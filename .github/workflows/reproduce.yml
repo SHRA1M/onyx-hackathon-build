@@ -1,4 +1,4 @@
-# Placeholder (Task 1). Task 11 adds selftest, verify-log, replay, eval, check-data.
+# Placeholder (Task 1). Task 11 adds selftest, verify-log, replay, eval.
 name: reproduce
 
 on: [push, pull_request]
@@ -14,4 +14,5 @@ jobs:
       # Addendum item 15: fetch before the checks; a blocked host leaves the committed extract.
       - run: uv run --no-sync python -m onyx kb fetch
       - run: uv run --no-sync python -m onyx kb verify
+      - run: uv run --no-sync python -m onyx check-data
       - run: uv run --no-sync pytest

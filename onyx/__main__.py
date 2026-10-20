@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from onyx import kb
+from onyx import data, kb
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -13,6 +13,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     subparsers = parser.add_subparsers(dest="command", metavar="<command>")
     kb.register(subparsers)
+    data.register(subparsers)
     return parser
 
 

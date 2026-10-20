@@ -1,0 +1,104 @@
+"""Mandates, rule table and answer keys, and `check-data`: every quote the gates rely on is verbatim in the KB."""
+
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+from typing import Any
+
+from onyx import kb
+
+DATA_DIR = Path(__file__).resolve().parent / "data"
+KEYS_DIR = DATA_DIR / "keys"
+MIN_QUOTE = 20  # Task 6: a quote of 20+ characters
+
+
+def normalize(text: str) -> str:
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def load_rules() -> list[dict[str, Any]]:
+    return json.loads((DATA_DIR / "rules.json").read_text(encoding="utf-8"))["rules"]
+
+
+def load_mandates() -> dict[str, Any]:
+    return json.loads((DATA_DIR / "mandates.json").read_text(encoding="utf-8"))["agents"]
+
+
+def _chunk(document_id: str, clause: str) -> dict[str, Any] | None:
+    try:
+        return kb.get_chunk(document_id, clause)
+    except KeyError:
+        return None
+
+
+def check_rules() -> list[str]:
+    manifest = kb.manifest_by_id()
+    problems, seen = [], set()
+    for rule in load_rules():
+        rid = rule["id"]
+        if rid in seen:
+            problems.append(f"{rid}: duplicate id")
+        seen.add(rid)
+        if not rule.get("clause"):
+            problems.append(f"{rid}: no clause id")
+        row = manifest.get(rule["document_id"])
+        if row is None:
+            problems.append(f"{rid}: document {rule['document_id']} not in the manifest")
+            continue
+        if (rule["binding_status"], rule["jurisdiction"]) != (row["binding_status"], row["jurisdiction"]):
+            problems.append(f"{rid}: binding_status or jurisdiction differs from the manifest")
+        chunk = _chunk(rule["document_id"], rule["chunk"])
+        if chunk is None:
+            problems.append(f"{rid}: no chunk {rule['document_id']} {rule['chunk']}")
+            continue
+        if chunk["status"] != "VERIFIED":
+            problems.append(f"{rid}: chunk status {chunk['status']}")
+        if len(rule["quote"]) < MIN_QUOTE:
+            problems.append(f"{rid}: quote shorter than {MIN_QUOTE} characters")
+        if normalize(rule["quote"]) not in normalize(chunk["text_en"]):
+            problems.append(f"{rid}: quote not verbatim in {rule['document_id']} {rule['chunk']}")
+        if rule.get("quote_ar") and normalize(rule["quote_ar"]) not in normalize(chunk["text_ar"]):
+            problems.append(f"{rid}: Arabic quote not verbatim in {rule['document_id']} {rule['chunk']}")
+    return problems
+
+
+def check_mandates() -> list[str]:
+    problems = []
+    for agent, spec in load_mandates().items():
+        for verb in spec["verbs"]:
+            name = f"{agent}.{verb['verb']}"
+            if not verb["clause_ids"]:
+                problems.append(f"{name}: no clause")
+                continue
+            texts = []
+            for ref in verb["clause_ids"]:
+                chunk = _chunk(ref["document_id"], ref["chunk"])
+                if chunk is None:
+                    problems.append(f"{name}: no chunk {ref['document_id']} {ref['chunk']}")
+                else:
+                    texts.append(normalize(chunk["text_en"]))
+            if len(verb["quote"]) < MIN_QUOTE or not any(normalize(verb["quote"]) in t for t in texts):
+                problems.append(f"{name}: quote not verbatim in its clauses")
+    return problems
+
+
+def check_data() -> int:
+    """Addendum item 2: fail on a listing-page URL, on a quote that is not the document's text, on a rule
+    without a clause id. Rows with no recorded URL are listed, not failed."""
+    rows = kb.load_manifest()
+    failures = [p for r in rows for p in kb.url_problems(r)] + check_rules() + check_mandates()
+    no_url = [r["document_id"] for r in rows if not r["url"] and r["status"] != "UNVERIFIED"]
+    rules, mandates = load_rules(), load_mandates()
+    print(f"rules {len(rules)}  mandate verbs {sum(len(s['verbs']) for s in mandates.values())}  "
+          f"manifest rows {len(rows)}")
+    if no_url:
+        print(f"no URL recorded ({len(no_url)}): {', '.join(no_url)}")
+    print("\n".join(failures) if failures else "check-data ok: every quote verbatim, every rule cites a clause")
+    return 1 if failures else 0
+
+
+def register(subparsers) -> None:
+    parser = subparsers.add_parser("check-data", help="prove every rule and mandate quote is verbatim in the KB")
+    parser.set_defaults(func=lambda args: check_data())

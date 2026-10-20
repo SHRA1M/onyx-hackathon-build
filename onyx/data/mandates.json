@@ -1,0 +1,257 @@
+{
+ "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 3; quotes verbatim from kb/chunks (check with python -m onyx check-data)",
+ "agents": {
+  "care": {
+   "verbs": [
+    {
+     "verb": "propose_sale",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.3",
+       "chunk": "4.3"
+      },
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.7.1",
+       "chunk": "4.7.1"
+      }
+     ],
+     "quote": "Licensees shall not register, charge or otherwise avail a Service to a Subscriber that the Subscriber has not expressly ordered or opted to pay for.",
+     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    },
+    {
+     "verb": "propose_change",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.4",
+       "chunk": "4.4"
+      },
+      {
+       "document_id": "cabinet-66-2023-en",
+       "clause": "34(5)",
+       "chunk": "34(5)"
+      }
+     ],
+     "quote": "The provisions of sub-article 4.3 shall not apply in circumstances where an existing Service",
+     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    },
+    {
+     "verb": "disclose_account",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "24.10",
+       "chunk": "24.10"
+      }
+     ],
+     "quote": "the Licensee shall disclose it free of charge and without delay after an adequate verification process",
+     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    },
+    {
+     "verb": "draft_reply",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "26.7.2",
+       "chunk": "26.7.2"
+      },
+      {
+       "document_id": "licence-2-2026",
+       "clause": "9.1",
+       "chunk": "9.1"
+      }
+     ],
+     "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints",
+     "note": "Order Task 6: in a complaint the AI may draft_reply for the human only. Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    }
+   ]
+  },
+  "adviser": {
+   "verbs": [
+    {
+     "verb": "classify_channel",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.15",
+       "chunk": "4.15"
+      },
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.17",
+       "chunk": "4.17"
+      },
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.22",
+       "chunk": "4.22"
+      },
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.23",
+       "chunk": "4.23"
+      }
+     ],
+     "quote": "The following conditions shall apply in circumstances where the purchase of a Licensee provided Service3 is made via a Licensee App:",
+     "note": "Clauses from the order."
+    },
+    {
+     "verb": "cite",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "3.3",
+       "chunk": "3.3"
+      }
+     ],
+     "quote": "all information provided to Consumers shall, at the time it is provided, be complete, transparent, accurate, and truthful",
+     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    },
+    {
+     "verb": "flag_gap",
+     "clause_ids": [
+      {
+       "document_id": "itu-t-y3172",
+       "clause": "8.1",
+       "chunk": "8.1"
+      }
+     ],
+     "quote": "an MLFO is a logical node with functionalities that manage and orchestrate the nodes of ML pipelines",
+     "note": "Method basis only: no legal clause governs flagging a gap. Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    }
+   ]
+  },
+  "tdra": {
+   "verbs": [
+    {
+     "verb": "raise_dispute",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "26.16.1",
+       "chunk": "26.16.1"
+      }
+     ],
+     "quote": "the Licensee shall resolve the Dispute and respond to the TDRA within three (3) business days",
+     "note": "Clause from the order (3 business days)."
+    },
+    {
+     "verb": "order_restore",
+     "clause_ids": [
+      {
+       "document_id": "licence-2-2026",
+       "clause": "9.3",
+       "chunk": "9.3"
+      }
+     ],
+     "quote": "the TDRA may resolve the issues between parties in accordance with Telecommunications Law",
+     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    },
+    {
+     "verb": "request_report",
+     "clause_ids": [
+      {
+       "document_id": "licence-2-2026",
+       "clause": "9.2.4",
+       "chunk": "9.2.4"
+      }
+     ],
+     "quote": "shall furnish this information to the TDRA in a format and timeframe determined by the TDRA",
+     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    }
+   ]
+  },
+  "data_office": {
+   "verbs": [
+    {
+     "verb": "receive_objection",
+     "clause_ids": [
+      {
+       "document_id": "pdpl-45-2021-en",
+       "clause": "18(1)",
+       "chunk": "18(1)"
+      }
+     ],
+     "quote": "The Data Subject shall have the right to object to any decisions resulting from automated processing",
+     "note": "Clause from the order."
+    },
+    {
+     "verb": "receive_dpia",
+     "clause_ids": [
+      {
+       "document_id": "pdpl-45-2021-en",
+       "clause": "21(2)",
+       "chunk": "21(2)"
+      }
+     ],
+     "quote": "If the processing includes a systematic and comprehensive assessment of the personal aspects of the Data Subject, using automated processing",
+     "note": "Clause from the order (21(2)(a))."
+    },
+    {
+     "verb": "request_human_review",
+     "clause_ids": [
+      {
+       "document_id": "pdpl-45-2021-en",
+       "clause": "18(4)",
+       "chunk": "18(4)"
+      }
+     ],
+     "quote": "The Controller shall include the human element in reviewing automated processing decisions at the request of the Data Subject.",
+     "note": "Clause from the order."
+    }
+   ]
+  },
+  "coordinator": {
+   "verbs": [
+    {
+     "verb": "release_event",
+     "clause_ids": [
+      {
+       "document_id": "itu-t-y3172",
+       "clause": "8.1",
+       "chunk": "8.1"
+      }
+     ],
+     "quote": "an MLFO is a logical node with functionalities that manage and orchestrate the nodes of ML pipelines",
+     "note": "Method basis: the coordinator is the MLFO stage schedule (order README Y.3172 table). Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    },
+    {
+     "verb": "route",
+     "clause_ids": [
+      {
+       "document_id": "itu-t-y3172",
+       "clause": "8.1",
+       "chunk": "8.1"
+      }
+     ],
+     "quote": "This node is responsible for identifying the SINK(s) and distributing the output of the M node to the corresponding SINK nodes.",
+     "note": "Method basis: D node, coordinator routing (order README Y.3172 table). Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    },
+    {
+     "verb": "escalate_to_human",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "26.7.2",
+       "chunk": "26.7.2"
+      },
+      {
+       "document_id": "licence-2-2026",
+       "clause": "9.1",
+       "chunk": "9.1"
+      },
+      {
+       "document_id": "pdpl-45-2021-en",
+       "clause": "18(4)",
+       "chunk": "18(4)"
+      }
+     ],
+     "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints",
+     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+    }
+   ]
+  }
+ }
+}
