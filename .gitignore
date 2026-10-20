@@ -1,0 +1,28 @@
+# Secrets: model API keys live in .env, never committed (order, global constraints)
+.env*
+!.env.example
+
+# Python and uv
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Order, Task 1: local vector store
+data/chromadb/
+
+# Order, addendum item 15: full source texts are fetched, not committed
+kb/sources/
+
+# engineering/_reference/new-repo.md list
+node_modules/
+_private/
+private/
+test-files/
+*.log
+*.txt
+# Text files this repo must track
+!onyx/data/keys/HASHES.txt
