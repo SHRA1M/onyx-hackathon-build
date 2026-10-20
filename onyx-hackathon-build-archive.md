@@ -1,0 +1,5 @@
+# onyx-hackathon-build: archive
+
+## 2026-10-20: Repo set up, Tasks 1 and 2, Task 3 rules and mandates
+
+Copied the hq order over the local one (sha256 b88fa014...818da, identical) and filed it. git init, private remote SHRA1M/onyx-hackathon-build. Task 1 scaffold test-first. Task 2: manifest of 40 rows built from the hq notes; live fetch matched 12 documents byte for byte (TDRA, IMDA, ITU Readiness); the legislation portal 403s, so those fall back to hq copies. Chunker: decimal clauses (CPR, licence, policies) and Articles with numbered paragraphs (laws); 2,184 clauses from 19 documents, every clause the rule list needs present. Tried and fixed: Y.3172 headings without dots and a footer glued to clause numbers; a cover line read as clause 1.0; the dimensions.json URL (short sha and wrong path gave 404). Task 3: 92 rules and 16 mandate verbs, all quotes verbatim on first run; a mutation test confirmed check-data fails on an altered quote. CI green on a clean runner. Iyas then decided to cut the chunks back to cited ones with a history rewrite, and to use the hq transcription for Decision 16/2026 4.17 and 4.18; session wrapped at 311k context before doing either.
