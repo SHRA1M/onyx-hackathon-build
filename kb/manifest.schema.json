@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mizan knowledge-base manifest row",
+  "description": "One row of kb/manifest.csv. Columns: order Task 2 plus addendum items 13 and 14 (jurisdiction replaces jurisdiction_level, Iyas 2026-10-20).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "document_id", "title", "title_ar", "issuer", "instrument", "url", "url_accessed", "http_status", "sha256", "bytes",
+    "page_count", "fetched_at", "status", "binding_status", "jurisdiction", "language", "is_official_translation",
+    "source_type", "country", "node", "itu_dimensions", "license_note", "notes"
+  ],
+  "properties": {
+    "document_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "title": {"type": "string", "minLength": 1},
+    "title_ar": {"type": "string"},
+    "issuer": {"type": "string", "minLength": 1},
+    "instrument": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "url": {"type": "string", "pattern": "^(https://\\S+)?$"},
+    "url_accessed": {"type": "string", "pattern": "^(\\d{4}-\\d{2}-\\d{2})?$"},
+    "http_status": {"type": "string", "pattern": "^(\\d{3}|error)?$"},
+    "sha256": {"type": "string", "pattern": "^([0-9a-f]{64})?$"},
+    "bytes": {"type": "string", "pattern": "^(\\d+)?$"},
+    "page_count": {"type": "string", "pattern": "^(\\d+)?$"},
+    "fetched_at": {"type": "string", "pattern": "^(\\d{4}-\\d{2}-\\d{2})?$"},
+    "status": {"enum": ["VERIFIED", "REFERENCED", "UNVERIFIED", "HISTORICAL"]},
+    "binding_status": {"enum": ["binding", "advisory", "method"]},
+    "jurisdiction": {"enum": ["UAE", "foreign", "international"]},
+    "language": {"type": "string", "pattern": "^(en|ar)(,(en|ar))?$"},
+    "is_official_translation": {"type": "string", "minLength": 1},
+    "source_type": {"type": "string", "minLength": 1},
+    "country": {"type": "string", "minLength": 1},
+    "node": {"enum": ["SRC", "C", "PP", "M", "P", "D", "SINK", "MLFO", "ML sandbox"]},
+    "itu_dimensions": {"type": "string"},
+    "license_note": {"type": "string", "minLength": 1},
+    "notes": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "VERIFIED"}}},
+      "then": {"properties": {"sha256": {"minLength": 64}, "bytes": {"minLength": 1}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "UNVERIFIED"}}},
+      "then": {"properties": {"sha256": {"maxLength": 0}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "REFERENCED"}}},
+      "then": {"properties": {"url": {"minLength": 9}, "sha256": {"maxLength": 0}}}
+    }
+  ]
+}

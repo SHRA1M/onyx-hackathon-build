@@ -3,13 +3,16 @@
 import argparse
 import sys
 
+from onyx import kb
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="onyx",
         description="Mizan (team Onyx): governed consumer-care agents. Synthetic operator and subscribers.",
     )
-    parser.add_subparsers(dest="command", metavar="<command>")
+    subparsers = parser.add_subparsers(dest="command", metavar="<command>")
+    kb.register(subparsers)
     return parser
 
 

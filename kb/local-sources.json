@@ -1,0 +1,322 @@
+{
+ "tdra-cpr-v2-en": {
+  "file": "standards-text/tdra-cpr-v2-en.pdf",
+  "text": "standards-text/tdra-cpr-v2-en.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "tdra-cpr-v2-ar": {
+  "file": "standards-text/tdra-cpr-v2-ar.pdf",
+  "text": "standards-text/tdra-cpr-v2-ar.txt",
+  "splitter": "decimal",
+  "pair_of": "tdra-cpr-v2-en",
+  "top": false,
+  "strip": ""
+ },
+ "telecom-law-3-2003-en": {
+  "file": "standards-text/telecom-law-3-2003-consolidated-2020-portal-en.pdf",
+  "text": "standards-text/telecom-law-3-2003-consolidated-2020-portal-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "telecom-law-3-2003-ar": {
+  "file": "standards-text/telecom-law-3-2003-consolidated-2020-portal-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "licence-2-2026": {
+  "file": "standards-text/licence-2-2026-etisalat-public-telecom-en-ar.pdf",
+  "text": "standards-text/licence-2-2026-etisalat-public-telecom-en-ar.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "pdpl-45-2021-en": {
+  "file": "standards-text/pdpl-45-2021-en.pdf",
+  "text": "standards-text/pdpl-45-2021-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "pdpl-45-2021-ar": {
+  "file": "standards-text/pdpl-45-2021-ar-portal.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "etransactions-46-2021-en": {
+  "file": "standards-text/etransactions-46-2021-en.pdf",
+  "text": "standards-text/etransactions-46-2021-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "etransactions-46-2021-ar": {
+  "file": "standards-text/e-transactions-46-2021-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "consumer-law-15-2020-en": {
+  "file": "standards-text/consumer-law-15-2020-en.pdf",
+  "text": "standards-text/consumer-law-15-2020-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "consumer-law-15-2020-ar": {
+  "file": "standards-text/consumer-law-15-2020-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabinet-66-2023-en": {
+  "file": "standards-text/consumer-protection-execreg-cabres-66-2023-en.pdf",
+  "text": "standards-text/consumer-protection-execreg-cabres-66-2023-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabinet-66-2023-ar": {
+  "file": "standards-text/consumer-exec-reg-cabinet-66-2023-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabinet-56-2024-en": {
+  "file": "standards-text/cabinet-resolution-56-2024-telemarketing-en.pdf",
+  "text": "standards-text/cabinet-resolution-56-2024-telemarketing-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabinet-56-2024-ar": {
+  "file": "standards-text/cabinet-resolution-56-2024-telemarketing-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabinet-57-2024-en": {
+  "file": "standards-text/cabinet-resolution-57-2024-telemarketing-penalties-en.pdf",
+  "text": "standards-text/cabinet-resolution-57-2024-telemarketing-penalties-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabinet-57-2024-ar": {
+  "file": "standards-text/cabinet-resolution-57-2024-telemarketing-penalties-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "spam-calls-v4-en": {
+  "file": "standards-text/tdra-spam-calls-policy-v4-2026-en.pdf",
+  "text": "standards-text/tdra-spam-calls-policy-v4-2026-en.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "spam-calls-v4-ar": {
+  "file": "standards-text/tdra-spam-calls-policy-v4-2026-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "spam-sms-2022-en": {
+  "file": "standards-text/tdra-spam-sms-policy-2022-en.pdf",
+  "text": "standards-text/tdra-spam-sms-policy-2022-en.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "spam-sms-2022-ar": {
+  "file": "standards-text/tdra-spam-sms-policy-2022-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "qos-v3-en": {
+  "file": "standards-text/tdra-qos-policy-v3-2026-en.pdf",
+  "text": "standards-text/tdra-qos-policy-v3-2026-en.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "child-digital-safety-26-2025-en": {
+  "file": "standards-text/child-digital-safety-law-26-2025-en.pdf",
+  "text": "standards-text/child-digital-safety-law-26-2025-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "child-digital-safety-26-2025-ar": {
+  "file": "standards-text/child-digital-safety-law-26-2025-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cybercrimes-34-2021-en": {
+  "file": "standards-text/cybercrimes-34-2021-en.pdf",
+  "text": "standards-text/cybercrimes-34-2021-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cybercrimes-34-2021-ar": {
+  "file": "standards-text/cybercrimes-34-2021-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "decision-16-2026-ar": {
+  "file": "standards-text/tdra-mobile-devices-use-instructions-2026-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "instructions-1-2014-ar": {
+  "file": "standards-text/tdra-people-of-determination-accessibility-2014-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "tdra-dispute-service-page": {
+  "file": "",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "itu-t-y3172": {
+  "file": "standards-text/itu-t-y3172-2019-06.pdf",
+  "text": "standards-text/itu-t-y3172-2019-06.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": true,
+  "strip": "^\\s*\\d*\\s*Rec\\. ITU-T Y\\.3172 \\(06/2019\\)\\s*(\\d+?(?=\\d\\.\\d))?"
+ },
+ "itu-readiness-2-0": {
+  "file": "standards-text/itu-ai-readiness-report-2-0-2026-01.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "itu-readiness-dimensions": {
+  "file": "standards-text/itu-reference-code/dimensions.json",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "imda-mgf-agentic-v1-5": {
+  "file": "standards-text/global-2026-10-17/imda-agentic-ai-v1.5.pdf",
+  "text": "standards-text/global-2026-10-17/imda-agentic-ai-v1.5.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "eu-ai-act-2026-07-27": {
+  "file": "standards-text/global-2026-10-17/eu-ai-act-art50-art113-20260727.txt",
+  "text": "standards-text/global-2026-10-17/eu-ai-act-art50-art113-20260727.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "gdpr-art22": {
+  "file": "standards-text/global-2026-10-17/gdpr-art22.txt",
+  "text": "standards-text/global-2026-10-17/gdpr-art22.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "mocai-ai-ethics-2022": {
+  "file": "standards-text/mocai-ai-ethics-principles-2022-en.pdf",
+  "text": "standards-text/mocai-ai-ethics-principles-2022-en.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "ai-deepfake-guide-2021": {
+  "file": "corpus-text/pdf/AI_Deepfake_Guide_2021.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabinet-agentic-ai-framework-2026-05-18": {
+  "file": "",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "executive-order-3-2004": {
+  "file": "",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "pdpl-executive-regulations": {
+  "file": "",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ }
+}

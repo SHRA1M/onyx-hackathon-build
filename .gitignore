@@ -26,3 +26,6 @@ test-files/
 *.txt
 # Text files this repo must track
 !onyx/data/keys/HASHES.txt
+
+# Order Task 2 export: copies of full texts stay local
+kb/export/InputDocs/*/

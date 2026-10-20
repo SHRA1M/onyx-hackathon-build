@@ -1,4 +1,4 @@
-# Placeholder (Task 1). Task 11 adds selftest, verify-log, replay, eval, check-data, kb verify.
+# Placeholder (Task 1). Task 11 adds selftest, verify-log, replay, eval, check-data.
 name: reproduce
 
 on: [push, pull_request]
@@ -11,4 +11,7 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - run: uv venv --python 3.12
       - run: uv pip install -e ".[dev]"
+      # Addendum item 15: fetch before the checks; a blocked host leaves the committed extract.
+      - run: uv run --no-sync python -m onyx kb fetch
+      - run: uv run --no-sync python -m onyx kb verify
       - run: uv run --no-sync pytest
