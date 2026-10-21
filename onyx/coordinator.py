@@ -81,7 +81,7 @@ def _rules_by_chunk() -> dict[str, list[str]]:
 class Coordinator:
     def __init__(self, scenario: dict[str, Any], model: Model, retriever: Retriever, log_path: str | Path,
                  gaps_dir: str | Path = GAPS_DIR, lang: str = "en", governed: bool = True,
-                 knowledge: gate.Knowledge | None = None) -> None:
+                 knowledge: gate.Knowledge | None = None, mandate_clauses: bool = True) -> None:
         if lang not in {"en", "ar"}:
             raise ValueError(f"language {lang!r}: en or ar")
         self.scenario, self.lang, self.governed = scenario, lang, governed
@@ -91,7 +91,7 @@ class Coordinator:
         self.kb = knowledge or gate.Knowledge.load()
         self.decide = gate.decide if governed else gate.allow_all
         self.decide_pending = gate.decide_pending if governed else gate.allow_all
-        self.agents = {name: cls(model, retriever, self.log) for name, cls in AGENTS.items()}
+        self.agents = {name: cls(model, retriever, self.log, mandate_clauses) for name, cls in AGENTS.items()}
         self.inboxes: dict[str, list[Release]] = {name: [] for name in AGENTS}
         self.record = {name: scenario[name] for name in RECORD_FIELDS if name in scenario}
         self.facts: dict[str, Any] = {**scenario.get("subscriber", {}), **scenario.get("account", {}),
@@ -131,7 +131,8 @@ class Coordinator:
                                         "facts": {**release.record, **release.facts}}, self.lang)
         result = StepResult(release.inject, release.to, output)
         for proposal in output.proposals:
-            result.verdicts.append((proposal, self._gate(proposal, release, request_id, output.sources_used)))
+            given = output.sources_mandate + output.sources_used  # what the prompt gave (prompt v2)
+            result.verdicts.append((proposal, self._gate(proposal, release, request_id, given)))
         if release.to == "adviser" and release.kind in QUESTION_KINDS and self._abstains(result):
             self._abstain(result, release)
             if step.get("pending_proposal"):

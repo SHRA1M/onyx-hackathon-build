@@ -1,0 +1,14 @@
+{
+ "source": "Task 9 register order",
+ "copied_from": "onyx/data/keys/S1.json gap_ids (the one-liners verbatim) and gaps_expected (the candidate id); order 2026-10-21-task-8-part-c item 5",
+ "gaps": [
+  {"id": "gap-1", "line": "complaint hand-over", "source": "Task 9 register order"},
+  {"id": "gap-2", "line": "consent elicited by an AI (channel classification)", "source": "Task 9 register order"},
+  {"id": "gap-3", "line": "adequate verification", "source": "Task 9 register order"},
+  {"id": "gap-4", "line": "automated disconnection review", "source": "Task 9 register order"},
+  {"id": "gap-5", "line": "model provider", "source": "Task 9 register order"},
+  {"id": "gap-6", "line": "AI disclosure", "source": "Task 9 register order"},
+  {"id": "gap-7", "line": "five mentions no standard", "source": "Task 9 register order"},
+  {"id": "candidate-4-4-fixed-term-bundle", "line": "whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4", "source": "Task 9 register order; candidate row from the keys session (S1 step 6 obligation candidate_row)"}
+ ]
+}

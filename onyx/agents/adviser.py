@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from onyx import kb
+from onyx import data, kb
 from onyx.agents.base import Agent, AgentOutput, Proposal
 
 CPR = "tdra-cpr-v2-en"
@@ -19,6 +19,13 @@ CHANNELS = {
 class Adviser(Agent):
     name = "adviser"
     role = "Checks each proposed action against the knowledge base and returns the clause that allows or blocks it."
+
+    def extra_lines(self) -> list[str]:
+        """The gap register (onyx/data/gaps.json), numbered, so a flagged gap carries its register id (order
+        2026-10-21-task-8-part-c item 5)."""
+        gaps = data.load_gaps()["gaps"]
+        return ["Gap register:", *[f"{n}. {g['id']}: {g['line']}" for n, g in enumerate(gaps, 1)],
+                "When you flag a gap or abstain because a rule is missing, name the register id in `args.gap`."]
 
     def classify_channel(self, request_id: str, channel: str) -> AgentOutput:
         if channel not in CHANNELS:

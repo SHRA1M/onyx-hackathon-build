@@ -26,6 +26,11 @@ def load_mandates() -> dict[str, Any]:
     return json.loads((DATA_DIR / "mandates.json").read_text(encoding="utf-8"))["agents"]
 
 
+def load_gaps() -> dict[str, Any]:
+    """The gap register ids and one-liners the adviser names in args.gap (gaps.json, from the keys' gap_ids)."""
+    return json.loads((DATA_DIR / "gaps.json").read_text(encoding="utf-8"))
+
+
 def cited_chunks() -> set[tuple[str, str]]:
     """(document_id, chunk) for every chunk a rule or a mandate verb cites: what kb/chunks/ holds."""
     cited = {(rule["document_id"], rule["chunk"]) for rule in load_rules()}

@@ -126,3 +126,27 @@ def test_openai_compatible_model_omits_temperature_by_default():
     finally:
         urllib.request.urlopen = original
     assert "temperature" not in sent and sent["model"] == "m" and sent["max_tokens"] > 0
+
+
+def test_must_cite_given_is_the_share_of_must_cite_chunks_in_the_prompt():
+    """Order 2026-10-21 Part C1 item 7: diagnostic only. S2 step 3 (care, draft_reply): the scripted run gave the
+    care agent CPR 26.7.2 alone, so of the step's must_cite rules only those on 26.7.2 were given."""
+    events = _events(SCRIPTED / "S2" / "run1.jsonl")
+    key = data.load_key("S2")
+    given = onyx_eval.must_cite_given(events, key)
+    step = next(s for s in key["steps"] if s["n"] == 3)
+    rules = {r["id"]: f"{r['document_id']}:{r['chunk']}" for r in data.load_rules()}
+    assert given[3] == round(sum(rules[r] == "tdra-cpr-v2-en:26.7.2" for r in step["must_cite"])
+                             / len(step["must_cite"]), 4)
+    assert given[1] is None  # step 1 is classified in plain code: no prompt
+    with_mandate = [{**e, "new_value": {**e["new_value"], "sources_mandate": [rules[r] for r in step["must_cite"]]}}
+                    if e["action"] == "propose" and e["entity_id"] == "S2-3-care" else e for e in events]
+    assert onyx_eval.must_cite_given(with_mandate, key)[3] == 1.0
+
+
+def test_must_cite_given_is_shown_not_compared(tmp_path):
+    results = onyx_eval.evaluate(SCRIPTED, tmp_path)
+    assert "must_cite_given" not in onyx_eval.METRICS
+    row = results["scenarios"]["S2"]["governed"]["en"]
+    assert set(row["must_cite_given"]) == {"min", "max"}
+    assert "Must-cite given" in (tmp_path / "results.md").read_text(encoding="utf-8")

@@ -107,10 +107,13 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
     events = _events(path)
     config = events[0]["new_value"]
     scenario = data.load_scenario(events[0]["entity_id"])
+    # a log recorded before prompt v2 gave no mandate clauses; its replay gives none either
+    mandate = any(e["new_value"].get("sources_mandate") for e in events if e["action"] == "propose")
     with tempfile.TemporaryDirectory() as tmp:
         run = coordinator.Coordinator(scenario, model_mod.RecordedModel(path), RecordedRetriever(events),
                                       log_path=Path(tmp) / "replay.jsonl", gaps_dir=Path(tmp) / "gaps",
-                                      lang=config.get("lang", "en"), governed=config.get("mode") != "ungoverned")
+                                      lang=config.get("lang", "en"), governed=config.get("mode") != "ungoverned",
+                                      mandate_clauses=mandate)
         run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode"}})
         run.run()
         for e in events:

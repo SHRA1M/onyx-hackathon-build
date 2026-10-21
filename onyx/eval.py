@@ -20,6 +20,9 @@ Metrics, per run, then min and max over the three runs of each scenario, mode an
 - ungoverned baseline: steps where the ungoverned run allowed what the key says the gate holds or blocks.
 - Arabic versus English agreement: share of steps whose decision and clause ids are the same in the two languages.
 - gate_ms and model_ms: median and max (addendum 18).
+- must-cite given (diagnostic, shown only, never compared): share of the key's must_cite rules whose chunk was in
+  the prompt of the step's agent (mandate clauses or retrieved), over the steps that sent a prompt. A miss with the
+  chunk given is the model's; a miss without it is retrieval's.
 - tokens and cost, per run: model calls, prompt and completion tokens from each reply's usage, and USD priced from
   onyx/data/model_prices.json; "price unknown" where the model has no price row or a reply carries no usage.
 """
@@ -73,6 +76,24 @@ def action_hits(events: list[dict[str, Any]], key: dict[str, Any], scenario: dic
         hits[n] = any(e["old_value"]["verb"] == step["verb"] and _to_human(e["old_value"]) == expect_human
                       for e in _gates(events, pending=False) if e["entity_id"] == entity)
     return hits
+
+
+def _must_cite_counts(events: list[dict[str, Any]], key: dict[str, Any]) -> dict[int, tuple[int, int] | None]:
+    chunks = {r["id"]: f"{r['document_id']}:{r['chunk']}" for r in data.load_rules()}
+    given = {e["entity_id"]: set(e["new_value"].get("sources_mandate", [])) | set(e["new_value"]["sources_used"])
+             for e in events if e["action"] == "propose"}
+    counts: dict[int, tuple[int, int] | None] = {}
+    for step in key["steps"]:
+        prompt = given.get(f"{key['scenario']}-{step['n']}-{step['agent']}")
+        counts[step["n"]] = None if prompt is None else (sum(chunks[r] in prompt for r in step["must_cite"]),
+                                                         len(step["must_cite"]))
+    return counts
+
+
+def must_cite_given(events: list[dict[str, Any]], key: dict[str, Any]) -> dict[int, float | None]:
+    """Per key step: share of the step's must_cite rules whose chunk was in the prompt of the key's agent (its
+    propose event's sources_mandate and sources_used). None where no prompt was sent (a plain-code step)."""
+    return {n: None if c is None else _ratio(*c) for n, c in _must_cite_counts(events, key).items()}
 
 
 def _citation_valid(proposal: dict[str, Any], kb: gate.Knowledge) -> bool:
@@ -138,7 +159,10 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
     claims = [n for n in steps if expected(n) in {gate.HOLD, gate.BLOCK}
               and any(e["verdict"] == gate.ALLOW for e in judged(n))]
     hits = action_hits(events, key, scenario)
+    prompted = [c for c in _must_cite_counts(events, key).values() if c is not None]
     return {
+        "must_cite_given": _ratio(sum(h for h, _ in prompted), sum(t for _, t in prompted)),
+        "must_cite_given_by_step": must_cite_given(events, key),
         "chain_ok": audit.verify(path),
         "keys_match": events[0]["new_value"]["answer_keys"] == audit.key_hashes(),
         "model": events[0]["new_value"].get("model", ""),
@@ -195,7 +219,10 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
                     results["all_keys_match"] &= r["keys_match"]
                     timings[mode]["gate_ms"] += r["gate_ms"]
                     timings[mode]["model_ms"] += r["model_ms"]
-                row[lang] = {"runs": len(rows), **{m: _span([r[m] for r in rows]) for m in METRICS}}
+                row[lang] = {"runs": len(rows), **{m: _span([r[m] for r in rows]) for m in METRICS},
+                             "must_cite_given": _span([r["must_cite_given"] for r in rows]),
+                             "must_cite_given_by_step": {n: _span([r["must_cite_given_by_step"][n] for r in rows])
+                                                         for n in rows[0]["must_cite_given_by_step"]} if rows else {}}
             agreement = []
             for en, ar in zip(per_lang["en"], per_lang["ar"]):
                 steps = set(en["signature"]) | set(ar["signature"])
@@ -230,13 +257,14 @@ def _markdown(results: dict[str, Any]) -> str:
              f"All hash chains verify: {'yes' if results['all_chains_ok'] else 'NO'}. "
              f"Every run_start carries the current key hashes: {'yes' if results['all_keys_match'] else 'NO'}.", ""]
     heads = ["Scenario", "Lang", "Runs", "Gate rejection", "Citation validity", "Action recall", "Obligation proxy",
-             "Gap recall", "Abstention", "Hand-over latency (steps)", "Ungoverned claims allowed"]
+             "Gap recall", "Abstention", "Hand-over latency (steps)", "Ungoverned claims allowed", "Must-cite given"]
     for mode in MODES:
         lines += [f"## {mode.capitalize()}", "", "| " + " | ".join(heads) + " |", "|" + "---|" * len(heads)]
         for sid, modes in results["scenarios"].items():
             for lang in LANGS:
                 row = modes[mode][lang]
-                lines.append("| " + " | ".join([sid, lang, str(row["runs"])] + [_cell(row[m]) for m in METRICS]) + " |")
+                lines.append("| " + " | ".join([sid, lang, str(row["runs"])] + [_cell(row[m]) for m in METRICS]
+                                               + [_cell(row["must_cite_given"])]) + " |")
         lines += ["", "Arabic versus English agreement on decisions and clause ids: " + ", ".join(
             f"{sid} {_cell(modes[mode]['ar_en_clause_agreement'])}" for sid, modes in results["scenarios"].items()), ""]
         lat = results["latency"][mode]

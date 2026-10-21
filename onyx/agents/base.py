@@ -3,7 +3,13 @@ rejected before the gate.
 
 Output schema (reference code, kept): agent_name, proposals[{verb, target, args, clause_ids[], quote, rationale}],
 sources_used[], reasoning_chain[]. Agents exchange these objects, never free text (IMDA 2.3.1). A clause id is the
-chunk id `document_id:clause`, the id the agent saw when it retrieved the clause.
+chunk id `document_id:clause`, the id the agent saw when it was given the clause.
+
+Prompt v2 (order 2026-10-21-task-8-part-c, items 5 and 6): the model proposes what the step calls for and the gates
+decide; it abstains only when the step asks for a rule, figure or deadline no clause states. It is given the
+mandate clauses of its verbs (mandates.json) first, then the retrieved chunks, deduplicated; both sets are logged
+apart (sources_mandate, sources_used) and both are what the gate counts as given. On the wire reasoning_chain is
+named `notes` (parse_output accepts both); the internal and logged name stays reasoning_chain.
 """
 
 from __future__ import annotations
@@ -17,6 +23,7 @@ from onyx import audit, data, kb
 from onyx.model import Model
 
 INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
+LANGUAGE = {"en": "English", "ar": "Arabic"}
 
 
 @dataclass
@@ -33,7 +40,8 @@ class Proposal:
 class AgentOutput:
     agent_name: str
     proposals: list[Proposal] = field(default_factory=list)
-    sources_used: list[str] = field(default_factory=list)
+    sources_used: list[str] = field(default_factory=list)  # retrieved for this step
+    sources_mandate: list[str] = field(default_factory=list)  # the mandate clauses of the agent's verbs
     reasoning_chain: list[str] = field(default_factory=list)
     rejected: list[Proposal] = field(default_factory=list)  # verbs outside the mandate, never shown to the gate
 
@@ -59,7 +67,9 @@ def parse_output(agent_name: str, text: str) -> AgentOutput:
         proposals = [Proposal(verb=str(p["verb"]), target=str(p.get("target", "")), args=dict(p.get("args") or {}),
                               clause_ids=[str(c) for c in p.get("clause_ids") or []], quote=str(p.get("quote", "")),
                               rationale=str(p.get("rationale", ""))) for p in reply.get("proposals") or []]
-        reasoning = [str(r) for r in reply.get("reasoning_chain") or []]
+        reasoning = [str(r) for r in reply.get("notes", reply.get("reasoning_chain")) or []]
+        if reasoning and reasoning[0] == f"<{INSUFFICIENT_EVIDENCE}>":
+            reasoning[0] = INSUFFICIENT_EVIDENCE
     except (ValueError, TypeError, KeyError, AttributeError):
         return AgentOutput(agent_name, reasoning_chain=["unparseable model response: no JSON in the agreed schema"])
     return AgentOutput(agent_name, proposals, reasoning_chain=reasoning)
@@ -87,8 +97,10 @@ class Agent:
     name = ""
     role = ""  # hq hackathon-plan-2026-10-15.docx, Agents table
 
-    def __init__(self, model: Model, retriever: Retriever, log: audit.AuditLog | None = None) -> None:
+    def __init__(self, model: Model, retriever: Retriever, log: audit.AuditLog | None = None,
+                 mandate_clauses: bool = True) -> None:
         self.model, self.retriever, self.log = model, retriever, log
+        self.mandate_clauses = mandate_clauses  # False only to replay a log recorded before prompt v2
 
     @classmethod
     def mandate(cls) -> list[dict[str, Any]]:
@@ -115,18 +127,39 @@ class Agent:
     def retrieve(self, query: str, k: int = 8) -> list[dict[str, Any]]:
         return self.retriever(query, self.documents, k)
 
+    def mandate_chunks(self) -> list[dict[str, Any]]:
+        """The clauses mandates.json maps the agent's verbs to, in order, once each."""
+        if not self.mandate_clauses:
+            return []
+        seen, chunks = set(), []
+        for verb in self.mandate():
+            for c in verb["clause_ids"]:
+                if (c["document_id"], c["chunk"]) not in seen:
+                    seen.add((c["document_id"], c["chunk"]))
+                    chunks.append(kb.get_chunk(c["document_id"], c["chunk"]))
+        return chunks
+
+    def extra_lines(self) -> list[str]:
+        return []
+
     def messages(self, step: dict[str, Any], text: str, hits: list[dict[str, Any]], lang: str) -> list[dict[str, str]]:
+        """`hits` are the clauses given, mandate clauses first (see run)."""
         schema = ('{"proposals": [{"verb": "", "target": "", "args": {}, "clause_ids": [], "quote": "", '
-                  '"rationale": ""}], "reasoning_chain": []}')
-        system = (
-            f"You are the {self.name} agent of Sahab Telecom, a SYNTHETIC UAE operator. Role: {self.role}\n"
-            f"You may propose only these verbs: {', '.join(sorted(self.verbs))}.\n"
-            f"Reply with one JSON object and nothing else: {schema}\n"
+                  '"rationale": ""}], "notes": []}')
+        system = "\n".join([
+            f"You are the {self.name} agent of Sahab Telecom, a SYNTHETIC UAE operator. Role: {self.role}",
+            f"You may propose only these verbs: {', '.join(sorted(self.verbs))}.",
+            f"Reply with one JSON object and nothing else: {schema}",
             "Cite only the clauses given below, by their id in square brackets. 'quote' is 20 or more characters "
-            "copied exactly from a cited clause. You propose and explain; plain-code gates decide.\n"
-            f"If no clause below answers the step, propose nothing and make '{INSUFFICIENT_EVIDENCE}' the first "
-            "entry of reasoning_chain."
-        )
+            "copied exactly from a cited clause. You propose and explain; plain-code gates decide.",
+            "Propose the action this step calls for, citing the clauses that govern it; the gates decide whether it "
+            f"is allowed. Propose nothing, and make '<{INSUFFICIENT_EVIDENCE}>' the first entry of the last field, "
+            "only when the step asks for a rule, figure or deadline that no clause below states.",
+            "Facts are Sahab's own records (account, catalogue, consent log). Use them as true. Clauses are for "
+            "citations only.",
+            f"Reply in the language of this run: {LANGUAGE[lang]}.",
+            *self.extra_lines(),
+        ])
         clauses = []
         for hit in hits:
             clause = f"[{chunk_id(hit)}] {hit['text_en']}"
@@ -140,12 +173,14 @@ class Agent:
 
     def run(self, request_id: str, step: dict[str, Any], lang: str = "en") -> AgentOutput:
         text = step[f"text_{lang}"]
-        hits = self.retrieve(text)
+        hits, mandate = self.retrieve(text), self.mandate_chunks()
+        given = mandate + [hit for hit in hits if chunk_id(hit) not in {chunk_id(m) for m in mandate}]
         started = time.perf_counter()
-        response = self.model.complete(request_id, self.messages(step, text, hits, lang))
+        response = self.model.complete(request_id, self.messages(step, text, given, lang))
         model_ms = round((time.perf_counter() - started) * 1000, 3)
         out = parse_output(self.name, response.text)
         out.sources_used = [chunk_id(hit) for hit in hits]  # what was retrieved, never what the model claims
+        out.sources_mandate = [chunk_id(m) for m in mandate]
         out.rejected = [p for p in out.proposals if p.verb not in self.verbs]
         out.proposals = [p for p in out.proposals if p.verb in self.verbs]
         self._append({"action": "propose", "entity_type": "step", "entity_id": request_id, "new_value": out.to_dict(),

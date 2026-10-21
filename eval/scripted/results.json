@@ -542,6 +542,36 @@
       "max": null,
       "min": null
      },
+     "must_cite_given": {
+      "max": 0.0833,
+      "min": 0.0833
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
+     },
      "obligation_proxy": {
       "max": 0.9286,
       "min": 0.9286
@@ -581,6 +611,36 @@
       "max": null,
       "min": null
      },
+     "must_cite_given": {
+      "max": 0.0833,
+      "min": 0.0833
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
+     },
      "obligation_proxy": {
       "max": 0.9286,
       "min": 0.9286
@@ -617,6 +677,36 @@
      "handover_latency_steps": {
       "max": null,
       "min": null
+     },
+     "must_cite_given": {
+      "max": 0.0833,
+      "min": 0.0833
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -656,6 +746,36 @@
      "handover_latency_steps": {
       "max": null,
       "min": null
+     },
+     "must_cite_given": {
+      "max": 0.0833,
+      "min": 0.0833
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -696,6 +816,36 @@
       "max": 0,
       "min": 0
      },
+     "must_cite_given": {
+      "max": 0.2174,
+      "min": 0.2174
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "3": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "4": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "6": {
+       "max": 0.3333,
+       "min": 0.3333
+      }
+     },
      "obligation_proxy": {
       "max": 0.8235,
       "min": 0.8235
@@ -735,6 +885,36 @@
       "max": 0,
       "min": 0
      },
+     "must_cite_given": {
+      "max": 0.2174,
+      "min": 0.2174
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "3": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "4": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "6": {
+       "max": 0.3333,
+       "min": 0.3333
+      }
+     },
      "obligation_proxy": {
       "max": 0.8235,
       "min": 0.8235
@@ -771,6 +951,36 @@
      "handover_latency_steps": {
       "max": 1,
       "min": 1
+     },
+     "must_cite_given": {
+      "max": 0.2174,
+      "min": 0.2174
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "3": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "4": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "6": {
+       "max": 0.3333,
+       "min": 0.3333
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -810,6 +1020,36 @@
      "handover_latency_steps": {
       "max": 1,
       "min": 1
+     },
+     "must_cite_given": {
+      "max": 0.2174,
+      "min": 0.2174
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": null,
+       "min": null
+      },
+      "2": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "3": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "4": {
+       "max": 0.25,
+       "min": 0.25
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      },
+      "6": {
+       "max": 0.3333,
+       "min": 0.3333
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -850,6 +1090,32 @@
       "max": null,
       "min": null
      },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.125,
+       "min": 0.125
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      }
+     },
      "obligation_proxy": {
       "max": 0.8571,
       "min": 0.8571
@@ -889,6 +1155,32 @@
       "max": null,
       "min": null
      },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.125,
+       "min": 0.125
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      }
+     },
      "obligation_proxy": {
       "max": 0.8571,
       "min": 0.8571
@@ -925,6 +1217,32 @@
      "handover_latency_steps": {
       "max": null,
       "min": null
+     },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.125,
+       "min": 0.125
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -964,6 +1282,32 @@
      "handover_latency_steps": {
       "max": null,
       "min": null
+     },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.125,
+       "min": 0.125
+      },
+      "4": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -1004,6 +1348,32 @@
       "max": 0,
       "min": 0
      },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.1429,
+       "min": 0.1429
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
+     },
      "obligation_proxy": {
       "max": 1.0,
       "min": 1.0
@@ -1043,6 +1413,32 @@
       "max": 0,
       "min": 0
      },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.1429,
+       "min": 0.1429
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
+     },
      "obligation_proxy": {
       "max": 1.0,
       "min": 1.0
@@ -1079,6 +1475,32 @@
      "handover_latency_steps": {
       "max": 0,
       "min": 0
+     },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.1429,
+       "min": 0.1429
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -1118,6 +1540,32 @@
      "handover_latency_steps": {
       "max": 0,
       "min": 0
+     },
+     "must_cite_given": {
+      "max": 0.0741,
+      "min": 0.0741
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "2": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "3": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "4": {
+       "max": 0.1429,
+       "min": 0.1429
+      },
+      "5": {
+       "max": 0.1667,
+       "min": 0.1667
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -1158,6 +1606,36 @@
       "max": 0,
       "min": 0
      },
+     "must_cite_given": {
+      "max": 0.3125,
+      "min": 0.3125
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "2": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "3": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "4": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.25,
+       "min": 0.25
+      }
+     },
      "obligation_proxy": {
       "max": 0.7222,
       "min": 0.7222
@@ -1197,6 +1675,36 @@
       "max": 0,
       "min": 0
      },
+     "must_cite_given": {
+      "max": 0.3125,
+      "min": 0.3125
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "2": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "3": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "4": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.25,
+       "min": 0.25
+      }
+     },
      "obligation_proxy": {
       "max": 0.7222,
       "min": 0.7222
@@ -1233,6 +1741,36 @@
      "handover_latency_steps": {
       "max": null,
       "min": null
+     },
+     "must_cite_given": {
+      "max": 0.3125,
+      "min": 0.3125
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "2": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "3": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "4": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.25,
+       "min": 0.25
+      }
      },
      "obligation_proxy": {
       "max": 0.0,
@@ -1272,6 +1810,36 @@
      "handover_latency_steps": {
       "max": null,
       "min": null
+     },
+     "must_cite_given": {
+      "max": 0.3125,
+      "min": 0.3125
+     },
+     "must_cite_given_by_step": {
+      "1": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "2": {
+       "max": 0.5,
+       "min": 0.5
+      },
+      "3": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "4": {
+       "max": 0.3333,
+       "min": 0.3333
+      },
+      "5": {
+       "max": 0.0,
+       "min": 0.0
+      },
+      "6": {
+       "max": 0.25,
+       "min": 0.25
+      }
      },
      "obligation_proxy": {
       "max": 0.0,

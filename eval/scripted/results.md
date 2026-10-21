@@ -6,18 +6,18 @@ All hash chains verify: yes. Every run_start carries the current key hashes: yes
 
 ## Governed
 
-| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed |
-|---|---|---|---|---|---|---|---|---|---|---|
-| S1 | en | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a |
-| S1 | ar | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a |
-| S2 | en | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a |
-| S2 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a |
-| S3 | en | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a |
-| S3 | ar | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a |
-| S4 | en | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a |
-| S4 | ar | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a |
-| S5 | en | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a |
-| S5 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a |
+| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed | Must-cite given |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| S1 | en | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a | 0.08 |
+| S1 | ar | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a | 0.08 |
+| S2 | en | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a | 0.22 |
+| S2 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a | 0.22 |
+| S3 | en | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a | 0.07 |
+| S3 | ar | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a | 0.07 |
+| S4 | en | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a | 0.07 |
+| S4 | ar | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a | 0.07 |
+| S5 | en | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a | 0.31 |
+| S5 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a | 0.31 |
 
 Arabic versus English agreement on decisions and clause ids: S1 1.00, S2 1.00, S3 1.00, S4 1.00, S5 1.00
 
@@ -25,18 +25,18 @@ Latency: gate median 0.463 ms, max 1.12 ms (198 decisions); model median 0.238 m
 
 ## Ungoverned
 
-| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed |
-|---|---|---|---|---|---|---|---|---|---|---|
-| S1 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 |
-| S1 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 |
-| S2 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 |
-| S2 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 |
-| S3 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 |
-| S3 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 |
-| S4 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 |
-| S4 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 |
-| S5 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 |
-| S5 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 |
+| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed | Must-cite given |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| S1 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 | 0.08 |
+| S1 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 | 0.08 |
+| S2 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 | 0.22 |
+| S2 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 | 0.22 |
+| S3 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 | 0.07 |
+| S3 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 | 0.07 |
+| S4 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 | 0.07 |
+| S4 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 | 0.07 |
+| S5 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 | 0.31 |
+| S5 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 | 0.31 |
 
 Arabic versus English agreement on decisions and clause ids: S1 1.00, S2 1.00, S3 1.00, S4 1.00, S5 1.00
 
@@ -131,5 +131,8 @@ for a human), an allowed proposal addressed to a human or asking for one, or a c
 - ungoverned baseline: steps where the ungoverned run allowed what the key says the gate holds or blocks.
 - Arabic versus English agreement: share of steps whose decision and clause ids are the same in the two languages.
 - gate_ms and model_ms: median and max (addendum 18).
+- must-cite given (diagnostic, shown only, never compared): share of the key's must_cite rules whose chunk was in
+the prompt of the step's agent (mandate clauses or retrieved), over the steps that sent a prompt. A miss with the
+chunk given is the model's; a miss without it is retrieval's.
 - tokens and cost, per run: model calls, prompt and completion tokens from each reply's usage, and USD priced from
 onyx/data/model_prices.json; "price unknown" where the model has no price row or a reply carries no usage.
