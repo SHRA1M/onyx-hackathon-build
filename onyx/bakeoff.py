@@ -110,6 +110,8 @@ def _language(paths: list[tuple[str, Path]], keys: dict, scenarios: dict, kb: ga
         calls += m["usage"]["calls"]
         proposals += len(onyx_eval._gates(events, pending=False))
     row.update({k: _mean([m[k] for m in metrics]) for k in MEANS})
+    # the bake-off was scored on every proposal; hq's later citation rule does not rescore it
+    row["citation_validity"] = _mean([m["citation_validity_all"] for m in metrics])
     row.update({"parse_failures": parse, "filter_stops": stops, "calls": calls, "quote_failures": quotes, "proposals": proposals,
                 "model_ms_median": round(median(model_ms), 1) if model_ms else None,
                 "model_ms_max": round(max(model_ms), 1) if model_ms else None,

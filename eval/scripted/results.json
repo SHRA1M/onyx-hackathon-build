@@ -530,6 +530,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 0.3333,
       "min": 0.3333
@@ -603,6 +611,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 0.3333,
       "min": 0.3333
@@ -673,6 +689,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 0.3333,
@@ -746,6 +770,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 0.3333,
@@ -820,6 +852,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -893,6 +933,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -963,6 +1011,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,
@@ -1036,6 +1092,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,
@@ -1110,6 +1174,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -1179,6 +1251,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -1245,6 +1325,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,
@@ -1314,6 +1402,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,
@@ -1384,6 +1480,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -1453,6 +1557,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -1519,6 +1631,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,
@@ -1588,6 +1708,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,
@@ -1658,6 +1786,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -1731,6 +1867,14 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
+     },
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
@@ -1801,6 +1945,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,
@@ -1874,6 +2026,14 @@
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
+     },
+     "citation_validity_all": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_flags_without_clause": {
+      "max": 0,
+      "min": 0
      },
      "gap_recall": {
       "max": 1.0,

@@ -4,7 +4,10 @@ the same bytes (no clock, sorted keys), so `git diff` stays empty.
 Metrics, per run, then min and max over the three runs of each scenario, mode and language:
 - gate rejection rate: share of gate verdicts that are not allow.
 - citation validity: share of proposals (pending proposals excluded: they cite nothing) whose every cited chunk is
-  VERIFIED and whose quote is 20+ characters verbatim in a cited chunk.
+  VERIFIED and whose quote is 20+ characters verbatim in a cited chunk. A flag_gap that cites no clause is left out
+  (rule set by hq on 2026-10-21 after S3 of the scored run); any other proposal citing nothing counts as invalid.
+  The bake-off tables keep the earlier definition, every proposal counted (citation_validity_all).
+- gap flags without a clause (shown only, never compared): flag_gap proposals that cite no clause.
 - action recall: share of key steps with a proposal by the key's agent whose verb is the key's verb and whose
   addressee, the subscriber side or a human, matches: where the key answers a step sent by a human with a reply
   (draft_reply), the reply is addressed to that human (args.recipient 'human' or a 'Human agent' target); every
@@ -120,6 +123,8 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
     events = _events(path)
     sid, governed = key["scenario"], events[0]["new_value"].get("mode") != "ungoverned"
     gates, proposals = _gates(events), _gates(events, pending=False)
+    bare_gaps = [e for e in proposals if e["old_value"]["verb"] == "flag_gap" and not e["old_value"].get("clause_ids")]
+    citing = [e for e in proposals if e not in bare_gaps]
     by_step: dict[int, list[dict[str, Any]]] = {}
     for e in gates:
         by_step.setdefault(_step(e["entity_id"]), []).append(e)
@@ -172,7 +177,9 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
         "keys_match": events[0]["new_value"]["answer_keys"] == audit.key_hashes(),
         "model": events[0]["new_value"].get("model", ""),
         "gate_rejection_rate": _ratio(sum(e["verdict"] != gate.ALLOW for e in gates), len(gates)),
-        "citation_validity": _ratio(sum(_citation_valid(e["old_value"], kb) for e in proposals), len(proposals)),
+        "citation_validity": _ratio(sum(_citation_valid(e["old_value"], kb) for e in citing), len(citing)),
+        "citation_validity_all": _ratio(sum(_citation_valid(e["old_value"], kb) for e in proposals), len(proposals)),
+        "gap_flags_without_clause": len(bare_gaps),
         "action_recall": _ratio(sum(hits.values()), len(hits)),
         "obligation_proxy": _ratio(met, total),
         "gap_recall": _ratio(len(set(key["gaps_expected"]) & flagged), len(key["gaps_expected"])),
@@ -227,6 +234,8 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
                 row[lang] = {"runs": len(rows), **{m: _span([r[m] for r in rows]) for m in METRICS},
                              "must_cite_given": _span([r["must_cite_given"] for r in rows]),
                              "gaps_from_notes": _span([r["gaps_from_notes"] for r in rows]),
+                             "citation_validity_all": _span([r["citation_validity_all"] for r in rows]),
+                             "gap_flags_without_clause": _span([r["gap_flags_without_clause"] for r in rows]),
                              "must_cite_given_by_step": {n: _span([r["must_cite_given_by_step"][n] for r in rows])
                                                          for n in rows[0]["must_cite_given_by_step"]} if rows else {}}
             agreement = []
@@ -253,6 +262,27 @@ def _cell(span: dict[str, Any]) -> str:
     return fmt(lo) if lo == hi else f"{fmt(lo)} to {fmt(hi)}"
 
 
+BOTH_WAYS = ("S1", "S2", "S3")  # recorded before hq set the citation rule
+
+
+def _both_ways(results: dict[str, Any]) -> list[str]:
+    """Live results only: citation validity on hq's rule and on the earlier one, for the scenarios recorded before
+    the rule was set (order 2026-10-21-task-8-part-c3-citation-rule)."""
+    if results["scripted"]:
+        return []
+    lines = ["## Citation validity both ways, S1 to S3", "",
+             "Rule set by hq on 2026-10-21 after S3, before the remaining runs.", "",
+             "| Scenario | Mode | Lang | Citation validity (hq rule: flag_gap citing nothing left out) | "
+             "Citation validity (every proposal) |", "|---|---|---|---|---|"]
+    for sid in BOTH_WAYS:
+        for mode in MODES:
+            for lang in LANGS:
+                row = results["scenarios"][sid][mode][lang]
+                lines.append(f"| {sid} | {mode} | {lang} | {_cell(row['citation_validity'])} | "
+                             f"{_cell(row['citation_validity_all'])} |")
+    return lines + [""]
+
+
 def _markdown(results: dict[str, Any]) -> str:
     label = ("SCRIPTED runs (scripted-mock, no model call): these test the coordinator and the gate, never a model"
              if results["scripted"] else f"Live runs, model {', '.join(results['models'])}")
@@ -264,20 +294,22 @@ def _markdown(results: dict[str, Any]) -> str:
              f"Every run_start carries the current key hashes: {'yes' if results['all_keys_match'] else 'NO'}.", ""]
     heads = ["Scenario", "Lang", "Runs", "Gate rejection", "Citation validity", "Action recall", "Obligation proxy",
              "Gap recall", "Abstention", "Hand-over latency (steps)", "Ungoverned claims allowed", "Must-cite given",
-             "Gaps from notes"]
+             "Gaps from notes", "Gap flags without a clause"]
     for mode in MODES:
         lines += [f"## {mode.capitalize()}", "", "| " + " | ".join(heads) + " |", "|" + "---|" * len(heads)]
         for sid, modes in results["scenarios"].items():
             for lang in LANGS:
                 row = modes[mode][lang]
                 lines.append("| " + " | ".join([sid, lang, str(row["runs"])] + [_cell(row[m]) for m in METRICS]
-                                               + [_cell(row["must_cite_given"]), _cell(row["gaps_from_notes"])]) + " |")
+                                               + [_cell(row["must_cite_given"]), _cell(row["gaps_from_notes"]),
+                                                  _cell(row["gap_flags_without_clause"])]) + " |")
         lines += ["", "Arabic versus English agreement on decisions and clause ids: " + ", ".join(
             f"{sid} {_cell(modes[mode]['ar_en_clause_agreement'])}" for sid, modes in results["scenarios"].items()), ""]
         lat = results["latency"][mode]
         lines += [f"Latency: gate median {lat['gate_ms']['median_ms']} ms, max {lat['gate_ms']['max_ms']} ms "
                   f"({lat['gate_ms']['n']} decisions); model median {lat['model_ms']['median_ms']} ms, max "
                   f"{lat['model_ms']['max_ms']} ms ({lat['model_ms']['n']} calls).", ""]
+    lines += _both_ways(results)
     prices = cost.load_prices()
     lines += ["## Tokens and cost", "",
               f"Priced from {prices['source']} (read {prices['read']}), base input and output prices; a model with no "

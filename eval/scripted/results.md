@@ -6,18 +6,18 @@ All hash chains verify: yes. Every run_start carries the current key hashes: yes
 
 ## Governed
 
-| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed | Must-cite given | Gaps from notes |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| S1 | en | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a | 0.08 | 0 |
-| S1 | ar | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a | 0.08 | 0 |
-| S2 | en | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a | 0.22 | 0 |
-| S2 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a | 0.22 | 0 |
-| S3 | en | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a | 0.07 | 0 |
-| S3 | ar | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a | 0.07 | 0 |
-| S4 | en | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a | 0.07 | 0 |
-| S4 | ar | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a | 0.07 | 0 |
-| S5 | en | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a | 0.31 | 0 |
-| S5 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a | 0.31 | 0 |
+| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed | Must-cite given | Gaps from notes | Gap flags without a clause |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S1 | en | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a | 0.08 | 0 | 0 |
+| S1 | ar | 3 | 0.43 | 1.00 | 1.00 | 0.93 | 0.33 | 1 | n/a | n/a | 0.08 | 0 | 0 |
+| S2 | en | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a | 0.22 | 0 | 0 |
+| S2 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.82 | 1.00 | 1 | 0 | n/a | 0.22 | 0 | 0 |
+| S3 | en | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a | 0.07 | 0 | 0 |
+| S3 | ar | 3 | 0.50 | 1.00 | 1.00 | 0.86 | 1.00 | 1 | n/a | n/a | 0.07 | 0 | 0 |
+| S4 | en | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a | 0.07 | 0 | 0 |
+| S4 | ar | 3 | 0.33 | 1.00 | 1.00 | 1.00 | 1.00 | 1 | 0 | n/a | 0.07 | 0 | 0 |
+| S5 | en | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a | 0.31 | 0 | 0 |
+| S5 | ar | 3 | 0.29 | 1.00 | 1.00 | 0.72 | 1.00 | 1 | 0 | n/a | 0.31 | 0 | 0 |
 
 Arabic versus English agreement on decisions and clause ids: S1 1.00, S2 1.00, S3 1.00, S4 1.00, S5 1.00
 
@@ -25,18 +25,18 @@ Latency: gate median 0.463 ms, max 1.12 ms (198 decisions); model median 0.238 m
 
 ## Ungoverned
 
-| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed | Must-cite given | Gaps from notes |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| S1 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 | 0.08 | 0 |
-| S1 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 | 0.08 | 0 |
-| S2 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 | 0.22 | 0 |
-| S2 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 | 0.22 | 0 |
-| S3 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 | 0.07 | 0 |
-| S3 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 | 0.07 | 0 |
-| S4 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 | 0.07 | 0 |
-| S4 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 | 0.07 | 0 |
-| S5 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 | 0.31 | 0 |
-| S5 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 | 0.31 | 0 |
+| Scenario | Lang | Runs | Gate rejection | Citation validity | Action recall | Obligation proxy | Gap recall | Abstention | Hand-over latency (steps) | Ungoverned claims allowed | Must-cite given | Gaps from notes | Gap flags without a clause |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S1 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 | 0.08 | 0 | 0 |
+| S1 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 0.33 | 1 | n/a | 3 | 0.08 | 0 | 0 |
+| S2 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 | 0.22 | 0 | 0 |
+| S2 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 1 | 2 | 0.22 | 0 | 0 |
+| S3 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 | 0.07 | 0 | 0 |
+| S3 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 3 | 0.07 | 0 | 0 |
+| S4 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 | 0.07 | 0 | 0 |
+| S4 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | 0 | 2 | 0.07 | 0 | 0 |
+| S5 | en | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 | 0.31 | 0 | 0 |
+| S5 | ar | 3 | 0.00 | 1.00 | 1.00 | 0.00 | 1.00 | 1 | n/a | 2 | 0.31 | 0 | 0 |
 
 Arabic versus English agreement on decisions and clause ids: S1 1.00, S2 1.00, S3 1.00, S4 1.00, S5 1.00
 
@@ -115,7 +115,10 @@ Total: price unknown over 312 calls.
 
 - gate rejection rate: share of gate verdicts that are not allow.
 - citation validity: share of proposals (pending proposals excluded: they cite nothing) whose every cited chunk is
-VERIFIED and whose quote is 20+ characters verbatim in a cited chunk.
+VERIFIED and whose quote is 20+ characters verbatim in a cited chunk. A flag_gap that cites no clause is left out
+(rule set by hq on 2026-10-21 after S3 of the scored run); any other proposal citing nothing counts as invalid.
+The bake-off tables keep the earlier definition, every proposal counted (citation_validity_all).
+- gap flags without a clause (shown only, never compared): flag_gap proposals that cite no clause.
 - action recall: share of key steps with a proposal by the key's agent whose verb is the key's verb and whose
 addressee, the subscriber side or a human, matches: where the key answers a step sent by a human with a reply
 (draft_reply), the reply is addressed to that human (args.recipient 'human' or a 'Human agent' target); every
