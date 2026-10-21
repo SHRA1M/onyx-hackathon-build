@@ -34,6 +34,8 @@ ROOT = Path(__file__).resolve().parents[1]
 BAKEOFF_DIR = ROOT / "runs" / "bakeoff"
 # (prompt, runs root, commit of the prompt the runs used): v1 Part B; v2 Part C2 (order 2026-10-21-task-8-part-c)
 VERSIONS = (("v1", BAKEOFF_DIR, "d85871d"), ("v2", ROOT / "runs" / "bakeoff-v2", "a8f4acb"))
+# a line under a version's table, written by hq's order (2026-10-21-task-8-part-c2b item 3)
+NOTES = {"v2": "Arabic gap ids present in notes in 10 of 10 runs; scored 0 under v2 parsing; see C2b."}
 MODELS = ("claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5")
 OPUS, SONNET, _ = MODELS
 UNPARSEABLE = "unparseable model response"
@@ -221,6 +223,8 @@ def _section(table: dict[str, Any]) -> list[str]:
     for label, key, scope, direction in ROWS:
         compared = {HIGHER: "higher is better", LOWER: "lower is better", SHOWN: "shown only"}[direction]
         lines.append(f"| {label} | " + " | ".join(_cell(m, key, scope) for m in models) + f" | {compared} |")
+    if table["prompt"] in NOTES:
+        lines += ["", NOTES[table["prompt"]]]
     decision = table["decision"]
     if decision.get("decided_by") == "hq":
         lines += ["", f"### Decision ({table['prompt']})", "", f"{decision['reason']}.", ""]

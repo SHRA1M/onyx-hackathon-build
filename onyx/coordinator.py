@@ -81,13 +81,15 @@ def _rules_by_chunk() -> dict[str, list[str]]:
 class Coordinator:
     def __init__(self, scenario: dict[str, Any], model: Model, retriever: Retriever, log_path: str | Path,
                  gaps_dir: str | Path = GAPS_DIR, lang: str = "en", governed: bool = True,
-                 knowledge: gate.Knowledge | None = None, mandate_clauses: bool = True) -> None:
+                 knowledge: gate.Knowledge | None = None, mandate_clauses: bool = True,
+                 notes_gaps: bool = True) -> None:
         if lang not in {"en", "ar"}:
             raise ValueError(f"language {lang!r}: en or ar")
         self.scenario, self.lang, self.governed = scenario, lang, governed
         self.sid = scenario["id"]
         self.log = audit.AuditLog(log_path)
         self.gaps_dir = Path(gaps_dir)
+        self.notes_gaps = notes_gaps  # False only to replay a log recorded before prompt v3
         self.kb = knowledge or gate.Knowledge.load()
         self.decide = gate.decide if governed else gate.allow_all
         self.decide_pending = gate.decide_pending if governed else gate.allow_all
@@ -227,9 +229,15 @@ class Coordinator:
         result.searched = self._searched(out.sources_used if out else [])
         result.gaps = [str(p.args.get("gap") or p.target) for p in (out.proposals if out else [])
                        if p.verb == "flag_gap"]
+        new_value: dict[str, Any] = {"answer": INSUFFICIENT_EVIDENCE, "searched": result.searched, "gaps": result.gaps}
+        if self.notes_gaps:  # prompt v3: a register id named only in notes is recorded, and where it came from
+            source = "proposal"
+            if not result.gaps and out and out.gaps_in_notes:
+                result.gaps, source = list(out.gaps_in_notes), "notes"
+            new_value = {**new_value, "gaps": result.gaps, "gaps_source": source}
         event_hash = self.log.append({
             "actor": "adviser", "action": "abstain", "entity_type": "step", "entity_id": release.inject,
-            "new_value": {"answer": INSUFFICIENT_EVIDENCE, "searched": result.searched, "gaps": result.gaps},
+            "new_value": new_value,
             "verdict": gate.INSUFFICIENT, "clause_ids": result.searched_ids, "source": "onyx/coordinator.py",
             "reason": "no VERIFIED clause retrieved answers the step; clauses searched listed with what each says"})
         if release.kind == "inject" or not result.gaps:

@@ -110,7 +110,7 @@ def test_adviser_prompt_lists_the_gap_register():
     assert [g["id"] for g in gaps["gaps"]][:7] == [f"gap-{n}" for n in range(1, 8)]
     for n, gap in enumerate(gaps["gaps"], 1):
         assert f"{n}. {gap['id']}: {gap['line']}" in system
-    assert "When you flag a gap or abstain because a rule is missing, name the register id in `args.gap`." in system
+    assert "propose a `flag_gap` action with the register id in `args.gap`, in every language" in system
 
 
 def test_gap_register_holds_every_id_the_keys_expect():

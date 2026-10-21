@@ -121,3 +121,12 @@ def test_v2_table_sits_beside_v1_with_the_prompt_commit_on_each(tmp_path):
 
 def test_bakeoff_versions_name_the_committed_prompts():
     assert [(label, commit) for label, _, commit in bakeoff.VERSIONS] == [("v1", "d85871d"), ("v2", "a8f4acb")]
+
+
+def test_v2_table_carries_the_c2b_line_on_arabic_gap_ids_in_notes():
+    """Order 2026-10-21-task-8-part-c2b item 3: the v2 runs are not rescored; one line under the v2 table says why
+    their Arabic gap recall reads 0."""
+    md = (bakeoff.ROOT / "eval" / "bakeoff.md").read_text(encoding="utf-8")
+    line = "Arabic gap ids present in notes in 10 of 10 runs; scored 0 under v2 parsing; see C2b."
+    assert md.count(line) == 1
+    assert md.index("## Prompt v2") < md.index(line) < md.index("### Decision (v2)")

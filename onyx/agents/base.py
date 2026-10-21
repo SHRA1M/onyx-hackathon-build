@@ -10,11 +10,16 @@ decide; it abstains only when the step asks for a rule, figure or deadline no cl
 mandate clauses of its verbs (mandates.json) first, then the retrieved chunks, deduplicated; both sets are logged
 apart (sources_mandate, sources_used) and both are what the gate counts as given. On the wire reasoning_chain is
 named `notes` (parse_output accepts both); the internal and logged name stays reasoning_chain.
+
+Prompt v3 (order 2026-10-21-task-8-part-c2b): when a reply abstains, parse_output also collects the gap register
+ids (onyx/data/gaps.json) its notes name, exact id strings only, in gaps_in_notes. The coordinator records them on
+the abstention when no flag_gap proposal names a gap.
 """
 
 from __future__ import annotations
 
 import json
+import re
 import time
 from dataclasses import asdict, dataclass, field
 from typing import Any, Protocol
@@ -43,6 +48,7 @@ class AgentOutput:
     sources_used: list[str] = field(default_factory=list)  # retrieved for this step
     sources_mandate: list[str] = field(default_factory=list)  # the mandate clauses of the agent's verbs
     reasoning_chain: list[str] = field(default_factory=list)
+    gaps_in_notes: list[str] = field(default_factory=list)  # register ids named in an abstaining reply's notes
     rejected: list[Proposal] = field(default_factory=list)  # verbs outside the mandate, never shown to the gate
 
     def to_dict(self) -> dict[str, Any]:
@@ -60,6 +66,13 @@ def _strip_fence(text: str) -> str:
     return text
 
 
+def _gaps_in(notes: list[str]) -> list[str]:
+    """Register ids named in the notes, in register order: the exact id, not inside a longer word or id."""
+    text = "\n".join(notes)
+    return [g["id"] for g in data.load_gaps()["gaps"]
+            if re.search(rf"(?<![\w-]){re.escape(g['id'])}(?![\w-])", text)]
+
+
 def parse_output(agent_name: str, text: str) -> AgentOutput:
     """The model's reply as an AgentOutput. Anything not in the schema proposes nothing (deny by default)."""
     try:
@@ -72,7 +85,9 @@ def parse_output(agent_name: str, text: str) -> AgentOutput:
             reasoning[0] = INSUFFICIENT_EVIDENCE
     except (ValueError, TypeError, KeyError, AttributeError):
         return AgentOutput(agent_name, reasoning_chain=["unparseable model response: no JSON in the agreed schema"])
-    return AgentOutput(agent_name, proposals, reasoning_chain=reasoning)
+    abstains = not proposals or reasoning[:1] == [INSUFFICIENT_EVIDENCE]
+    return AgentOutput(agent_name, proposals, reasoning_chain=reasoning,
+                       gaps_in_notes=_gaps_in(reasoning) if abstains else [])
 
 
 class Retriever(Protocol):

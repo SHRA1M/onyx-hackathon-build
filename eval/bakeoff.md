@@ -60,6 +60,8 @@ All hash chains verify and every run_start carries the current key hashes: yes.
 | Completion tokens | en 22168 / ar 27539 | en 31119 / ar 34866 | shown only |
 | Cost (USD) | 0.8552 | 0.0509 | lower is better |
 
+Arabic gap ids present in notes in 10 of 10 runs; scored 0 under v2 parsing; see C2b.
+
 ### Decision (v2)
 
 claude-sonnet-5-5 is the main model (hq, order 2026-10-21-task-8-part-c, decision 1); the Part B rule is not re-applied.

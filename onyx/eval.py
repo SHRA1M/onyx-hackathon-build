@@ -13,7 +13,10 @@ Metrics, per run, then min and max over the three runs of each scenario, mode an
 - obligation proxy (addendum item 27 wording): share of key obligations on steps that reached the key's verdict
   (gate_outcome on the abstention step) with every must_cite clause on the step's record (verdict, proposal or
   clauses searched).
-- gap recall: share of the key's gaps_expected flagged in the run (flag_gap proposals and the abstention's gaps).
+- gap recall: share of the key's gaps_expected flagged in the run (flag_gap proposals and the abstention's gaps,
+  including register ids the abstention took from the reply's notes, prompt v3).
+- gaps from notes (shown only, never compared): register ids an abstention recorded from the reply's notes rather
+  than from a flag_gap proposal (gaps_source "notes"); logs recorded before prompt v3 have none.
 - abstention: the key's abstain_step answered INSUFFICIENT_EVIDENCE by the adviser (addendum 29).
 - hand-over latency in steps: from the key's handover_step to the first step that passes to a human: a hold (held
   for a human), an allowed proposal addressed to a human or asking for one, or a complaint_gate hand-over duty.
@@ -161,6 +164,8 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
     hits = action_hits(events, key, scenario)
     prompted = [c for c in _must_cite_counts(events, key).values() if c is not None]
     return {
+        "gaps_from_notes": sum(len(e["new_value"]["gaps"]) for e in abstains.values()
+                               if e["new_value"].get("gaps_source") == "notes"),
         "must_cite_given": _ratio(sum(h for h, _ in prompted), sum(t for _, t in prompted)),
         "must_cite_given_by_step": must_cite_given(events, key),
         "chain_ok": audit.verify(path),
@@ -221,6 +226,7 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
                     timings[mode]["model_ms"] += r["model_ms"]
                 row[lang] = {"runs": len(rows), **{m: _span([r[m] for r in rows]) for m in METRICS},
                              "must_cite_given": _span([r["must_cite_given"] for r in rows]),
+                             "gaps_from_notes": _span([r["gaps_from_notes"] for r in rows]),
                              "must_cite_given_by_step": {n: _span([r["must_cite_given_by_step"][n] for r in rows])
                                                          for n in rows[0]["must_cite_given_by_step"]} if rows else {}}
             agreement = []
@@ -257,14 +263,15 @@ def _markdown(results: dict[str, Any]) -> str:
              f"All hash chains verify: {'yes' if results['all_chains_ok'] else 'NO'}. "
              f"Every run_start carries the current key hashes: {'yes' if results['all_keys_match'] else 'NO'}.", ""]
     heads = ["Scenario", "Lang", "Runs", "Gate rejection", "Citation validity", "Action recall", "Obligation proxy",
-             "Gap recall", "Abstention", "Hand-over latency (steps)", "Ungoverned claims allowed", "Must-cite given"]
+             "Gap recall", "Abstention", "Hand-over latency (steps)", "Ungoverned claims allowed", "Must-cite given",
+             "Gaps from notes"]
     for mode in MODES:
         lines += [f"## {mode.capitalize()}", "", "| " + " | ".join(heads) + " |", "|" + "---|" * len(heads)]
         for sid, modes in results["scenarios"].items():
             for lang in LANGS:
                 row = modes[mode][lang]
                 lines.append("| " + " | ".join([sid, lang, str(row["runs"])] + [_cell(row[m]) for m in METRICS]
-                                               + [_cell(row["must_cite_given"])]) + " |")
+                                               + [_cell(row["must_cite_given"]), _cell(row["gaps_from_notes"])]) + " |")
         lines += ["", "Arabic versus English agreement on decisions and clause ids: " + ", ".join(
             f"{sid} {_cell(modes[mode]['ar_en_clause_agreement'])}" for sid, modes in results["scenarios"].items()), ""]
         lat = results["latency"][mode]

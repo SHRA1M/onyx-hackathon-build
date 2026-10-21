@@ -22,10 +22,12 @@ class Adviser(Agent):
 
     def extra_lines(self) -> list[str]:
         """The gap register (onyx/data/gaps.json), numbered, so a flagged gap carries its register id (order
-        2026-10-21-task-8-part-c item 5)."""
+        2026-10-21-task-8-part-c item 5). Prompt v3 (order 2026-10-21-task-8-part-c2b item 1): flag_gap in every
+        language, also on an abstention."""
         gaps = data.load_gaps()["gaps"]
         return ["Gap register:", *[f"{n}. {g['id']}: {g['line']}" for n, g in enumerate(gaps, 1)],
-                "When you flag a gap or abstain because a rule is missing, name the register id in `args.gap`."]
+                "When a rule is missing, propose a `flag_gap` action with the register id in `args.gap`, in every "
+                "language, also when you abstain. A gap id written only in `notes` is not recorded."]
 
     def classify_channel(self, request_id: str, channel: str) -> AgentOutput:
         if channel not in CHANNELS:

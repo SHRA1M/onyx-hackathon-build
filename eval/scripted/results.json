@@ -534,6 +534,10 @@
       "max": 0.3333,
       "min": 0.3333
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.4286,
       "min": 0.4286
@@ -603,6 +607,10 @@
       "max": 0.3333,
       "min": 0.3333
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.4286,
       "min": 0.4286
@@ -669,6 +677,10 @@
      "gap_recall": {
       "max": 0.3333,
       "min": 0.3333
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -738,6 +750,10 @@
      "gap_recall": {
       "max": 0.3333,
       "min": 0.3333
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -808,6 +824,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.2857,
       "min": 0.2857
@@ -877,6 +897,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.2857,
       "min": 0.2857
@@ -943,6 +967,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -1012,6 +1040,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -1082,6 +1114,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.5,
       "min": 0.5
@@ -1147,6 +1183,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.5,
       "min": 0.5
@@ -1209,6 +1249,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -1274,6 +1318,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -1340,6 +1388,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.3333,
       "min": 0.3333
@@ -1405,6 +1457,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.3333,
       "min": 0.3333
@@ -1467,6 +1523,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -1532,6 +1592,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -1598,6 +1662,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.2857,
       "min": 0.2857
@@ -1667,6 +1735,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
+     },
      "gate_rejection_rate": {
       "max": 0.2857,
       "min": 0.2857
@@ -1733,6 +1805,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
@@ -1802,6 +1878,10 @@
      "gap_recall": {
       "max": 1.0,
       "min": 1.0
+     },
+     "gaps_from_notes": {
+      "max": 0,
+      "min": 0
      },
      "gate_rejection_rate": {
       "max": 0.0,
