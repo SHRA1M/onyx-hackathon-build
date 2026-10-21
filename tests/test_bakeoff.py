@@ -54,7 +54,7 @@ def test_table_reads_each_model_folder(tmp_path):
 def test_markdown_has_one_row_per_metric_and_the_decision(tmp_path):
     for model in (OPUS, SONNET, HAIKU):
         _copy_runs(tmp_path / model)
-    bakeoff.write(bakeoff.build(tmp_path), tmp_path / "out")
+    bakeoff.write(bakeoff.build_all((("v1", tmp_path, "d85871d"),)), tmp_path / "out")
     md = (tmp_path / "out" / "bakeoff.md").read_text(encoding="utf-8")
     for label in ("Obligation proxy", "JSON parse failures", "Quote failures", "Arabic versus English agreement",
                   "model_ms median", "Cost (USD)", "Decision"):
@@ -97,3 +97,27 @@ def test_filter_stops_count_replies_the_endpoint_stopped():
         return {"action": "propose", "model_response": {"choices": [{"finish_reason": reason, "message": {
             "content": ""}}]}}
     assert bakeoff.filter_stops([propose("content_filter"), propose("stop"), {"action": "gate"}]) == 1
+
+
+def test_v2_table_sits_beside_v1_with_the_prompt_commit_on_each(tmp_path):
+    """Order 2026-10-21-task-8-part-c item 10: eval/bakeoff.md carries the v1 and v2 tables, each with the commit of
+    the prompt it ran on; the v1 decision stays; v2 is shown under hq's decision, not re-decided."""
+    for model in (OPUS, SONNET, HAIKU):
+        _copy_runs(tmp_path / "v1" / model)
+    for model in (SONNET, HAIKU):
+        _copy_runs(tmp_path / "v2" / model)
+    versions = (("v1", tmp_path / "v1", "d85871d"), ("v2", tmp_path / "v2", "a8f4acb"))
+    tables = bakeoff.build_all(versions)
+    assert [t["prompt"] for t in tables] == ["v1", "v2"]
+    assert [t["prompt_commit"] for t in tables] == ["d85871d", "a8f4acb"]
+    assert [m["model"] for m in tables[1]["models"]] == [SONNET, HAIKU]
+    bakeoff.write(tables, tmp_path / "out")
+    md = (tmp_path / "out" / "bakeoff.md").read_text(encoding="utf-8")
+    assert "## Prompt v1, commit d85871d" in md and "## Prompt v2, commit a8f4acb" in md
+    assert md.index("## Prompt v1") < md.index("## Prompt v2")
+    assert md.count("| Row |") == 2
+    assert "claude-sonnet-5-5 is the main model (hq, order 2026-10-21-task-8-part-c, decision 1)" in md
+
+
+def test_bakeoff_versions_name_the_committed_prompts():
+    assert [(label, commit) for label, _, commit in bakeoff.VERSIONS] == [("v1", "d85871d"), ("v2", "a8f4acb")]
