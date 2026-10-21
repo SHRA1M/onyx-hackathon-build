@@ -19,7 +19,7 @@ def test_manifest_validates():
         path = kb.source_path(row)
         if path is None:
             # Addendum item 15: a blocked host leaves only the committed cited clauses; say so.
-            warnings.warn(f"{row['document_id']}: source not fetched; read from the committed extract")
+            warnings.warn(f"{row['document_id']}: source not fetched; runs on the committed cited clauses")
             continue
         assert kb.sha256_file(path) == row["sha256"], f"{row['document_id']}: sha256 differs from the file on disk"
 

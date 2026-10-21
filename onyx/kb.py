@@ -143,7 +143,7 @@ def verify(print_counts: bool = False) -> bool:
     for row in verified_rows(rows):
         path = source_path(row)
         if path is None:
-            lines.append(f"  not fetched  {row['document_id']} (committed extract only)")
+            lines.append(f"  not fetched  {row['document_id']} (runs on the committed cited clauses)")
         elif sha256_file(path) != row["sha256"]:
             ok = False
             lines.append(f"  MISMATCH     {row['document_id']}")
