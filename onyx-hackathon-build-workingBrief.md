@@ -1,6 +1,6 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-21 (fourth wrap, Opus).
+Updated 2026-10-21 (fifth wrap, Opus).
 
 ## Objective
 
@@ -10,7 +10,7 @@ Task 5: model adapter and agents (`onyx/model.py` with `RecordedModel` and `Mock
 
 1. Opus: Task 5 per the order. `RecordedModel` replays through `audit.iter_model_responses`.
 2. Iyas: read the Arabic step text of S1 to S5 on a page (scenarios are not hashed; wording fixes allowed).
-3. hq: answer the report-back of 2026-10-21 (licence-9-3 quote, four other quotes, keys' 'frozen' line, 'hq plan, S2'). Apply its answers as a new hq instruction.
+3. hq: answer the report-backs of 2026-10-21 (keys review: licence-9-3 quote, four other quotes, keys' 'frozen' line, 'hq plan, S2'; blind keys review: S1 step 6, 34(3) in S4, S3 step 3 wording, two null gate_outcome fields, receive_objection, S2 verbs). Apply its answers as a new hq instruction.
 4. Then Tasks 6 and 7 (Task 6 carries addendum 17's two override tests).
 
 ## Open questions

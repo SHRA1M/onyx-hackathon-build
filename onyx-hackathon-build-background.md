@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-21 (fourth wrap, Opus: keys after hq review, licence splitter, Task 4, quote audit).
+Updated 2026-10-21 (fifth wrap, Opus: blind review of the answer keys, report only).
 
 ## What this is
 
@@ -59,6 +59,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Open
 
 - For hq (report-back 2026-10-21-keys-review-splitter-task4): the licence-9-3 quote; four more quotes not verbatim in the PDF text (cpr-4-7-3, cpr-24-7, cpr-3-9-recordings, cpr-3-9-notices); the keys' 'Never edited after HASHES.txt is committed' line, now untrue; the keys' 'hq plan, S2' reference, which no plan file holds.
+- For hq (report-back 2026-10-21-blind-keys-review): S1 step 6 decidable from 4.4 (hold, not insufficient_evidence); Cabinet 66/2023 34(3) cited in S4 where 34(1) fits; S3 step 3 wording ignores PDPL 22(1) and 22(2) in chunks-full; gate_outcome null on S1 step 6 and S2 step 5; receive_objection lacks PDPL 17; S2 steps 3 and 4 share verb draft_reply. Keys unchanged until hq answers.
 - Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
 - GitHub may keep the old commits reachable by their hash until its own cleanup; private repo. A full purge is a GitHub Support request.
