@@ -791,14 +791,14 @@
    "value": "",
    "unit": "",
    "quote": "The Licensee shall maintain adequate trained personnel to receive and respond promptly to complaints and disputes from Customers.",
-   "quote_ar": "",
-   "language_note": "Arabic is the binding version (licence 16.7); the Arabic is not chunked in the first pass. Arabic: موظفين مدربين.",
+   "quote_ar": "توفير ما يلزم من موظفين مدربين",
+   "language_note": "Arabic is the binding version (licence 16.7). The Arabic quote is the hq checked fragment (kb/extracts/licence-2-2026-ar.txt), PDF page 22; the rest of the Arabic is not chunked.",
    "binding_status": "binding",
    "jurisdiction": "UAE",
    "transcription": {
-    "from": "PDF text layer, lam-alef ligature restored by hand (hq telecom-law-and-licences-2026-10-17.md)",
-    "field": "language_note",
-    "checked_file": ""
+    "from": "PDF text layer, checked against the PDF page",
+    "field": "quote_ar",
+    "checked_file": "licence-2-2026-ar-9.1-checked.txt"
    }
   },
   {

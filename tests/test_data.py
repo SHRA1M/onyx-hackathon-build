@@ -67,7 +67,7 @@ def test_mandates_hold_the_order_verbs():
 # Iyas, 2026-10-21: a quote read from page images or scanned text is valid only if hq holds a "-checked.txt"
 # for it. Every such rule, and the ones still pending.
 TRANSCRIBED = {"d16-4-17", "d16-4-18", "licence-9-1"}
-PENDING_CHECK = {"licence-9-1"}
+PENDING_CHECK: set[str] = set()  # licence-9-1 checked by Iyas, 2026-10-21
 
 
 def test_transcribed_rules_are_listed_and_pending_marked():
@@ -98,6 +98,13 @@ def test_d16_4_18_covers_both_two_hour_limits():
     assert "خلال فترة لا تتجاوز ساعتين من وقت استلام البلاغ" in rule["quote"]
     assert "ويتعين على المرخص له الآخر تنفيذ الحجب خلال ساعتين من وقت استلام الإخطار" in rule["quote"]
     assert "other licensee" in rule["unit"]
+
+
+def test_licence_9_1_arabic_is_the_checked_fragment():
+    rule = next(r for r in data.load_rules() if r["id"] == "licence-9-1")
+    assert rule["quote_ar"] == "توفير ما يلزم من موظفين مدربين"
+    assert rule["transcription"]["field"] == "quote_ar"
+    assert rule["transcription"]["checked_file"] == "licence-2-2026-ar-9.1-checked.txt"
 
 
 def test_keys_hashed():

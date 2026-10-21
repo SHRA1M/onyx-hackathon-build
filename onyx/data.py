@@ -83,8 +83,8 @@ def _check_transcription(rule: dict[str, Any]) -> list[str]:
         return []
     if not checked.endswith("-checked.txt"):
         return [f"{rule['id']}: checked file {checked} is not an hq '-checked.txt'"]
-    path = kb.EXTRACTS_DIR / f"{rule['document_id']}.txt"
-    if not path.exists() or not kb.read_extract(rule["document_id"]).get("checked", "").startswith(checked):
+    extract = kb.find_extract(rule["document_id"])
+    if extract is None or not extract.get("checked", "").startswith(checked):
         return [f"{rule['id']}: the KB text for {rule['document_id']} is not from its checked file {checked}"]
     return []
 

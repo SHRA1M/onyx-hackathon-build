@@ -313,6 +313,15 @@ def read_extract(document_id: str) -> dict[str, Any]:
     return {**header, "clauses": clauses}
 
 
+def find_extract(document_id: str) -> dict[str, Any] | None:
+    """The extract that holds a document's text: its own, or one paired to it ('# pair_of:') for its Arabic."""
+    for path in sorted(EXTRACTS_DIR.glob("*.txt")):
+        extract = read_extract(path.stem)
+        if document_id in (path.stem, extract.get("pair_of")):
+            return extract
+    return None
+
+
 def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as f:
         for row in rows:
@@ -329,8 +338,12 @@ def build_chunks(local_dir: str | os.PathLike | None = None, cited: set[tuple[st
     local_dir = Path(local_dir or os.environ[SOURCE_DIR_ENV])
     manifest = manifest_by_id()
     full: dict[str, list[dict[str, Any]]] = {}
+    arabic: dict[str, dict[str, str]] = {}
     for path in sorted(EXTRACTS_DIR.glob("*.txt")):
         extract = read_extract(path.stem)
+        if extract.get("pair_of"):  # checked Arabic for clauses of a document chunked from its text layer
+            arabic.setdefault(extract["pair_of"], {}).update(extract["clauses"])
+            continue
         row = manifest[path.stem]
         text_field = "text_ar" if row["language"] == "ar" else "text_en"
         full[path.stem] = [{
@@ -338,11 +351,11 @@ def build_chunks(local_dir: str | os.PathLike | None = None, cited: set[tuple[st
             "text_en": "", "text_ar": "", text_field: text,
             "status": row["status"], "retention_class": "", "node": "PP",
         } for clause, text in extract["clauses"].items()]
-    arabic: dict[str, dict[str, str]] = {}
     for doc_id, spec in LOCAL.items():
         if spec["pair_of"] and spec["text"]:
             text = read_text(local_dir / spec["text"])
-            arabic[spec["pair_of"]] = {c["clause"]: _join(c["lines"]) for c in split_decimal(text, keep="all")}
+            arabic.setdefault(spec["pair_of"], {}).update(
+                {c["clause"]: _join(c["lines"]) for c in split_decimal(text, keep="all")})
     for doc_id, spec in LOCAL.items():
         if not spec["text"] or spec["pair_of"]:
             continue

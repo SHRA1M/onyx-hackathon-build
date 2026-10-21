@@ -1,0 +1,7 @@
+# document_id: licence-2-2026-ar
+# pair_of: licence-2-2026
+# title: Public Telecommunications Licence No. 2/2026 (Emirates Telecommunications Group Company PJSC), Arabic, the binding version (licence 16.7)
+# checked: licence-2-2026-ar-9.1-checked.txt (hq, checked by Iyas against the PDF, 2026-10-21)
+# page: 22
+# Extract of the checked words only, not the full clause; fills text_ar of licence-2-2026 9.1.
+9.1 توفير ما يلزم من موظفين مدربين

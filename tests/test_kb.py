@@ -1,4 +1,5 @@
 import json
+import re
 import warnings
 from pathlib import Path
 
@@ -53,12 +54,25 @@ def test_extract_chunks_match_the_extract():
         assert chunk["text_en"] == "" and chunk["page"] == 10
 
 
-def test_extract_body_is_the_hq_checked_file():
-    checked = HQ_DIR / "decision-16-2026-ar-4.17-4.18-checked.txt"
-    if not checked.exists():
+@pytest.mark.parametrize("extract, checked", [
+    ("decision-16-2026-ar.txt", "decision-16-2026-ar-4.17-4.18-checked.txt"),
+    ("licence-2-2026-ar.txt", "licence-2-2026-ar-9.1-checked.txt"),
+])
+def test_extract_body_is_the_hq_checked_file(extract, checked):
+    if not (HQ_DIR / checked).exists():
         pytest.skip("hq folder not on this machine")
-    body = lambda path: [l for l in path.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")]
-    assert body(kb.EXTRACTS_DIR / "decision-16-2026-ar.txt") == body(checked)
+    # hq writes the bare words where the clause is known from the file name; compare without clause numbers.
+    body = lambda path: [re.sub(r"^\d+(\.\d+)+\s", "", l) for l in path.read_text(encoding="utf-8").splitlines()
+                         if l.strip() and not l.startswith("#")]
+    assert body(kb.EXTRACTS_DIR / extract) == body(HQ_DIR / checked)
+
+
+def test_a_paired_extract_fills_the_arabic_of_its_document():
+    # The licence is chunked from its text layer; the checked Arabic of 9.1 comes from kb/extracts/.
+    extract = kb.find_extract("licence-2-2026")
+    assert extract["pair_of"] == "licence-2-2026"
+    assert extract["checked"].startswith("licence-2-2026-ar-9.1-checked.txt")
+    assert kb.get_chunk("licence-2-2026", "9.1")["text_ar"] == extract["clauses"]["9.1"]
 
 
 def test_extract_continuation_lines_join_the_clause(tmp_path, monkeypatch):
