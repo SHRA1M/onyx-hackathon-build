@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-21 (sixth wrap, Opus: keys freeze from hq, Task 5 built).
+Updated 2026-10-21 (seventh wrap, Opus: agent document sets, Task 6 gate built).
 
 ## What this is
 
@@ -15,10 +15,11 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - `kb/manifest.csv` (40 rows), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only), `kb/export/InputDocs/Inputs.md`.
 - `kb/chunks/*.jsonl`: only the 105 cited clauses, 13 documents (committed). `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
-- `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts only), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
+- `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs; a `documents` list per agent), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts only), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
 - `onyx/audit.py` (Task 4): `AuditLog(path, clock)` with `start(scenario_id)` and `append(event) -> hash`; `verify(path)`, `first_break(path)`, `iter_model_responses(path)`, `key_hashes()`, `FIELDS`. Tests `tests/test_audit.py`.
 - `onyx/model.py` (Task 5): `ModelResponse(request_id, raw)` (`raw` is chat-completions JSON, logged verbatim as `model_response`), `OpenAICompatibleModel(base_url, model, api_key)` (stdlib urllib, temperature 0), `RecordedModel(log_path)` (replay by `model_request_id`), `MockModel(script)` (dict or function, offline).
-- `onyx/agents/` (Task 5): `base.Agent` (`run(request_id, step, lang)`: retrieve within `documents_of()`, one model call, `parse_output`, verbs outside the mandate moved to `rejected` and logged as `reject_proposal`; `sources_used` is what was retrieved, set by code), `ChromaRetriever(kb_main collection)`, `AGENTS` (care, adviser, tdra, data_office, coordinator; roles from the hq plan's Agents table). `Adviser.classify_channel` is plain code (`CHANNELS`). Clause ids in proposals are chunk ids `document_id:clause`. Tests `tests/test_agents.py`.
+- `onyx/agents/` (Task 5): `base.Agent` (`run(request_id, step, lang)`: retrieve within `documents_of()`, one model call, `parse_output`, verbs outside the mandate moved to `rejected` and logged as `reject_proposal`; `sources_used` is what was retrieved, set by code), `ChromaRetriever(kb_main collection)`, `AGENTS` (care, adviser, tdra, data_office, coordinator; roles from the hq plan's Agents table). `Adviser.classify_channel` is plain code (`CHANNELS`). Clause ids in proposals are chunk ids `document_id:clause`. `documents_of()` reads the agent's `documents` list and raises on an id not in the manifest. Tests `tests/test_agents.py`.
+- `onyx/gate.py` (Task 6): `decide(proposal, State, Knowledge) -> Verdict{verdict, clause_ids, reasons}`, `allow_all` (ungoverned), `DECIDERS`, `override(verdict, approver, reason, log, entity_id)`, `GATES` (verb to gate functions). `State`: agent, inject, released, retrieved, channel, facts (scenario field names), humans. `Knowledge.load()` (rules, mandates, chunks; injectable). clause_ids are rules.json ids; reasons carry `gate` and `kind` (check, obligation, quote, design_basis, override). Tests `tests/test_gate.py` (48), whose `_facts` and `_state` show how a step becomes a State.
 
 ## Decisions settled
 
@@ -43,7 +44,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - 2026-10-21: licence splitter reads the pypdf .txt: an English clause heading keeps its number and English title and drops the Arabic title on the same line; `bare_page_numbers` starts a page at a line holding only the next page number. Committed licence chunks kept as they are (see Traps).
 - 2026-10-21 (Task 4): `hash = sha256(prev_hash + canonical_json(event without 'hash'))`, canonical = sorted keys, compact separators, UTF-8 unescaped; first `prev_hash` 64 zeros; `seq` from 1 and must equal the line number; `run_start` holds the sha256 of each key file as on disk (`new_value.answer_keys`); a broken chain is never replayed. Addendum 17's two override tests need the gate and are left for Task 6.
 - 2026-10-21 (freeze, hq orders freeze-order-2026-10-21.md and part 2, commit e8b17cb): quotes licence-9-3 ('between the parties ... with the Telecommunications Law'), cpr-4-7-3 ('opt-out'), cpr-24-7 ('anti-competitive') fixed in rules and committed chunks; 3.9 quotes checked against CPR PDF page 12 and kept; rule pdpl-22-1 added; `receive_objection` cites PDPL 18(1) and 17 (quote stays 18(1)); S1 step 6 and S2 step 5 gate_outcome hold; S3 step 3 cites pdpl-22-1; S4 cites 66/2023 34(1) only, no 34(3) anywhere; frozen line: any later key change re-hashes HASHES.txt in the same commit.
-- 2026-10-21 (Task 5, Opus, commit 07416f4): channel classification is plain code (hq plan: 'The checks (plain code, not AI judgement)'): business_centre 4.15, voice 4.17, app_chat 4.22 + 4.10 + 4.11 (strict reading, key S1 step 1), web 4.23; unknown channel raises. An agent's document set is every document its mandate verbs cite (no hq source defines it; open, see below). An unparseable reply proposes nothing. No new dependency; no real model call made.
+- 2026-10-21 (Task 5, Opus, commit 07416f4): channel classification is plain code (hq plan: 'The checks (plain code, not AI judgement)'): business_centre 4.15, voice 4.17, app_chat 4.22 + 4.10 + 4.11 (strict reading, key S1 step 1), web 4.23; unknown channel raises. An unparseable reply proposes nothing. No new dependency; no real model call made.
+
+- 2026-10-21 (hq addendum 27, commit 13c02c6): an agent's document set follows its role, listed in `mandates.json` (care 27, adviser all 40, tdra 18, data_office 22, coordinator 8). Tests: every key `must_cite` document lies in the step agent's set; global examples reach only the adviser, except IMDA for the coordinator (deny-by-default source). A future key that breaks this goes to hq; the set is not widened.
+- 2026-10-21 (Task 6, commit 4adbebb): base checks first. A verb with no gate, or no reachable human, is a hold (IMDA 2.2.2 as design basis). A verb outside the mandate, an inject not released, or a deadline not equal to rules.json is a block. A bad quote, or an unretrieved or non-VERIFIED chunk, is insufficient_evidence. Then every gate for the verb; the strictest wins (block, hold, allow). Only a hold can be overridden, by a named human; a block override is refused and logged. disconnection_gate cites 66/2023 34(1) (as the frozen keys), not the order's 34(3). Global examples (IMDA 2.2.2, EU AI Act 50(1) and 50(5), GDPR 22(3)) quoted from the hq standards-text files, in reasons only.
 
 ## Traps
 
@@ -62,7 +66,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- For hq (report-back 2026-10-21-freeze-and-task5): each agent's document set. Under the current reading (documents its mandate verbs cite) care cannot retrieve Electronic Transactions 11(2), which key S1 step 3 requires; Task 6 needs the answer first. Also still open from the blind review: S2 steps 3 and 4 share verb draft_reply. The order's Task 6 `disconnection_gate` line names 66/2023 34(3); the keys now use 34(1).
+- For hq (report-back 2026-10-21-doc-sets-and-gate): Telecom Law 72(2), named in the order's model_provider_gate, has no rules.json row or chunk, so it is not cited; 34(1) used in place of the order's 34(3); price_change, cancellation and child gates have no scenario step (synthetic tests). Still open from the blind review: S2 steps 3 and 4 share verb draft_reply (the gate tells them apart by `recipient`).
+- The gate's fact and args vocabulary (change, recipient, payload, outbound, human_review_open) is the gate's own; Task 7's coordinator and mock scripts must produce it. S4 step 5's `must_cite` is the adviser's searched list, met in Task 7, not by the gate.
 - Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
 - GitHub may keep the old commits reachable by their hash until its own cleanup; private repo. A full purge is a GitHub Support request.
@@ -70,4 +75,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-hq answers the agent document sets; then Task 6 (the gate) on Opus.
+Task 7 (scenarios and the coordinator: staged release, live inject) on Opus; it builds a State from each step and feeds the gate.
