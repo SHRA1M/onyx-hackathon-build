@@ -95,8 +95,13 @@ class Agent:
 
     @classmethod
     def documents_of(cls) -> list[str]:
-        """The mandate's document set: every document a verb of this agent cites in mandates.json."""
-        return sorted({ref["document_id"] for verb in cls.mandate() for ref in verb["clause_ids"]})
+        """The agent's document set, by role (hq addendum 27): the `documents` list in mandates.json. Every id must
+        be a manifest row; an unknown id raises rather than silently narrowing retrieval."""
+        documents = data.load_mandates()[cls.name]["documents"]
+        unknown = [d for d in documents if d not in kb.manifest_by_id()]
+        if unknown:
+            raise ValueError(f"{cls.name}: documents not in kb/manifest.csv: {', '.join(unknown)}")
+        return list(documents)
 
     @property
     def verbs(self) -> set[str]:

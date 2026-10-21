@@ -172,3 +172,31 @@ def test_keys_file_set_is_frozen():
     assert hashes.exists(), "answer keys must be hashed before the first live run (order Task 3)"
     names = {line.split(maxsplit=1)[1] for line in hashes.read_text(encoding="utf-8").splitlines()}
     assert names == {f"{sid}.json" for sid in SCENARIOS}, names
+
+
+# Addendum 27 (hq, 2026-10-21): each agent's document set follows its role; the frozen keys must fit inside it.
+def test_every_key_citation_is_inside_the_agents_documents():
+    from onyx.agents import AGENTS
+
+    rules = {r["id"]: r for r in data.load_rules()}
+    outside = []
+    for sid in SCENARIOS:
+        for step in data.load_key(sid)["steps"]:
+            documents = set(AGENTS[step["agent"]].documents_of())
+            outside += [f"{sid} step {step['n']} ({step['agent']}): {rid} in {rules[rid]['document_id']}"
+                        for rid in step["must_cite"] if rules[rid]["document_id"] not in documents]
+    assert not outside, f"{len(outside)} citations outside the agent's documents:\n" + "\n".join(outside)
+
+
+GLOBAL_EXAMPLES = {"imda-mgf-agentic-v1-5", "eu-ai-act-2026-07-27", "gdpr-art22"}
+# The one exception: the coordinator holds IMDA MGF Agentic v1.5 as the deny-by-default source (addendum 27).
+GLOBAL_EXCEPTIONS = {("coordinator", "imda-mgf-agentic-v1-5")}
+
+
+def test_global_examples_only_reach_the_adviser():
+    from onyx.agents import AGENTS
+
+    held = {(name, doc) for name, cls in AGENTS.items() if name != "adviser"
+            for doc in cls.documents_of() if doc in GLOBAL_EXAMPLES}
+    assert held == GLOBAL_EXCEPTIONS
+    assert GLOBAL_EXAMPLES <= set(AGENTS["adviser"].documents_of())
