@@ -107,6 +107,12 @@ def test_licence_9_1_arabic_is_the_checked_fragment():
     assert rule["transcription"]["checked_file"] == "licence-2-2026-ar-9.1-checked.txt"
 
 
+def test_no_arabic_chunk_has_a_reversed_lam_alef():
+    # TDRA text layers write 'علاقات' as 'عالقات' and 'الإنجليزية' as 'اإلنجليزية' (Iyas, 2026-10-21).
+    problems = data.ligature_problems()
+    assert not problems, f"{len(problems)} chunks:\n" + "\n".join(problems)
+
+
 def test_keys_hashed():
     hashes = data.KEYS_DIR / "HASHES.txt"
     if not hashes.exists():

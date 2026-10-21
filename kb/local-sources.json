@@ -9,7 +9,7 @@
  },
  "tdra-cpr-v2-ar": {
   "file": "standards-text/tdra-cpr-v2-ar.pdf",
-  "text": "standards-text/tdra-cpr-v2-ar.txt",
+  "text": "standards-text/tdra-cpr-v2-ar.pdf",
   "splitter": "decimal",
   "pair_of": "tdra-cpr-v2-en",
   "top": false,

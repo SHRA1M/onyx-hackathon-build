@@ -416,7 +416,7 @@
    "value": "28",
    "unit": "calendar days",
    "quote": "Licensees shall provide Consumers with notice at least twenty-eight (28) calendar days prior to implementing any price increase",
-   "quote_ar": "بمدة ال تقل عن ثمان وعشرون يوماً",
+   "quote_ar": "بمدة لا تقل عن ثمان وعشرون يوماً",
    "language_note": "The Arabic says days (يوماً), not calendar days; quote the English where the distinction matters.",
    "binding_status": "binding",
    "jurisdiction": "UAE"
@@ -641,8 +641,8 @@
    "value": "",
    "unit": "",
    "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints",
-   "quote_ar": "يستثنى أو يستبعد منها استخدام وكالء غير بشريين",
-   "language_note": "Binding rule the system enforces, never a gap. Arabic: يستثنى أو يستبعد منها (is excepted or excluded from them); the extraction prints وكلاء as وكالء.",
+   "quote_ar": "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين",
+   "language_note": "Binding rule the system enforces, never a gap. Arabic: يستثنى أو يستبعد منها (is excepted or excluded from them).",
    "binding_status": "binding",
    "jurisdiction": "UAE"
   },

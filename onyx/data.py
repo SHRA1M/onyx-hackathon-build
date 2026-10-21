@@ -89,6 +89,25 @@ def _check_transcription(rule: dict[str, Any]) -> list[str]:
     return []
 
 
+# Iyas, 2026-10-21: TDRA text layers write the lam-alef ligature reversed (alef before lam). A detector, not a fix:
+# a real 'لا' is common, so only shapes correct Arabic never has (a lone 'ال' is 'لا'), plus broken words seen in
+# the CPR.
+REVERSED_LAM_ALEF = re.compile(r"اا|ا[أإآ]ل|(?<![؀-ۿ])ال(?![؀-ۿ])")
+REVERSED_LAM_ALEF_WORDS = {"خالل", "عالقات", "وكالء", "الالزمة", "استالم", "سجالت", "مالئم", "إصالح", "اطالع",
+                           "إطالقاً", "فضالً"}
+
+
+def ligature_problems() -> list[str]:
+    """Every committed chunk whose Arabic shows a reversed lam-alef."""
+    problems = []
+    for chunk in kb.iter_chunks():
+        words = set(re.findall(r"[؀-ۿ]+", chunk["text_ar"]))
+        bad = sorted(set(REVERSED_LAM_ALEF.findall(chunk["text_ar"])) | (words & REVERSED_LAM_ALEF_WORDS))
+        if bad:
+            problems.append(f"{chunk['document_id']} {chunk['clause']}: reversed lam-alef in Arabic ({', '.join(bad)})")
+    return problems
+
+
 def transcribed_rules() -> list[dict[str, Any]]:
     """Rules whose quote (or the Arabic in a field) was read from page images or scanned text."""
     return [rule for rule in load_rules() if rule.get("transcription")]
@@ -123,7 +142,7 @@ def check_data() -> int:
     """Addendum item 2: fail on a listing-page URL, on a quote that is not the document's text, on a rule
     without a clause id. Rows with no recorded URL are listed, not failed."""
     rows = kb.load_manifest()
-    failures = [p for r in rows for p in kb.url_problems(r)] + check_rules() + check_mandates()
+    failures = [p for r in rows for p in kb.url_problems(r)] + check_rules() + check_mandates() + ligature_problems()
     no_url = [r["document_id"] for r in rows if not r["url"] and r["status"] != "UNVERIFIED"]
     rules, mandates = load_rules(), load_mandates()
     print(f"rules {len(rules)}  mandate verbs {sum(len(s['verbs']) for s in mandates.values())}  "

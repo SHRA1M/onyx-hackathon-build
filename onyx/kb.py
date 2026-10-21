@@ -292,6 +292,15 @@ def read_text(path: Path) -> str:
         return data.decode("cp1252")
 
 
+def source_text(local_dir: Path, spec: dict[str, str]) -> str:
+    """A source's text: its extraction file, or, where 'text' names the PDF itself, the PDF read with pypdf. TDRA
+    Arabic text layers lose the lam-alef order under PyMuPDF (which made the hq .txt files); pypdf keeps it."""
+    if spec["text"].endswith(".pdf"):
+        import pypdf
+        return "\n".join(page.extract_text() or "" for page in pypdf.PdfReader(local_dir / spec["text"]).pages)
+    return read_text(local_dir / spec["text"])
+
+
 def _join(lines: Iterable[str]) -> str:
     return re.sub(r"\s+", " ", " ".join(lines)).strip()
 
@@ -353,7 +362,7 @@ def build_chunks(local_dir: str | os.PathLike | None = None, cited: set[tuple[st
         } for clause, text in extract["clauses"].items()]
     for doc_id, spec in LOCAL.items():
         if spec["pair_of"] and spec["text"]:
-            text = read_text(local_dir / spec["text"])
+            text = source_text(local_dir, spec)
             arabic.setdefault(spec["pair_of"], {}).update(
                 {c["clause"]: _join(c["lines"]) for c in split_decimal(text, keep="all")})
     for doc_id, spec in LOCAL.items():
