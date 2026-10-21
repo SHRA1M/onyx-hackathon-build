@@ -4,6 +4,7 @@ One entry per fix: date, what broke, what changed.
 
 ## 2026-10-21
 
+- Added (task-8 Part C4 item 5, partial): C4 governed S1 on prompt v4, 2 runs en and 2 ar, under `runs/c4/S1/` (USD 1.31). Stopped by the 0.1 rule: S1 English citation validity 0.87 against C3 1.00 (a mangled document id on step 3). Recorded USD 9.50 of the USD 14.50 stop.
 - Broke: action recall scored a correct `request_human_review` as a miss: the data office's S4 step 4 proposal targeting "Human agent H-03", allowed by the gate, failed because the scorer expected a non-human addressee on every step except a reply to a human's message (5 of 6 C3 runs; hq miss analysis, class A). Changed (hq, order 2026-10-21-task-8-part-c4 item 1): a `request_human_review` or `escalate_to_human` is addressed to a human; `eval.action_hits(..., corrected=False)` keeps the earlier rule. Live and scripted results show action recall both ways with hq's line; the bake-off tables keep the earlier rule and are byte-identical. C3 governed action recall en 0.75 / ar 0.73 (earlier rule 0.71 / 0.71); scripted S4 1.00 (earlier 0.80).
 - Changed (task-8 Part C4 items 2 and 3, prompt v4): care's prompt gets hq's three lines (verbs, propose and let the gate decide, complaint addressee); care's `mandates.json` clauses widened to every rules.json clause its verbs' gates cite in `gate.py`; `run_start` logs `prompt: "v4"`. Replay gives each agent the `sources_mandate` its log recorded, so logs recorded on the narrower mandate replay as recorded (112 committed live logs checked).
 
