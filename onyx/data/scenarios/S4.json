@@ -69,7 +69,8 @@
    "kind": "question",
    "text_en": "By when must the human review requested at step 4 conclude, what procedure governs it, and to which regulator can the subscriber turn if it does not happen?",
    "text_ar": "متى يجب أن تنتهي المراجعة البشرية المطلوبة في الخطوة 4، وما الإجراء الذي يحكمها، وإلى أي جهة تنظيمية يمكن للمشترك اللجوء إن لم تحدث؟",
-   "facts": {}
+   "facts": {},
+   "pending_proposal": {"agent": "care", "verb": "propose_change", "target": "subscriber", "args": {"change": "suspend", "services": ["mobile line"], "kept": ["incoming calls", "emergency numbers", "home broadband"]}}
   }
  ]
 }

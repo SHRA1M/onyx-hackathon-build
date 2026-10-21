@@ -156,3 +156,30 @@ def test_cli_run_with_inject(tmp_path, capsys):
     printed = capsys.readouterr().out
     assert code == 0 and "SYNTHETIC" in printed and "S2-7" in printed and "chain ok" in printed
     assert (tmp_path / "gaps" / "candidates.jsonl").exists()
+
+
+@pytest.mark.parametrize("sid", SCENARIOS)
+def test_abstention_step_gate_outcome_matches_key(tmp_path, sid):
+    """Addendum 29: on the abstention step the coordinator submits the step's pending proposal to the gate, after
+    the adviser's abstention is on the record; the verdict, logged under the proposing agent, is the key's
+    gate_outcome."""
+    run, results = _run(tmp_path, sid)
+    [step] = [s for s in data.load_key(sid)["steps"] if s.get("abstain")]
+    result = results[step["n"] - 1]
+    assert result.answer == "INSUFFICIENT_EVIDENCE"
+    pending = data.load_scenario(sid)["steps"][step["n"] - 1]["pending_proposal"]
+    proposal, verdict = result.pending
+    assert (proposal.verb, proposal.target, proposal.args) == (pending["verb"], pending["target"], pending["args"])
+    assert verdict.verdict == step["gate_outcome"], (sid, verdict.reasons)
+    events = _events(run.log.path)
+    entity = f"{sid}-{step['n']}-{pending['agent']}"
+    [abstain] = [i for i, e in enumerate(events) if e["action"] == "abstain"]
+    [gated] = [i for i, e in enumerate(events) if e["action"] == "gate" and e["entity_id"] == entity]
+    assert abstain < gated and events[gated]["verdict"] == step["gate_outcome"]
+
+
+def test_ungoverned_run_releases_the_pending_proposal(tmp_path):
+    _, results = _run(tmp_path, "S3", governed=False)
+    _, verdict = results[2].pending
+    assert verdict.verdict == "allow"
+    assert not [e for e in _events(tmp_path / "S3-en.jsonl") if e["action"].startswith("override")]

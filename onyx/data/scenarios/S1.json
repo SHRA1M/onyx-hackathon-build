@@ -74,7 +74,8 @@
    "kind": "question",
    "text_en": "Day 8. The 7-day bundle has ended and the subscriber is still abroad. The care agent proposes to extend it for another 7 days at AED 95 as a 'renewal of an existing service' under CPR 4.4, with no new consent step. Does CPR 4.4 cover this extension?",
    "text_ar": "اليوم الثامن. انتهت باقة الأيام السبعة والمشترك ما زال خارج الدولة. يقترح وكيل الرعاية تمديدها سبعة أيام أخرى بمبلغ 95 درهماً بوصفها «تجديداً لخدمة قائمة» بموجب البند 4.4 من لائحة حماية المستهلك، دون خطوة موافقة جديدة. هل يشمل البند 4.4 هذا التمديد؟",
-   "facts": {"bundle_status": "expired on day 7; fixed-term, non-recurring per the catalogue", "new_consent": "none"}
+   "facts": {"bundle_status": "expired on day 7; fixed-term, non-recurring per the catalogue", "new_consent": "none"},
+   "pending_proposal": {"agent": "care", "verb": "propose_change", "target": "subscriber", "args": {"change": "renew", "sku": "ROAM-UK-7D", "price_aed": 95, "term_days": 7, "basis": "renewal"}}
   }
  ]
 }

@@ -11,11 +11,18 @@ the gate on evidence, the adviser answers INSUFFICIENT_EVIDENCE and lists the cl
 says (its rules.json quote): the clauses it retrieved for the question and every clause the gate has cited in
 this case so far. A live inject (`run S2 --inject "<text>"`) that ends in abstention writes a row to
 gaps/candidates.jsonl (order review focus 4).
+
+Pending proposal (addendum 29): an abstention step may carry the action its question is about. After the abstention
+is on the record, the coordinator submits that proposal to the gate in the same step, as the proposing agent's
+(gate.decide_pending: deny by default gives hold, a gate rule that blocks gives block), and logs the verdict under
+that agent. A named human's override attempt in the step's facts goes to gate.override: a hold can be released, a
+block cannot, and the refusal is logged with the name (addendum 17).
 """
 
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -56,6 +63,7 @@ class StepResult:
     answer: str = ""  # INSUFFICIENT_EVIDENCE on an abstention
     searched: list[dict[str, str]] = field(default_factory=list)
     gaps: list[str] = field(default_factory=list)
+    pending: tuple[Proposal, gate.Verdict] | None = None  # addendum 29: the abstention step's pending proposal
 
     @property
     def searched_ids(self) -> list[str]:
@@ -81,6 +89,7 @@ class Coordinator:
         self.gaps_dir = Path(gaps_dir)
         self.kb = knowledge or gate.Knowledge.load()
         self.decide = gate.decide if governed else gate.allow_all
+        self.decide_pending = gate.decide_pending if governed else gate.allow_all
         self.agents = {name: cls(model, retriever, self.log) for name, cls in AGENTS.items()}
         self.inboxes: dict[str, list[Release]] = {name: [] for name in AGENTS}
         self.record = {name: scenario[name] for name in RECORD_FIELDS if name in scenario}
@@ -123,6 +132,8 @@ class Coordinator:
             result.verdicts.append((proposal, self._gate(proposal, release, request_id, output.sources_used)))
         if release.to == "adviser" and release.kind in QUESTION_KINDS and self._abstains(result):
             self._abstain(result, release)
+            if step.get("pending_proposal"):
+                self._pending(step["pending_proposal"], release, result)
         return result
 
     # --- staged release ---------------------------------------------------------------------------------------
@@ -152,8 +163,10 @@ class Coordinator:
                           retrieved=set(retrieved), channel=self.channel or DEFAULT_CHANNEL, facts=dict(self.facts),
                           humans=humans)
 
-    def _gate(self, proposal: Proposal, release: Release, request_id: str, retrieved: list[str]) -> gate.Verdict:
-        verdict = self.decide(proposal, self._state(release.to, release.inject, retrieved), self.kb)
+    def _gate(self, proposal: Proposal, release: Release, request_id: str, retrieved: list[str],
+              agent: str = "", decide=None) -> gate.Verdict:
+        decide = decide or self.decide
+        verdict = decide(proposal, self._state(agent or release.to, release.inject, retrieved), self.kb)
         self.cited += [c for c in verdict.clause_ids if c not in self.cited]
         if verdict.verdict == gate.ALLOW and proposal.verb == "request_human_review":
             self.facts["human_review_open"] = True  # every further automated step waits for it (PDPL 18(4))
@@ -181,6 +194,17 @@ class Coordinator:
         if out is None or not out.proposals or (out.reasoning_chain[:1] == [INSUFFICIENT_EVIDENCE]):
             return True
         return all(v.verdict == gate.INSUFFICIENT for _, v in result.verdicts)
+
+    def _pending(self, pending: dict[str, Any], release: Release, result: StepResult) -> None:
+        agent = pending["agent"]
+        proposal = Proposal(verb=pending["verb"], target=pending.get("target", ""), args=dict(pending.get("args", {})),
+                            rationale="pending proposal: the action the step's question is about (addendum 29)")
+        request_id = f"{release.inject}-{agent}"
+        verdict = self._gate(proposal, release, request_id, [], agent=agent, decide=self.decide_pending)
+        attempt = re.match(r"(.+?)(?:, reason given: '(.*)')?$", str(release.facts.get("override_attempted_by", "")))
+        if attempt and verdict.verdict != gate.ALLOW:
+            verdict = gate.override(verdict, attempt.group(1), attempt.group(2) or "", self.log, request_id)
+        result.pending = (proposal, verdict)
 
     def _searched(self, retrieved: list[str]) -> list[dict[str, str]]:
         ids: list[str] = []
@@ -246,6 +270,8 @@ def _cli(args) -> int:
         print(f"  {r.inject:<6} {r.agent:<12} {verdicts}")
         if r.answer:
             print(f"         {r.answer}; searched {len(r.searched)} clauses; gaps {', '.join(r.gaps) or 'none named'}")
+        if r.pending:
+            print(f"         pending proposal {r.pending[0].verb}: {r.pending[1].verdict}")
     print(f"log: {out} ({'chain ok' if audit.verify(out) else 'chain broken'})")
     return 0
 

@@ -710,6 +710,30 @@ def decide(proposal: Any, state: State, kb: Knowledge | None = None) -> Verdict:
     return Verdict(verdict, clause_ids, [r for v in findings for r in v.reasons])
 
 
+def decide_pending(proposal: Any, state: State, kb: Knowledge | None = None) -> Verdict:
+    """Addendum 29: the action an abstention step is about, submitted by the coordinator after the adviser answered
+    INSUFFICIENT_EVIDENCE. It cites nothing (no VERIFIED clause answers it), so the evidence checks do not apply;
+    the verb must be in the agent's mandate, a gate rule that blocks or holds decides, and otherwise deny by
+    default gives hold."""
+    kb = kb or Knowledge.load()
+    if proposal.verb not in GATES:
+        return _base_checks(proposal, state, kb)  # no gate: held (deny_by_default)
+    if proposal.verb not in kb.verbs(state.agent):
+        return Verdict(BLOCK, [], [_check("base", f"verb {proposal.verb} is outside the {state.agent} mandate "
+                                                  "(mandates.json)")])
+    findings = [v for gate in GATES[proposal.verb] if (v := gate(proposal, state, kb)) is not None]
+    worst = max((SEVERITY[v.verdict] for v in findings), default=0)
+    if worst:
+        verdict = next(k for k, v in SEVERITY.items() if v == worst)
+        deciding = [c for v in findings if SEVERITY[v.verdict] == worst for c in v.clause_ids]
+        clause_ids = list(dict.fromkeys(deciding + [c for v in findings for c in v.clause_ids]))
+        return Verdict(verdict, clause_ids, [r for v in findings for r in v.reasons])
+    return Verdict(HOLD, list(dict.fromkeys(c for v in findings for c in v.clause_ids)), [
+        _check("deny_by_default", f"the adviser answered INSUFFICIENT_EVIDENCE on {state.inject}: no VERIFIED clause "
+                                  f"permits {proposal.verb}; held for a human"),
+        _basis("deny_by_default", IMDA_2_2_2), *(r for v in findings for r in v.reasons)])
+
+
 def allow_all(proposal: Any, state: State, kb: Knowledge | None = None) -> Verdict:
     """Ungoverned mode: the same pipeline with the gate removed."""
     return Verdict(ALLOW, [], [{"gate": "ungoverned", "kind": "check", "text": "ungoverned run: no gate"}])

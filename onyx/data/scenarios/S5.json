@@ -57,7 +57,8 @@
    "kind": "question",
    "text_en": "What counts as adequate verification of this caller's identity on a voice call from an unknown number, before the device and SIM are blocked?",
    "text_ar": "ما الذي يُعدّ تحققاً كافياً من هوية هذا المتصل في مكالمة صوتية من رقم غير معروف، قبل حجب الجهاز والشريحة؟",
-   "facts": {}
+   "facts": {},
+   "pending_proposal": {"agent": "care", "verb": "propose_change", "target": "subscriber", "args": {"change": "block_device"}}
   },
   {
    "n": 5,

@@ -337,14 +337,20 @@ def test_override_release_logs_approver_name(tmp_path):
 
 
 def test_override_refused_on_block(tmp_path):
-    log = _log(tmp_path)
-    blocked = _verdict("model_provider_full_record")
-    assert blocked.verdict == "block"
-    after = gate.override(blocked, "Human agent H-02 (synthetic)", "faster reply", log, "S3-3")
+    """Addendum 17 on S3 step 3, through the coordinator's pending-proposal path (addendum 29): H-02's override of
+    the model-provider block is refused and logged with the name that tried."""
+    from onyx import coordinator, scripted
+    run = coordinator.Coordinator(data.load_scenario("S3"), scripted.model("S3"), scripted.retriever("S3"),
+                                  log_path=tmp_path / "S3.jsonl", gaps_dir=tmp_path / "gaps")
+    run.start()
+    _, after = run.run()[2].pending
     assert after.verdict == "block"
-    [event] = [e for e in _events(log) if e["action"] == "override_refused"]
+    events = [json.loads(line) for line in run.log.path.read_text(encoding="utf-8").splitlines()]
+    [event] = [e for e in events if e["action"] == "override_refused"]
     assert event["actor"] == "Human agent H-02 (synthetic)" and event["verdict"] == "block"
-    assert "faster reply" in event["reason"]
+    assert event["entity_id"] == "S3-3-care" and "faster reply" in event["reason"]
+    assert not [e for e in events if e["action"] == "override_release"]
+    assert audit.verify(run.log.path)
 
 
 def test_override_needs_a_named_human(tmp_path):

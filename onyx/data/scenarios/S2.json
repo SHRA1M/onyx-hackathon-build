@@ -69,7 +69,8 @@
    "kind": "question",
    "text_en": "After the grievance at step 3, how fast must the app chatbot stop and hand the conversation to a human, and which text sets that time?",
    "text_ar": "بعد التذمر في الخطوة 3، ما السرعة التي يجب أن يتوقف بها روبوت المحادثة في التطبيق ويحوّل المحادثة إلى إنسان، وأي نص يحدد ذلك الوقت؟",
-   "facts": {}
+   "facts": {},
+   "pending_proposal": {"agent": "coordinator", "verb": "route", "target": "S2-3 hand-over", "args": {"handover_step": 3, "mark": "within_time"}}
   },
   {
    "n": 6,
