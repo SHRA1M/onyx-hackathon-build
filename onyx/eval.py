@@ -64,6 +64,8 @@ RESOLUTION_LINE = ("Clause-id resolution added 2026-10-21 (hq, after C4 S1): an 
 C4 = "c4"  # runs/c4: the C4 re-run on prompt v4, Sonnet 5.5 (order 2026-10-21-task-8-part-c4)
 C4_LINE = ("Prompt v4 adds three care lines (verbs, propose-and-let-the-gate-decide, complaint addressee) and widens "
            "care's mandate to its gates' clauses; the ungoverned baseline runs on the same prompt.")
+C4_RUNS_LINE = ("C4 is governed only, 2 runs per scenario and language (Iyas, 2026-10-21, to stay inside the USD 6.00 C4 "
+                "cap); no ungoverned C4 run was recorded, so the ungoverned rows are C3 on prompt v3.")
 SUMMARY = (("Citation validity (hq rule)", "citation_validity"), ("Action recall", "action_recall"),
            ("Obligation proxy", "obligation_proxy"), ("Gap recall", "gap_recall"), ("Abstention", "abstention"))
 
@@ -432,7 +434,7 @@ def _c4_lines(results: dict[str, Any]) -> list[str]:
             lines.append(f"| {label} | " + cells(lambda r, m=metric: _fig(r[m])) + " |")
     lines += ["| Ungoverned claims allowed | " + cells(lambda r: _fig(r["ungoverned_claims_allowed"])) + " |",
               "| Runs (governed / ungoverned) | " + cells(lambda r: f"{r['runs']} / {r['ungoverned_runs']}") + " |",
-              "", C4_LINE, "",
+              "", C4_LINE, "", C4_RUNS_LINE, "",
               "Prompt named on each C4 run_start: governed " + (", ".join(c4["prompts"]["governed"]) or "none") +
               "; ungoverned " + (", ".join(c4["prompts"]["ungoverned"]) or "none recorded") + ".", "",
               "| Scenario | Lang | Citation validity C3 | Citation validity C4 | Action recall C3 | Action recall C4 |",
