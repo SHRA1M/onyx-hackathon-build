@@ -2,7 +2,7 @@
 
 One entry per fix: date, what broke, what changed.
 
-## 2026-10-20
+## 2026-10-21
 
 - Broke: the repo committed all 2,184 clause chunks, more than addendum item 15 allows. Changed: `kb/chunks/` holds only the 93 clauses rules and mandates cite; `kb chunk` writes every clause to `kb/chunks-full/` (gitignored); history rewritten so no commit holds the full chunks (Iyas).
 - Broke: `kb fetch` gave no way forward where the portal blocks. Changed: it prints the row's URL and the `kb/sources/` file name to save by hand.
