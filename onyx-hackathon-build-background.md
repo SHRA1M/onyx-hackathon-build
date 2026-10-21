@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-21 (fifth wrap, Opus: blind review of the answer keys, report only).
+Updated 2026-10-21 (sixth wrap, Opus: keys freeze from hq, Task 5 built).
 
 ## What this is
 
@@ -13,10 +13,12 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Where things live
 
 - `kb/manifest.csv` (40 rows), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only), `kb/export/InputDocs/Inputs.md`.
-- `kb/chunks/*.jsonl`: only the 104 cited clauses, 13 documents (committed). `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
+- `kb/chunks/*.jsonl`: only the 105 cited clauses, 13 documents (committed). `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
-- `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (107 rules), `onyx/data/mandates.json` (16 verbs), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts only), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
+- `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts only), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
 - `onyx/audit.py` (Task 4): `AuditLog(path, clock)` with `start(scenario_id)` and `append(event) -> hash`; `verify(path)`, `first_break(path)`, `iter_model_responses(path)`, `key_hashes()`, `FIELDS`. Tests `tests/test_audit.py`.
+- `onyx/model.py` (Task 5): `ModelResponse(request_id, raw)` (`raw` is chat-completions JSON, logged verbatim as `model_response`), `OpenAICompatibleModel(base_url, model, api_key)` (stdlib urllib, temperature 0), `RecordedModel(log_path)` (replay by `model_request_id`), `MockModel(script)` (dict or function, offline).
+- `onyx/agents/` (Task 5): `base.Agent` (`run(request_id, step, lang)`: retrieve within `documents_of()`, one model call, `parse_output`, verbs outside the mandate moved to `rejected` and logged as `reject_proposal`; `sources_used` is what was retrieved, set by code), `ChromaRetriever(kb_main collection)`, `AGENTS` (care, adviser, tdra, data_office, coordinator; roles from the hq plan's Agents table). `Adviser.classify_channel` is plain code (`CHANNELS`). Clause ids in proposals are chunk ids `document_id:clause`. Tests `tests/test_agents.py`.
 
 ## Decisions settled
 
@@ -40,11 +42,13 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - 2026-10-21: S3 step 4 (de-identified payload to the model provider) is the order's design rule, not a KB-confirmed PDPL 22 exemption; the key says so.
 - 2026-10-21: licence splitter reads the pypdf .txt: an English clause heading keeps its number and English title and drops the Arabic title on the same line; `bare_page_numbers` starts a page at a line holding only the next page number. Committed licence chunks kept as they are (see Traps).
 - 2026-10-21 (Task 4): `hash = sha256(prev_hash + canonical_json(event without 'hash'))`, canonical = sorted keys, compact separators, UTF-8 unescaped; first `prev_hash` 64 zeros; `seq` from 1 and must equal the line number; `run_start` holds the sha256 of each key file as on disk (`new_value.answer_keys`); a broken chain is never replayed. Addendum 17's two override tests need the gate and are left for Task 6.
+- 2026-10-21 (freeze, hq orders freeze-order-2026-10-21.md and part 2, commit e8b17cb): quotes licence-9-3 ('between the parties ... with the Telecommunications Law'), cpr-4-7-3 ('opt-out'), cpr-24-7 ('anti-competitive') fixed in rules and committed chunks; 3.9 quotes checked against CPR PDF page 12 and kept; rule pdpl-22-1 added; `receive_objection` cites PDPL 18(1) and 17 (quote stays 18(1)); S1 step 6 and S2 step 5 gate_outcome hold; S3 step 3 cites pdpl-22-1; S4 cites 66/2023 34(1) only, no 34(3) anywhere; frozen line: any later key change re-hashes HASHES.txt in the same commit.
+- 2026-10-21 (Task 5, Opus, commit 07416f4): channel classification is plain code (hq plan: 'The checks (plain code, not AI judgement)'): business_centre 4.15, voice 4.17, app_chat 4.22 + 4.10 + 4.11 (strict reading, key S1 step 1), web 4.23; unknown channel raises. An agent's document set is every document its mandate verbs cite (no hq source defines it; open, see below). An unparseable reply proposes nothing. No new dependency; no real model call made.
 
 ## Traps
 
-- A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` unless hq has settled the licence text (next item).
-- A `kb chunk` rebuild changes `kb/chunks/licence-2-2026.jsonl` in three places: 'pur suant' (3.4.1) and 'billin g' (9.1) are pypdf errors; 9.3 'between the parties ... with the Telecommunications Law' is right (PDF page 24). The rebuilt 9.3 fails `check-data` on licence-9-3 until hq corrects that quote. Do not commit a rebuilt licence file.
+- A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` and `kb/chunks/tdra-cpr-v2-en.jsonl`, and re-apply the hand fixes (next item).
+- A `kb chunk` rebuild undoes hand fixes in committed chunks: licence 3.4.1 'pur suant' and 9.1 'billin g' (pypdf errors; the committed file has them right), and the CPR 4.7.3 'opt-out' and 24.7 'anti-competitive' (the extraction keeps 'opt- out', 'anti- competitive'). Licence 9.3 now matches the rebuild. Never commit a rebuilt licence or CPR file unchanged.
 - `check-data` compares quotes with our chunks, not with the PDFs. The 2026-10-21 pdftotext audit found 13 of 110 quotes not verbatim in pdftotext output (8 layout only); see the report-back.
 - `kb fetch` rewrites `url_accessed` and `http_status` in the manifest to the run's date: do not commit a manifest changed only by a fetch.
 - The UAE legislation portal answers 403 to scripts; Y.3172 and EUR-Lex URLs are pages, so their bytes never match.
@@ -58,8 +62,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- For hq (report-back 2026-10-21-keys-review-splitter-task4): the licence-9-3 quote; four more quotes not verbatim in the PDF text (cpr-4-7-3, cpr-24-7, cpr-3-9-recordings, cpr-3-9-notices); the keys' 'Never edited after HASHES.txt is committed' line, now untrue; the keys' 'hq plan, S2' reference, which no plan file holds.
-- For hq (report-back 2026-10-21-blind-keys-review): S1 step 6 decidable from 4.4 (hold, not insufficient_evidence); Cabinet 66/2023 34(3) cited in S4 where 34(1) fits; S3 step 3 wording ignores PDPL 22(1) and 22(2) in chunks-full; gate_outcome null on S1 step 6 and S2 step 5; receive_objection lacks PDPL 17; S2 steps 3 and 4 share verb draft_reply. Keys unchanged until hq answers.
+- For hq (report-back 2026-10-21-freeze-and-task5): each agent's document set. Under the current reading (documents its mandate verbs cite) care cannot retrieve Electronic Transactions 11(2), which key S1 step 3 requires; Task 6 needs the answer first. Also still open from the blind review: S2 steps 3 and 4 share verb draft_reply. The order's Task 6 `disconnection_gate` line names 66/2023 34(3); the keys now use 34(1).
 - Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
 - GitHub may keep the old commits reachable by their hash until its own cleanup; private repo. A full purge is a GitHub Support request.
@@ -67,4 +70,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Task 5 (model adapter and agents) on Opus.
+hq answers the agent document sets; then Task 6 (the gate) on Opus.
