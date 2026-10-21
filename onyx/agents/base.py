@@ -9,6 +9,7 @@ chunk id `document_id:clause`, the id the agent saw when it retrieved the clause
 from __future__ import annotations
 
 import json
+import time
 from dataclasses import asdict, dataclass, field
 from typing import Any, Protocol
 
@@ -140,14 +141,16 @@ class Agent:
     def run(self, request_id: str, step: dict[str, Any], lang: str = "en") -> AgentOutput:
         text = step[f"text_{lang}"]
         hits = self.retrieve(text)
+        started = time.perf_counter()
         response = self.model.complete(request_id, self.messages(step, text, hits, lang))
+        model_ms = round((time.perf_counter() - started) * 1000, 3)
         out = parse_output(self.name, response.text)
         out.sources_used = [chunk_id(hit) for hit in hits]  # what was retrieved, never what the model claims
         out.rejected = [p for p in out.proposals if p.verb not in self.verbs]
         out.proposals = [p for p in out.proposals if p.verb in self.verbs]
         self._append({"action": "propose", "entity_type": "step", "entity_id": request_id, "new_value": out.to_dict(),
                       "source": response.model, "clause_ids": sorted({c for p in out.proposals for c in p.clause_ids}),
-                      "model_request_id": request_id, "model_response": response.raw})
+                      "model_request_id": request_id, "model_response": response.raw, "model_ms": model_ms})
         for p in out.rejected:
             self._append({"action": "reject_proposal", "entity_type": "proposal", "entity_id": request_id,
                           "old_value": asdict(p), "source": "onyx/data/mandates.json",

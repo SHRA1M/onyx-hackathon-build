@@ -15,7 +15,8 @@ from onyx import data
 
 GENESIS = "0" * 64
 FIELDS = ("seq", "ts", "prev_hash", "hash", "actor", "action", "entity_type", "entity_id", "old_value",
-          "new_value", "source", "reason", "clause_ids", "quote", "verdict", "model_request_id", "model_response")
+          "new_value", "source", "reason", "clause_ids", "quote", "verdict", "model_request_id", "model_response",
+          "gate_ms", "model_ms")  # addendum 18: decision time and model time, in milliseconds
 
 
 def canonical_json(event: dict[str, Any]) -> str:
@@ -46,10 +47,11 @@ class AuditLog:
                 event = json.loads(line)
                 self.seq, self.last_hash = event["seq"], event["hash"]
 
-    def start(self, scenario_id: str, actor: str = "coordinator") -> str:
-        """The run_start event: the sha256 of every answer key, so a run proves which keys it was scored against."""
+    def start(self, scenario_id: str, actor: str = "coordinator", config: dict[str, Any] | None = None) -> str:
+        """The run_start event: the sha256 of every answer key, so a run proves which keys it was scored against,
+        and the run's configuration (language, mode, model) when given."""
         return self.append({"actor": actor, "action": "run_start", "entity_type": "scenario", "entity_id": scenario_id,
-                            "new_value": {"answer_keys": key_hashes()}, "source": "onyx/data/keys"})
+                            "new_value": {"answer_keys": key_hashes(), **(config or {})}, "source": "onyx/data/keys"})
 
     def append(self, event: dict[str, Any]) -> str:
         record: dict[str, Any] = {field: None for field in FIELDS}

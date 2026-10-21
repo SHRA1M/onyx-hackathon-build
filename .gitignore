@@ -1,4 +1,5 @@
 # Secrets: model API keys live in .env, never committed (order, global constraints)
+.env
 .env*
 !.env.example
 

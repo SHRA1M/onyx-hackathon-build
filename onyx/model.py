@@ -8,6 +8,7 @@ the model id is in every run. The model proposes and explains; it decides nothin
 from __future__ import annotations
 
 import json
+import os
 import urllib.request
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
@@ -42,18 +43,57 @@ def _chat_completion(model: str, text: str) -> dict[str, Any]:
 
 
 class OpenAICompatibleModel:
-    """Any OpenAI-compatible chat-completions endpoint. A real call costs money: only with Iyas's go."""
+    """Any OpenAI-compatible chat-completions endpoint. A real call costs money: only with Iyas's go.
 
-    def __init__(self, base_url: str, model: str, api_key: str, timeout: float = 120.0) -> None:
+    temperature is sent only when given: Anthropic's OpenAI-compatible endpoint returns a 400 for any value below 1
+    on Claude 4.7 and later models (platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk)."""
+
+    def __init__(self, base_url: str, model: str, api_key: str, timeout: float = 600.0,
+                 temperature: float | None = None, max_tokens: int = 16000) -> None:
         self.url = base_url.rstrip("/") + "/chat/completions"
         self.model, self.api_key, self.timeout = model, api_key, timeout
+        self.temperature, self.max_tokens = temperature, max_tokens
 
     def complete(self, request_id: str, messages: Messages) -> ModelResponse:
-        body = json.dumps({"model": self.model, "messages": messages, "temperature": 0}).encode("utf-8")
+        request: dict[str, Any] = {"model": self.model, "messages": messages, "max_tokens": self.max_tokens}
+        if self.temperature is not None:
+            request["temperature"] = self.temperature
+        body = json.dumps(request).encode("utf-8")
         request = urllib.request.Request(self.url, data=body, method="POST", headers={
             "Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"})
         with urllib.request.urlopen(request, timeout=self.timeout) as response:
             return ModelResponse(request_id, json.loads(response.read().decode("utf-8")))
+
+
+ENV_NAMES = ("ONYX_MODEL_BASE_URL", "ONYX_MODEL", "ONYX_MODEL_API_KEY")
+
+
+class MissingModelKey(RuntimeError):
+    """A live run needs ONYX_MODEL_API_KEY with a value; the scripted model never stands in for it."""
+
+
+def read_env(path: str | Path = ".env") -> dict[str, str]:
+    """KEY=VALUE lines of the repo's .env (gitignored), then the process environment. Values are never printed."""
+    values: dict[str, str] = {}
+    env = Path(path)
+    if env.exists():
+        for line in env.read_text(encoding="utf-8").splitlines():
+            name, sep, value = line.strip().partition("=")
+            if sep and not name.startswith("#"):
+                values[name.strip()] = value.strip().strip('"').strip("'")
+    for name in ENV_NAMES:
+        if os.environ.get(name):
+            values[name] = os.environ[name]
+    return values
+
+
+def from_env(path: str | Path = ".env") -> OpenAICompatibleModel:
+    """The live model (order Task 5, decided 2026-10-21: Claude through Anthropic's OpenAI-compatible endpoint)."""
+    values = read_env(path)
+    missing = [name for name in ENV_NAMES if not values.get(name)]
+    if missing:
+        raise MissingModelKey(f"no value in .env for {', '.join(missing)}; live runs stopped (no model call made)")
+    return OpenAICompatibleModel(values["ONYX_MODEL_BASE_URL"], values["ONYX_MODEL"], values["ONYX_MODEL_API_KEY"])
 
 
 class RecordedModel:

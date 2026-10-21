@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import re
+import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -103,8 +104,9 @@ class Coordinator:
 
     # --- the run --------------------------------------------------------------------------------------------
 
-    def start(self) -> str:
-        return self.log.start(self.sid)
+    def start(self, **config: Any) -> str:
+        return self.log.start(self.sid, config={"lang": self.lang, "mode": "governed" if self.governed else "ungoverned",
+                                                **config})
 
     def run(self, until: int | None = None) -> list[StepResult]:
         steps = [s for s in self.scenario["steps"] if until is None or s["n"] <= until]
@@ -164,16 +166,21 @@ class Coordinator:
                           humans=humans)
 
     def _gate(self, proposal: Proposal, release: Release, request_id: str, retrieved: list[str],
-              agent: str = "", decide=None) -> gate.Verdict:
+              agent: str = "", decide=None, pending: bool = False) -> gate.Verdict:
         decide = decide or self.decide
-        verdict = decide(proposal, self._state(agent or release.to, release.inject, retrieved), self.kb)
+        state = self._state(agent or release.to, release.inject, retrieved)
+        started = time.perf_counter()
+        verdict = decide(proposal, state, self.kb)
+        gate_ms = round((time.perf_counter() - started) * 1000, 3)
         self.cited += [c for c in verdict.clause_ids if c not in self.cited]
         if verdict.verdict == gate.ALLOW and proposal.verb == "request_human_review":
             self.facts["human_review_open"] = True  # every further automated step waits for it (PDPL 18(4))
         self.log.append({"actor": "gate", "action": "gate", "entity_type": "proposal", "entity_id": request_id,
-                         "old_value": asdict(proposal), "new_value": {"reasons": verdict.reasons},
+                         "old_value": asdict(proposal),
+                         "new_value": {"reasons": verdict.reasons, **({"pending": True} if pending else {})},
                          "verdict": verdict.verdict, "clause_ids": verdict.clause_ids, "quote": proposal.quote,
-                         "source": "onyx/gate.py decide" if self.governed else "onyx/gate.py allow_all (ungoverned)"})
+                         "source": "onyx/gate.py decide" if self.governed else "onyx/gate.py allow_all (ungoverned)",
+                         "gate_ms": gate_ms})
         return verdict
 
     def _classify(self, release: Release, request_id: str) -> StepResult:
@@ -200,7 +207,7 @@ class Coordinator:
         proposal = Proposal(verb=pending["verb"], target=pending.get("target", ""), args=dict(pending.get("args", {})),
                             rationale="pending proposal: the action the step's question is about (addendum 29)")
         request_id = f"{release.inject}-{agent}"
-        verdict = self._gate(proposal, release, request_id, [], agent=agent, decide=self.decide_pending)
+        verdict = self._gate(proposal, release, request_id, [], agent=agent, decide=self.decide_pending, pending=True)
         attempt = re.match(r"(.+?)(?:, reason given: '(.*)')?$", str(release.facts.get("override_attempted_by", "")))
         if attempt and verdict.verdict != gate.ALLOW:
             verdict = gate.override(verdict, attempt.group(1), attempt.group(2) or "", self.log, request_id)

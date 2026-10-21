@@ -1,0 +1,808 @@
+{
+ "all_chains_ok": true,
+ "all_keys_match": true,
+ "latency": {
+  "governed": {
+   "gate_ms": {
+    "max_ms": 1.12,
+    "median_ms": 0.463,
+    "n": 198
+   },
+   "model_ms": {
+    "max_ms": 0.512,
+    "median_ms": 0.238,
+    "n": 156
+   }
+  },
+  "ungoverned": {
+   "gate_ms": {
+    "max_ms": 0.005,
+    "median_ms": 0.002,
+    "n": 198
+   },
+   "model_ms": {
+    "max_ms": 0.387,
+    "median_ms": 0.229,
+    "n": 156
+   }
+  }
+ },
+ "models": [
+  "scripted-mock"
+ ],
+ "runs_read": 60,
+ "runs_root": "runs/scripted",
+ "scenarios": {
+  "S1": {
+   "governed": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 0.3333,
+      "min": 0.3333
+     },
+     "gate_rejection_rate": {
+      "max": 0.4286,
+      "min": 0.4286
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.9286,
+      "min": 0.9286
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 0.3333,
+      "min": 0.3333
+     },
+     "gate_rejection_rate": {
+      "max": 0.4286,
+      "min": 0.4286
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.9286,
+      "min": 0.9286
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    }
+   },
+   "ungoverned": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 0.3333,
+      "min": 0.3333
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 3,
+      "min": 3
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 0.3333,
+      "min": 0.3333
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 3,
+      "min": 3
+     }
+    }
+   }
+  },
+  "S2": {
+   "governed": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.2857,
+      "min": 0.2857
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 0.8235,
+      "min": 0.8235
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.2857,
+      "min": 0.2857
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 0.8235,
+      "min": 0.8235
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    }
+   },
+   "ungoverned": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": 1,
+      "min": 1
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 2,
+      "min": 2
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": 1,
+      "min": 1
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 2,
+      "min": 2
+     }
+    }
+   }
+  },
+  "S3": {
+   "governed": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.5,
+      "min": 0.5
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.8571,
+      "min": 0.8571
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.5,
+      "min": 0.5
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.8571,
+      "min": 0.8571
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    }
+   },
+   "ungoverned": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 3,
+      "min": 3
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 3,
+      "min": 3
+     }
+    }
+   }
+  },
+  "S4": {
+   "governed": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.3333,
+      "min": 0.3333
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.3333,
+      "min": 0.3333
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    }
+   },
+   "ungoverned": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 2,
+      "min": 2
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 2,
+      "min": 2
+     }
+    }
+   }
+  },
+  "S5": {
+   "governed": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.2857,
+      "min": 0.2857
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 0.7222,
+      "min": 0.7222
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.2857,
+      "min": 0.2857
+     },
+     "handover_latency_steps": {
+      "max": 0,
+      "min": 0
+     },
+     "obligation_recall": {
+      "max": 0.7222,
+      "min": 0.7222
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": null,
+      "min": null
+     }
+    }
+   },
+   "ungoverned": {
+    "ar": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 2,
+      "min": 2
+     }
+    },
+    "ar_en_clause_agreement": {
+     "max": 1.0,
+     "min": 1.0
+    },
+    "en": {
+     "abstention": {
+      "max": 1,
+      "min": 1
+     },
+     "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gap_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "gate_rejection_rate": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "handover_latency_steps": {
+      "max": null,
+      "min": null
+     },
+     "obligation_recall": {
+      "max": 0.0,
+      "min": 0.0
+     },
+     "runs": 3,
+     "ungoverned_claims_allowed": {
+      "max": 2,
+      "min": 2
+     }
+    }
+   }
+  }
+ },
+ "scripted": true
+}
