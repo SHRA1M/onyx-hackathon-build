@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-21 (seventh wrap, Opus: agent document sets, Task 6 gate built).
+Updated 2026-10-21 (eighth wrap, Opus: Task 7 coordinator, addendum 29 pending proposals, Task 8 runs, replay, eval).
 
 ## What this is
 
@@ -8,7 +8,7 @@ Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom 
 
 ## Stack and how it runs
 
-Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, downloaded once), pytest, jsonschema, pypdf. CLI: `python -m onyx kb fetch|verify|chunk|ingest|export`, `python -m onyx check-data`, `python -m onyx verify-log <file>`. `ONYX_SOURCE_DIR=D:\Projects\hq\uni\ai-for-good-hackathon` lets `kb fetch` fall back to the hq copies and `kb chunk` read the hq text extractions (maintainer only); the CPR Arabic it reads from the PDF with pypdf, because the hq .txt files (made with PyMuPDF) reverse the lam-alef. Remote: github.com/SHRA1M/onyx-hackathon-build, private, branches main and backup/main, CI `reproduce.yml` (kb fetch, kb verify, check-data, pytest). Not hosted; no push deploys.
+Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, downloaded once), pytest, jsonschema, pypdf. CLI: `python -m onyx kb fetch|verify|chunk|ingest|export`, `python -m onyx check-data`, `python -m onyx verify-log <file>`, `python -m onyx run S1..S5 [--lang ar] [--ungoverned] [--inject TEXT]` (scripted, offline), `python -m onyx record --source scripted|live`, `python -m onyx replay <log>`, `python -m onyx eval --runs <root> --out <dir>`. Live model: `.env` at the repo root (gitignored) with ONYX_MODEL_BASE_URL, ONYX_MODEL, ONYX_MODEL_API_KEY; names in `.env.example`. `ONYX_SOURCE_DIR=D:\Projects\hq\uni\ai-for-good-hackathon` lets `kb fetch` fall back to the hq copies and `kb chunk` read the hq text extractions (maintainer only); the CPR Arabic it reads from the PDF with pypdf, because the hq .txt files (made with PyMuPDF) reverse the lam-alef. Remote: github.com/SHRA1M/onyx-hackathon-build, private, branches main and backup/main, CI `reproduce.yml` (kb fetch, kb verify, check-data, pytest). Not hosted; no push deploys.
 
 ## Where things live
 
@@ -17,9 +17,14 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
 - `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs; a `documents` list per agent), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts only), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
 - `onyx/audit.py` (Task 4): `AuditLog(path, clock)` with `start(scenario_id)` and `append(event) -> hash`; `verify(path)`, `first_break(path)`, `iter_model_responses(path)`, `key_hashes()`, `FIELDS`. Tests `tests/test_audit.py`.
-- `onyx/model.py` (Task 5): `ModelResponse(request_id, raw)` (`raw` is chat-completions JSON, logged verbatim as `model_response`), `OpenAICompatibleModel(base_url, model, api_key)` (stdlib urllib, temperature 0), `RecordedModel(log_path)` (replay by `model_request_id`), `MockModel(script)` (dict or function, offline).
+- `onyx/model.py` (Task 5): `ModelResponse(request_id, raw)` (`raw` is chat-completions JSON, logged verbatim as `model_response`), `OpenAICompatibleModel(base_url, model, api_key)` (stdlib urllib; temperature sent only when given, max_tokens 16000, timeout 600 s), `from_env()` (reads `.env`, raises `MissingModelKey` when any of the three is empty), `RecordedModel(log_path)` (replay by `model_request_id`), `MockModel(script)` (dict or function, offline).
 - `onyx/agents/` (Task 5): `base.Agent` (`run(request_id, step, lang)`: retrieve within `documents_of()`, one model call, `parse_output`, verbs outside the mandate moved to `rejected` and logged as `reject_proposal`; `sources_used` is what was retrieved, set by code), `ChromaRetriever(kb_main collection)`, `AGENTS` (care, adviser, tdra, data_office, coordinator; roles from the hq plan's Agents table). `Adviser.classify_channel` is plain code (`CHANNELS`). Clause ids in proposals are chunk ids `document_id:clause`. `documents_of()` reads the agent's `documents` list and raises on an id not in the manifest. Tests `tests/test_agents.py`.
-- `onyx/gate.py` (Task 6): `decide(proposal, State, Knowledge) -> Verdict{verdict, clause_ids, reasons}`, `allow_all` (ungoverned), `DECIDERS`, `override(verdict, approver, reason, log, entity_id)`, `GATES` (verb to gate functions). `State`: agent, inject, released, retrieved, channel, facts (scenario field names), humans. `Knowledge.load()` (rules, mandates, chunks; injectable). clause_ids are rules.json ids; reasons carry `gate` and `kind` (check, obligation, quote, design_basis, override). Tests `tests/test_gate.py` (48), whose `_facts` and `_state` show how a step becomes a State.
+- `onyx/gate.py` (Task 6): `decide(proposal, State, Knowledge) -> Verdict{verdict, clause_ids, reasons}`, `decide_pending` (addendum 29), `allow_all` (ungoverned), `DECIDERS`, `override(verdict, approver, reason, log, entity_id)`, `GATES` (verb to gate functions). `State`: agent, inject, released, retrieved, channel, facts (scenario field names), humans. `Knowledge.load()` (rules, mandates, chunks; injectable). clause_ids are rules.json ids; reasons carry `gate` and `kind` (check, obligation, quote, design_basis, override). Tests `tests/test_gate.py` (48), whose `_facts` and `_state` show how a step becomes a State.
+- `onyx/coordinator.py` (Task 7): `Coordinator(scenario, model, retriever, log_path, gaps_dir, lang, governed)`; `start(**config)` writes run_start with lang, mode and config; `run()`, `step()`, `inject(text)`. Staged release (inboxes; subscriber record only to care and data_office), abstention with clauses searched, gap candidates in `gaps/candidates.jsonl` for injects. `StepResult.pending` holds the pending proposal and its verdict. Gate events carry `gate_ms`; a pending one has `new_value.pending: true` and entity id `<step>-<proposing agent>`.
+- `onyx/scripted.py`: one canonical proposal per scenario step and a retriever returning its clause; the scripted model never reads the keys.
+- `onyx/runs.py` (Task 8): `run_path(root, sid, n, lang, governed)` (governed EN `runs/S1/run1.jsonl`, AR `runs/S1/ar/run1.jsonl`, ungoverned under `runs/ungoverned/`), `record(source, root)` (never overwrites a run), `RecordedRetriever`, `replay(path) -> (recorded, replayed)` decisions.
+- `onyx/eval.py` (Task 8): `evaluate(root, out)` writes `results.json` and `results.md`, byte-identical on rerun; `action_hits`; metric definitions in the module docstring and at the foot of results.md.
+- `runs/scripted/` (60 scripted runs, labelled `source: scripted`, `model: scripted-mock`) and `eval/scripted/results.{md,json}`. `runs/S*` and `eval/results.*` are for the live runs, not yet made.
 
 ## Decisions settled
 
@@ -48,6 +53,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - 2026-10-21 (hq addendum 27, commit 13c02c6): an agent's document set follows its role, listed in `mandates.json` (care 27, adviser all 40, tdra 18, data_office 22, coordinator 8). Tests: every key `must_cite` document lies in the step agent's set; global examples reach only the adviser, except IMDA for the coordinator (deny-by-default source). A future key that breaks this goes to hq; the set is not widened.
 - 2026-10-21 (Task 6, commit 4adbebb): base checks first. A verb with no gate, or no reachable human, is a hold (IMDA 2.2.2 as design basis). A verb outside the mandate, an inject not released, or a deadline not equal to rules.json is a block. A bad quote, or an unretrieved or non-VERIFIED chunk, is insufficient_evidence. Then every gate for the verb; the strictest wins (block, hold, allow). Only a hold can be overridden, by a named human; a block override is refused and logged. disconnection_gate cites 66/2023 34(1) (as the frozen keys), not the order's 34(3). Global examples (IMDA 2.2.2, EU AI Act 50(1) and 50(5), GDPR 22(3)) quoted from the hq standards-text files, in reasons only.
+- 2026-10-21 (hq task-7 order, commits b048945, 93a7d40): Telecom Law 72(2) has a rules.json row and chunk; model_provider_gate cites it. Task 7 coordinator built (staged release, live inject, Arabic runs cite the same clause ids as English).
+- 2026-10-21 (hq task-8 order Part A, addendum 29, commit d4ec049): the five abstention steps carry `pending_proposal`; after the adviser abstains the coordinator submits it through `gate.decide_pending` (mandate check, then the verb's gates; block or hold stands, else a deny-by-default hold). Verdicts equal every key's gate_outcome; S3's H-02 override is refused and logged with the name. Ungoverned: allow_all, no override event.
+- 2026-10-21 (Task 5 model decision, hq task-8 order): the live model is Claude through Anthropic's OpenAI-compatible endpoint, base URL `https://api.anthropic.com/v1/`, model `claude-opus-5-5` (platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk, read through context7). Temperature below 1 is a 400 on Claude 4.7+, so it is omitted.
+- 2026-10-21 (Task 8, commit d85871d): every event has `gate_ms` and `model_ms` (null where not measured). Action recall addressee: where the key answers a step sent by a human with draft_reply, the reply must be addressed to the human; every other step a non-human addressee. Obligation recall is step-level (key verdict reached and every must_cite on the step's record). Hand-over latency: first step from handover_step that is a hold, an allowed proposal to or asking for a human, or a complaint_gate hand-over duty. All three sent to hq to confirm.
 
 ## Traps
 
@@ -66,13 +75,14 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- For hq (report-back 2026-10-21-doc-sets-and-gate): Telecom Law 72(2), named in the order's model_provider_gate, has no rules.json row or chunk, so it is not cited; 34(1) used in place of the order's 34(3); price_change, cancellation and child gates have no scenario step (synthetic tests). Still open from the blind review: S2 steps 3 and 4 share verb draft_reply (the gate tells them apart by `recipient`).
-- The gate's fact and args vocabulary (change, recipient, payload, outbound, human_review_open) is the gate's own; Task 7's coordinator and mock scripts must produce it. S4 step 5's `must_cite` is the adviser's searched list, met in Task 7, not by the gate.
-- Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 hits under every extractor; not read, not chunked.
+- Live runs: wait for Iyas to fill `.env` (key never in chat). Then `record --source live` (60 runs, about 312 calls, estimate $20 to $40) and `eval --runs runs --out eval`, commit `eval: results from runs/`.
+- For hq (report-back 2026-10-21-pending-and-task8): confirm the addressee rule, the obligation-recall definition and the hand-over latency definition; `gate.decide_pending` added to the gate.
+- price_change, cancellation and child gates have no scenario step (synthetic tests only).
+- Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 reversed-ligature hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
 - GitHub may keep the old commits reachable by their hash until its own cleanup; private repo. A full purge is a GitHub Support request.
-- Arabic in the scenario steps (`text_ar`) is the assistant's synthetic subscriber speech, not yet read by Iyas on a page; scenarios are not hashed, so a wording fix is allowed.
+- Arabic in the scenario steps (`text_ar`) not yet read by Iyas on a page; scenarios are not hashed, wording fixes allowed.
 
 ## Next action
 
-Task 7 (scenarios and the coordinator: staged release, live inject) on Opus; it builds a State from each step and feeds the gate.
+Iyas fills `.env`; then the live Task 8 runs and eval on Opus. Task 9 only on a new hq order.
