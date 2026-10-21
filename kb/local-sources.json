@@ -37,7 +37,8 @@
   "splitter": "decimal",
   "pair_of": "",
   "top": false,
-  "strip": ""
+  "strip": "",
+  "bare_page_numbers": true
  },
  "pdpl-45-2021-en": {
   "file": "standards-text/pdpl-45-2021-en.pdf",

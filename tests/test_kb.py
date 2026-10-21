@@ -136,3 +136,19 @@ def test_export_writes_inputs_md(tmp_path):
     out = kb.export(tmp_path)
     text = out.read_text(encoding="utf-8")
     assert "tdra-cpr-v2-en" in text and "sha256" in text
+
+
+def test_a_bilingual_heading_with_a_long_arabic_title_is_still_a_clause():
+    # pypdf puts the Arabic title on the English heading line (licence-2-2026, 2026-10-21 re-extraction).
+    text = "2.1 Roll-Out and Coverage 2.1  تغطية\nshall roll out.\n3.1 General 3.1  الشروط العامة للترخيص\nshall comply.\nيلتزم المرخص له\n3.2 Law\n"
+    chunks = kb.split_decimal(text, keep="en")
+    assert [c["clause"] for c in chunks] == ["2.1", "3.1", "3.2"]
+    assert kb._join(chunks[0]["lines"]) == "Roll-Out and Coverage shall roll out."  # Arabic the lesser part
+    assert kb._join(chunks[1]["lines"]) == "General shall comply."
+
+
+def test_bare_page_numbers_mark_pages_when_asked():
+    text = " 1 \nHeader\n1.1 One\n 2 \nHeader\n1.2 Two\n7\n 3 \nHeader\n1.3 Three\n"
+    assert [p for p, _ in kb.page_lines(text)] == [1] * 6  # no markers, no option: one page
+    assert [(p, l) for p, l in kb.page_lines(text, bare_page_numbers=True)] == [
+        (1, "Header"), (1, "1.1 One"), (2, "Header"), (2, "1.2 Two"), (3, "Header"), (3, "1.3 Three")]

@@ -175,13 +175,16 @@ def _is_arabic(line: str) -> bool:
     return bool(letters) and sum(1 for c in letters if ARABIC.match(c)) / len(letters) > 0.5
 
 
-def page_lines(text: str) -> list[tuple[int, str]]:
+def page_lines(text: str, bare_page_numbers: bool = False) -> list[tuple[int, str]]:
     """Lines with their page numbers, minus page markers, bare page numbers, contents lines and
-    running headers or footers (a line repeated on at least 30% of five or more pages)."""
+    running headers or footers (a line repeated on at least 30% of five or more pages). With
+    bare_page_numbers, a text with no markers (pypdf) starts a page at a line holding only the next number."""
     pages: list[tuple[int, list[str]]] = []
     current = (1, [])
     for line in text.splitlines():
         m = PAGE_MARK.match(line)
+        if not m and bare_page_numbers and line.strip() == str(current[0] + 1):
+            m = re.match(r"\s*(\d+)", line)
         if m:
             if current[1]:
                 pages.append(current)
@@ -218,16 +221,32 @@ def _next_ok(new: tuple[int, ...], cur: tuple[int, ...] | None, slack: int = 2) 
     return new[i] <= base + slack and all(x == 1 for x in new[i + 1:])
 
 
-def split_decimal(text: str, keep: str = "en", top: bool = False, strip: str = "") -> list[dict[str, Any]]:
+def _english_heading(line: str) -> str | None:
+    """'3.1 General 3.1 <Arabic title>' -> '3.1 General': a bilingual heading line, the Arabic title dropped.
+    None if the line is not an English clause heading."""
+    m = DECIMAL.match(line)
+    if not (m and m.group(2) and re.match(r"[A-Za-z]", m.group(2))):
+        return None
+    head = ARABIC.split(m.group(2), maxsplit=1)[0]
+    head = re.sub(rf"\s*{re.escape(m.group(1))}\.?\s*$", "", head).strip()
+    return f"{m.group(1)} {head}"
+
+
+def split_decimal(text: str, keep: str = "en", top: bool = False, strip: str = "",
+                  bare_page_numbers: bool = False) -> list[dict[str, Any]]:
     """Clause headings are decimal numbers at line start (26.7.2). With top=True, a bare number before a
     capitalised title (7 High-level ...) is a heading too; strip removes a running footer glued to a line."""
     chunks: list[dict[str, Any]] = []
     cur: tuple[int, ...] | None = None
-    for page, line in page_lines(text):
+    for page, line in page_lines(text, bare_page_numbers):
         if strip:
             line = re.sub(strip, "", line)
-        if keep == "en" and _is_arabic(line):
-            continue
+        if keep == "en" and ARABIC.search(line):
+            heading = _english_heading(line)
+            if heading:
+                line = heading
+            elif _is_arabic(line):
+                continue
         t = TOP.match(line) if top else None
         if t and _next_ok((int(t.group(1)),), cur):
             cur = (int(t.group(1)),)
@@ -371,7 +390,8 @@ def build_chunks(local_dir: str | os.PathLike | None = None, cited: set[tuple[st
         text = read_text(local_dir / spec["text"])
         row = manifest[doc_id]
         if spec["splitter"] == "decimal":
-            raw = split_decimal(text, keep="en", top=spec["top"], strip=spec["strip"])
+            raw = split_decimal(text, keep="en", top=spec["top"], strip=spec["strip"],
+                                bare_page_numbers=spec.get("bare_page_numbers", False))
         else:
             raw = split_articles(text, any_gap=row["source_type"] == "extract")
         ar = arabic.get(doc_id, {})
