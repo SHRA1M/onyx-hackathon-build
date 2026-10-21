@@ -10,8 +10,9 @@ Metrics, per run, then min and max over the three runs of each scenario, mode an
   (draft_reply), the reply is addressed to that human (args.recipient 'human' or a 'Human agent' target); every
   other step expects a non-human addressee (blind keys review, 2026-10-21: S2 steps 3 and 4).
   On the abstention step the verb is flag_gap; the pending proposal's verb is never counted (addendum 29).
-- obligation recall: share of key obligations on steps that reached the key's verdict (gate_outcome on the
-  abstention step) with every must_cite clause on the step's record (verdict, proposal or clauses searched).
+- obligation proxy (addendum item 27 wording): share of key obligations on steps that reached the key's verdict
+  (gate_outcome on the abstention step) with every must_cite clause on the step's record (verdict, proposal or
+  clauses searched).
 - gap recall: share of the key's gaps_expected flagged in the run (flag_gap proposals and the abstention's gaps).
 - abstention: the key's abstain_step answered INSUFFICIENT_EVIDENCE by the adviser (addendum 29).
 - hand-over latency in steps: from the key's handover_step to the first step that passes to a human: a hold (held
@@ -19,6 +20,8 @@ Metrics, per run, then min and max over the three runs of each scenario, mode an
 - ungoverned baseline: steps where the ungoverned run allowed what the key says the gate holds or blocks.
 - Arabic versus English agreement: share of steps whose decision and clause ids are the same in the two languages.
 - gate_ms and model_ms: median and max (addendum 18).
+- tokens and cost, per run: model calls, prompt and completion tokens from each reply's usage, and USD priced from
+  onyx/data/model_prices.json; "price unknown" where the model has no price row or a reply carries no usage.
 """
 
 from __future__ import annotations
@@ -29,12 +32,12 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
-from onyx import audit, data, gate
+from onyx import audit, cost, data, gate
 from onyx.coordinator import _rules_by_chunk
 from onyx.runs import LANGS, RUNS, SCENARIOS, run_path
 
 MODES = {"governed": True, "ungoverned": False}
-METRICS = ("gate_rejection_rate", "citation_validity", "action_recall", "obligation_recall", "gap_recall",
+METRICS = ("gate_rejection_rate", "citation_validity", "action_recall", "obligation_proxy", "gap_recall",
            "abstention", "handover_latency_steps", "ungoverned_claims_allowed")
 HUMAN_VERBS = {"escalate_to_human", "request_human_review"}
 
@@ -108,7 +111,7 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
     def expected(n: int) -> str:
         return steps[n].get("gate_outcome", steps[n]["verdict"])
 
-    # obligation recall: the step reached the key's verdict and every must_cite clause is on its record
+    # obligation proxy: the step reached the key's verdict and every must_cite clause is on its record
     met = total = 0
     for n, step in steps.items():
         on_record = {c for e in by_step.get(n, []) for c in e["clause_ids"]}
@@ -142,7 +145,7 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
         "gate_rejection_rate": _ratio(sum(e["verdict"] != gate.ALLOW for e in gates), len(gates)),
         "citation_validity": _ratio(sum(_citation_valid(e["old_value"], kb) for e in proposals), len(proposals)),
         "action_recall": _ratio(sum(hits.values()), len(hits)),
-        "obligation_recall": _ratio(met, total),
+        "obligation_proxy": _ratio(met, total),
         "gap_recall": _ratio(len(set(key["gaps_expected"]) & flagged), len(key["gaps_expected"])),
         "abstention": int(abstains.get(key["abstain_step"], {}).get("verdict") == gate.INSUFFICIENT),
         "handover_latency_steps": handover,
@@ -150,6 +153,7 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
         "gate_ms": [e["gate_ms"] for e in gates if e.get("gate_ms") is not None],
         "model_ms": [e["model_ms"] for e in events if e["action"] == "propose" and e.get("model_ms") is not None],
         "signature": _signature(events),
+        "usage": cost.run_usage(events),
     }
 
 
@@ -169,7 +173,7 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
     repo = Path(__file__).resolve().parents[1]
     shown = root.resolve().relative_to(repo) if root.resolve().is_relative_to(repo) else root
     results: dict[str, Any] = {"runs_root": shown.as_posix(), "scenarios": {}, "latency": {}, "models": [],
-                               "runs_read": 0, "all_chains_ok": True, "all_keys_match": True}
+                               "runs_read": 0, "all_chains_ok": True, "all_keys_match": True, "runs": []}
     timings: dict[str, dict[str, list[float]]] = {m: {"gate_ms": [], "model_ms": []} for m in MODES}
     models = set()
     for sid in SCENARIOS:
@@ -178,8 +182,10 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
         for mode, governed in MODES.items():
             per_lang: dict[str, list[dict[str, Any]]] = {}
             for lang in LANGS:
-                per_lang[lang] = [run_metrics(p, key, scenario, kb, by_chunk) for n in range(1, RUNS + 1)
-                                  if (p := run_path(root, sid, n, lang, governed)).exists()]
+                paths = [p for n in range(1, RUNS + 1) if (p := run_path(root, sid, n, lang, governed)).exists()]
+                per_lang[lang] = [run_metrics(p, key, scenario, kb, by_chunk) for p in paths]
+                results["runs"] += [{"path": p.relative_to(root).as_posix(), "model": r["model"], **r["usage"]}
+                                    for p, r in zip(paths, per_lang[lang])]
             row: dict[str, Any] = {}
             for lang, rows in per_lang.items():
                 results["runs_read"] += len(rows)
@@ -223,7 +229,7 @@ def _markdown(results: dict[str, Any]) -> str:
              "they agree. Synthetic operator and subscribers.", "",
              f"All hash chains verify: {'yes' if results['all_chains_ok'] else 'NO'}. "
              f"Every run_start carries the current key hashes: {'yes' if results['all_keys_match'] else 'NO'}.", ""]
-    heads = ["Scenario", "Lang", "Runs", "Gate rejection", "Citation validity", "Action recall", "Obligation recall",
+    heads = ["Scenario", "Lang", "Runs", "Gate rejection", "Citation validity", "Action recall", "Obligation proxy",
              "Gap recall", "Abstention", "Hand-over latency (steps)", "Ungoverned claims allowed"]
     for mode in MODES:
         lines += [f"## {mode.capitalize()}", "", "| " + " | ".join(heads) + " |", "|" + "---|" * len(heads)]
@@ -237,6 +243,18 @@ def _markdown(results: dict[str, Any]) -> str:
         lines += [f"Latency: gate median {lat['gate_ms']['median_ms']} ms, max {lat['gate_ms']['max_ms']} ms "
                   f"({lat['gate_ms']['n']} decisions); model median {lat['model_ms']['median_ms']} ms, max "
                   f"{lat['model_ms']['max_ms']} ms ({lat['model_ms']['n']} calls).", ""]
+    prices = cost.load_prices()
+    lines += ["## Tokens and cost", "",
+              f"Priced from {prices['source']} (read {prices['read']}), base input and output prices; a model with no "
+              "price row, or a reply with no usage, is price unknown.", "",
+              "| Run | Model | Calls | Prompt tokens | Completion tokens | Cost |", "|---|---|---|---|---|---|"]
+    for r in results["runs"]:
+        tokens = [str(r[k]) if r[k] is not None else "not recorded" for k in ("prompt_tokens", "completion_tokens")]
+        usd = "price unknown" if r["cost_usd"] is None else f"USD {r['cost_usd']:.4f}"
+        lines.append(f"| {r['path']} | {r['model']} | {r['calls']} | {' | '.join(tokens)} | {usd} |")
+    total = [r["cost_usd"] for r in results["runs"]]
+    lines += ["", "Total: " + ("price unknown" if not total or None in total else f"USD {sum(total):.4f}") +
+              f" over {sum(r['calls'] for r in results['runs'])} calls.", ""]
     lines += ["## Definitions", "", *[line.strip() for line in __doc__.split("Metrics,", 1)[1].splitlines()[1:]
                                       if line.strip()]]
     return "\n".join(lines) + "\n"

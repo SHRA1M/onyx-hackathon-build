@@ -141,12 +141,15 @@ def check_mandates() -> list[str]:
 def check_data() -> int:
     """Addendum item 2: fail on a listing-page URL, on a quote that is not the document's text, on a rule
     without a clause id. Rows with no recorded URL are listed, not failed."""
+    from onyx import cost
+
     rows = kb.load_manifest()
     failures = [p for r in rows for p in kb.url_problems(r)] + check_rules() + check_mandates() + ligature_problems()
+    failures += cost.check_prices()
     no_url = [r["document_id"] for r in rows if not r["url"] and r["status"] != "UNVERIFIED"]
     rules, mandates = load_rules(), load_mandates()
     print(f"rules {len(rules)}  mandate verbs {sum(len(s['verbs']) for s in mandates.values())}  "
-          f"manifest rows {len(rows)}")
+          f"manifest rows {len(rows)}  model prices {len(cost.load_prices()['models'])}")
     if no_url:
         print(f"no URL recorded ({len(no_url)}): {', '.join(no_url)}")
     print("transcribed from page images or scanned text:")

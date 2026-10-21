@@ -17,11 +17,14 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from onyx import audit, data, kb
+from collections.abc import Callable
+
+from onyx import audit, cost, data, kb
 from onyx import model as model_mod
 
 SCENARIOS = ("S1", "S2", "S3", "S4", "S5")  # the demo set; the unseen bank is never recorded or scored
 LANGS = ("en", "ar")
+MODES = ("governed", "ungoverned")
 RUNS = 3
 DECISIONS = {"gate", "abstain", "override_refused", "override_release"}
 
@@ -43,18 +46,23 @@ def decisions(path: str | Path) -> list[tuple[Any, ...]]:
 
 
 def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS, runs: int = RUNS,
-           langs: tuple[str, ...] = LANGS, env: str | Path = ".env") -> list[Path]:
+           langs: tuple[str, ...] = LANGS, env: str | Path = ".env", modes: tuple[str, ...] = MODES,
+           retriever: Any = None, max_usd: float = cost.DEFAULT_MAX_USD, spend_root: str | Path = cost.RUNS_DIR,
+           out: Callable[[str], Any] = print) -> list[Path]:
+    """A live run stops before any call when the key has no value (MissingModelKey) or when the spend guard
+    refuses (cost.SpendRefused). `retriever` replaces kb_main in tests only."""
     from onyx import coordinator, scripted
 
     if source == "live":
         live = model_mod.from_env(env)  # raises MissingModelKey before anything is written
-        retriever = coordinator._kb_retriever()
+        retriever = retriever or coordinator._kb_retriever()
+        cost.guard(live.model, cost.plan(scenarios, langs, modes, runs, retriever), max_usd, spend_root, out)
     elif source != "scripted":
         raise ValueError(f"source {source!r}: live or scripted")
     written = []
     for sid in scenarios:
         scenario = data.load_scenario(sid)
-        for governed in (True, False):
+        for governed in (mode == "governed" for mode in modes):
             for lang in langs:
                 for n in range(1, runs + 1):
                     path = run_path(root, sid, n, lang, governed)
@@ -112,8 +120,9 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
 def _record_cli(args) -> int:
     root = Path(args.root or ("runs" if args.source == "live" else "runs/scripted"))
     try:
-        written = record(args.source, root, tuple(args.scenarios or SCENARIOS), args.runs)
-    except model_mod.MissingModelKey as e:
+        written = record(args.source, root, tuple(args.scenarios or SCENARIOS), args.runs,
+                         modes=tuple(args.modes or MODES), max_usd=args.max_usd)
+    except (model_mod.MissingModelKey, cost.SpendRefused) as e:
         print(f"stopped: {e}")
         return 2
     print(f"{len(written)} runs written under {root} ({args.source}).")
@@ -137,6 +146,9 @@ def register(subparsers) -> None:
     parser.add_argument("--root", help="default runs/ (live) or runs/scripted/ (scripted)")
     parser.add_argument("--scenarios", nargs="*", choices=SCENARIOS)
     parser.add_argument("--runs", type=int, default=RUNS)
+    parser.add_argument("--modes", nargs="*", choices=MODES, help="default both; the bake-off runs governed only")
+    parser.add_argument("--max-usd", type=float, default=cost.DEFAULT_MAX_USD,
+                        help=f"refuse a live run whose estimate is over this (default USD {cost.DEFAULT_MAX_USD})")
     parser.set_defaults(func=_record_cli)
     parser = subparsers.add_parser("replay", help="re-run a recorded log offline and compare the verdicts")
     parser.add_argument("log")

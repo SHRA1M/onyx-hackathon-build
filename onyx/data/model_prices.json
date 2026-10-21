@@ -1,0 +1,28 @@
+{
+ "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+ "read": "2026-10-21",
+ "read_through": "claude-api skill, shared/live-sources.md, Pricing row",
+ "note": "Base input and output prices, Claude API (first party), global routing, no batch, no cache. Each quote is the row of the page's 'Model pricing' table, copied verbatim (footnote markers dropped).",
+ "models": {
+  "claude-opus-5-5": {
+   "usd_per_mtok_in": 4,
+   "usd_per_mtok_out": 20,
+   "quote": "| Claude Opus 5.5 | $4 / MTok | $5 / MTok | $8 / MTok | $0.20 / MTok | $20 / MTok |"
+  },
+  "claude-sonnet-5-5": {
+   "usd_per_mtok_in": 2,
+   "usd_per_mtok_out": 10,
+   "quote": "| Claude Sonnet 5.5 | $2 / MTok | $2.50 / MTok | $4 / MTok | $0.10 / MTok | $10 / MTok |"
+  },
+  "claude-haiku-5-5": {
+   "usd_per_mtok_in": 0.10,
+   "usd_per_mtok_out": 0.50,
+   "max_prompt_tokens": 100000,
+   "quote": "| Claude Haiku 5.5 (for prompts up to 100,000 tokens) | $0.10 / MTok | $0.125 / MTok | $0.20 / MTok | $0.01 / MTok | $0.50 / MTok |"
+  }
+ },
+ "bytes_per_token": {
+  "value": 4,
+  "quote": "Average web page (10 kB): ~2,500 tokens"
+ }
+}

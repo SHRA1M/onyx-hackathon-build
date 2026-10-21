@@ -30,6 +30,488 @@
  "models": [
   "scripted-mock"
  ],
+ "runs": [
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S1/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S1/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S1/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S1/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S1/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S1/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S1/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S1/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S1/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S1/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S1/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S1/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S2/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S2/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S2/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S2/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S2/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S2/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S2/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S2/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S2/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S2/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S2/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S2/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S3/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S3/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S3/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S3/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S3/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S3/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S3/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S3/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S3/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S3/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S3/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S3/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S4/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S4/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S4/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S4/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S4/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S4/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S4/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S4/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S4/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S4/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S4/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 5,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S4/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S5/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S5/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S5/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S5/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S5/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "S5/ar/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S5/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S5/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S5/run3.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S5/ar/run1.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S5/ar/run2.jsonl",
+   "prompt_tokens": null
+  },
+  {
+   "calls": 6,
+   "completion_tokens": null,
+   "cost_usd": null,
+   "model": "scripted-mock",
+   "path": "ungoverned/S5/ar/run3.jsonl",
+   "prompt_tokens": null
+  }
+ ],
  "runs_read": 60,
  "runs_root": "runs/scripted",
  "scenarios": {
@@ -60,7 +542,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.9286,
       "min": 0.9286
      },
@@ -99,7 +581,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.9286,
       "min": 0.9286
      },
@@ -136,7 +618,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -175,7 +657,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -214,7 +696,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.8235,
       "min": 0.8235
      },
@@ -253,7 +735,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.8235,
       "min": 0.8235
      },
@@ -290,7 +772,7 @@
       "max": 1,
       "min": 1
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -329,7 +811,7 @@
       "max": 1,
       "min": 1
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -368,7 +850,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.8571,
       "min": 0.8571
      },
@@ -407,7 +889,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.8571,
       "min": 0.8571
      },
@@ -444,7 +926,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -483,7 +965,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -522,7 +1004,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 1.0,
       "min": 1.0
      },
@@ -561,7 +1043,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 1.0,
       "min": 1.0
      },
@@ -598,7 +1080,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -637,7 +1119,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -676,7 +1158,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.7222,
       "min": 0.7222
      },
@@ -715,7 +1197,7 @@
       "max": 0,
       "min": 0
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.7222,
       "min": 0.7222
      },
@@ -752,7 +1234,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
@@ -791,7 +1273,7 @@
       "max": null,
       "min": null
      },
-     "obligation_recall": {
+     "obligation_proxy": {
       "max": 0.0,
       "min": 0.0
      },
