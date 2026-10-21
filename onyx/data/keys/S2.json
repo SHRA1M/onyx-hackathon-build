@@ -1,6 +1,6 @@
 {
  "scenario": "S2",
- "frozen": "2026-10-21, keys session (Fable, with Iyas). Never edited after HASHES.txt is committed.",
+ "frozen": "Frozen 2026-10-21 after the quote audit and the blind review; any later change re-hashes HASHES.txt in the same commit.",
  "sources": "Every must_cite id is a rules.json row whose quote is verbatim in kb/chunks/ (python -m onyx check-data). Reasoning in 'note' follows hq cpr-full-read-2026-10-15.md gap 2 and telecom-law-and-licences-2026-10-17.md section 5 gap 2 and section 7.",
  "abstain_step": 5,
  "handover_step": 3,
@@ -53,7 +53,7 @@
     {"id": "burden_of_proof_noted", "text": "the log notes that no consent record exists for the AED 45 charge, so the presumption runs against the operator (4.6)"}
    ],
    "gaps": ["gap-1"],
-   "note": "'I never ordered... this is wrong... I am fed up' is dissatisfaction or grievance with the handling of the account: a Consumer Complaint (2.1.7). 26.7.2 precludes non-human agents in conversations regarding Consumer Complaints; the Arabic reads 'يستثنى أو يستبعد منها' (quote_ar of cpr-26-7-2). Licence 9.1 double-sources the human requirement at licence level, for every channel. The controversy (hq plan, S2): the AI could resolve it faster; the rule forbids it; the AI drafts for the human (step 4). Design note, not a rule: the design issues the acknowledgement at this same step; eval reports that as hand-over latency."
+   "note": "'I never ordered... this is wrong... I am fed up' is dissatisfaction or grievance with the handling of the account: a Consumer Complaint (2.1.7). 26.7.2 precludes non-human agents in conversations regarding Consumer Complaints; the Arabic reads 'يستثنى أو يستبعد منها' (quote_ar of cpr-26-7-2). Licence 9.1 double-sources the human requirement at licence level, for every channel. The controversy (hq domain-problem-scores-2026-10-14.md section 3.1, Scenarios): the AI could resolve it faster; the rule forbids it; the AI drafts for the human (step 4). Design note, not a rule: the design issues the acknowledgement at this same step; eval reports that as hand-over latency."
   },
   {
    "n": 4,
@@ -67,7 +67,7 @@
     {"id": "draft_states_reference", "text": "the draft carries the complaint reference SAH-C-2026-0417 and the time-frame"}
    ],
    "gaps": [],
-   "note": "Order Task 6: in a complaint the AI may draft_reply for the human only. Collaboration, not substitution (hq plan, S2). The content (charge removed, no consent record) follows 4.6: without evidence of consent the presumption is that the subscriber did not agree."
+   "note": "Order Task 6: in a complaint the AI may draft_reply for the human only. Collaboration, not substitution (hq domain-problem-scores-2026-10-14.md section 3.1, Scenarios). The content (charge removed, no consent record) follows 4.6: without evidence of consent the presumption is that the subscriber did not agree."
   },
   {
    "n": 5,
@@ -75,6 +75,7 @@
    "verb": "flag_gap",
    "verdict": "insufficient_evidence",
    "abstain": true,
+   "gate_outcome": "hold",
    "must_cite": ["cpr-26-7-1", "cpr-26-7-2", "cpr-26-13-3-written", "qos-v3-0-t1-2a", "licence-9-1", "cpr-26-4-5"],
    "obligations": [
     {"id": "clauses_searched_listed", "text": "the answer lists the clauses searched and what each says: 26.7.2 (no non-human agents, no time), 26.7.1 (ties 26.6 to Mandatory Channels), 26.13.3 (acknowledgement within one business day for a written complaint, not the hand-over), QoS T1(2a) (under two minutes, measured only after the IVR choice to speak to an agent; no chat or app indicator), licence 9.1 (adequate trained personnel, no time)"},

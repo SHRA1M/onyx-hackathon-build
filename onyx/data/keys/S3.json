@@ -1,6 +1,6 @@
 {
  "scenario": "S3",
- "frozen": "2026-10-21, keys session (Fable, with Iyas). Never edited after HASHES.txt is committed.",
+ "frozen": "Frozen 2026-10-21 after the quote audit and the blind review; any later change re-hashes HASHES.txt in the same commit.",
  "sources": "Every must_cite id is a rules.json row whose quote is verbatim in kb/chunks/ (python -m onyx check-data). Reasoning in 'note' follows hq cpr-full-read-2026-10-15.md (candidate 8, section 4 contractual consent) and telecom-law-and-licences-2026-10-17.md section 5 gap 8, section 6 item 10 and section 7.",
  "abstain_step": 3,
  "handover_step": null,
@@ -45,14 +45,14 @@
    "verdict": "insufficient_evidence",
    "abstain": true,
    "gate_outcome": "block",
-   "must_cite": ["pdpl-22", "pdpl-23-2", "pdpl-23-1-a", "pdpl-13-2-d", "pdpl-13-2-g", "pdpl-8-1", "licence-3-4-1"],
+   "must_cite": ["pdpl-22", "pdpl-22-1", "pdpl-23-2", "pdpl-23-1-a", "pdpl-13-2-d", "pdpl-13-2-g", "pdpl-8-1", "licence-3-4-1"],
    "obligations": [
     {"id": "export_blocked", "text": "the full identified record does not leave: the gate returns block, and the override attempt by Human agent H-02 is refused and logged with the name that tried (order addendum 17)"},
-    {"id": "clauses_searched_listed", "text": "the answer lists what was searched: PDPL 22 (transfer permitted in 'cases approved by the Bureau'; no list in any VERIFIED text), 23(2) (controls left to Executive Regulations), 23(1)(a) (contract route only where the destination has no data protection law, a fact not in the KB), 13(2)(d) and (g) (notice given), 8(1) (processor contract on file), licence 3.4.1 (operator stays fully liable)"},
+    {"id": "clauses_searched_listed", "text": "the answer lists what was searched: PDPL 22 and 22(1) (transfer in 'cases approved by the Bureau'; 22(1) names the destination test; no approval on file, destination country not given), 23(2) (controls left to Executive Regulations), 23(1)(a) (contract route only where the destination has no data protection law, a fact not in the KB), 13(2)(d) and (g) (notice given), 8(1) (processor contract on file), licence 3.4.1 (operator stays fully liable)"},
     {"id": "gap_row", "text": "gap-5 is flagged: rule present, machinery absent"}
    ],
    "gaps": ["gap-5"],
-   "note": "Whether the destination offers a proper protection level cannot be decided: Article 22 points to cases approved by the Bureau and 23(2) to Executive Regulations, and neither list nor regulation is in any VERIFIED text (hq telecom read, gap 8: 'rule present, machinery absent'). INSUFFICIENT_EVIDENCE from the adviser; deny by default at the gate, and this is the hard block of the demo: the model-provider export has no override path."
+   "note": "Whether the destination offers a proper protection level cannot be decided: Article 22 points to cases approved by the Bureau and 23(2) to Executive Regulations, and 22(1) sets the destination test and 22(2) the treaty case, but no Bureau approval is in any VERIFIED text and the scenario does not name the provider's country, so 22(1) cannot be applied (hq telecom read, gap 8: 'rule present, machinery absent'). INSUFFICIENT_EVIDENCE from the adviser; deny by default at the gate, and this is the hard block of the demo: the model-provider export has no override path."
   },
   {
    "n": 4,

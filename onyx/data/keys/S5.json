@@ -1,6 +1,6 @@
 {
  "scenario": "S5",
- "frozen": "2026-10-21, keys session (Fable, with Iyas). Never edited after HASHES.txt is committed.",
+ "frozen": "Frozen 2026-10-21 after the quote audit and the blind review; any later change re-hashes HASHES.txt in the same commit.",
  "sources": "Every must_cite id is a rules.json row whose quote is verbatim in kb/chunks/ (python -m onyx check-data); d16-4-17 and d16-4-18 are Arabic quotes from the hq checked file decision-16-2026-ar-4.17-4.18-checked.txt. Reasoning in 'note' follows hq cpr-full-read-2026-10-15.md gap 5 and telecom-law-and-licences-2026-10-17.md section 5 gap 5, section 6 item 16, section 7.",
  "abstain_step": 4,
  "handover_step": 4,
