@@ -25,6 +25,10 @@ uv run python -m onyx --help
 - Bake-off: [`eval/bakeoff.md`](eval/bakeoff.md), one governed run per scenario (S1 to S5) per language per model.
 - Scored run: [`eval/results.md`](eval/results.md), Sonnet on prompt v3, three runs per scenario per mode per language.
 
+Clause-id resolution (2026-10-21, hq): a cited id missing its language ending (`-en`, `-ar`) resolves to the one
+clause given to that agent for that step that it names, never to the whole knowledge base and never when two match;
+in C3 and C4 S1 that was 6 ids in 4 of 389 proposals citing a clause.
+
 The adapter takes any OpenAI-compatible endpoint; a UAE-hosted Jais 3 or Falcon-H1 Arabic served through vLLM
 exposes the same API, so the provider is three values in `.env`.
 

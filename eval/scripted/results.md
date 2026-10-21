@@ -120,6 +120,10 @@ Total: price unknown over 312 calls.
 VERIFIED and whose quote is 20+ characters verbatim in a cited chunk. A flag_gap that cites no clause is left out
 (rule set by hq on 2026-10-21 after S3 of the scored run); any other proposal citing nothing counts as invalid.
 The bake-off tables keep the earlier definition, every proposal counted (citation_validity_all).
+A cited id not among the clauses given to the agent for the step resolves to the one given clause it names without
+its language ending (gate.resolve_ids, hq, 2026-10-21, after C4 S1); every log is scored so. The bake-off tables
+keep the ids as cited.
+- citation validity without clause-id resolution, and ids resolved (shown only, never compared).
 - gap flags without a clause (shown only, never compared): flag_gap proposals that cite no clause.
 - action recall: share of key steps with a proposal by the key's agent whose verb is the key's verb and whose
 addressee, the subscriber side or a human, matches: where the key answers a step sent by a human with a reply

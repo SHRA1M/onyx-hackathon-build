@@ -4,6 +4,8 @@ decide(proposal, state, kb) -> Verdict{allow|hold|block|insufficient_evidence, c
 passes only if its quote (20+ characters) is verbatim in a chunk the proposing agent retrieved, every cited chunk is
 VERIFIED, the verb is in the agent's mandate, the inject it answers was released to that agent, any deadline it states
 comes from rules.json, and every gate for its verb allows it. The strictest gate decides: block, then hold.
+A cited id not among the clauses given to the agent first resolves to the one given clause it names without its
+language ending (resolve_ids, hq addendum to C4, 2026-10-21); the verdict records each correction.
 
 clause_ids are rules.json ids, binding UAE only (addendum 16). Global examples (IMDA 2.2.2, EU AI Act 50, GDPR 22(3))
 appear in reasons[] with kind 'design_basis', never as the deciding clause. reasons[] entries carry 'gate' and 'kind':
@@ -16,8 +18,9 @@ allow_all and nothing else, so the diff between the runs is the gate alone.
 
 from __future__ import annotations
 
+import copy
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from dataclasses import asdict, dataclass, field
 from functools import lru_cache
 from typing import Any
@@ -42,9 +45,13 @@ class Verdict:
     verdict: str
     clause_ids: list[str] = field(default_factory=list)
     reasons: list[dict[str, Any]] = field(default_factory=list)
+    resolved: list[dict[str, str]] = field(default_factory=list)  # {cited, resolved} per corrected id
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        d = asdict(self)
+        if not self.resolved:
+            del d["resolved"]
+        return d
 
 
 @dataclass
@@ -56,6 +63,7 @@ class State:
     channel: str = ""  # the adviser's classification: app_chat, web, voice, business_centre
     facts: dict[str, Any] = field(default_factory=dict)
     humans: tuple[str, ...] = ()  # named humans reachable now
+    resolve: bool = True  # False only to replay a log recorded before resolve_ids
 
 
 class Knowledge:
@@ -652,6 +660,31 @@ GATES: dict[str, tuple[Callable[..., Verdict | None], ...]] = {
 }
 
 
+LANGUAGE_ENDING = re.compile(r"-(?:en|ar)$")
+
+
+def _bare(chunk_id: str) -> str:
+    document_id, sep, clause = chunk_id.partition(":")
+    return LANGUAGE_ENDING.sub("", document_id) + sep + clause
+
+
+def resolve_ids(cited: Iterable[str], given: Iterable[str]) -> tuple[list[str], list[dict[str, str]]]:
+    """hq addendum to C4 (2026-10-21): a cited id not among the given clauses resolves to the given clause whose id
+    is equal once the language ending (-en, -ar) is removed from the document part of both, only when exactly one
+    given clause matches. Never against the whole KB, never fuzzy. Used by the gate and by the eval. Returns the ids
+    and a {cited, resolved} record per corrected id."""
+    given = set(given)
+    ids, corrected = [], []
+    for cid in cited:
+        matches = [] if cid in given else sorted(g for g in given if _bare(g) == _bare(cid))
+        if len(matches) == 1:
+            ids.append(matches[0])
+            corrected.append({"cited": cid, "resolved": matches[0]})
+        else:
+            ids.append(cid)
+    return ids, corrected
+
+
 def _normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
@@ -697,7 +730,18 @@ def _base_checks(p: Any, s: State, kb: Knowledge) -> Verdict | None:
 
 
 def decide(proposal: Any, state: State, kb: Knowledge | None = None) -> Verdict:
-    kb = kb or Knowledge.load()
+    resolved: list[dict[str, str]] = []
+    if state.resolve and proposal.clause_ids:
+        ids, resolved = resolve_ids(proposal.clause_ids, state.retrieved)
+        if resolved:
+            proposal = copy.copy(proposal)
+            proposal.clause_ids = ids
+    verdict = _decide(proposal, state, kb or Knowledge.load())
+    verdict.resolved = resolved
+    return verdict
+
+
+def _decide(proposal: Any, state: State, kb: Knowledge) -> Verdict:
     failed = _base_checks(proposal, state, kb)
     if failed is not None:
         return failed

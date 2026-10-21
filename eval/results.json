@@ -1,6 +1,204 @@
 {
  "all_chains_ok": true,
  "all_keys_match": true,
+ "c4": {
+  "C3": {
+   "all": {
+    "ar": {
+     "abstention": 1.0,
+     "action_recall": 0.7267,
+     "action_recall_earlier": 0.7133,
+     "citation_validity": 1.0,
+     "gap_recall": 0.8667,
+     "obligation_proxy": 0.3475,
+     "runs": 15,
+     "ungoverned_claims_allowed": 2.1333,
+     "ungoverned_runs": 15
+    },
+    "en": {
+     "abstention": 1.0,
+     "action_recall": 0.7533,
+     "action_recall_earlier": 0.7133,
+     "citation_validity": 0.9905,
+     "gap_recall": 0.8667,
+     "obligation_proxy": 0.3221,
+     "runs": 15,
+     "ungoverned_claims_allowed": 2.3333,
+     "ungoverned_runs": 15
+    }
+   },
+   "by_scenario": {
+    "S1": {
+     "ar": {
+      "action_recall": 0.6667,
+      "citation_validity": 1.0
+     },
+     "en": {
+      "action_recall": 0.6111,
+      "citation_validity": 1.0
+     }
+    },
+    "S2": {
+     "ar": {
+      "action_recall": 0.8333,
+      "citation_validity": 1.0
+     },
+     "en": {
+      "action_recall": 0.8889,
+      "citation_validity": 0.9524
+     }
+    },
+    "S3": {
+     "ar": {
+      "action_recall": 0.6667,
+      "citation_validity": 1.0
+     },
+     "en": {
+      "action_recall": 0.6,
+      "citation_validity": 1.0
+     }
+    },
+    "S4": {
+     "ar": {
+      "action_recall": 0.4667,
+      "citation_validity": 1.0
+     },
+     "en": {
+      "action_recall": 0.6667,
+      "citation_validity": 1.0
+     }
+    },
+    "S5": {
+     "ar": {
+      "action_recall": 1.0,
+      "citation_validity": 1.0
+     },
+     "en": {
+      "action_recall": 1.0,
+      "citation_validity": 1.0
+     }
+    }
+   }
+  },
+  "C4": {
+   "all": {
+    "ar": {
+     "abstention": 1.0,
+     "action_recall": 1.0,
+     "action_recall_earlier": 1.0,
+     "citation_validity": 1.0,
+     "gap_recall": 0.3333,
+     "obligation_proxy": 0.7857,
+     "runs": 2,
+     "ungoverned_claims_allowed": null,
+     "ungoverned_runs": 0
+    },
+    "en": {
+     "abstention": 1.0,
+     "action_recall": 1.0,
+     "action_recall_earlier": 1.0,
+     "citation_validity": 1.0,
+     "gap_recall": 0.3333,
+     "obligation_proxy": 0.7857,
+     "runs": 2,
+     "ungoverned_claims_allowed": null,
+     "ungoverned_runs": 0
+    }
+   },
+   "by_scenario": {
+    "S1": {
+     "ar": {
+      "action_recall": 1.0,
+      "citation_validity": 1.0
+     },
+     "en": {
+      "action_recall": 1.0,
+      "citation_validity": 1.0
+     }
+    },
+    "S2": {
+     "ar": {
+      "action_recall": null,
+      "citation_validity": null
+     },
+     "en": {
+      "action_recall": null,
+      "citation_validity": null
+     }
+    },
+    "S3": {
+     "ar": {
+      "action_recall": null,
+      "citation_validity": null
+     },
+     "en": {
+      "action_recall": null,
+      "citation_validity": null
+     }
+    },
+    "S4": {
+     "ar": {
+      "action_recall": null,
+      "citation_validity": null
+     },
+     "en": {
+      "action_recall": null,
+      "citation_validity": null
+     }
+    },
+    "S5": {
+     "ar": {
+      "action_recall": null,
+      "citation_validity": null
+     },
+     "en": {
+      "action_recall": null,
+      "citation_validity": null
+     }
+    }
+   }
+  },
+  "prompts": {
+   "governed": [
+    "v4"
+   ],
+   "ungoverned": []
+  },
+  "runs": [
+   {
+    "calls": 5,
+    "completion_tokens": 6545,
+    "cost_usd": 0.284722,
+    "model": "claude-sonnet-5-5",
+    "path": "c4/S1/run1.jsonl",
+    "prompt_tokens": 109636
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 6358,
+    "cost_usd": 0.282852,
+    "model": "claude-sonnet-5-5",
+    "path": "c4/S1/run2.jsonl",
+    "prompt_tokens": 109636
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 7917,
+    "cost_usd": 0.370458,
+    "model": "claude-sonnet-5-5",
+    "path": "c4/S1/ar/run1.jsonl",
+    "prompt_tokens": 145644
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 8256,
+    "cost_usd": 0.373848,
+    "model": "claude-sonnet-5-5",
+    "path": "c4/S1/ar/run2.jsonl",
+    "prompt_tokens": 145644
+   }
+  ]
+ },
  "latency": {
   "governed": {
    "gate_ms": {
@@ -538,6 +736,11 @@
       "max": 1.0,
       "min": 0.8571
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 20,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 0
@@ -558,6 +761,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.125,
       "min": 0.125
@@ -623,6 +827,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 18,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -643,6 +852,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.25,
       "min": 0.25
@@ -706,6 +916,11 @@
       "max": 0.8571,
       "min": 0.8571
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 18,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -726,6 +941,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.125,
       "min": 0.125
@@ -791,6 +1007,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 19,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -811,6 +1032,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.25,
       "min": 0.25
@@ -876,6 +1098,11 @@
       "max": 0.875,
       "min": 0.8571
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 20,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -896,6 +1123,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.4783,
       "min": 0.4783
@@ -961,6 +1189,11 @@
       "max": 1.0,
       "min": 0.8571
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 0.8571
+     },
+     "citations": 22,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -981,6 +1214,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.3913,
       "min": 0.3913
@@ -1044,6 +1278,11 @@
       "max": 0.8889,
       "min": 0.875
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 23,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -1064,6 +1303,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.4783,
       "min": 0.4783
@@ -1129,6 +1369,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 21,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -1149,6 +1394,7 @@
       "max": 1,
       "min": 1
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.3913,
       "min": 0.3913
@@ -1214,6 +1460,11 @@
       "max": 0.8,
       "min": 0.75
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 11,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -1234,6 +1485,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.037,
       "min": 0.037
@@ -1289,12 +1541,17 @@
      },
      "citation_validity": {
       "max": 1.0,
-      "min": 0.75
+      "min": 1.0
      },
      "citation_validity_all": {
       "max": 1.0,
+      "min": 1.0
+     },
+     "citation_validity_unresolved": {
+      "max": 1.0,
       "min": 0.75
      },
+     "citations": 13,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -1315,6 +1572,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 1,
      "must_cite_given": {
       "max": 0.3333,
       "min": 0.3333
@@ -1374,6 +1632,11 @@
       "max": 0.8,
       "min": 0.75
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 10,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -1394,6 +1657,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.037,
       "min": 0.037
@@ -1455,6 +1719,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 15,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -1475,6 +1744,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.3333,
       "min": 0.3333
@@ -1530,12 +1800,17 @@
      },
      "citation_validity": {
       "max": 1.0,
-      "min": 0.75
+      "min": 1.0
      },
      "citation_validity_all": {
       "max": 0.8,
-      "min": 0.6
+      "min": 0.8
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 0.75
+     },
+     "citations": 12,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -1556,6 +1831,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 1,
      "must_cite_given": {
       "max": 0.1111,
       "min": 0.1111
@@ -1617,6 +1893,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 21,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -1637,6 +1918,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.4074,
       "min": 0.4074
@@ -1696,6 +1978,11 @@
       "max": 0.8571,
       "min": 0.6667
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 15,
      "gap_flags_without_clause": {
       "max": 2,
       "min": 1
@@ -1716,6 +2003,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.1111,
       "min": 0.1111
@@ -1777,6 +2065,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 21,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -1797,6 +2090,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.4074,
       "min": 0.4074
@@ -1858,6 +2152,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 23,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -1878,6 +2177,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.8125,
       "min": 0.8125
@@ -1943,6 +2243,11 @@
       "max": 0.875,
       "min": 0.8571
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 19,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -1963,6 +2268,7 @@
       "max": 0,
       "min": 0
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.5625,
       "min": 0.5625
@@ -2026,6 +2332,11 @@
       "max": 1.0,
       "min": 1.0
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 22,
      "gap_flags_without_clause": {
       "max": 0,
       "min": 0
@@ -2046,6 +2357,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.8125,
       "min": 0.8125
@@ -2111,6 +2423,11 @@
       "max": 0.8571,
       "min": 0.8571
      },
+     "citation_validity_unresolved": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "citations": 18,
      "gap_flags_without_clause": {
       "max": 1,
       "min": 1
@@ -2131,6 +2448,7 @@
       "max": null,
       "min": null
      },
+     "ids_resolved": 0,
      "must_cite_given": {
       "max": 0.5625,
       "min": 0.5625

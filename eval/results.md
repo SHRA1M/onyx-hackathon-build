@@ -14,10 +14,10 @@ Addressee rule corrected 2026-10-21 (hq): a human-review request is addressed to
 | S1 | ar | 3 | 0.38 to 0.50 | 1.00 | 0.67 | 0.67 | 0.43 | 0.33 | 1 | n/a | n/a | 0.12 | 0 | 0 to 1 |
 | S2 | en | 3 | 0.33 to 0.50 | 0.86 to 1.00 | 0.83 to 1.00 | 0.83 to 1.00 | 0.47 | 1.00 | 1 | 0 | n/a | 0.39 | 0 | 0 |
 | S2 | ar | 3 | 0.44 to 0.50 | 1.00 | 0.83 | 0.83 | 0.47 | 1.00 | 1 | 0 | n/a | 0.48 | 0 | 1 |
-| S3 | en | 3 | 0.17 to 0.40 | 0.75 to 1.00 | 0.60 | 0.60 | 0.21 to 0.36 | 1.00 | 1 | n/a | n/a | 0.33 | 0 | 0 |
+| S3 | en | 3 | 0.17 to 0.40 | 1.00 | 0.60 | 0.60 | 0.21 to 0.36 | 1.00 | 1 | n/a | n/a | 0.33 | 0 | 0 |
 | S3 | ar | 3 | 0.33 to 0.50 | 1.00 | 0.60 to 0.80 | 0.60 to 0.80 | 0.21 | 1.00 | 1 | n/a | n/a | 0.04 | 0 | 1 |
 | S4 | en | 3 | 0.11 to 0.14 | 1.00 | 0.60 to 0.80 | 0.40 to 0.60 | 0.24 | 1.00 | 1 | 0 | n/a | 0.41 | 0 | 0 |
-| S4 | ar | 3 | 0.33 to 0.50 | 0.75 to 1.00 | 0.40 to 0.60 | 0.20 to 0.60 | 0.24 | 1.00 | 1 | 0 | n/a | 0.11 | 0 | 1 |
+| S4 | ar | 3 | 0.33 to 0.50 | 1.00 | 0.40 to 0.60 | 0.20 to 0.60 | 0.24 | 1.00 | 1 | 0 | n/a | 0.11 | 0 | 1 |
 | S5 | en | 3 | 0.33 to 0.38 | 1.00 | 1.00 | 1.00 | 0.17 | 1.00 | 1 | 0 | n/a | 0.56 | 0 | 1 |
 | S5 | ar | 3 | 0.33 to 0.38 | 1.00 | 1.00 | 1.00 | 0.39 | 1.00 | 1 | 0 | n/a | 0.81 | 0 | 0 |
 
@@ -58,10 +58,68 @@ Rule set by hq on 2026-10-21 after S3, before the remaining runs.
 | S2 | governed | ar | 1.00 | 0.86 to 0.88 |
 | S2 | ungoverned | en | 1.00 | 1.00 |
 | S2 | ungoverned | ar | 1.00 | 0.88 to 0.89 |
-| S3 | governed | en | 0.75 to 1.00 | 0.75 to 1.00 |
+| S3 | governed | en | 1.00 | 1.00 |
 | S3 | governed | ar | 1.00 | 0.75 to 0.80 |
 | S3 | ungoverned | en | 1.00 | 1.00 |
 | S3 | ungoverned | ar | 1.00 | 0.75 to 0.80 |
+
+## Citation validity with and without clause-id resolution
+
+Clause-id resolution added 2026-10-21 (hq, after C4 S1): an id missing its language ending resolves to the one given clause it names; 6 ids in 4 of 389 proposals citing a clause across C3 and C4 S1.
+
+| Scenario | Mode | Lang | Citation validity (ids resolved) | Citation validity (ids as cited) | Ids resolved | Proposals citing a clause |
+|---|---|---|---|---|---|---|
+| S1 | governed | en | 1.00 | 1.00 | 0 | 18 |
+| S1 | governed | ar | 1.00 | 1.00 | 0 | 20 |
+| S1 | ungoverned | en | 1.00 | 1.00 | 0 | 19 |
+| S1 | ungoverned | ar | 1.00 | 1.00 | 0 | 18 |
+| S2 | governed | en | 0.86 to 1.00 | 0.86 to 1.00 | 0 | 22 |
+| S2 | governed | ar | 1.00 | 1.00 | 0 | 20 |
+| S2 | ungoverned | en | 1.00 | 1.00 | 0 | 21 |
+| S2 | ungoverned | ar | 1.00 | 1.00 | 0 | 23 |
+| S3 | governed | en | 1.00 | 0.75 to 1.00 | 1 | 13 |
+| S3 | governed | ar | 1.00 | 1.00 | 0 | 11 |
+| S3 | ungoverned | en | 1.00 | 1.00 | 0 | 15 |
+| S3 | ungoverned | ar | 1.00 | 1.00 | 0 | 10 |
+| S4 | governed | en | 1.00 | 1.00 | 0 | 21 |
+| S4 | governed | ar | 1.00 | 0.75 to 1.00 | 1 | 12 |
+| S4 | ungoverned | en | 1.00 | 1.00 | 0 | 21 |
+| S4 | ungoverned | ar | 1.00 | 1.00 | 0 | 15 |
+| S5 | governed | en | 1.00 | 1.00 | 0 | 19 |
+| S5 | governed | ar | 1.00 | 1.00 | 0 | 23 |
+| S5 | ungoverned | en | 1.00 | 1.00 | 0 | 18 |
+| S5 | ungoverned | ar | 1.00 | 1.00 | 0 | 22 |
+
+## C4 beside C3 (governed, en / ar)
+
+Each cell is the mean over the governed runs of all five scenarios (ungoverned claims allowed: the mean per ungoverned run). C3: prompt v3; C4: prompt v4; both Sonnet 5.5.
+
+| Row | C3 en | C3 ar | C4 en | C4 ar |
+|---|---|---|---|---|
+| Citation validity (hq rule) | 0.99 | 1.00 | 1.00 | 1.00 |
+| Action recall (corrected addressee rule; earlier rule in brackets) | 0.75 (0.71) | 0.73 (0.71) | 1.00 (1.00) | 1.00 (1.00) |
+| Obligation proxy | 0.32 | 0.35 | 0.79 | 0.79 |
+| Gap recall | 0.87 | 0.87 | 0.33 | 0.33 |
+| Abstention | 1.00 | 1.00 | 1.00 | 1.00 |
+| Ungoverned claims allowed | 2.33 | 2.13 | n/a | n/a |
+| Runs (governed / ungoverned) | 15 / 15 | 15 / 15 | 2 / 0 | 2 / 0 |
+
+Prompt v4 adds three care lines (verbs, propose-and-let-the-gate-decide, complaint addressee) and widens care's mandate to its gates' clauses; the ungoverned baseline runs on the same prompt.
+
+Prompt named on each C4 run_start: governed v4; ungoverned none recorded.
+
+| Scenario | Lang | Citation validity C3 | Citation validity C4 | Action recall C3 | Action recall C4 |
+|---|---|---|---|---|---|
+| S1 | en | 1.00 | 1.00 | 0.61 | 1.00 |
+| S1 | ar | 1.00 | 1.00 | 0.67 | 1.00 |
+| S2 | en | 0.95 | n/a | 0.89 | n/a |
+| S2 | ar | 1.00 | n/a | 0.83 | n/a |
+| S3 | en | 1.00 | n/a | 0.60 | n/a |
+| S3 | ar | 1.00 | n/a | 0.67 | n/a |
+| S4 | en | 1.00 | n/a | 0.67 | n/a |
+| S4 | ar | 1.00 | n/a | 0.47 | n/a |
+| S5 | en | 1.00 | n/a | 1.00 | n/a |
+| S5 | ar | 1.00 | n/a | 1.00 | n/a |
 
 ## Tokens and cost
 
@@ -132,6 +190,17 @@ Priced from https://platform.claude.com/docs/en/about-claude/pricing (read 2026-
 
 Total: USD 5.2668 over 312 calls.
 
+### C4 runs
+
+| Run | Model | Calls | Prompt tokens | Completion tokens | Cost |
+|---|---|---|---|---|---|
+| c4/S1/run1.jsonl | claude-sonnet-5-5 | 5 | 109636 | 6545 | USD 0.2847 |
+| c4/S1/run2.jsonl | claude-sonnet-5-5 | 5 | 109636 | 6358 | USD 0.2829 |
+| c4/S1/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 145644 | 7917 | USD 0.3705 |
+| c4/S1/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 145644 | 8256 | USD 0.3738 |
+
+Total: USD 1.3119 over 20 calls.
+
 ## Definitions
 
 - gate rejection rate: share of gate verdicts that are not allow.
@@ -139,6 +208,10 @@ Total: USD 5.2668 over 312 calls.
 VERIFIED and whose quote is 20+ characters verbatim in a cited chunk. A flag_gap that cites no clause is left out
 (rule set by hq on 2026-10-21 after S3 of the scored run); any other proposal citing nothing counts as invalid.
 The bake-off tables keep the earlier definition, every proposal counted (citation_validity_all).
+A cited id not among the clauses given to the agent for the step resolves to the one given clause it names without
+its language ending (gate.resolve_ids, hq, 2026-10-21, after C4 S1); every log is scored so. The bake-off tables
+keep the ids as cited.
+- citation validity without clause-id resolution, and ids resolved (shown only, never compared).
 - gap flags without a clause (shown only, never compared): flag_gap proposals that cite no clause.
 - action recall: share of key steps with a proposal by the key's agent whose verb is the key's verb and whose
 addressee, the subscriber side or a human, matches: where the key answers a step sent by a human with a reply

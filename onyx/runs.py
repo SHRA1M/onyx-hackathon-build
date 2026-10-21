@@ -115,13 +115,15 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
                          if e["action"] == "propose" and "sources_mandate" in e["new_value"]}
     # a log recorded before prompt v3 took no gap from notes; its abstentions carry no gaps_source
     notes_gaps = any("gaps_source" in e["new_value"] for e in events if e["action"] == "abstain")
+    # a log recorded before gate.resolve_ids (hq addendum to C4) decided on the ids as cited; its replay does too
+    resolve = bool(config.get("clause_resolution"))
     with tempfile.TemporaryDirectory() as tmp:
         run = coordinator.Coordinator(scenario, model_mod.RecordedModel(path), RecordedRetriever(events),
                                       log_path=Path(tmp) / "replay.jsonl", gaps_dir=Path(tmp) / "gaps",
                                       lang=config.get("lang", "en"), governed=config.get("mode") != "ungoverned",
                                       mandate_clauses=mandate, notes_gaps=notes_gaps,
-                                      recorded_mandates=recorded_mandates)
-        run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode"}})
+                                      recorded_mandates=recorded_mandates, resolve_ids=resolve)
+        run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode", "clause_resolution"}})
         run.run()
         for e in events:
             if e["action"] == "release_event" and e["new_value"]["kind"] == "inject":

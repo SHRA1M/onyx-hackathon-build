@@ -7,6 +7,10 @@ Metrics, per run, then min and max over the three runs of each scenario, mode an
   VERIFIED and whose quote is 20+ characters verbatim in a cited chunk. A flag_gap that cites no clause is left out
   (rule set by hq on 2026-10-21 after S3 of the scored run); any other proposal citing nothing counts as invalid.
   The bake-off tables keep the earlier definition, every proposal counted (citation_validity_all).
+  A cited id not among the clauses given to the agent for the step resolves to the one given clause it names without
+  its language ending (gate.resolve_ids, hq, 2026-10-21, after C4 S1); every log is scored so. The bake-off tables
+  keep the ids as cited.
+- citation validity without clause-id resolution, and ids resolved (shown only, never compared).
 - gap flags without a clause (shown only, never compared): flag_gap proposals that cite no clause.
 - action recall: share of key steps with a proposal by the key's agent whose verb is the key's verb and whose
   addressee, the subscriber side or a human, matches: where the key answers a step sent by a human with a reply
@@ -54,6 +58,9 @@ METRICS = ("gate_rejection_rate", "citation_validity", "action_recall", "obligat
 HUMAN_VERBS = {"escalate_to_human", "request_human_review"}
 ADDRESSEE_LINE = ("Addressee rule corrected 2026-10-21 (hq): a human-review request is addressed to a human; the "
                   "earlier rule scored it as a miss.")
+RESOLUTION_LINE = ("Clause-id resolution added 2026-10-21 (hq, after C4 S1): an id missing its language ending "
+                   "resolves to the one given clause it names; 6 ids in 4 of 389 proposals citing a clause across C3 and "
+                   "C4 S1.")
 C4 = "c4"  # runs/c4: the C4 re-run on prompt v4, Sonnet 5.5 (order 2026-10-21-task-8-part-c4)
 C4_LINE = ("Prompt v4 adds three care lines (verbs, propose-and-let-the-gate-decide, complaint addressee) and widens "
            "care's mandate to its gates' clauses; the ungoverned baseline runs on the same prompt.")
@@ -116,9 +123,12 @@ def must_cite_given(events: list[dict[str, Any]], key: dict[str, Any]) -> dict[i
     return {n: None if c is None else _ratio(*c) for n, c in _must_cite_counts(events, key).items()}
 
 
-def _citation_valid(proposal: dict[str, Any], kb: gate.Knowledge) -> bool:
+def _citation_valid(proposal: dict[str, Any], kb: gate.Knowledge, given: list[str] | None = None) -> bool:
+    """given: the clauses the agent's prompt gave for the step; the cited ids resolve against them (gate.resolve_ids).
+    None scores the ids as cited (the bake-off)."""
     texts = []
-    for cid in proposal.get("clause_ids") or []:
+    cited = proposal.get("clause_ids") or []
+    for cid in cited if given is None else gate.resolve_ids(cited, given)[0]:
         chunk = kb.chunk(cid)
         if chunk is None or chunk.get("status") != "VERIFIED":
             return False
@@ -133,9 +143,20 @@ def _signature(events: list[dict[str, Any]]) -> dict[str, tuple[Any, ...]]:
 
 
 def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: gate.Knowledge,
-                by_chunk: dict[str, list[str]], earlier_addressee: bool = False) -> dict[str, Any]:
-    """earlier_addressee=True scores action_recall on the addressee rule before 2026-10-21 (the bake-off tables)."""
+                by_chunk: dict[str, list[str]], earlier_addressee: bool = False, resolve: bool = True) -> dict[str, Any]:
+    """earlier_addressee=True scores action_recall on the addressee rule before 2026-10-21, and resolve=False the ids
+    as cited (the bake-off tables)."""
     events = _events(path)
+    prompts = {e["entity_id"]: e["new_value"].get("sources_mandate", []) + e["new_value"]["sources_used"]
+               for e in events if e["action"] == "propose"}
+
+    def given(e: dict[str, Any]) -> list[str]:
+        """The clauses given for the step: the prompt's, or the proposal's own where no prompt was sent."""
+        return prompts.get(e["entity_id"], e["old_value"].get("clause_ids") or [])
+
+    def valid(e: dict[str, Any], resolved: bool = resolve) -> bool:
+        return _citation_valid(e["old_value"], kb, given(e) if resolved else None)
+
     sid, governed = key["scenario"], events[0]["new_value"].get("mode") != "ungoverned"
     gates, proposals = _gates(events), _gates(events, pending=False)
     bare_gaps = [e for e in proposals if e["old_value"]["verb"] == "flag_gap" and not e["old_value"].get("clause_ids")]
@@ -193,8 +214,11 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
         "keys_match": events[0]["new_value"]["answer_keys"] == audit.key_hashes(),
         "model": events[0]["new_value"].get("model", ""),
         "gate_rejection_rate": _ratio(sum(e["verdict"] != gate.ALLOW for e in gates), len(gates)),
-        "citation_validity": _ratio(sum(_citation_valid(e["old_value"], kb) for e in citing), len(citing)),
-        "citation_validity_all": _ratio(sum(_citation_valid(e["old_value"], kb) for e in proposals), len(proposals)),
+        "citation_validity": _ratio(sum(valid(e) for e in citing), len(citing)),
+        "citation_validity_all": _ratio(sum(valid(e) for e in proposals), len(proposals)),
+        "citation_validity_unresolved": _ratio(sum(valid(e, False) for e in citing), len(citing)),
+        "ids_resolved": sum(len(gate.resolve_ids(e["old_value"].get("clause_ids") or [], given(e))[1]) for e in citing),
+        "citations": len(citing),
         "gap_flags_without_clause": len(bare_gaps),
         "action_recall": _ratio(sum(hits.values()), len(hits)),
         "action_recall_earlier": _ratio(sum(earlier.values()), len(earlier)),
@@ -255,6 +279,9 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
                              "must_cite_given": _span([r["must_cite_given"] for r in rows]),
                              "gaps_from_notes": _span([r["gaps_from_notes"] for r in rows]),
                              "citation_validity_all": _span([r["citation_validity_all"] for r in rows]),
+                             "citation_validity_unresolved": _span([r["citation_validity_unresolved"] for r in rows]),
+                             "ids_resolved": sum(r["ids_resolved"] for r in rows),
+                             "citations": sum(r["citations"] for r in rows),
                              "gap_flags_without_clause": _span([r["gap_flags_without_clause"] for r in rows]),
                              "must_cite_given_by_step": {n: _span([r["must_cite_given_by_step"][n] for r in rows])
                                                          for n in rows[0]["must_cite_given_by_step"]} if rows else {}}
@@ -353,6 +380,23 @@ def _both_ways(results: dict[str, Any]) -> list[str]:
     return lines + [""]
 
 
+def _resolution(results: dict[str, Any]) -> list[str]:
+    """Live results only: citation validity with and without clause-id resolution (hq addendum to C4)."""
+    if results["scripted"]:
+        return []
+    lines = ["## Citation validity with and without clause-id resolution", "", RESOLUTION_LINE, "",
+             "| Scenario | Mode | Lang | Citation validity (ids resolved) | Citation validity (ids as cited) | "
+             "Ids resolved | Proposals citing a clause |", "|---|---|---|---|---|---|---|"]
+    for sid, modes in results["scenarios"].items():
+        for mode in MODES:
+            for lang in LANGS:
+                row = modes[mode][lang]
+                lines.append(f"| {sid} | {mode} | {lang} | {_cell(row['citation_validity'])} | "
+                             f"{_cell(row['citation_validity_unresolved'])} | {row['ids_resolved']} | "
+                             f"{row['citations']} |")
+    return lines + [""]
+
+
 def _cost_rows(runs: list[dict[str, Any]]) -> list[str]:
     lines = []
     for r in runs:
@@ -432,6 +476,7 @@ def _markdown(results: dict[str, Any]) -> str:
                   f"({lat['gate_ms']['n']} decisions); model median {lat['model_ms']['median_ms']} ms, max "
                   f"{lat['model_ms']['max_ms']} ms ({lat['model_ms']['n']} calls).", ""]
     lines += _both_ways(results)
+    lines += _resolution(results)
     lines += _c4_lines(results)
     prices = cost.load_prices()
     lines += ["## Tokens and cost", "",

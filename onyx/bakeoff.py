@@ -99,7 +99,8 @@ def _language(paths: list[tuple[str, Path]], keys: dict, scenarios: dict, kb: ga
     calls = proposals = parse = quotes = stops = 0
     model_ms: list[float] = []
     for sid, path in paths:
-        m = onyx_eval.run_metrics(path, keys[sid], scenarios[sid], kb, by_chunk, earlier_addressee=True)
+        m = onyx_eval.run_metrics(path, keys[sid], scenarios[sid], kb, by_chunk, earlier_addressee=True,
+                                     resolve=False)
         events = onyx_eval._events(path)
         metrics.append(m)
         row["chains_ok"] &= m["chain_ok"] and m["keys_match"]
