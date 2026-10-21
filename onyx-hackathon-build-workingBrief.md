@@ -1,22 +1,22 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-21 (third wrap, after the keys session).
+Updated 2026-10-21 (fourth wrap, Opus).
 
 ## Objective
 
-Task 4: audit log, hash chain, replay store (`onyx/audit.py`, `tests/test_audit.py`), on Opus.
+Task 5: model adapter and agents (`onyx/model.py` with `RecordedModel` and `MockModel`, the five agents), on Opus. No real model call without Iyas's go and a cost estimate.
 
 ## Next moves, in order
 
-1. Opus: diagnose why `kb chunk` drops licence-2-2026 (splitter returns 29 clauses on the hq .txt); fix before any rebuild.
-2. Opus: Task 4 per the order (`append`, `verify`, `iter_model_responses`; `run_start` carries the sha256 of every key; `python -m onyx verify-log`).
-3. Iyas: read the Arabic step text of S1 to S5 on a page (scenarios are not hashed; wording fixes allowed, keys are not).
-4. Then Tasks 5 to 7.
+1. Opus: Task 5 per the order. `RecordedModel` replays through `audit.iter_model_responses`.
+2. Iyas: read the Arabic step text of S1 to S5 on a page (scenarios are not hashed; wording fixes allowed).
+3. hq: answer the report-back of 2026-10-21 (licence-9-3 quote, four other quotes, keys' 'frozen' line, 'hq plan, S2'). Apply its answers as a new hq instruction.
+4. Then Tasks 6 and 7 (Task 6 carries addendum 17's two override tests).
 
 ## Open questions
 
+- Does hq correct licence-9-3 to the PDF wording, and do the rebuilt licence chunks then replace the committed ones (with 'pursuant' and 'billing' fixed by hand or by a checked file)?
+- cpr-4-7-3 and cpr-24-7 quote 'opt- out' and 'anti- competitive'; the PDF breaks those words at a line end. Which spelling does hq want?
 - Decision 16/2026 4.19: no checked text; never cited.
-- S1 step 6 raises a new candidate gap (expired fixed-term bundle under CPR 4.4); hq decides whether it enters the register.
-- hq: re-check Arabic quoted in the research notes from the PyMuPDF .txt files.
 - Claude API key: walked through before the first real call.
 - `/setup-matt-pocock-skills` not yet run by Iyas.
