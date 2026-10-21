@@ -1,20 +1,19 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-21 (eleventh wrap, Opus).
+Updated 2026-10-21 (twelfth wrap, Opus).
 
 ## Objective
 
-Task 8 Part C order (`docs/work-orders/2026-10-21-task-8-part-c.md`): C1 done (a8f4acb), C2 done (0e5f8a6). C3, the scored Sonnet run and the README "Model" section, waits for Iyas's go.
+Task 8 Part C is done (C1 a8f4acb, C2 0e5f8a6, C2b bbc5497, citation rule f8a7504, C3 7b13260). Waiting for hq to read `docs/report-back/2026-10-21-task8-part-c3.md` and send the next order.
 
 ## Next moves, in order
 
-1. On Iyas's go, C3 item 11: Sonnet (already in `.env`), prompt v2, `record --source live` into `runs/` (both modes, both languages, 3 runs each, 60 runs). Cap USD 6; measured about USD 0.086 per run, about USD 5.1. The guard under-estimates v2, so run one scenario at a time with a spend check between (as C2 did). Then `eval --runs runs --out eval`. Stop and report if any row is more than 0.1 below the v2 bake-off.
-2. C3 item 12: README "Model" section (live order item 10 wording), bake-off v1 and v2 tables, the Opus finding paragraph (field name, run ids `runs/opus-filter-v2/S2/run1.jsonl` and `.../ar/run1.jsonl`), the UAE-hosted-models sentence, no claim that such a run happened.
-3. Report under 25 lines, report-back file, wait.
+1. Read the next hq order in `D:\Projects\hq\uni\ai-for-good-hackathon\`, file it in `docs/work-orders/`, build it.
+2. Task 9 (gap register, candidate-id naming) only on a new hq order.
 
 ## Open questions
 
-- hq: Arabic gap recall 0.00 on v2 for both models; the Opus finding caveat (v2 changed more than the field name); the order's "five candidate ids" (only one exists).
-- Candidate-id mismatch waits for Task 9 (Iyas).
+- hq: S4 Arabic and S3 English citation validity 0.75 to 1.00 under the new rule (real misses).
+- hq: confirm the addressee, obligation-proxy and hand-over latency definitions (report-back pending-and-task8).
 - Iyas: read the Arabic step text of S1 to S5 on a page.
 - `/setup-matt-pocock-skills` not yet run by Iyas.

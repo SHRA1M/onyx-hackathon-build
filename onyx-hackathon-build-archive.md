@@ -77,3 +77,11 @@ hq's go with Iyas's key in `.env`. Committed hq's `scripts/set-model-key.ps1` (6
 - C2 (0e5f8a6): Opus S2 en and ar on v2, 0 of 10 content_filter stops (v1 8 of 10), USD 0.39 (over the item's 0.30 estimate: the guard uses v1 prompt sizes). Haiku v2 bake-off USD 0.05, then Sonnet one scenario at a time with a projected-cost check before each, USD 0.86. C2 USD 1.30 of 1.50. `eval/bakeoff.md` now holds v1 (d85871d) and v2 (a8f4acb) tables; `bakeoff --runs` dropped. 195 passed; 22 new logs verify and replay.
 - Superseded: "No model chosen; hq decides" (Part B) is now hq's decision Sonnet; the Part A Part C cost estimate on Opus (about USD 5.5 for 60 runs) is replaced by Sonnet v2's USD 0.086 per run.
 - `.env` model switched by a scratchpad script (one line, key never printed): Opus, Haiku, then Sonnet, left on Sonnet.
+
+## 2026-10-21: Task 8 Part C2b, hq's citation rule, C3 scored run (twelfth wrap, Opus)
+
+- C2b (bbc5497): checked that 10 of 10 Arabic v2 bake-off logs name the key's gap id in the adviser's notes. Prompt v3 gap line; `parse_output` collects exact register ids from an abstaining reply's notes; abstain events carry `gaps_source`; eval column "Gaps from notes"; pre-v3 logs replay without notes gaps; the ordered line under the v2 table. 9 tests failed first, then passed.
+- C3 first pass: governed S1 to S3 (18 runs, USD 1.61) recorded scenario by scenario with a running comparison against the v2 bake-off. Stopped by the 0.1 rule after S3: Arabic citation validity 0.87 against 1.00. Cause: 7 of 9 failing proposals were Arabic flag_gap proposals citing nothing, which v3 asked for (bfbc171, report-back c2b-c3-stop).
+- hq's rule (f8a7504): citation validity leaves out a flag_gap citing nothing; new shown-only column; live results show both ways for S1 to S3; bake-off tables keep the old definition (byte-identical).
+- C3 resumed: a batch loop piped the stop check through `tail` and lost its exit code; stopped it by hand, partial S4 log moved to `runs/_failed/S4/`, restarted with the exit code captured. A self-set USD 1.50 headroom check paused before S5 ungoverned; recorded after, inside the cap. 60 runs, USD 5.27 of 6; README "Model" section; report-back c3 (7b13260).
+- Superseded: the C2 line "the finding paragraph names `reasoning_chain` as the trigger" (hq corrected it: cause not isolated).
