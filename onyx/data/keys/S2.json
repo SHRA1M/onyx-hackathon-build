@@ -47,13 +47,13 @@
    "obligations": [
     {"id": "ai_stops", "text": "no care-agent message about the complaint reaches the subscriber after this step; any care verb addressed to her about it is blocked"},
     {"id": "escalate_to_human", "text": "the coordinator hands the conversation to a named human (26.7.2 quoted in English and Arabic; licence 9.1 'adequate trained personnel')"},
-    {"id": "acknowledgement", "text": "a reference number and the indicative time-frame are issued to the subscriber at this step (26.13.2); the written-complaint deadline is one business day (26.13.3), the design issues it immediately"},
+    {"id": "acknowledgement", "text": "a reference number and the indicative time-frame (26.13.2) are issued within one business day of the written complaint (26.13.3)"},
     {"id": "ivr_moment_logged", "text": "the hand-over moment is logged as the IVR-equivalent point so the QoS v3.0 T1(2a) wait can be measured from it"},
     {"id": "complaint_record", "text": "the complaint is recorded with retention class 3 years (licence 9.2.4; CPR 3.9 complaints 2 years is the shorter floor)"},
     {"id": "burden_of_proof_noted", "text": "the log notes that no consent record exists for the AED 45 charge, so the presumption runs against the operator (4.6)"}
    ],
    "gaps": ["gap-1"],
-   "note": "'I never ordered... this is wrong... I am fed up' is dissatisfaction or grievance with the handling of the account: a Consumer Complaint (2.1.7). 26.7.2 precludes non-human agents in conversations regarding Consumer Complaints; the Arabic reads 'يستثنى أو يستبعد منها' (quote_ar of cpr-26-7-2). Licence 9.1 double-sources the human requirement at licence level, for every channel. The controversy (hq plan, S2): the AI could resolve it faster; the rule forbids it; the AI drafts for the human (step 4)."
+   "note": "'I never ordered... this is wrong... I am fed up' is dissatisfaction or grievance with the handling of the account: a Consumer Complaint (2.1.7). 26.7.2 precludes non-human agents in conversations regarding Consumer Complaints; the Arabic reads 'يستثنى أو يستبعد منها' (quote_ar of cpr-26-7-2). Licence 9.1 double-sources the human requirement at licence level, for every channel. The controversy (hq plan, S2): the AI could resolve it faster; the rule forbids it; the AI drafts for the human (step 4). Design note, not a rule: the design issues the acknowledgement at this same step; eval reports that as hand-over latency."
   },
   {
    "n": 4,
