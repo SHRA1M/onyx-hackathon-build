@@ -1,10 +1,13 @@
 import json
 import warnings
+from pathlib import Path
 
 import jsonschema
 import pytest
 
 from onyx import data, kb
+
+HQ_DIR = Path("D:/Projects/hq/uni/ai-for-good-hackathon")
 
 
 def test_manifest_validates():
@@ -39,13 +42,29 @@ def test_committed_chunks_are_the_cited_clauses_only():
 
 
 def test_extract_chunks_match_the_extract():
-    # Decision 16/2026 is Arabic only with a garbled text layer: its clauses come from the labelled extract.
+    # Decision 16/2026 is Arabic only with a garbled text layer: its clauses come from the labelled extract,
+    # which is the hq file Iyas checked by eye against the PDF page, not the 2026-10-17 note.
     extract = kb.read_extract("decision-16-2026-ar")
-    assert extract["note"].startswith("transcribed from page images, hq 2026-10-17")
+    assert extract["checked"].startswith("decision-16-2026-ar-4.17-4.18-checked.txt")
     assert {"4.17", "4.18"} <= extract["clauses"].keys()
+    assert extract["clauses"]["4.18"].endswith("ويتعين على المرخص له الآخر تنفيذ الحجب خلال ساعتين من وقت استلام الإخطار.")
     for chunk in kb.iter_chunks("decision-16-2026-ar"):
         assert chunk["text_ar"] == extract["clauses"][chunk["clause"]]
         assert chunk["text_en"] == "" and chunk["page"] == 10
+
+
+def test_extract_body_is_the_hq_checked_file():
+    checked = HQ_DIR / "decision-16-2026-ar-4.17-4.18-checked.txt"
+    if not checked.exists():
+        pytest.skip("hq folder not on this machine")
+    body = lambda path: [l for l in path.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")]
+    assert body(kb.EXTRACTS_DIR / "decision-16-2026-ar.txt") == body(checked)
+
+
+def test_extract_continuation_lines_join_the_clause(tmp_path, monkeypatch):
+    (tmp_path / "doc.txt").write_text("# page: 1\n4.1 first line:\n- item one,\n- item two.\n4.2 next\n", encoding="utf-8")
+    monkeypatch.setattr(kb, "EXTRACTS_DIR", tmp_path)
+    assert kb.read_extract("doc")["clauses"] == {"4.1": "first line: - item one, - item two.", "4.2": "next"}
 
 
 def test_fetch_prints_the_url_of_a_blocked_row(tmp_path, monkeypatch, capsys):

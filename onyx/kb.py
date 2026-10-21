@@ -297,16 +297,19 @@ def _join(lines: Iterable[str]) -> str:
 
 
 def read_extract(document_id: str) -> dict[str, Any]:
-    """A labelled extract: '# key: value' header lines, then one '<clause> <text>' line per clause."""
-    header, clauses = {}, {}
+    """A labelled extract: '# key: value' header lines, then '<clause> <text>' per clause; a line that does not
+    open with a clause number (a '-' item, a closing sentence) continues the clause above it."""
+    header, clauses, clause = {}, {}, None
     for line in (EXTRACTS_DIR / f"{document_id}.txt").read_text(encoding="utf-8").splitlines():
         if line.startswith("#"):
             key, sep, value = line[1:].strip().partition(": ")
             if sep:
                 header[key] = value
-        elif line.strip():
+        elif re.match(r"\d+(\.\d+)+\s", line):
             clause, text = line.split(maxsplit=1)
             clauses[clause] = text.strip()
+        elif line.strip() and clause:
+            clauses[clause] = _join([clauses[clause], line])
     return {**header, "clauses": clauses}
 
 

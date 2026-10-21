@@ -71,7 +71,32 @@ def check_rules() -> list[str]:
             problems.append(f"{rid}: quote not verbatim in {rule['document_id']} {rule['chunk']}")
         if rule.get("quote_ar") and normalize(rule["quote_ar"]) not in normalize(chunk["text_ar"]):
             problems.append(f"{rid}: Arabic quote not verbatim in {rule['document_id']} {rule['chunk']}")
+        problems += _check_transcription(rule)
     return problems
+
+
+def _check_transcription(rule: dict[str, Any]) -> list[str]:
+    """Iyas, 2026-10-21: a quote from page images or scanned text is valid only if hq holds a '-checked.txt' for it,
+    and the KB text it is matched against must be that file, not one made from the same note as the quote."""
+    checked = rule.get("transcription", {}).get("checked_file")
+    if not checked:
+        return []
+    if not checked.endswith("-checked.txt"):
+        return [f"{rule['id']}: checked file {checked} is not an hq '-checked.txt'"]
+    path = kb.EXTRACTS_DIR / f"{rule['document_id']}.txt"
+    if not path.exists() or not kb.read_extract(rule["document_id"]).get("checked", "").startswith(checked):
+        return [f"{rule['id']}: the KB text for {rule['document_id']} is not from its checked file {checked}"]
+    return []
+
+
+def transcribed_rules() -> list[dict[str, Any]]:
+    """Rules whose quote (or the Arabic in a field) was read from page images or scanned text."""
+    return [rule for rule in load_rules() if rule.get("transcription")]
+
+
+def pending_rules() -> list[dict[str, Any]]:
+    """Transcribed rules with no hq checked file yet: their transcribed text is not verified."""
+    return [rule for rule in transcribed_rules() if not rule["transcription"]["checked_file"]]
 
 
 def check_mandates() -> list[str]:
@@ -105,6 +130,10 @@ def check_data() -> int:
           f"manifest rows {len(rows)}")
     if no_url:
         print(f"no URL recorded ({len(no_url)}): {', '.join(no_url)}")
+    print("transcribed from page images or scanned text:")
+    for rule in transcribed_rules():
+        t = rule["transcription"]
+        print(f"  {rule['id']} ({t['field']}, {t['from']}): {t['checked_file'] or 'PENDING, no hq checked file'}")
     print("\n".join(failures) if failures else "check-data ok: every quote verbatim, every rule cites a clause")
     return 1 if failures else 0
 

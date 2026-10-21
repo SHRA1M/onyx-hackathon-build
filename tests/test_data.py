@@ -32,7 +32,7 @@ ORDER_RULES = (
     "QoS v3.0 T1(2a)|Cybercrimes 48"
 ).split("|")
 
-# 4.17 and 4.18 come from the hq transcription (kb/extracts/); 4.19 has no checked text yet (Iyas, 2026-10-20).
+# 4.17 and 4.18 come from the hq checked file (kb/extracts/); 4.19 has no checked text yet (Iyas, 2026-10-20).
 PENDING = {"Decision 16/2026 4.19"}
 
 
@@ -62,6 +62,42 @@ def test_every_mandate_verb_cites_a_clause():
 def test_mandates_hold_the_order_verbs():
     mandates = data.load_mandates()
     assert {agent: {v["verb"] for v in spec["verbs"]} for agent, spec in mandates.items()} == ORDER_MANDATES
+
+
+# Iyas, 2026-10-21: a quote read from page images or scanned text is valid only if hq holds a "-checked.txt"
+# for it. Every such rule, and the ones still pending.
+TRANSCRIBED = {"d16-4-17", "d16-4-18", "licence-9-1"}
+PENDING_CHECK = {"licence-9-1"}
+
+
+def test_transcribed_rules_are_listed_and_pending_marked():
+    rules = {r["id"]: r for r in data.load_rules()}
+    assert {rid for rid, r in rules.items() if r.get("transcription")} == TRANSCRIBED
+    assert {r["id"] for r in data.pending_rules()} == PENDING_CHECK
+    for rid in TRANSCRIBED:
+        t = rules[rid]["transcription"]
+        assert t["from"] and t["field"] in rules[rid], rid
+        assert t["checked_file"].endswith("-checked.txt") or rid in PENDING_CHECK, rid
+
+
+def test_a_checked_file_must_be_what_the_kb_holds(monkeypatch):
+    # A quote checked against a file made from the same note does not count: the KB text must come from the
+    # checked file itself, so the extract header names it.
+    rule = next(r for r in data.load_rules() if r["id"] == "d16-4-17")
+    other = {**rule, "transcription": {**rule["transcription"], "checked_file": "other-checked.txt"}}
+    monkeypatch.setattr(data, "load_rules", lambda: [other])
+    assert any("checked file" in p for p in data.check_rules())
+    unchecked = {**rule, "transcription": {**rule["transcription"], "checked_file": ""}}
+    monkeypatch.setattr(data, "load_rules", lambda: [unchecked])
+    assert not data.check_rules()
+    assert [r["id"] for r in data.pending_rules()] == ["d16-4-17"]
+
+
+def test_d16_4_18_covers_both_two_hour_limits():
+    rule = next(r for r in data.load_rules() if r["id"] == "d16-4-18")
+    assert "خلال فترة لا تتجاوز ساعتين من وقت استلام البلاغ" in rule["quote"]
+    assert "ويتعين على المرخص له الآخر تنفيذ الحجب خلال ساعتين من وقت استلام الإخطار" in rule["quote"]
+    assert "other licensee" in rule["unit"]
 
 
 def test_keys_hashed():
