@@ -11,7 +11,10 @@ Metrics, per run, then min and max over the three runs of each scenario, mode an
 - action recall: share of key steps with a proposal by the key's agent whose verb is the key's verb and whose
   addressee, the subscriber side or a human, matches: where the key answers a step sent by a human with a reply
   (draft_reply), the reply is addressed to that human (args.recipient 'human' or a 'Human agent' target); every
-  other step expects a non-human addressee (blind keys review, 2026-10-21: S2 steps 3 and 4).
+  other step expects a non-human addressee (blind keys review, 2026-10-21: S2 steps 3 and 4), except a
+  request_human_review or escalate_to_human, which is addressed to a human (hq, 2026-10-21, order C4).
+- action recall, earlier addressee rule (shown beside it): the same without that exception; the bake-off tables
+  keep it.
   On the abstention step the verb is flag_gap; the pending proposal's verb is never counted (addendum 29).
 - obligation proxy (addendum item 27 wording): share of key obligations on steps that reached the key's verdict
   (gate_outcome on the abstention step) with every must_cite clause on the step's record (verdict, proposal or
@@ -49,6 +52,13 @@ MODES = {"governed": True, "ungoverned": False}
 METRICS = ("gate_rejection_rate", "citation_validity", "action_recall", "obligation_proxy", "gap_recall",
            "abstention", "handover_latency_steps", "ungoverned_claims_allowed")
 HUMAN_VERBS = {"escalate_to_human", "request_human_review"}
+ADDRESSEE_LINE = ("Addressee rule corrected 2026-10-21 (hq): a human-review request is addressed to a human; the "
+                  "earlier rule scored it as a miss.")
+C4 = "c4"  # runs/c4: the C4 re-run on prompt v4, Sonnet 5.5 (order 2026-10-21-task-8-part-c4)
+C4_LINE = ("Prompt v4 adds three care lines (verbs, propose-and-let-the-gate-decide, complaint addressee) and widens "
+           "care's mandate to its gates' clauses; the ungoverned baseline runs on the same prompt.")
+SUMMARY = (("Citation validity (hq rule)", "citation_validity"), ("Action recall", "action_recall"),
+           ("Obligation proxy", "obligation_proxy"), ("Gap recall", "gap_recall"), ("Abstention", "abstention"))
 
 
 def _events(path: Path) -> list[dict[str, Any]]:
@@ -73,12 +83,16 @@ def _ratio(hit: int, total: int) -> float | None:
     return round(hit / total, 4) if total else None
 
 
-def action_hits(events: list[dict[str, Any]], key: dict[str, Any], scenario: dict[str, Any]) -> dict[int, bool]:
+def action_hits(events: list[dict[str, Any]], key: dict[str, Any], scenario: dict[str, Any],
+                corrected: bool = True) -> dict[int, bool]:
+    """Per key step, whether the key's agent proposed the key's verb to the expected addressee. corrected=False is
+    the earlier rule (a human only for a draft_reply answering a human), kept for the bake-off and the C3 column."""
     senders = {s["n"]: s["from"] for s in scenario["steps"]}
     hits = {}
     for step in key["steps"]:
         n, entity = step["n"], f"{key['scenario']}-{step['n']}-{step['agent']}"
-        expect_human = senders[n] == "human" and step["verb"] == "draft_reply"
+        expect_human = (senders[n] == "human" and step["verb"] == "draft_reply") or (
+            corrected and step["verb"] in HUMAN_VERBS)
         hits[n] = any(e["old_value"]["verb"] == step["verb"] and _to_human(e["old_value"]) == expect_human
                       for e in _gates(events, pending=False) if e["entity_id"] == entity)
     return hits
@@ -119,7 +133,8 @@ def _signature(events: list[dict[str, Any]]) -> dict[str, tuple[Any, ...]]:
 
 
 def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: gate.Knowledge,
-                by_chunk: dict[str, list[str]]) -> dict[str, Any]:
+                by_chunk: dict[str, list[str]], earlier_addressee: bool = False) -> dict[str, Any]:
+    """earlier_addressee=True scores action_recall on the addressee rule before 2026-10-21 (the bake-off tables)."""
     events = _events(path)
     sid, governed = key["scenario"], events[0]["new_value"].get("mode") != "ungoverned"
     gates, proposals = _gates(events), _gates(events, pending=False)
@@ -166,7 +181,8 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
                 break
     claims = [n for n in steps if expected(n) in {gate.HOLD, gate.BLOCK}
               and any(e["verdict"] == gate.ALLOW for e in judged(n))]
-    hits = action_hits(events, key, scenario)
+    hits = action_hits(events, key, scenario, corrected=not earlier_addressee)
+    earlier = action_hits(events, key, scenario, corrected=False)
     prompted = [c for c in _must_cite_counts(events, key).values() if c is not None]
     return {
         "gaps_from_notes": sum(len(e["new_value"]["gaps"]) for e in abstains.values()
@@ -181,6 +197,7 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
         "citation_validity_all": _ratio(sum(_citation_valid(e["old_value"], kb) for e in proposals), len(proposals)),
         "gap_flags_without_clause": len(bare_gaps),
         "action_recall": _ratio(sum(hits.values()), len(hits)),
+        "action_recall_earlier": _ratio(sum(earlier.values()), len(earlier)),
         "obligation_proxy": _ratio(met, total),
         "gap_recall": _ratio(len(set(key["gaps_expected"]) & flagged), len(key["gaps_expected"])),
         "abstention": int(abstains.get(key["abstain_step"], {}).get("verdict") == gate.INSUFFICIENT),
@@ -212,6 +229,7 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
                                "runs_read": 0, "all_chains_ok": True, "all_keys_match": True, "runs": []}
     timings: dict[str, dict[str, list[float]]] = {m: {"gate_ms": [], "model_ms": []} for m in MODES}
     models = set()
+    scored = _empty()
     for sid in SCENARIOS:
         key, scenario = data.load_key(sid), data.load_scenario(sid)
         results["scenarios"][sid] = {}
@@ -220,6 +238,7 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
             for lang in LANGS:
                 paths = [p for n in range(1, RUNS + 1) if (p := run_path(root, sid, n, lang, governed)).exists()]
                 per_lang[lang] = [run_metrics(p, key, scenario, kb, by_chunk) for p in paths]
+                scored[mode][lang] += [(sid, r) for r in per_lang[lang]]
                 results["runs"] += [{"path": p.relative_to(root).as_posix(), "model": r["model"], **r["usage"]}
                                     for p, r in zip(paths, per_lang[lang])]
             row: dict[str, Any] = {}
@@ -232,6 +251,7 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
                     timings[mode]["gate_ms"] += r["gate_ms"]
                     timings[mode]["model_ms"] += r["model_ms"]
                 row[lang] = {"runs": len(rows), **{m: _span([r[m] for r in rows]) for m in METRICS},
+                             "action_recall_earlier": _span([r["action_recall_earlier"] for r in rows]),
                              "must_cite_given": _span([r["must_cite_given"] for r in rows]),
                              "gaps_from_notes": _span([r["gaps_from_notes"] for r in rows]),
                              "citation_validity_all": _span([r["citation_validity_all"] for r in rows]),
@@ -247,11 +267,61 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
     results["latency"] = {mode: {name: _latency(values) for name, values in t.items()} for mode, t in timings.items()}
     results["models"] = sorted(models)
     results["scripted"] = results["models"] == ["scripted-mock"]
+    if (root / C4).exists():
+        results["c4"] = _c4(root, scored, kb, by_chunk)
     out.mkdir(parents=True, exist_ok=True)
     (out / "results.json").write_text(json.dumps(results, indent=1, sort_keys=True, ensure_ascii=False) + "\n",
                                       encoding="utf-8", newline="\n")
     (out / "results.md").write_text(_markdown(results), encoding="utf-8", newline="\n")
     return results
+
+
+Scored = dict[str, dict[str, list[tuple[str, dict[str, Any]]]]]  # mode, lang: (scenario, run metrics) per run
+
+
+def _empty() -> Scored:
+    return {mode: {lang: [] for lang in LANGS} for mode in MODES}
+
+
+def _mean(values: list[Any]) -> float | None:
+    present = [v for v in values if v is not None]
+    return round(sum(present) / len(present), 4) if present else None
+
+
+def _summary(scored: Scored) -> dict[str, Any]:
+    """Per language: the mean over every governed run of each SUMMARY metric and of action recall on the earlier
+    addressee rule, the mean ungoverned claims allowed per ungoverned run; per scenario and language, the mean
+    citation validity and action recall of the governed runs (the 0.1 rule is per scenario)."""
+    governed, ungoverned = scored["governed"], scored["ungoverned"]
+    return {
+        "all": {lang: {"runs": len(governed[lang]),
+                       **{m: _mean([r[m] for _, r in governed[lang]]) for _, m in SUMMARY},
+                       "action_recall_earlier": _mean([r["action_recall_earlier"] for _, r in governed[lang]]),
+                       "ungoverned_runs": len(ungoverned[lang]),
+                       "ungoverned_claims_allowed": _mean([r["ungoverned_claims_allowed"] for _, r in ungoverned[lang]])}
+                for lang in LANGS},
+        "by_scenario": {sid: {lang: {m: _mean([r[m] for s, r in governed[lang] if s == sid])
+                                     for m in ("citation_validity", "action_recall")} for lang in LANGS}
+                        for sid in SCENARIOS},
+    }
+
+
+def _c4(root: Path, c3: Scored, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[str, Any]:
+    """The C4 runs under root/c4 beside C3 (root): the summaries, the prompt each run_start names, per mode, and the
+    C4 runs' tokens and cost."""
+    scored, usage, prompts = _empty(), [], {mode: set() for mode in MODES}
+    for sid in SCENARIOS:
+        key, scenario = data.load_key(sid), data.load_scenario(sid)
+        for mode, governed in MODES.items():
+            for lang in LANGS:
+                paths = [p for n in range(1, RUNS + 1) if (p := run_path(root / C4, sid, n, lang, governed)).exists()]
+                rows = [run_metrics(p, key, scenario, kb, by_chunk) for p in paths]
+                scored[mode][lang] += [(sid, r) for r in rows]
+                prompts[mode] |= {_events(p)[0]["new_value"].get("prompt", "before v4") for p in paths}
+                usage += [{"path": p.relative_to(root).as_posix(), "model": r["model"], **r["usage"]}
+                          for p, r in zip(paths, rows)]
+    return {"C3": _summary(c3), "C4": _summary(scored), "prompts": {mode: sorted(v) for mode, v in prompts.items()},
+            "runs": usage}
 
 
 def _cell(span: dict[str, Any]) -> str:
@@ -283,6 +353,54 @@ def _both_ways(results: dict[str, Any]) -> list[str]:
     return lines + [""]
 
 
+def _cost_rows(runs: list[dict[str, Any]]) -> list[str]:
+    lines = []
+    for r in runs:
+        tokens = [str(r[k]) if r[k] is not None else "not recorded" for k in ("prompt_tokens", "completion_tokens")]
+        usd = "price unknown" if r["cost_usd"] is None else f"USD {r['cost_usd']:.4f}"
+        lines.append(f"| {r['path']} | {r['model']} | {r['calls']} | {' | '.join(tokens)} | {usd} |")
+    total = [r["cost_usd"] for r in runs]
+    return lines + ["", "Total: " + ("price unknown" if not total or None in total else f"USD {sum(total):.4f}") +
+                    f" over {sum(r['calls'] for r in runs)} calls.", ""]
+
+
+def _fig(value: float | None) -> str:
+    return "n/a" if value is None else f"{value:.2f}"
+
+
+def _c4_lines(results: dict[str, Any]) -> list[str]:
+    """The C4 table beside C3 (order 2026-10-21-task-8-part-c4 item 6), when runs/c4 exists."""
+    if "c4" not in results:
+        return []
+    c4 = results["c4"]
+    lines = ["## C4 beside C3 (governed, en / ar)", "",
+             "Each cell is the mean over the governed runs of all five scenarios (ungoverned claims allowed: the mean "
+             "per ungoverned run). C3: prompt v3; C4: prompt v4; both Sonnet 5.5.", "",
+             "| Row | C3 en | C3 ar | C4 en | C4 ar |", "|---|---|---|---|---|"]
+
+    def cells(fn) -> str:
+        return " | ".join(fn(c4[run]["all"][lang]) for run in ("C3", "C4") for lang in LANGS)
+    for label, metric in SUMMARY:
+        if metric == "action_recall":
+            lines.append("| Action recall (corrected addressee rule; earlier rule in brackets) | " + cells(
+                lambda r: f"{_fig(r['action_recall'])} ({_fig(r['action_recall_earlier'])})") + " |")
+        else:
+            lines.append(f"| {label} | " + cells(lambda r, m=metric: _fig(r[m])) + " |")
+    lines += ["| Ungoverned claims allowed | " + cells(lambda r: _fig(r["ungoverned_claims_allowed"])) + " |",
+              "| Runs (governed / ungoverned) | " + cells(lambda r: f"{r['runs']} / {r['ungoverned_runs']}") + " |",
+              "", C4_LINE, "",
+              "Prompt named on each C4 run_start: governed " + (", ".join(c4["prompts"]["governed"]) or "none") +
+              "; ungoverned " + (", ".join(c4["prompts"]["ungoverned"]) or "none recorded") + ".", "",
+              "| Scenario | Lang | Citation validity C3 | Citation validity C4 | Action recall C3 | Action recall C4 |",
+              "|---|---|---|---|---|---|"]
+    for sid in SCENARIOS:
+        for lang in LANGS:
+            a, b = c4["C3"]["by_scenario"][sid][lang], c4["C4"]["by_scenario"][sid][lang]
+            lines.append(f"| {sid} | {lang} | {_fig(a['citation_validity'])} | {_fig(b['citation_validity'])} | "
+                         f"{_fig(a['action_recall'])} | {_fig(b['action_recall'])} |")
+    return lines + [""]
+
+
 def _markdown(results: dict[str, Any]) -> str:
     label = ("SCRIPTED runs (scripted-mock, no model call): these test the coordinator and the gate, never a model"
              if results["scripted"] else f"Live runs, model {', '.join(results['models'])}")
@@ -291,16 +409,20 @@ def _markdown(results: dict[str, Any]) -> str:
              "against the frozen keys (onyx/data/keys). Each cell is min to max over the three runs; one figure where "
              "they agree. Synthetic operator and subscribers.", "",
              f"All hash chains verify: {'yes' if results['all_chains_ok'] else 'NO'}. "
-             f"Every run_start carries the current key hashes: {'yes' if results['all_keys_match'] else 'NO'}.", ""]
-    heads = ["Scenario", "Lang", "Runs", "Gate rejection", "Citation validity", "Action recall", "Obligation proxy",
-             "Gap recall", "Abstention", "Hand-over latency (steps)", "Ungoverned claims allowed", "Must-cite given",
-             "Gaps from notes", "Gap flags without a clause"]
+             f"Every run_start carries the current key hashes: {'yes' if results['all_keys_match'] else 'NO'}.", "",
+             ADDRESSEE_LINE, ""]
+    heads = ["Scenario", "Lang", "Runs", "Gate rejection", "Citation validity", "Action recall",
+             "Action recall (earlier addressee rule)", "Obligation proxy", "Gap recall", "Abstention",
+             "Hand-over latency (steps)", "Ungoverned claims allowed", "Must-cite given", "Gaps from notes",
+             "Gap flags without a clause"]
     for mode in MODES:
         lines += [f"## {mode.capitalize()}", "", "| " + " | ".join(heads) + " |", "|" + "---|" * len(heads)]
         for sid, modes in results["scenarios"].items():
             for lang in LANGS:
                 row = modes[mode][lang]
-                lines.append("| " + " | ".join([sid, lang, str(row["runs"])] + [_cell(row[m]) for m in METRICS]
+                cells = [_cell(row[m]) for m in METRICS]
+                cells.insert(METRICS.index("action_recall") + 1, _cell(row["action_recall_earlier"]))
+                lines.append("| " + " | ".join([sid, lang, str(row["runs"])] + cells
                                                + [_cell(row["must_cite_given"]), _cell(row["gaps_from_notes"]),
                                                   _cell(row["gap_flags_without_clause"])]) + " |")
         lines += ["", "Arabic versus English agreement on decisions and clause ids: " + ", ".join(
@@ -310,18 +432,16 @@ def _markdown(results: dict[str, Any]) -> str:
                   f"({lat['gate_ms']['n']} decisions); model median {lat['model_ms']['median_ms']} ms, max "
                   f"{lat['model_ms']['max_ms']} ms ({lat['model_ms']['n']} calls).", ""]
     lines += _both_ways(results)
+    lines += _c4_lines(results)
     prices = cost.load_prices()
     lines += ["## Tokens and cost", "",
               f"Priced from {prices['source']} (read {prices['read']}), base input and output prices; a model with no "
               "price row, or a reply with no usage, is price unknown.", "",
               "| Run | Model | Calls | Prompt tokens | Completion tokens | Cost |", "|---|---|---|---|---|---|"]
-    for r in results["runs"]:
-        tokens = [str(r[k]) if r[k] is not None else "not recorded" for k in ("prompt_tokens", "completion_tokens")]
-        usd = "price unknown" if r["cost_usd"] is None else f"USD {r['cost_usd']:.4f}"
-        lines.append(f"| {r['path']} | {r['model']} | {r['calls']} | {' | '.join(tokens)} | {usd} |")
-    total = [r["cost_usd"] for r in results["runs"]]
-    lines += ["", "Total: " + ("price unknown" if not total or None in total else f"USD {sum(total):.4f}") +
-              f" over {sum(r['calls'] for r in results['runs'])} calls.", ""]
+    lines += _cost_rows(results["runs"])
+    if "c4" in results:
+        lines += ["### C4 runs", "", "| Run | Model | Calls | Prompt tokens | Completion tokens | Cost |",
+                  "|---|---|---|---|---|---|", *_cost_rows(results["c4"]["runs"])]
     lines += ["## Definitions", "", *[line.strip() for line in __doc__.split("Metrics,", 1)[1].splitlines()[1:]
                                       if line.strip()]]
     return "\n".join(lines) + "\n"

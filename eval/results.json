@@ -526,6 +526,10 @@
       "max": 0.6667,
       "min": 0.6667
      },
+     "action_recall_earlier": {
+      "max": 0.6667,
+      "min": 0.6667
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -604,6 +608,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.6667,
+      "min": 0.5
+     },
+     "action_recall_earlier": {
       "max": 0.6667,
       "min": 0.5
      },
@@ -686,6 +694,10 @@
       "max": 0.6667,
       "min": 0.6667
      },
+     "action_recall_earlier": {
+      "max": 0.6667,
+      "min": 0.6667
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -764,6 +776,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.6667,
+      "min": 0.6667
+     },
+     "action_recall_earlier": {
       "max": 0.6667,
       "min": 0.6667
      },
@@ -848,6 +864,10 @@
       "max": 0.8333,
       "min": 0.8333
      },
+     "action_recall_earlier": {
+      "max": 0.8333,
+      "min": 0.8333
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -929,6 +949,10 @@
       "max": 1.0,
       "min": 0.8333
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 0.8333
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 0.8571
@@ -1005,6 +1029,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.8333,
+      "min": 0.8333
+     },
+     "action_recall_earlier": {
       "max": 0.8333,
       "min": 0.8333
      },
@@ -1089,6 +1117,10 @@
       "max": 1.0,
       "min": 0.8333
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 0.8333
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1170,6 +1202,10 @@
       "max": 0.8,
       "min": 0.6
      },
+     "action_recall_earlier": {
+      "max": 0.8,
+      "min": 0.6
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1244,6 +1280,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.6,
+      "min": 0.6
+     },
+     "action_recall_earlier": {
       "max": 0.6,
       "min": 0.6
      },
@@ -1322,6 +1362,10 @@
       "max": 0.8,
       "min": 0.6
      },
+     "action_recall_earlier": {
+      "max": 0.8,
+      "min": 0.6
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1396,6 +1440,10 @@
       "min": 0
      },
      "action_recall": {
+      "max": 0.6,
+      "min": 0.6
+     },
+     "action_recall_earlier": {
       "max": 0.6,
       "min": 0.6
      },
@@ -1474,6 +1522,10 @@
      },
      "action_recall": {
       "max": 0.6,
+      "min": 0.4
+     },
+     "action_recall_earlier": {
+      "max": 0.6,
       "min": 0.2
      },
      "citation_validity": {
@@ -1550,6 +1602,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.8,
+      "min": 0.6
+     },
+     "action_recall_earlier": {
       "max": 0.6,
       "min": 0.4
      },
@@ -1625,6 +1681,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.6,
+      "min": 0.6
+     },
+     "action_recall_earlier": {
       "max": 0.4,
       "min": 0.4
      },
@@ -1702,6 +1762,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.8,
+      "min": 0.6
+     },
+     "action_recall_earlier": {
       "max": 0.6,
       "min": 0.4
      },
@@ -1779,6 +1843,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1863,6 +1931,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1939,6 +2011,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 0.8333
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 0.8333
      },
@@ -2020,6 +2096,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },

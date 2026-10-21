@@ -526,6 +526,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -604,6 +608,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -686,6 +694,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -764,6 +776,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -848,6 +864,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -926,6 +946,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1008,6 +1032,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1086,6 +1114,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1170,6 +1202,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1244,6 +1280,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1322,6 +1362,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1396,6 +1440,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1473,6 +1521,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.8,
+      "min": 0.8
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1550,6 +1602,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.8,
+      "min": 0.8
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1625,6 +1681,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.8,
+      "min": 0.8
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1702,6 +1762,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 0.8,
+      "min": 0.8
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1782,6 +1846,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -1860,6 +1928,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },
@@ -1942,6 +2014,10 @@
       "max": 1.0,
       "min": 1.0
      },
+     "action_recall_earlier": {
+      "max": 1.0,
+      "min": 1.0
+     },
      "citation_validity": {
       "max": 1.0,
       "min": 1.0
@@ -2020,6 +2096,10 @@
       "min": 1
      },
      "action_recall": {
+      "max": 1.0,
+      "min": 1.0
+     },
+     "action_recall_earlier": {
       "max": 1.0,
       "min": 1.0
      },

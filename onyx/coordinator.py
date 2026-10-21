@@ -82,7 +82,7 @@ class Coordinator:
     def __init__(self, scenario: dict[str, Any], model: Model, retriever: Retriever, log_path: str | Path,
                  gaps_dir: str | Path = GAPS_DIR, lang: str = "en", governed: bool = True,
                  knowledge: gate.Knowledge | None = None, mandate_clauses: bool = True,
-                 notes_gaps: bool = True) -> None:
+                 notes_gaps: bool = True, recorded_mandates: dict[str, list[str]] | None = None) -> None:
         if lang not in {"en", "ar"}:
             raise ValueError(f"language {lang!r}: en or ar")
         self.scenario, self.lang, self.governed = scenario, lang, governed
@@ -93,7 +93,9 @@ class Coordinator:
         self.kb = knowledge or gate.Knowledge.load()
         self.decide = gate.decide if governed else gate.allow_all
         self.decide_pending = gate.decide_pending if governed else gate.allow_all
-        self.agents = {name: cls(model, retriever, self.log, mandate_clauses) for name, cls in AGENTS.items()}
+        recorded_mandates = recorded_mandates or {}  # replay only: each agent's logged sources_mandate
+        self.agents = {name: cls(model, retriever, self.log, mandate_clauses, recorded_mandates.get(name))
+                       for name, cls in AGENTS.items()}
         self.inboxes: dict[str, list[Release]] = {name: [] for name in AGENTS}
         self.record = {name: scenario[name] for name in RECORD_FIELDS if name in scenario}
         self.facts: dict[str, Any] = {**scenario.get("subscriber", {}), **scenario.get("account", {}),

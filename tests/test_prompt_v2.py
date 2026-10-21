@@ -26,7 +26,7 @@ class OneHit:
     """Retrieves one chunk that is also a care mandate clause, and one that is not."""
 
     def __call__(self, query, documents, k):
-        return [kb.get_chunk("tdra-cpr-v2-en", "4.3"), kb.get_chunk("tdra-cpr-v2-en", "3.3")]
+        return [kb.get_chunk("tdra-cpr-v2-en", "4.3"), kb.get_chunk("tdra-cpr-v2-en", "26.6")]
 
 
 def _prompt(agent_cls, lang="en", retriever=None):
@@ -75,14 +75,14 @@ def test_mandate_clauses_reach_the_prompt_first_and_once():
     positions = [user.index(f"[{cid}]") for cid in mandate]
     assert positions == sorted(positions)
     assert user.count("[tdra-cpr-v2-en:4.3]") == 1  # retrieved and mandate: given once
-    assert user.index("[tdra-cpr-v2-en:3.3]") > positions[-1]  # retrieved only: after the mandate clauses
+    assert user.index("[tdra-cpr-v2-en:26.6]") > positions[-1]  # retrieved only: after the mandate clauses
 
 
 def test_sources_used_and_sources_mandate_are_logged_apart(tmp_path):
     log = audit.AuditLog(tmp_path / "run.jsonl", clock=lambda: "2026-10-21T12:00:00.000+00:00")
     log.start("S1")
     out = Care(MockModel(), OneHit(), log).run("S1-2-care", STEP)
-    assert out.sources_used == ["tdra-cpr-v2-en:4.3", "tdra-cpr-v2-en:3.3"]
+    assert out.sources_used == ["tdra-cpr-v2-en:4.3", "tdra-cpr-v2-en:26.6"]
     assert out.sources_mandate == _mandate_ids(Care)
     [propose] = [json.loads(l) for l in log.path.read_text(encoding="utf-8").splitlines() if '"propose"' in l]
     assert propose["new_value"]["sources_used"] == out.sources_used

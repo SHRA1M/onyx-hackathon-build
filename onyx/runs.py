@@ -21,6 +21,7 @@ from collections.abc import Callable
 
 from onyx import audit, cost, data, kb
 from onyx import model as model_mod
+from onyx.agents.base import PROMPT_VERSION
 
 SCENARIOS = ("S1", "S2", "S3", "S4", "S5")  # the demo set; the unseen bank is never recorded or scored
 LANGS = ("en", "ar")
@@ -79,7 +80,7 @@ def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS
                     run = coordinator.Coordinator(scenario, model, retrieve, log_path=path,
                                                   gaps_dir=Path(root) / "gaps", lang=lang, governed=governed)
                     run.start(source=source, model=model_id, run=n,
-                              retrieval="kb_main" if source == "live" else "scripted")
+                              retrieval="kb_main" if source == "live" else "scripted", prompt=PROMPT_VERSION)
                     run.run()
                     written.append(path)
     return written
@@ -109,13 +110,17 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
     scenario = data.load_scenario(events[0]["entity_id"])
     # a log recorded before prompt v2 gave no mandate clauses; its replay gives none either
     mandate = any(e["new_value"].get("sources_mandate") for e in events if e["action"] == "propose")
+    # a log recorded before prompt v4 had a narrower mandate; each agent gets the mandate clauses its log recorded
+    recorded_mandates = {e["actor"]: e["new_value"]["sources_mandate"] for e in reversed(events)
+                         if e["action"] == "propose" and "sources_mandate" in e["new_value"]}
     # a log recorded before prompt v3 took no gap from notes; its abstentions carry no gaps_source
     notes_gaps = any("gaps_source" in e["new_value"] for e in events if e["action"] == "abstain")
     with tempfile.TemporaryDirectory() as tmp:
         run = coordinator.Coordinator(scenario, model_mod.RecordedModel(path), RecordedRetriever(events),
                                       log_path=Path(tmp) / "replay.jsonl", gaps_dir=Path(tmp) / "gaps",
                                       lang=config.get("lang", "en"), governed=config.get("mode") != "ungoverned",
-                                      mandate_clauses=mandate, notes_gaps=notes_gaps)
+                                      mandate_clauses=mandate, notes_gaps=notes_gaps,
+                                      recorded_mandates=recorded_mandates)
         run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode"}})
         run.run()
         for e in events:

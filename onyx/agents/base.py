@@ -14,6 +14,10 @@ named `notes` (parse_output accepts both); the internal and logged name stays re
 Prompt v3 (order 2026-10-21-task-8-part-c2b): when a reply abstains, parse_output also collects the gap register
 ids (onyx/data/gaps.json) its notes name, exact id strings only, in gaps_in_notes. The coordinator records them on
 the abstention when no flag_gap proposal names a gap.
+
+Prompt v4 (order 2026-10-21-task-8-part-c4): three care lines (Care.extra_lines) and care's mandate widened to the
+clauses its gates test. A replay gives each agent the mandate clauses its log recorded (recorded_mandate), so a log
+recorded on a narrower mandate is decided again on what its run was given.
 """
 
 from __future__ import annotations
@@ -28,6 +32,7 @@ from onyx import audit, data, kb
 from onyx.model import Model
 
 INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
+PROMPT_VERSION = "v4"  # logged on run_start
 LANGUAGE = {"en": "English", "ar": "Arabic"}
 
 
@@ -113,9 +118,10 @@ class Agent:
     role = ""  # hq hackathon-plan-2026-10-15.docx, Agents table
 
     def __init__(self, model: Model, retriever: Retriever, log: audit.AuditLog | None = None,
-                 mandate_clauses: bool = True) -> None:
+                 mandate_clauses: bool = True, recorded_mandate: list[str] | None = None) -> None:
         self.model, self.retriever, self.log = model, retriever, log
         self.mandate_clauses = mandate_clauses  # False only to replay a log recorded before prompt v2
+        self.recorded_mandate = recorded_mandate  # replay only: the sources_mandate its log recorded
 
     @classmethod
     def mandate(cls) -> list[dict[str, Any]]:
@@ -146,6 +152,8 @@ class Agent:
         """The clauses mandates.json maps the agent's verbs to, in order, once each."""
         if not self.mandate_clauses:
             return []
+        if self.recorded_mandate is not None:
+            return [kb.get_chunk(*c.split(":", 1)) for c in self.recorded_mandate]
         seen, chunks = set(), []
         for verb in self.mandate():
             for c in verb["clause_ids"]:
