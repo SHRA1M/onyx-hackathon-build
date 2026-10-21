@@ -32,3 +32,6 @@ test-files/
 
 # Order Task 2 export: copies of full texts stay local
 kb/export/InputDocs/*/
+
+# Order Task 7: local runs from `python -m onyx run` (scored runs go in runs/S1..S5, Task 8)
+runs/local/

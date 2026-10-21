@@ -1,0 +1,49 @@
+{
+ "id": "U1",
+ "title_en": "A price rise without notice",
+ "title_ar": "زيادة في السعر دون إشعار",
+ "synthetic": true,
+ "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, prices and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. Unseen drill bank: no answer key, not in the demo set, never in a scored test.",
+ "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7, unseen bank: price rise without notice",
+ "channel": "app_chat",
+ "operator": "Sahab Telecom (synthetic)",
+ "subscriber": {
+  "name": "Khalid (synthetic)",
+  "msisdn": "+971 5X XXX 0101 (synthetic)",
+  "plan": "postpaid mobile",
+  "preferred_language": "unknown",
+  "age_flag": "adult, no caregiver flag",
+  "session": "logged in to the Sahab app (password and device binding)"
+ },
+ "account": {
+  "plan_price_aed": 185,
+  "proposed_price_aed": 199,
+  "effective": "2026-11-01 (synthetic)",
+  "notice_sent": "none",
+  "human_agents_on_shift": [
+   "Human agent H-05 (synthetic)"
+  ]
+ },
+ "steps": [
+  {
+   "n": 1,
+   "from": "system",
+   "to": "care",
+   "kind": "system_event",
+   "text_en": "The billing system proposes raising Khalid's monthly plan from AED 185 to AED 199 from 2026-11-01. No notice has been sent.",
+   "text_ar": "يقترح نظام الفوترة رفع سعر باقة خالد الشهرية من 185 درهماً إلى 199 درهماً اعتباراً من 2026-11-01. لم يُرسل أي إشعار.",
+   "facts": {
+    "time": "2026-10-28 09:00 (synthetic)"
+   }
+  },
+  {
+   "n": 2,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_message",
+   "text_en": "I saw a new price for my plan in the app. Nobody told me. Can you just keep the old one?",
+   "text_ar": "رأيت سعراً جديداً لباقتي في التطبيق. لم يخبرني أحد. هل يمكنكم الإبقاء على السعر القديم؟",
+   "facts": {}
+  }
+ ]
+}

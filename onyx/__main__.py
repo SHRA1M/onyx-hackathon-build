@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from onyx import audit, data, kb
+from onyx import audit, coordinator, data, kb
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -15,6 +15,7 @@ def build_parser() -> argparse.ArgumentParser:
     kb.register(subparsers)
     data.register(subparsers)
     audit.register(subparsers)
+    coordinator.register(subparsers)
     return parser
 
 

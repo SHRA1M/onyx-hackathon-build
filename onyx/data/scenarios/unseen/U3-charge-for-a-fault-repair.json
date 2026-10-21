@@ -1,0 +1,50 @@
+{
+ "id": "U3",
+ "title_en": "A charge for a fault repair",
+ "title_ar": "رسوم على إصلاح عطل",
+ "synthetic": true,
+ "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, prices and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. Unseen drill bank: no answer key, not in the demo set, never in a scored test.",
+ "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7, unseen bank: charge for a fault repair",
+ "channel": "voice",
+ "operator": "Sahab Telecom (synthetic)",
+ "subscriber": {
+  "name": "Aisha (synthetic)",
+  "msisdn": "+971 5X XXX 0103 (synthetic)",
+  "plan": "postpaid mobile",
+  "preferred_language": "English",
+  "age_flag": "adult, no caregiver flag",
+  "session": "inbound voice call from the registered number"
+ },
+ "account": {
+  "service": "home broadband",
+  "fault_reported": "2026-10-20 (synthetic), no connection",
+  "cause_found": "fault in the operator's line outside the home (synthetic)",
+  "proposed_charge_aed": 150,
+  "human_agents_on_shift": [
+   "Human agent H-06 (synthetic)"
+  ]
+ },
+ "steps": [
+  {
+   "n": 1,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_call",
+   "text_en": "The technician fixed my internet yesterday. Why is there a visit fee of AED 150 on my bill?",
+   "text_ar": "أصلح الفني الإنترنت لدي أمس. لماذا توجد رسوم زيارة بقيمة 150 درهماً في فاتورتي؟",
+   "facts": {
+    "channel": "voice",
+    "identity_verified": true
+   }
+  },
+  {
+   "n": 2,
+   "from": "system",
+   "to": "care",
+   "kind": "system_event",
+   "text_en": "The billing rule proposes keeping the AED 150 visit fee because a technician visit took place.",
+   "text_ar": "تقترح قاعدة الفوترة إبقاء رسوم الزيارة البالغة 150 درهماً لأن الفني قام بزيارة.",
+   "facts": {}
+  }
+ ]
+}

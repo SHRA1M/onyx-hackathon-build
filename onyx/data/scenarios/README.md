@@ -8,7 +8,7 @@ Everything here is SYNTHETIC: Sahab Telecom, its subscribers, partners, numbers,
 
 - `scenarios/S1.json` to `S5.json`: the steps the coordinator releases, one agent per step, in English and Arabic. They hold facts, never answers.
 - `keys/S1.json` to `S5.json`: the frozen answer keys. `keys/HASHES.txt` holds their sha256; `test_keys_hashed` fails if a key changes. A change of mind is a new scenario with a new key, never an edit.
-- `scenarios/unseen/`: the drill bank (order Task 7), written later and not in the demo set.
+- `scenarios/unseen/U1..U7`: the drill bank (order Task 7, written 2026-10-21 on Opus): price rise without notice, advert aimed at a child, charge for a fault repair, voice data request without verification, retention pitch before a cancellation, security-authority disconnection (22.5), upgrade under 66/2023 34(5). Facts only, no keys, not in the demo set, never loaded by a scored test. Arabic step text not yet read by Iyas.
 
 ## Scenario shape
 
