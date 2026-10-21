@@ -124,3 +124,51 @@ def test_keys_hashed():
 
 def test_check_data_passes(capsys):
     assert data.check_data() == 0, capsys.readouterr().out
+
+
+# Order Task 3 (keys session, Fable, 2026-10-21): scenarios S1 to S5 and their frozen answer keys.
+SCENARIOS = ["S1", "S2", "S3", "S4", "S5"]
+VERDICTS = {"allow", "hold", "block", "insufficient_evidence"}
+
+
+def test_every_scenario_has_steps_in_both_languages():
+    mandates = data.load_mandates()
+    for sid in SCENARIOS:
+        scenario = data.load_scenario(sid)
+        assert scenario["id"] == sid and scenario["synthetic"] is True, sid
+        assert scenario["steps"], sid
+        for i, step in enumerate(scenario["steps"], start=1):
+            assert step["n"] == i, f"{sid} step {i}"
+            assert step["to"] in mandates, f"{sid} step {i}: agent {step['to']}"
+            assert step["text_en"].strip() and step["text_ar"].strip(), f"{sid} step {i}: both languages"
+
+
+def test_every_key_matches_its_scenario_and_cites_rules():
+    rules = {r["id"] for r in data.load_rules()}
+    mandates = data.load_mandates()
+    for sid in SCENARIOS:
+        scenario, key = data.load_scenario(sid), data.load_key(sid)
+        assert key["scenario"] == sid
+        assert [s["n"] for s in key["steps"]] == [s["n"] for s in scenario["steps"]], sid
+        abstain = [s["n"] for s in key["steps"] if s.get("abstain")]
+        assert len(abstain) == 1, f"{sid}: exactly one INSUFFICIENT_EVIDENCE step, got {abstain}"
+        assert key["abstain_step"] == abstain[0], sid
+        for step, sstep in zip(key["steps"], scenario["steps"]):
+            label = f"{sid} step {step['n']}"
+            assert step["verdict"] in VERDICTS, label
+            assert step["must_cite"], f"{label}: a key step names the clauses it rests on"
+            missing = [c for c in step["must_cite"] if c not in rules]
+            assert not missing, f"{label}: must_cite not in rules.json: {missing}"
+            if step.get("abstain"):
+                assert step["verdict"] in {"insufficient_evidence", "hold"}, label
+            if step.get("verb"):
+                assert step["verb"] in {v["verb"] for v in mandates[sstep["to"]]["verbs"]}, f"{label}: {step['verb']}"
+        assert key["handover_step"] is None or key["handover_step"] in [s["n"] for s in key["steps"]], sid
+        assert key["ungoverned_claims"], f"{sid}: the ungoverned baseline names what the gate rejects"
+
+
+def test_keys_file_set_is_frozen():
+    hashes = data.KEYS_DIR / "HASHES.txt"
+    assert hashes.exists(), "answer keys must be hashed before the first live run (order Task 3)"
+    names = {line.split(maxsplit=1)[1] for line in hashes.read_text(encoding="utf-8").splitlines()}
+    assert names == {f"{sid}.json" for sid in SCENARIOS}, names

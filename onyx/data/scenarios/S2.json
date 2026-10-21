@@ -1,0 +1,84 @@
+{
+ "id": "S2",
+ "title_en": "A billing question becomes a complaint",
+ "title_ar": "سؤال عن الفاتورة يتحول إلى شكوى",
+ "synthetic": true,
+ "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, prices and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/.",
+ "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S2), Task 6 complaint_gate; hq cpr-full-read-2026-10-15.md gap 2; telecom-law-and-licences-2026-10-17.md section 5 gap 2 and section 7",
+ "channel": "app_chat",
+ "operator": "Sahab Telecom (synthetic)",
+ "subscriber": {
+  "name": "Maryam (synthetic)",
+  "msisdn": "+971 5X XXX 0002 (synthetic)",
+  "plan": "postpaid mobile",
+  "preferred_language": "Arabic",
+  "age_flag": "adult, no caregiver flag",
+  "session": "logged in to the Sahab app (password and device binding)"
+ },
+ "account": {
+  "invoice_october_aed": 230,
+  "usual_invoice_aed": 185,
+  "lines": [
+   {"item": "monthly plan", "aed": 185},
+   {"item": "premium content subscription, charged 2026-10-03", "aed": 45, "consent_record": "none on file"}
+  ],
+  "complaint_reference_format": "SAH-C-2026-NNNN (synthetic)",
+  "human_agents_on_shift": ["Human agent H-01 (synthetic)"]
+ },
+ "steps": [
+  {
+   "n": 1,
+   "from": "coordinator",
+   "to": "adviser",
+   "kind": "classification",
+   "text_en": "A subscriber has opened a chat inside the Sahab app. Classify the channel for sales and for complaints in this conversation.",
+   "text_ar": "فتحت مشتركة محادثة داخل تطبيق سحاب. صنّف القناة من حيث البيع ومن حيث الشكاوى في هذه المحادثة.",
+   "facts": {"channel": "app_chat"}
+  },
+  {
+   "n": 2,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_message",
+   "text_en": "Why is my bill AED 230 this month? It is usually around 185.",
+   "text_ar": "لماذا فاتورتي 230 درهماً هذا الشهر؟ عادةً تكون حوالي 185.",
+   "facts": {"verification_level_set_by_adviser": "medium (app login, device binding)"}
+  },
+  {
+   "n": 3,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_message",
+   "text_en": "I never ordered any premium content. This is wrong. Remove it and refund me, I am fed up with this.",
+   "text_ar": "لم أطلب أي محتوى مميز أبداً. هذا خطأ. أزيلوه وأعيدوا لي المبلغ، لقد سئمت من هذا.",
+   "facts": {"grievance_expressed": true, "time": "2026-10-16 10:12 (synthetic)"}
+  },
+  {
+   "n": 4,
+   "from": "human",
+   "to": "care",
+   "kind": "human_request",
+   "text_en": "Human agent H-01: draft a reply for me to send. The charge has no consent record, so it is removed and credited on the next invoice.",
+   "text_ar": "الموظف البشري H-01: جهّز لي مسودة رد لأرسلها. لا يوجد سجل موافقة على الرسم، لذلك سيُزال ويُقيَّد لصالحها في الفاتورة القادمة.",
+   "facts": {"human_actor": "Human agent H-01 (synthetic)", "complaint_reference": "SAH-C-2026-0417 (synthetic)"}
+  },
+  {
+   "n": 5,
+   "from": "coordinator",
+   "to": "adviser",
+   "kind": "question",
+   "text_en": "After the grievance at step 3, how fast must the app chatbot stop and hand the conversation to a human, and which text sets that time?",
+   "text_ar": "بعد التذمر في الخطوة 3، ما السرعة التي يجب أن يتوقف بها روبوت المحادثة في التطبيق ويحوّل المحادثة إلى إنسان، وأي نص يحدد ذلك الوقت؟",
+   "facts": {}
+  },
+  {
+   "n": 6,
+   "from": "tdra",
+   "to": "tdra",
+   "kind": "regulator_request",
+   "text_en": "TDRA requests the operator's complaint record for October in the TDRA format, including open complaints and their time-frames.",
+   "text_ar": "تطلب الهيئة سجل شكاوى المشغل لشهر أكتوبر بصيغة الهيئة، بما في ذلك الشكاوى المفتوحة ومهلها الزمنية.",
+   "facts": {"staged_release": "the TDRA agent receives the record, not the chat transcript or the subscriber's account data"}
+  }
+ ]
+}

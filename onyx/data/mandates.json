@@ -18,7 +18,7 @@
       }
      ],
      "quote": "Licensees shall not register, charge or otherwise avail a Service to a Subscriber that the Subscriber has not expressly ordered or opted to pay for.",
-     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): 4.3 (no Service without an express order) and 4.7.1 (opt-in by positive affirmative action) are the clauses a sale hangs on; the channel sub-article (4.17, 4.22, 4.23) comes from classify_channel."
     },
     {
      "verb": "propose_change",
@@ -29,13 +29,18 @@
        "chunk": "4.4"
       },
       {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "4.9",
+       "chunk": "4.9"
+      },
+      {
        "document_id": "cabinet-66-2023-en",
        "clause": "34(5)",
        "chunk": "34(5)"
       }
      ],
      "quote": "The provisions of sub-article 4.3 shall not apply in circumstances where an existing Service",
-     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): 4.4 (renewal exception, three conditions tested not the label), 4.9 (no upgrade or migration without consent) and 66/2023 34(5) (unilateral change void except a notified upgrade)."
     },
     {
      "verb": "disclose_account",
@@ -47,7 +52,7 @@
       }
      ],
      "quote": "the Licensee shall disclose it free of charge and without delay after an adequate verification process",
-     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): 24.10 is the only clause on disclosure to the Subscriber; its 'adequate verification process' is gap 3 (S5 step 4)."
     },
     {
      "verb": "draft_reply",
@@ -64,7 +69,7 @@
       }
      ],
      "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints",
-     "note": "Order Task 6: in a complaint the AI may draft_reply for the human only. Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): order Task 6: in a complaint the AI may draft_reply for the human only; 26.7.2 and licence 9.1 are the two sources of the human requirement (hq telecom read, gap 2)."
     }
    ]
   },
@@ -107,7 +112,7 @@
       }
      ],
      "quote": "all information provided to Consumers shall, at the time it is provided, be complete, transparent, accurate, and truthful",
-     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): 3.3 (information complete, accurate, truthful) is the duty a verbatim citation serves; no clause names citation itself. Method basis: the order's global constraint 'every mandate verb cites a KB row'."
     },
     {
      "verb": "flag_gap",
@@ -119,7 +124,7 @@
       }
      ],
      "quote": "an MLFO is a logical node with functionalities that manage and orchestrate the nodes of ML pipelines",
-     "note": "Method basis only: no legal clause governs flagging a gap. Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): method basis only (Y.3172 8.1 MLFO); no binding clause governs flagging a gap, and none is claimed."
     }
    ]
   },
@@ -132,22 +137,32 @@
        "document_id": "tdra-cpr-v2-en",
        "clause": "26.16.1",
        "chunk": "26.16.1"
-      }
-     ],
-     "quote": "the Licensee shall resolve the Dispute and respond to the TDRA within three (3) business days",
-     "note": "Clause from the order (3 business days)."
-    },
-    {
-     "verb": "order_restore",
-     "clause_ids": [
+      },
       {
        "document_id": "licence-2-2026",
        "clause": "9.3",
        "chunk": "9.3"
       }
      ],
-     "quote": "the TDRA may resolve the issues between parties in accordance with Telecommunications Law",
-     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "quote": "the Licensee shall resolve the Dispute and respond to the TDRA within three (3) business days",
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): 26.16.1 (three business days) and licence 9.3 (TDRA Customer Dispute Resolution)."
+    },
+    {
+     "verb": "order_restore",
+     "clause_ids": [
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "26.11",
+       "chunk": "26.11"
+      },
+      {
+       "document_id": "licence-2-2026",
+       "clause": "9.3",
+       "chunk": "9.3"
+      }
+     ],
+     "quote": "the TDRA may direct the concerned Licensee to restore a Consumer’s service in whole or in part",
+     "note": "Changed at the keys session 2026-10-21 (Fable): CPR 26.11 is the clause that lets the TDRA direct restoration (the 2026-10-20 mapping cited licence 9.3 alone, which only says the TDRA may resolve the dispute); 9.3 kept as the licence-level basis."
     },
     {
      "verb": "request_report",
@@ -156,10 +171,15 @@
        "document_id": "licence-2-2026",
        "clause": "9.2.4",
        "chunk": "9.2.4"
+      },
+      {
+       "document_id": "tdra-cpr-v2-en",
+       "clause": "3.9",
+       "chunk": "3.9"
       }
      ],
      "quote": "shall furnish this information to the TDRA in a format and timeframe determined by the TDRA",
-     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): licence 9.2.4 (complaint records furnished in the TDRA's format and timeframe) and CPR 3.9 (copies of records to the TDRA on demand)."
     }
    ]
   },
@@ -215,7 +235,7 @@
       }
      ],
      "quote": "an MLFO is a logical node with functionalities that manage and orchestrate the nodes of ML pipelines",
-     "note": "Method basis: the coordinator is the MLFO stage schedule (order README Y.3172 table). Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): method basis only (Y.3172 8.1: MLFO stage schedule for release_event, D node for route); no binding clause governs it, and none is claimed."
     },
     {
      "verb": "route",
@@ -227,7 +247,7 @@
       }
      ],
      "quote": "This node is responsible for identifying the SINK(s) and distributing the output of the M node to the corresponding SINK nodes.",
-     "note": "Method basis: D node, coordinator routing (order README Y.3172 table). Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): method basis only (Y.3172 8.1: MLFO stage schedule for release_event, D node for route); no binding clause governs it, and none is claimed."
     },
     {
      "verb": "escalate_to_human",
@@ -249,9 +269,10 @@
       }
      ],
      "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints",
-     "note": "Design mapping by the build session 2026-10-20 (the order names no clause for this verb); confirm at the keys session."
+     "note": "Confirmed at the keys session 2026-10-21 (Fable): 26.7.2 and licence 9.1 (a human for complaint conversations), PDPL 18(4) (human review of an automated decision on request); also the deny-by-default fallback when a verb has no gate (design basis IMDA 2.2.2, in reasons only)."
     }
    ]
   }
- }
+ },
+ "keys_session": "2026-10-21 (Fable): every 2026-10-20 design mapping checked; one changed (tdra.order_restore to CPR 26.11), three widened (propose_change +4.9, raise_dispute +licence 9.3, request_report +CPR 3.9)."
 }

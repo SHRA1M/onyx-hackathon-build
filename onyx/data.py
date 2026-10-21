@@ -160,3 +160,15 @@ def check_data() -> int:
 def register(subparsers) -> None:
     parser = subparsers.add_parser("check-data", help="prove every rule and mandate quote is verbatim in the KB")
     parser.set_defaults(func=lambda args: check_data())
+
+
+SCENARIOS_DIR = DATA_DIR / "scenarios"
+
+
+def load_scenario(scenario_id: str) -> dict[str, Any]:
+    return json.loads((SCENARIOS_DIR / f"{scenario_id}.json").read_text(encoding="utf-8"))
+
+
+def load_key(scenario_id: str) -> dict[str, Any]:
+    """A frozen answer key (order Task 3): never edited once HASHES.txt is committed."""
+    return json.loads((KEYS_DIR / f"{scenario_id}.json").read_text(encoding="utf-8"))

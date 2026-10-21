@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-21 (second wrap).
+Updated 2026-10-21 (third wrap, keys session on Fable).
 
 ## What this is
 
@@ -13,9 +13,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Where things live
 
 - `kb/manifest.csv` (40 rows), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document), `kb/export/InputDocs/Inputs.md`.
-- `kb/chunks/*.jsonl`: only the 93 cited clauses, 13 documents (committed). `kb/chunks-full/`: every clause, 2,186 (gitignored, written by `kb chunk`).
+- `kb/chunks/*.jsonl`: only the 104 cited clauses, 13 documents (committed). `kb/chunks-full/`: every clause, 2,186 (gitignored, written by `kb chunk`).
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
-- `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (94 rules), `onyx/data/mandates.json` (16 verbs).
+- `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (107 rules), `onyx/data/mandates.json` (16 verbs), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts only), `onyx/data/keys/S1..S5.json` (frozen; `HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
 
 ## Decisions settled
 
@@ -32,7 +32,11 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - 2026-10-21: the 11 URLs from hq `kb-missing-urls-2026-10-20.md` are portal landing pages, `url_accessed` 2026-10-20; the two UNVERIFIED rows stay empty.
 - 2026-10-20: rules carry `clause` (the citation) and `chunk` (where the quote sits); CPR fn 35 is in chunk 24.11, QoS Annex A (T1(2a)) in 9.5.
 - 2026-10-20: dimensions.json canonical bytes are upstream's (commit 6c6771c6, path simulation/data/framework/).
-- Unanchored agent-verb clause choices stay flagged; checked in the 2026-10-23 Fable session (Iyas).
+- 2026-10-21 (keys session, Fable): scenarios S1 to S5 and the answer keys written and hashed (`keys/HASHES.txt`; 31 tests pass, the keys test no longer skipped). Keys are frozen: a change is a new scenario and key. Keys cite rules.json ids; gap ids follow the Task 9 register order (the order's S2 line says 'gap 2' in the research numbering; it is `gap-1`). One new candidate gap from S1 step 6 (is an expired fixed-term bundle a 4.4 renewal).
+- 2026-10-21: sources rule for keys (Iyas): only kb/, onyx/data/, the order and the hq notes; no web, no law from memory; a missing fact stops the step.
+- 2026-10-21: every flagged mandate clause checked. Changed: `tdra.order_restore` to CPR 26.11 (licence 9.3 kept second). Widened: `propose_change` +4.9, `raise_dispute` +licence 9.3, `request_report` +CPR 3.9. The rest confirmed; `cite`, `flag_gap`, `release_event`, `route` stay method basis only.
+- 2026-10-21: 13 rules added for the keys (CPR 2.1.7, 26.4.5, 26.11, 4.9, 13.4, 13.8, 5.3, 4.22.4, 4.17.1, 4.23.2, 3.9 notices; PDPL 23(2); licence 9.3), quotes from kb/chunks-full/.
+- 2026-10-21: S3 step 4 (de-identified payload to the model provider) is the order's design rule, not a KB-confirmed PDPL 22 exemption; the key says so. Decision 16/2026 4.19 is never cited.
 
 ## Traps
 
@@ -51,8 +55,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
 - GitHub may keep the old commits reachable by their hash until its own cleanup; private repo. A full purge is a GitHub Support request.
-- Mandate clauses the order leaves open are build mappings (marked in mandates.json).
+- `kb chunk` now drops licence-2-2026: `split_decimal` on the hq licence .txt returns 29 clauses (1.1.x only) and never reaches 9.1, so a rebuild deletes `kb/chunks/licence-2-2026.jsonl`. Found 2026-10-21; the committed file was restored from git. Opus: diagnose before the next `kb chunk`; never commit a rebuild that drops a document.
+- Arabic in the scenario steps (`text_ar`) is the assistant's synthetic subscriber speech, not yet read by Iyas on a page; scenarios are not hashed, so a wording fix is allowed.
 
 ## Next action
 
-Fable session with Iyas, target 2026-10-23: scenario steps S1 to S5, answer keys hashed into `onyx/data/keys/HASHES.txt`, and the flagged verb clauses.
+Task 4 (audit log, hash chain, replay store) on Opus; first, fix the `kb chunk` licence drop.

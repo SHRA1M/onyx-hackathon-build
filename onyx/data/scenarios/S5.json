@@ -1,0 +1,81 @@
+{
+ "id": "S5",
+ "title_en": "A TDRA dispute and a loss report",
+ "title_ar": "نزاع لدى الهيئة وبلاغ فقدان",
+ "synthetic": true,
+ "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, references, times and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/ (Decision 16/2026 from the hq checked file).",
+ "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S5), Task 6 verification_gate; hq cpr-full-read-2026-10-15.md gap 5; telecom-law-and-licences-2026-10-17.md section 5 gap 5, section 6 item 16, section 7; kb/extracts/decision-16-2026-ar.txt",
+ "channel": "regulator_then_voice",
+ "operator": "Sahab Telecom (synthetic)",
+ "subscriber": {
+  "name": "Noura (synthetic)",
+  "msisdn": "+971 5X XXX 0005 (synthetic)",
+  "plan": "postpaid mobile",
+  "preferred_language": "Arabic",
+  "age_flag": "adult, no caregiver flag",
+  "session": "none for steps 1, 2 and 6; inbound voice call for steps 3 to 5"
+ },
+ "account": {
+  "open_complaint": "SAH-C-2026-0912 (synthetic), lodged 2026-09-20, about a disputed charge; unresolved",
+  "service_state": "outgoing service suspended since 2026-10-01 over the disputed charge",
+  "tdra_dispute": "submitted by the TDRA to the operator on 2026-10-19 (synthetic)",
+  "loss_report": {"received": "2026-10-20 14:05 (synthetic), by voice call", "device": "IMEI ending 0005 (synthetic)", "other_licensee": "the other licensee (synthetic)"},
+  "human_agents_on_shift": ["Human agent H-04 (synthetic)"]
+ },
+ "steps": [
+  {
+   "n": 1,
+   "from": "tdra",
+   "to": "tdra",
+   "kind": "regulator_dispute",
+   "text_en": "The TDRA submits Consumer Dispute D-2026-0310 (synthetic) to Sahab: complaint SAH-C-2026-0912 remains unresolved. Respond within three business days.",
+   "text_ar": "تحيل الهيئة نزاع المستهلك D-2026-0310 إلى سحاب: الشكوى SAH-C-2026-0912 ما زالت دون حل. الرد خلال ثلاثة أيام عمل.",
+   "facts": {"submitted": "2026-10-19 (synthetic)", "staged_release": "the TDRA agent holds the dispute file; it has not seen the subscriber's chat or account beyond the complaint"}
+  },
+  {
+   "n": 2,
+   "from": "tdra",
+   "to": "tdra",
+   "kind": "regulator_direction",
+   "text_en": "The TDRA directs Sahab to restore Noura's outgoing service in part, pending resolution of the dispute.",
+   "text_ar": "توجّه الهيئة سحاب إلى إعادة الخدمة الصادرة لنورة جزئياً، ريثما يُحسم النزاع.",
+   "facts": {"scope": "outgoing calls restored; data stays as it was"}
+  },
+  {
+   "n": 3,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_call",
+   "text_en": "My phone was stolen an hour ago. Block it now, please, and block the SIM.",
+   "text_ar": "سُرق هاتفي قبل ساعة. احجبوه الآن من فضلكم، واحجبوا الشريحة.",
+   "facts": {"channel": "voice", "received": "2026-10-20 14:05", "caller_number": "a different number (the subscriber's phone is gone)", "identity_verified": false, "call_recorded": true}
+  },
+  {
+   "n": 4,
+   "from": "coordinator",
+   "to": "adviser",
+   "kind": "question",
+   "text_en": "What counts as adequate verification of this caller's identity on a voice call from an unknown number, before the device and SIM are blocked?",
+   "text_ar": "ما الذي يُعدّ تحققاً كافياً من هوية هذا المتصل في مكالمة صوتية من رقم غير معروف، قبل حجب الجهاز والشريحة؟",
+   "facts": {}
+  },
+  {
+   "n": 5,
+   "from": "human",
+   "to": "care",
+   "kind": "human_verification",
+   "text_en": "Human agent H-04: identity verified at 14:30 by the operator's procedure (security questions matched, logged under my name). Proceed with the block and notify the other licensee.",
+   "text_ar": "الموظف البشري H-04: تم التحقق من الهوية الساعة 14:30 وفق إجراء المشغل (تطابقت أسئلة الأمان، ومسجّل باسمي). نفّذ الحجب وأخطر المرخص له الآخر.",
+   "facts": {"identity_verified": true, "verified_at": "2026-10-20 14:30", "verified_by": "Human agent H-04 (synthetic)", "report_received": "2026-10-20 14:05"}
+  },
+  {
+   "n": 6,
+   "from": "tdra",
+   "to": "tdra",
+   "kind": "regulator_request",
+   "text_en": "Third business day after the dispute was submitted. The TDRA requests Sahab's response to dispute D-2026-0310 and the complaint record.",
+   "text_ar": "يوم العمل الثالث بعد إحالة النزاع. تطلب الهيئة رد سحاب على النزاع D-2026-0310 وسجل الشكوى.",
+   "facts": {"deadline": "three business days from 2026-10-19"}
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+{
+ "id": "S1",
+ "title_en": "Roaming before a flight",
+ "title_ar": "تجوال قبل رحلة طيران",
+ "synthetic": true,
+ "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, prices and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/.",
+ "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S1) and hq cpr-full-read-2026-10-15.md section 4 (channel classification, renewal exception, PSCM, 'no' default)",
+ "channel": "app_chat",
+ "operator": "Sahab Telecom (synthetic)",
+ "subscriber": {
+  "name": "Salem (synthetic)",
+  "msisdn": "+971 5X XXX 0001 (synthetic)",
+  "plan": "postpaid mobile, no roaming bundle active",
+  "preferred_language": "unknown",
+  "age_flag": "adult, no caregiver flag",
+  "session": "logged in to the Sahab app (password and device binding); no 2FA completed in this session"
+ },
+ "catalogue": {
+  "note": "SYNTHETIC tariff. The price gate accepts only figures from this block (order Task 6: quoted figures from the KB only; the operator's tariff is scenario data).",
+  "items": [
+   {"sku": "ROAM-UK-7D", "name_en": "UK roaming bundle, 7 days", "name_ar": "باقة تجوال المملكة المتحدة، 7 أيام", "price_aed": 95, "recurring": false, "term_days": 7}
+  ]
+ },
+ "steps": [
+  {
+   "n": 1,
+   "from": "coordinator",
+   "to": "adviser",
+   "kind": "classification",
+   "text_en": "A subscriber has opened a chat inside the Sahab app. Classify the sales channel for any purchase in this conversation.",
+   "text_ar": "فتح مشترك محادثة داخل تطبيق سحاب. صنّف قناة البيع لأي عملية شراء في هذه المحادثة.",
+   "facts": {"channel": "app_chat", "device": "subscriber's phone, Sahab app"}
+  },
+  {
+   "n": 2,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_message",
+   "text_en": "Hi, I fly to London tonight at 11pm. Does my line work there? What will it cost me?",
+   "text_ar": "مرحباً، سأسافر إلى لندن الليلة الساعة 11 مساءً. هل يعمل خطي هناك؟ وكم سيكلفني؟",
+   "facts": {"account_roaming": "not active; pay-as-you-go roaming rates apply", "verification_level_set_by_adviser": "medium (app login, device binding)"}
+  },
+  {
+   "n": 3,
+   "from": "coordinator",
+   "to": "care",
+   "kind": "offer",
+   "text_en": "Offer the subscriber the UK roaming bundle from the catalogue, with the price and term.",
+   "text_ar": "اعرض على المشترك باقة تجوال المملكة المتحدة من الكتالوج مع السعر والمدة.",
+   "facts": {"automated_disclosure_logged": false}
+  },
+  {
+   "n": 4,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_message",
+   "text_en": "yes",
+   "text_ar": "نعم",
+   "facts": {"otp_completed": false, "terms_accepted": false, "automated_disclosure_logged": true}
+  },
+  {
+   "n": 5,
+   "from": "subscriber",
+   "to": "care",
+   "kind": "subscriber_message",
+   "text_en": "OTP 4471 entered. I accept the terms shown on screen.",
+   "text_ar": "أدخلت رمز التحقق 4471. أوافق على الشروط المعروضة على الشاشة.",
+   "facts": {"otp_completed": true, "otp_matches": true, "terms_accepted": "explicit tap on 'Accept'; the yes/no control defaulted to 'no'", "consent_form": "electronic interaction, stored"}
+  },
+  {
+   "n": 6,
+   "from": "coordinator",
+   "to": "adviser",
+   "kind": "question",
+   "text_en": "Day 8. The 7-day bundle has ended and the subscriber is still abroad. The care agent proposes to extend it for another 7 days at AED 95 as a 'renewal of an existing service' under CPR 4.4, with no new consent step. Does CPR 4.4 cover this extension?",
+   "text_ar": "اليوم الثامن. انتهت باقة الأيام السبعة والمشترك ما زال خارج الدولة. يقترح وكيل الرعاية تمديدها سبعة أيام أخرى بمبلغ 95 درهماً بوصفها «تجديداً لخدمة قائمة» بموجب البند 4.4 من لائحة حماية المستهلك، دون خطوة موافقة جديدة. هل يشمل البند 4.4 هذا التمديد؟",
+   "facts": {"bundle_status": "expired on day 7; fixed-term, non-recurring per the catalogue", "new_consent": "none"}
+  }
+ ]
+}
