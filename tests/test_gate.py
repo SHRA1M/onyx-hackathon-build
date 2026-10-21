@@ -193,6 +193,13 @@ def test_model_provider_gate_logs_what_left():
     assert {"pdpl-8-1", "pdpl-13-2-d", "pdpl-13-2-g", "licence-3-4-1"} <= _ids(verdict)
 
 
+@pytest.mark.parametrize("label", ["model_provider_full_record", "model_provider_minimum_payload"])
+def test_model_provider_gate_cites_telecom_law_72_2(label):
+    verdict = _verdict(label)
+    assert "telecom-law-72-2" in _ids(verdict)
+    assert any(r.get("clause") == "telecom-law-72-2" for r in verdict.reasons if r["gate"] == "model_provider_gate")
+
+
 def test_marketing_gate_names_all_three_bars():
     verdict = _verdict("marketing_outbound_call")
     assert {"spam-calls-v4-15-4", "spam-calls-v4-10-2", "cpr-28-26", "pdpl-17"} <= _ids(verdict)

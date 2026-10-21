@@ -390,8 +390,8 @@ def sharing_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
 
 def model_provider_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     """Minimum de-identified payload, processor contract on file (PDPL 8(1)), foreign-recipient notice (13(2)(d),
-    (g)), log what left. A payload with direct identifiers abroad has no Bureau-approved case on file (PDPL 22,
-    23(2)): block, and a block has no override."""
+    (g)), log what left, cite Telecom Law 72(2). A payload with direct identifiers abroad has no Bureau-approved
+    case on file (PDPL 22, 23(2)): block, and a block has no override."""
     provider = p.args.get("model_provider")
     if not provider:
         return None
@@ -403,7 +403,7 @@ def model_provider_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     notice = record.get("foreign_recipient_notice_given_at_contract")
     if identifiers:
         return _finding(BLOCK, ["pdpl-22", "pdpl-22-1", "pdpl-23-2", "pdpl-23-1-a", "pdpl-8-1", "pdpl-13-2-d",
-                                "pdpl-13-2-g", "licence-3-4-1"], [
+                                "pdpl-13-2-g", "licence-3-4-1", "telecom-law-72-2"], [
             _check(g, f"the payload holds direct identifiers ({', '.join(identifiers)}) for a provider "
                       f"{record.get('location', 'abroad')}", "pdpl-22"),
             _check(g, "no case approved by the Bureau and no named destination country on file, so 22(1) cannot be "
@@ -413,8 +413,11 @@ def model_provider_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
             _check(g, f"processor contract ({'on file' if _yes(contract) else 'none'}, 8(1)) and foreign-recipient "
                       f"notice ({'given' if _yes(notice) else 'none'}, 13(2)(d), (g)) do not make the transfer an "
                       "approved case", "pdpl-8-1"),
+            _check(g, "disclosing the content of a message or service without right is an offence for anyone "
+                      "connected to the licensee in a way that gives access to it (Telecom Law 72(2))",
+                   "telecom-law-72-2"),
             _check(g, "the operator stays fully liable (licence 3.4.1); deny by default", "licence-3-4-1")])
-    clauses = ["pdpl-8-1", "pdpl-7-5", "pdpl-13-2-d", "pdpl-13-2-g", "cpr-24-5", "licence-3-4-1"]
+    clauses = ["pdpl-8-1", "pdpl-7-5", "pdpl-13-2-d", "pdpl-13-2-g", "cpr-24-5", "licence-3-4-1", "telecom-law-72-2"]
     missing = []
     if not _yes(contract):
         missing.append(_check(g, "no processor contract on file (PDPL 8(1), 7(5))", "pdpl-8-1"))
@@ -429,7 +432,9 @@ def model_provider_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         _must(g, f"log what left: {', '.join(payload)}; to the model provider {record.get('location', '')}; under "
                  f"contract {contract_id.group(0) if contract_id else contract}", "pdpl-8-1"),
         _must(g, "access limited to trained, authorised personnel (24.5); the operator stays fully liable "
-                 "(licence 3.4.1)", "cpr-24-5")])
+                 "(licence 3.4.1)", "cpr-24-5"),
+        _must(g, "only the logged fields leave; no other content of the subscriber's messages or services is "
+                 "disclosed (Telecom Law 72(2))", "telecom-law-72-2")])
 
 
 def disconnection_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:

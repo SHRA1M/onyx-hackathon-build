@@ -1635,6 +1635,21 @@
    "language_note": "",
    "binding_status": "binding",
    "jurisdiction": "UAE"
+  },
+  {
+   "id": "telecom-law-72-2",
+   "label": "Telecom Law 72(2)",
+   "document_id": "telecom-law-3-2003-en",
+   "clause": "72(2)",
+   "chunk": "72(2)",
+   "verb": "prohibition",
+   "value": "",
+   "unit": "",
+   "quote": "Illegally copies, discloses, or distributes the content of a telephone call or text message or any of the telecommunications services",
+   "quote_ar": "",
+   "language_note": "Arabic prevails (portal; TRA 2008 edition cover).",
+   "binding_status": "binding",
+   "jurisdiction": "UAE"
   }
  ],
  "keys_session": "2026-10-21 (Fable): 13 rules added for the scenario keys (CPR 2.1.7, 26.4.5, 26.11, 4.9, 13.4, 13.8, 5.3, 4.22.4, 4.17.1, 4.23.2, 3.9 notices; PDPL 23(2); licence 9.3); quotes from kb/chunks-full/ (the same text extraction as kb/chunks/)."
