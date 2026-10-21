@@ -1,6 +1,6 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-21 (wrap).
+Updated 2026-10-21 (second wrap).
 
 ## Objective
 
@@ -14,5 +14,6 @@ Task 3 finish: scenarios S1 to S5 and the frozen answer keys.
 ## Open questions
 
 - Decision 16/2026 4.19: no checked text; stays in `PENDING`.
+- hq: re-check Arabic quoted in the research notes from the PyMuPDF .txt files; Telecom Law and Cabinet 57/2024 Arabic hits under every extractor are unexplained.
 - Claude API key: walked through before the first real call.
 - `/setup-matt-pocock-skills` not yet run by Iyas.
