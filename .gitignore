@@ -16,6 +16,8 @@ data/chromadb/
 
 # Order, addendum item 15: full source texts are fetched, not committed
 kb/sources/
+# Iyas, 2026-10-20: only cited clauses are committed; kb chunk writes every clause here
+kb/chunks-full/
 
 # engineering/_reference/new-repo.md list
 node_modules/
@@ -26,6 +28,7 @@ test-files/
 *.txt
 # Text files this repo must track
 !onyx/data/keys/HASHES.txt
+!kb/extracts/*.txt
 
 # Order Task 2 export: copies of full texts stay local
 kb/export/InputDocs/*/

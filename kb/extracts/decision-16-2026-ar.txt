@@ -1,0 +1,8 @@
+# document_id: decision-16-2026-ar
+# title: TDRA Decision No. (16) of 2026, Instructions for Regulating and Governing the Use of Mobile Communication Devices, v1.0, issued 2026-05-11 (Arabic only)
+# source: https://tdra.gov.ae/-/media/About/regulations-and-ruling/Updated-regulations-and-ruling/Use-of-Mobile-Telecommunications-Devices-Ar.ashx
+# note: transcribed from page images, hq 2026-10-17 (research-notes/uae-rules-2026-10-17/tdra-and-licences.md line 194); the PDF's text layer is garbled
+# page: 10
+# Extract of the words quoted in hq, not the full clauses. 4.19 is not here: no checked text yet.
+4.17 عند استلام بلاغ فقدان أو سرقة، يتعين على المرخص له التحقق فوراً من صحة البيانات المقدمة، بما في ذلك التحقق من هوية مقدم البلاغ
+4.18 بعد التحقق، يجب على المرخص له خلال فترة لا تتجاوز ساعتين من وقت استلام البلاغ: حجب الجهاز ومنع وصوله إلى الشبكة، إخطار المرخص له الآخر فوراً

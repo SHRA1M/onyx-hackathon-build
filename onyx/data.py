@@ -26,6 +26,15 @@ def load_mandates() -> dict[str, Any]:
     return json.loads((DATA_DIR / "mandates.json").read_text(encoding="utf-8"))["agents"]
 
 
+def cited_chunks() -> set[tuple[str, str]]:
+    """(document_id, chunk) for every chunk a rule or a mandate verb cites: what kb/chunks/ holds."""
+    cited = {(rule["document_id"], rule["chunk"]) for rule in load_rules()}
+    for spec in load_mandates().values():
+        for verb in spec["verbs"]:
+            cited |= {(ref["document_id"], ref["chunk"]) for ref in verb["clause_ids"]}
+    return cited
+
+
 def _chunk(document_id: str, clause: str) -> dict[str, Any] | None:
     try:
         return kb.get_chunk(document_id, clause)
@@ -57,7 +66,8 @@ def check_rules() -> list[str]:
             problems.append(f"{rid}: chunk status {chunk['status']}")
         if len(rule["quote"]) < MIN_QUOTE:
             problems.append(f"{rid}: quote shorter than {MIN_QUOTE} characters")
-        if normalize(rule["quote"]) not in normalize(chunk["text_en"]):
+        text = chunk["text_ar"] if row["language"] == "ar" else chunk["text_en"]  # an Arabic-only document
+        if normalize(rule["quote"]) not in normalize(text):
             problems.append(f"{rid}: quote not verbatim in {rule['document_id']} {rule['chunk']}")
         if rule.get("quote_ar") and normalize(rule["quote_ar"]) not in normalize(chunk["text_ar"]):
             problems.append(f"{rid}: Arabic quote not verbatim in {rule['document_id']} {rule['chunk']}")

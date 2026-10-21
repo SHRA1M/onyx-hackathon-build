@@ -1380,6 +1380,36 @@
    "language_note": "",
    "binding_status": "binding",
    "jurisdiction": "UAE"
+  },
+  {
+   "id": "d16-4-17",
+   "label": "Decision 16/2026 4.17",
+   "document_id": "decision-16-2026-ar",
+   "clause": "4.17",
+   "chunk": "4.17",
+   "verb": "must",
+   "value": "verify the report immediately, including the reporter's identity",
+   "unit": "",
+   "quote": "عند استلام بلاغ فقدان أو سرقة، يتعين على المرخص له التحقق فوراً من صحة البيانات المقدمة، بما في ذلك التحقق من هوية مقدم البلاغ",
+   "quote_ar": "",
+   "language_note": "Arabic only; transcribed from page images, hq 2026-10-17 (kb/extracts/decision-16-2026-ar.txt).",
+   "binding_status": "binding",
+   "jurisdiction": "UAE"
+  },
+  {
+   "id": "d16-4-18",
+   "label": "Decision 16/2026 4.18",
+   "document_id": "decision-16-2026-ar",
+   "clause": "4.18",
+   "chunk": "4.18",
+   "verb": "deadline",
+   "value": "2",
+   "unit": "hours (block the device after verification, from receipt of the report)",
+   "quote": "بعد التحقق، يجب على المرخص له خلال فترة لا تتجاوز ساعتين من وقت استلام البلاغ: حجب الجهاز ومنع وصوله إلى الشبكة، إخطار المرخص له الآخر فوراً",
+   "quote_ar": "",
+   "language_note": "Arabic only; transcribed from page images, hq 2026-10-17 (kb/extracts/decision-16-2026-ar.txt). 4.19 not yet in the rules: no checked text.",
+   "binding_status": "binding",
+   "jurisdiction": "UAE"
   }
  ]
 }

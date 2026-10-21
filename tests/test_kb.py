@@ -4,7 +4,7 @@ import warnings
 import jsonschema
 import pytest
 
-from onyx import kb
+from onyx import data, kb
 
 
 def test_manifest_validates():
@@ -18,8 +18,7 @@ def test_manifest_validates():
     for row in kb.verified_rows(rows):
         path = kb.source_path(row)
         if path is None:
-            # Addendum item 15: a blocked host leaves only the committed extract (the chunks); say so.
-            assert kb.has_chunks(row["document_id"]) or not kb.LOCAL[row["document_id"]]["splitter"], row["document_id"]
+            # Addendum item 15: a blocked host leaves only the committed cited clauses; say so.
             warnings.warn(f"{row['document_id']}: source not fetched; read from the committed extract")
             continue
         assert kb.sha256_file(path) == row["sha256"], f"{row['document_id']}: sha256 differs from the file on disk"
@@ -31,6 +30,37 @@ def test_chunk_cpr_26_7_2_both_languages():
     assert "يستثنى أو يستبعد منها" in chunk["text_ar"]
     assert chunk["status"] == "VERIFIED"
     assert chunk["article"] == "26"
+
+
+def test_committed_chunks_are_the_cited_clauses_only():
+    # Addendum item 15 (Iyas, 2026-10-20): the repo holds the clauses rules and mandates cite, nothing more.
+    committed = {(c["document_id"], c["clause"]) for c in kb.iter_chunks()}
+    assert committed == data.cited_chunks()
+
+
+def test_extract_chunks_match_the_extract():
+    # Decision 16/2026 is Arabic only with a garbled text layer: its clauses come from the labelled extract.
+    extract = kb.read_extract("decision-16-2026-ar")
+    assert extract["note"].startswith("transcribed from page images, hq 2026-10-17")
+    assert {"4.17", "4.18"} <= extract["clauses"].keys()
+    for chunk in kb.iter_chunks("decision-16-2026-ar"):
+        assert chunk["text_ar"] == extract["clauses"][chunk["clause"]]
+        assert chunk["text_en"] == "" and chunk["page"] == 10
+
+
+def test_fetch_prints_the_url_of_a_blocked_row(tmp_path, monkeypatch, capsys):
+    # Iyas, 2026-10-20: where the portal blocks, print the row's URL so a judge can download it by hand.
+    manifest = tmp_path / "manifest.csv"
+    manifest.write_bytes(kb.MANIFEST.read_bytes())
+    monkeypatch.setattr(kb, "MANIFEST", manifest)
+    monkeypatch.setattr(kb, "SOURCES_DIR", tmp_path / "sources")
+    monkeypatch.setattr(kb, "_download", lambda url: ("403", None))
+    monkeypatch.delenv(kb.SOURCE_DIR_ENV, raising=False)
+    kb._cli(type("Args", (), {"action": "fetch", "local": None})())
+    out = capsys.readouterr().out
+    row = kb.manifest_by_id()["cabinet-56-2024-en"]
+    assert row["url"] in out
+    assert "kb/sources/cabinet-56-2024-en.pdf" in out
 
 
 def test_every_chunk_has_the_order_fields():

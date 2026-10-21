@@ -1,7 +1,8 @@
 """Knowledge base: manifest, fetch, verify, clause chunks, ChromaDB ingest, ITU InputDocs export.
 
 Full source texts are fetched to kb/sources/ and never committed (addendum item 15). The committed record is
-kb/manifest.csv (one row per document) and kb/chunks/*.jsonl (one row per clause, the text the gates quote).
+kb/manifest.csv (one row per document), kb/chunks/*.jsonl (only the clauses rules and mandates cite, Iyas 2026-10-20)
+and kb/extracts/ (labelled transcriptions where a text layer cannot be read).
 """
 
 from __future__ import annotations
@@ -25,6 +26,8 @@ KB_DIR = REPO / "kb"
 MANIFEST = KB_DIR / "manifest.csv"
 SOURCES_DIR = KB_DIR / "sources"
 CHUNKS_DIR = KB_DIR / "chunks"
+CHUNKS_FULL_DIR = KB_DIR / "chunks-full"  # every clause, maintainer only, gitignored
+EXTRACTS_DIR = KB_DIR / "extracts"
 CHROMA_DIR = REPO / "data" / "chromadb"
 STATUSES = ("VERIFIED", "REFERENCED", "UNVERIFIED", "HISTORICAL")
 COLLECTIONS = ("kb_main", "kb_framework", "kb_decisions")
@@ -126,7 +129,8 @@ def fetch(local_dir: str | os.PathLike | None = None, today: str | None = None) 
                 how = f"local copy ({how})" if how != "missing" else "local copy"
         if how.startswith(("missing", "downloaded bytes")) and target.exists() and sha256_file(target) == row["sha256"]:
             how = "already on disk"
-        report.append({"document_id": row["document_id"], "http_status": row["http_status"], "result": how})
+        report.append({"document_id": row["document_id"], "http_status": row["http_status"], "result": how,
+                       "url": row["url"], "target": f"kb/sources/{target.name}"})
     save_manifest(rows)
     return report
 
@@ -292,13 +296,45 @@ def _join(lines: Iterable[str]) -> str:
     return re.sub(r"\s+", " ", " ".join(lines)).strip()
 
 
-def build_chunks(local_dir: str | os.PathLike | None = None) -> dict[str, int]:
-    """Maintainer step: read each document's text extraction from the local folder and write
-    kb/chunks/<document_id>.jsonl. An Arabic sibling (pair_of) fills text_ar of the same clause ids."""
+def read_extract(document_id: str) -> dict[str, Any]:
+    """A labelled extract: '# key: value' header lines, then one '<clause> <text>' line per clause."""
+    header, clauses = {}, {}
+    for line in (EXTRACTS_DIR / f"{document_id}.txt").read_text(encoding="utf-8").splitlines():
+        if line.startswith("#"):
+            key, sep, value = line[1:].strip().partition(": ")
+            if sep:
+                header[key] = value
+        elif line.strip():
+            clause, text = line.split(maxsplit=1)
+            clauses[clause] = text.strip()
+    return {**header, "clauses": clauses}
+
+
+def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def build_chunks(local_dir: str | os.PathLike | None = None, cited: set[tuple[str, str]] | None = None) -> dict[str, int]:
+    """Maintainer step: read each document's text extraction from the local folder (and each kb/extracts/ file)
+    and write every clause to kb/chunks-full/, then the cited ones to kb/chunks/. An Arabic sibling (pair_of)
+    fills text_ar of the same clause ids. Returns the cited count per document."""
+    if cited is None:
+        from onyx import data
+        cited = data.cited_chunks()
     local_dir = Path(local_dir or os.environ[SOURCE_DIR_ENV])
     manifest = manifest_by_id()
-    CHUNKS_DIR.mkdir(parents=True, exist_ok=True)
-    counts = {}
+    full: dict[str, list[dict[str, Any]]] = {}
+    for path in sorted(EXTRACTS_DIR.glob("*.txt")):
+        extract = read_extract(path.stem)
+        row = manifest[path.stem]
+        text_field = "text_ar" if row["language"] == "ar" else "text_en"
+        full[path.stem] = [{
+            "document_id": path.stem, "article": clause.split(".")[0], "clause": clause, "page": int(extract["page"]),
+            "text_en": "", "text_ar": "", text_field: text,
+            "status": row["status"], "retention_class": "", "node": "PP",
+        } for clause, text in extract["clauses"].items()]
     arabic: dict[str, dict[str, str]] = {}
     for doc_id, spec in LOCAL.items():
         if spec["pair_of"] and spec["text"]:
@@ -324,10 +360,18 @@ def build_chunks(local_dir: str | os.PathLike | None = None) -> dict[str, int]:
                 "text_en": _join(c["lines"]), "text_ar": ar.get(c["clause"], ""),
                 "status": row["status"], "retention_class": "", "node": "PP",
             })
-        with (CHUNKS_DIR / f"{doc_id}.jsonl").open("w", encoding="utf-8", newline="\n") as f:
-            for c in out:
-                f.write(json.dumps(c, ensure_ascii=False) + "\n")
-        counts[doc_id] = len(out)
+        full[doc_id] = out
+    for folder in (CHUNKS_FULL_DIR, CHUNKS_DIR):
+        folder.mkdir(parents=True, exist_ok=True)
+        for old in folder.glob("*.jsonl"):
+            old.unlink()
+    counts = {}
+    for doc_id, chunks in full.items():
+        _write_jsonl(CHUNKS_FULL_DIR / f"{doc_id}.jsonl", chunks)
+        kept = [c for c in chunks if (doc_id, c["clause"]) in cited]
+        if kept:
+            _write_jsonl(CHUNKS_DIR / f"{doc_id}.jsonl", kept)
+            counts[doc_id] = len(kept)
     return counts
 
 
@@ -492,6 +536,9 @@ def _cli(args) -> int:
     if args.action == "fetch":
         for r in fetch(args.local):
             print(f"{r['http_status'] or '-':>5}  {r['result']:<32} {r['document_id']}")
+            if r["result"].startswith(("missing", "downloaded bytes")):
+                # Iyas, 2026-10-20: a blocked host gets a hand download; the demo runs on the committed clauses.
+                print(f"       download by hand: open {r['url'] or '(no URL recorded)'} and save the file as {r['target']}")
         return 0
     if args.action == "verify":
         return 0 if verify(print_counts=True) else 1
@@ -499,7 +546,7 @@ def _cli(args) -> int:
         counts = build_chunks(args.local)
         for doc, n in counts.items():
             print(f"{n:>5}  {doc}")
-        print(f"{sum(counts.values()):>5}  clauses in {len(counts)} documents")
+        print(f"{sum(counts.values()):>5}  cited clauses in {len(counts)} documents (every clause: kb/chunks-full/)")
         return 0
     if args.action == "ingest":
         client = ingest()

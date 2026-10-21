@@ -11,29 +11,29 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 1 | `tdra-cpr-v2-en.pdf` | `regulation` | TDRA Consumer Protection Regulations, Version 2.0 (issued 25 July 2023) | VERIFIED | `7e8dad214b44…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/CONSUMER-PROTECTION-REGULATIONS-VERSION-20-ISSUED-2572023.ashx) |
 | 2 | `tdra-cpr-v2-ar.pdf` | `regulation` | TDRA Consumer Protection Regulations, Version 2.0, Arabic | VERIFIED | `2cc338bdd9a0…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/AR/CONSUMER-PROTECTION-REGULATIONS-VERSION-20-ISSUED-2572023-Ar.ashx) |
 | 3 | `telecom-law-3-2003-en.pdf` | `law` | Federal Law by Decree No. 3 of 2003 Regulating the Telecommunications Sector, consolidated (portal, last update 27 Sep 2020) | VERIFIED | `ad162193811d…` | [link](https://uaelegislation.gov.ae/en/legislations/1132) |
-| 4 | `telecom-law-3-2003-ar.pdf` | `law` | Federal Law by Decree No. 3 of 2003, consolidated, Arabic (portal) | VERIFIED | `8d512b942e1f…` | not recorded |
+| 4 | `telecom-law-3-2003-ar.pdf` | `law` | Federal Law by Decree No. 3 of 2003, consolidated, Arabic (portal) | VERIFIED | `8d512b942e1f…` | [link](https://uaelegislation.gov.ae/ar/legislations/1132) |
 | 5 | `licence-2-2026.pdf` | `licence` | Public Telecommunications Licence No. 2/2026 (e&), term 2026-08-09 to 2046-08-08, bilingual | VERIFIED | `17335c1b9934…` | [link](https://tdra.gov.ae/-/media/About/LICENSING/EN/Licence-22026-Etisalat-Public.ashx) |
 | 6 | `pdpl-45-2021-en.pdf` | `law` | Federal Decree-Law No. 45 of 2021 Concerning the Protection of Personal Data (PDPL) | VERIFIED | `d5d5f9e93bd6…` | [link](https://uaelegislation.gov.ae/en/legislations/1972/download) |
 | 7 | `pdpl-45-2021-ar.pdf` | `law` | Federal Decree-Law No. 45 of 2021 (PDPL), Arabic (portal) | VERIFIED | `74a19403c312…` | [link](https://uaelegislation.gov.ae/ar/legislations/1972/download) |
 | 8 | `etransactions-46-2021-en.pdf` | `law` | Federal Decree-Law No. 46 of 2021 on Electronic Transactions and Trust Services | VERIFIED | `4d6cb059c2bf…` | [link](https://uaelegislation.gov.ae/en/legislations/1539/download) |
-| 9 | `etransactions-46-2021-ar.pdf` | `law` | Federal Decree-Law No. 46 of 2021, Arabic | VERIFIED | `68e195f55716…` | not recorded |
+| 9 | `etransactions-46-2021-ar.pdf` | `law` | Federal Decree-Law No. 46 of 2021, Arabic | VERIFIED | `68e195f55716…` | [link](https://uaelegislation.gov.ae/ar/legislations/1539) |
 | 10 | `consumer-law-15-2020-en.pdf` | `law` | Federal Law No. 15 of 2020 on Consumer Protection, as amended by Federal Decree-Law No. 5 of 2023 | VERIFIED | `f9cc62563d9e…` | [link](https://uaelegislation.gov.ae/en/legislations/1455) |
-| 11 | `consumer-law-15-2020-ar.pdf` | `law` | Federal Law No. 15 of 2020 on Consumer Protection, Arabic | VERIFIED | `9dd4bf0dc164…` | not recorded |
+| 11 | `consumer-law-15-2020-ar.pdf` | `law` | Federal Law No. 15 of 2020 on Consumer Protection, Arabic | VERIFIED | `9dd4bf0dc164…` | [link](https://uaelegislation.gov.ae/ar/legislations/1455) |
 | 12 | `cabinet-66-2023-en.pdf` | `regulation` | Cabinet Decision No. 66 of 2023, Executive Regulations of Federal Law 15/2020 | VERIFIED | `09e6db5c1c49…` | [link](https://uaelegislation.gov.ae/en/legislations/2157) |
-| 13 | `cabinet-66-2023-ar.pdf` | `regulation` | Cabinet Decision No. 66 of 2023, Arabic | VERIFIED | `e934c7bc5be9…` | not recorded |
-| 14 | `cabinet-56-2024-en.pdf` | `regulation` | Cabinet Resolution No. 56 of 2024 Concerning the Telemarketing Regulations | VERIFIED | `5c2fa1dd4c0e…` | not recorded |
-| 15 | `cabinet-56-2024-ar.pdf` | `regulation` | Cabinet Resolution No. 56 of 2024, Arabic | VERIFIED | `bb409f9b238e…` | not recorded |
-| 16 | `cabinet-57-2024-en.pdf` | `regulation` | Cabinet Resolution No. 57 of 2024 on violations and administrative penalties of the Telemarketing Regulations | VERIFIED | `100f229a9d68…` | not recorded |
-| 17 | `cabinet-57-2024-ar.pdf` | `regulation` | Cabinet Resolution No. 57 of 2024, Arabic | VERIFIED | `ebbc8b8b2d38…` | not recorded |
+| 13 | `cabinet-66-2023-ar.pdf` | `regulation` | Cabinet Decision No. 66 of 2023, Arabic | VERIFIED | `e934c7bc5be9…` | [link](https://uaelegislation.gov.ae/ar/legislations/2157) |
+| 14 | `cabinet-56-2024-en.pdf` | `regulation` | Cabinet Resolution No. 56 of 2024 Concerning the Telemarketing Regulations | VERIFIED | `5c2fa1dd4c0e…` | [link](https://uaelegislation.gov.ae/en/legislations/2519) |
+| 15 | `cabinet-56-2024-ar.pdf` | `regulation` | Cabinet Resolution No. 56 of 2024, Arabic | VERIFIED | `bb409f9b238e…` | [link](https://uaelegislation.gov.ae/ar/legislations/2519) |
+| 16 | `cabinet-57-2024-en.pdf` | `regulation` | Cabinet Resolution No. 57 of 2024 on violations and administrative penalties of the Telemarketing Regulations | VERIFIED | `100f229a9d68…` | [link](https://uaelegislation.gov.ae/en/legislations/2523) |
+| 17 | `cabinet-57-2024-ar.pdf` | `regulation` | Cabinet Resolution No. 57 of 2024, Arabic | VERIFIED | `ebbc8b8b2d38…` | [link](https://uaelegislation.gov.ae/ar/legislations/2523) |
 | 18 | `spam-calls-v4-en.pdf` | `policy` | TDRA Spam Calls Policy, Version 4.0 (issued 2025-10-14) | VERIFIED | `fb335a7569de…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/Regulations/Spam/Voice-Spam-Policy-V40-0926.ashx) |
 | 19 | `spam-calls-v4-ar.pdf` | `policy` | TDRA Spam Calls Policy, Version 4.0, Arabic | VERIFIED | `ee6cf6b93914…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/Regulations/Spam/Voice-Spam-Policy-V40-AR.ashx) |
 | 20 | `spam-sms-2022-en.pdf` | `policy` | TDRA Cellular Phone Spam (SMS) Regulatory Policy | VERIFIED | `c5ffeda41f87…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/cellular-phone-spam-regulatory-policy-English.ashx) |
 | 21 | `spam-sms-2022-ar.pdf` | `policy` | TDRA Cellular Phone Spam (SMS) Regulatory Policy, Arabic | VERIFIED | `ab3ed7294f86…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/AR/cellular-phone-spam-regulatory-policy-arabic.ashx) |
 | 22 | `qos-v3-en.pdf` | `policy` | TDRA Quality of Service Policy, Version 3.0 (issued 2024-07-11) | VERIFIED | `e1198281aa4f…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/Updated-regulations-and-ruling/QoS-Policy-V-30-2-1.ashx) |
-| 23 | `child-digital-safety-26-2025-en.pdf` | `law` | Federal Decree-Law No. 26 of 2025 Regarding Child Digital Safety | VERIFIED | `20cdda8a8f0a…` | not recorded |
-| 24 | `child-digital-safety-26-2025-ar.pdf` | `law` | Federal Decree-Law No. 26 of 2025, Arabic | VERIFIED | `41c105007026…` | not recorded |
+| 23 | `child-digital-safety-26-2025-en.pdf` | `law` | Federal Decree-Law No. 26 of 2025 Regarding Child Digital Safety | VERIFIED | `20cdda8a8f0a…` | [link](https://uaelegislation.gov.ae/en/legislations/3912) |
+| 24 | `child-digital-safety-26-2025-ar.pdf` | `law` | Federal Decree-Law No. 26 of 2025, Arabic | VERIFIED | `41c105007026…` | [link](https://uaelegislation.gov.ae/ar/legislations/3912) |
 | 25 | `cybercrimes-34-2021-en.pdf` | `law` | Federal Decree-Law No. 34 of 2021 on Countering Rumors and Cybercrimes | VERIFIED | `f438fdf264b9…` | [link](https://uaelegislation.gov.ae/en/legislations/1526) |
-| 26 | `cybercrimes-34-2021-ar.pdf` | `law` | Federal Decree-Law No. 34 of 2021, Arabic | VERIFIED | `1d367a497550…` | not recorded |
+| 26 | `cybercrimes-34-2021-ar.pdf` | `law` | Federal Decree-Law No. 34 of 2021, Arabic | VERIFIED | `1d367a497550…` | [link](https://uaelegislation.gov.ae/ar/legislations/1526) |
 | 27 | `decision-16-2026-ar.pdf` | `regulation` | TDRA Decision 16/2026 on the use of mobile telecommunications devices (issued 2026-05-11), Arabic only | VERIFIED | `0278aec14e47…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/Updated-regulations-and-ruling/Use-of-Mobile-Telecommunications-Devices-Ar.ashx) |
 | 28 | `instructions-1-2014-ar.pdf` | `regulation` | TDRA Instructions 1/2014 on accessibility of telecommunications for People of Determination, Arabic only | VERIFIED | `b9ebfc40c67e…` | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/AR/People-of-determination-accessibility-to-telecommunication.ashx) |
 
@@ -51,7 +51,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 |---|---|---|---|---|---|---|
 | 1 | `itu-t-y3172.pdf` | `standard` | ITU-T Y.3172 (06/2019) Architectural framework for machine learning in future networks including IMT-2020 | VERIFIED | `e42f9a3be3f9…` | [link](https://www.itu.int/rec/T-REC-Y.3172/en) |
 | 2 | `itu-readiness-2-0.pdf` | `report` | ITU AI Ready: Analysis Towards a Standardized Readiness Framework, Report 2.0 (January 2026) | VERIFIED | `71191768d46b…` | [link](https://www.itu.int/dms_pub/itu-t/opb/ai4g/T-AI4G-AI4GOOD-2025-6-PDF-E.pdf) |
-| 3 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `7158cae4c844…` | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c/data/framework/dimensions.json) |
+| 3 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `a3cc9bfd2b09…` | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c6aac69d9692dcae95b5b498a416befcfb/simulation/data/framework/dimensions.json) |
 | 4 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
 
 ## Global_Examples/ (2 files)

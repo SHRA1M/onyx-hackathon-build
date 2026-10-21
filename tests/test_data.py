@@ -32,8 +32,8 @@ ORDER_RULES = (
     "QoS v3.0 T1(2a)|Cybercrimes 48"
 ).split("|")
 
-# No checkable text on disk yet: the Arabic-only PDF's text layer is garbled (open question to Iyas, 2026-10-20).
-PENDING = {"Decision 16/2026 4.17", "Decision 16/2026 4.18", "Decision 16/2026 4.19"}
+# 4.17 and 4.18 come from the hq transcription (kb/extracts/); 4.19 has no checked text yet (Iyas, 2026-10-20).
+PENDING = {"Decision 16/2026 4.19"}
 
 
 def test_every_rule_quote_is_verbatim():
