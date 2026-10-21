@@ -176,3 +176,64 @@ def test_live_record_without_a_key_still_stops_first(tmp_path, monkeypatch):
 def test_check_data_includes_the_price_table(capsys):
     assert data.check_data() == 0
     assert "prices" in capsys.readouterr().out
+
+
+# --- Part B: a dropped connection is retried; a re-run keeps the runs already recorded ------------------------
+
+def test_live_call_retries_a_dropped_connection_then_succeeds(monkeypatch):
+    import io
+    import json
+    import urllib.error
+
+    attempts, waits = [], []
+    reply = {"model": "claude-haiku-5-5", "choices": [{"message": {"content": "{}"}}]}
+
+    def urlopen(request, timeout):
+        attempts.append(request.full_url)
+        if len(attempts) < 3:
+            raise urllib.error.URLError("[SSL: UNEXPECTED_EOF_WHILE_READING]")
+        return io.BytesIO(json.dumps(reply).encode("utf-8"))
+    monkeypatch.setattr(model.urllib.request, "urlopen", urlopen)
+    live = model.OpenAICompatibleModel("https://example.invalid/v1/", "claude-haiku-5-5", "k", sleep=waits.append)
+    assert live.complete("S1-2-care", [{"role": "user", "content": "x"}]).raw == reply
+    assert len(attempts) == 3 and waits == [2, 4]
+
+
+def test_live_call_gives_up_after_the_last_retry_and_never_retries_a_client_error(monkeypatch):
+    import urllib.error
+
+    def refuse(code):
+        def urlopen(request, timeout):
+            calls.append(code)
+            raise urllib.error.HTTPError(request.full_url, code, "error", {}, None)
+        return urlopen
+    live = model.OpenAICompatibleModel("https://example.invalid/v1/", "m", "k", sleep=lambda s: None)
+    calls = []
+    monkeypatch.setattr(model.urllib.request, "urlopen", refuse(529))
+    with pytest.raises(urllib.error.HTTPError):
+        live.complete("S1-2-care", [])
+    assert len(calls) == model.ATTEMPTS
+    calls = []
+    monkeypatch.setattr(model.urllib.request, "urlopen", refuse(400))
+    with pytest.raises(urllib.error.HTTPError):
+        live.complete("S1-2-care", [])
+    assert calls == [400]
+
+
+def test_record_skip_existing_keeps_recorded_runs_and_records_the_rest(tmp_path, monkeypatch):
+    _clear_env(monkeypatch)
+    complete, calls = _with_usage("claude-haiku-5-5")
+    monkeypatch.setattr(model.OpenAICompatibleModel, "complete", complete)
+    root = tmp_path / "runs"
+    kept = runs.run_path(root, "S1", 1, "en")
+    kept.parent.mkdir(parents=True)
+    recorded = '{"action": "run_start", "new_value": {"source": "live", "model": "claude-haiku-5-5"}}\n'
+    kept.write_text(recorded, encoding="utf-8")
+    written = runs.record("live", root, scenarios=("S1",), runs=1, modes=("governed",), env=_env(tmp_path, "claude-haiku-5-5"),
+                          retriever=scripted.retriever("S1"), spend_root=root, out=lambda s: None, skip_existing=True)
+    assert written == [runs.run_path(root, "S1", 1, "ar")]
+    assert kept.read_text(encoding="utf-8") == recorded
+    assert calls  # the Arabic run called the model
+    with pytest.raises(FileExistsError):
+        runs.record("live", root, scenarios=("S1",), runs=1, modes=("governed",), env=_env(tmp_path, "claude-haiku-5-5"),
+                    retriever=scripted.retriever("S1"), spend_root=root, out=lambda s: None)

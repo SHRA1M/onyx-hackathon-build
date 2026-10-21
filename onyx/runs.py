@@ -48,9 +48,11 @@ def decisions(path: str | Path) -> list[tuple[Any, ...]]:
 def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS, runs: int = RUNS,
            langs: tuple[str, ...] = LANGS, env: str | Path = ".env", modes: tuple[str, ...] = MODES,
            retriever: Any = None, max_usd: float = cost.DEFAULT_MAX_USD, spend_root: str | Path = cost.RUNS_DIR,
-           out: Callable[[str], Any] = print) -> list[Path]:
+           out: Callable[[str], Any] = print, skip_existing: bool = False) -> list[Path]:
     """A live run stops before any call when the key has no value (MissingModelKey) or when the spend guard
-    refuses (cost.SpendRefused). `retriever` replaces kb_main in tests only."""
+    refuses (cost.SpendRefused). `retriever` replaces kb_main in tests only. skip_existing keeps a recorded run and
+    records only the missing ones (after a run died; move its partial log out first); without it an existing run
+    raises."""
     from onyx import coordinator, scripted
 
     if source == "live":
@@ -66,6 +68,8 @@ def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS
             for lang in langs:
                 for n in range(1, runs + 1):
                     path = run_path(root, sid, n, lang, governed)
+                    if path.exists() and skip_existing:
+                        continue
                     if path.exists():
                         raise FileExistsError(f"{path}: a recorded run is never overwritten")
                     if source == "live":
@@ -121,7 +125,7 @@ def _record_cli(args) -> int:
     root = Path(args.root or ("runs" if args.source == "live" else "runs/scripted"))
     try:
         written = record(args.source, root, tuple(args.scenarios or SCENARIOS), args.runs,
-                         modes=tuple(args.modes or MODES), max_usd=args.max_usd)
+                         modes=tuple(args.modes or MODES), max_usd=args.max_usd, skip_existing=args.skip_existing)
     except (model_mod.MissingModelKey, cost.SpendRefused) as e:
         print(f"stopped: {e}")
         return 2
@@ -149,6 +153,8 @@ def register(subparsers) -> None:
     parser.add_argument("--modes", nargs="*", choices=MODES, help="default both; the bake-off runs governed only")
     parser.add_argument("--max-usd", type=float, default=cost.DEFAULT_MAX_USD,
                         help=f"refuse a live run whose estimate is over this (default USD {cost.DEFAULT_MAX_USD})")
+    parser.add_argument("--skip-existing", action="store_true",
+                        help="keep runs already recorded and record only the missing ones (never overwrites)")
     parser.set_defaults(func=_record_cli)
     parser = subparsers.add_parser("replay", help="re-run a recorded log offline and compare the verdicts")
     parser.add_argument("log")

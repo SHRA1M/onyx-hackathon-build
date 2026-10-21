@@ -684,6 +684,8 @@ def _base_checks(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         return Verdict(INSUFFICIENT, [], [_check(g, f"the quote is not {data.MIN_QUOTE}+ characters verbatim in a "
                                                     "cited clause")])
     deadline = p.args.get("deadline")
+    if deadline and not isinstance(deadline, dict):
+        return Verdict(BLOCK, [], [_check(g, f"deadline {deadline!r} is not a rules.json rule, value and unit")])
     if deadline:
         rule = kb.rules.get(deadline.get("rule", ""))
         if rule is None or (str(deadline.get("value")), deadline.get("unit")) != (rule["value"], rule["unit"]):

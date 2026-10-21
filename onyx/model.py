@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import json
 import os
+import time
+import urllib.error
 import urllib.request
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
@@ -42,17 +44,24 @@ def _chat_completion(model: str, text: str) -> dict[str, Any]:
     return {"model": model, "choices": [{"index": 0, "message": {"role": "assistant", "content": text}}]}
 
 
+ATTEMPTS = 4  # a dropped connection or a temporary server error is retried after 2, 4 and 8 seconds
+RETRY_STATUS = {429, 500, 502, 503, 504, 529}
+
+
 class OpenAICompatibleModel:
     """Any OpenAI-compatible chat-completions endpoint. A real call costs money: only with Iyas's go.
 
     temperature is sent only when given: Anthropic's OpenAI-compatible endpoint returns a 400 for any value below 1
-    on Claude 4.7 and later models (platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk)."""
+    on Claude 4.7 and later models (platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk).
+    A dropped connection (the bake-off's first Haiku run died on an SSL EOF, 2026-10-21) or a status in RETRY_STATUS
+    is retried; any other HTTP error is raised at once."""
 
     def __init__(self, base_url: str, model: str, api_key: str, timeout: float = 600.0,
-                 temperature: float | None = None, max_tokens: int = 16000) -> None:
+                 temperature: float | None = None, max_tokens: int = 16000,
+                 sleep: Callable[[float], Any] = time.sleep) -> None:
         self.url = base_url.rstrip("/") + "/chat/completions"
         self.model, self.api_key, self.timeout = model, api_key, timeout
-        self.temperature, self.max_tokens = temperature, max_tokens
+        self.temperature, self.max_tokens, self.sleep = temperature, max_tokens, sleep
 
     def complete(self, request_id: str, messages: Messages) -> ModelResponse:
         request: dict[str, Any] = {"model": self.model, "messages": messages, "max_tokens": self.max_tokens}
@@ -61,8 +70,18 @@ class OpenAICompatibleModel:
         body = json.dumps(request).encode("utf-8")
         request = urllib.request.Request(self.url, data=body, method="POST", headers={
             "Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"})
-        with urllib.request.urlopen(request, timeout=self.timeout) as response:
-            return ModelResponse(request_id, json.loads(response.read().decode("utf-8")))
+        for attempt in range(1, ATTEMPTS + 1):
+            try:
+                with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                    return ModelResponse(request_id, json.loads(response.read().decode("utf-8")))
+            except urllib.error.HTTPError as e:
+                if e.code not in RETRY_STATUS or attempt == ATTEMPTS:
+                    raise
+            except (urllib.error.URLError, TimeoutError, ConnectionError):
+                if attempt == ATTEMPTS:
+                    raise
+            self.sleep(2 ** attempt)
+        raise AssertionError("unreachable")
 
 
 ENV_NAMES = ("ONYX_MODEL_BASE_URL", "ONYX_MODEL", "ONYX_MODEL_API_KEY")

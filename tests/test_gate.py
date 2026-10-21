@@ -284,6 +284,8 @@ def test_unverified_source_never_allows():
     (lambda p, s: s.released.clear(), "block"),                                     # inject not released to it
     (lambda p, s: setattr(s, "agent", "tdra"), "block"),                            # verb outside the mandate
     (lambda p, s: p.args.update(deadline={"rule": "cpr-26-14-2", "value": "30", "unit": "business days"}), "block"),
+    # a free-text deadline, as claude-haiku-5-5 sent on S5 step 6 (bake-off, 2026-10-21): blocked, never a crash
+    (lambda p, s: p.args.update(deadline="three business days from 2026-10-19"), "block"),
 ])
 def test_a_proposal_passes_only_on_every_base_check(change, expected):
     proposal, state = _case("S1", 2, "disclose_account", f"{CPR}:24.10", data=["roaming_status"])
