@@ -1,0 +1,93 @@
+Source: https://uaelegislation.gov.ae/en/legislations/4506 (official English page, full text; the /download endpoint returned an empty body on 2026-10-22)
+Fetched: 2026-10-22 by hq (scrapling, Fable session). Page metadata: Issued 17 Jun 2026; Effective 30 Jun 2026; Official Gazette No 826, 29 Jun 2026; State: Active; site last updated 20/10/2026.
+Portal disclaimer: "for the purpose of their interpretation and application, reference must be made to the original Arabic text. In case of conflict, the Arabic text will prevail". Arabic PDF already saved as cabinet-resolution-106-2026-children-social-media-ar.pdf (2026-10-16).
+
+Cabinet Resolution No. (106) of 2026 Regarding the Regulation of Children's Access to Social Media Platforms
+
+The Cabinet:
+– Having reviewed the Constitution;
+– Federal Law No. (1) of 1972 Regarding the Competences of Ministries and the Powers of Ministers, as amended;
+– Federal Decree by Law No. (3) of 2003 Regarding the Regulation of the Telecommunications, as amended;
+– Federal Law No. (3) of 2016 Regarding the Child Rights Law "Wadeema", as amended;
+– Federal Decree by Law No. (34) of 2021 Regarding Countering Rumors and Cybercrimes, as amended;
+– Federal Decree by Law No. (55) of 2023 Regarding Media Regulation;
+– Federal Decree by Law No. (42) of 2024 Regarding the Establishment and Regulation of the Education, Human Development and Community Development Council;
+– Federal Decree by Law No. (11) of 2025 Establishing and Regulating the National Media Authority;
+– Federal Decree by Law No. (26) of 2025 Regarding Child Digital Safety; and
+– Upon the proposal of the Minister of Family and the approval of the Cabinet,
+Hereby resolves as follows:
+
+Article (1) Definitions
+The definitions set forth in Federal Decree by Law No. (26) of 2025 Regarding Child Digital Safety shall apply to this Resolution. In all other cases, the following expressions shall have the meanings respectively assigned to each of them, unless the context requires otherwise:
+Social Media Platforms : Any platform that enables users to create public or semi-public accounts or profiles, facilitates social interaction, enables the publication or dissemination of content, or relies in displaying, ranking, or recommending content on algorithmic systems or automated technologies, whether the service is provided free of charge or for a fee, and regardless of the service provider's place of establishment, its business model, the means through which the service is made available, or the technical infrastructure used for its operation.
+Age Verification : The set of technical and organizational procedures aimed at verifying a user's age through reliable and proportionate means that respect the protection of personal data.
+Decree by Law : Federal Decree by Law No. (26) of 2025 Regarding Child Digital Safety.
+
+Article (2) Scope of Application
+This Resolution shall apply to all Social Media Platforms whose services are made available within the State or directed at users therein.
+
+Article (3) Minimum Age
+1. Children who have not attained the age of fifteen (15) years shall be prohibited from creating, using, or operating any personal account on Social Media Platforms subject to the provisions of this Resolution.
+2. For the purposes of Clause (1) of this Article, Social Media Platforms shall:
+a. Refrain from permitting the creation of personal accounts by Children below the prescribed age.
+b. Refrain from enabling Children below the prescribed age to access the full features of Social Media Platforms, including social interaction, posting, commenting, sharing content, joining public groups or open channels, or participating in any large-scale interactive spaces.
+3. Children who have attained the age of fifteen (15) years but have not yet attained the age of sixteen (16) years may access Social Media Platforms, provided that their personal accounts are subject to special restrictions and measures commensurate with their age group, in a manner that ensures an enhanced level of digital protection.
+4. For the purposes of Clause (3) of this Article, Social Media Platforms shall implement the following appropriate measures and restrictions:
+a. Applying effective mechanisms for the classification and restriction of the categories of content that may be viewed or shared, including Harmful Content and content unsuitable for the relevant age group.
+b. Limiting public sharing functions and interactions with users who are unknown to the Child and their Caregiver.
+c. Providing technical tools for regulating or specifying the periods during which access to the Social Media Platform is permitted, and for determining or restricting daily or nighttime usage durations, in accordance with the standards approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority.
+d. Providing clear and user-friendly Parental Control Tools that enable the Child Caregiver to supervise the settings of the Child's personal account, manage privacy levels, and restrict access to certain features.
+e. Restricting or disabling features or functionalities that, by their nature, involve elevated risks, including unrestricted private messaging, open live streaming, intensive algorithmic recommendation systems, or any other high-risk features for this age group; or providing protection tools and safe-design measures to mitigate such risks, as approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority.
+f. Any additional measures deemed necessary by Social Media Platforms in coordination with the Concerned Authorities, in a manner that achieves an appropriate level of protection for Children.
+5. The consent of the Child Caregiver or any other person shall not be recognized as an exception to the prohibitions or restrictions prescribed under this Article. The Child Caregiver may adjust the settings of the accounts of Children who have attained the age of fifteen (15) years but have not attained the age of sixteen (16) years through the Parental Control Tools provided by Social Media Platforms, provided that such adjustment does not conflict with the prohibitions and restrictions prescribed under this Article.
+
+Article (4) Age Verification Mechanisms
+1. Social Media Platforms shall implement effective and reliable Age Verification mechanisms that satisfy the following standards:
+a. The mechanism shall achieve a high level of accuracy in determining or estimating the user's age, so as to minimize the likelihood of circumvention or material error.
+b. The data collected or processed shall be limited to the minimum necessary for Age Verification, without excess or unjustified expansion, and in a manner consistent with the provisions governing the protection of privacy and personal data under the legislation in force.
+c. Compliance with the principles of data minimization, purpose limitation, and processing security, and the non-retention of biometric data and official documents except to the extent and for the duration necessary to complete the Age Verification process and in accordance with the legislation in force.
+d. The mechanism shall not result in unjustified discrimination against, or technical exclusion of categories of users.
+e. The mechanism shall be capable of integration with approved national Age Verification systems upon request.
+f. The mechanism shall be capable of being reviewed and audited by the Telecommunications and Digital Government Regulatory Authority.
+g. Clear and comprehensible information shall be made available to users regarding the Age Verification mechanism and its operation.
+h. Any other standards approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority.
+2. One or more of the following mechanisms may be adopted for Age Verification, provided that they satisfy the standards referred to in Clause (1) of this Article:
+a. Verification through a digital government identity, scanning of an official identity document, or any official document accompanied by biometric matching.
+b. Age-estimation technologies utilizing artificial intelligence, including biometric means.
+c. Approved and licensed Age Verification service providers within the State.
+d. Any other mechanisms approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority.
+3. Self-declaration of age, or any other Age Verification mechanism not approved in accordance with the provisions of this Resolution, shall not be recognized.
+4. Social Media Platforms shall comply with the privacy and personal data protection provisions stipulated in the Decree by Law, the resolutions issued in implementation thereof, and any other relevant legislation in force.
+
+Article (5) Obligations of Social Media Platforms
+Social Media Platforms subject to this Resolution shall:
+1. Implement approved and effective Age Verification mechanisms in accordance with the provisions of Article (4) of this Resolution.
+2. Detect personal accounts belonging to Children below the specified age that have been created in contravention of the provisions of this Resolution and take immediate measures to suspend or disable such accounts.
+3. Adopt all reasonable and appropriate technical and organizational measures to prevent circumvention of the provisions set out in this Resolution and ensure ongoing compliance therewith.
+4. Refrain from targeting Children with directed advertisements based on tracking and behavioral profiling, or from exploiting or processing their personal data for commercial purposes based on tracking their digital activity. This shall not apply to algorithmic processing necessary to ensure Children's digital safety, prevent their exposure to Harmful Content or age-inappropriate content, and provide general contextual advertising that does not rely on profiling or intrusion into privacy.
+5. Design and integrate digital awareness tools and materials within the interfaces of Social Media Platforms, directed at Children and their Caregivers, to promote safe and responsible use.
+6. Conduct periodic assessments of digital safety risks relating to Children.
+7. Provide periodic reports to the Concerned Authorities regarding the measures taken and the extent of implementation of the controls and obligations set out in this Resolution.
+8. Any other obligations stipulated in the Decree by Law and the resolutions issued in implementation thereof.
+
+Article (6) Obligations of the Child Caregiver
+The Child Caregiver shall:
+1. Refrain from enabling a Child to create or use a personal account on Social Media Platforms in contravention of the provisions of this Resolution.
+2. Refrain from circumventing Age Verification mechanisms or providing false or misleading data or information with the intention of enabling a Child to access Social Media Platforms in contravention of the provisions of this Resolution.
+3. Exercise effective supervision over any digital activity of the Child in a manner that ensures that the Child is not exploited or exposed to digital risks.
+4. Raise the Child's awareness of the risks associated with the use of Social Media Platforms and promote safe and responsible usage practices commensurate with the Child's age and level of maturity.
+5. Any other obligations stipulated in the Decree by Law and the resolutions issued in implementation thereof.
+
+Article (7) Oversight and Supervision of Social Media Platforms
+1. The National Media Authority shall be responsible for overseeing and supervising the extent to which Social Media Platforms comply with the obligations, controls, and standards relating to digital and media content associated with Children pursuant to the provisions of this Resolution. It may take the necessary measures upon establishing a violation or negligence, including warning, closure, partial blocking, total blocking, or the imposition of other administrative penalties prescribed under the list of administrative penalties issued pursuant to the provisions of the Decree by Law, while observing the principle of graduality.
+2. The Telecommunications and Digital Government Regulatory Authority shall be responsible for overseeing and supervising the extent to which Social Media Platforms comply with the technical obligations, controls, and standards prescribed pursuant to the provisions of this Resolution. It may take the necessary measures upon establishing a violation or negligence, including warning, closure, partial blocking, total blocking, or the imposition of other administrative penalties prescribed under the list of administrative penalties issued pursuant to the provisions of the Decree by Law, while observing the principle of graduality.
+3. The National Media Authority and the Telecommunications and Digital Government Regulatory Authority shall, each within its respective competence, submit periodic reports to the Child Digital Safety Council regarding the extent to which Social Media Platforms comply with the prescribed obligations, controls, and standards, as well as the measures and penalties imposed in respect of violations.
+4. The Child Digital Safety Council shall assess the risks and impacts associated with Children's access to Social Media Platforms, propose the measures necessary to address and mitigate such risks and impacts, and coordinate with the relevant federal and local authorities in a manner that ensures the effective implementation of the provisions of this Resolution.
+5. The Child Digital Safety Council may, upon the proposal of the Telecommunications and Digital Government Regulatory Authority and the National Media Authority, each within its respective competence, issue the guidance manuals, standards, and technical or regulatory requirements necessary to ensure the implementation of the provisions of this Resolution.
+
+Article (8) Regularization of Status
+1. Social Media Platforms shall be granted a transitional period of twelve (12) months from the date of entry into force of this Resolution to regularize their status in accordance with its provisions and requirements.
+2. The Telecommunications and Digital Government Regulatory Authority may communicate and coordinate with the companies operating Social Media Platforms during the transitional period to enhance their readiness to implement the technical and regulatory requirements set out in this Resolution, in a manner that ensures effective digital safety of the Child.
+
+Article (9) Publication and Entry into Force
+This Resolution shall be published in the Official Gazette and shall enter into force on the day following the date of its publication.

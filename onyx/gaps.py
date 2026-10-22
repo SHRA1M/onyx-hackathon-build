@@ -20,7 +20,8 @@ CATEGORIES = ("unclear responsibilities", "standards gap", "technology gap", "le
 ADDRESSEES = ("TDRA", "UAE Data Office", "the consumer-protection authority", "Cabinet", "ITU")
 COMPETITOR = ("yes", "no", "not read")
 # short names for the table, by the file a global example quotes
-SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172"}
+SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172",
+         "coppa-": "16 CFR"}
 
 
 def _short(path: str) -> str:
@@ -67,6 +68,9 @@ def _searched(s: dict[str, Any]) -> list[str]:
         out.append(f"  - EN: \"{chunk['text_en']}\"")
     if chunk["text_ar"]:
         out.append(f"  - AR (the whole chunk): \"{chunk['text_ar']}\"")
+    # the chunk has no Arabic: the phrase from the Arabic source text (order 2026-10-22 Task 15, gap-9 11(1))
+    if s.get("quote_ar"):
+        out.append(f"  - AR (`{s['file_ar']}`): \"{s['quote_ar']}\"")
     return out
 
 

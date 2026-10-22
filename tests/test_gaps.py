@@ -13,7 +13,7 @@ import pytest
 from onyx import data, gaps, kb
 
 ROWS = data.load_gaps()["gaps"]
-ORDER_IDS = [f"gap-{n}" for n in range(1, 9)] + ["candidate-4-4-fixed-term-bundle"]
+ORDER_IDS = [f"gap-{n}" for n in range(1, 10)] + ["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
 GLOBAL_DIR = kb.KB_DIR / "sources" / "global"
 REGISTER_ID = re.compile(r"^(gap-\d+|candidate-[\w-]+)$")
 
@@ -138,3 +138,91 @@ def test_public_outputs_carry_no_competitor_column(tmp_path):
     for path in (tmp_path / "gaps.md", readme):
         assert "competitor" not in path.read_text(encoding="utf-8").lower(), path.name
     assert all("competitor" in row for row in ROWS)  # hq's internal note stays in gaps.json
+
+
+# --- order 2026-10-22-task-15-gap-9-child -------------------------------------------------------------------------
+
+GAP_9 = ("A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the "
+         "beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the "
+         "Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are "
+         "unpublished, and no text addressed to a telecom provider says how an automated channel learns that the "
+         "person is a child.")
+COPPA = {"312.5(a)(1)": "obtain verifiable parental consent before any collection, use, or disclosure of personal "
+                        "information from children",
+         "312.5(b)(1)": "reasonably calculated, in light of available technology, to ensure that the person providing "
+                        "consent is the child's parent"}
+CDS = "child-digital-safety-26-2025-en"
+
+
+def _row(rid):
+    [row] = [r for r in ROWS if r["id"] == rid]
+    return row
+
+
+def test_gap_9_is_the_orders_text():
+    row = _row("gap-9")
+    assert row["gap"] == GAP_9
+    assert (row["kind"], row["category"], row["addressee"]) == ("method", "legislative gap", ["TDRA", "Cabinet"])
+    assert row["exposed_by"] == "mapping (SRC, P); U2 (drill bank, not run)"
+    assert row["uae_position"].startswith("The duty is the law's own words; the operator's licence 3.2 makes it")
+    assert "'Self-declaration of age ... shall not be recognized' (Art 4(3))" in row["uae_position"]
+    assert row["uae_position"].endswith("it is not on the TDRA Regulations and Ruling register.")
+    assert row["recommendation"].startswith("TDRA to issue the Art 11 instructions with the caregiver check")
+    assert row["recommendation"].endswith("can name a list of the same shape for telecom channels.")
+
+
+def test_gap_9_searches_the_orders_clauses():
+    searched = [s["clause"] for s in _row("gap-9")["searched"]]
+    # 10(1)(g) sits in chunk 10(1) and 11(2) in chunk 11(1): the chunker keeps them together, as gap-7 cites 10(1)
+    assert searched == [f"{CDS}:7(1)", f"{CDS}:9(2)", f"{CDS}:10(1)", f"{CDS}:11(1)", f"{CDS}:11(1)",
+                        "tdra-cpr-v2-en:4.3", "tdra-cpr-v2-en:4.7"]
+
+
+def test_gap_9_arabic_is_verbatim_in_the_source_file():
+    [ar] = [s for s in _row("gap-9")["searched"] if s.get("quote_ar")]
+    assert ar["clause"] == f"{CDS}:11(1)" and ar["file_ar"] == "docs/sources/child-digital-safety-law-26-2025-ar.txt"
+    assert _norm(ar["quote_ar"]) in _norm((kb.REPO / ar["file_ar"]).read_text(encoding="utf-8"))
+
+
+def test_gap_9_global_example_is_coppa_312_5():
+    examples = _row("gap-9")["global_examples"]
+    assert {ex["clause"]: ex["quote"] for ex in examples} == COPPA
+    assert {ex["file"] for ex in examples} == {"kb/sources/global/coppa-16cfr312-5.txt"}
+    assert "16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1)" in gaps.table()
+
+
+def test_coppa_quotes_are_verbatim_in_the_fetched_file():
+    path = GLOBAL_DIR / "coppa-16cfr312-5.txt"
+    if not path.exists():
+        pytest.skip("kb/sources/global/ is local only (gitignored, addendum item 15)")
+    text = path.read_text(encoding="utf-8")
+    assert text.startswith("Source: https://www.ecfr.gov/")
+    for quote in COPPA.values():
+        assert _norm(quote) in _norm(text)
+
+
+def test_candidate_79bis_2_row():
+    row = _row("candidate-79bis-2-fine-schedule")
+    assert row["gap"] == ("The Cabinet schedule of licensee violations and fines promised by Telecom Law 79 bis (2) is "
+                          "not published; a CPR breach by an automated channel falls under 79 bis (1) and licence "
+                          "16.3.2 (AED 50,000 to 200,000) with no schedule above it.")
+    assert (row["kind"], row["addressee"], row["global_examples"]) == ("absence", ["Cabinet"], [])
+    assert row["exposed_by"] == "mapping (P)"
+    # 79 bis (1) and (2) are one chunk, 79 bis
+    assert [s["clause"] for s in row["searched"]] == ["telecom-law-3-2003-en:79 bis", "telecom-law-3-2003-en:79 bis",
+                                                      "licence-2-2026:16.3.2"]
+
+
+def test_readme_register_has_eleven_rows_and_the_child_left_the_candidates():
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    table = readme.split(gaps.START, 1)[1].split(gaps.END, 1)[0]
+    assert table.count("\n| ") == 11 + 2  # gap-1 to gap-9 and two candidate rows, plus the header and separator
+    names = [c["name"] for c in data.load_gaps()["candidates"]]
+    assert "A child on the line" not in names and len(names) == 3
+    assert "### A child on the line" not in (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
+
+
+def test_adviser_register_lists_gap_9_and_the_candidate():
+    from onyx.agents.adviser import Adviser
+    text = "\n".join(Adviser.extra_lines(None))  # the register lines read no instance state
+    assert "9. gap-9: " in text and "11. candidate-79bis-2-fine-schedule: " in text

@@ -1,0 +1,35 @@
+Source: https://tdra.gov.ae/en/consumer-tool-hub/topics/telecom-for-minors (TDRA Consumer Tool Hub, English). Page states "Last updated October 01, 2026" (footer: 01/10/2026 09:29).
+Fetched: 2026-10-22 by hq (scrapling, Fable session). Navigation, footer and feedback widgets removed; page body text only.
+Nature of the document: a consumer information page about an initiative. Not on the TDRA Regulations and Ruling register; no instrument number, no legal basis clause, no obligation on licensees.
+
+Telecom for Minors
+Last updated October 01, 2026
+
+Telecom for Minors Initiative
+Safer connectivity for children. Simpler control for parents.
+TDRA has launched the Telecom for minors initiative in collaboration with licensed telecommunications service providers in the UAE. It brings age-appropriate mobile services and parental control tools together in one place.
+
+Our Objective
+To give children telecommunications services that suit their age, and to give parents clear, easy-to-use tools to manage and supervise their children's digital access.
+
+What The Initiative Offers
+• Safer digital access
+Services that reduce exposure to harmful or age-inappropriate content.
+• Parental control tools
+Manage screen time, filter content, choose who your child can contact.
+• Packages for minors
+Plans built around children's everyday learning and calling needs.
+• Aligned with the law
+Supports the goals of the UAE child digital safety law.
+
+Child Digital Safety Law
+Federal Decree-Law No. (26) of 2025 regarding child digital safety sets a national framework for protecting children in the digital environment, defining a child as anyone under 18 years of age.
+Read the full law
+
+Explore Available Services
+Etisalat: Kids SIM; Parental control
+du: Family circle; Youth plans
+Virgin Mobile UAE: Plans for minors; Family plan
+
+Disclaimer:
+Package features, eligibility requirements, pricing, availability and terms are determined by each service provider and may change at any time. The links above are provided for consumer information only and do not constitute an endorsement by TDRA of any commercial package.

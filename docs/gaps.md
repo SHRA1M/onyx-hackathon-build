@@ -14,7 +14,9 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 | gap-6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only. | scope | legislative gap | Cabinet | EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113 | S1-3 |
 | gap-7 | No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's conduct. | absence | standards gap | TDRA | IMDA 2.1.2 | all |
 | gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | none; the recommendation is the example | S2-3 |
+| gap-9 | A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
+| candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines promised by Telecom Law 79 bis (2) is not published; a CPR breach by an automated channel falls under 79 bis (1) and licence 16.3.2 (AED 50,000 to 200,000) with no schedule above it. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 
 ## gap-1: complaint hand-over
 
@@ -288,6 +290,41 @@ Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S2-3.
 
 **Recommendation.** ITU-T to add a policy-node outcome that withholds the model's output and routes the case to a named human (hand-over), with its own reference point, so a regulator's human-in-the-loop rule maps into the pipeline.
 
+## gap-9: a child on the line
+
+A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child.
+
+Kind: method. Category: legislative gap. Addressee: TDRA, Cabinet. Exposed by: mapping (SRC, P); U2 (drill bank, not run).
+
+**Clauses searched**
+
+- `child-digital-safety-26-2025-en:7(1)` (page 8): No under-13 data without the caregiver's consent, explicit, documented and verifiable; no method of verifying it is named.
+  - EN: "Obtaining parental consent from the child caregiver, provided that such consent is explicit, documented, and verifiable."
+- `child-digital-safety-26-2025-en:9(2)` (page 10): Platforms and Internet Service Providers must keep children from prohibited games, age verification included; no mechanism is named.
+  - EN: "including age-verification mechanisms, Parental Control Tools, and blocking Harmful Content."
+- `child-digital-safety-26-2025-en:10(1)` (page 10): Point (g): platforms may use AI systems to detect, remove or report harmful content. A tool, not an age signal; point (b)'s age verification is asked of platforms, by their Art 6 class.
+  - EN: "including artificial intelligence systems and machine learning algorithms, for proactive detection, removal, or reporting thereof"
+- `child-digital-safety-26-2025-en:11(1)` (page 12): Point (b): the TDRA instructions to Internet Service Providers include the caregiver signing the service terms where the beneficiary is a child; the instructions are unpublished.
+  - EN: "including requiring the Child Caregiver to sign service terms"
+  - AR (`docs/sources/child-digital-safety-law-26-2025-ar.txt`): "إلزام القائم على رعاية الطفل بالتوقيع على شروط الخدمة"
+- `child-digital-safety-26-2025-en:11(1)` (page 12): Paragraph 2 (11(2), held in the 11(1) chunk): TDRA reviews the providers' policies and supervises their compliance.
+  - EN: "The Authority shall review the policies of Internet Service Providers and supervise and monitor their compliance"
+- `tdra-cpr-v2-en:4.3` (page 14): No Service the Subscriber has not expressly ordered; no age condition on who orders.
+  - EN: "Licensees shall not register, charge or otherwise avail a Service to a Subscriber that the Subscriber has not expressly ordered or opted to pay for."
+  - AR (the whole chunk): "مع مراعاة أحكام المادة الفرعية 4.4 ، يجب ألا يقوم المرخص لهم بتسجيل أو استيفاء رسوم أو جعل المشترك مستفيداً من خدمة لم يطلبها المشترك أو يختر الدفع لقائها صراحةً."
+- `tdra-cpr-v2-en:4.7` (page 14): The consent provisions for receiving or paying for a Service follow; none sets an age condition on a sale.
+  - EN: "with reference to a Subscriber"
+  - AR (the whole chunk): ":في سياق هذه الأنظمة وبالرجوع إلى موافقة المشترك على تلقي الخدمة و/أو الدفع مقابلها، يتم تطبيق الأحكام التالية"
+
+**UAE position.** The duty is the law's own words; the operator's licence 3.2 makes it a licence condition; the instruments that would set the age signal, the caregiver check and the penalties do not exist yet (searched 2026-10-16 and 2026-10-22, both languages). Two published texts come near and neither reaches a telecom channel. Cabinet Resolution 106/2026 (issued 2026-06-17, in force 2026-06-30) 'shall apply to all Social Media Platforms whose services are made available within the State or directed at users therein' (Art 2); it lists age-verification mechanisms for those platforms (Art 4(2)) and says 'Self-declaration of age ... shall not be recognized' (Art 4(3)), but its standards are still to be 'approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority' (Arts 3(4)(c), 4(1)(h), 4(2)(d)) and its penalties are those 'prescribed under the list of administrative penalties issued pursuant to the provisions of the Decree by Law' (Art 7(1), 7(2)), the Art 16 list that is not published. TDRA's 'Telecom for Minors' page (consumer hub, updated 2026-10-01) describes an initiative launched 'in collaboration with licensed telecommunications service providers' that 'Supports the goals of the UAE child digital safety law'; its terms 'are determined by each service provider', the links 'are provided for consumer information only', and it is not on the TDRA Regulations and Ruling register.
+
+**Global example**
+
+- US COPPA Rule, 16 CFR 312.5 (Parental consent), 312.5(a)(1) (VERIFIED, `kb/sources/global/coppa-16cfr312-5.txt`): "obtain verifiable parental consent before any collection, use, or disclosure of personal information from children"
+- US COPPA Rule, 16 CFR 312.5 (Parental consent), 312.5(b)(1) (VERIFIED, `kb/sources/global/coppa-16cfr312-5.txt`): "reasonably calculated, in light of available technology, to ensure that the person providing consent is the child's parent"
+
+**Recommendation.** TDRA to issue the Art 11 instructions with the caregiver check an automated channel must run before activating or changing a service, and the consent method for under-13 data. Resolution 106 Art 4(2) already lists acceptable age-verification mechanisms for social media platforms, and 16 CFR 312.5(b) lists acceptable consent methods; the Art 11 instructions can name a list of the same shape for telecom channels.
+
 ## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
 
 Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.
@@ -306,18 +343,30 @@ Kind: scope. Category: legislative gap. Addressee: TDRA. Exposed by: S1-6.
 
 **Recommendation.** TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3.
 
+## candidate-79bis-2-fine-schedule: the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished
+
+The Cabinet schedule of licensee violations and fines promised by Telecom Law 79 bis (2) is not published; a CPR breach by an automated channel falls under 79 bis (1) and licence 16.3.2 (AED 50,000 to 200,000) with no schedule above it.
+
+Kind: absence. Category: legislative gap. Addressee: Cabinet. Exposed by: mapping (P).
+
+**Clauses searched**
+
+- `telecom-law-3-2003-en:79 bis` (page 29): Paragraph (1): a breach of the Law or anything issued under it is fined AED 50,000 to 200,000.
+  - EN: "shall be punished with a fine that is not less than AED (50,000) Fifty Thousand Dirhams and does not exceed AED (200,000) Two Hundred Thousand Dirhams"
+- `telecom-law-3-2003-en:79 bis` (page 29): Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.
+  - EN: "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees"
+- `licence-2-2026:16.3.2` (page 45): A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.
+  - EN: "The penalty shall be not less than Dirhams 50,000 and not more than Dirhams 200,000"
+
+**UAE position.** Candidate from the mapping (P node): the fine a CPR breach by an automated channel carries is the 79 bis (1) and licence 16.3.2 band; the Cabinet schedule 79 bis (2) promises is not published.
+
+**Global example.** none (order Task 15: no global example)
+
+**Recommendation.** Cabinet to issue the schedule of licensee violations and fines that Telecom Law 79 bis (2) promises.
+
 ## Candidates
 
 Flagged as candidates; no global example required.
-
-### A child on the line
-
-The agent has no age signal; verified caregiver consent for under-13 data and the caregiver's signature on service terms are required, and the classification, TDRA instructions and penalties are unpublished.
-
-- `child-digital-safety-26-2025-en:7(1)` (page 8): Explicit, documented, verifiable caregiver consent for under-13 data.
-  - EN: "Obtaining parental consent from the child caregiver, provided that such consent is explicit, documented, and verifiable."
-- `child-digital-safety-26-2025-en:11(1)` (page 12): Point (b): the caregiver signs the service terms where the beneficiary is a child.
-  - EN: "including requiring the Child Caregiver to sign service terms"
 
 ### Arabic records
 
@@ -346,4 +395,4 @@ The Executive Order ranks above the Regulatory Framework in the licence's order 
 
 ## Sources
 
-Task 9 register order (docs/work-orders/2026-10-21-task-9-gaps.md); gap reasoning from docs/sources/telecom-law-and-licences-2026-10-17.md sections 5 and 6 and docs/sources/cpr-full-read-2026-10-15.md section 3.
+Task 9 register order (docs/work-orders/2026-10-21-task-9-gaps.md); gap-9 and candidate-79bis-2-fine-schedule from the Task 15 order (docs/work-orders/2026-10-22-task-15-gap-9-child.md); gap reasoning from docs/sources/telecom-law-and-licences-2026-10-17.md sections 5 and 6 and docs/sources/cpr-full-read-2026-10-15.md section 3.
