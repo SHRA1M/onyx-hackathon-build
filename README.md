@@ -94,7 +94,10 @@ The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox
   (`onyx/model.py`, one adapter for every model).
 - Prices: https://platform.claude.com/docs/en/about-claude/pricing, read 2026-10-21 (`onyx/data/model_prices.json`).
 - Bake-off: [`eval/bakeoff.md`](eval/bakeoff.md), one governed run per scenario (S1 to S5) per language per model.
-- Scored run: [`eval/results.md`](eval/results.md), Sonnet on prompt v3, three runs per scenario per mode per language.
+- Scored run: [`eval/results.md`](eval/results.md), C5, Sonnet on prompt v5, two runs per scenario per language,
+  governed (English / Arabic): action recall 0.96 / 0.94, citation validity 0.99 / 1.00, obligation proxy
+  0.57 / 0.56; 5 of 112 key steps missed.
+- Ungoverned baseline: C3, Sonnet on prompt v3, three runs per scenario per mode per language.
 
 Clause-id resolution (2026-10-21, hq): a cited id missing its language ending (`-en`, `-ar`) resolves to the one
 clause given to that agent for that step that it names, never to the whole knowledge base and never when two match;

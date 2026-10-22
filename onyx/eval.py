@@ -66,6 +66,12 @@ C4_LINE = ("Prompt v4 adds three care lines (verbs, propose-and-let-the-gate-dec
            "care's mandate to its gates' clauses; the ungoverned baseline runs on the same prompt.")
 C4_RUNS_LINE = ("C4 is governed only, 2 runs per scenario and language (Iyas, 2026-10-21, to stay inside the USD 6.00 C4 "
                 "cap); no ungoverned C4 run was recorded, so the ungoverned rows are C3 on prompt v3.")
+C5 = "c5"  # runs/c5: the C5 scored run on prompt v5, Sonnet 5.5 (order 2026-10-22-task-13-prompt-v5-c5)
+C5_LINE = ("Prompt v5 changes two care lines (the de-identified model-provider payload is draft_reply; a draft_reply is "
+           "addressed to the step's sender, the human named from the facts) after the C4 misses; governed only, 2 runs "
+           "per cell; the ungoverned baseline stays C3 on prompt v3.")
+BY_SCENARIO = ("citation_validity", "action_recall", "action_recall_earlier", "obligation_proxy", "gap_recall",
+               "abstention")
 SUMMARY = (("Citation validity (hq rule)", "citation_validity"), ("Action recall", "action_recall"),
            ("Obligation proxy", "obligation_proxy"), ("Gap recall", "gap_recall"), ("Abstention", "abstention"))
 
@@ -298,6 +304,8 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
     results["scripted"] = results["models"] == ["scripted-mock"]
     if (root / C4).exists():
         results["c4"] = _c4(root, scored, kb, by_chunk)
+    if (root / C5).exists():
+        results["c5"] = _c5(root, kb, by_chunk)
     out.mkdir(parents=True, exist_ok=True)
     (out / "results.json").write_text(json.dumps(results, indent=1, sort_keys=True, ensure_ascii=False) + "\n",
                                       encoding="utf-8", newline="\n")
@@ -330,27 +338,52 @@ def _summary(scored: Scored) -> dict[str, Any]:
                        "ungoverned_claims_allowed": _mean([r["ungoverned_claims_allowed"] for _, r in ungoverned[lang]])}
                 for lang in LANGS},
         "by_scenario": {sid: {lang: {m: _mean([r[m] for s, r in governed[lang] if s == sid])
-                                     for m in ("citation_validity", "action_recall")} for lang in LANGS}
+                                     for m in BY_SCENARIO} for lang in LANGS}
                         for sid in SCENARIOS},
     }
+
+
+def _rerun(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[str, Any]:
+    """The runs of a re-run folder (runs/c4, runs/c5): scored per mode and language, the prompt each run_start
+    names, per mode, the runs' tokens and cost, and the governed misses per key step and language."""
+    scored, usage, prompts = _empty(), [], {mode: set() for mode in MODES}
+    misses: dict[str, dict[str, Any]] = {}
+    for sid in SCENARIOS:
+        key, scenario = data.load_key(sid), data.load_scenario(sid)
+        for mode, governed in MODES.items():
+            for lang in LANGS:
+                paths = [p for n in range(1, RUNS + 1) if (p := run_path(root, sid, n, lang, governed)).exists()]
+                rows = [run_metrics(p, key, scenario, kb, by_chunk) for p in paths]
+                scored[mode][lang] += [(sid, r) for r in rows]
+                prompts[mode] |= {_events(p)[0]["new_value"].get("prompt", "before v4") for p in paths}
+                usage += [{"path": p.relative_to(root.parent).as_posix(), "model": r["model"], **r["usage"]}
+                          for p, r in zip(paths, rows)]
+                if not governed or not paths:
+                    continue
+                hits = [action_hits(_events(p), key, scenario) for p in paths]
+                for step in key["steps"]:
+                    row = misses.setdefault(f"{sid}-{step['n']}", {"agent": step["agent"], "verb": step["verb"],
+                                                                    **{lg: [0, 0] for lg in LANGS}})
+                    row[lang] = [sum(not h[step["n"]] for h in hits), len(paths)]
+    return {"scored": scored, "prompts": {mode: sorted(v) for mode, v in prompts.items()}, "runs": usage,
+            "misses": misses}
 
 
 def _c4(root: Path, c3: Scored, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[str, Any]:
     """The C4 runs under root/c4 beside C3 (root): the summaries, the prompt each run_start names, per mode, and the
     C4 runs' tokens and cost."""
-    scored, usage, prompts = _empty(), [], {mode: set() for mode in MODES}
-    for sid in SCENARIOS:
-        key, scenario = data.load_key(sid), data.load_scenario(sid)
-        for mode, governed in MODES.items():
-            for lang in LANGS:
-                paths = [p for n in range(1, RUNS + 1) if (p := run_path(root / C4, sid, n, lang, governed)).exists()]
-                rows = [run_metrics(p, key, scenario, kb, by_chunk) for p in paths]
-                scored[mode][lang] += [(sid, r) for r in rows]
-                prompts[mode] |= {_events(p)[0]["new_value"].get("prompt", "before v4") for p in paths}
-                usage += [{"path": p.relative_to(root).as_posix(), "model": r["model"], **r["usage"]}
-                          for p, r in zip(paths, rows)]
-    return {"C3": _summary(c3), "C4": _summary(scored), "prompts": {mode: sorted(v) for mode, v in prompts.items()},
-            "runs": usage}
+    c4 = _rerun(root / C4, kb, by_chunk)
+    return {"C3": _summary(c3), "C4": _summary(c4["scored"]), "prompts": c4["prompts"], "runs": c4["runs"]}
+
+
+def _c5(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[str, Any]:
+    """The C5 scored run under root/c5 (order 2026-10-22 item 10): its summary, prompts, cost, and the key steps
+    scored and missed."""
+    c5 = _rerun(root / C5, kb, by_chunk)
+    scored = sum(m[lang][1] for m in c5["misses"].values() for lang in LANGS)
+    missed = {k: v for k, v in c5["misses"].items() if v["en"][0] or v["ar"][0]}
+    return {"C5": _summary(c5["scored"]), "prompts": c5["prompts"], "runs": c5["runs"], "misses": missed,
+            "key_steps": scored}
 
 
 def _cell(span: dict[str, Any]) -> str:
@@ -415,17 +448,22 @@ def _fig(value: float | None) -> str:
 
 
 def _c4_lines(results: dict[str, Any]) -> list[str]:
-    """The C4 table beside C3 (order 2026-10-21-task-8-part-c4 item 6), when runs/c4 exists."""
+    """The C4 table beside C3 (order 2026-10-21-task-8-part-c4 item 6), when runs/c4 exists; with C5 beside both when
+    runs/c5 exists (order 2026-10-22 item 10)."""
     if "c4" not in results:
         return []
-    c4 = results["c4"]
-    lines = ["## C4 beside C3 (governed, en / ar)", "",
+    c4, c5 = results["c4"], results.get("c5")
+    summaries = {"C3": c4["C3"], "C4": c4["C4"], **({"C5": c5["C5"]} if c5 else {})}
+    names = list(summaries)
+    lines = [f"## {'C3, C4 and C5' if c5 else 'C4 beside C3'} (governed, en / ar)", "",
              "Each cell is the mean over the governed runs of all five scenarios (ungoverned claims allowed: the mean "
-             "per ungoverned run). C3: prompt v3; C4: prompt v4; both Sonnet 5.5.", "",
-             "| Row | C3 en | C3 ar | C4 en | C4 ar |", "|---|---|---|---|---|"]
+             "per ungoverned run). C3: prompt v3; C4: prompt v4; " +
+             ("C5: prompt v5; all Sonnet 5.5." if c5 else "both Sonnet 5.5."), "",
+             "| Row | " + " | ".join(f"{n} {lang}" for n in names for lang in LANGS) + " |",
+             "|---|" + "---|" * (len(names) * len(LANGS))]
 
     def cells(fn) -> str:
-        return " | ".join(fn(c4[run]["all"][lang]) for run in ("C3", "C4") for lang in LANGS)
+        return " | ".join(fn(summaries[run]["all"][lang]) for run in names for lang in LANGS)
     for label, metric in SUMMARY:
         if metric == "action_recall":
             lines.append("| Action recall (corrected addressee rule; earlier rule in brackets) | " + cells(
@@ -433,18 +471,40 @@ def _c4_lines(results: dict[str, Any]) -> list[str]:
         else:
             lines.append(f"| {label} | " + cells(lambda r, m=metric: _fig(r[m])) + " |")
     lines += ["| Ungoverned claims allowed | " + cells(lambda r: _fig(r["ungoverned_claims_allowed"])) + " |",
-              "| Runs (governed / ungoverned) | " + cells(lambda r: f"{r['runs']} / {r['ungoverned_runs']}") + " |",
-              "", C4_LINE, "", C4_RUNS_LINE, "",
+              "| Runs (governed / ungoverned) | " + cells(lambda r: f"{r['runs']} / {r['ungoverned_runs']}") + " |", ""]
+    if c5:
+        lines += [C5_LINE, ""]
+    lines += [C4_LINE, "", C4_RUNS_LINE, "",
               "Prompt named on each C4 run_start: governed " + (", ".join(c4["prompts"]["governed"]) or "none") +
-              "; ungoverned " + (", ".join(c4["prompts"]["ungoverned"]) or "none recorded") + ".", "",
-              "| Scenario | Lang | Citation validity C3 | Citation validity C4 | Action recall C3 | Action recall C4 |",
-              "|---|---|---|---|---|---|"]
+              "; ungoverned " + (", ".join(c4["prompts"]["ungoverned"]) or "none recorded") + ".", ""]
+    if not c5:
+        lines += ["| Scenario | Lang | Citation validity C3 | Citation validity C4 | Action recall C3 | "
+                  "Action recall C4 |", "|---|---|---|---|---|---|"]
+        for sid in SCENARIOS:
+            for lang in LANGS:
+                a, b = c4["C3"]["by_scenario"][sid][lang], c4["C4"]["by_scenario"][sid][lang]
+                lines.append(f"| {sid} | {lang} | {_fig(a['citation_validity'])} | {_fig(b['citation_validity'])} | "
+                             f"{_fig(a['action_recall'])} | {_fig(b['action_recall'])} |")
+        return lines + [""]
+    lines += ["Prompt named on each C5 run_start: governed " + (", ".join(c5["prompts"]["governed"]) or "none") +
+              "; ungoverned " + (", ".join(c5["prompts"]["ungoverned"]) or "none recorded") + ".", "",
+              "| Scenario | Lang | Citation validity C3 / C4 / C5 | Action recall C3 / C4 / C5 (earlier rule in "
+              "brackets) | Obligation proxy C3 / C4 / C5 | Gap recall C3 / C4 / C5 | Abstention C3 / C4 / C5 |",
+              "|---|---|---|---|---|---|---|"]
     for sid in SCENARIOS:
         for lang in LANGS:
-            a, b = c4["C3"]["by_scenario"][sid][lang], c4["C4"]["by_scenario"][sid][lang]
-            lines.append(f"| {sid} | {lang} | {_fig(a['citation_validity'])} | {_fig(b['citation_validity'])} | "
-                         f"{_fig(a['action_recall'])} | {_fig(b['action_recall'])} |")
-    return lines + [""]
+            rows = [summaries[n]["by_scenario"][sid][lang] for n in names]
+            recall = " / ".join(f"{_fig(r['action_recall'])} ({_fig(r['action_recall_earlier'])})" for r in rows)
+            plain = [" / ".join(_fig(r[m]) for r in rows) for m in ("obligation_proxy", "gap_recall", "abstention")]
+            lines.append(f"| {sid} | {lang} | " + " / ".join(_fig(r["citation_validity"]) for r in rows) +
+                         f" | {recall} | " + " | ".join(plain) + " |")
+    total = sum(m[lang][0] for m in c5["misses"].values() for lang in LANGS)
+    lines += ["", "### Misses per step after v5 (C5)", "",
+              "Governed runs whose proposals at the step miss the key's verb or addressee, of the runs recorded.", "",
+              "| Step | Agent | Key verb | en | ar |", "|---|---|---|---|---|"]
+    lines += [f"| {step} | {m['agent']} | {m['verb']} | {m['en'][0]} of {m['en'][1]} | {m['ar'][0]} of "
+              f"{m['ar'][1]} |" for step, m in c5["misses"].items()]
+    return lines + ["", f"Misses: {total} of {c5['key_steps']} key steps, in {len(c5['misses'])} steps.", ""]
 
 
 def _markdown(results: dict[str, Any]) -> str:
@@ -489,6 +549,9 @@ def _markdown(results: dict[str, Any]) -> str:
     if "c4" in results:
         lines += ["### C4 runs", "", "| Run | Model | Calls | Prompt tokens | Completion tokens | Cost |",
                   "|---|---|---|---|---|---|", *_cost_rows(results["c4"]["runs"])]
+    if "c5" in results:
+        lines += ["### C5 runs", "", "| Run | Model | Calls | Prompt tokens | Completion tokens | Cost |",
+                  "|---|---|---|---|---|---|", *_cost_rows(results["c5"]["runs"])]
     lines += ["## Definitions", "", *[line.strip() for line in __doc__.split("Metrics,", 1)[1].splitlines()[1:]
                                       if line.strip()]]
     return "\n".join(lines) + "\n"

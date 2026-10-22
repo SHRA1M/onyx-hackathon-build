@@ -30,52 +30,92 @@
    "by_scenario": {
     "S1": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 0.6667,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.6667,
+      "citation_validity": 1.0,
+      "gap_recall": 0.3333,
+      "obligation_proxy": 0.4286
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 0.6111,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.6111,
+      "citation_validity": 1.0,
+      "gap_recall": 0.3333,
+      "obligation_proxy": 0.4286
      }
     },
     "S2": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 0.8333,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.8333,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.4706
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 0.8889,
-      "citation_validity": 0.9524
+      "action_recall_earlier": 0.8889,
+      "citation_validity": 0.9524,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.4706
      }
     },
     "S3": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 0.6667,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.6667,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.2143
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 0.6,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.6,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.3095
      }
     },
     "S4": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 0.4667,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.4,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.2353
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 0.6667,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.4667,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.2353
      }
     },
     "S5": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.3889
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.1667
      }
     }
    }
@@ -108,52 +148,92 @@
    "by_scenario": {
     "S1": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 0.3333,
+      "obligation_proxy": 0.7857
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 0.3333,
+      "obligation_proxy": 0.7857
      }
     },
     "S2": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 0.8333,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.8333,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.1176
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 0.8333,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.8333,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.1176
      }
     },
     "S3": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 0.9,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.9,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.3215
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 0.8,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.8,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.3215
      }
     },
     "S4": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.8,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.6471
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 0.8,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.5294
      }
     },
     "S5": {
      "ar": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.6111
      },
      "en": {
+      "abstention": 1.0,
       "action_recall": 1.0,
-      "citation_validity": 1.0
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.6111
      }
     }
    }
@@ -324,6 +404,321 @@
     "model": "claude-sonnet-5-5",
     "path": "c4/S5/ar/run2.jsonl",
     "prompt_tokens": 86887
+   }
+  ]
+ },
+ "c5": {
+  "C5": {
+   "all": {
+    "ar": {
+     "abstention": 1.0,
+     "action_recall": 0.94,
+     "action_recall_earlier": 0.94,
+     "citation_validity": 1.0,
+     "gap_recall": 0.8667,
+     "obligation_proxy": 0.5639,
+     "runs": 10,
+     "ungoverned_claims_allowed": null,
+     "ungoverned_runs": 0
+    },
+    "en": {
+     "abstention": 1.0,
+     "action_recall": 0.96,
+     "action_recall_earlier": 0.96,
+     "citation_validity": 0.9875,
+     "gap_recall": 0.8667,
+     "obligation_proxy": 0.5743,
+     "runs": 10,
+     "ungoverned_claims_allowed": null,
+     "ungoverned_runs": 0
+    }
+   },
+   "by_scenario": {
+    "S1": {
+     "ar": {
+      "abstention": 1.0,
+      "action_recall": 1.0,
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 0.3333,
+      "obligation_proxy": 0.7857
+     },
+     "en": {
+      "abstention": 1.0,
+      "action_recall": 1.0,
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 0.3333,
+      "obligation_proxy": 0.7857
+     }
+    },
+    "S2": {
+     "ar": {
+      "abstention": 1.0,
+      "action_recall": 1.0,
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.6471
+     },
+     "en": {
+      "abstention": 1.0,
+      "action_recall": 1.0,
+      "action_recall_earlier": 1.0,
+      "citation_validity": 0.9375,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.4706
+     }
+    },
+    "S3": {
+     "ar": {
+      "abstention": 1.0,
+      "action_recall": 0.8,
+      "action_recall_earlier": 0.8,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.3571
+     },
+     "en": {
+      "abstention": 1.0,
+      "action_recall": 0.9,
+      "action_recall_earlier": 0.9,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.3571
+     }
+    },
+    "S4": {
+     "ar": {
+      "abstention": 1.0,
+      "action_recall": 0.9,
+      "action_recall_earlier": 0.9,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.5294
+     },
+     "en": {
+      "abstention": 1.0,
+      "action_recall": 0.9,
+      "action_recall_earlier": 0.9,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.6471
+     }
+    },
+    "S5": {
+     "ar": {
+      "abstention": 1.0,
+      "action_recall": 1.0,
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.5
+     },
+     "en": {
+      "abstention": 1.0,
+      "action_recall": 1.0,
+      "action_recall_earlier": 1.0,
+      "citation_validity": 1.0,
+      "gap_recall": 1.0,
+      "obligation_proxy": 0.6111
+     }
+    }
+   }
+  },
+  "key_steps": 112,
+  "misses": {
+   "S3-4": {
+    "agent": "care",
+    "ar": [
+     2,
+     2
+    ],
+    "en": [
+     1,
+     2
+    ],
+    "verb": "draft_reply"
+   },
+   "S4-4": {
+    "agent": "data_office",
+    "ar": [
+     1,
+     2
+    ],
+    "en": [
+     1,
+     2
+    ],
+    "verb": "request_human_review"
+   }
+  },
+  "prompts": {
+   "governed": [
+    "v5"
+   ],
+   "ungoverned": []
+  },
+  "runs": [
+   {
+    "calls": 5,
+    "completion_tokens": 7115,
+    "cost_usd": 0.295374,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S1/run1.jsonl",
+    "prompt_tokens": 112112
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 6423,
+    "cost_usd": 0.288454,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S1/run2.jsonl",
+    "prompt_tokens": 112112
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 8158,
+    "cost_usd": 0.374326,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S1/ar/run1.jsonl",
+    "prompt_tokens": 146373
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 7287,
+    "cost_usd": 0.365616,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S1/ar/run2.jsonl",
+    "prompt_tokens": 146373
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 4959,
+    "cost_usd": 0.26008,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S2/run1.jsonl",
+    "prompt_tokens": 105245
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 5029,
+    "cost_usd": 0.26078,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S2/run2.jsonl",
+    "prompt_tokens": 105245
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 6182,
+    "cost_usd": 0.29023,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S2/ar/run1.jsonl",
+    "prompt_tokens": 114205
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 5972,
+    "cost_usd": 0.28813,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S2/ar/run2.jsonl",
+    "prompt_tokens": 114205
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 5160,
+    "cost_usd": 0.22869,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S3/run1.jsonl",
+    "prompt_tokens": 88545
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 4467,
+    "cost_usd": 0.22176,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S3/run2.jsonl",
+    "prompt_tokens": 88545
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 5748,
+    "cost_usd": 0.285344,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S3/ar/run1.jsonl",
+    "prompt_tokens": 113932
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 5792,
+    "cost_usd": 0.285784,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S3/ar/run2.jsonl",
+    "prompt_tokens": 113932
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 5883,
+    "cost_usd": 0.24082,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S4/run1.jsonl",
+    "prompt_tokens": 90995
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 5281,
+    "cost_usd": 0.2348,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S4/run2.jsonl",
+    "prompt_tokens": 90995
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 6198,
+    "cost_usd": 0.287932,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S4/ar/run1.jsonl",
+    "prompt_tokens": 112976
+   },
+   {
+    "calls": 5,
+    "completion_tokens": 7059,
+    "cost_usd": 0.296542,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S4/ar/run2.jsonl",
+    "prompt_tokens": 112976
+   },
+   {
+    "calls": 6,
+    "completion_tokens": 4546,
+    "cost_usd": 0.186216,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S5/run1.jsonl",
+    "prompt_tokens": 70378
+   },
+   {
+    "calls": 6,
+    "completion_tokens": 4345,
+    "cost_usd": 0.184206,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S5/run2.jsonl",
+    "prompt_tokens": 70378
+   },
+   {
+    "calls": 6,
+    "completion_tokens": 6046,
+    "cost_usd": 0.234884,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S5/ar/run1.jsonl",
+    "prompt_tokens": 87212
+   },
+   {
+    "calls": 6,
+    "completion_tokens": 5057,
+    "cost_usd": 0.224994,
+    "model": "claude-sonnet-5-5",
+    "path": "c5/S5/ar/run2.jsonl",
+    "prompt_tokens": 87212
    }
   ]
  },

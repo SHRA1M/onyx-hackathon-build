@@ -3,6 +3,7 @@
 proposals v5 asks for. Scripted model only, no model call."""
 
 import json
+from pathlib import Path
 
 from onyx import data, eval as eval_mod, gate, kb, runs, scripted
 from onyx.agents import Care
@@ -132,3 +133,47 @@ def test_prompt_version_is_v5_on_run_start(tmp_path):
     [path] = runs.record("scripted", tmp_path, scenarios=("S1",), runs=1, langs=("en",), modes=("governed",))
     start = json.loads(path.read_text(encoding="utf-8").splitlines()[0])
     assert start["new_value"]["prompt"] == "v5"
+
+
+# --- Part C item 10: the C5 column in eval/results.md ---------------------------------------------------------
+
+def test_eval_puts_c5_beside_c3_and_c4_with_misses_per_step(tmp_path):
+    root = tmp_path / "runs"
+    for sub in ("", "c4", "c5"):
+        runs.record("scripted", root / sub, scenarios=("S1",), runs=1, langs=("en", "ar"), modes=("governed",))
+    results = eval_mod.evaluate(root, tmp_path / "eval")
+    assert results["c5"]["prompts"]["governed"] == ["v5"]
+    md = (tmp_path / "eval" / "results.md").read_text(encoding="utf-8")
+    assert "| Row | C3 en | C3 ar | C4 en | C4 ar | C5 en | C5 ar |" in md
+    assert eval_mod.C5_LINE in md and eval_mod.C5_LINE.startswith("Prompt v5 changes two care lines")
+    assert "| Scenario | Lang | Citation validity C3 / C4 / C5 |" in md
+    assert "### Misses per step after v5 (C5)" in md and "### C5 runs" in md
+
+
+# --- Part C item 11: the README's scored-run line is C5, its figures from eval/results.json -------------------
+
+def test_readme_scored_run_is_c5_with_the_figures_eval_wrote():
+    root = Path(__file__).resolve().parents[1]
+    readme = (root / "README.md").read_text(encoding="utf-8")
+    c5 = json.loads((root / "eval" / "results.json").read_text(encoding="utf-8"))["c5"]
+    bullet = readme.split("\n- Scored run:", 1)[1].split("\n- ", 1)[0]
+    line = " ".join(bullet.split())
+    assert "C5" in line and "prompt v5" in line and "two runs per scenario per language" in line and "governed" in line
+    fig = lambda m: " / ".join(f"{c5['C5']['all'][lang][m]:.2f}" for lang in ("en", "ar"))
+    for label, metric in (("action recall", "action_recall"), ("citation validity", "citation_validity"),
+                          ("obligation proxy", "obligation_proxy")):
+        assert f"{label} {fig(metric)}" in line
+    missed = sum(m[lang][0] for m in c5["misses"].values() for lang in ("en", "ar"))
+    assert f"{missed} of {c5['key_steps']} key steps missed" in line
+    assert any(x.startswith("- Ungoverned baseline: C3") for x in readme.splitlines())
+
+
+# --- Part C item 12: the S2 replay page reads the first C5 run that shows the hand-over and the human's allow ---
+
+def test_s2_replay_page_reads_the_first_c5_run_with_the_hand_over_and_step_4_allowed():
+    from onyx import replay_page
+    assert replay_page.source("S2") == replay_page.RUNS / "c5" / "S2" / "ar" / "run1.jsonl"
+    for sid in ("S1", "S3", "S4", "S5"):
+        assert replay_page.source(sid) == replay_page.RUNS / sid / "run1.jsonl"
+    page = replay_page.render(replay_page.source("S2"))
+    assert "`runs/c5/S2/ar/run1.jsonl`" in page and replay_page.C5_S2_LINE in page

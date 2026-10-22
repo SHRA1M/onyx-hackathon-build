@@ -1,7 +1,10 @@
 """Replay pages (order 2026-10-21-task-9-fixes-tasks-10-11 item 7): `python -m onyx replay-page` writes
 docs/replay/S1.md to S5.md, one recorded governed run each (runs/S<n>/run1.jsonl, English): the steps in order, each
 proposal, the gate's verdict, the clause ids with their quotes, and both language quotes at every hand-over and
-abstention. Text only, read from the committed log and rules.json; byte-identical on every run."""
+abstention. Text only, read from the committed log and rules.json; byte-identical on every run.
+
+S2 reads the first C5 run (runs/c5/S2: English run1, run2, then Arabic) whose step 3 carries the hand-over with both
+quotes and whose step 4, the human's, is allowed, when there is one (order 2026-10-22 item 12); the page says so."""
 
 from __future__ import annotations
 
@@ -13,6 +16,28 @@ from onyx import audit, data, kb, runs
 RUNS = kb.REPO / "runs"
 OUT = kb.REPO / "docs" / "replay"
 SCENARIOS = ("S1", "S2", "S3", "S4", "S5")
+HANDOVER_QUOTES = {"CPR 26.7.2", "Licence 9.1"}
+C5_S2_LINE = ("This page reads a C5 run (prompt v5), not runs/S2/run1.jsonl: the first C5 S2 run whose step 3 carries "
+              "the hand-over with both quotes and whose step 4, the human's, is allowed (order 2026-10-22 item 12).")
+
+
+def _shows_handover(path: Path) -> bool:
+    gates = [e for e in runs._events(path) if e["action"] == "gate"]
+    step3 = any(HANDOVER_QUOTES <= {r.get("label") for r in e["new_value"].get("reasons", []) if r.get("kind") == "quote"}
+                for e in gates if e["entity_id"] == "S2-3-care")
+    step4 = any(e["verdict"] == "allow" for e in gates if e["entity_id"] == "S2-4-care")
+    return step3 and step4
+
+
+def source(sid: str) -> Path:
+    """The run a scenario's page reads: runs/S<n>/run1.jsonl, or for S2 the first C5 run showing the hand-over."""
+    if sid == "S2":
+        for lang in runs.LANGS:
+            for n in (1, 2):
+                path = runs.run_path(RUNS / "c5", sid, n, lang)
+                if path.exists() and _shows_handover(path):
+                    return path
+    return RUNS / sid / "run1.jsonl"
 
 
 def _rules() -> dict[str, dict[str, Any]]:
@@ -52,6 +77,8 @@ def render(path: str | Path) -> str:
              f"Model `{config.get('model')}`, prompt {config.get('prompt', 'not logged (labels began with v4)')}, "
              f"{config.get('mode')}, "
              f"{config.get('lang')}. Hash chain: {'ok' if audit.verify(path) else 'BROKEN'}."]
+    if "c5" in path.resolve().relative_to(RUNS).parts:
+        lines += ["", C5_S2_LINE]
     for e in events[1:]:
         nv = e["new_value"] or {}
         if e["action"] == "release_event":
@@ -92,7 +119,7 @@ def write(out: str | Path = OUT) -> list[Path]:
     written = []
     for sid in SCENARIOS:
         page = out / f"{sid}.md"
-        page.write_text(render(RUNS / sid / "run1.jsonl"), encoding="utf-8", newline="\n")
+        page.write_text(render(source(sid)), encoding="utf-8", newline="\n")
         written.append(page)
     return written
 

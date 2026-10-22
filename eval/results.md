@@ -90,19 +90,21 @@ Clause-id resolution added 2026-10-21 (hq, after C4 S1): an id missing its langu
 | S5 | ungoverned | en | 1.00 | 1.00 | 0 | 18 |
 | S5 | ungoverned | ar | 1.00 | 1.00 | 0 | 22 |
 
-## C4 beside C3 (governed, en / ar)
+## C3, C4 and C5 (governed, en / ar)
 
-Each cell is the mean over the governed runs of all five scenarios (ungoverned claims allowed: the mean per ungoverned run). C3: prompt v3; C4: prompt v4; both Sonnet 5.5.
+Each cell is the mean over the governed runs of all five scenarios (ungoverned claims allowed: the mean per ungoverned run). C3: prompt v3; C4: prompt v4; C5: prompt v5; all Sonnet 5.5.
 
-| Row | C3 en | C3 ar | C4 en | C4 ar |
-|---|---|---|---|---|
-| Citation validity (hq rule) | 0.99 | 1.00 | 1.00 | 1.00 |
-| Action recall (corrected addressee rule; earlier rule in brackets) | 0.75 (0.71) | 0.73 (0.71) | 0.93 (0.89) | 0.95 (0.91) |
-| Obligation proxy | 0.32 | 0.35 | 0.47 | 0.50 |
-| Gap recall | 0.87 | 0.87 | 0.87 | 0.87 |
-| Abstention | 1.00 | 1.00 | 1.00 | 1.00 |
-| Ungoverned claims allowed | 2.33 | 2.13 | n/a | n/a |
-| Runs (governed / ungoverned) | 15 / 15 | 15 / 15 | 10 / 0 | 10 / 0 |
+| Row | C3 en | C3 ar | C4 en | C4 ar | C5 en | C5 ar |
+|---|---|---|---|---|---|---|
+| Citation validity (hq rule) | 0.99 | 1.00 | 1.00 | 1.00 | 0.99 | 1.00 |
+| Action recall (corrected addressee rule; earlier rule in brackets) | 0.75 (0.71) | 0.73 (0.71) | 0.93 (0.89) | 0.95 (0.91) | 0.96 (0.96) | 0.94 (0.94) |
+| Obligation proxy | 0.32 | 0.35 | 0.47 | 0.50 | 0.57 | 0.56 |
+| Gap recall | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 |
+| Abstention | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| Ungoverned claims allowed | 2.33 | 2.13 | n/a | n/a | n/a | n/a |
+| Runs (governed / ungoverned) | 15 / 15 | 15 / 15 | 10 / 0 | 10 / 0 | 10 / 0 | 10 / 0 |
+
+Prompt v5 changes two care lines (the de-identified model-provider payload is draft_reply; a draft_reply is addressed to the step's sender, the human named from the facts) after the C4 misses; governed only, 2 runs per cell; the ungoverned baseline stays C3 on prompt v3.
 
 Prompt v4 adds three care lines (verbs, propose-and-let-the-gate-decide, complaint addressee) and widens care's mandate to its gates' clauses; the ungoverned baseline runs on the same prompt.
 
@@ -110,18 +112,31 @@ C4 is governed only, 2 runs per scenario and language (Iyas, 2026-10-21, to stay
 
 Prompt named on each C4 run_start: governed v4; ungoverned none recorded.
 
-| Scenario | Lang | Citation validity C3 | Citation validity C4 | Action recall C3 | Action recall C4 |
-|---|---|---|---|---|---|
-| S1 | en | 1.00 | 1.00 | 0.61 | 1.00 |
-| S1 | ar | 1.00 | 1.00 | 0.67 | 1.00 |
-| S2 | en | 0.95 | 1.00 | 0.89 | 0.83 |
-| S2 | ar | 1.00 | 1.00 | 0.83 | 0.83 |
-| S3 | en | 1.00 | 1.00 | 0.60 | 0.80 |
-| S3 | ar | 1.00 | 1.00 | 0.67 | 0.90 |
-| S4 | en | 1.00 | 1.00 | 0.67 | 1.00 |
-| S4 | ar | 1.00 | 1.00 | 0.47 | 1.00 |
-| S5 | en | 1.00 | 1.00 | 1.00 | 1.00 |
-| S5 | ar | 1.00 | 1.00 | 1.00 | 1.00 |
+Prompt named on each C5 run_start: governed v5; ungoverned none recorded.
+
+| Scenario | Lang | Citation validity C3 / C4 / C5 | Action recall C3 / C4 / C5 (earlier rule in brackets) | Obligation proxy C3 / C4 / C5 | Gap recall C3 / C4 / C5 | Abstention C3 / C4 / C5 |
+|---|---|---|---|---|---|---|
+| S1 | en | 1.00 / 1.00 / 1.00 | 0.61 (0.61) / 1.00 (1.00) / 1.00 (1.00) | 0.43 / 0.79 / 0.79 | 0.33 / 0.33 / 0.33 | 1.00 / 1.00 / 1.00 |
+| S1 | ar | 1.00 / 1.00 / 1.00 | 0.67 (0.67) / 1.00 (1.00) / 1.00 (1.00) | 0.43 / 0.79 / 0.79 | 0.33 / 0.33 / 0.33 | 1.00 / 1.00 / 1.00 |
+| S2 | en | 0.95 / 1.00 / 0.94 | 0.89 (0.89) / 0.83 (0.83) / 1.00 (1.00) | 0.47 / 0.12 / 0.47 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S2 | ar | 1.00 / 1.00 / 1.00 | 0.83 (0.83) / 0.83 (0.83) / 1.00 (1.00) | 0.47 / 0.12 / 0.65 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S3 | en | 1.00 / 1.00 / 1.00 | 0.60 (0.60) / 0.80 (0.80) / 0.90 (0.90) | 0.31 / 0.32 / 0.36 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S3 | ar | 1.00 / 1.00 / 1.00 | 0.67 (0.67) / 0.90 (0.90) / 0.80 (0.80) | 0.21 / 0.32 / 0.36 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S4 | en | 1.00 / 1.00 / 1.00 | 0.67 (0.47) / 1.00 (0.80) / 0.90 (0.90) | 0.24 / 0.53 / 0.65 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S4 | ar | 1.00 / 1.00 / 1.00 | 0.47 (0.40) / 1.00 (0.80) / 0.90 (0.90) | 0.24 / 0.65 / 0.53 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S5 | en | 1.00 / 1.00 / 1.00 | 1.00 (1.00) / 1.00 (1.00) / 1.00 (1.00) | 0.17 / 0.61 / 0.61 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S5 | ar | 1.00 / 1.00 / 1.00 | 1.00 (1.00) / 1.00 (1.00) / 1.00 (1.00) | 0.39 / 0.61 / 0.50 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+
+### Misses per step after v5 (C5)
+
+Governed runs whose proposals at the step miss the key's verb or addressee, of the runs recorded.
+
+| Step | Agent | Key verb | en | ar |
+|---|---|---|---|---|
+| S3-4 | care | draft_reply | 1 of 2 | 2 of 2 |
+| S4-4 | data_office | request_human_review | 1 of 2 | 1 of 2 |
+
+Misses: 5 of 112 key steps, in 2 steps.
 
 ## Tokens and cost
 
@@ -218,6 +233,33 @@ Total: USD 5.2668 over 312 calls.
 | c4/S5/ar/run2.jsonl | claude-sonnet-5-5 | 6 | 86887 | 5629 | USD 0.2301 |
 
 Total: USD 5.2786 over 104 calls.
+
+### C5 runs
+
+| Run | Model | Calls | Prompt tokens | Completion tokens | Cost |
+|---|---|---|---|---|---|
+| c5/S1/run1.jsonl | claude-sonnet-5-5 | 5 | 112112 | 7115 | USD 0.2954 |
+| c5/S1/run2.jsonl | claude-sonnet-5-5 | 5 | 112112 | 6423 | USD 0.2885 |
+| c5/S1/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 146373 | 8158 | USD 0.3743 |
+| c5/S1/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 146373 | 7287 | USD 0.3656 |
+| c5/S2/run1.jsonl | claude-sonnet-5-5 | 5 | 105245 | 4959 | USD 0.2601 |
+| c5/S2/run2.jsonl | claude-sonnet-5-5 | 5 | 105245 | 5029 | USD 0.2608 |
+| c5/S2/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 114205 | 6182 | USD 0.2902 |
+| c5/S2/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 114205 | 5972 | USD 0.2881 |
+| c5/S3/run1.jsonl | claude-sonnet-5-5 | 5 | 88545 | 5160 | USD 0.2287 |
+| c5/S3/run2.jsonl | claude-sonnet-5-5 | 5 | 88545 | 4467 | USD 0.2218 |
+| c5/S3/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 113932 | 5748 | USD 0.2853 |
+| c5/S3/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 113932 | 5792 | USD 0.2858 |
+| c5/S4/run1.jsonl | claude-sonnet-5-5 | 5 | 90995 | 5883 | USD 0.2408 |
+| c5/S4/run2.jsonl | claude-sonnet-5-5 | 5 | 90995 | 5281 | USD 0.2348 |
+| c5/S4/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 112976 | 6198 | USD 0.2879 |
+| c5/S4/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 112976 | 7059 | USD 0.2965 |
+| c5/S5/run1.jsonl | claude-sonnet-5-5 | 6 | 70378 | 4546 | USD 0.1862 |
+| c5/S5/run2.jsonl | claude-sonnet-5-5 | 6 | 70378 | 4345 | USD 0.1842 |
+| c5/S5/ar/run1.jsonl | claude-sonnet-5-5 | 6 | 87212 | 6046 | USD 0.2349 |
+| c5/S5/ar/run2.jsonl | claude-sonnet-5-5 | 6 | 87212 | 5057 | USD 0.2250 |
+
+Total: USD 5.3350 over 104 calls.
 
 ## Definitions
 
