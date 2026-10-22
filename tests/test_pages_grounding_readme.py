@@ -2,6 +2,7 @@
 committed chunks), one grounding line per scenario, the README in our own words, and the candidate-79bis-2 row in
 hq's wording. The README figures and quoted phrases are checked against the source copies in docs/sources/."""
 
+import hashlib
 import json
 import re
 
@@ -229,13 +230,16 @@ def test_readme_headings_in_the_orders_order():
 def test_no_other_entry_is_named_in_a_tracked_file():
     import subprocess
     tracked = subprocess.run(["git", "ls-files"], cwd=kb.REPO, capture_output=True, text=True).stdout.split()
-    names = re.compile(r"\b(another team|another team|another team|another team)\b")
+    # the four running or named entries of hq's competitor read, as sha256 prefixes of the lowercased word, so this
+    # file names none of them
+    names = {'efb5047d16364e2d', 'b40f83d655ec2d8a', '8121d545b0b04138', '43b23c7cde617876'}
     for name in tracked:
         if name.startswith("docs/work-orders/"):  # hq's frozen orders; Task 16's own order names two entries
             continue
         path = kb.REPO / name
         if path.suffix in {".md", ".py", ".json", ".html", ".txt", ".csv"} and path.exists():
-            assert not names.search(path.read_text(encoding="utf-8", errors="replace")), name
+            words = set(re.findall(r"[a-z]+", path.read_text(encoding="utf-8", errors="replace").lower()))
+            assert not {hashlib.sha256(w.encode()).hexdigest()[:16] for w in words} & names, name
 
 
 # --- item 4: the candidate-79bis-2 row --------------------------------------------------------------------------
