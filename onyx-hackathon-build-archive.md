@@ -166,3 +166,17 @@ Order `docs/work-orders/2026-10-22-task-13-prompt-v5-c5.md` (hq, Fable, with Iya
   - 2026-10-21 (Task 5 model decision, hq task-8 order): the live model is Claude through Anthropic's OpenAI-compatible endpoint, base URL `https://api.anthropic.com/v1/`, model `claude-opus-5-5` (platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk, read through context7). Temperature below 1 is a 400 on Claude 4.7+, so it is omitted.
   - 2026-10-21 (live order Part B): a proposal whose `args.deadline` is not a {rule, value, unit} object is blocked by the base checks (it crashed the gate on Haiku's and Sonnet's S5 step 6). No existing verdict changed.
   - 2026-10-21 (Task 8, commit d85871d): every event has `gate_ms` and `model_ms` (null where not measured). Action recall addressee: where the key answers a step sent by a human with draft_reply, the reply must be addressed to the human; every other step a non-human addressee. Obligation recall is step-level (key verdict reached and every must_cite on the step's record). Hand-over latency: first step from handover_step that is a hold, an allowed proposal to or asking for a human, or a complaint_gate hand-over duty. All three sent to hq to confirm.
+
+## 2026-10-22: Task 14, the replay viewer
+
+Order `docs/work-orders/2026-10-22-task-14-replay-viewer.md` (hq, Fable). Built by Opus 5.5, no model call, USD 0.
+- The hq ruling on the C5 report (items 2 and 3) was already in 19584b1; nothing further to do. Order filed dd69538.
+- Built ebc29a2: `onyx/replay_viewer.py`, `replay-page --html`, `docs/replay/index.html` (1,110,983 bytes), CI step,
+  README line, 10 tests (282 in all). Steps rendered in Python (parseable, testable); events inline as JSON as ordered.
+- S2 English run: no C5 English run allows step 4; C3 `runs/S2/run1.jsonl` blocks with both quotes at steps 3 and 4,
+  breaking the order's "panel at step 3 only" test, so `runs/c5/S2/run1.jsonl` (step 4 hold). C5 Arabic step 4 also
+  carries both quotes on an allow: the panel needs a block.
+- First test run found 4 quotes "missing": the Decision 16 rules hold Arabic in `quote`; the page had tagged them
+  English. Language now detected from the text; all quotes verbatim in kb/chunks.
+- Screenshots via a localhost server (Playwright blocks file://). CI green on ebc29a2 (1m7s).
+- Moved from the background (superseded by C5 as the headline, still true): 2026-10-21 (C4 result, 1deb675): governed (en / ar) citation validity 1.00 / 1.00, action recall 0.93 / 0.95 (earlier rule 0.89 / 0.91), obligation proxy 0.47 / 0.50, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 7 of 112 key steps: S2-3 and S3-4 care, both from v4 lines. 12 ids resolved (S1-3 4 by the eval only, S3-5 8 by the gate live). C4 USD 5.28 of 6.00.
