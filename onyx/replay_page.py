@@ -126,4 +126,14 @@ def write(out: str | Path = OUT) -> list[Path]:
 
 def register(subparsers) -> None:
     parser = subparsers.add_parser("replay-page", help="write docs/replay/S1.md to S5.md from one recorded run each")
-    parser.set_defaults(func=lambda args: print("\n".join(p.relative_to(kb.REPO).as_posix() for p in write())) or 0)
+    parser.add_argument("--html", action="store_true", help="write docs/replay/index.html, the replay viewer, instead")
+    parser.set_defaults(func=_cli)
+
+
+def _cli(args) -> int:
+    if args.html:
+        from onyx import replay_viewer  # it imports this module
+        print(replay_viewer.write().relative_to(kb.REPO).as_posix())
+        return 0
+    print("\n".join(p.relative_to(kb.REPO).as_posix() for p in write()))
+    return 0

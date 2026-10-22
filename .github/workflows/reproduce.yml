@@ -32,4 +32,5 @@ jobs:
       - run: uv run --no-sync python -m onyx eval --runs runs/scripted --out eval/scripted
       - run: uv run --no-sync python -m onyx gaps
       - run: uv run --no-sync python -m onyx replay-page
+      - run: uv run --no-sync python -m onyx replay-page --html
       - run: git diff --exit-code
