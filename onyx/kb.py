@@ -43,6 +43,10 @@ LISTING_PAGE = re.compile(
     r"|^https://u\.ae/?$|^https://tdra\.gov\.ae/?(en|ar)?/?$",
     re.IGNORECASE,
 )
+# A portal landing page in place of the document link. hq ruling (order 2026-10-21-task-9-fixes-tasks-10-11 item 9):
+# where the document link did not return the recorded bytes, the row keeps its landing URL and carries this mark.
+LANDING_PAGE = re.compile(r"uaelegislation\.gov\.ae/(en|ar)/legislations/\d+/?$|itu\.int/rec/T-REC-[^/]+/(en|ar)/?$")
+LANDING_MARK = "landing page: document link not verified"
 
 
 # --- manifest ---------------------------------------------------------------------------------------------
@@ -85,6 +89,8 @@ def url_problems(row: dict[str, str]) -> list[str]:
     url = row.get("url", "")
     if url and row.get("source_type") != "web_page" and LISTING_PAGE.search(url):
         problems.append(f"{row['document_id']}: URL is a listing page, not the document: {url}")
+    if url and LANDING_PAGE.search(url) and LANDING_MARK not in row.get("notes", ""):
+        problems.append(f"{row['document_id']}: URL is a landing page, not the document: {url}")
     return problems
 
 
@@ -567,6 +573,8 @@ def export(out_dir: str | os.PathLike | None = None) -> Path:
                 (root / category).mkdir(exist_ok=True)
                 shutil.copyfile(src, root / category / name)
             link = f"[link]({r['url']})" if r["url"] else "not recorded"
+            if LANDING_MARK in r["notes"]:
+                link = f"[landing page]({r['url']}) (document link not verified)"
             sha = f"`{r['sha256'][:12]}…`" if r["sha256"] else ""
             lines.append(f"| {i} | `{name or r['document_id']}` | `{r['source_type']}` | {r['title']} | {r['status']} | {sha} | {link} |")
     lines += ["", "sha256 values in full: `kb/manifest.csv`."]

@@ -10,6 +10,8 @@ Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, and three members.
 
 Knowledge base: 36 VERIFIED (text on disk, sha256 matches), 1 REFERENCED (opened, text not held), 3 UNVERIFIED
 (asserted, not published; they back no claim) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
+[The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
+16 rows link a landing page because the document link could not be verified.
 
 ## Gap register
 

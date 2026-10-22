@@ -155,3 +155,36 @@ def test_bare_page_numbers_mark_pages_when_asked():
     assert [p for p, _ in kb.page_lines(text)] == [1] * 6  # no markers, no option: one page
     assert [(p, l) for p, l in kb.page_lines(text, bare_page_numbers=True)] == [
         (1, "Header"), (1, "1.1 One"), (2, "Header"), (2, "1.2 Two"), (3, "Header"), (3, "1.3 Three")]
+
+
+# --- order 2026-10-21-task-9-fixes-tasks-10-11 item 9, hq ruling (a) -----------------------------------------------
+
+LANDING_ROWS = {
+    "telecom-law-3-2003-en", "telecom-law-3-2003-ar", "etransactions-46-2021-ar", "consumer-law-15-2020-en",
+    "consumer-law-15-2020-ar", "cabinet-66-2023-en", "cabinet-66-2023-ar", "cabinet-56-2024-en", "cabinet-56-2024-ar",
+    "cabinet-57-2024-en", "cabinet-57-2024-ar", "child-digital-safety-26-2025-en", "child-digital-safety-26-2025-ar",
+    "cybercrimes-34-2021-en", "cybercrimes-34-2021-ar", "itu-t-y3172"}
+
+
+def test_no_portal_url_except_the_marked_landing_rows():
+    rows = kb.load_manifest()
+    assert {r["document_id"] for r in rows if kb.LANDING_MARK in r["notes"]} == LANDING_ROWS
+    assert not [p for r in rows for p in kb.url_problems(r)]
+
+
+def test_a_landing_url_without_the_mark_is_rejected():
+    row = {"document_id": "x", "status": "VERIFIED", "source_type": "law", "notes": "",
+           "url": "https://uaelegislation.gov.ae/en/legislations/1132"}
+    assert kb.url_problems(row)
+    assert kb.url_problems({**row, "url": "https://www.itu.int/rec/T-REC-Y.3172/en"})
+    assert not kb.url_problems({**row, "url": row["url"] + "/download"})
+
+
+def test_kb_export_is_committed_with_a_link_per_record(tmp_path):
+    out = kb.export(tmp_path)
+    assert out.read_bytes() == (kb.KB_DIR / "export" / "InputDocs" / "Inputs.md").read_bytes()
+    text = out.read_text(encoding="utf-8")
+    for r in kb.load_manifest():
+        if r["url"]:
+            assert f"]({r['url']})" in text, r["document_id"]
+    assert text.count("document link not verified") == len(LANDING_ROWS)
