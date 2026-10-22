@@ -1,14 +1,258 @@
 {
- "source": "Task 9 register order",
- "copied_from": "onyx/data/keys/S1.json gap_ids (the one-liners verbatim) and gaps_expected (the candidate id); order 2026-10-21-task-8-part-c item 5",
+ "source": "Task 9 register order (docs/work-orders/2026-10-21-task-9-gaps.md); gap reasoning from docs/sources/telecom-law-and-licences-2026-10-17.md sections 5 and 6 and docs/sources/cpr-full-read-2026-10-15.md section 3",
+ "copied_from": "onyx/data/keys/S1.json gap_ids (the one-liners in `line`, verbatim, unchanged since order 2026-10-21-task-8-part-c item 5) and gaps_expected (the candidate id)",
  "gaps": [
-  {"id": "gap-1", "line": "complaint hand-over", "source": "Task 9 register order"},
-  {"id": "gap-2", "line": "consent elicited by an AI (channel classification)", "source": "Task 9 register order"},
-  {"id": "gap-3", "line": "adequate verification", "source": "Task 9 register order"},
-  {"id": "gap-4", "line": "automated disconnection review", "source": "Task 9 register order"},
-  {"id": "gap-5", "line": "model provider", "source": "Task 9 register order"},
-  {"id": "gap-6", "line": "AI disclosure", "source": "Task 9 register order"},
-  {"id": "gap-7", "line": "five mentions no standard", "source": "Task 9 register order"},
-  {"id": "candidate-4-4-fixed-term-bundle", "line": "whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4", "source": "Task 9 register order; candidate row from the keys session (S1 step 6 obligation candidate_row)"}
+  {
+   "id": "gap-1",
+   "line": "complaint hand-over",
+   "gap": "Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice.",
+   "kind": "method",
+   "category": "standards gap",
+   "addressee": ["TDRA"],
+   "searched": [
+    {"clause": "tdra-cpr-v2-en:2.1.7", "says": "The trigger: a communication becomes a Consumer Complaint the moment a Subscriber expresses dissatisfaction at any authorised place.", "quote": "any correspondence or communication registered by any reasonable means at any place authorised by the Licensee for such purposes, from a Subscriber expressing dissatisfaction or grievance"},
+    {"clause": "tdra-cpr-v2-en:26.4.5", "says": "The Licensee App is a complaint channel.", "quote": "any other licensee-developed channels such as by Licensee App., etc."},
+    {"clause": "tdra-cpr-v2-en:26.7.1", "says": "26.6 applies whichever Mandatory Channel is used (26.4.1 to 26.4.4 only).", "quote": "apply in all cases regardless of which Mandatory Channel is used"},
+    {"clause": "tdra-cpr-v2-en:26.7.2", "says": "No non-human agents in complaint conversations; unqualified by channel. The Arabic reads 'excepted or excluded' (يستثنى أو يستبعد منها).", "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."},
+    {"clause": "tdra-cpr-v2-en:26.13.1", "says": "A duty to help a Consumer formulate and lodge a complaint; no step for an automated channel.", "quote": "reasonably assist any Consumer, so requesting such assistance, to formulate and to lodge a Consumer Complaint with the Licensee"},
+    {"clause": "licence-2-2026:9.1", "says": "Trained personnel for complaints, at licence level, on every channel (Arabic: موظفين مدربين). No hand-over procedure or time.", "quote": "The Licensee shall maintain adequate trained personnel to receive and respond promptly to complaints and disputes from Customers."},
+    {"clause": "qos-v3-en:9.5", "says": "Annex A, T1(2a): the only time measured is the wait after the IVR choice, under two minutes, indicative. A bot before that choice, and chat or app, are unmeasured.", "quote": "Average time (seconds) spent waiting from the time the Customer has selected the IVR choice to speak to an agent until the Customer is connected to an agent"}
+   ],
+   "uae_position": "The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it; no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over.",
+   "global_examples": [
+    {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.2.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "Organisations should define significant checkpoints or action boundaries that require human approval, especially before sensitive actions are executed."},
+    {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.2.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "Human override rate i.e. the frequency at which humans reject or modify agent actions."},
+    {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.2.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "Human response times during review of agent actions."},
+    {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.4.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "Provide users with the respective human contact points who are responsible for the agents, whom the users can alert if the agents malfunction or if they are dissatisfied with a decision."}
+   ],
+   "global_none": "",
+   "recommendation": "TDRA to state, for every automated channel, what happens when a conversation becomes a Consumer Complaint: the agent stops, the named human takes over, within a stated time, measured like T1(2a) for chat and app.",
+   "exposed_by": "S2-3",
+   "competitor": "no",
+   "competitor_basis": "README and its gap table (docs/sources reading notes) list no complaint hand-over gap"
+  },
+  {
+   "id": "gap-2",
+   "line": "consent elicited by an AI (channel classification)",
+   "gap": "Consent elicited by an AI: the CPR medium classification (4.10, 4.17, 4.22) decides whether an OTP is needed, and PDPL 6(1)(b) names consent 'in writing or electronically', not spoken.",
+   "kind": "method",
+   "category": "coordination problem",
+   "addressee": ["TDRA", "UAE Data Office"],
+   "searched": [
+    {"clause": "tdra-cpr-v2-en:4.7.2", "says": "Spoken consent is acceptable for a purchase if it can be stored.", "quote": "all tangible forms of consent: written; spoken; and, electronic interaction are acceptable"},
+    {"clause": "tdra-cpr-v2-en:4.10", "says": "Digital applications: multi-step, 2FA unless expressly specified otherwise.", "quote": "unless objectively justified otherwise, or expressly specified otherwise, the process shall require the consumer to complete a 2FA procedure"},
+    {"clause": "tdra-cpr-v2-en:4.11", "says": "Where 2FA is mandated, the default is an OTP.", "quote": "the default method of 2FA shall, in the absence of any approved alternative, be one-time password (OTP)."},
+    {"clause": "tdra-cpr-v2-en:4.17", "says": "Call-centre purchases: recorded verbal consent, no 2FA. A voice agent reads naturally as this.", "quote": "where a Service is purchased via a telephone call to/from a Licensee"},
+    {"clause": "tdra-cpr-v2-en:4.22", "says": "Licensee App purchases: no express 2FA. A chat agent in the app reads as this or as 4.10.", "quote": "where the purchase of a Licensee provided Service3 is made via a Licensee App"},
+    {"clause": "etransactions-46-2021-en:12(2)", "says": "What an automated system sends is the operator's own act.", "quote": "If it is sent by an electronic medium automated and programmed to operate automatically by or on behalf of the Originator."},
+    {"clause": "pdpl-45-2021-en:6(1)", "says": "Data-processing consent in writing or electronically; spoken is not named.", "quote": "whether in writing or electronically"}
+  ],
+   "uae_position": "No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes; a spoken consent through the agent covers the purchase (4.7.2) but not a new processing purpose under PDPL 6(1)(b). Mizan takes the strict reading (4.10 plus OTP, 4.11).",
+   "global_examples": [
+    {"document": "EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27", "clause": "Art 50(1)", "file": "kb/sources/global/eu-ai-act-art50-art113-20260727.txt", "status": "VERIFIED", "quote": "Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system"},
+    {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.2.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "Irreversible actions e.g. permanently deleting data, sending communications, making payments"}
+   ],
+   "global_none": "",
+   "recommendation": "TDRA to classify an AI agent in each sales medium of Article 4 and say whether 2FA applies; the UAE Data Office to say whether a recorded spoken consent meets PDPL 6(1)(b).",
+   "exposed_by": "S1-4",
+   "competitor": "no",
+   "competitor_basis": "README and its gap table list no consent gap"
+  },
+  {
+   "id": "gap-3",
+   "line": "adequate verification",
+   "gap": "'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it.",
+   "kind": "method",
+   "category": "standards gap",
+   "addressee": ["TDRA"],
+   "searched": [
+    {"clause": "tdra-cpr-v2-en:24.10", "says": "Disclose a Subscriber's own information after an adequate verification process; adequate is not defined.", "quote": "the Licensee shall disclose it free of charge and without delay after an adequate verification process."},
+    {"clause": "tdra-cpr-v2-en:20.11.1", "says": "Verification by security questions or the Licensee's own procedures.", "quote": "by asking the relevant security questions, or by following such other procedures used by the Licensee for identification purposes"},
+    {"clause": "etransactions-46-2021-en:33(1)", "says": "Three trust levels, low, medium and high, for electronic identification.", "quote": "The levels of security and trust of the Electronic Identification System and the Digital Identity issued thereby are three: low, medium and high"},
+    {"clause": "etransactions-46-2021-en:33(4)", "says": "TDRA sets authentication procedures; none mapped to CPR 24.10.", "quote": "Authentication Procedures to confirm the identity of any person to the Relying Party."},
+    {"clause": "decision-16-2026-ar:4.17", "says": "On a loss report the licensee verifies the reporter's identity; the method is not stated (Arabic only)."}
+   ],
+   "uae_position": "A voice or chat agent that discloses account data after security questions is within the letter of the CPR; the national trust levels exist but no text says which level 24.10 needs on a remote channel.",
+   "global_examples": [
+    {"document": "eIDAS, Regulation (EU) No 910/2014", "clause": "Art 8(1)", "file": "kb/sources/global/eidas-910-2014-art8.txt", "status": "VERIFIED", "quote": "shall specify assurance levels low, substantial and/or high for electronic identification means issued under that scheme."},
+    {"document": "eIDAS, Regulation (EU) No 910/2014", "clause": "Art 8(3)(c)", "file": "kb/sources/global/eidas-910-2014-art8.txt", "status": "VERIFIED", "quote": "the authentication mechanism, through which the natural or legal person uses the electronic identification means to confirm its identity to a relying party;"}
+   ],
+   "global_none": "",
+   "recommendation": "TDRA to name the Art 33 trust level that an adequate verification process under 24.10 requires on a remote channel, as eIDAS Art 8 ties each assurance level to an authentication mechanism.",
+   "exposed_by": "S5 (verification step)",
+   "competitor": "no",
+   "competitor_basis": "its gap table lists 'no SIM-swap authentication rule', a different act (SIM swap, not disclosure of account data)"
+  },
+  {
+   "id": "gap-4",
+   "line": "automated disconnection review",
+   "gap": "Automated disconnection: PDPL 18(4) human review has no procedure, deadline or regulator; the 18(2) contract escape is undercut by Cabinet 66/2023 34(1), (3), (5) (inferred interaction, both quoted).",
+   "kind": "method",
+   "category": "unclear responsibilities",
+   "addressee": ["UAE Data Office"],
+   "searched": [
+    {"clause": "pdpl-45-2021-en:18(1)", "says": "A right to object to automated decisions with legal or adverse effect; disconnection meets it.", "quote": "particularly those decisions which have legal impact on or adversely affect the Data Subject."},
+    {"clause": "pdpl-45-2021-en:18(2)", "says": "No objection where the contract provides for the automated processing.", "quote": "If the automated processing is agreed upon under the contract made between the Data Subject and the Controller."},
+    {"clause": "pdpl-45-2021-en:18(4)", "says": "Human review on request, not conditioned on 18(1); no procedure, deadline or regulator.", "quote": "The Controller shall include the human element in reviewing automated processing decisions at the request of the Data Subject."},
+    {"clause": "cabinet-66-2023-en:34(1)", "says": "A prohibited term: the provider terminates unilaterally.", "quote": "unilaterally terminate it without referring to the consumer"},
+    {"clause": "cabinet-66-2023-en:34(3)", "says": "A prohibited term: the provider alone judges conformity.", "quote": "Authorising the provider to determine by himself and without referring to the consumer whether the goods or service subject of the contract is in conformity"},
+    {"clause": "cabinet-66-2023-en:34(5)", "says": "A prohibited term: unilateral change of a subscription, except a notified upgrade.", "quote": "the right to unilaterally change the characteristics of the goods or the terms of the consumer use of the service in the case of services subscription contracts"}
+   ],
+   "uae_position": "The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations were never issued.",
+   "global_examples": [
+    {"document": "GDPR, Regulation (EU) 2016/679", "clause": "Art 22(3)", "file": "kb/sources/global/gdpr-art22.txt", "status": "VERIFIED", "quote": "at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision."}
+   ],
+   "global_none": "",
+   "recommendation": "UAE Data Office to issue the 18(4) review procedure: who reviews, the deadline, how the subscriber puts a point of view and contests, and which regulator hears a refusal.",
+   "exposed_by": "S4-4, S4-5",
+   "competitor": "yes",
+   "competitor_basis": "its gap table lists 'PDPL Art 18 right to object has no procedure' (hq reading notes 2026-10-17); differs from the order, which says no"
+  },
+  {
+   "id": "gap-5",
+   "line": "model provider",
+   "gap": "Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)).",
+   "kind": "method",
+   "category": "legislative gap",
+   "addressee": ["UAE Data Office"],
+   "searched": [
+    {"clause": "pdpl-45-2021-en:7(5)", "says": "The Controller appoints only a Processor with sufficient guarantees.", "quote": "Appoint the Processor which has sufficient guarantees"},
+    {"clause": "pdpl-45-2021-en:8(1)", "says": "The Processor acts on the Controller's instructions and contract.", "quote": "Carry out the processing in accordance with the instructions of the Controller"},
+    {"clause": "pdpl-45-2021-en:8(11)", "says": "Processor standards wait on the Executive Regulations.", "quote": "The Executive Regulations of this Decree by Law shall specify the procedures, controls, conditions, and technical standards related to such obligations."},
+    {"clause": "pdpl-45-2021-en:13(1)", "says": "Points (d) and (g): recipients inside and outside the State; cross-border protection measures.", "quote": "The targeted sectors or establishments with whom its personal data will be shared from inside and outside the State."},
+    {"clause": "pdpl-45-2021-en:13(2)", "says": "Notice of (b), (d) and (g) before processing starts.", "quote": "before starting the processing, provide the Data Subject with the information stipulated in paragraphs (b), (d) and (g) of Paragraph (1) of this Article."},
+    {"clause": "pdpl-45-2021-en:22", "says": "Transfer to countries approved by the Bureau; no list issued.", "quote": "Personal Data may be transferred to outside of the State in the following cases approved by the Bureau:"},
+    {"clause": "pdpl-45-2021-en:23(1)", "says": "Point (a): transfer under a contract binding the recipient to the Decree's measures.", "quote": "may transfer data under a contract or agreement obligating the companies in such countries to adopt measures, controls and requirements set out in this Decree by Law"},
+    {"clause": "pdpl-45-2021-en:23(2)", "says": "The transfer controls wait on the Executive Regulations.", "quote": "The Executive Regulations of this Decree by Law set forth the controls and stipulations referred to in Paragraphs (1) of this Article"},
+    {"clause": "licence-2-2026:3.4.1", "says": "Subcontracting needs TDRA's prior written approval; the Licensee stays fully liable.", "quote": "with the prior written approval of the TDRA, provided that the Licensee shall continue to be fully liable"},
+    {"clause": "tdra-cpr-v2-en:24.9", "says": "Third parties directly involved in supply, under a contract; a model API is not one by name.", "quote": "who are directly involved in the supply of the telecommunications services ordered by Subscribers"},
+    {"clause": "tdra-cpr-v2-en:24.6", "says": "Prior consent before sharing with third parties not directly involved.", "quote": "before sharing any Subscriber Information with its affiliates and/or other third parties not directly involved"}
+   ],
+   "uae_position": "The provider is a Processor and the duties exist; the adequacy list, the transfer controls and the processor standards all wait on Executive Regulations never issued. Mizan blocks the export and logs what left.",
+   "global_examples": [
+    {"document": "GDPR, Regulation (EU) 2016/679", "clause": "Art 28(3)(a)", "file": "kb/sources/global/gdpr-art28-3-art45.txt", "status": "VERIFIED", "quote": "processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation"},
+    {"document": "GDPR, Regulation (EU) 2016/679", "clause": "Art 45(1)", "file": "kb/sources/global/gdpr-art28-3-art45.txt", "status": "VERIFIED", "quote": "may take place where the Commission has decided that the third country, a territory or one or more specified sectors within that third country, or the international organisation in question ensures an adequate level of protection."}
+   ],
+   "global_none": "",
+   "recommendation": "UAE Data Office to issue the processor contract terms (8(11)), the transfer controls (23(2)) and the approved-country list (22), as GDPR 28(3) and 45 do.",
+   "exposed_by": "S3-3",
+   "competitor": "no",
+   "competitor_basis": "README and its gap table list no model-provider gap"
+  },
+  {
+   "id": "gap-6",
+   "line": "AI disclosure",
+   "gap": "AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only.",
+   "kind": "scope",
+   "category": "legislative gap",
+   "addressee": ["Cabinet"],
+   "searched": [
+    {"clause": "etransactions-46-2021-en:11(2)", "says": "An automated contract binds only if the person knows, or should know, a system makes it: disclosure before a sale.", "quote": "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."},
+    {"clause": "tdra-cpr-v2-en:3.3", "says": "Transparency in all dealings; AI is not named.", "quote": "Licensees shall act with transparency and fairness in all dealings with Consumers"},
+    {"clause": "pdpl-45-2021-en:13(1)", "says": "Point (c): automated decisions disclosed only on request.", "quote": "Decisions made based on automated processing, including profiling."},
+    {"clause": "cabinet-56-2024-en:5(6)", "says": "Automated systems may market; no duty to disclose the machine.", "quote": "Automated communication systems may be used for marketing"},
+    {"clause": "spam-calls-v4-en:3.3", "says": "Synthesised voices contemplated; no duty to disclose the machine.", "quote": "the audible message contains a natural or a synthesised voice"}
+   ],
+   "uae_position": "Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only UAE text that says it.",
+   "global_examples": [
+    {"document": "EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27", "clause": "Art 50(1)", "file": "kb/sources/global/eu-ai-act-art50-art113-20260727.txt", "status": "VERIFIED", "quote": "Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system"},
+    {"document": "EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27", "clause": "Art 50(5)", "file": "kb/sources/global/eu-ai-act-art50-art113-20260727.txt", "status": "VERIFIED", "quote": "in a clear and distinguishable manner at the latest at the time of the first interaction or exposure"},
+    {"document": "EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27", "clause": "Art 113", "file": "kb/sources/global/eu-ai-act-art50-art113-20260727.txt", "status": "VERIFIED", "quote": "It shall apply from 2 August 2026."}
+   ],
+   "global_none": "",
+   "recommendation": "Cabinet to set a general duty to tell a consumer, at the first interaction, that they are talking to an AI, beyond the sales case of 11(2).",
+   "exposed_by": "S1-3",
+   "competitor": "yes",
+   "competitor_basis": "its gap table lists 'no duty to disclose a customer is talking to an AI, citing CPR 26.7.2'"
+  },
+  {
+   "id": "gap-7",
+   "line": "five mentions no standard",
+   "gap": "Five mentions of AI across every binding text (CPR 25.14, 26.7.2, Spam Calls v4 3.3(iii), Cabinet 56/2024 5(6), Child Digital Safety 10(1)(g)), zero conduct standards.",
+   "kind": "absence",
+   "category": "technology gap",
+   "addressee": ["TDRA"],
+   "searched": [
+    {"clause": "tdra-cpr-v2-en:25.14.1", "says": "Directory enquiries by an AIA: charges waived if it fails. A billing rule, not a conduct standard.", "quote": "enquiry is processed by an artificial intelligence assistance (AIA)"},
+    {"clause": "tdra-cpr-v2-en:26.7.2", "says": "Non-human agents excluded from complaint conversations. A bar, not a conduct standard.", "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."},
+    {"clause": "spam-calls-v4-en:3.3", "says": "Point (iii): a synthesised voice can make a Spam Call. A definition.", "quote": "the audible message contains a natural or a synthesised voice"},
+    {"clause": "cabinet-56-2024-en:5(6)", "says": "Automated systems may market. A permission.", "quote": "Automated communication systems may be used for marketing"},
+    {"clause": "child-digital-safety-26-2025-en:10(1)", "says": "Point (g): platforms may use AI to detect harmful content. A tool, not a standard for AI conduct.", "quote": "including artificial intelligence systems and machine learning algorithms, for proactive detection, removal, or reporting thereof"}
+   ],
+   "uae_position": "AI or a non-human agent is named five times in the binding texts read, and none of them sets how an AI agent must behave with a consumer. Automated processing is regulated elsewhere (PDPL 18, Electronic Transactions 11 and 12), as decisions and contracts, not as agent conduct.",
+   "global_examples": [
+    {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.1.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "In general, prefer deterministic rather than non-deterministic limits, and bound by design."},
+    {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.1.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "rather than relying on prompts to instruct the agent against accessing certain tools, impose access controls that prevent the tool from being called by the agent at all."}
+   ],
+   "global_none": "",
+   "recommendation": "TDRA to set conduct standards for AI agents in consumer care (limits, oversight, logs), as IMDA's framework does as a whole; Mizan's gates are one worked form of them.",
+   "exposed_by": "all",
+   "competitor": "no",
+   "competitor_basis": "README and its gap table list no such gap"
+  },
+  {
+   "id": "gap-8",
+   "line": "Y.3172 has no hand-over to a human",
+   "gap": "Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person.",
+   "kind": "absence",
+   "category": "standards gap",
+   "addressee": ["ITU"],
+   "searched": [
+    {"clause": "itu-t-y3172:8.1", "page": "13 to 14", "says": "Clause 8.1 (pages 13 and 14) defines the nodes SRC, C, PP, M, P, D and SINK. P applies policies to the model's output; D distributes it to SINK nodes, which act on it. No node or outcome sends an output to a human.", "quote": "P (policy): This node enables the application of policies to the output of the model node."},
+    {"clause": "itu-t-y3172:7.1", "page": "4", "says": "The only mention of a human in the Recommendation's text (page 4): a SON example acting 'without human intervention'. The back-page list of ITU-T series names 'human factors' as a series title only.", "quote": "without human intervention"}
+   ],
+   "standard_text": [
+    {"document": "ITU-T Y.3172 (06/2019)", "clause": "8.1, page 14", "file": "kb/sources/global/itu-t-y3172-2019-06.txt", "status": "VERIFIED", "quote": "P (policy): This node enables the application of policies to the output of the model node."},
+    {"document": "ITU-T Y.3172 (06/2019)", "clause": "8.1, page 14", "file": "kb/sources/global/itu-t-y3172-2019-06.txt", "status": "VERIFIED", "quote": "D (distributor): This node is responsible for identifying the SINK(s) and distributing the output of the M node to the corresponding SINK nodes."},
+    {"document": "ITU-T Y.3172 (06/2019)", "clause": "8.1, page 14", "file": "kb/sources/global/itu-t-y3172-2019-06.txt", "status": "VERIFIED", "quote": "SINK: This node is the target of the ML output on which it takes action."},
+    {"document": "ITU-T Y.3172 (06/2019)", "clause": "7.1, page 4", "file": "kb/sources/global/itu-t-y3172-2019-06.txt", "status": "VERIFIED", "quote": "give network design recommendations without human intervention."}
+   ],
+   "uae_position": "CPR 26.7.2 and licence 9.1 require a human in a complaint conversation; Mizan's P node gate returns a hand-over that Y.3172 has no outcome for, so it is mapped outside the standard's node set.",
+   "global_examples": [],
+   "global_none": "none; the recommendation is the example",
+   "recommendation": "ITU-T to add a policy-node outcome that withholds the model's output and routes the case to a named human (hand-over), with its own reference point, so a regulator's human-in-the-loop rule maps into the pipeline.",
+   "exposed_by": "S2-3",
+   "competitor": "no",
+   "competitor_basis": "its README maps Y.3172 nodes and states no standards gap"
+  },
+  {
+   "id": "candidate-4-4-fixed-term-bundle",
+   "line": "whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4",
+   "gap": "Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.",
+   "kind": "scope",
+   "category": "legislative gap",
+   "addressee": ["TDRA"],
+   "searched": [
+    {"clause": "tdra-cpr-v2-en:4.4", "says": "The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.", "quote": "where an existing Service, that is to say a service that a Subscriber has expressly ordered, is extended or renewed on terms which are:"}
+   ],
+   "uae_position": "Candidate from the keys session (S1 step 6): the text does not say whether a lapsed fixed-term bundle is still an existing Service.",
+   "global_examples": [],
+   "global_none": "none on disk",
+   "recommendation": "TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3.",
+   "exposed_by": "S1-6",
+   "competitor": "no",
+   "competitor_basis": "README and its gap table list no such gap"
+  }
+ ],
+ "candidates": [
+  {"name": "A child on the line", "line": "The agent has no age signal; verified caregiver consent for under-13 data and the caregiver's signature on service terms are required, and the classification, TDRA instructions and penalties are unpublished.",
+   "searched": [
+    {"clause": "child-digital-safety-26-2025-en:7(1)", "says": "Explicit, documented, verifiable caregiver consent for under-13 data.", "quote": "Obtaining parental consent from the child caregiver, provided that such consent is explicit, documented, and verifiable."},
+    {"clause": "child-digital-safety-26-2025-en:11(1)", "says": "Point (b): the caregiver signs the service terms where the beneficiary is a child.", "quote": "including requiring the Child Caregiver to sign service terms"}
+   ]},
+  {"name": "Arabic records", "line": "Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only chat transcript may not satisfy it (inferred). Consumer Law 4(5), named in the hq note, is about data privacy, not language.",
+   "searched": [
+    {"clause": "consumer-law-15-2020-en:8(4)", "says": "The invoice in Arabic.", "quote": "The Invoice shall be in Arabic"},
+    {"clause": "cabinet-66-2023-en:43(5)", "says": "Annex 2: AED 100,000 for an invoice not in Arabic.", "quote": "The provider fails to issue the invoice in Arabic."},
+    {"clause": "consumer-law-15-2020-en:4(5)", "says": "Privacy and security of the consumer's data; says nothing on language.", "quote": "Protecting the privacy and security of his data"}
+   ]},
+  {"name": "Breach notification without a period", "line": "The Controller notifies the Bureau of a breach within a period the never-issued Executive Regulations were to set.",
+   "searched": [
+    {"clause": "pdpl-45-2021-en:9(1)", "says": "The period is left to the Executive Regulations.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"}
+   ]},
+  {"name": "The Executive Order unpublished", "line": "The Executive Order ranks above the Regulatory Framework in the licence's order of precedence, and its text is not published.",
+   "searched": [
+    {"clause": "licence-2-2026:16.2", "says": "Point (b): the Executive Order is second in precedence.", "quote": "its Executive Order to the Federal Law by Decree No. 3 of 2003"}
+   ]}
  ]
 }

@@ -32,11 +32,15 @@ def load_gaps() -> dict[str, Any]:
 
 
 def cited_chunks() -> set[tuple[str, str]]:
-    """(document_id, chunk) for every chunk a rule or a mandate verb cites: what kb/chunks/ holds."""
+    """(document_id, chunk) for every chunk a rule, a mandate verb or a gap row (searched clauses, Task 9) cites:
+    what kb/chunks/ holds."""
     cited = {(rule["document_id"], rule["chunk"]) for rule in load_rules()}
     for spec in load_mandates().values():
         for verb in spec["verbs"]:
             cited |= {(ref["document_id"], ref["chunk"]) for ref in verb["clause_ids"]}
+    register = load_gaps()
+    for row in register["gaps"] + register.get("candidates", []):
+        cited |= {tuple(s["clause"].split(":", 1)) for s in row.get("searched", [])}
     return cited
 
 
