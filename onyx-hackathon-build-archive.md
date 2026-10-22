@@ -180,3 +180,17 @@ Order `docs/work-orders/2026-10-22-task-14-replay-viewer.md` (hq, Fable). Built 
   English. Language now detected from the text; all quotes verbatim in kb/chunks.
 - Screenshots via a localhost server (Playwright blocks file://). CI green on ebc29a2 (1m7s).
 - Moved from the background (superseded by C5 as the headline, still true): 2026-10-21 (C4 result, 1deb675): governed (en / ar) citation validity 1.00 / 1.00, action recall 0.93 / 0.95 (earlier rule 0.89 / 0.91), obligation proxy 0.47 / 0.50, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 7 of 112 key steps: S2-3 and S3-4 care, both from v4 lines. 12 ids resolved (S1-3 4 by the eval only, S3-5 8 by the gate live). C4 USD 5.28 of 6.00.
+
+## 2026-10-22: Task 15, gap-9 and the 79 bis (2) candidate
+
+Order `docs/work-orders/2026-10-22-task-15-gap-9-child.md` (hq, Fable, final). Built by Opus 5.5, no model call, USD 0.
+- Copied the order and three hq source texts (Resolution 106 EN, Telecom for Minors EN, child law AR) to `docs/`; Iyas said "two" files, the order lists three. `.gitignore` gained `!docs/sources/*.txt`.
+- COPPA 16 CFR 312.5: ecfr.gov page gave a CAPTCHA to scrapling; fetched from the eCFR versioner API (2026-10-19 text). Both quotes verbatim; all nine item-2 quotes verbatim in the copies.
+- gap-9 and candidate-79bis-2-fine-schedule added by a scratch script in the file's layout; "A child on the line" left Candidates. Renderer: `16 CFR` short name, Arabic line from `quote_ar`/`file_ar`.
+- kb/chunks: a filter of local chunks-full would have reverted four hand fixes (pur suant, billin g, opt- out, anti- competitive); restored, then only 9(2), CPR 4.7, 79 bis, licence 16.3.2 added. `kb ingest` rebuilt (121 kb_main).
+- Tests: 8 new; `test_prompt_v3` example id gap-9 became gap-10. 290 passed; every CI step run locally with no diff; CI green on 7313ead (1m9s).
+- Moved from the background (C3 and C4 detail, superseded by C5 as the headline, still true):
+  - 2026-10-21 (hq, after C3 stopped at S3 on the 0.1 rule, commit f8a7504): citation validity counts only proposals that cite a clause; a flag_gap citing nothing is counted apart ("Gap flags without a clause"). Narrower reading taken: any other verb citing nothing still fails (only flag_gap cites nothing in every committed run). Bake-off tables keep the old definition.
+  - 2026-10-21 (C3, commit 7b13260): Sonnet on v3, governed all five (en / ar): citation validity 0.97 / 0.98 (hq rule; 0.95 / 0.87 every proposal), action recall 0.71 / 0.71, obligation proxy 0.32 / 0.35, gap recall 0.87 / 0.87, abstention 1 / 1; gaps from notes 0. C3 spent USD 5.27 of 6; recorded spend USD 8.19 of 15.
+  - 2026-10-21 (Iyas, after the governed estimate of USD 7.68 broke the USD 6 C4 cap): C4 is governed only, 2 runs per scenario and language; no ungoverned C4; results.md must say the ungoverned rows are C3 on prompt v3 and that C4 has 2 runs per cell; every stop rule of the order still applies.
+  - 2026-10-21 (hq C4 addendum, Fable): clause-id resolution, one function for gate and eval; older logs replay as recorded; no prompt change, v4 stands. Iyas chose the logs' count for the results line and README ("6 ids in 4 of 389 proposals citing a clause across C3 and C4 S1") over hq's "4 of 341".
