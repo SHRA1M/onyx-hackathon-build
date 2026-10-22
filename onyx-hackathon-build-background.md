@@ -1,10 +1,10 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-22 (twenty-second wrap, Opus: Task 17 figures built; CI red on PNG bytes across machines, awaiting hq).
+Updated 2026-10-22 (twenty-third session, Opus: Task 17 ruling 4 applied, CI green; hq accepted Tasks 14, 16 and 17 as built).
 
 ## What this is
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). Latest: `2026-10-22-task-17-figures.md` (with hq's rulings on its first stop; 045f28b, SVG line-ending fix 20cc23e; report-back `docs/report-back/2026-10-22-task-17-figures.md`, item 8 a stop for hq). Next: hq's ruling on that stop, and on the Task 14 and Task 16 report-backs, or the next order. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). Latest: `2026-10-22-task-17-figures.md` (rulings 1 to 4 filed in it; 045f28b, 20cc23e, ruling 4 151402f, CI green). hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. No order in hand. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
 
 ## Stack and how it runs
 
@@ -47,8 +47,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - 2026-10-22 (C5 result, hq accepted): governed (en / ar) citation validity 0.99 / 1.00, action recall 0.96 / 0.94, obligation proxy 0.57 / 0.56, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 5 of 112: S3-4 care (recipient human on the coordinator's step, 3 runs), S4-4 data office (addressee not "Human agent ...", 2 runs); both stay disclosed, no v6 (budget spent). C5 USD 5.41; recorded total USD 18.88 of 20.00. The README and selftest headline is C5; C3 is the ungoverned baseline.
 - 2026-10-22 (Task 15, 7313ead): register 11 rows (gap-9 method / legislative gap, TDRA and Cabinet, global example COPPA 16 CFR 312.5; candidate-79bis-2-fine-schedule absence, Cabinet); child-law 10(1)(g), 11(2) and Telecom Law 79 bis (1)/(2) cited by their merged chunks (10(1), 11(1), 79 bis). hq kept the category, `line` labels and competitor 'not read'; Task 16 rewrote the candidate's gap and UAE position.
 - 2026-10-22 (hq Task 16 and its rulings): README leads with hq's first paragraph, `## Why` (e& 371,476 and TDRA 23,464, three linked sources), `## Three things to look at first`, then the register; headings "Run it without a key" and "What we do not claim". No other entry is named in the repo; the competitor read lives in hq only (the repo copy was removed outside this session). CPR 17.4, 17.4.1, 4.20.1 and licence 16.3.3 added to kb/chunks (ruling 1). PDF page test compares with whitespace removed (ruling 3).
-- 2026-10-22 (Task 16, awaiting hq): departures sent in the report-back: `page_of` hides only all-page-1 documents (the order's 'more than one distinct page' would hide decision-16 p. 10 and three others); S1 `grounded_in` lists 17.4 and 17.4.1; the filed order names two entries, so the name test skips `docs/work-orders/`.
-- 2026-10-22 (Task 14, ebc29a2, awaiting hq): viewer departures sent in the report-back: S2 English shows C5 run1 (C3 run1 hands over again at step 4); holds name no approver (no log records one); figures are per run shown, not the C5 means.
+- 2026-10-22 (hq, Task 16 report-back rulings, filed in the order): accepted as built. `page_of` returns None only when every committed chunk of a document says page 1; S1 `grounded_in` lists 17.4 and 17.4.1. The two entry names inside the filed order stay until hq strips them with the clean-history public repo before 2026-11-09; the name test skips `docs/work-orders/` until then.
+- 2026-10-22 (hq, Task 14 report-back rulings, filed in the order): accepted as built. S2 English shows `runs/c5/S2/run1.jsonl` (C5 is the run the report cites); figures are per run shown, run named; holds name no approver (human steps are scripted; a real approver comes after the shortlist).
+- 2026-10-22 (hq, Task 17 ruling 4, 151402f): figure SVGs are byte-checked against the committed files across machines; PNGs only against a same-machine redraw (test draws twice; CI's `git diff` excludes `docs/fig/*.png`). Committed PNGs are the Windows ones.
 - 2026-10-22 (hq rulings on Task 17's first stop): panel (b) draws the C3 Governed and Ungoverned tables with its own caption line, no column added to results.md; item 4 (report hook) waits for Task 12, which places both figures.
 
 ## Traps
@@ -76,7 +77,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - Y.3172 needs `top` headings and a footer strip that splits glued page numbers (`138.1` is page 13 + clause 8.1).
 - ecfr.gov answers a browser-style scripted request with a CAPTCHA; its versioner API works with curl `--compressed` (it refuses uncompressed replies). The local `kb/chunks-full/` is older than the committed chunks: copy only new clause lines from it.
 - `.gitattributes` forces LF so hashes match on every machine. matplotlib on Windows writes SVG with CRLF: the figure scripts strip it before writing.
-- matplotlib PNG bytes differ between Windows and the Linux CI (SVG bytes match): run 39842151859 failed `test_a_second_run_writes_the_same_bytes` on both PNGs. Main is red until hq rules (report-back item 8).
+- matplotlib PNG bytes differ between Windows and the Linux CI (SVG bytes match). Never compare a figure PNG with the committed file (ruling 4).
 - Stop a background server with its own task, never `taskkill` by image name (2026-10-22: that closes every Python process on Iyas's PC).
 - Chaining commit and push after a test with `;` pushes a red commit (c8c08e2, 2026-10-22): chain with `&&`. A test run before a new file is tracked passes locally and fails in CI (the name test met the filed order only in CI).
 - The copied `docs/sources/` text files carry non-UTF-8 bytes: read them with `errors="replace"`. Long Python heredocs with quotes break Git Bash: write the script to the scratchpad and run it.
@@ -94,9 +95,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 reversed-ligature hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
 - Arabic in the scenario steps (`text_ar`) not yet read by Iyas on a page; scenarios are not hashed, wording fixes allowed.
-- For hq (Task 17 report-back item 8): PNG byte check across machines, options (a) SVG only across machines (recommended), (b) commit Linux PNGs, (c) compare pixels.
-- For hq (Task 16 report-back): the `page_of` rule, S1's two clauses, the two entry names inside the filed Task 16 order (frozen; repo goes public 2026-11-09).
+- hq strips the two entry names from the filed Task 16 order before 2026-11-09 (clean-history public repo).
 
 ## Next action
 
-hq rules on `docs/report-back/2026-10-22-task-17-figures.md` item 8 (CI red on PNG bytes); then apply it in a dated order and get CI green. hq still holds the Task 14 and Task 16 report-backs.
+Wait for hq's next order. Nothing is pending from this folder; main is green.

@@ -124,3 +124,14 @@ TDRA and Etisalat sources), `eand-sustainability-report-appendices-2025.txt`, `t
 - A README figure or quoted phrase is not verbatim in the copied source file.
 - Anything needs a model call, a fetch, a key change, or a committed chunk line changed.
 - A source URL for the `## Why` paragraph is missing from the opening-figure read.
+
+## Rulings on the report-back (hq, 2026-10-22, after Task 17)
+
+All accepted as built; nothing to build. File these rulings into `docs/work-orders/` beside this order and clear them
+from the build's background and brief.
+1. `page_of` returns None only when every committed chunk of a document says page 1 (report-back item 2). Accepted:
+   it keeps the intent (hide Y.3172's placeholder page) without hiding real pages of four other documents.
+2. S1 `grounded_in` lists 17.4 and 17.4.1 (item 3). Accepted: the committed-chunk test requires 17.4 to be cited.
+3. The competitor read lives in hq only (item 7). Already settled; stays.
+4. The two entry names in this filed order: not now. hq strips them before 2026-11-09 with the clean-history public
+   repo; the name test keeps skipping `docs/work-orders/` until then.

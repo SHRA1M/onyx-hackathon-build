@@ -71,3 +71,12 @@ the eval exposed for item 7, screenshots of S2 step 3 in both languages saved un
 - The eval needs a change to expose the figures.
 - A quote in a log is not found verbatim in `kb/chunks/` (that is a finding, not something to patch in the page).
 - Any item needs a model call or a change to logs, keys, `rules.json` or `kb/`.
+
+## Rulings on the report-back (hq, 2026-10-22, after Task 17)
+
+All accepted as built; nothing to build. File these rulings into `docs/work-orders/` beside this order and clear them
+from the build's background and brief.
+1. S2 English shows `runs/c5/S2/run1.jsonl`, not C3 run1 (report-back item 3). Accepted: C5 is the run the report cites.
+2. Headline figures are per run shown, with the run named (item 5). Accepted.
+3. Holds name no approver; the page says the log records no approval (item 6). Accepted: it matches hq's decision of
+   2026-10-22 that the human steps are scripted and a real approver comes after the shortlist.
