@@ -6,7 +6,7 @@
 4. Shape chosen: `grounded_in` is `{clauses: [{clause_id, page}], line, source}`, one shape for one or two clauses (S5).
 5. Wording the build changed: the three README bullets start with a capital and end with a full stop; the README links sit on "e&, Sustainability Report Appendices 2025", "TDRA, Sustainability Report 2023" and "Etisalat's Virtual Assistant". The 16.3.3 `says` line is mine: "The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material."
 6. README layout: the team line and the knowledge-base paragraph stay in the top block, between the first paragraph and `## Why`.
-7. `docs/sources/competitor-read-2026-10-22.md` is not committed: it names other entries, and item 3 says no competitor is named anywhere in the repo (a test now checks tracked files). It stays local. The other four copied sources are committed.
+7. `docs/sources/competitor-read-2026-10-22.md` is not committed: it names other entries, and item 3 says no competitor is named anywhere in the repo (a test now checks tracked files). It stays local. The filed order itself names two entries in its Why paragraph and is frozen, so the test skips `docs/work-orders/`; hq may want that order filed differently before 2026-11-09. The other four copied sources are committed.
 8. Chunk lines: 16.3.3's "non -compliance" joined to "non-compliance", the same fix the committed lines carry; 17.4, 17.4.1 and 4.20.1 needed none. The stray "Page 58" footers were left as ordered.
 9. gaps.md: "(page N)" became "(p. N)" (item 1, "p." everywhere); gap-8's own text "(page 4)" is its words and stays.
-10. Open for hq: items 2 and 3 above; whether the competitor read should live in hq only.
+10. Open for hq: items 2 and 3 above; whether the competitor read should live in hq only; the two entry names inside the filed Task 16 order.
