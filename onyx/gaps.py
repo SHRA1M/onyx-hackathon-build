@@ -45,12 +45,14 @@ def _examples(row: dict[str, Any]) -> str:
 
 def table() -> str:
     """The register as one Markdown table: the README's first section and the top of docs/gaps.md."""
-    lines = ["| id | gap | kind | category | addressee | global example | exposed by | competitor has it |",
-             "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+    # the competitor fields stay in gaps.json as hq's internal note, out of the public register (order
+    # 2026-10-21-task-9-fixes-tasks-10-11 item 2)
+    lines = ["| id | gap | kind | category | addressee | global example | exposed by |",
+             "| --- | --- | --- | --- | --- | --- | --- |"]
     for row in data.load_gaps()["gaps"]:
         lines.append("| " + " | ".join(_cell(c) for c in (
             row["id"], row["gap"], row["kind"], row["category"], ", ".join(row["addressee"]), _examples(row),
-            row["exposed_by"], row["competitor"])) + " |")
+            row["exposed_by"])) + " |")
     return "\n".join(lines) + "\n"
 
 
@@ -99,8 +101,7 @@ def render() -> str:
             lines += _quotes("Global example", row["global_examples"])
         else:
             lines += [f"**Global example.** {row['global_none']}", ""]
-        lines += [f"**Recommendation.** {row['recommendation']}", "",
-                  f"**Competitor has it:** {row['competitor']} ({row['competitor_basis']}).", ""]
+        lines += [f"**Recommendation.** {row['recommendation']}", ""]
     lines += ["## Candidates", "", "Flagged as candidates; no global example required.", ""]
     for cand in register["candidates"]:
         lines += [f"### {cand['name']}", "", cand["line"], ""]

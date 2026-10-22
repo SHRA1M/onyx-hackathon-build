@@ -168,18 +168,22 @@
   {
    "id": "gap-7",
    "line": "five mentions no standard",
-   "gap": "Five mentions of AI across every binding text (CPR 25.14, 26.7.2, Spam Calls v4 3.3(iii), Cabinet 56/2024 5(6), Child Digital Safety 10(1)(g)), zero conduct standards.",
+   "gap": "No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's conduct.",
    "kind": "absence",
-   "category": "technology gap",
+   "category": "standards gap",
    "addressee": ["TDRA"],
    "searched": [
     {"clause": "tdra-cpr-v2-en:25.14.1", "says": "Directory enquiries by an AIA: charges waived if it fails. A billing rule, not a conduct standard.", "quote": "enquiry is processed by an artificial intelligence assistance (AIA)"},
     {"clause": "tdra-cpr-v2-en:26.7.2", "says": "Non-human agents excluded from complaint conversations. A bar, not a conduct standard.", "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."},
     {"clause": "spam-calls-v4-en:3.3", "says": "Point (iii): a synthesised voice can make a Spam Call. A definition.", "quote": "the audible message contains a natural or a synthesised voice"},
     {"clause": "cabinet-56-2024-en:5(6)", "says": "Automated systems may market. A permission.", "quote": "Automated communication systems may be used for marketing"},
-    {"clause": "child-digital-safety-26-2025-en:10(1)", "says": "Point (g): platforms may use AI to detect harmful content. A tool, not a standard for AI conduct.", "quote": "including artificial intelligence systems and machine learning algorithms, for proactive detection, removal, or reporting thereof"}
+    {"clause": "child-digital-safety-26-2025-en:10(1)", "says": "Point (g): platforms may use AI to detect harmful content. A tool, not a standard for AI conduct.", "quote": "including artificial intelligence systems and machine learning algorithms, for proactive detection, removal, or reporting thereof"},
+    {"clause": "pdpl-45-2021-en:18(4)", "says": "The controller adds a human to the review of an automated processing decision when the data subject asks. A rule for the decision, not for the agent's conduct.", "quote": "The Controller shall include the human element in reviewing automated processing decisions at the request of the Data Subject."},
+    {"clause": "etransactions-46-2021-en:11(2)", "says": "An automated system can make a contract if the other person knows, or should know, it is automated. A rule for the contract, not for the agent's conduct.", "quote": "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."},
+    {"clause": "etransactions-46-2021-en:12(2)", "says": "A document sent by an automated medium on the originator's behalf is the originator's. Attribution of the outcome, not a conduct standard.", "quote": "If it is sent by an electronic medium automated and programmed to operate automatically by or on behalf of the Originator."},
+    {"clause": "cabinet-57-2024-en:7", "says": "Table No. (1), row 16: a fine for using automatic calling or marketing in breach of Cabinet 56/2024 (Clause (6)). A penalty, not a conduct standard.", "quote": "16 Using automatic calling or marketing"}
    ],
-   "uae_position": "AI or a non-human agent is named five times in the binding texts read, and none of them sets how an AI agent must behave with a consumer. Automated processing is regulated elsewhere (PDPL 18, Electronic Transactions 11 and 12), as decisions and contracts, not as agent conduct.",
+   "uae_position": "The binding texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct.",
    "global_examples": [
     {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.1.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "In general, prefer deterministic rather than non-deterministic limits, and bound by design."},
     {"document": "IMDA Model AI Governance Framework for Agentic AI v1.5", "clause": "2.1.2", "file": "kb/sources/global/imda-agentic-ai-v1.5.txt", "status": "VERIFIED", "quote": "rather than relying on prompts to instruct the agent against accessing certain tools, impose access controls that prevent the tool from being called by the agent at all."}

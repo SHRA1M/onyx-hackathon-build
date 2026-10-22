@@ -109,3 +109,32 @@ def test_readme_leads_with_the_register():
     headings = re.findall(r"^## (.+)$", readme, re.MULTILINE)
     assert headings[:2] == ["Gap register", "Model"]
     assert table.count("\n| ") == len(ROWS) + 1  # the separator row plus one row per gap
+
+
+# --- order 2026-10-21-task-9-fixes-tasks-10-11, Part A ------------------------------------------------------------
+
+GAP_7 = ("No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI "
+         "or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 "
+         "3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and "
+         "Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's "
+         "conduct.")
+
+
+def test_gap_7_is_hqs_text_and_a_standards_gap():
+    [row] = [r for r in ROWS if r["id"] == "gap-7"]
+    assert row["line"] == "five mentions no standard"
+    assert row["gap"] == GAP_7
+    assert row["category"] == "standards gap"
+    searched = {s["clause"] for s in row["searched"]}
+    # etransactions 13 is left out: its chunk is the heading "Acknowledgment of Receipt" (report-back)
+    assert {"pdpl-45-2021-en:18(4)", "etransactions-46-2021-en:11(2)", "etransactions-46-2021-en:12(2)",
+            "cabinet-57-2024-en:7"} <= searched
+
+
+def test_public_outputs_carry_no_competitor_column(tmp_path):
+    readme = tmp_path / "README.md"
+    readme.write_text(gaps.README.read_text(encoding="utf-8"), encoding="utf-8")
+    gaps.write(tmp_path / "gaps.md", readme)
+    for path in (tmp_path / "gaps.md", readme):
+        assert "competitor" not in path.read_text(encoding="utf-8").lower(), path.name
+    assert all("competitor" in row for row in ROWS)  # hq's internal note stays in gaps.json

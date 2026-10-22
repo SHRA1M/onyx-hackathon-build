@@ -18,6 +18,8 @@ the abstention when no flag_gap proposal names a gap.
 Prompt v4 (order 2026-10-21-task-8-part-c4): three care lines (Care.extra_lines) and care's mandate widened to the
 clauses its gates test. A replay gives each agent the mandate clauses its log recorded (recorded_mandate), so a log
 recorded on a narrower mandate is decided again on what its run was given.
+
+v4.1 (Task 9, unscored): the adviser's register lists gap-8 and the candidate at line 9; kb_main grew from 106 chunks with the Task 9 searched clauses (and again with item 1 above). Recorded runs are v4 and replay as recorded.
 """
 
 from __future__ import annotations
@@ -32,7 +34,7 @@ from onyx import audit, data, kb
 from onyx.model import Model
 
 INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
-PROMPT_VERSION = "v4"  # logged on run_start
+PROMPT_VERSION = "v4.1"  # logged on run_start
 LANGUAGE = {"en": "English", "ar": "Arabic"}
 
 

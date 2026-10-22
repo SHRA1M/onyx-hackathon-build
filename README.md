@@ -11,18 +11,21 @@ Built by Team Onyx.
 Nine rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each row's clauses searched, both languages, global quotes and recommendation are in [`docs/gaps.md`](docs/gaps.md).
 
 <!-- gap-register:start -->
-| id | gap | kind | category | addressee | global example | exposed by | competitor has it |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2 | S2-3 | no |
-| gap-2 | Consent elicited by an AI: the CPR medium classification (4.10, 4.17, 4.22) decides whether an OTP is needed, and PDPL 6(1)(b) names consent 'in writing or electronically', not spoken. | method | coordination problem | TDRA, UAE Data Office | EU AI Act Art 50(1); IMDA 2.2.2 | S1-4 | no |
-| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c) | S5 (verification step) | no |
-| gap-4 | Automated disconnection: PDPL 18(4) human review has no procedure, deadline or regulator; the 18(2) contract escape is undercut by Cabinet 66/2023 34(1), (3), (5) (inferred interaction, both quoted). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3) | S4-4, S4-5 | yes |
-| gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1) | S3-3 | no |
-| gap-6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only. | scope | legislative gap | Cabinet | EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113 | S1-3 | yes |
-| gap-7 | Five mentions of AI across every binding text (CPR 25.14, 26.7.2, Spam Calls v4 3.3(iii), Cabinet 56/2024 5(6), Child Digital Safety 10(1)(g)), zero conduct standards. | absence | technology gap | TDRA | IMDA 2.1.2 | all | no |
-| gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | none; the recommendation is the example | S2-3 | no |
-| candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 | no |
+| id | gap | kind | category | addressee | global example | exposed by |
+| --- | --- | --- | --- | --- | --- | --- |
+| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2 | S2-3 |
+| gap-2 | Consent elicited by an AI: the CPR medium classification (4.10, 4.17, 4.22) decides whether an OTP is needed, and PDPL 6(1)(b) names consent 'in writing or electronically', not spoken. | method | coordination problem | TDRA, UAE Data Office | EU AI Act Art 50(1); IMDA 2.2.2 | S1-4 |
+| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c) | S5 (verification step) |
+| gap-4 | Automated disconnection: PDPL 18(4) human review has no procedure, deadline or regulator; the 18(2) contract escape is undercut by Cabinet 66/2023 34(1), (3), (5) (inferred interaction, both quoted). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3) | S4-4, S4-5 |
+| gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1) | S3-3 |
+| gap-6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only. | scope | legislative gap | Cabinet | EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113 | S1-3 |
+| gap-7 | No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's conduct. | absence | standards gap | TDRA | IMDA 2.1.2 | all |
+| gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | none; the recommendation is the example | S2-3 |
+| candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
 <!-- gap-register:end -->
+
+The global quotes are checked verbatim offline against the fetched texts in `kb/sources/global/` (not committed,
+addendum item 15); CI checks every UAE quote against the committed chunks and the register's structure.
 
 ## Model
 
