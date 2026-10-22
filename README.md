@@ -30,6 +30,8 @@ complaint or a disconnection. The binding texts do, and Mizan's gates are writte
 
 ## Three things to look at first
 
+![S2 step 3: the gate blocks the agent's reply and hands the complaint to a person, citing CPR 26.7.2, p. 65](docs/replay/screenshots/S2-step3-en.png)
+
 - A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.
 - Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in `docs/replay/`.
 - Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 0.94 Arabic on C5 (`eval/results.md`).
