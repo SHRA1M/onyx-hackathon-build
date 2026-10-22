@@ -19,6 +19,7 @@ allow_all and nothing else, so the diff between the runs is the gate alone.
 from __future__ import annotations
 
 import copy
+import json
 import re
 from collections.abc import Callable, Iterable
 from dataclasses import asdict, dataclass, field
@@ -142,6 +143,22 @@ def _recipient(p: Any) -> str:
     return p.args.get("recipient", "subscriber")
 
 
+def read_items(values: Any, terms: Iterable[str]) -> set[str]:
+    """A model-written list as the set a gate checks (hq ruling 2026-10-22, after a dict in args.data crashed C5 S2
+    run2). A string is kept as written and matches exactly. Any other item becomes its canonical JSON text (sorted
+    keys, ensure_ascii False), kept in the set so nothing the model wrote goes unread, and each of the check's terms
+    that text names as a whole word is added, as the plain string would be."""
+    items: set[str] = set()
+    for value in values if isinstance(values, list) else [values]:
+        if isinstance(value, str):
+            items.add(value)
+            continue
+        text = json.dumps(value, sort_keys=True, ensure_ascii=False)
+        items.add(text)
+        items |= {t for t in terms if re.search(rf"(?<!\w){re.escape(t)}(?!\w)", text)}
+    return items
+
+
 def _catalogue_item(facts: dict[str, Any], sku: str) -> dict[str, Any] | None:
     return next((item for item in facts.get("catalogue", []) if item.get("sku") == sku), None)
 
@@ -153,7 +170,8 @@ def _languages_needed(facts: dict[str, Any]) -> set[str]:
 
 def _language(gate: str, p: Any, s: State) -> Verdict:
     """CPR 3.2.2: the preferred language, both where it is unknown."""
-    given = set(p.args.get("languages") or ([p.args["language"]] if p.args.get("language") else []))
+    given = read_items(p.args.get("languages") or ([p.args["language"]] if p.args.get("language") else []),
+                       {"ar", "en"})
     needed = _languages_needed(s.facts)
     if needed <= given:
         return _finding(ALLOW, ["cpr-3-2-2"], [_check(gate, f"written in {', '.join(sorted(needed))}", "cpr-3-2-2")])
@@ -372,7 +390,7 @@ def sharing_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     never for marketing, 24.9 the third party's contract, PDPL 7(5) the processor's guarantees, PDPL 17 objection."""
     if p.verb != "disclose_account" or _recipient(p) == "subscriber":
         return None
-    g, f, fields = "sharing_gate", s.facts, set(p.args.get("data", []))
+    g, f, fields = "sharing_gate", s.facts, read_items(p.args.get("data", []), {"interconnection"})
     bad, clauses = [], ["cpr-24-6", "cpr-24-6-fn-35"]
     if "interconnection" in fields or _yes(f.get("interconnection_data_requested")):
         clauses.append("cpr-24-7")
@@ -404,9 +422,11 @@ def model_provider_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     if not provider:
         return None
     g, f = "model_provider_gate", s.facts
-    payload = list(provider.get("payload", []))
+    raw = provider.get("payload", [])
+    payload = [v if isinstance(v, str) else json.dumps(v, sort_keys=True, ensure_ascii=False)
+               for v in (raw if isinstance(raw, list) else [raw])]  # in order: the log says what left
     record = f.get("model_provider", {})
-    identifiers = sorted(set(payload) & DIRECT_IDENTIFIERS)
+    identifiers = sorted(read_items(raw, DIRECT_IDENTIFIERS) & DIRECT_IDENTIFIERS)
     contract = f.get("processor_contract") or record.get("processor_contract_on_file")
     notice = record.get("foreign_recipient_notice_given_at_contract")
     if identifiers:
@@ -454,8 +474,8 @@ def disconnection_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         return None
     g, f = "disconnection_gate", s.facts
     if change == "notice":
-        content = set(p.args.get("content", []))
         needed = {"actions_required", "due_dates", "consequences", "interruption_date"}
+        content = read_items(p.args.get("content", []), needed)
         lang = _language(g, p, s)
         reasons = [_check(g, "the individual notice and warning before any interruption (22.1.1)", "cpr-22-1-1")]
         if needed - content:
@@ -475,11 +495,12 @@ def disconnection_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     if not _yes(f.get("warning_sent")):
         clauses.append("cpr-22-2")
         bad.append(_check(g, "no individual notice and warning yet (22.1.1), with the 22.2 content", "cpr-22-1-1"))
-    services, unpaid = set(p.args.get("services", [])), f.get("unpaid_service") or f.get("invoice_service")
+    unpaid = f.get("unpaid_service") or f.get("invoice_service")
+    services = read_items(p.args.get("services", []), {unpaid} if unpaid else set())
     if unpaid and services - {unpaid}:
         bad.append(_check(g, f"reaches {', '.join(sorted(services - {unpaid}))}; confine it to {unpaid} (22.1.2)",
                           "cpr-22-1-2"))
-    kept = set(p.args.get("kept", []))
+    kept = read_items(p.args.get("kept", []), {"incoming calls", "emergency numbers"})
     if "incoming calls" not in kept:
         bad.append(_check(g, "incoming calls, a basic non-substitutable service, are cut (22.3)", "cpr-22-3"))
     if "emergency numbers" not in kept:
@@ -615,7 +636,7 @@ def records(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     if p.args.get("change") == "notice":
         retain("the notice and warning", "cpr-3-9-notices")
         keep.append(_must(g, "the notice record carries an Arabic copy (Consumer Law 8(4))", "consumer-law-8-4"))
-    if p.verb == "disclose_account" and {"invoice", "billing"} & set(p.args.get("data", [])):
+    if p.verb == "disclose_account" and {"invoice", "billing"} & read_items(p.args.get("data", []), {"invoice", "billing"}):
         retain("the billing information", "licence-9-4-3")
     if _yes(f.get("call_recorded")):
         retain("the call recording", "cpr-3-9-recordings")

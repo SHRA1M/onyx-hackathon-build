@@ -358,3 +358,32 @@ def test_override_refused_on_block(tmp_path):
 def test_override_needs_a_named_human(tmp_path):
     with pytest.raises(ValueError):
         gate.override(_verdict("disconnection_held_for_review"), "", "no name", _log(tmp_path), "S4-5")
+
+
+# --- hq ruling 2026-10-22 (C5 S2 run2 crash): a model-written list item that is not a string is read as its
+# canonical JSON text, never skipped -----------------------------------------------------------------------------
+
+def _billing_retention(verdict):
+    return "licence-9-4-3" in _ids(verdict)
+
+
+def test_an_object_in_args_data_no_longer_crashes_and_is_checked_as_text():
+    item = {"item": "October invoice total", "aed": 230}
+    proposal, state = _case("S2", 2, "disclose_account", f"{CPR}:24.10", data=[item])
+    verdict = gate.decide(proposal, state)  # was TypeError: unhashable type: 'dict'
+    assert gate.read_items([item], {"invoice"}) == {json.dumps(item, sort_keys=True, ensure_ascii=False), "invoice"}
+    assert _billing_retention(verdict)
+
+
+def test_an_object_naming_a_term_triggers_the_check_the_plain_string_does():
+    plain, _ = _case("S2", 2, "disclose_account", f"{CPR}:24.10", data=["invoice"])
+    wrapped, state = _case("S2", 2, "disclose_account", f"{CPR}:24.10", data=[{"field": "invoice"}])
+    assert _billing_retention(gate.decide(plain, state)) and _billing_retention(gate.decide(wrapped, state))
+    identifier = {"field": "msisdn"}
+    proposal, state = _case("S3", 4, "draft_reply", f"{CPR}:24.10", language="en",
+                            model_provider={"payload": ["question_text", identifier]})
+    assert gate.decide(proposal, state).verdict == gate.BLOCK
+
+
+def test_a_plain_string_still_matches_exactly():
+    assert gate.read_items(["October invoice total"], {"invoice"}) == {"October invoice total"}
