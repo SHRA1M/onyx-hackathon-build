@@ -12,6 +12,7 @@ a second run writes the same bytes.
 """
 
 import argparse
+import io
 import re
 import textwrap
 from pathlib import Path
@@ -157,7 +158,9 @@ def main() -> None:
     args.out.mkdir(parents=True, exist_ok=True)
     fig = draw(values)
     fig.savefig(args.out / f"{STEM}.png", dpi=300, metadata={"Software": None})
-    fig.savefig(args.out / f"{STEM}.svg", metadata={"Date": None, "Creator": None})
+    svg = io.BytesIO()
+    fig.savefig(svg, format="svg", metadata={"Date": None, "Creator": None})
+    (args.out / f"{STEM}.svg").write_bytes(svg.getvalue().replace(b"\r\n", b"\n"))  # LF on every machine
     plt.close(fig)
     print(f"wrote {args.out / STEM}.png and .svg")
 
