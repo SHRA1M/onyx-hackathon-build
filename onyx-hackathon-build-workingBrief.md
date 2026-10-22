@@ -16,8 +16,8 @@ report-backs, or the next order. No order in hand: do not invent work.
 
 ## Open questions
 
-- hq: the two entry names inside the filed Task 16 order (frozen; repo public 2026-11-09); whether
-  `docs/sources/competitor-read-2026-10-22.md` lives in hq only (local here, uncommitted).
+- hq: the two entry names inside the filed Task 16 order (frozen; repo public 2026-11-09). The competitor read
+  now lives in hq only (the repo copy was removed outside this session).
 - USD 1.12 left of the USD 20 balance: no live batch fits; any live run needs a top-up first.
 - hq: the candidate-id mismatch (coordinator writes `candidate-S1-6`); the team members' spellings for the README team line.
 - Iyas: read the Arabic step text of S1 to S5 on a page (the viewer's Arabic view shows them). `/setup-matt-pocock-skills` not yet run.
