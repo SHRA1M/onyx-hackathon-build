@@ -177,3 +177,29 @@ def test_s2_replay_page_reads_the_first_c5_run_with_the_hand_over_and_step_4_all
         assert replay_page.source(sid) == replay_page.RUNS / sid / "run1.jsonl"
     page = replay_page.render(replay_page.source("S2"))
     assert "`runs/c5/S2/ar/run1.jsonl`" in page and replay_page.C5_S2_LINE in page
+
+
+# --- hq ruling on the C5 report (2026-10-22): README names each page's run; selftest heads with C5 ------------
+
+def test_readme_names_the_run_each_replay_page_reads():
+    from onyx import replay_page
+    root = Path(__file__).resolve().parents[1]
+    section = (root / "README.md").read_text(encoding="utf-8").split("## Scenarios", 1)[1].split("\n## ", 1)[0]
+    assert "runs/S<n>/run1.jsonl" not in section
+    for sid in ("S1", "S2", "S3", "S4", "S5"):
+        run = replay_page.source(sid).relative_to(root).as_posix()
+        assert any(row.startswith(f"| {sid} |") and f"`{run}`" in row for row in section.splitlines()), sid
+
+
+def test_selftest_headline_is_c5_governed_with_c3_as_the_ungoverned_baseline():
+    from onyx import selftest
+    root = Path(__file__).resolve().parents[1]
+    results = json.loads((root / "eval" / "results.json").read_text(encoding="utf-8"))
+    lines = selftest.headline(results)
+    c5 = results["c5"]["C5"]
+    assert lines[0].startswith("C5 governed") and "runs/c5" in lines[0] and "prompt v5" in lines[0]
+    assert f"{c5['all']['en']['runs']} / {c5['all']['ar']['runs']} runs" in lines[0]
+    s2_en = next(x for x in lines if x.strip().startswith("S2 en"))
+    assert f"{c5['by_scenario']['S2']['en']['action_recall']:.2f}" in s2_en
+    baseline = next(x for x in lines if x.startswith("Ungoverned baseline: C3"))
+    assert f"{results['scenarios']['S1']['ungoverned']['en']['ungoverned_claims_allowed']['max']}" in baseline

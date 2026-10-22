@@ -35,6 +35,7 @@
       "action_recall_earlier": 0.6667,
       "citation_validity": 1.0,
       "gap_recall": 0.3333,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.4286
      },
      "en": {
@@ -43,6 +44,7 @@
       "action_recall_earlier": 0.6111,
       "citation_validity": 1.0,
       "gap_recall": 0.3333,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.4286
      }
     },
@@ -53,6 +55,7 @@
       "action_recall_earlier": 0.8333,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.4706
      },
      "en": {
@@ -61,6 +64,7 @@
       "action_recall_earlier": 0.8889,
       "citation_validity": 0.9524,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.4706
      }
     },
@@ -71,6 +75,7 @@
       "action_recall_earlier": 0.6667,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.2143
      },
      "en": {
@@ -79,6 +84,7 @@
       "action_recall_earlier": 0.6,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.3095
      }
     },
@@ -89,6 +95,7 @@
       "action_recall_earlier": 0.4,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.2353
      },
      "en": {
@@ -97,6 +104,7 @@
       "action_recall_earlier": 0.4667,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.2353
      }
     },
@@ -107,6 +115,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.3889
      },
      "en": {
@@ -115,6 +124,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.1667
      }
     }
@@ -153,6 +163,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 0.3333,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.7857
      },
      "en": {
@@ -161,6 +172,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 0.3333,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.7857
      }
     },
@@ -171,6 +183,7 @@
       "action_recall_earlier": 0.8333,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.1176
      },
      "en": {
@@ -179,6 +192,7 @@
       "action_recall_earlier": 0.8333,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.1176
      }
     },
@@ -189,6 +203,7 @@
       "action_recall_earlier": 0.9,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.3215
      },
      "en": {
@@ -197,6 +212,7 @@
       "action_recall_earlier": 0.8,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.3215
      }
     },
@@ -207,6 +223,7 @@
       "action_recall_earlier": 0.8,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.6471
      },
      "en": {
@@ -215,6 +232,7 @@
       "action_recall_earlier": 0.8,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.5294
      }
     },
@@ -225,6 +243,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.6111
      },
      "en": {
@@ -233,6 +252,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.6111
      }
     }
@@ -441,6 +461,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 0.3333,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.7857
      },
      "en": {
@@ -449,6 +470,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 0.3333,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.7857
      }
     },
@@ -459,6 +481,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.6471
      },
      "en": {
@@ -467,6 +490,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 0.9375,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.4706
      }
     },
@@ -477,6 +501,7 @@
       "action_recall_earlier": 0.8,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.3571
      },
      "en": {
@@ -485,6 +510,7 @@
       "action_recall_earlier": 0.9,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": null,
       "obligation_proxy": 0.3571
      }
     },
@@ -495,6 +521,7 @@
       "action_recall_earlier": 0.9,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.5294
      },
      "en": {
@@ -503,6 +530,7 @@
       "action_recall_earlier": 0.9,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.6471
      }
     },
@@ -513,6 +541,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.5
      },
      "en": {
@@ -521,6 +550,7 @@
       "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
+      "handover_latency_steps": 0.0,
       "obligation_proxy": 0.6111
      }
     }

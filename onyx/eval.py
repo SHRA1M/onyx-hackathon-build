@@ -71,7 +71,7 @@ C5_LINE = ("Prompt v5 changes two care lines (the de-identified model-provider p
            "addressed to the step's sender, the human named from the facts) after the C4 misses; governed only, 2 runs "
            "per cell; the ungoverned baseline stays C3 on prompt v3.")
 BY_SCENARIO = ("citation_validity", "action_recall", "action_recall_earlier", "obligation_proxy", "gap_recall",
-               "abstention")
+               "abstention", "handover_latency_steps")
 SUMMARY = (("Citation validity (hq rule)", "citation_validity"), ("Action recall", "action_recall"),
            ("Obligation proxy", "obligation_proxy"), ("Gap recall", "gap_recall"), ("Abstention", "abstention"))
 

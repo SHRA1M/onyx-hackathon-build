@@ -20,6 +20,27 @@ HEADLINE = (("Action recall", "action_recall"), ("Citation validity", "citation_
 
 
 def headline(results: dict) -> list[str]:
+    """With a C5 run set in results (order 2026-10-22, hq ruling on the C5 report): the C5 governed figures per
+    scenario, the run set named, then C3's ungoverned claims as the baseline line. Without it: every scenario's
+    governed figures and ungoverned claims, as before. Every figure is read from results, never typed."""
+    if "c5" in results:
+        c5 = results["c5"]
+        runs_of = {lang: c5["C5"]["all"][lang]["runs"] for lang in runs.LANGS}
+        lines = [f"C5 governed, {', '.join(results['models'])}: runs/c5, prompt {', '.join(c5['prompts']['governed'])}, "
+                 f"{runs_of['en']} / {runs_of['ar']} runs (en / ar); chains ok: "
+                 f"{'yes' if results['all_chains_ok'] else 'NO'}; key hashes match: "
+                 f"{'yes' if results['all_keys_match'] else 'NO'}",
+                 "  Governed     " + " | ".join(name for name, _ in HEADLINE)]
+        for sid, by_lang in c5["C5"]["by_scenario"].items():
+            for lang in runs.LANGS:
+                cells = ["n/a" if by_lang[lang][m] is None else f"{by_lang[lang][m]:.2f}" for _, m in HEADLINE]
+                lines.append(f"  {sid} {lang}        " + " | ".join(cells))
+        claims = [f"{sid} {lang} {_cell(modes['ungoverned'][lang]['ungoverned_claims_allowed'])}"
+                  for sid, modes in results["scenarios"].items() for lang in runs.LANGS]
+        ungoverned = sum(modes["ungoverned"][lang]["runs"] for modes in results["scenarios"].values()
+                         for lang in runs.LANGS)
+        return lines + [f"Ungoverned baseline: C3, runs/ungoverned ({ungoverned} runs), ungoverned claims allowed per "
+                        "run: " + ", ".join(claims)]
     label = "SCRIPTED (no model call)" if results["scripted"] else ", ".join(results["models"])
     lines = [f"{label}; {results['runs_read']} runs; chains ok: {'yes' if results['all_chains_ok'] else 'NO'}; "
              f"key hashes match: {'yes' if results['all_keys_match'] else 'NO'}",
