@@ -57,7 +57,9 @@ def test_a_second_run_writes_the_same_bytes(tmp_path, name, stem):
     _run(name, second)
     for ext in ("png", "svg"):
         assert (first / f"{stem}.{ext}").read_bytes() == (second / f"{stem}.{ext}").read_bytes()
-        assert (FIG / f"{stem}.{ext}").read_bytes() == (first / f"{stem}.{ext}").read_bytes(), f"{stem}.{ext} stale"
+    # ruling 4 (hq, 2026-10-22): matplotlib's PNG bytes differ across machines, so only the SVG is held to the
+    # committed file; the PNG is held to a same-machine redraw above
+    assert (FIG / f"{stem}.svg").read_bytes() == (first / f"{stem}.svg").read_bytes(), f"{stem}.svg stale"
 
 
 # --- Figure 1 ----------------------------------------------------------------------------------------------------

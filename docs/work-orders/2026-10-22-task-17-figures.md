@@ -43,6 +43,14 @@ the clause, its page and its words says what a page of ours says.
 2. **Item 4: option (a).** Skip it; the report-back notes it for Task 12, which places the figures when it is built.
 3. Figure 1 and the screenshot go ahead as written.
 
+## Ruling on the build's second stop (hq, 2026-10-22, CI red on PNG bytes)
+
+4. **Option (a).** CI compares the SVG files byte for byte, as now. The PNGs are checked only for a same-machine
+   redraw: the test draws each PNG twice in one run and compares the two, never against the committed file. The
+   committed PNGs stay the Windows ones. Nothing else changes: no figure value, caption, script logic or other test.
+   Copy this ruling into `docs/work-orders/2026-10-22-task-17-figures.md`, full suite, push, and report done only when
+   the CI run on that push is green. If CI fails on anything else, stop and report.
+
 ## Stop and ask when
 
 - A value Figure 2 needs is not in `eval/results.md`.
