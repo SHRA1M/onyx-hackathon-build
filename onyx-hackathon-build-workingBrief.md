@@ -1,6 +1,6 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-22 (twenty-third session, Opus).
+Updated 2026-10-22 (twenty-third wrap, Opus).
 
 ## Objective
 

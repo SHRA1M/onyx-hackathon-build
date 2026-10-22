@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-22 (twenty-third session, Opus: Task 17 ruling 4 applied, CI green; hq accepted Tasks 14, 16 and 17 as built).
+Updated 2026-10-22 (twenty-third wrap, Opus: Task 17 ruling 4 applied, CI green; hq accepted Tasks 14, 16 and 17 as built).
 
 ## What this is
 
