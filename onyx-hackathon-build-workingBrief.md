@@ -1,18 +1,19 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-21 (seventeenth wrap, Opus).
+Updated 2026-10-22 (eighteenth wrap, Opus).
 
 ## Objective
 
-Tasks 1 to 11 are built and CI is green. Wait for hq's Task 12 order (report, video, judge card).
+Task 13 (prompt v5, C5) is built and accepted by hq. Build Task 14, the replay viewer:
+`D:\Projects\hq\uni\ai-for-good-hackathon\task-14-replay-viewer-order-2026-10-22.md` (Opus, no model call, USD 0).
 
 ## Next moves, in order
 
-1. hq reads `docs/report-back/2026-10-21-task9-fixes.md` and `2026-10-21-tasks-10-11.md`.
-2. hq rules on `docs/report-back/2026-10-21-task8-part-c4.md` (S2-3 and S3-4 care misses: v4 lines or frozen keys).
-3. Build the Task 12 order. A live run logs prompt v4.1 on kb_main 117; estimate from C4 per-run costs; USD 1.03 is left under the USD 14.50 stop.
+1. CI is green on 19584b1 (checked at wrap). Copy the Task 14 order into `docs/work-orders/`, then build it test first. The viewer reads the same run per
+   scenario as `replay_page.source` (S2: `runs/c5/S2/ar/run1.jsonl`); headline figures from eval, never typed.
 
 ## Open questions
 
+- USD 1.12 left of the USD 20 balance: no live batch fits; any live run needs a top-up first.
 - hq: the candidate-id mismatch (coordinator writes `candidate-S1-6`); the team members' spellings for the README team line.
 - Iyas: read the Arabic step text of S1 to S5 on a page. `/setup-matt-pocock-skills` not yet run.

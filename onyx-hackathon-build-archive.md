@@ -137,3 +137,32 @@ Decision lines moved here from the background (older, still true):
 - 2026-10-21: 13 rules added for the keys (CPR 2.1.7, 26.4.5, 26.11, 4.9, 13.4, 13.8, 5.3, 4.22.4, 4.17.1, 4.23.2, 3.9 notices; PDPL 23(2); licence 9.3), quotes from kb/chunks-full/.
 - 2026-10-21: licence splitter reads the pypdf .txt: an English clause heading keeps its number and English title and drops the Arabic title on the same line; `bare_page_numbers` starts a page at a line holding only the next page number. Committed licence chunks kept as they are (see Traps).
 - 2026-10-21 (freeze, hq orders freeze-order-2026-10-21.md and part 2, commit e8b17cb): quotes licence-9-3 ('between the parties ... with the Telecommunications Law'), cpr-4-7-3 ('opt-out'), cpr-24-7 ('anti-competitive') fixed in rules and committed chunks; 3.9 quotes checked against CPR PDF page 12 and kept; rule pdpl-22-1 added; `receive_objection` cites PDPL 18(1) and 17 (quote stays 18(1)); S1 step 6 and S2 step 5 gate_outcome hold; S3 step 3 cites pdpl-22-1; S4 cites 66/2023 34(1) only, no 34(3) anywhere; frozen line: any later key change re-hashes HASHES.txt in the same commit.
+
+## 2026-10-22: Task 13, prompt v5 and the C5 scored run
+
+Order `docs/work-orders/2026-10-22-task-13-prompt-v5-c5.md` (hq, Fable, with Iyas). Built by Opus 5.5.
+- Part A (1fe11bb): care lines 1 and 3 word for word, PROMPT_VERSION v5; v4 tests narrowed to line 2. The order's S2-3
+  test said a draft to "Human agent H-01 (synthetic)" is held; the gate allows it (H-01 on shift from the start), so the
+  test pins allow plus the scorer's miss, and the C4 spelling "Human agent H-01" pins hold. Spend guard: Sonnet estimate
+  from C4 actual cost per run plus 10 percent (USD 5.80 for the batch); TOTAL_CAP_USD 15 to 20; `record` stops between
+  runs on the total or the batch cap.
+- Part B: C5 S2 en run2 crashed in gate.py `records` (a dict in `args.data`). Asked; hq ruled option 1 with canonical
+  JSON text, nothing skipped. `gate.read_items` (f31fb4b); 193 logs replayed, 0 verdicts changed; partial log to
+  `runs/_failed/c5/S2/`. Resumed with --skip-existing; order S2, S3, S1, S4, S5, each checked against C4 (citation
+  validity within 0.1 everywhere; S2 en 0.94 from one malformed id `tdra-cpr-v2-4.3`). Runs 72439fa.
+- C5 result: 5 of 112 key steps missed (C4: 7). S2-3 hit 4 of 4. S3-4 care set recipient human on the coordinator's
+  step (en 1 of 2, ar 2 of 2); S4-4 data office addressed "H-03" and "Sahab Telecom account of Khalid". USD 5.41
+  (S2 1.17 with the partial run, S3 1.02, S1 1.32, S4 1.06, S5 0.83); recorded total USD 18.88 of 20.00.
+- Part C (7bb8cb6): eval `_rerun` for any re-run folder, C5 beside C3 and C4 with a six-metric per-scenario table and
+  misses per step; README scored-run line is C5 (tested against results.json); S2 replay page reads
+  `runs/c5/S2/ar/run1.jsonl` (no C5 English run had step 4 allowed: run1 hold, run2 insufficient evidence).
+- hq ruling on the report (19584b1): README Scenarios table names each page's run; selftest heads with C5 governed and
+  names the run set, C3 ungoverned as the baseline line; hand-over latency added to eval's per-scenario summary. No v6.
+- CI: the Part C run showed in progress 17 min though every step passed; it ended green. 19584b1 green (10m46s).
+- Decisions moved here from the background (superseded detail, still true):
+  - 2026-10-21 (Task 4): `hash = sha256(prev_hash + canonical_json(event without 'hash'))`, canonical = sorted keys, compact separators, UTF-8 unescaped; first `prev_hash` 64 zeros; `seq` from 1 and must equal the line number; `run_start` holds the sha256 of each key file as on disk (`new_value.answer_keys`); a broken chain is never replayed. Addendum 17's two override tests need the gate and are left for Task 6.
+  - 2026-10-21 (Task 5, Opus, commit 07416f4): channel classification is plain code (hq plan: 'The checks (plain code, not AI judgement)'): business_centre 4.15, voice 4.17, app_chat 4.22 + 4.10 + 4.11 (strict reading, key S1 step 1), web 4.23; unknown channel raises. An unparseable reply proposes nothing. No new dependency; no real model call made.
+  - 2026-10-21 (hq task-7 order, commits b048945, 93a7d40): Telecom Law 72(2) has a rules.json row and chunk; model_provider_gate cites it. Task 7 coordinator built (staged release, live inject, Arabic runs cite the same clause ids as English).
+  - 2026-10-21 (Task 5 model decision, hq task-8 order): the live model is Claude through Anthropic's OpenAI-compatible endpoint, base URL `https://api.anthropic.com/v1/`, model `claude-opus-5-5` (platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk, read through context7). Temperature below 1 is a 400 on Claude 4.7+, so it is omitted.
+  - 2026-10-21 (live order Part B): a proposal whose `args.deadline` is not a {rule, value, unit} object is blocked by the base checks (it crashed the gate on Haiku's and Sonnet's S5 step 6). No existing verdict changed.
+  - 2026-10-21 (Task 8, commit d85871d): every event has `gate_ms` and `model_ms` (null where not measured). Action recall addressee: where the key answers a step sent by a human with draft_reply, the reply must be addressed to the human; every other step a non-human addressee. Obligation recall is step-level (key verdict reached and every must_cite on the step's record). Hand-over latency: first step from handover_step that is a hold, an allowed proposal to or asking for a human, or a complaint_gate hand-over duty. All three sent to hq to confirm.
