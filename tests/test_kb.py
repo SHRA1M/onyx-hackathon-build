@@ -129,6 +129,9 @@ def test_ingest_builds_three_collections(tmp_path):
     names = {c.name for c in client.list_collections()}
     assert names == {"kb_main", "kb_framework", "kb_decisions"}
     assert client.get_collection("kb_main").count() == sum(1 for _ in kb.iter_chunks())
+    if not kb._framework_documents():
+        # CI runs no `kb fetch` (it rewrites the manifest's access dates); the dimensions file is fetched, not committed
+        pytest.skip("kb/sources/itu-readiness-dimensions.json not on disk: run `python -m onyx kb fetch`")
     assert client.get_collection("kb_framework").count() > 0
 
 
