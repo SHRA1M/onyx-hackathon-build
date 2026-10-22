@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-21 (fifteenth wrap, Opus: Task 9 gap register built and pushed, bafd4a3).
+Updated 2026-10-21 (sixteenth wrap, Opus: hq accepted Task 9 at bafd4a3; items 4, 5 and the v4 label await hq).
 
 ## What this is
 
@@ -61,6 +61,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - 2026-10-21 (Iyas, after the governed estimate of USD 7.68 broke the USD 6 C4 cap): C4 is governed only, 2 runs per scenario and language; no ungoverned C4; results.md must say the ungoverned rows are C3 on prompt v3 and that C4 has 2 runs per cell; every stop rule of the order still applies.
 - 2026-10-21 (hq C4 addendum, Fable): clause-id resolution, one function for gate and eval; older logs replay as recorded; no prompt change, v4 stands. Iyas chose the logs' count for the results line and README ("6 ids in 4 of 389 proposals citing a clause across C3 and C4 S1") over hq's "4 of 341".
 - 2026-10-21 (Task 9, bafd4a3): 9 rows plus 4 candidates; a row's quotes are verbatim in a committed chunk or a `kb/sources/global/` file. Departures sent to hq in the report-back: gap-4 competitor yes (hq reading notes), Consumer Law 4(5) not about Arabic, 66/2023 34 says 'prohibited' not 'void', gap-7 wording, builder-chosen category and recommendation. 10 chunks added; adviser prompt gained gap-8 under the v4 label.
+- 2026-10-21 (hq check of Task 9 at bafd4a3): accepted. Report-back items 1 (gap-4 competitor yes), 2 (Consumer Law 4(5) not about Arabic), 3 ('prohibited term', not 'void') and 6 (source-line headers on the IMDA and Y.3172 texts) stand as built. Items 4 (gap-7 wording), 5 (category and recommendation) and the prompt v4 label (adviser gained gap-8) wait for an hq ruling: change nothing until it comes.
 - 2026-10-21 (C4 result, 1deb675): governed (en / ar) citation validity 1.00 / 1.00, action recall 0.93 / 0.95 (earlier rule 0.89 / 0.91), obligation proxy 0.47 / 0.50, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 7 of 112 key steps: S2-3 and S3-4 care, both from v4 lines. 12 ids resolved (S1-3 4 by the eval only, S3-5 8 by the gate live). C4 USD 5.28 of 6.00; recorded USD 13.47 of 14.50 (cost.py TOTAL_CAP_USD is 15; the order's stop is 14.50).
 
 ## Traps
@@ -91,6 +92,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
+- For hq (report-back task9): items 4 (gap-7 wording) and 5 (category and recommendation per row), and whether the adviser's gap-8 line keeps the v4 label. Nothing changes until hq rules.
+
 - For hq (report-back c4): S2-3 (care replies to "Human agent H-01" per v4 line 3; the key wants the subscriber) and S3-4 (care proposes `disclose_account` per v4 line 1; the key wants `draft_reply`): v4 lines or frozen keys, hq decides.
 - C3 S2 en run3 cites `tdra-cpr-v2-en:9.1` for `licence-2-2026:9.1` (a different document): stays invalid under resolution (0.95).
 - The order said five `candidate-*` ids; the keys and hq hold one. Sent to hq in report-back c1. The candidate-id mismatch is still open (Task 9 did not change the coordinator).
@@ -103,4 +106,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-hq reads `docs/report-back/2026-10-21-task9.md` (rule on the departures) and `2026-10-21-task8-part-c4.md` (S2-3, S3-4), then sends the next order. Next live run: bump PROMPT_VERSION (adviser gained gap-8; kb_main 116). USD 1.03 left under the 14.50 stop.
+hq rules on Task 9 items 4 and 5 and the v4 label, and on `2026-10-21-task8-part-c4.md` (S2-3, S3-4), then sends the next order. Before the next live run, the v4 label question must be settled (adviser gained gap-8; kb_main 116). USD 1.03 left under the 14.50 stop.
