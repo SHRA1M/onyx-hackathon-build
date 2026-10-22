@@ -116,8 +116,8 @@ def test_guard_refuses_over_the_cap_before_any_call(tmp_path, monkeypatch):
     assert printed and "estimate" in printed[0].lower() and "USD" in printed[0]
 
 
-def test_guard_default_cap_is_five_usd():
-    assert cost.DEFAULT_MAX_USD == 5 and cost.TOTAL_CAP_USD == 15
+def test_guard_default_cap_is_five_usd_and_the_total_stop_is_twenty():
+    assert cost.DEFAULT_MAX_USD == 5 and cost.TOTAL_CAP_USD == 20  # order 2026-10-22: the prepaid balance
 
 
 def test_estimate_is_printed_before_the_first_call(tmp_path, monkeypatch):
@@ -154,12 +154,12 @@ def test_guard_uses_recorded_tokens_and_counts_output_once_measured(tmp_path, mo
     assert est.spent_usd == pytest.approx(est.usd)  # the first run's actual spend, same calls and tokens
 
 
-def test_guard_refuses_when_total_spend_would_pass_fifteen(tmp_path, monkeypatch):
+def test_guard_refuses_when_total_spend_would_pass_twenty(tmp_path, monkeypatch):
     _clear_env(monkeypatch)
     complete, calls = _with_usage("claude-opus-5-5")
     monkeypatch.setattr(model.OpenAICompatibleModel, "complete", complete)
-    monkeypatch.setattr(cost, "spent_usd", lambda root: 15.0)
-    with pytest.raises(cost.SpendRefused, match="would pass USD 15"):
+    monkeypatch.setattr(cost, "spent_usd", lambda root: 20.0)
+    with pytest.raises(cost.SpendRefused, match="would pass USD 20"):
         runs.record("live", tmp_path / "runs", scenarios=("S1",), runs=1, langs=("en",), modes=("governed",),
                     env=_env(tmp_path), retriever=scripted.retriever("S1"), max_usd=5, spend_root=tmp_path / "runs",
                     out=lambda s: None)
@@ -176,6 +176,53 @@ def test_live_record_without_a_key_still_stops_first(tmp_path, monkeypatch):
 def test_check_data_includes_the_price_table(capsys):
     assert data.check_data() == 0
     assert "prices" in capsys.readouterr().out
+
+
+# --- Task 13 item 6: the estimate from C4's actual costs; the stop holds between runs ------------------------
+
+C5_ORDER = ("S2", "S3", "S1", "S4", "S5")
+
+
+def _no_hits(query, documents, k):
+    return []
+
+
+def test_sonnet_estimate_is_the_c4_actual_cost_per_scenario_plus_ten_percent(tmp_path):
+    plan = cost.plan(C5_ORDER, ("en", "ar"), ("governed",), 2, retriever=_no_hits)
+    est = cost.estimate("claude-sonnet-5-5", plan, spend_root=tmp_path)
+    assert cost.C4_ACTUAL_USD == {"S1": 1.31, "S2": 1.08, "S3": 1.01, "S4": 1.05, "S5": 0.82}
+    assert est.usd == pytest.approx((1.31 + 1.08 + 1.01 + 1.05 + 0.82) * 1.1)
+    assert "C4 actual" in est.basis
+
+
+def test_the_c4_estimate_scales_with_the_runs_asked(tmp_path):
+    plan = cost.plan(("S2",), ("en",), ("governed",), 1, retriever=_no_hits)
+    assert cost.estimate("claude-sonnet-5-5", plan, spend_root=tmp_path).usd == pytest.approx(1.08 / 4 * 1.1)
+
+
+def _stop_after_first_run(tmp_path, monkeypatch, spent, max_usd):
+    _clear_env(monkeypatch)
+    complete, _ = _with_usage("claude-opus-5-5")
+    monkeypatch.setattr(model.OpenAICompatibleModel, "complete", complete)
+    readings = list(spent)
+    monkeypatch.setattr(cost, "spent_usd", lambda root: readings.pop(0) if len(readings) > 1 else readings[0])
+    printed = []
+    written = runs.record("live", tmp_path / "runs", scenarios=("S1",), runs=2, langs=("en",), modes=("governed",),
+                          env=_env(tmp_path), retriever=scripted.retriever("S1"), max_usd=max_usd,
+                          spend_root=tmp_path / "runs", out=printed.append)
+    return written, printed
+
+
+def test_record_stops_between_runs_when_the_recorded_total_reaches_twenty(tmp_path, monkeypatch):
+    written, printed = _stop_after_first_run(tmp_path, monkeypatch, [0.0, 20.0], max_usd=5)
+    assert [p.name for p in written] == ["run1.jsonl"]
+    assert "stopped" in printed[-1] and "USD 20" in printed[-1] and "run2.jsonl" in printed[-1]
+
+
+def test_record_stops_between_runs_when_the_batch_reaches_its_cap(tmp_path, monkeypatch):
+    written, printed = _stop_after_first_run(tmp_path, monkeypatch, [13.0, 19.0], max_usd=6)
+    assert [p.name for p in written] == ["run1.jsonl"]
+    assert "stopped" in printed[-1] and "batch" in printed[-1] and "run2.jsonl" in printed[-1]
 
 
 # --- Part B: a dropped connection is retried; a re-run keeps the runs already recorded ------------------------

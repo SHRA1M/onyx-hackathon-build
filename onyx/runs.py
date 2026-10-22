@@ -51,38 +51,47 @@ def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS
            retriever: Any = None, max_usd: float = cost.DEFAULT_MAX_USD, spend_root: str | Path = cost.RUNS_DIR,
            out: Callable[[str], Any] = print, skip_existing: bool = False) -> list[Path]:
     """A live run stops before any call when the key has no value (MissingModelKey) or when the spend guard
-    refuses (cost.SpendRefused). `retriever` replaces kb_main in tests only. skip_existing keeps a recorded run and
-    records only the missing ones (after a run died; move its partial log out first); without it an existing run
-    raises."""
+    refuses (cost.SpendRefused), and between runs once the recorded spend reaches USD 20 or this batch's spend
+    reaches max_usd; it then prints the runs not recorded. `retriever` replaces kb_main in tests only.
+    skip_existing keeps a recorded run and records only the missing ones (after a run died; move its partial log
+    out first); without it an existing run raises."""
     from onyx import coordinator, scripted
 
     if source == "live":
         live = model_mod.from_env(env)  # raises MissingModelKey before anything is written
         retriever = retriever or coordinator._kb_retriever()
-        cost.guard(live.model, cost.plan(scenarios, langs, modes, runs, retriever), max_usd, spend_root, out)
+        start = cost.guard(live.model, cost.plan(scenarios, langs, modes, runs, retriever), max_usd, spend_root,
+                           out).spent_usd
     elif source != "scripted":
         raise ValueError(f"source {source!r}: live or scripted")
+    cells = [(sid, governed, lang, n) for sid in scenarios for governed in (mode == "governed" for mode in modes)
+             for lang in langs for n in range(1, runs + 1)]
     written = []
-    for sid in scenarios:
-        scenario = data.load_scenario(sid)
-        for governed in (mode == "governed" for mode in modes):
-            for lang in langs:
-                for n in range(1, runs + 1):
-                    path = run_path(root, sid, n, lang, governed)
-                    if path.exists() and skip_existing:
-                        continue
-                    if path.exists():
-                        raise FileExistsError(f"{path}: a recorded run is never overwritten")
-                    if source == "live":
-                        model, retrieve, model_id = live, retriever, live.model
-                    else:
-                        model, retrieve, model_id = scripted.model(sid, lang), scripted.retriever(sid), "scripted-mock"
-                    run = coordinator.Coordinator(scenario, model, retrieve, log_path=path,
-                                                  gaps_dir=Path(root) / "gaps", lang=lang, governed=governed)
-                    run.start(source=source, model=model_id, run=n,
-                              retrieval="kb_main" if source == "live" else "scripted", prompt=PROMPT_VERSION)
-                    run.run()
-                    written.append(path)
+    for i, (sid, governed, lang, n) in enumerate(cells):
+        path = run_path(root, sid, n, lang, governed)
+        if path.exists() and skip_existing:
+            continue
+        if path.exists():
+            raise FileExistsError(f"{path}: a recorded run is never overwritten")
+        if source == "live":
+            model, retrieve, model_id = live, retriever, live.model
+        else:
+            model, retrieve, model_id = scripted.model(sid, lang), scripted.retriever(sid), "scripted-mock"
+        run = coordinator.Coordinator(data.load_scenario(sid), model, retrieve, log_path=path,
+                                      gaps_dir=Path(root) / "gaps", lang=lang, governed=governed)
+        run.start(source=source, model=model_id, run=n,
+                  retrieval="kb_main" if source == "live" else "scripted", prompt=PROMPT_VERSION)
+        run.run()
+        written.append(path)
+        if source == "live":
+            spent = cost.spent_usd(spend_root)
+            reason = (f"recorded spend USD {spent:.2f} reached USD {cost.TOTAL_CAP_USD}" if spent >= cost.TOTAL_CAP_USD
+                      else f"this batch spent USD {spent - start:.2f}, at its cap USD {max_usd:.2f}"
+                      if spent - start >= max_usd else "")
+            if reason:
+                missing = [str(p) for s, g, lg, k in cells[i + 1:] if not (p := run_path(root, s, k, lg, g)).exists()]
+                out(f"stopped: {reason}; not recorded: {', '.join(missing) or 'none'}")
+                break
     return written
 
 

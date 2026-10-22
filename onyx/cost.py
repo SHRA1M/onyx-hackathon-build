@@ -9,7 +9,11 @@ The guard runs before a live run's first call. Its estimate is calls x tokens x 
   model stands in, no call made), converted at the pricing page's own ratio, 10 kB to about 2,500 tokens;
 - once a live run of the same model is recorded, its median prompt and completion tokens per call replace that, so
   output is counted from then on (Iyas, 2026-10-21: live-shape prompts, output added once measured).
-It refuses a run whose estimate is over --max-usd (default USD 5), or that would take recorded live spend past USD 15.
+- for Sonnet 5.5 on the five scenarios, the C4 actual cost per scenario (order 2026-10-22 item 6, from the C4
+  report-back, USD for 4 governed runs: 2 per language) per run asked, plus 10 percent for prompt v5's longer care
+  lines.
+It refuses a run whose estimate is over --max-usd (default USD 5), or that would take recorded live spend past USD 20
+(the prepaid balance, order 2026-10-22). `runs.record` checks the recorded spend again after each run and stops there.
 """
 
 from __future__ import annotations
@@ -27,8 +31,12 @@ from onyx import data
 PRICES_PATH = data.DATA_DIR / "model_prices.json"
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 DEFAULT_MAX_USD = 5
-TOTAL_CAP_USD = 15  # the key's cap is USD 20; the order stops at 15
+TOTAL_CAP_USD = 20  # the prepaid balance, hard (order 2026-10-22)
 BYTES_PER_TOKEN = 4
+C4_MODEL = "claude-sonnet-5-5"
+C4_ACTUAL_USD = {"S1": 1.31, "S2": 1.08, "S3": 1.01, "S4": 1.05, "S5": 0.82}  # docs/report-back/...-part-c4.md
+C4_RUNS_PER_SCENARIO = 4  # governed, en and ar, 2 runs each
+PROMPT_UPLIFT = 1.10  # prompt v5's longer care lines
 
 
 class SpendRefused(RuntimeError):
@@ -110,6 +118,7 @@ def spent_usd(root: str | Path) -> float:
 class Plan:
     calls: int
     prompt_bytes: list[int] = field(default_factory=list)
+    runs_per_scenario: dict[str, int] = field(default_factory=dict)
 
     @property
     def prompt_tokens(self) -> int:
@@ -133,6 +142,7 @@ def plan(scenarios: tuple[str, ...], langs: tuple[str, ...], modes: tuple[str, .
     retrieve = retriever or coordinator._kb_retriever()
     sizes: list[int] = []
     calls = 0
+    per_scenario = {sid: len(modes) * len(langs) * runs for sid in scenarios}
     for sid in scenarios:
         for mode in modes:
             for lang in langs:
@@ -145,7 +155,7 @@ def plan(scenarios: tuple[str, ...], langs: tuple[str, ...], modes: tuple[str, .
                     run.run()
                 sizes += capture.sizes
                 calls += len(capture.sizes) * runs
-    return Plan(calls, sizes)
+    return Plan(calls, sizes, per_scenario)
 
 
 @dataclass
@@ -179,6 +189,10 @@ def estimate(model_id: str, run_plan: Plan, spend_root: str | Path = RUNS_DIR) -
         basis = f"median live-shape prompt, {BYTES_PER_TOKEN} bytes per token"
     per_call = cost_usd(model_id, prompt, completion or 0)
     usd = None if per_call is None else round(run_plan.calls * per_call, 6)
+    if model_id == C4_MODEL and run_plan.runs_per_scenario and set(run_plan.runs_per_scenario) <= set(C4_ACTUAL_USD):
+        usd = round(sum(C4_ACTUAL_USD[sid] / C4_RUNS_PER_SCENARIO * n for sid, n in run_plan.runs_per_scenario.items())
+                    * PROMPT_UPLIFT, 6)
+        basis = f"C4 actual cost per run, plus {round((PROMPT_UPLIFT - 1) * 100)} percent for the longer prompt"
     return Estimate(model_id, run_plan.calls, prompt, completion, usd, spent_usd(spend_root), basis)
 
 

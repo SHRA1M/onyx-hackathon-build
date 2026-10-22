@@ -20,6 +20,8 @@ clauses its gates test. A replay gives each agent the mandate clauses its log re
 recorded on a narrower mandate is decided again on what its run was given.
 
 v4.1 (Task 9, unscored): the adviser's register lists gap-8 and the candidate at line 9; kb_main grew from 106 chunks with the Task 9 searched clauses (and again with item 1 above). Recorded runs are v4 and replay as recorded.
+
+v5 (order 2026-10-22): line 1 carves the de-identified model-provider payload out of disclose_account; line 3 addresses the sender of the step and names the human from the facts. Scored as C5. Recorded C3 and C4 runs replay as recorded.
 """
 
 from __future__ import annotations
@@ -34,7 +36,7 @@ from onyx import audit, data, kb
 from onyx.model import Model
 
 INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
-PROMPT_VERSION = "v4.1"  # logged on run_start
+PROMPT_VERSION = "v5"  # logged on run_start
 LANGUAGE = {"en": "English", "ar": "Arabic"}
 
 

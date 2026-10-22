@@ -64,10 +64,11 @@ def _system(agent_cls):
     return seen["system"]
 
 
-def test_care_prompt_carries_the_three_v4_lines_word_for_word():
+def test_care_prompt_keeps_v4_line_2_word_for_word():
+    """v5 (order 2026-10-22) rewrote lines 1 and 3 (tests/test_prompt_v5.py); line 2 stays."""
     system = _system(Care)
-    for line in V4_LINES:
-        assert line in system
+    assert V4_LINES[1] in system
+    assert V4_LINES[0] not in system and V4_LINES[2] not in system
 
 
 def test_other_agents_prompts_are_unchanged():
@@ -91,12 +92,6 @@ def test_a_care_draft_reply_for_the_human_on_a_complaint_step_passes_the_complai
     assert verdict.verdict == gate.ALLOW
     assert not any(r.get("gate") == "complaint_gate" and r.get("kind") == "check" and "precluded" in r["text"]
                    for r in verdict.reasons)
-
-
-def test_run_start_logs_the_prompt_version(tmp_path):
-    [path] = runs.record("scripted", tmp_path, scenarios=("S1",), runs=1, langs=("en",), modes=("governed",))
-    start = json.loads(path.read_text(encoding="utf-8").splitlines()[0])
-    assert start["new_value"]["prompt"] == "v4.1"
 
 
 # --- item 3: care's mandate is its gates' clauses ------------------------------------------------------------

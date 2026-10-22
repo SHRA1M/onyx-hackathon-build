@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-10-22
+
+- Broke: C4 missed 7 of 112 key steps, all in S2-3 and S3-4 care, both from prompt v4 lines: line 3 sent a complaint-step draft_reply to "Human agent H-xx" (copied literally into English targets) instead of the subscriber, and line 1 ("account data to anyone") made care propose disclose_account for the de-identified model-provider payload. Changed (order 2026-10-22-task-13-prompt-v5-c5 Part A, prompt v5, care only): line 1 carves the de-identified payload out as draft_reply with args.model_provider.payload; line 3 addresses a draft_reply to the step's sender, the human named exactly as the facts name them; PROMPT_VERSION v5 on run_start; recorded C3 and C4 runs replay and score as recorded. The spend guard prices Sonnet 5.5 on the five scenarios from the C4 actual cost per run plus 10 percent; the recorded-spend stop rises from USD 15 to USD 20 (the prepaid balance) and `record` re-checks it, and the batch's own spend against --max-usd, after every live run, stopping there and printing the runs not recorded. Gate, keys, rules.json, mandates.json and eval.action_hits unchanged.
+
 ## 2026-10-21
 
 - Changed (order 2026-10-21-task-9-fixes-tasks-10-11 item 9, hq ruling (a)): 16 manifest rows whose document link returned a block page (HTTP 403 Cloudflare on uaelegislation.gov.ae, ITU "Request Rejected") keep their landing URL and carry "landing page: document link not verified" in `notes`; no sha256, text or access date changed. `kb.url_problems` rejects a landing URL without that mark. `kb/export/InputDocs/Inputs.md` is committed (landing rows say so in the link cell); the README links it.
