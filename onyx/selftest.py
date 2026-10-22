@@ -9,10 +9,11 @@ import tempfile
 from pathlib import Path
 
 from onyx import audit, coordinator, data, runs, scripted
-from onyx.eval import _cell
+from onyx.eval import _cell, evaluate
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = (ROOT / "eval" / "results.json", ROOT / "eval" / "scripted" / "results.json")
+RUNS_OF = {RESULTS[0]: ROOT / "runs", RESULTS[1]: ROOT / "runs" / "scripted"}
 HEADLINE = (("Action recall", "action_recall"), ("Citation validity", "citation_validity"),
             ("Obligation proxy", "obligation_proxy"), ("Gap recall", "gap_recall"), ("Abstention", "abstention"),
             ("Hand-over latency", "handover_latency_steps"))
@@ -55,7 +56,13 @@ def selftest() -> int:
     print(f"Headline figures from {path.relative_to(ROOT).as_posix()}:")
     for line in headline(json.loads(path.read_text(encoding="utf-8"))):
         print(line)
-    return 0 if chain and same else 1
+    # the figures are recomputed from the committed logs, never trusted as written (addendum, order 2026-10-21)
+    with tempfile.TemporaryDirectory() as tmp:
+        evaluate(RUNS_OF[path], tmp)
+        match = (Path(tmp) / "results.json").read_bytes() == path.read_bytes()
+    print(f"{'figures match a fresh eval' if match else 'FIGURES DIFFER from a fresh eval'} of "
+          f"{RUNS_OF[path].relative_to(ROOT).as_posix()}/")
+    return 0 if chain and same and match else 1
 
 
 def register(subparsers) -> None:

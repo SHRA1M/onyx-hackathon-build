@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from onyx import audit, bakeoff, coordinator, data, eval, gaps, kb, runs, selftest
+from onyx import audit, bakeoff, coordinator, data, eval, gaps, kb, replay_page, runs, selftest
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -21,10 +21,13 @@ def build_parser() -> argparse.ArgumentParser:
     bakeoff.register(subparsers)
     selftest.register(subparsers)
     gaps.register(subparsers)
+    replay_page.register(subparsers)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Arabic quotes print on any console (Windows defaults to cp1252)
+    sys.stdout.reconfigure(encoding="utf-8")
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.command is None:

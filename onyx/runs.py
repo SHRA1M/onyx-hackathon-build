@@ -149,6 +149,16 @@ def _replay_cli(args) -> int:
     recorded, replayed = replay(args.log)
     for entity, action, verdict, clauses in replayed:
         print(f"  {entity:<18} {action:<16} {verdict or '':<22} {', '.join(clauses[:4])}{', ...' if len(clauses) > 4 else ''}")
+    # the hand-over in both languages (order Task 10): the quotes the gate gave, from the log the replay matched
+    for e in _events(args.log):
+        if e["action"] != "gate":
+            continue
+        quotes = [r for r in e["new_value"].get("reasons", []) if r.get("kind") == "quote"]
+        if quotes:
+            print(f"Hand-over at {e['entity_id']} ({e['verdict']}):")
+            for q in quotes:
+                print(f"  {q['label']} EN: \"{q['en']}\"")
+                print(f"  {q['label']} AR: \"{q['ar']}\"")
     same = recorded == replayed
     print(f"{args.log}: chain ok; replay {'matches' if same else 'DIFFERS FROM'} the recorded verdicts "
           f"({len(recorded)} decisions)")

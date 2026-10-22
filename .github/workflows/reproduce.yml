@@ -1,18 +1,35 @@
-# Placeholder (Task 1). Task 11 adds selftest, verify-log, replay, eval.
+# Order 2026-10-17 Task 11 and order 2026-10-21-task-9-fixes-tasks-10-11 item 8: every committed figure and page is
+# regenerated from the committed logs and data, and the job fails if any byte differs. No secret, no model call.
 name: reproduce
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  reproduce:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - run: uv venv --python 3.12
-      - run: uv pip install -e ".[dev]"
-      # Addendum item 15: fetch before the checks; a blocked host leaves the committed extract.
-      - run: uv run --no-sync python -m onyx kb fetch
+      - run: uv python install 3.12
+      # the README's two-minute check: uv sync, then pytest -q (selftest and replay are run by tests/test_cli.py)
+      - run: uv sync
+      # No `kb fetch`: it rewrites url_accessed and http_status in kb/manifest.csv, and the checks below run on the
+      # committed chunks and extracts. `kb verify` checks the manifest and any source on disk.
       - run: uv run --no-sync python -m onyx kb verify
       - run: uv run --no-sync python -m onyx check-data
-      - run: uv run --no-sync pytest
+      - run: uv run --no-sync pytest -q
+      - run: uv run --no-sync python -m onyx selftest
+      - name: verify-log on every committed run log
+        run: |
+          for log in $(git ls-files 'runs/*.jsonl' | grep -v '/gaps/'); do
+            uv run --no-sync python -m onyx verify-log "$log" > /dev/null || { echo "chain broken: $log"; exit 1; }
+          done
+          echo "$(git ls-files 'runs/*.jsonl' | grep -vc '/gaps/') logs: chain ok"
+      - name: replay one run per scenario
+        run: |
+          for s in S1 S2 S3 S4 S5; do uv run --no-sync python -m onyx replay "runs/$s/run1.jsonl"; done
+      - run: uv run --no-sync python -m onyx eval
+      - run: uv run --no-sync python -m onyx eval --runs runs/scripted --out eval/scripted
+      - run: uv run --no-sync python -m onyx gaps
+      - run: uv run --no-sync python -m onyx replay-page
+      - run: git diff --exit-code

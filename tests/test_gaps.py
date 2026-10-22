@@ -107,7 +107,7 @@ def test_readme_leads_with_the_register():
     table = gaps.table()
     assert table in readme, "README register table is stale: run python -m onyx gaps"
     headings = re.findall(r"^## (.+)$", readme, re.MULTILINE)
-    assert headings[:2] == ["Gap register", "Model"]
+    assert headings[:2] == ["Gap register", "Two-minute check"]  # order 2026-10-21-task-9-fixes-tasks-10-11 item 6
     assert table.count("\n| ") == len(ROWS) + 1  # the separator row plus one row per gap
 
 

@@ -716,6 +716,13 @@ dev = [
     { name = "pytest" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "jsonschema" },
+    { name = "pypdf" },
+    { name = "pytest" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "chromadb", specifier = ">=1.0" },
@@ -725,6 +732,13 @@ requires-dist = [
     { name = "rich", specifier = ">=13.7" },
 ]
 provides-extras = ["dev"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "jsonschema", specifier = ">=4.21" },
+    { name = "pypdf", specifier = ">=4.0" },
+    { name = "pytest", specifier = ">=8.0" },
+]
 
 [[package]]
 name = "opentelemetry-api"

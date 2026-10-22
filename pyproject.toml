@@ -17,6 +17,14 @@ dev = [
     "pypdf>=4.0",
 ]
 
+# `uv sync` (the README's two-minute check) installs this group; `uv pip install -e ".[dev]"` the extra above
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "jsonschema>=4.21",
+    "pypdf>=4.0",
+]
+
 [build-system]
 requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
