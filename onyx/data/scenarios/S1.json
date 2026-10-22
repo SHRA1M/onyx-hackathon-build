@@ -2,6 +2,7 @@
  "id": "S1",
  "title_en": "Roaming before a flight",
  "title_ar": "تجوال قبل رحلة طيران",
+ "grounded_in": {"clauses": [{"clause_id": "tdra-cpr-v2-en:17.4", "page": 51}, {"clause_id": "tdra-cpr-v2-en:17.4.1", "page": 51}], "line": "CPR 17.4 and 17.4.1 require the operator, where possible and practicable, to provide a facility that tells a roaming subscriber the applicable retail roaming prices for calls and SMS; the price question in step 2 is the one that facility answers.", "source": "docs/work-orders/2026-10-22-task-16-pages-grounding-readme.md item 2 and ruling 2"},
  "synthetic": true,
  "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, prices and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/.",
  "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S1) and hq cpr-full-read-2026-10-15.md section 4 (channel classification, renewal exception, PSCM, 'no' default)",

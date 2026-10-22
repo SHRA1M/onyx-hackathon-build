@@ -80,12 +80,12 @@ def test_selftest_checks_figures_against_a_fresh_eval():
 # --- item 6: the two-minute check ----------------------------------------------------------------------------
 
 def _quickstart():
-    block = README.split("## Two-minute check", 1)[1].split("```", 2)[1]
+    block = README.split("## Run it without a key", 1)[1].split("```", 2)[1]
     return [line.strip() for line in block.splitlines() if line.strip()]
 
 
 def test_quickstart_follows_the_register():
-    assert README.index("<!-- gap-register:end -->") < README.index("## Two-minute check") < README.index("## Model")
+    assert README.index("<!-- gap-register:end -->") < README.index("## Run it without a key") < README.index("## Model")
 
 
 def test_quickstart_holds_the_order_commands():
@@ -108,7 +108,7 @@ def test_every_quickstart_onyx_command_runs_offline_under_60s(line):
 
 def test_readme_first_screen_states_the_status_counts():
     rows = kb.load_manifest()
-    head = README.split("## Two-minute check", 1)[0]
+    head = README.split("## Run it without a key", 1)[0]
     for status in ("VERIFIED", "REFERENCED", "UNVERIFIED"):
         count = sum(r["status"] == status for r in rows)
         assert f"{count} {status}" in head, status

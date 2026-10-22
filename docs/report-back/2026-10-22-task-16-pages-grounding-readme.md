@@ -1,0 +1,12 @@
+# Report-back: Task 16, pages, grounding, README, 79 bis (2026-10-22, Opus 5.5, no model call, USD 0)
+
+1. Built: items 1 to 4 as ordered, with hq's rulings on the first stop (four chunk lines added, S1 reworded, PDF test with whitespace removed). 29 new tests in `tests/test_pages_grounding_readme.py`, failed first, then pass; full suite 319 passed; every CI step run locally with no diff beyond this order's files; viewer opened in a browser (S2 step 3 shows "p. 65", links open the PDF at the page).
+2. Departure, `page_of`: the order's rule ("more than one distinct page in the committed chunks") would also hide real pages of decision-16-2026-ar (p. 10, cited by S5's line), cabinet-57, cybercrimes and qos, which have one committed page each. Built to the stated intent instead: None only when every committed chunk of the document says page 1, which is itu-t-y3172 alone. hq may restore the literal rule.
+3. Departure, S1 `grounded_in`: lists 17.4 and 17.4.1 (both p. 51), not 17.4.1 alone. The line names both and ruling 1 added 17.4 to the chunks; a committed chunk must be cited (`test_committed_chunks_are_the_cited_clauses_only`), so 17.4 is cited here.
+4. Shape chosen: `grounded_in` is `{clauses: [{clause_id, page}], line, source}`, one shape for one or two clauses (S5).
+5. Wording the build changed: the three README bullets start with a capital and end with a full stop; the README links sit on "e&, Sustainability Report Appendices 2025", "TDRA, Sustainability Report 2023" and "Etisalat's Virtual Assistant". The 16.3.3 `says` line is mine: "The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material."
+6. README layout: the team line and the knowledge-base paragraph stay in the top block, between the first paragraph and `## Why`.
+7. `docs/sources/competitor-read-2026-10-22.md` is not committed: it names other entries, and item 3 says no competitor is named anywhere in the repo (a test now checks tracked files). It stays local. The other four copied sources are committed.
+8. Chunk lines: 16.3.3's "non -compliance" joined to "non-compliance", the same fix the committed lines carry; 17.4, 17.4.1 and 4.20.1 needed none. The stray "Page 58" footers were left as ordered.
+9. gaps.md: "(page N)" became "(p. N)" (item 1, "p." everywhere); gap-8's own text "(page 4)" is its words and stays.
+10. Open for hq: items 2 and 3 above; whether the competitor read should live in hq only.

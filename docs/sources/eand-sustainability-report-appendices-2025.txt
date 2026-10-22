@@ -1,0 +1,709 @@
+   Sustainability Report
+Appendices 2025
+
+Appendix 1: Performance data  1
+
+Appendix 2: Material topics   8
+
+Appendix 3: Disclosure index  10
+
+Appendix 4: Disclaimers       15
+1  Sustainability Report Appendices 2025
+
+Appendix 1: Performance data
+
+This year, we have adopted a strategic approach to sustainability reporting, designed to enhance transparency and accessibility for ESG raters and investors. All performance numbers are
+consolidated in a dedicated addendum, providing a comprehensive, single reference point for stakeholders seeking detailed ESG data.
+
+We have retained trend-based reporting for UAE performance, offering clear year-on-year consumption data across a three-year period. A key enhancement in 2025 is the inaugural publication of
+Group-level data, expanding the scope of our ESG disclosures beyond UAE ­ for emissions data which we have been reporting at a Group-level since 2022. For each metric, we specify the percentage
+of Group operations covered, acknowledging where data from certain entities may not yet be available.
+
+Moving into 2026, we are committed to expanding Group-level data coverage across all material topics as part of a two-year programme, in preparation for future reporting requirements.
+
+                                                                                     Climate action
+
+   Disclosure                                                         YoY data (Group data)                      Coverage Additional information
+
+   Scope 1 GHG emissions (tCO2e)                                      2023           2024          2025
+   Scope 2 GHG emissions (tCO2e) ­ market based
+   Scope 3 GHG emissions (tCO2e)                                      442,375        439,017       409,358       100%  1) This data set covers our global operations, including operating
+   Total GHG emissions (tCO2e)                                                                                   100%      companies and excluded acquisitions during 2025 (i.e. SBB
+   Scope 1 + Scope 2 GHG emissions (tCO2e)                            1,353,718      1,342,856     1,075,442     100%      Serbia and Telenor Pakistan).
+   Reduction of GHG emissions Scope 1 + 2 (tCO2e)                                                                100%
+                                                                      3,719,997      3,598,956     TBD           100%  2) Data restated due to updated emissions factors, updated
+   Total energy consumption within the organisation (MWh)                                                        100%      data collection methodologies and expansion of boundaries
+   Total renewable energy consumption (MWh)                           5,516,090      5,380,829     1,484,800               to all entities.
+   Total other zero-carbon energy consumption (MWh)
+   total non-zero-carbon energy consumption                           1,796,093      1,781,874     1,484,800
+
+   Total fuel consumption within the organisation from non-renewable  -31,220        14,219        297,074
+   sources (MWh)
+   Total electricity consumption (MWh)                                4,400,506      4,577,447     4,733,945     100%  3)Scope 3 data unavailable at time of publication. Total GHG
+   Renewable electricity consumption (MWh)                                235,221       510,404         951,119  100%      emissions is exclusive of Scope 3 emissions data.
+   Other zero-carbon electricity consumption (MWh)                               NA            NA                100%
+   Non-zero-carbon electricity consumption (MWh)                                                     362,084     100%  4) Other zero-carbon electricity accounts for nuclear sources
+                                                                       4,165,285     4,067,043     3,420,742               in Abu Dhabi.
+   Total energy consumed: percentage renewable (%)                                                               100%
+   Total energy consumed: percentage other zero-carbon (%)            1,396,875      1,364,152     1,284,804
+   Total energy consumed: percentage non-zero carbon (%)                                                         100%
+                                                                      3,003,631      3,213,295      3,449,141    100%
+                                                                         235,221       510,404         951,119   100%
+                                                                                NA            NA                 100%
+                                                                                                     362,084
+                                                                      2,768,410      2,702,891     2,135,938
+
+                                                                       5%             11%          20%           100%
+                                                                        NA             NA           8%           100%
+                                                                      95%            89%                         100%
+                                                                                                   72%
+2  Sustainability Report Appendices 2025
+
+Appendix 1: Performance data continued
+
+                                                                            Water usage
+
+Disclosure                                                                  YoY data (UAE data)               Group data Coverage Additional information
+Total water consumption (m3)
+                                                                2023        2024                 2025
+
+                                                                309,805.90  289,329.43           270,590.00   549,659.54    73%
+
+                                                                            Waste management & circularity
+
+Disclosure                                                                  YoY data (UAE data)               Group data    Coverage Additional information
+
+Total waste generated (tons)                                    2023        2024                 2025
+Hazardous waste generated (tons)
+Non-hazardous waste generated (tons)                            1,126.65    1,369.13             1,733.84     ­             ­    ­
+Waste landfilled
+Non-hazardous waste recycled                                    110.00      191.50               229.22       ­             ­    ­
+E-waste generated (tons)
+Number of facilities covered by ISO 14001 certification         1,016.65    1,158.73             1,490.68     ­             ­    ­
+(high-rise buildings)
+                                                                ­           ­                    32.00        ­             ­    ­
+Disclosure
+                                                                278.15      249.77               394.70       ­             ­    ­
+Proportion of women in our workforce (FTE, %)
+Proportion of women in management (FTE, %)                      34.00       18.90                24.60        ­             ­    ­
+Proportion of women in top management ­ SVP and above (FTE, %)
+Proportion of women in junior management (FTE, %)               5.00        10.00                10.00        ­             ­    ­
+Proportion of women in management positions in
+revenue-generating functions (FTE, %)                                       Diversity, equity & inclusion
+Proportion of women in our Board of Directors (%)
+Mean gender pay ratio (men to women FTE)                                    YoY data (UAE data)               Group data    Coverage Additional information
+Proportion of employees by age:<30/30-50/>50 years old (%)
+Proportion of Gen Z employees                                   2023        2024                 2025
+Proportion of youth employees
+Number of nationalities (FTE)                                   25.8%       26.2%                26.9%        37.8%         90%  ­
+Proportion of local UAE employees (FTE, %)                                                                                  90%  ­
+Proportion of local UAE employees in management (FTE, %)        15.50%      15.6%                16.2%        19.9%         90%  ­
+                                                                                                                            53%  ­
+                                                                4%          4.4%                 2.4%            6.1%       53%  ­
+
+                                                                NA          NA                   17.0%        22.0%         90%  ­
+                                                                                                                              ­  *Data is unavailable at time of publication.
+                                                                NA          NA                   24.2%           3.6%            *Data has been restated
+                                                                                                                            90%
+                                                                   9.10%       9.10%                   9.1%       10.7%       ­
+                                                                1 to 0.71   1 to 0.78                   NA*              -    ­
+                                                                 7/74/18    9/71/21*             10/67/23                     ­
+                                                                                                    10.3%     18/46/35        ­
+                                                                  5.60%       7.50%                  18.7%               -    ­
+                                                                   15.8%       16.6%                                     -
+                                                                                                          71             -
+                                                                        74          70              55.0%                -
+                                                                52.50%        54.3%                 44.1%                -
+                                                                44.90%      44.40%
+3  Sustainability Report Appendices 2025
+
+Appendix 1: Performance data continued
+
+                                                                            Talent attraction, retention & development
+
+Disclosure                                                                                YoY data (UAE data)                 Group data        Coverage Additional information
+
+Total workforce (FTE + outsourced employees)                                2023          2024                 2025
+Proportion of FTE versus outsourced employees (%)
+Total new hires (FTE, external hires)                                       7,210         6,570                9,760          54,967            71%  ­
+Age Group ­ Total new hires (FTE, external hires)
+                                                                            54.6%         54.5%                36.4%          26%               71%  ­
+18 to 30 years old
+31 to 50 years old                                                          182           170                  182            6,450.75          90%  ­
+51+ years old
+Gender ­ Total new hires (FTE, external hires)                              49            81                   114            4,435.88
+
+Female headcount                                                            127           87                   61             1,943.88
+Male Headcount
+Management Level ­ Total new hires (FTE, external hires)                    6             2                    7              71
+
+Senior Management                                                           82            59                   80             2,352.88
+Middle Management
+Junior Management                                                           100           111                  102            4,097.88
+Percentage of positions filled by internal candidates (%)
+Employee total turnover rate (FTE,%)                                                   5             0                     2       46           90%  ­
+Employee non-voluntary turnover rate (FTE,%)                                         83             52                   38      758
+Employee voluntary turnover rate (FTE,%)                                             94            118                  142     3272            ­    ­
+Number of employees who took maternity leave/Number who returned to               30%          31.2%               32.8%      29.8%
+work/Number who were still in employment 12 months after returning              9.40%        13.50%                  5.0%                       ­    ­
+(FTE)                                                                                7%       11.10%               2.70%              -
+Percentage of employees who took paternity leave, out of those entitled to      2.40%         2.40%                2.34%              -         ­    ­
+paternity leave (FTE, %)                                                    56/46/45      59/45/44             68/58/55               -
+Percentage of employees covered by performance appraisals                                                                             -         ­    ­
+(FTE, %)
+Total number of training hours (FTE and outsourced employees)                      63.2        61.0            83%                           -    ­  ­
+Number of hours of training per employee (FTE and outsourced)
+CEO pay ratio (annual total compensation for the organisation's highest-            100         100             100                   100%      66%  ­
+paid individual to the median annual total compensation
+for all employees)                                                           298,686      288,164               NA*           442,373.79        43%  *Data unavailable at the time of publication
+Sickness absence rate (% of sick days out of total days worked, FTE)                41.4      43.9              NA*                         ­     ­  *Data unavailable at the time of publication
+                                                                                                                NA*                          -    ­  *Data unavailable at the time of publication
+                                                                            1 to 33.83      1 to 32
+
+                                                                            1.6           1.7                  1.85%          -                 ­    ­
+4  Sustainability Report Appendices 2025
+
+Appendix 1: Performance data continued
+
+                                                                                Health, safety & environment
+
+Disclosure                                                                      YoY data (UAE data)             Group data  Coverage Additional information
+
+Total number of health and safety training hours provided to employees   2023   2024                 2025
+Number of recordable work-related injuries ­ employees
+Number of high-consequence work-related injuries (excluding fatalities)  9,789  13,089               16,788.88  ­           ­  ­
+­ employees
+Number of fatalities ­ employees                                         2      4                    4          ­           ­  ­
+Number of recordable work-related injuries ­ contractors
+Number of high-consequence work-related injuries (excluding fatalities)  0      0                    0          ­           ­  ­
+­ contractors
+Number of fatalities ­ contractors                                       0      0                    0          ­           ­  ­
+
+Disclosure                                                               5      6                    5          ­           ­  ­
+
+Overall contribution to community work (in millions)                     0      0                    1          ­           ­  ­
+Number of volunteering hours
+                                                                         0      0                    0          ­           ­  ­
+Number of volunteers amongst employees
+                                                                                Community
+
+                                                                                YoY data (UAE data)             Group data Coverage Additional information
+
+                                                                         2023   2024                 2025
+
+                                                                         29.16  27.644               25         ­           ­
+
+                                                                         2,716  100                  ­          ­           ­  Our volunteering approach is currently being re-evaluated.
+
+                                                                                                                               Data for this is currently unavailable
+
+                                                                         510    857                  850        ­           ­
+5  Sustainability Report Appendices 2025
+
+Appendix 1: Performance data continued
+
+                                                                        Ethical business practices
+
+Disclosure                                                              YoY data (UAE data)         Group data   Coverage Additional information
+
+Percentage of employees trained on our Code of Conduct (%)       2023   2024                 2025
+Percentage of employees that the organisation's anti-corruption
+policies and procedures have been communicated to                99.8%  99.8%                99%    86%          71%  ­
+Percentage of employees receiving anti-corruption training
+Percentage of employees who have attested to ethics and          ­      100%                 100%   94%          71%  ­
+compliance policies
+Number of potential conflict of interests approved               ­      98.2%                97%    74%          71%  ­
+Number of gifts approved                                                                     91%    83%
+Number of gifts rejected                                         ­      97%                                      65%  ­
+Number of general hospitality approved
+Number of concerns brought to the whistleblowing line            115    209                  191    301          71%  ­
+Number of cases investigated
+Number of substantiated cases                                    46     71                   32     112          71%  ­
+
+Disclosure                                                       ­      12                   11     20           71%  ­
+
+Number of data breaches                                          41     84                   25     199          71%  ­
+
+Disclosure                                                       81     71                   107    243          71%  ­
+
+Number of attempted cyber attacks (millions)                     80     77                   84     190          71%  ­
+Number of actual cyber attacks
+Percentage of employees trained on cybersecurity                 38     42                   43     90           65%  ­
+
+                                                                        Data privacy
+
+                                                                        YoY data (UAE data)         Group data Coverage Additional information
+
+                                                                 2023   2024                 2025
+
+                                                                 0      0                    NA*    ­            ­    *Data is unavailable at the time of publication
+
+                                                                        Cybersecurity
+
+                                                                        YoY data (UAE data)         Group data Coverage Additional information
+
+                                                                 2023   2024                 2025
+
+                                                                 105.9  206.629              207.4  1,699.88     84%  ­
+                                                                                                              ­    ­  *Data is unavailable at the time of publication
+                                                                 0      0                    NA*                      ­
+                                                                                                         50%     90%
+                                                                 95%    96%                  92%
+6  Sustainability Report Appendices 2025
+
+Appendix 1: Performance data continued
+
+                                                                                   Sustainable supply chain
+
+Disclosure                                                                         YoY data (UAE data)           Group data  Coverage Additional information
+
+Total procurement spend (millions)                                        2023     2024                 2025            ­
+Percentage of procurement spend on local suppliers (%)                                                                  ­
+Total spend on local suppliers                                            13,708   15,432               13,991          ­    ­  ­
+Proportion of new and existing suppliers acknowledging our Supplier                                                     ­
+Code of Conduct (%)                                                       81       83                   95%                  ­  ­
+Total new suppliers
+Total number of tier-1 suppliers (direct)                                 -        -                    13,274               ­  ­
+Total number of significant (strategic) suppliers
+Total number of significant (strategic) suppliers in tier-1               100      100                  100%                 ­  ­
+Percentage of procurement spend on significant (strategic) suppliers (%)
+Total spend on procurement on significant (strategic) suppliers           457      488                  217       ­          ­  ­
+(AED, millions)
+Total number of significant suppliers assessed                            -        -                    1,651     ­          ­  ­
+Number of suppliers assessed with substantial actual/ potential
+negative impacts                                                          -        -                    65        ­          ­  ­
+Number of suppliers assessed with substantial actual/ potential negative
+impacts with agreed corrective actions/ improvements                      -        -                    65        ­          ­  ­
+Number of suppliers assessed with substantial actual/ potential impacts
+that were terminated                                                      -        -                    62%       ­          ­  ­
+
+                                                                          -        -                    9,676     ­          ­  ­
+
+                                                                          -        -                    65        ­          ­  ­
+
+                                                                          -        -                    8         ­          ­  ­
+
+                                                                          -        -                    8         ­          ­  ­
+
+                                                                          -        -                    0         ­          ­  ­
+
+                                                                                   Responsible commercialisation
+
+Disclosure                                                                         YoY data (UAE data)           Group data  Coverage Additional information
+
+Number of customer complaints                                             2023     2024                 2025
+Percentage of customer complaints resolved (%)
+Percentage of first call resolution (%)                                   411,752  389,387              371,476   ­          ­  ­
+
+                                                                          94       91                   88        ­          ­  ­
+
+                                                                          73       78                   81        ­          ­  ­
+7  Sustainability Report Appendices 2025
+
+Appendix 1: Performance data continued
+
+                                                         Network availability
+
+Disclosure                                               YoY data               Additional information
+
+Total subscribers in millions (Group)           2023     2024      2025        *Data has been restated
+Total subscribers in millions (UAE)              169.5                         ­
+Number of wireless subscribers (UAE)                     186.5*    244.7       ­
+Number of wireline subscribers (UAE)              14.2                         ­
+Number of broadband subscribers (UAE)              12.6  15        16          ­
+Leading mobile network, download speeds (mbps)      0.3                        ­
+5G penetration in the UAE (% of population)              13.3      14.6        ­
+FTTH Penetration in the UAE (%)                     1.4                        ­
+                                                   313   0.33      0.32
+                                                >99%
+                                                  98%    1.4       1.4
+
+                                                         454       692
+
+                                                         99%       99.60%
+
+                                                         99.30%    99.50%
+8  Sustainability Report Appendices 2025
+
+Appendix 2: Material topics
+
+Material topic      Definition                                                       Material impact to e&                                                                                                   Key stakeholder
+
+Climate action      Refers to e&'s entire amount of greenhouse gas Operating in regions prone to extreme weather, e& recognizes the critical importance of climate mitigation and                            ­ Customers
+                                                                                                                                                                                                             ­ Employees
+                    (GHG) emissions resulting from our activities,                   adaptation to safeguard water, biodiversity, food security, and business continuity. Responding to increasing consumer  ­ Business partners
+                                                                                                                                                                                                             ­ Shareholders
+                    both directly and indirectly, expressed in carbon demand for sustainability, reducing our carbon footprint is essential. Implementing carbon reduction strategies                        ­ Community
+                                                                                                                                                                                                             ­ Local and
+                    dioxide equivalents. It includes emissions from a supports global sustainability objectives, enhances environmental and societal outcomes, and drives innovation
+                                                                                                                                                                                                               national authorities
+                    range of sources, such as energy use, purchased and cost efficiency. Failure to act risks environmental credibility, regulatory compliance, stakeholder trust, and the
+
+                    goods and services or capital goods.                             resilience of our operations.
+
+Waste management    Refers to e&'s waste-related impacts, and how                    Operational waste and e-waste present significant environmental challenges within our industry. Addressing these        ­ Customers
+and circularity     it manages them. This includes waste generated,                  issues and the end-of-life impact of our products is essential to meet rising customer demand for sustainability.       ­ Employees
+                    waste recycled as well as waste diverted                         Collaborative efforts across our value chain to manage e-waste will reduce environmental impact and enhance             ­ Business partners
+                    from disposal                                                    e&'s reputation and stakeholder trust.                                                                                  ­ Shareholders
+                                                                                                                                                                                                             ­ Community
+                                                                                                                                                                                                             ­ Local and
+
+                                                                                                                                                                                                               national authorities
+
+Water usage         Refers to e&'s water-related impacts, and how it                 The Telco sector is not typically water intensive, however e& operates in water-scarce regions, making water            ­ Customers
+                    manages them. This includes water withdrawn,                     management and conservation vital for our operations and local communities. Efficient water management reduces          ­ Employees
+                    consumed and discharged                                          waste and controls costs, ensuring sustainable resource use. Failure to address this could result in increased water    ­ Community
+                                                                                     waste and higher operational expenses in these critical regions.
+
+Diversity, equity   Refers to e&'s approach to fostering an inclusive                Providing a fair and inclusive workplace that respects differences is essential for fostering innovation, attracting talent, ­ Customers
+and inclusion       and collaborative work environment that
+                    recognizes, appreciates, and creates                             and reflecting our customer base at e&. Embracing diversity and equity enhances profitability and growth opportunities. ­ Employees
+                    opportunities to effectively utilize the talent,
+                    skills, and perspectives of every employee.                      Conversely, failing to address diversity challenges risks undermining our organisational culture, overall performance, ­ Business partners
+
+                                                                                     and ability to attract and retain skilled professionals.                                                                ­ Shareholders
+
+                                                                                                                                                                                                             ­ Community
+
+                                                                                                                                                                                                             ­ Local and
+
+                                                                                                                                                                                                             national authorities
+
+Talent attraction,  Refers to e&'s approach to employment or job Effective talent management is vital for e&, influencing operational efficiency, innovation, and customer satisfaction.                     ­ Employees
+retention and                                                                                                                                                                                                ­ Community
+development         creation, that is, an organization's approach to Ensuring fair remuneration, employee development, and well-being strengthens organisational resilience and                              ­ Local and
+
+                    hiring, recruitment, and related practices, and the compliance. Positive outcomes include enhanced innovation and satisfaction, while inadequate talent management                         national authorities
+
+                    working conditions it provides                                   may lead to skill gaps, talent shortages, and unhealthy turnover, impacting overall business performance and growth.
+
+Digital access      Refers to e&'s approach to creating accessible,                  Connectivity is fundamental to e&'s business, enabling access and inclusion that address broader societal challenges.   ­ Customers
+and inclusion       affordable connectivity and digital solutions in                 By providing inclusive digital access, e& empowers communities to access essential services such as health,             ­ Business partners
+                    the communities in which we operate.                             education, and finance. This approach not only supports societal progress but also strengthens e&'s business by         ­ Community
+                                                                                     fostering positive community impact and sustainable growth.
+
+Health and safety   Refers to e&'s approach to ensuring healthy and                  Employee and contractor health and safety is a top priority for e&, reflecting our commitment to a secure and ethical   ­ Customers
+                    safe work conditions which involves both                         workplace. Robust health and safety policies have a tangible, positive impact across our value chain, fostering trust,  ­ Employees
+                    prevention of physical and mental harm, and                      supporting sustainable operations, and enhancing our corporate reputation. This focus is integral to our corporate      ­ Business partners
+                    promotion of workers' health.                                    responsibility and long-term business success.                                                                          ­ Shareholders
+                                                                                                                                                                                                             ­ Community
+                                                                                                                                                                                                             ­ Local and
+
+                                                                                                                                                                                                               national authorities
+
+Community engagement Refers to e&'s positive and/or negative impacts                 As a leading telecommunications brand, e& is committed to uplifting and supporting the communities it serves.           ­ Customers
+                                       related to the local communities in which it
+                                       operates, and how it manages these impacts.   Corporate Social Responsibility (CSR) initiatives enhance employee engagement, strengthen ESG ratings, and foster ­ Employees
+
+                                                                                     support from regulatory bodies. These activities also build brand identity, trust, and reputation, reinforcing our licence to ­ Business partners
+
+                                                                                     operate and our role as a responsible corporate citizen.                                                                ­ Shareholders
+
+                                                                                                                                                                                                             ­ Community
+
+                                                                                                                                                                                                             ­ Local and
+
+                                                                                                                                                                                                             national authorities
+9  Sustainability Report Appendices 2025
+
+Appendix 2: Material topics
+
+Material topic            Definition                                         Material impact to e&                                                                                                   Key stakeholder
+
+Ethical business          Refers to e&'s values, principles, standards,      Ethical business practices are fundamental to e&'s reputation and customer trust, underpinning our success across       ­ Customers
+                          code of conduct and ethics                         all geographies and operations. A robust ethics and compliance programme safeguards our licence to operate              ­ Employees
+                                                                             and stakeholder confidence. Inconsistent adherence poses significant risks, including loss of trust and operational     ­ Business partners
+                                                                             legitimacy, highlighting the importance of structured ethical conduct throughout our value chain.                       ­ Shareholders
+                                                                                                                                                                                                     ­ Community
+                                                                                                                                                                                                     ­ Local and
+
+                                                                                                                                                                                                       national authorities
+
+Data privacy              Refers to e&'s approach to managing                Data privacy is essential for e&, given evolving regulations and the significance of digital information. Responsible   ­ Customers
+                          confidentiality and integrity of all personal      data management builds trust with customers and stakeholders, reinforcing our reputation. Positive impacts include      ­ Employees
+                          information we hold. This also includes lawful     enhanced stakeholder confidence, while breaches may result in reputational damage, financial loss, and legal            ­ Business partners
+                          handling of data, ensuring compliance with         consequences, underscoring the importance of robust privacy measures across our operations.                             ­ Shareholders
+                          privacy laws, regulations and industry standards                                                                                                                           ­ Community
+                                                                                                                                                                                                     ­ Local and
+
+                                                                                                                                                                                                       national authorities
+
+Cybersecurity             Refers to e&'s approach to managing controls       Cybersecurity is vital for e& amid rising cyber threats, directly influencing stakeholder trust and confidence.         ­ Customers
+                          aimed at safeguarding our digital assets,          Effective cybersecurity measures create a secure digital environment, protect critical business operations,             ­ Employees
+                          infrastructure and customer data from              and safeguard customer trust. Conversely, inadequate protection may lead to data breaches, financial loss, and          ­ Business partners
+                          cyber threats                                      reputational damage, highlighting the importance of robust cybersecurity across all systems and processes.              ­ Shareholders
+                                                                                                                                                                                                     ­ Community
+                                                                                                                                                                                                     ­ Local and
+
+                                                                                                                                                                                                       national authorities
+
+Responsible AI            Refers to e&'s approach to digital transformation  Responsible AI governance is essential for sustainable digital transformation at e&. Developing trustworthy, fair, and  ­ Customers
+                          and AI integration within operations, products
+                          and services                                       reliable AI solutions enhances customer trust, improves service quality, and drives innovation. Responsible AI practices ­ Employees
+
+                                                                             mitigate risks such as bias, privacy breaches, and regulatory noncompliance, ensuring positive societal impact and      ­ Business partners
+
+                                                                             reinforcing e&'s commitment to ethical technology adoption across its markets.                                          ­ Shareholders
+
+                                                                                                                                                                                                     ­ Community
+
+                                                                                                                                                                                                     ­ Local and
+
+                                                                                                                                                                                                     national authorities
+
+Sustainable supply chain  Refers to e&'s approach to managing suppliers,     Sustainable supply chain management is crucial for e&, reflecting our commitment to corporate responsibility beyond     ­ Customers
+                          screening suppliers for ESG performance            core operations. Ethical sourcing and environmentally conscious practices strengthen business resilience and support    ­ Employees
+                          and ensuring supplier commitment to                community development. Positive impacts include reduced carbon footprint and enhanced reputation, while unethical       ­ Business partners
+                          ethical conducts, social responsibility            supply chain practices may lead to reputational damage, underscoring the importance of responsible supply               ­ Community
+                          and environmental care                             chain governance.
+
+Responsible               Refers to e&'s approach to managing                Responsible commercialisation is vital for e&, shaping brand loyalty, customer retention, and competitiveness. Meeting ­ Customers
+commercialisation         customer experiences
+                                                                             customer expectations drives increased loyalty, positive word-of-mouth, and business growth. Conversely, neglecting ­ Employees
+
+                                                                             responsible practices may result in dissatisfaction, reduced loyalty, and reputational harm. Effective commercialisation ­ Business partners
+
+                                                                             enhances customer satisfaction, strengthens brand reputation, and supports sustainable growth in a competitive          ­ Shareholders
+
+                                                                             market environment.                                                                                                     ­ Community
+
+                                                                                                                                                                                                     ­ Local and
+
+                                                                                                                                                                                                     national authorities
+10  Sustainability Report Appendices 2025
+
+Appendix 3: Disclosure index
+
+GRI content index                                                     Emirates Telecommunications Group Company PJSC (e&) has reported the information cited in this GRI content index for the period
+Statement of use:                                                     January 1 2025, to December 31 2025 with reference to the GRI Standards.
+
+GRI 1 used:                                                           GRI 1: Foundation 2021
+
+                                                                                                                               Mapping with ADX                Mapping with WEF  Mapping with UNGC
+                                                                                                                                                                                 2025 COP questionnaire
+GRI Disclosure                                                        Location in e& Integrated Annual Report 2025             Voluntary ESG Disclosures MSC core metrics
+GRI 2: General Disclosures 2021                                                                                                                                                  R3
+                                                                      Pages 8 ­ 9                                              G10.1                           Governance Body   R2
+2-1Organisational details                                             Page 79                                                                                  Composition
+2-2Entities included in the organisation's sustainability reporting   This annual report covers FY2025 (1 Jan ­ 31 Dec 2025).  G11.1                                             G13
+2-3Reporting period, frequency and contact point                      Contact: sustainability@eand.com                         S3
+                                                                      Pages 2 ­ 8 in the e& Sustainability Report Appendices   S5.2                                              G3.1, G9
+2-4Restatements of information                                        2025                                                     G1.1; G1.2; G2.1; G2.2
+                                                                      Page 85 ­ external assurance of GHG emissions                                                              G1, G5
+2-5External assurance                                                 Page 19                                                                                                    G3, G3.1
+2-6Activities, value chain and other business relationships           Page 3, 99 ­ 102                                                                                           G1
+2-7Employees                                                          Page 99 ­ 102                                                                                              AC2
+2-8Workers who are not employees                                      Pages 81, 141
+2-9Governance structure and composition                                                                                                                                          G8
+                                                                      Page 147                                                 G1.2; G2.2
+2-10Nomination and selection of the highest governance body           Pages 143 ­ 144                                          G1.1                                              G1
+2-11Chair of the highest governance body                              Pages 143 ­ 144                                          G8.1; G8.2                                        S1, G2, G5, G5.1, HR/L2, HR/
+2-12Role of the highest governance body in overseeing the management                                                                                                             L2.1, E1, AC2
+of impacts                                                            Pages 141 ­ 142                                          G7.1; G8.4; E11.4               Remuneration
+2-13Delegation of responsibility for managing impacts                 Page 81                                                  G8.1; G10.1                     Remuneration
+2-14Role of the highest governance body in sustainability reporting   Page 142                                                                                 Wage level (%)
+2-15Conflicts of interest                                             Pages 116 ­ 119                                          S1.1; S1.2
+2-16Communication of critical concerns                                Pages 25 ­ 27 and 149 ­ 150                              S1.1; S1.2
+2-17Collective knowledge of the highest governance body               Page 157                                                 G6.1; G6.2; G6.3
+2-18Evaluation of the performance of the highest governance body      Page 158, 160                                            G4.1; G5.1; S8.1; S10.1; S11.1
+2-19Remuneration policies                                             Page 157 ­ 158
+2-20Process to determine remuneration                                 Page 3 in the e& Sustainability Report Appendices 2025
+2-21Annual total compensation ratio                                   Page 79
+2-22Statement on sustainable development strategy                     Pages 83 ­ 137 (multiple policies disclosed across
+2-23Policy commitments                                                material topics)
+11  Sustainability Report Appendices 2025
+
+Appendix 3: Disclosure index continued
+
+GRI Disclosure                                                       Location in e& Integrated Annual Report 2025             Mapping with ADX                 Mapping with WEF           Mapping with UNGC
+2-24Embedding policy commitments                                                                                              Voluntary ESG Disclosures        MSC core metrics           2025 COP questionnaire
+2-25Processes to remediate negative impacts                          Pages 83 ­ 137 (management approach disclosed
+2-26Mechanisms for seeking advice and raising concerns               across all material topics)                              G4.2; G5.1
+2-27Compliance with laws and regulations                             Pages 83 ­ 137 (management approach disclosed
+2-28Membership associations                                          across all material topics)                              G4.1; G4.2                       Protected ethics advice G6, G6.1
+2-29Approach to stakeholder engagement                               Pages 116 ­ 119                                          I3.1; I3.2                       and reporting mechanisms
+2-30Collective bargaining agreements
+GRI 3: Material Topics 2021                                          Pages 159, 161 ­ 164                                                                                                               HR/L2.2
+3-1Process to determine material topics                              e& are members of: ITU, WEF, GSMA, UNGC
+                                                                     Pages 2 ­ 7
+3-2List of material topics                                           Not disclosed ­ collective bargaining agreements are
+3-3Management of material topics                                     implemented inline with local laws
+
+GRI 201: Economic Performance 2016                                   Page 82                                                  G7.1; G7.2                       Material issues impacting  G5, G5.1, HR/L3, E2, E11
+201-1Direct economic value generated and distributed                                                                                                           stakeholders               S2, HR/L1, E10
+201-2Financial implications and other risks/opportunities due to     Page 82 and Pages 8 ­ 9 in the e& Sustainability Report
+climate change                                                       Appendices 2025                                                                           Integrating risk and
+201-3Defined benefit plan obligations and other retirement plans     Pages 83 ­ 137 (management approach disclosed                                             opportunity into
+GRI 202: Market Presence 2016                                        across all material topics)                                                               business process
+202-2Proportion of senior management hired from the local community
+GRI 203: Indirect Economic Impacts 2016                                                                                       E1.1; E1.2; E1.3; S7.1; S8.1;                               G5, G7, HR/L2, HR/L3, HR/
+203-1Infrastructure investments and services supported                                                                        S10.1; S10.2; G4.1; G5.1; G6.1;                             L4, HR/L4.1, E1, E1.1, E2, E3,
+203-2Significant indirect economic impacts                                                                                    G6.2; G6.3                                                  E3.1, E3.1.1, E3.1.2, E4, E16,
+GRI 204: Procurement Practices 2016                                                                                                                                                       AC1, AC1.1, AC1.2
+204-1Proportion of spending on local suppliers
+                                                                     Page 167                                                                                  Economic contribution,
+                                                                     Pages 83 ­ 84                                                                             Total tax paid
+                                                                     Page 101
+                                                                                                                              E9.1; E9.2; E9.3; E9.4; E10.1; Integrating risk and         E2, E3, E3.1, E4, E7
+
+                                                                                                                              E10.2                            opportunity into
+
+                                                                                                                                                               business process
+
+                                                                     Page 2 in the e& Sustainability Report Appendices 2025 S6.1
+
+                                                                     Pages 31 ­ 33
+                                                                     Pages 31 ­ 33
+
+                                                                     Page 131                                                 G3.1; G3.2
+12  Sustainability Report Appendices 2025
+
+Appendix 3: Disclosure index continued
+
+                                                                                                                                   Mapping with ADX         Mapping with WEF          Mapping with UNGC
+                                                                                                                                                                                      2025 COP questionnaire
+GRI Disclosure                                                             Location in e& Integrated Annual Report 2025            Voluntary ESG Disclosures MSC core metrics
+GRI 205: Anti-corruption 2016
+
+205-1Operations assessed for risks related to corruption                   Pages 117 ­ 118                                         G4.1                     Anti-corruption           G4, AC1, AC1.1, AC1.2, AC2,
+                                                                           Page 118                                                G4.2                                               AC3, AC4, AC5, AC6
+205-2Communication and training about anti-corruption policies and
+procedures                                                                 Page 5 in the e& Sustainability Report Appendices 2025 G4.1; G4.2
+
+205-3Confirmed incidents of corruption and actions taken
+
+GRI 302: Energy 2016
+
+302-1Energy consumption within the organisation                            Page 1 in the e& Sustainability Report Appendices 2025  E4.1; E4.2; E5.1; E6.1                             G12, E1, E1.1, E2, E3, E3.1, E4,
+302-4Reduction of energy consumption                                       Page 85                                                 E4.1; E4.2                                         E8, E9, E16
+302-5Reductions in energy requirements of products and services            Page 85
+GRI 303: Water and Effluents 2018
+
+303-1Interactions with water as a shared resource                          Pages 88 ­ 90                                           E2.1; E2.2               Water consumption and     E1, E1.1, E2, E3, E3.1, E3.1.1,
+303-5Water consumption                                                     Page 2 in the e& Sustainability Report Appendices 2025  E2.1; E2.2               withdrawal in water       E3.1.2, E4, E11, E16
+                                                                                                                                                            stressed areas
+GRI 305: Emissions 2016
+
+305-1Direct (Scope 1) GHG emissions                                        Page 1 in the e& Sustainability Report Appendices 2025 E7.1                      Greenhouse gas (GHG)      G12, E1, E1.1, E2, E3, E3.1, E4,
+                                                                                                                                                            emissions                 E5, E5.1, E6, E6.1, E14, E16
+305-2Energy indirect (Scope 2) GHG emissions
+305-3Other indirect (Scope 3) GHG emissions                                Page 1 in the e& Sustainability Report Appendices 2025  E7.2
+305-5Reduction of GHG emissions                                            Page 1 in the e& Sustainability Report Appendices 2025  E7.3
+GRI 306: Waste 2020                                                        Pages 84 ­ 86                                           E7.1; E7.2; E8.1; E12.1
+
+306-1Waste generation and significant waste-related impacts                Pages 91 ­ 94                                           E3.1; E3.2                                         E1, E1.1, E2, E3, E3.1, E4, E15,
+306-2Management of significant waste-related impacts                       Pages 91 ­ 94                                           E3.1; E3.2                                         E16
+306-3Waste generated                                                       Page 2 in the e& Sustainability Report Appendices 2025  E3.1
+306-4Waste diverted from disposal                                          Page 2 in the e& Sustainability Report Appendices 2025  E3.2
+GRI 308: Supplier Environmental Assessment 2016
+
+308-1New suppliers screened using environmental criteria                   Page 6 in the e& Sustainability Report Appendices 2025  G3.1; G3.2
+308-2Negative environmental impacts in the supply chain and actions taken  Pages 131 ­ 135                                         G3.2
+GRI 401: Employment 2016
+
+401-1New employee hires and employee turnover                              Page 3 in the e& Sustainability Report Appendices 2025 S3.1; S3.2; S3.3          Absolute number and rate
+401-3Parental leave                                                        Page 3 in the e& Sustainability Report Appendices 2025                           of employment
+13  Sustainability Report Appendices 2025
+
+Appendix 3: Disclosure index continued
+
+                                                                                                                                   Mapping with ADX  Mapping with WEF                      Mapping with UNGC
+                                                                                                                                                                                           2025 COP questionnaire
+GRI Disclosure                                                             Location in e& Integrated Annual Report 2025            Voluntary ESG Disclosures MSC core metrics
+GRI 403: Occupational Health and Safety 2018                                                                                                                                               HR/L7
+
+403-1Occupational health and safety management system                      Pages 107 ­ 111                                         S8.1              Health and safety (%)                 G9, G11
+403-2Hazard identification, risk assessment, and incident investigation    Pages 107 ­ 111                                         S8.1              Health and safety (%)                 HR/L6
+403-3Occupational health services                                          Page 108                                                S8.1                                                    HR/L1, HR/L2, HR/L3,
+403-4Worker participation, consultation, and communication on OHS          Page 4 in the e& Sustainability Report Appendices 2025  S8.1                                                    HR/L4, HR/L4.1, HR/L5
+403-5Worker training on occupational health and safety                     Page 4 in the e& Sustainability Report Appendices 2025  S8.1                                                    HR/L1, HR/L2, HR/L3,
+403-6Promotion of worker health                                            Pages 108 ­ 109                                         S8.1                                                    HR/L4, HR/L4.1, HR/L5
+403-7Prevention and mitigation of OHS impacts linked by                    Pages 108 ­ 109                                         S8.1; S10.1
+business relationships
+403-8Workers covered by an OHS management system                           Page 4 in the e& Sustainability Report Appendices 2025 S8.1
+403-9Work-related injuries                                                 Page 4 in the e& Sustainability Report Appendices 2025 S9.1
+GRI 404: Training and Education 2016
+
+404-1Average hours of training per year per employee                       Page 3 in the e& Sustainability Report Appendices 2025                    Training provided (#, $)
+                                                                           Page 100
+404-2Programs for upgrading employee skills and transition assistance      Page 3 in the e& Sustainability Report Appendices 2025
+
+404-3Percentage of employees receiving performance and career
+development reviews
+
+GRI 405: Diversity and Equal Opportunity 2016
+
+405-1Diversity of governance bodies and employees                          Pages 96 ­ 98                                           S4.1; S4.2; S4.3; G2.1; G2.2 Diversity and
+                                                                           TBC                                                                                              inclusion (%)
+405-2Ratio of basic salary and remuneration of women to men
+GRI 408: Child Labour 2016                                                                                                         S2.2              Pay equality (%)
+
+408-1Operations and suppliers at significant risk for incidents of child labour Page 133                                           S10.1; S10.2      Risk for incidents
+GRI 409: Forced or Compulsory Labour 2016                                                                                                            of child, forced or
+                                                                                                                                                     compulsory labour
+
+409-1Operations and suppliers at significant risk for incidents of forced  Pages 131 ­ 133                                         S10.1; S10.2      Risk for incidents
+or compulsory labour                                                                                                                                 of child, forced or
+                                                                                                                                                     compulsory labour
+GRI 413: Local Communities 2016
+
+413-1Operations with local community engagement, impact assessments,       Pages 6, 112 ­ 155                                      S12.1
+and development programs
+14    Sustainability Report Appendices 2025
+
+Appendix 3: Disclosure index continued
+
+                                                                                                                     Mapping with ADX          Mapping with WEF     Mapping with UNGC
+                                                                                                                                                                    2025 COP questionnaire
+GRI Disclosure                                                         Location in e& Integrated Annual Report 2025  Voluntary ESG Disclosures MSC core metrics
+GRI 414: Supplier Social Assessment 2016
+414-1New suppliers screened using social criteria                      Page 6 in the e& Sustainability Report Appendices 2025 G3.1; G3.2       Risk for incidents
+                                                                                                                                               of child, forced or
+414-2Negative social impacts in the supply chain and actions taken                                                                             compulsory labour
+GRI 416: Customer Health and Safety 2016
+416-1Assessment of the health and safety impacts of product and        Page 6 in the e& Sustainability Report Appendices 2025 G3.2
+service categories
+GRI 418: Customer Privacy 2016                                         Page 106                                      S8.1
+418-1Substantiated complaints concerning breaches of customer privacy
+and losses of customer data                                            Page 6 in the e& Sustainability Report Appendices 2025 G5.1; G5.2
+
+References to SASB content index ­ Version 2023 ­ 12
+
+Code          Metric                                                                                                                           Location in e& Integrated Annual Report 2024
+                                                                                                                                               Page 1 in the e& Sustainability Report Appendices 2025
+TC-TL-130a.1  (1) Total energy consumed
+TC-TL-220a.1  (2) percentage grid electricity and                                                                                              Pages 136 ­ 139
+              (3) percentage renewable                                                                                                         Page 5 in the e& Sustainability Report Appendices 2025
+                                                                                                                                               Pages 124 ­ 125
+              Description of policies and practices relating to targeted advertising and customer privacy                                      Pages 61 ­ 75
+                                                                                                                                               Page 7 in the e& Sustainability Report Appendices 2025
+TC-TL_230a.1  (1) Number of data breaches                                                                                                      Page 7 in the e& Sustainability Report Appendices 2025
+                                                                                                                                               Page 7 in the e& Sustainability Report Appendices 2025
+TC-TL_230a.1  Description of approach to identifying and addressing data security risks, including use of third-party cybersecurity standards  Page 7 in the e& Sustainability Report Appendices 2025
+TC-TL-550a.2  Discussion of systems to provide unimpeded service during service disruptions
+
+TC-TL-000.A   Number of wireless subscribers
+TC-TL-000.B   Number of wireline subscribers
+TC-TL-000.C   Number of broadband subscribers
+
+TC-TL-000.D   Network traffic
+15  Sustainability Report Appendices 2025
+
+Appendix 4: Disclaimers
+
+Sustainability Report 2025: Disclaimers on disclosures
+
+This report contains forward-looking statements regarding e&'s plans and strategy. These              In addition to factors set forth elsewhere in this report, those set out above are important factors,
+statements may be introduced by words such as "will", "intends", "plans", "aims", "continues",        although not exhaustive, that may cause actual results and developments to differ materially from
+"believes," and similar phrases. e& has made every effort to ensure the report is as accurate         those expressed or implied by these forward-looking statements.
+and truthful as possible. Such statements included, but are not limited to, plans regarding e&'s
+sustainability ambitions, environmental footprint, efforts to combat climate change, DEI and          The term `material' is used within this document to describe issues for voluntary sustainability
+Emiratisation goals, health and safety commitments, and ambitions related to operating responsibly.   reporting that we consider to be of high or medium importance in terms of stakeholder interest
+                                                                                                      and potential business impact. Material for the purposes of this document should not, therefore,
+By their nature, such plans and expectations are subject to risks outside of e&'s control, including  be read as equating to any use of the word in other e& reporting or filings.
+risks related to macroeconomic, political and regulatory developments in the countries in which
+e& operates. Actual results may differ materially from e&'s expectations, and the forward-looking     No part of this Sustainability Report constitutes, or shall be taken to constitute, an invitation or
+statements in this report do not represent a guarantee that such plans or expectations will be        inducement to invest in e& or any other entity and must not be relied upon in any way in connection
+realised. e& undertakes no responsibility to update such forward-looking statements other than        with any investment decisions.
+as may be required by applicable law and regulation.
+

@@ -2,6 +2,7 @@
  "id": "S5",
  "title_en": "A TDRA dispute and a loss report",
  "title_ar": "نزاع لدى الهيئة وبلاغ فقدان",
+ "grounded_in": {"clauses": [{"clause_id": "decision-16-2026-ar:4.18", "page": 10}, {"clause_id": "tdra-cpr-v2-en:26.11", "page": 66}], "line": "Decision 16/2026 4.17 and 4.18 make the operator verify the reporter's identity at once and block a lost device within two hours; CPR 26.11 lets TDRA order a service restored while a dispute is open.", "source": "docs/work-orders/2026-10-22-task-16-pages-grounding-readme.md item 2 and ruling 2"},
  "synthetic": true,
  "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, references, times and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/ (Decision 16/2026 from the hq checked file).",
  "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S5), Task 6 verification_gate; hq cpr-full-read-2026-10-15.md gap 5; telecom-law-and-licences-2026-10-17.md section 5 gap 5, section 6 item 16, section 7; kb/extracts/decision-16-2026-ar.txt",

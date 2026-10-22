@@ -2,6 +2,7 @@
  "id": "S2",
  "title_en": "A billing question becomes a complaint",
  "title_ar": "سؤال عن الفاتورة يتحول إلى شكوى",
+ "grounded_in": {"clauses": [{"clause_id": "tdra-cpr-v2-en:4.20.1", "page": 17}], "line": "CPR 4.20.1 requires a PIN or TDRA-approved 2FA for each and every content purchase, premium channels included; the AED 45 charge with no consent record is the charge that rule exists to stop.", "source": "docs/work-orders/2026-10-22-task-16-pages-grounding-readme.md item 2 and ruling 2"},
  "synthetic": true,
  "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, prices and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/.",
  "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S2), Task 6 complaint_gate; hq cpr-full-read-2026-10-15.md gap 2; telecom-law-and-licences-2026-10-17.md section 5 gap 2 and section 7",

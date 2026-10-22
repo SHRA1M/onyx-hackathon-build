@@ -2,6 +2,7 @@
  "id": "S3",
  "title_en": "A partner wants the data, and the model provider is abroad",
  "title_ar": "شريك يريد البيانات، ومزوّد النموذج خارج الدولة",
+ "grounded_in": {"clauses": [{"clause_id": "pdpl-45-2021-en:23(1)", "page": 25}], "line": "PDPL 23(1) lets personal data leave the State only in listed cases, one being a contract binding the foreign recipient to this law's controls; the model provider abroad is such a recipient.", "source": "docs/work-orders/2026-10-22-task-16-pages-grounding-readme.md item 2 and ruling 2"},
  "synthetic": true,
  "notice": "SYNTHETIC. Sahab Telecom, its subscribers, partners, numbers, prices and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/.",
  "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S3), Task 6 sharing_gate, model_provider_gate, marketing_gate; hq cpr-full-read-2026-10-15.md candidate 8 and section 4; telecom-law-and-licences-2026-10-17.md section 5 gap 8, section 6 item 10, section 7",

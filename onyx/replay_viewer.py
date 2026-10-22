@@ -63,6 +63,22 @@ def _quote(text: str, lang: str | None = None) -> str:
     return f'<q class="quote" data-lang="{lang}"{rtl}>{escape(text)}</q>'
 
 
+def _page(document_id: str, clause: str) -> str:
+    """ "p. N" for a committed chunk's page (kb.page_of), a link to the PDF at that page where the manifest's url is
+    the document itself; "" where there is no page (order 2026-10-22 Task 16 item 1)."""
+    page = kb.page_of(document_id, clause)
+    if not page:
+        return ""
+    url = kb.page_link(document_id, page)
+    return f'<a class="src" href="{escape(url)}">p. {page}</a>' if url else f"p. {page}"
+
+
+def _cite(clause_id: str) -> str:
+    document_id, _, clause = clause_id.partition(":")
+    page = _page(document_id, clause) if clause else ""
+    return f"<code>{escape(clause_id)}</code>" + (f" ({page})" if page else "")
+
+
 def _verdict(verdict: str) -> str:
     word, cls = WORDS[verdict]
     return f'<span class="verdict {cls}">{word}</span>'
@@ -103,11 +119,13 @@ class Viewer:
         url = self.urls.get(rule["document_id"], "")
         link = f' <a class="src" href="{escape(url)}">source</a>' if url.startswith("http") else ""
         ar = f"<br>{_quote(rule['quote_ar'], 'ar')}" if rule.get("quote_ar") else ""
-        return (f"<li><code>{escape(rule_id)}</code> {escape(rule['label'])}{link}<br>{_quote(rule['quote'])}"
+        page = _page(rule["document_id"], rule["chunk"])
+        page = f", {page}" if page else ""
+        return (f"<li><code>{escape(rule_id)}</code> {escape(rule['label'])}{page}{link}<br>{_quote(rule['quote'])}"
                 f"{ar}</li>")
 
     def proposal(self, p: dict[str, Any]) -> str:
-        cites = ", ".join(f"<code>{escape(c)}</code>" for c in p.get("clause_ids") or []) or "no clause"
+        cites = ", ".join(_cite(c) for c in p.get("clause_ids") or []) or "no clause"
         quote = f'<div class="pq">quoted: {_quote(p["quote"])}</div>' if p.get("quote") else ""
         return (f'<li class="proposal"><b>{escape(p["verb"])}</b> to {escape(str(p.get("target") or "no target"))}; '
                 f"cites {cites}{quote}</li>")

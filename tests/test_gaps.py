@@ -107,7 +107,8 @@ def test_readme_leads_with_the_register():
     table = gaps.table()
     assert table in readme, "README register table is stale: run python -m onyx gaps"
     headings = re.findall(r"^## (.+)$", readme, re.MULTILINE)
-    assert headings[:2] == ["Gap register", "Two-minute check"]  # order 2026-10-21-task-9-fixes-tasks-10-11 item 6
+    # order Task 16 item 3: Why and Three things lead, then the register (was order 2026-10-21-task-9 item 6)
+    assert headings[:4] == ["Why", "Three things to look at first", "Gap register", "Run it without a key"]
     assert table.count("\n| ") == len(ROWS) + 1  # the separator row plus one row per gap
 
 
@@ -203,14 +204,12 @@ def test_coppa_quotes_are_verbatim_in_the_fetched_file():
 
 def test_candidate_79bis_2_row():
     row = _row("candidate-79bis-2-fine-schedule")
-    assert row["gap"] == ("The Cabinet schedule of licensee violations and fines promised by Telecom Law 79 bis (2) is "
-                          "not published; a CPR breach by an automated channel falls under 79 bis (1) and licence "
-                          "16.3.2 (AED 50,000 to 200,000) with no schedule above it.")
+    # gap text: hq's rewrite, order 2026-10-22 Task 16 item 4 (tests/test_pages_grounding_readme.py)
     assert (row["kind"], row["addressee"], row["global_examples"]) == ("absence", ["Cabinet"], [])
     assert row["exposed_by"] == "mapping (P)"
     # 79 bis (1) and (2) are one chunk, 79 bis
-    assert [s["clause"] for s in row["searched"]] == ["telecom-law-3-2003-en:79 bis", "telecom-law-3-2003-en:79 bis",
-                                                      "licence-2-2026:16.3.2"]
+    assert [s["clause"] for s in row["searched"]][:3] == ["telecom-law-3-2003-en:79 bis", "telecom-law-3-2003-en:79 bis",
+                                                          "licence-2-2026:16.3.2"]
 
 
 def test_readme_register_has_eleven_rows_and_the_child_left_the_candidates():

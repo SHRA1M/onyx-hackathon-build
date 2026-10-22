@@ -16,7 +16,7 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 | gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | none; the recommendation is the example | S2-3 |
 | gap-9 | A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
-| candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines promised by Telecom Law 79 bis (2) is not published; a CPR breach by an automated channel falls under 79 bis (1) and licence 16.3.2 (AED 50,000 to 200,000) with no schedule above it. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
+| candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 
 ## gap-1: complaint hand-over
 
@@ -26,25 +26,25 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 
 **Clauses searched**
 
-- `tdra-cpr-v2-en:2.1.7` (page 5): The trigger: a communication becomes a Consumer Complaint the moment a Subscriber expresses dissatisfaction at any authorised place.
+- `tdra-cpr-v2-en:2.1.7` (p. 5): The trigger: a communication becomes a Consumer Complaint the moment a Subscriber expresses dissatisfaction at any authorised place.
   - EN: "any correspondence or communication registered by any reasonable means at any place authorised by the Licensee for such purposes, from a Subscriber expressing dissatisfaction or grievance"
   - AR (the whole chunk): """شكوى المستهلك تعني - أي مراسلات أو اتصالات مسجلة عن طريق أي وسيلة ممكنة في أي مكان معتمد من قبل المرخص له لهذه الأغراض، يقوم المشترك بتقديمها ويعبّر فيها عن عدم رضاه أو تظلمه بشأن تعامل المرخص له مع حسابه أو بشأن تقديم المرخص له لخدمة الاتصالات العامة لذلك المشترك، أو من مستهلك يعبّر عن عدم رضاه أو تظلمه بشأن موضوع يقع ضمن النطاق المباشر لأعمال المرخص له بحيث يكون للمستهلك بعض من المصلحة المشروعة في ذلك؛"
-- `tdra-cpr-v2-en:26.4.5` (page 65): The Licensee App is a complaint channel.
+- `tdra-cpr-v2-en:26.4.5` (p. 65): The Licensee App is a complaint channel.
   - EN: "any other licensee-developed channels such as by Licensee App., etc."
   - AR (the whole chunk): ".أي قنوات أخرى مطوّرة بواسطة المرخص له مثل التطبيقات المعتمدة لديه وغيرها"
-- `tdra-cpr-v2-en:26.7.1` (page 65): 26.6 applies whichever Mandatory Channel is used (26.4.1 to 26.4.4 only).
+- `tdra-cpr-v2-en:26.7.1` (p. 65): 26.6 applies whichever Mandatory Channel is used (26.4.1 to 26.4.4 only).
   - EN: "apply in all cases regardless of which Mandatory Channel is used"
   - AR (the whole chunk): "تسري في كل الحالات بغض النظر عن القناة الإلزامية المستخدمة؛ و"
-- `tdra-cpr-v2-en:26.7.2` (page 65): No non-human agents in complaint conversations; unqualified by channel. The Arabic reads 'excepted or excluded' (يستثنى أو يستبعد منها).
+- `tdra-cpr-v2-en:26.7.2` (p. 65): No non-human agents in complaint conversations; unqualified by channel. The Arabic reads 'excepted or excluded' (يستثنى أو يستبعد منها).
   - EN: "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."
   - AR (the whole chunk): "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم."
-- `tdra-cpr-v2-en:26.13.1` (page 66): A duty to help a Consumer formulate and lodge a complaint; no step for an automated channel.
+- `tdra-cpr-v2-en:26.13.1` (p. 66): A duty to help a Consumer formulate and lodge a complaint; no step for an automated channel.
   - EN: "reasonably assist any Consumer, so requesting such assistance, to formulate and to lodge a Consumer Complaint with the Licensee"
   - AR (the whole chunk): "مساعدة أي مستهلك بشكل معقول، حال طلبه هذه المساعدة، في صياغة وتقديم شكواه لدى المرخص له؛ و"
-- `licence-2-2026:9.1` (page 22): Trained personnel for complaints, at licence level, on every channel (Arabic: موظفين مدربين). No hand-over procedure or time.
+- `licence-2-2026:9.1` (p. 22): Trained personnel for complaints, at licence level, on every channel (Arabic: موظفين مدربين). No hand-over procedure or time.
   - EN: "The Licensee shall maintain adequate trained personnel to receive and respond promptly to complaints and disputes from Customers."
   - AR (the whole chunk): "توفير ما يلزم من موظفين مدربين"
-- `qos-v3-en:9.5` (page 17): Annex A, T1(2a): the only time measured is the wait after the IVR choice, under two minutes, indicative. A bot before that choice, and chat or app, are unmeasured.
+- `qos-v3-en:9.5` (p. 17): Annex A, T1(2a): the only time measured is the wait after the IVR choice, under two minutes, indicative. A bot before that choice, and chat or app, are unmeasured.
   - EN: "Average time (seconds) spent waiting from the time the Customer has selected the IVR choice to speak to an agent until the Customer is connected to an agent"
 
 **UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it; no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over.
@@ -66,24 +66,24 @@ Kind: method. Category: coordination problem. Addressee: TDRA, UAE Data Office. 
 
 **Clauses searched**
 
-- `tdra-cpr-v2-en:4.7.2` (page 14): Spoken consent is acceptable for a purchase if it can be stored.
+- `tdra-cpr-v2-en:4.7.2` (p. 14): Spoken consent is acceptable for a purchase if it can be stored.
   - EN: "all tangible forms of consent: written; spoken; and, electronic interaction are acceptable"
   - AR (the whole chunk): "تُقبل جميع أشكال الموافقات الخطية منها والشفهية؛ والتفاعل الإلكتروني طالما أمكن تخزينها من قبل المرخص له بموجب أحكام المادة الفرعية 3.9؛"
-- `tdra-cpr-v2-en:4.10` (page 15): Digital applications: multi-step, 2FA unless expressly specified otherwise.
+- `tdra-cpr-v2-en:4.10` (p. 15): Digital applications: multi-step, 2FA unless expressly specified otherwise.
   - EN: "unless objectively justified otherwise, or expressly specified otherwise, the process shall require the consumer to complete a 2FA procedure"
   - AR (the whole chunk): "في جميع التطبيقات الرقمية، يجب ألا تعتمد عملية أخذ موافقة المشترك على تلقي الخدمات و/أو الدفع مقابلها، على عملية "بنقرة واحدة". يجب أن تتبع هذه العملية منهجية متعددة الخطوات وما لم يتم التبرير موضوعياً بخلاف ذلك، أو تحديد خلاف ذلك صراحةً، يجب أن تتطلب العملية من المستهلك إتمام إجراء المصادقة الثنائية (ما يدعى أيضاً التحقق بخطوتين أو اختصاراً 2FA)؛"
-- `tdra-cpr-v2-en:4.11` (page 15): Where 2FA is mandated, the default is an OTP.
+- `tdra-cpr-v2-en:4.11` (p. 15): Where 2FA is mandated, the default is an OTP.
   - EN: "the default method of 2FA shall, in the absence of any approved alternative, be one-time password (OTP)."
   - AR (the whole chunk): "عندما تنص هذه الأنظمة على استخدام المصادقة الثنائية كوسيلة لتأكيد موافقة المشترك على تلقي خدمة ما و/أو الدفع مقابلها، فإن الطريقة الافتراضية لتلك المصادقة، في حالة عدم وجود أي بديل معتمد، يجب أن تكون كلمة المرور لمرة واحدة (OTP.)"
-- `tdra-cpr-v2-en:4.17` (page 16): Call-centre purchases: recorded verbal consent, no 2FA. A voice agent reads naturally as this.
+- `tdra-cpr-v2-en:4.17` (p. 16): Call-centre purchases: recorded verbal consent, no 2FA. A voice agent reads naturally as this.
   - EN: "where a Service is purchased via a telephone call to/from a Licensee"
   - AR (the whole chunk): ":تطبق الشروط التالية في الحالات التي يتم فيها شراء خدمة عبر مكالمة هاتفية إلى/من مركز اتصال المرخص له"
-- `tdra-cpr-v2-en:4.22` (page 18): Licensee App purchases: no express 2FA. A chat agent in the app reads as this or as 4.10.
+- `tdra-cpr-v2-en:4.22` (p. 18): Licensee App purchases: no express 2FA. A chat agent in the app reads as this or as 4.10.
   - EN: "where the purchase of a Licensee provided Service3 is made via a Licensee App"
   - AR (the whole chunk): "تطبق الشروط التالية في الحالات التي يتم فيها شراء خدمة3 :عبر تطبيق المرخص له"
-- `etransactions-46-2021-en:12(2)` (page 17): What an automated system sends is the operator's own act.
+- `etransactions-46-2021-en:12(2)` (p. 17): What an automated system sends is the operator's own act.
   - EN: "If it is sent by an electronic medium automated and programmed to operate automatically by or on behalf of the Originator."
-- `pdpl-45-2021-en:6(1)` (page 9): Data-processing consent in writing or electronically; spoken is not named.
+- `pdpl-45-2021-en:6(1)` (p. 9): Data-processing consent in writing or electronically; spoken is not named.
   - EN: "whether in writing or electronically"
 
 **UAE position.** No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes; a spoken consent through the agent covers the purchase (4.7.2) but not a new processing purpose under PDPL 6(1)(b). Mizan takes the strict reading (4.10 plus OTP, 4.11).
@@ -103,17 +103,17 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verifica
 
 **Clauses searched**
 
-- `tdra-cpr-v2-en:24.10` (page 60): Disclose a Subscriber's own information after an adequate verification process; adequate is not defined.
+- `tdra-cpr-v2-en:24.10` (p. 60): Disclose a Subscriber's own information after an adequate verification process; adequate is not defined.
   - EN: "the Licensee shall disclose it free of charge and without delay after an adequate verification process."
   - AR (the whole chunk): "في الحالات التي يطلب فيها المشترك من المرخص له الإفصاح عن معلوماته لذلك المشترك، يجب على المرخص لهم الإفصاح عن ذلك بدون مقابل ومن دون تأخير بعد إجراء عملية تحقق كافية."
-- `tdra-cpr-v2-en:20.11.1` (page 56): Verification by security questions or the Licensee's own procedures.
+- `tdra-cpr-v2-en:20.11.1` (p. 56): Verification by security questions or the Licensee's own procedures.
   - EN: "by asking the relevant security questions, or by following such other procedures used by the Licensee for identification purposes"
   - AR (the whole chunk): "يجب على المرخص له التحقق من هوية المشترك من خلال طرح الأسئلة التعريفية ذات الصلة، أو باتباع الإجراءات الأخرى التي يستخدمها المرخص له لأغراض تحديد الهوية؛"
-- `etransactions-46-2021-en:33(1)` (page 34): Three trust levels, low, medium and high, for electronic identification.
+- `etransactions-46-2021-en:33(1)` (p. 34): Three trust levels, low, medium and high, for electronic identification.
   - EN: "The levels of security and trust of the Electronic Identification System and the Digital Identity issued thereby are three: low, medium and high"
-- `etransactions-46-2021-en:33(4)` (page 35): TDRA sets authentication procedures; none mapped to CPR 24.10.
+- `etransactions-46-2021-en:33(4)` (p. 35): TDRA sets authentication procedures; none mapped to CPR 24.10.
   - EN: "Authentication Procedures to confirm the identity of any person to the Relying Party."
-- `decision-16-2026-ar:4.17` (page 10): On a loss report the licensee verifies the reporter's identity; the method is not stated (Arabic only).
+- `decision-16-2026-ar:4.17` (p. 10): On a loss report the licensee verifies the reporter's identity; the method is not stated (Arabic only).
   - AR (the whole chunk): "عند استلام بلاغ فقدان أو سرقة، يتعين على المرخص له التحقق فوراً من صحة البيانات المقدمة، بما في ذلك التحقق من هوية مقدم البلاغ."
 
 **UAE position.** A voice or chat agent that discloses account data after security questions is within the letter of the CPR; the national trust levels exist but no text says which level 24.10 needs on a remote channel.
@@ -133,17 +133,17 @@ Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Ex
 
 **Clauses searched**
 
-- `pdpl-45-2021-en:18(1)` (page 21): A right to object to automated decisions with legal or adverse effect; disconnection meets it.
+- `pdpl-45-2021-en:18(1)` (p. 21): A right to object to automated decisions with legal or adverse effect; disconnection meets it.
   - EN: "particularly those decisions which have legal impact on or adversely affect the Data Subject."
-- `pdpl-45-2021-en:18(2)` (page 21): No objection where the contract provides for the automated processing.
+- `pdpl-45-2021-en:18(2)` (p. 21): No objection where the contract provides for the automated processing.
   - EN: "If the automated processing is agreed upon under the contract made between the Data Subject and the Controller."
-- `pdpl-45-2021-en:18(4)` (page 22): Human review on request, not conditioned on 18(1); no procedure, deadline or regulator.
+- `pdpl-45-2021-en:18(4)` (p. 22): Human review on request, not conditioned on 18(1); no procedure, deadline or regulator.
   - EN: "The Controller shall include the human element in reviewing automated processing decisions at the request of the Data Subject."
-- `cabinet-66-2023-en:34(1)` (page 18): A prohibited term: the provider terminates unilaterally.
+- `cabinet-66-2023-en:34(1)` (p. 18): A prohibited term: the provider terminates unilaterally.
   - EN: "unilaterally terminate it without referring to the consumer"
-- `cabinet-66-2023-en:34(3)` (page 18): A prohibited term: the provider alone judges conformity.
+- `cabinet-66-2023-en:34(3)` (p. 18): A prohibited term: the provider alone judges conformity.
   - EN: "Authorising the provider to determine by himself and without referring to the consumer whether the goods or service subject of the contract is in conformity"
-- `cabinet-66-2023-en:34(5)` (page 18): A prohibited term: unilateral change of a subscription, except a notified upgrade.
+- `cabinet-66-2023-en:34(5)` (p. 18): A prohibited term: unilateral change of a subscription, except a notified upgrade.
   - EN: "the right to unilaterally change the characteristics of the goods or the terms of the consumer use of the service in the case of services subscription contracts"
 
 **UAE position.** The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations were never issued.
@@ -162,28 +162,28 @@ Kind: method. Category: legislative gap. Addressee: UAE Data Office. Exposed by:
 
 **Clauses searched**
 
-- `pdpl-45-2021-en:7(5)` (page 11): The Controller appoints only a Processor with sufficient guarantees.
+- `pdpl-45-2021-en:7(5)` (p. 11): The Controller appoints only a Processor with sufficient guarantees.
   - EN: "Appoint the Processor which has sufficient guarantees"
-- `pdpl-45-2021-en:8(1)` (page 11): The Processor acts on the Controller's instructions and contract.
+- `pdpl-45-2021-en:8(1)` (p. 11): The Processor acts on the Controller's instructions and contract.
   - EN: "Carry out the processing in accordance with the instructions of the Controller"
-- `pdpl-45-2021-en:8(11)` (page 13): Processor standards wait on the Executive Regulations.
+- `pdpl-45-2021-en:8(11)` (p. 13): Processor standards wait on the Executive Regulations.
   - EN: "The Executive Regulations of this Decree by Law shall specify the procedures, controls, conditions, and technical standards related to such obligations."
-- `pdpl-45-2021-en:13(1)` (page 17): Points (d) and (g): recipients inside and outside the State; cross-border protection measures.
+- `pdpl-45-2021-en:13(1)` (p. 17): Points (d) and (g): recipients inside and outside the State; cross-border protection measures.
   - EN: "The targeted sectors or establishments with whom its personal data will be shared from inside and outside the State."
-- `pdpl-45-2021-en:13(2)` (page 18): Notice of (b), (d) and (g) before processing starts.
+- `pdpl-45-2021-en:13(2)` (p. 18): Notice of (b), (d) and (g) before processing starts.
   - EN: "before starting the processing, provide the Data Subject with the information stipulated in paragraphs (b), (d) and (g) of Paragraph (1) of this Article."
-- `pdpl-45-2021-en:22` (page 25): Transfer to countries approved by the Bureau; no list issued.
+- `pdpl-45-2021-en:22` (p. 25): Transfer to countries approved by the Bureau; no list issued.
   - EN: "Personal Data may be transferred to outside of the State in the following cases approved by the Bureau:"
-- `pdpl-45-2021-en:23(1)` (page 25): Point (a): transfer under a contract binding the recipient to the Decree's measures.
+- `pdpl-45-2021-en:23(1)` (p. 25): Point (a): transfer under a contract binding the recipient to the Decree's measures.
   - EN: "may transfer data under a contract or agreement obligating the companies in such countries to adopt measures, controls and requirements set out in this Decree by Law"
-- `pdpl-45-2021-en:23(2)` (page 26): The transfer controls wait on the Executive Regulations.
+- `pdpl-45-2021-en:23(2)` (p. 26): The transfer controls wait on the Executive Regulations.
   - EN: "The Executive Regulations of this Decree by Law set forth the controls and stipulations referred to in Paragraphs (1) of this Article"
-- `licence-2-2026:3.4.1` (page 11): Subcontracting needs TDRA's prior written approval; the Licensee stays fully liable.
+- `licence-2-2026:3.4.1` (p. 11): Subcontracting needs TDRA's prior written approval; the Licensee stays fully liable.
   - EN: "with the prior written approval of the TDRA, provided that the Licensee shall continue to be fully liable"
-- `tdra-cpr-v2-en:24.9` (page 60): Third parties directly involved in supply, under a contract; a model API is not one by name.
+- `tdra-cpr-v2-en:24.9` (p. 60): Third parties directly involved in supply, under a contract; a model API is not one by name.
   - EN: "who are directly involved in the supply of the telecommunications services ordered by Subscribers"
   - AR (the whole chunk): "في الحالات التي تستلزم بالضرورة تقديم معلومات المشترك إلى جهات تابعة أو طرف ثالث معني مباشرة بتزويد خدمات الاتصالات التي يطلبها المشترك، يجب على الأطراف الثالثة اتخاذ جميع الإجراءات المناسبة والملائمة لحماية سرية وأمن معلومات المشترك واستخدامها فقط إذا كانت مطلوبة لأغراض تقديم خدمات الاتصالات. ويجب على المرخص له التأكد من أن يتضمن العقد بينه وبين أي طرف ثالث تحميل ذلك الطرف الثالث المسؤولية عن خصوصية وحماية معلومات المشتركين."
-- `tdra-cpr-v2-en:24.6` (page 60): Prior consent before sharing with third parties not directly involved.
+- `tdra-cpr-v2-en:24.6` (p. 60): Prior consent before sharing with third parties not directly involved.
   - EN: "before sharing any Subscriber Information with its affiliates and/or other third parties not directly involved"
   - AR (the whole chunk): "يجب على المرخص لهم الحصول على موافقة مسبقة من المشترك35 قبل تبادلأي معلومات للمشترك مع فروعهم و/أو الأطراف الأخرى غير المعنية مباشرة بتزويد خدمات الاتصالات التي يطلبها المشترك. 35 يجوز تقديم هذه الموافقة تعاقدياً خلال الفترة الزمنية التي يتم فيها صياغة العقد، شريطة وجود آلية دائماً يستطيع المشترك من خلالها أن يسحب تلك الموافقة واختيارها في مرحلة لاحقة إن رغب بذلك. صفحة47 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
 
@@ -204,16 +204,16 @@ Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
 
 **Clauses searched**
 
-- `etransactions-46-2021-en:11(2)` (page 17): An automated contract binds only if the person knows, or should know, a system makes it: disclosure before a sale.
+- `etransactions-46-2021-en:11(2)` (p. 17): An automated contract binds only if the person knows, or should know, a system makes it: disclosure before a sale.
   - EN: "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."
-- `tdra-cpr-v2-en:3.3` (page 10): Transparency in all dealings; AI is not named.
+- `tdra-cpr-v2-en:3.3` (p. 10): Transparency in all dealings; AI is not named.
   - EN: "Licensees shall act with transparency and fairness in all dealings with Consumers"
   - AR (the whole chunk): "يجب على المرخص لهم التصرف بشفافية في جميع التعاملات مع المستهلكين بخصوص الخدمات المعروضة و/أو المقدمة من المرخص لهم إلى المستهلكين ويجب أن تكون جميع المعلومات المقدمة إلى المستهلكين، وقت تقديمها، مستوفاة وتتسم بالشفافية والدقة والصحة."
-- `pdpl-45-2021-en:13(1)` (page 17): Point (c): automated decisions disclosed only on request.
+- `pdpl-45-2021-en:13(1)` (p. 17): Point (c): automated decisions disclosed only on request.
   - EN: "Decisions made based on automated processing, including profiling."
-- `cabinet-56-2024-en:5(6)` (page 5): Automated systems may market; no duty to disclose the machine.
+- `cabinet-56-2024-en:5(6)` (p. 5): Automated systems may market; no duty to disclose the machine.
   - EN: "Automated communication systems may be used for marketing"
-- `spam-calls-v4-en:3.3` (page 7): Synthesised voices contemplated; no duty to disclose the machine.
+- `spam-calls-v4-en:3.3` (p. 7): Synthesised voices contemplated; no duty to disclose the machine.
   - EN: "the audible message contains a natural or a synthesised voice"
 
 **UAE position.** Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only UAE text that says it.
@@ -234,25 +234,25 @@ Kind: absence. Category: standards gap. Addressee: TDRA. Exposed by: all.
 
 **Clauses searched**
 
-- `tdra-cpr-v2-en:25.14.1` (page 64): Directory enquiries by an AIA: charges waived if it fails. A billing rule, not a conduct standard.
+- `tdra-cpr-v2-en:25.14.1` (p. 64): Directory enquiries by an AIA: charges waived if it fails. A billing rule, not a conduct standard.
   - EN: "enquiry is processed by an artificial intelligence assistance (AIA)"
   - AR (the whole chunk): "معالجة استفسار المستهلك بواسطة مساعد ذكاء اصطناعي ((AIA؛ و"
-- `tdra-cpr-v2-en:26.7.2` (page 65): Non-human agents excluded from complaint conversations. A bar, not a conduct standard.
+- `tdra-cpr-v2-en:26.7.2` (p. 65): Non-human agents excluded from complaint conversations. A bar, not a conduct standard.
   - EN: "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."
   - AR (the whole chunk): "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم."
-- `spam-calls-v4-en:3.3` (page 7): Point (iii): a synthesised voice can make a Spam Call. A definition.
+- `spam-calls-v4-en:3.3` (p. 7): Point (iii): a synthesised voice can make a Spam Call. A definition.
   - EN: "the audible message contains a natural or a synthesised voice"
-- `cabinet-56-2024-en:5(6)` (page 5): Automated systems may market. A permission.
+- `cabinet-56-2024-en:5(6)` (p. 5): Automated systems may market. A permission.
   - EN: "Automated communication systems may be used for marketing"
-- `child-digital-safety-26-2025-en:10(1)` (page 10): Point (g): platforms may use AI to detect harmful content. A tool, not a standard for AI conduct.
+- `child-digital-safety-26-2025-en:10(1)` (p. 10): Point (g): platforms may use AI to detect harmful content. A tool, not a standard for AI conduct.
   - EN: "including artificial intelligence systems and machine learning algorithms, for proactive detection, removal, or reporting thereof"
-- `pdpl-45-2021-en:18(4)` (page 22): The controller adds a human to the review of an automated processing decision when the data subject asks. A rule for the decision, not for the agent's conduct.
+- `pdpl-45-2021-en:18(4)` (p. 22): The controller adds a human to the review of an automated processing decision when the data subject asks. A rule for the decision, not for the agent's conduct.
   - EN: "The Controller shall include the human element in reviewing automated processing decisions at the request of the Data Subject."
-- `etransactions-46-2021-en:11(2)` (page 17): An automated system can make a contract if the other person knows, or should know, it is automated. A rule for the contract, not for the agent's conduct.
+- `etransactions-46-2021-en:11(2)` (p. 17): An automated system can make a contract if the other person knows, or should know, it is automated. A rule for the contract, not for the agent's conduct.
   - EN: "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."
-- `etransactions-46-2021-en:12(2)` (page 17): A document sent by an automated medium on the originator's behalf is the originator's. Attribution of the outcome, not a conduct standard.
+- `etransactions-46-2021-en:12(2)` (p. 17): A document sent by an automated medium on the originator's behalf is the originator's. Attribution of the outcome, not a conduct standard.
   - EN: "If it is sent by an electronic medium automated and programmed to operate automatically by or on behalf of the Originator."
-- `cabinet-57-2024-en:7` (page 5): Table No. (1), row 16: a fine for using automatic calling or marketing in breach of Cabinet 56/2024 (Clause (6)). A penalty, not a conduct standard.
+- `cabinet-57-2024-en:7` (p. 5): Table No. (1), row 16: a fine for using automatic calling or marketing in breach of Cabinet 56/2024 (Clause (6)). A penalty, not a conduct standard.
   - EN: "16 Using automatic calling or marketing"
 
 **UAE position.** The binding texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct.
@@ -272,9 +272,9 @@ Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S2-3.
 
 **Clauses searched**
 
-- `itu-t-y3172:8.1` (page 13 to 14): Clause 8.1 (pages 13 and 14) defines the nodes SRC, C, PP, M, P, D and SINK. P applies policies to the model's output; D distributes it to SINK nodes, which act on it. No node or outcome sends an output to a human.
+- `itu-t-y3172:8.1` (p. 13 to 14): Clause 8.1 (pages 13 and 14) defines the nodes SRC, C, PP, M, P, D and SINK. P applies policies to the model's output; D distributes it to SINK nodes, which act on it. No node or outcome sends an output to a human.
   - EN: "P (policy): This node enables the application of policies to the output of the model node."
-- `itu-t-y3172:7.1` (page 4): The only mention of a human in the Recommendation's text (page 4): a SON example acting 'without human intervention'. The back-page list of ITU-T series names 'human factors' as a series title only.
+- `itu-t-y3172:7.1` (p. 4): The only mention of a human in the Recommendation's text (page 4): a SON example acting 'without human intervention'. The back-page list of ITU-T series names 'human factors' as a series title only.
   - EN: "without human intervention"
 
 **UAE position.** CPR 26.7.2 and licence 9.1 require a human in a complaint conversation; Mizan's P node gate returns a hand-over that Y.3172 has no outcome for, so it is mapped outside the standard's node set.
@@ -298,21 +298,21 @@ Kind: method. Category: legislative gap. Addressee: TDRA, Cabinet. Exposed by: m
 
 **Clauses searched**
 
-- `child-digital-safety-26-2025-en:7(1)` (page 8): No under-13 data without the caregiver's consent, explicit, documented and verifiable; no method of verifying it is named.
+- `child-digital-safety-26-2025-en:7(1)` (p. 8): No under-13 data without the caregiver's consent, explicit, documented and verifiable; no method of verifying it is named.
   - EN: "Obtaining parental consent from the child caregiver, provided that such consent is explicit, documented, and verifiable."
-- `child-digital-safety-26-2025-en:9(2)` (page 10): Platforms and Internet Service Providers must keep children from prohibited games, age verification included; no mechanism is named.
+- `child-digital-safety-26-2025-en:9(2)` (p. 10): Platforms and Internet Service Providers must keep children from prohibited games, age verification included; no mechanism is named.
   - EN: "including age-verification mechanisms, Parental Control Tools, and blocking Harmful Content."
-- `child-digital-safety-26-2025-en:10(1)` (page 10): Point (g): platforms may use AI systems to detect, remove or report harmful content. A tool, not an age signal; point (b)'s age verification is asked of platforms, by their Art 6 class.
+- `child-digital-safety-26-2025-en:10(1)` (p. 10): Point (g): platforms may use AI systems to detect, remove or report harmful content. A tool, not an age signal; point (b)'s age verification is asked of platforms, by their Art 6 class.
   - EN: "including artificial intelligence systems and machine learning algorithms, for proactive detection, removal, or reporting thereof"
-- `child-digital-safety-26-2025-en:11(1)` (page 12): Point (b): the TDRA instructions to Internet Service Providers include the caregiver signing the service terms where the beneficiary is a child; the instructions are unpublished.
+- `child-digital-safety-26-2025-en:11(1)` (p. 12): Point (b): the TDRA instructions to Internet Service Providers include the caregiver signing the service terms where the beneficiary is a child; the instructions are unpublished.
   - EN: "including requiring the Child Caregiver to sign service terms"
   - AR (`docs/sources/child-digital-safety-law-26-2025-ar.txt`): "إلزام القائم على رعاية الطفل بالتوقيع على شروط الخدمة"
-- `child-digital-safety-26-2025-en:11(1)` (page 12): Paragraph 2 (11(2), held in the 11(1) chunk): TDRA reviews the providers' policies and supervises their compliance.
+- `child-digital-safety-26-2025-en:11(1)` (p. 12): Paragraph 2 (11(2), held in the 11(1) chunk): TDRA reviews the providers' policies and supervises their compliance.
   - EN: "The Authority shall review the policies of Internet Service Providers and supervise and monitor their compliance"
-- `tdra-cpr-v2-en:4.3` (page 14): No Service the Subscriber has not expressly ordered; no age condition on who orders.
+- `tdra-cpr-v2-en:4.3` (p. 14): No Service the Subscriber has not expressly ordered; no age condition on who orders.
   - EN: "Licensees shall not register, charge or otherwise avail a Service to a Subscriber that the Subscriber has not expressly ordered or opted to pay for."
   - AR (the whole chunk): "مع مراعاة أحكام المادة الفرعية 4.4 ، يجب ألا يقوم المرخص لهم بتسجيل أو استيفاء رسوم أو جعل المشترك مستفيداً من خدمة لم يطلبها المشترك أو يختر الدفع لقائها صراحةً."
-- `tdra-cpr-v2-en:4.7` (page 14): The consent provisions for receiving or paying for a Service follow; none sets an age condition on a sale.
+- `tdra-cpr-v2-en:4.7` (p. 14): The consent provisions for receiving or paying for a Service follow; none sets an age condition on a sale.
   - EN: "with reference to a Subscriber"
   - AR (the whole chunk): ":في سياق هذه الأنظمة وبالرجوع إلى موافقة المشترك على تلقي الخدمة و/أو الدفع مقابلها، يتم تطبيق الأحكام التالية"
 
@@ -333,7 +333,7 @@ Kind: scope. Category: legislative gap. Addressee: TDRA. Exposed by: S1-6.
 
 **Clauses searched**
 
-- `tdra-cpr-v2-en:4.4` (page 14): The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.
+- `tdra-cpr-v2-en:4.4` (p. 14): The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.
   - EN: "where an existing Service, that is to say a service that a Subscriber has expressly ordered, is extended or renewed on terms which are:"
   - AR (the whole chunk): "لا تنطبق أحكام المادة الفرعية4.3 على الحالات التي يتم فيها تمديد أو تجديد خدمة حالية، أي الخدمة التي طلبها المشترك خصيصاً، وتم تمديدها أو تجدديها حسب الشروط:"
 
@@ -345,20 +345,24 @@ Kind: scope. Category: legislative gap. Addressee: TDRA. Exposed by: S1-6.
 
 ## candidate-79bis-2-fine-schedule: the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished
 
-The Cabinet schedule of licensee violations and fines promised by Telecom Law 79 bis (2) is not published; a CPR breach by an automated channel falls under 79 bis (1) and licence 16.3.2 (AED 50,000 to 200,000) with no schedule above it.
+The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure.
 
 Kind: absence. Category: legislative gap. Addressee: Cabinet. Exposed by: mapping (P).
 
 **Clauses searched**
 
-- `telecom-law-3-2003-en:79 bis` (page 29): Paragraph (1): a breach of the Law or anything issued under it is fined AED 50,000 to 200,000.
+- `telecom-law-3-2003-en:79 bis` (p. 29): Paragraph (1): a breach of the Law or anything issued under it is fined AED 50,000 to 200,000.
   - EN: "shall be punished with a fine that is not less than AED (50,000) Fifty Thousand Dirhams and does not exceed AED (200,000) Two Hundred Thousand Dirhams"
-- `telecom-law-3-2003-en:79 bis` (page 29): Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.
+  - AR (`docs/sources/telecom-law-and-licences-2026-10-17.md`): "يعاقب بالغرامة التي لا تقل عن (50.000) خمسون ألف درهم ولا تجاوز (200.000) مائتي ألف درهم كل من خالف أي حكم آخر من أحكام القانون أو لائحته التنفيذية أو الأنظمة أو القرارات أو التعليمات أو القواعد الصادرة بموجبهما."
+- `telecom-law-3-2003-en:79 bis` (p. 29): Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.
   - EN: "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees"
-- `licence-2-2026:16.3.2` (page 45): A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.
+  - AR (`docs/sources/telecom-law-and-licences-2026-10-17.md`): "لمجلس الإدارة توقيع غرامات إدارية بحق المرخص لهم في حال مخالفتهم أحكام القانون أو لائحته التنفيذية أو القرارات أو الأنظمة أو السياسات أو التعليمات الصادرة عن مجلس الإدارة أو الهيئة."
+- `licence-2-2026:16.3.2` (p. 45): A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.
   - EN: "The penalty shall be not less than Dirhams 50,000 and not more than Dirhams 200,000"
+- `licence-2-2026:16.3.3` (p. 45): The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material.
+  - EN: "The applicable penalty may be doubled: a) for cases of repeated non-compliance; b) for cases of non-compliance by an ordered date; or c) if the TDRA determines that the Licensee’s failure to comply with the aforementioned Article 16.3.2 is of a material nature."
 
-**UAE position.** Candidate from the mapping (P node): the fine a CPR breach by an automated channel carries is the 79 bis (1) and licence 16.3.2 band; the Cabinet schedule 79 bis (2) promises is not published.
+**UAE position.** Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Whether the Board may fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq 2026-10-22).
 
 **Global example.** none (order Task 15: no global example)
 
@@ -372,25 +376,25 @@ Flagged as candidates; no global example required.
 
 Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only chat transcript may not satisfy it (inferred). Consumer Law 4(5), named in the hq note, is about data privacy, not language.
 
-- `consumer-law-15-2020-en:8(4)` (page 6): The invoice in Arabic.
+- `consumer-law-15-2020-en:8(4)` (p. 6): The invoice in Arabic.
   - EN: "The Invoice shall be in Arabic"
-- `cabinet-66-2023-en:43(5)` (page 24): Annex 2: AED 100,000 for an invoice not in Arabic.
+- `cabinet-66-2023-en:43(5)` (p. 24): Annex 2: AED 100,000 for an invoice not in Arabic.
   - EN: "The provider fails to issue the invoice in Arabic."
-- `consumer-law-15-2020-en:4(5)` (page 5): Privacy and security of the consumer's data; says nothing on language.
+- `consumer-law-15-2020-en:4(5)` (p. 5): Privacy and security of the consumer's data; says nothing on language.
   - EN: "Protecting the privacy and security of his data"
 
 ### Breach notification without a period
 
 The Controller notifies the Bureau of a breach within a period the never-issued Executive Regulations were to set.
 
-- `pdpl-45-2021-en:9(1)` (page 13): The period is left to the Executive Regulations.
+- `pdpl-45-2021-en:9(1)` (p. 13): The period is left to the Executive Regulations.
   - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
 
 ### The Executive Order unpublished
 
 The Executive Order ranks above the Regulatory Framework in the licence's order of precedence, and its text is not published.
 
-- `licence-2-2026:16.2` (page 44): Point (b): the Executive Order is second in precedence.
+- `licence-2-2026:16.2` (p. 44): Point (b): the Executive Order is second in precedence.
   - EN: "its Executive Order to the Federal Law by Decree No. 3 of 2003"
 
 ## Sources

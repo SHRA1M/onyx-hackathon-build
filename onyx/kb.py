@@ -447,6 +447,25 @@ def get_chunk(document_id: str, clause: str) -> dict[str, Any]:
     raise KeyError(f"{document_id} {clause}")
 
 
+def page_of(document_id: str, clause: str) -> int | None:
+    """The PDF page index of a committed chunk (kb/chunks/), shown as "p. N" (order 2026-10-22 Task 16 item 1).
+    None when the chunk is not committed, or when every committed chunk of its document says page 1: the
+    placeholder a text with no page markers gets (itu-t-y3172), not a page."""
+    pages = {c["clause"]: c["page"] for c in iter_chunks(document_id)}
+    if clause not in pages or set(pages.values()) == {1}:
+        return None
+    return pages[clause]
+
+
+def page_link(document_id: str, page: int | None) -> str:
+    """The document's own PDF opened at the page, or "" for a landing page, a non-PDF or no page."""
+    row = manifest_by_id().get(document_id)
+    if not page or not row or LANDING_MARK in row["notes"] or not row["url"].startswith("http") \
+            or _suffix(document_id) != ".pdf":
+        return ""
+    return f"{row['url']}#page={page}"
+
+
 # --- ChromaDB ---------------------------------------------------------------------------------------------
 
 class HashEmbedding:
@@ -565,7 +584,8 @@ def export(out_dir: str | os.PathLike | None = None) -> Path:
     for category in ("UAE_Binding", "UAE_Advisory", "Framework", "Global_Examples", "Unverified"):
         members = [r for r in rows if _category(r) == category]
         lines += ["", f"## {category}/ ({len(members)} files)", "",
-                  "| # | Filename | Type | Description | Status | sha256 | Link |", "|---|---|---|---|---|---|---|"]
+                  "| # | Filename | Type | Description | Status | sha256 | Pages | Link |",
+                  "|---|---|---|---|---|---|---|---|"]
         for i, r in enumerate(members, 1):
             name = f"{r['document_id']}{_suffix(r['document_id'])}" if r["sha256"] else ""
             src = source_path(r) if r["sha256"] else None
@@ -576,7 +596,7 @@ def export(out_dir: str | os.PathLike | None = None) -> Path:
             if LANDING_MARK in r["notes"]:
                 link = f"[landing page]({r['url']}) (document link not verified)"
             sha = f"`{r['sha256'][:12]}…`" if r["sha256"] else ""
-            lines.append(f"| {i} | `{name or r['document_id']}` | `{r['source_type']}` | {r['title']} | {r['status']} | {sha} | {link} |")
+            lines.append(f"| {i} | `{name or r['document_id']}` | `{r['source_type']}` | {r['title']} | {r['status']} | {sha} | {r['page_count']} | {link} |")
     lines += ["", "sha256 values in full: `kb/manifest.csv`."]
     out = root / "Inputs.md"
     out.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")

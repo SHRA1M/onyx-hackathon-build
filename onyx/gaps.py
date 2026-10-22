@@ -60,8 +60,8 @@ def table() -> str:
 def _searched(s: dict[str, Any]) -> list[str]:
     document_id, clause = s["clause"].split(":", 1)
     chunk = kb.get_chunk(document_id, clause)
-    # a row's own page, read from the text on disk, where the chunk's is wrong (every Y.3172 chunk says page 1)
-    out = [f"- `{s['clause']}` (page {s.get('page', chunk['page'])}): {s['says']}"]
+    # "p.": the PDF page index (order Task 16 item 1); a row's own page, read from the text on disk, where the chunk's is wrong (every Y.3172 chunk says page 1)
+    out = [f"- `{s['clause']}` (p. {s.get('page', chunk['page'])}): {s['says']}"]
     if s.get("quote"):
         out.append(f"  - EN: \"{s['quote']}\"")
     elif chunk["text_en"]:

@@ -2,6 +2,7 @@
  "id": "S4",
  "title_en": "Non-payment: an automated disconnection",
  "title_ar": "عدم السداد: فصل آلي للخدمة",
+ "grounded_in": {"clauses": [{"clause_id": "tdra-cpr-v2-en:22.1.1", "page": 58}], "line": "CPR 22.1.1 requires, wherever possible, an individual notice and warning before a disconnection for non-payment; step 1 fires with `warning_sent: false`.", "source": "docs/work-orders/2026-10-22-task-16-pages-grounding-readme.md item 2 and ruling 2"},
  "synthetic": true,
  "notice": "SYNTHETIC. Sahab Telecom, its subscribers, numbers, prices, contract terms and dates are invented for the ITU AI for Good Lab Hackathon UAE 2026. The law texts cited are real and are quoted verbatim from kb/chunks/.",
  "source": "docs/work-orders/2026-10-17-onyx-mizan.md Task 7 (S4), Task 6 disconnection_gate; hq cpr-full-read-2026-10-15.md gap 4; telecom-law-and-licences-2026-10-17.md section 5 gap 4 and section 7",

@@ -4,7 +4,10 @@
 
 > **Synthetic data.** The operator, subscribers and numbers in this repo are synthetic. The law texts are real, public, linked and hashed. No consumer data.
 
-Team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom track). A consumer-care AI for a synthetic UAE operator: agents propose actions, plain-code gates written from binding UAE text decide, and every step is written to a hash-chained log.
+Mizan puts a consumer on the line. It is a consumer-care AI for a synthetic UAE operator, Team Onyx's entry to the
+ITU AI for Good Lab Hackathon UAE 2026 (telecom track): agents propose each step of a chat or call, plain-code gates
+written from binding UAE clauses allow or block it, and the same gates run in Arabic and English from the same
+clauses. Every step is written to a hash-chained log that replays offline, with the clause, its page and its words.
 
 Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, and three members.
 
@@ -12,6 +15,24 @@ Knowledge base: 36 VERIFIED (text on disk, sha256 matches), 1 REFERENCED (opened
 (asserted, not published; they back no claim) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
 [The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
 16 rows link a landing page because the document link could not be verified.
+
+## Why
+
+e& reported 371,476 customer complaints in its UAE operations for 2025
+([e&, Sustainability Report Appendices 2025](https://www.eand.com/content/dam/eand/assets/docs/sustainability/2025/eand-sustainability-report-appendices.pdf),
+Appendix 1, PDF page 7). TDRA dealt with 23,464 complaints about licensees in 2023, the latest count it has published
+([TDRA, Sustainability Report 2023](https://tdra.gov.ae/-/media/Media/Press-Kit/Sustainability-Report/EN/Sustainability-report-2023-English.ashx),
+p. 34). At the operator the first contact is already an AI:
+[Etisalat's Virtual Assistant](https://www.eand.ae/en/c/etisalat-virtual-assistant.html), "AI (Artificial
+Intelligence) powered", 24/7, English or Arabic, whose listed jobs include "adding or deleting services, changing of
+packages" and "Billing related clarifications". No source on file says what stops such an AI when a chat becomes a
+complaint or a disconnection. The binding texts do, and Mizan's gates are written from them.
+
+## Three things to look at first
+
+- A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.
+- Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in `docs/replay/`.
+- Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 0.94 Arabic on C5 (`eval/results.md`).
 
 ## Gap register
 
@@ -30,13 +51,13 @@ Nine rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each r
 | gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | none; the recommendation is the example | S2-3 |
 | gap-9 | A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
-| candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines promised by Telecom Law 79 bis (2) is not published; a CPR breach by an automated channel falls under 79 bis (1) and licence 16.3.2 (AED 50,000 to 200,000) with no schedule above it. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
+| candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 <!-- gap-register:end -->
 
 The global quotes are checked verbatim offline against the fetched texts in `kb/sources/global/` (not committed,
 addendum item 15); CI checks every UAE quote against the committed chunks and the register's structure.
 
-## Two-minute check
+## Run it without a key
 
 No API key and no model call. CI runs every line on each push.
 
@@ -62,13 +83,13 @@ Each page is generated by `python -m onyx replay-page` from the one recorded gov
 first English run, except S2, which reads the first C5 run whose step 3 carries the hand-over with both quotes
 and whose step 4, the human's, is allowed (an Arabic run; neither C5 English run allowed step 4).
 
-| id | scenario | steps | replay page | run read |
-| --- | --- | --- | --- | --- |
-| S1 | Roaming before a flight | 6 | [docs/replay/S1.md](docs/replay/S1.md) | `runs/S1/run1.jsonl` |
-| S2 | A billing question becomes a complaint | 6 | [docs/replay/S2.md](docs/replay/S2.md) | `runs/c5/S2/ar/run1.jsonl` |
-| S3 | A partner wants the data, and the model provider is abroad | 5 | [docs/replay/S3.md](docs/replay/S3.md) | `runs/S3/run1.jsonl` |
-| S4 | Non-payment: an automated disconnection | 5 | [docs/replay/S4.md](docs/replay/S4.md) | `runs/S4/run1.jsonl` |
-| S5 | A TDRA dispute and a loss report | 6 | [docs/replay/S5.md](docs/replay/S5.md) | `runs/S5/run1.jsonl` |
+| id | scenario | steps | replay page | run read | grounded in |
+| --- | --- | --- | --- | --- | --- |
+| S1 | Roaming before a flight | 6 | [docs/replay/S1.md](docs/replay/S1.md) | `runs/S1/run1.jsonl` | `tdra-cpr-v2-en:17.4` (p. 51), `tdra-cpr-v2-en:17.4.1` (p. 51) |
+| S2 | A billing question becomes a complaint | 6 | [docs/replay/S2.md](docs/replay/S2.md) | `runs/c5/S2/ar/run1.jsonl` | `tdra-cpr-v2-en:4.20.1` (p. 17) |
+| S3 | A partner wants the data, and the model provider is abroad | 5 | [docs/replay/S3.md](docs/replay/S3.md) | `runs/S3/run1.jsonl` | `pdpl-45-2021-en:23(1)` (p. 25) |
+| S4 | Non-payment: an automated disconnection | 5 | [docs/replay/S4.md](docs/replay/S4.md) | `runs/S4/run1.jsonl` | `tdra-cpr-v2-en:22.1.1` (p. 58) |
+| S5 | A TDRA dispute and a loss report | 6 | [docs/replay/S5.md](docs/replay/S5.md) | `runs/S5/run1.jsonl` | `decision-16-2026-ar:4.18` (p. 10), `tdra-cpr-v2-en:26.11` (p. 66) |
 
 ## Y.3172 mapping
 
@@ -87,12 +108,12 @@ The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox
 | MLFO | ML function orchestrator | the coordinator's staged release of steps | `onyx/coordinator.py` |
 | ML sandbox | ML sandbox | the governed-versus-ungoverned run on the same scenarios | `runs/ungoverned/`, `eval/results.md` |
 
-## Limits
+## What we do not claim
 
 - The answer keys are ours, written and hashed before the first live run (`onyx/data/keys/HASHES.txt`).
 - The humans in the recorded runs (approvers, override attempts) are scripted steps, not people.
 - UNVERIFIED rows in the manifest back no claim.
-- No source on file shows a UAE operator running AI care agents of this kind today.
+- No source on file shows how a UAE operator's assistant is governed; the Etisalat Virtual Assistant page lists what it does, not what stops it.
 
 ## Model
 
