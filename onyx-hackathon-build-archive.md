@@ -227,3 +227,24 @@ Moved from background traps (live runs are over, USD 1.12 left): The spend guard
   passes the diff, a changed SVG fails it. 329 passed; CI run 39845579560 green. Task 17 accepted.
 - hq's report-back rulings on Tasks 14 and 16 copied to the end of their filed orders: all accepted as built,
   nothing to build. Superseded: the "awaiting hq" lines for both tasks and the red-CI trap.
+
+## 2026-10-23: Task 12 part A, the report builder (twenty-fourth session)
+
+Built order 2026-10-23-task-12-report-build (filed with hq's rulings on the first stop). Items 1 to 3: template and
+draft copied; `docs/build_report.py` with the value check; both tagged paragraphs pass. First stop: 2.3 / 2.1 and the
+(1) to (4) markers had no class; hq ruled (plain decimals from the named run set only; single-digit list markers
+skipped). Item 5: S3 to S5 pages on C5 run1; S1 stays C3 (no run, C3 or C5, cites CPR 17.4 or 17.4.1). A Task 14 test
+then failed (viewer must match the pages); Iyas ruled the viewer follows. Item 6: register candidate id in the
+coordinator. Item 4: Word counts 9 pages, 3,241 words; stopped, nothing trimmed. Rendering checked on a PDF export:
+correct; the length is the text. 354 tests pass; selftest "figures match a fresh eval of runs/". CI not yet run on it.
+
+Moved from background (superseded or old):
+- 2026-10-22 (Task 15, 7313ead): register 11 rows (gap-9 method / legislative gap, TDRA and Cabinet, global example COPPA 16 CFR 312.5; candidate-79bis-2-fine-schedule absence, Cabinet); child-law 10(1)(g), 11(2) and Telecom Law 79 bis (1)/(2) cited by their merged chunks (10(1), 11(1), 79 bis). hq kept the category, `line` labels and competitor 'not read'; Task 16 rewrote the candidate's gap and UAE position.
+- 2026-10-22 (hq, Task 14 report-back rulings, filed in the order): accepted as built. S2 English shows `runs/c5/S2/run1.jsonl` (C5 is the run the report cites); figures are per run shown, run named; holds name no approver (human steps are scripted; a real approver comes after the shortlist).
+- 2026-10-22 (Iyas, hq order Task 13): the two C4 causes fixed before the report; stop raised to USD 20.00, the prepaid balance. Prompt v5 care lines 1 and 3 word for word; scorer, keys, rules.json, mandates.json unchanged.
+- ecfr.gov answers a browser-style scripted request with a CAPTCHA; its versioner API works with curl `--compressed` (it refuses uncompressed replies). The local `kb/chunks-full/` is older than the committed chunks: copy only new clause lines from it.
+- Git Bash turns `C:/...` arguments into broken paths inside `git filter-branch`; use `/c/...`.
+- The IMDA text is Windows-1252; `kb.read_text` falls back.
+- Y.3172 needs `top` headings and a footer strip that splits glued page numbers (`138.1` is page 13 + clause 8.1).
+- pdftotext on this machine is xpdf 4.00 (`/mingw64/bin`), not poppler: CRLF line ends, and it writes math-alphabet letters as split surrogates (QoS); decode with `surrogatepass`.
+- `طالما` and `ثالث` are real words: do not add them to the broken-word list.
