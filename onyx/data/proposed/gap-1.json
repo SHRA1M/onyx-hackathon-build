@@ -4,7 +4,7 @@
   "status": "proposed, not law",
   "addressee": "TDRA",
   "text_en": "When a conversation on an automated channel becomes a Consumer Complaint (CPR 2.1.7), the non-human agent stops and a named trained human (licence 9.1) takes the conversation within two minutes of the trigger; the hand-over moment is recorded and is the start of the T1(2a) measurement.",
-  "text_ar": "عند تحوّل محادثة على قناة آلية إلى شكوى مستهلك (المادة 2.1.7 من لائحة حماية المستهلك)، يتوقف الوكيل غير البشري ويتولى المحادثة موظف مدرّب مُسمّى (المادة 9.1 من الرخصة) في غضون دقيقتين من لحظة الشكوى؛ وتُسجَّل لحظة التحويل وتكون بداية قياس T1(2a).",
+  "text_ar": "عندما تتحول محادثة عبر قناة مؤتمتة إلى \"شكوى مستهلك\" (وفقاً للبند 2.1.7 من قواعد حماية المستهلك CPR)، يتوقف الوكيل غير البشري عن العمل، ويتولى موظف بشري مُدرَّب ومُحدَّد الهوية (بموجب الترخيص 9.1) متابعة المحادثة في غضون دقيقتين من لحظة وقوع هذه الحالة؛ وتُسجَّل لحظة الانتقال هذه، والتي تُعدُّ نقطة البدء لاحتساب المؤشر الزمني T1(2a).",
   "value": "2",
   "unit": "minutes",
   "value_basis": "qos-v3-0-t1-2a: the only hand-over time the texts measure (indicative, after the IVR choice); the number is TDRA's to set",
