@@ -1,0 +1,10 @@
+# Report-back: Task 18, the report at five pages (2026-10-23)
+
+1. Pages and words: Word counts 5 pages, 2,175 words (`scripts/report_pages.ps1`). Ladder steps used: none.
+2. Figures as rendered (PNG at 300 dpi): Figure 1 1889 by 531 px, 16.0 by 4.5 cm; Figure 2 1889 by 590 px, 16.0 by 5.0 cm. Figure 2 kept both panels side by side; panel (b)'s legend sits in one column over its own axes so nothing overlaps at 6.5 pt. Both draw no caption; the Word caption carries it.
+3. Value check passed on the new `docs/report.md` unchanged (two tagged paragraphs, three tags).
+4. Item 5: the "For the reviewer" block is in, under the synthetic-data notice. Every path is tracked and both commands run (`kb verify`: VERIFIED 36, REFERENCED 1, UNVERIFIED 3; replay of `runs/c5/S2/ar/run1.jsonl`: chain ok, 10 decisions). CI runs `kb verify` and `selftest` from a fresh checkout.
+5. Item 6 stopped, sentence not added. The manifest rows do not support "with their text layers (no OCR)" for the Arabic. `telecom-law-3-2003-ar` notes: "Authoritative language: Arabic prevails. Read from page images for Arts 13, 14, 72 to 79 bis; not chunked in the first pass. Download URL not recorded in the sources. landing page: document link not verified." `telecom-law-3-2003-en` notes: "Authoritative language: Arabic prevails (portal; TRA 2008 edition cover). Portal English mistranslates 14(3) 'use of information by subscribers'; quote the Arabic there. landing page: document link not verified." The rest of the sentence (consolidated portal texts, Arabic prevails, 14(3) from the Arabic) matches.
+6. Departures: three older README tests (Task 9 and Task 16 layout) now expect "For the reviewer" as the first heading; the 0.01 value test follows the new line wrap. No provenance-sentence test, since the sentence is held.
+7. Tests: 363 pass; selftest prints "figures match a fresh eval of runs/".
+8. Open for hq: the item 6 wording (for example "read from the portal's consolidated texts, English from its text layer, Arabic Articles 13, 14 and 72 to 79 bis from page images").

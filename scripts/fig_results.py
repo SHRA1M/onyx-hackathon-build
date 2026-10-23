@@ -6,7 +6,8 @@
     (a count, on its own axis): the Governed and Ungoverned tables, the only governed-against-ungoverned pair on file.
 
 Exits naming the scenario and language when a value it needs is missing. Writes docs/fig/fig2-results.png and .svg;
-a second run writes the same bytes.
+a second run writes the same bytes. Task 18 item 3: (a) and (b) side by side, 16 cm by 5 cm; the captions are the
+Word caption under the figure, not drawn here.
 
     uv run python scripts/fig_results.py [--out docs/fig]
 """
@@ -14,7 +15,6 @@ a second run writes the same bytes.
 import argparse
 import io
 import re
-import textwrap
 from pathlib import Path
 
 import matplotlib
@@ -27,10 +27,7 @@ RESULTS = REPO / "eval" / "results.md"
 STEM = "fig2-results"
 SCENARIOS = ["S1", "S2", "S3", "S4", "S5"]
 LANGS = ["en", "ar"]
-CAPTION_A = ("C5, Claude Sonnet 5.5, prompt v5, two runs per scenario per language; figures regenerate from the "
-             "committed logs.")
-CAPTION_B = "C3, prompt v3, three runs per scenario per language; the only governed-against-ungoverned pair on file."
-FONT = 7
+FONT = 7  # ticks and legends a half point smaller: 6.5 pt, the floor (Task 18 item 3)
 
 
 def _section(text: str, heading: str) -> str:
@@ -103,9 +100,9 @@ def _positions() -> tuple[list[float], list[str]]:
 def draw(values: dict) -> plt.Figure:
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": FONT, "svg.hashsalt": "mizan-fig2",
                          "svg.fonttype": "none", "hatch.linewidth": 0.5})
-    fig = plt.figure(figsize=(16 / 2.54, 6.0))
-    ax_a = fig.add_axes((0.09, 0.63, 0.80, 0.31))
-    ax_b = fig.add_axes((0.09, 0.14, 0.80, 0.29))
+    fig = plt.figure(figsize=(16 / 2.54, 5 / 2.54))
+    ax_a = fig.add_axes((0.08, 0.17, 0.38, 0.49))
+    ax_b = fig.add_axes((0.555, 0.17, 0.375, 0.49))
     xs, labels = _positions()
     keys = [(s, lang) for s in SCENARIOS for lang in LANGS]
     w = 0.38
@@ -114,15 +111,16 @@ def draw(values: dict) -> plt.Figure:
              linewidth=0.5, label="action recall")
     ax_a.bar([x + w / 2 for x in xs], [values["a"][k]["citation"] for k in keys], w, color="white",
              edgecolor="black", linewidth=0.5, hatch="////", label="citation validity")
-    ax_a.set_title("(a) Governed, C5", loc="left", fontsize=FONT + 1, pad=14)
-    ax_a.legend(loc="lower right", bbox_to_anchor=(1.0, 1.0), ncol=2, frameon=False, fontsize=FONT - 0.5)
+    ax_a.set_title("(a) Governed, C5", loc="left", fontsize=FONT + 1, pad=31)
+    ax_a.legend(loc="lower left", bbox_to_anchor=(0.0, 1.0), ncol=2, frameon=False, handlelength=1.4, columnspacing=0.8,
+                fontsize=FONT - 0.5)
 
     lo = [values["b"][k]["rejection"][0] for k in keys]
     hi = [values["b"][k]["rejection"][1] for k in keys]
     ax_b.bar(xs, lo, 0.6, color="0.35", edgecolor="black", linewidth=0.5, label="gate rejection rate, governed")
     ax_b.bar(xs, [h - l for h, l in zip(hi, lo)], 0.6, bottom=lo, color="white", edgecolor="black", linewidth=0.5,
              hatch="////", label="its range over runs")
-    ax_b.set_title("(b) Governed against ungoverned, C3", loc="left", fontsize=FONT + 1, pad=14)
+    ax_b.set_title("(b) Governed against ungoverned, C3", loc="left", fontsize=FONT + 1, pad=31)
     ax_c = ax_b.twinx()
     c_lo = [values["b"][k]["claims"][0] for k in keys]
     c_hi = [values["b"][k]["claims"][1] for k in keys]
@@ -134,19 +132,19 @@ def draw(values: dict) -> plt.Figure:
     ax_c.set_yticks([0, 1, 2, 3, 4])
     ax_c.set_ylabel("claims allowed (count per run)", fontsize=FONT)
     handles = ax_b.get_legend_handles_labels()[0] + ax_c.get_legend_handles_labels()[0][:1]
-    ax_b.legend(handles=handles, loc="lower right", bbox_to_anchor=(1.0, 1.0), ncol=3, frameon=False,
+    ax_b.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.0, 1.0), ncol=1,
+                frameon=False, handlelength=1.4, labelspacing=0.25, borderpad=0.2,
                 fontsize=FONT - 0.5)
 
     for ax, ylabel in ((ax_a, "share"), (ax_b, "share")):
         ax.set_ylim(0, 1)
+        ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
         ax.set_ylabel(ylabel, fontsize=FONT)
         ax.set_xticks(xs, labels, fontsize=FONT - 0.5)
         ax.spines["top"].set_visible(False)
     ax_a.spines["right"].set_visible(False)
     ax_c.spines["top"].set_visible(False)
 
-    fig.text(0.09, 0.535, "\n".join(textwrap.wrap(CAPTION_A, 100)), ha="left", va="top", fontsize=FONT)
-    fig.text(0.09, 0.045, "\n".join(textwrap.wrap(CAPTION_B, 100)), ha="left", va="top", fontsize=FONT)
     return fig
 
 

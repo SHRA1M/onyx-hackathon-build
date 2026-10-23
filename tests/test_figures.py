@@ -77,12 +77,13 @@ def test_figure_1_labels_come_from_the_readme_mapping_table():
 
 
 def test_figure_1_carries_the_hand_over_arrow_and_caption():
+    # Task 18 item 3: the caption is the Word caption under the figure, not drawn in the image
     fig1 = _load("fig_architecture")
     assert fig1.HANDOVER == "hand-over to a human (gap-8)"
-    assert fig1.CAPTION == ("Mizan on the Y.3172 nodes; the model proposes, the P node decides, D hands a complaint "
-                            "to a person.")
+    assert not hasattr(fig1, "CAPTION")
     svg = (FIG / "fig1-architecture.svg").read_text(encoding="utf-8")
-    assert "gap-8" in svg and "hands a complaint" in svg
+    assert "gap-8" in svg
+    assert "hands a complaint" not in svg and "Mizan on the Y.3172 nodes" not in svg
 
 
 # --- Figure 2 ----------------------------------------------------------------------------------------------------
@@ -137,11 +138,12 @@ def test_figure_2_fails_when_a_value_is_missing(tmp_path):
 
 
 def test_figure_2_captions():
+    # Task 18 item 3: the captions are the Word caption under the figure, not drawn in the image
     fig2 = _load("fig_results")
-    assert fig2.CAPTION_A == ("C5, Claude Sonnet 5.5, prompt v5, two runs per scenario per language; figures "
-                              "regenerate from the committed logs.")
-    assert fig2.CAPTION_B == ("C3, prompt v3, three runs per scenario per language; the only "
-                              "governed-against-ungoverned pair on file.")
+    assert not hasattr(fig2, "CAPTION_A") and not hasattr(fig2, "CAPTION_B")
+    svg = (FIG / "fig2-results.svg").read_text(encoding="utf-8")
+    for gone in ("figures regenerate", "the only governed-against-ungoverned pair", "two runs per scenario"):
+        assert gone not in svg, gone
 
 
 # --- README and CI -----------------------------------------------------------------------------------------------

@@ -184,7 +184,7 @@ def _section(heading: str) -> str:
 
 
 def test_readme_first_paragraph_is_the_orders():
-    head = README.split("\n## ", 1)[0]
+    head = README.split("\n## Why", 1)[0]  # Task 18 item 5: "For the reviewer" sits above it
     assert FIRST in [_norm(p) for p in head.split("\n\n")]
     assert "Team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom track). A consumer-care" not in README
 
@@ -222,7 +222,8 @@ def test_readme_three_things_and_the_c5_figures():
 
 def test_readme_headings_in_the_orders_order():
     headings = re.findall(r"^## (.+)$", README, re.MULTILINE)
-    assert headings[:4] == ["Why", "Three things to look at first", "Gap register", "Run it without a key"]
+    assert headings[:5] == ["For the reviewer", "Why", "Three things to look at first", "Gap register",
+                            "Run it without a key"]  # Task 18 item 5: the reviewer block leads
     assert "Two-minute check" not in headings and "Limits" not in headings
     assert [l for l in _section("What we do not claim").splitlines() if l.startswith("- ")][-1] == LAST_LIMIT
 

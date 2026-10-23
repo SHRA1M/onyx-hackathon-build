@@ -7,7 +7,8 @@ the header lines become four paragraphs with the label in bold; every template e
 paragraphs are Normal with the template's body run (Times New Roman, justified); markdown bold becomes bold runs,
 backticks are dropped, nothing else is interpreted but tables, images and headings. The mapping table reuses the
 template's table in place; the gap table is new, with the same table properties. "Limits and next steps" closes
-section 6 under a bold lead, with no heading. Run-set tags are stripped. Fixed core dates and zip times make two
+section 6 under a bold lead, with no heading. Run-set tags are stripped. Task 18 item 2: table cells 10 pt with no
+space before or after, both figures 16 cm wide, picture paragraphs and the six headings keep with next. Fixed core dates and zip times make two
 builds byte-identical.
 
 Value check (item 3, hq rulings 1 and 2 of 2026-10-23): in each tagged paragraph every token holding a digit is
@@ -52,11 +53,12 @@ SECTIONS = ["Introduction", "Description of the use case", "Use case requirement
             "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies", "Error scenarios",
             "Policy gaps and standards gaps derived from the mapping exercise"]
 TAIL = "Limits and next steps"
-FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(12), "docs/fig/fig2-results.png": Cm(16)}
+FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(16), "docs/fig/fig2-results.png": Cm(16)}  # Task 18 item 2b
 FIXED_DATE = dt.datetime(2026, 10, 23, tzinfo=dt.timezone.utc)
 ZIP_TIME = (2026, 10, 23, 0, 0, 0)
 TABLE_WIDTH = 9359  # the template table's width, dxa
 FONT = "Times New Roman"
+CELL_SIZE = Pt(10)  # Task 18 item 2a: every table run 10 pt, every cell paragraph 0 pt before and after
 CREATOR = "Team Onyx"
 
 TAG = re.compile(r"\s*`\[(C[35])\b[^\]]*\]`")
@@ -342,10 +344,12 @@ class Builder:
                 tc.append(OxmlElement("w:p"))
                 tr.append(tc)
                 paragraph = Paragraph(tc[-1], table)
+                paragraph.paragraph_format.space_before = Pt(0)
+                paragraph.paragraph_format.space_after = Pt(0)
                 if r == 0:
-                    _run(paragraph, text.replace("**", ""), bold=True)
+                    _run(paragraph, text.replace("**", ""), bold=True, size=CELL_SIZE)
                 else:
-                    _runs(paragraph, text)
+                    _runs(paragraph, text, size=CELL_SIZE)
         after.addnext(tbl)
         return tbl
 
@@ -361,6 +365,7 @@ class Builder:
             runs[0].remove(t)
         texts[0].text = text
         texts[0].set("{http://www.w3.org/XML/1998/namespace}space", "preserve")
+        Paragraph(element, self.doc._body).paragraph_format.keep_with_next = True  # Task 18 item 2d
 
 
 def _widths(rows: list[list[str]]) -> list[int]:

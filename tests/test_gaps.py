@@ -108,7 +108,8 @@ def test_readme_leads_with_the_register():
     assert table in readme, "README register table is stale: run python -m onyx gaps"
     headings = re.findall(r"^## (.+)$", readme, re.MULTILINE)
     # order Task 16 item 3: Why and Three things lead, then the register (was order 2026-10-21-task-9 item 6)
-    assert headings[:4] == ["Why", "Three things to look at first", "Gap register", "Run it without a key"]
+    assert headings[:5] == ["For the reviewer", "Why", "Three things to look at first", "Gap register",
+                            "Run it without a key"]  # Task 18 item 5: the reviewer block leads
     assert table.count("\n| ") == len(ROWS) + 1  # the separator row plus one row per gap
 
 

@@ -123,9 +123,9 @@ def test_a_missing_figure_fails_the_build(tmp_path):
 
 def test_a_tagged_value_changed_by_001_fails_naming_the_token(tmp_path):
     text = REPORT_MD.read_text(encoding="utf-8")
-    assert "action recall against the frozen keys\n0.96 / 0.94" in text
+    assert "against the frozen keys 0.96 / 0.94" in text
     md = tmp_path / "report.md"
-    md.write_text(text.replace("keys\n0.96 / 0.94", "keys\n0.97 / 0.94"), encoding="utf-8", newline="\n")
+    md.write_text(text.replace("keys 0.96 / 0.94", "keys 0.97 / 0.94"), encoding="utf-8", newline="\n")
     result = _build(md, tmp_path / "out.docx")
     output = result.stdout + result.stderr
     assert result.returncode != 0
@@ -231,3 +231,47 @@ def test_the_coordinator_writes_the_register_id_for_s1_step_6(tmp_path):
     row = next(r for r in rows if r["inject"] == "S1-6")
     assert row["id"] == "candidate-4-4-fixed-term-bundle" and row["local_id"] == "candidate-S1-6"
     assert row["id"] in {g["id"] for g in data.load_gaps()["gaps"]}
+
+
+# --- Task 18 (order 2026-10-23-task-18-report-five-pages) ----------------------------------------------------
+
+def test_every_table_cell_is_10_pt_with_no_space_before_or_after(built):
+    from docx import Document
+    from docx.shared import Pt
+    doc = Document(str(built))
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for p in cell.paragraphs:
+                    assert p.paragraph_format.space_before == 0 and p.paragraph_format.space_after == 0
+                    assert p.runs and all(r.font.size == Pt(10) for r in p.runs), cell.text
+
+
+def test_both_pictures_are_16_cm_wide_and_keep_with_next(built):
+    from docx import Document
+    from docx.shared import Cm
+    doc = Document(str(built))
+    pictures = [p for p in doc.paragraphs if p._p.xpath(".//pic:pic")]
+    assert len(pictures) == 2
+    for p in pictures:
+        assert p.paragraph_format.keep_with_next is True
+        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(16)
+
+
+def test_the_six_headings_keep_with_next(built):
+    from docx import Document
+    doc = Document(str(built))
+    headings = [p for p in doc.paragraphs if p.style.name == "List Paragraph"]
+    assert len(headings) == 6 and all(p.paragraph_format.keep_with_next for p in headings)
+
+
+def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    notice = readme.index("> **Synthetic data.**")
+    block = readme.index("## For the reviewer\n\nThe four published criteria, each with the one place that shows it:")
+    assert notice < block < readme.index("Mizan puts a consumer on the line")
+    lines = readme[block:readme.index("Mizan puts a consumer on the line")].strip().splitlines()
+    numbered = [line for line in lines if re.match(r"\d\. ", line)]
+    assert [line[:2] for line in numbered] == ["1.", "2.", "3.", "4."]
+    assert numbered[0].startswith("1. Knowledge base: `kb/manifest.csv` (40 rows")
+    assert numbered[3].startswith("4. ITU-T Y.3172 and the Readiness Framework:")
