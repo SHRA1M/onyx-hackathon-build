@@ -13,7 +13,7 @@ import pytest
 from onyx import data, gaps, kb
 
 ROWS = data.load_gaps()["gaps"]
-ORDER_IDS = [f"gap-{n}" for n in range(1, 10)] + ["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
+ORDER_IDS = [f"gap-{n}" for n in range(1, 11)] +["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
 GLOBAL_DIR = kb.KB_DIR / "sources" / "global"
 REGISTER_ID = re.compile(r"^(gap-\d+|candidate-[\w-]+)$")
 
@@ -213,10 +213,10 @@ def test_candidate_79bis_2_row():
                                                           "licence-2-2026:16.3.2"]
 
 
-def test_readme_register_has_eleven_rows_and_the_child_left_the_candidates():
+def test_readme_register_has_twelve_rows_and_the_child_left_the_candidates():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     table = readme.split(gaps.START, 1)[1].split(gaps.END, 1)[0]
-    assert table.count("\n| ") == 11 + 2  # gap-1 to gap-9 and two candidate rows, plus the header and separator
+    assert table.count("\n| ") == 12 + 2  # gap-1 to gap-10 and two candidate rows, plus the header and separator
     names = [c["name"] for c in data.load_gaps()["candidates"]]
     assert "A child on the line" not in names and len(names) == 3
     assert "### A child on the line" not in (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
@@ -225,4 +225,92 @@ def test_readme_register_has_eleven_rows_and_the_child_left_the_candidates():
 def test_adviser_register_lists_gap_9_and_the_candidate():
     from onyx.agents.adviser import Adviser
     text = "\n".join(Adviser.extra_lines(None))  # the register lines read no instance state
-    assert "9. gap-9: " in text and "11. candidate-79bis-2-fine-schedule: " in text
+    assert "9. gap-9: " in text and "12. candidate-79bis-2-fine-schedule: " in text  # gap-10 at line 10 (Task 20)
+
+
+# --- order 2026-10-24-task-20-gap-10-arabic-parity ----------------------------------------------------------------
+
+GAP_10 = ("Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or "
+          "English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in "
+          "Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the "
+          "quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the "
+          "QoS Policy v3.0 has no indicator per language.")
+CANADA = {"s. 22": "Every federal institution has the duty to ensure that any member of the public can communicate with "
+                   "and obtain available services from its head or central office in either official language",
+          "s. 26": "Every federal institution that regulates persons or organizations with respect to any of their "
+                   "activities that relate to the health, safety or security of members of the public has the duty to "
+                   "ensure, through its regulation of those persons or organizations, wherever it is reasonable to do "
+                   "so in the circumstances, that members of the public can communicate with and obtain available "
+                   "services from those persons or organizations in relation to those activities in both official "
+                   "languages.",
+          "s. 27": "the duty applies in respect of oral and written communications and in respect of any documents or "
+                   "activities that relate to those communications or services."}
+NEW_CHUNKS = [("tdra-cpr-v2-en", "4.25.3"), ("tdra-cpr-v2-en", "17.3"), ("consumer-law-15-2020-en", "25(1)"),
+              ("consumer-law-15-2020-en", "26"), ("licence-2-2026", "16.7")]
+
+
+def test_gap_10_is_the_orders_text():
+    row = _row("gap-10")
+    assert row["line"] == "Arabic at equal quality" and row["gap"] == GAP_10
+    assert (row["kind"], row["category"], row["addressee"]) == ("method", "standards gap", ["TDRA"])
+    assert row["exposed_by"] == "C5 per-language scoring (M, D nodes); mapping (SRC)"
+    assert row["uae_position"].startswith("The language duty is binding and fined; Mizan meets it by answering")
+    assert "action recall 0.96 English and 0.94 Arabic, citation validity 0.99 and 1.00" in row["uae_position"]
+    assert row["uae_position"].endswith("Searched 2026-10-24 in both languages.")
+    assert row["recommendation"].startswith("TDRA to add to the QoS Policy, for every automated consumer channel")
+    assert row["recommendation"].endswith("and s. 27 extends it to oral channels.")
+    # the order's basis names two entries; no other entry is named in a tracked file (Task 16 ruling), so it is held unnamed
+    assert row["competitor"] == "no" and row["competitor_basis"].endswith("which is why the candidate was searched.")
+
+
+def test_gap_10_searches_the_orders_clauses():
+    searched = [s["clause"] for s in _row("gap-10")["searched"]]
+    assert searched == ["tdra-cpr-v2-en:3.2.2", "tdra-cpr-v2-en:4.25.3", "tdra-cpr-v2-en:17.3",
+                        "consumer-law-15-2020-en:26", "consumer-law-15-2020-en:25(1)", "consumer-law-15-2020-en:8(4)",
+                        "cabinet-66-2023-en:43(5)", "licence-2-2026:16.7", "qos-v3-en:9.5"]
+    assert "inferred" in _row("gap-10")["searched"][0]["says"]  # 3.2.1 (electronic form) reaches an app chat
+
+
+def test_gap_10_new_chunks_are_committed_once_each():
+    for document_id, clause in NEW_CHUNKS:
+        lines = (kb.KB_DIR / "chunks" / f"{document_id}.jsonl").read_text(encoding="utf-8").splitlines()
+        assert sum(json.loads(line)["clause"] == clause for line in lines) == 1, (document_id, clause)
+
+
+def test_gap_10_framework_line_is_readiness_dimension_6_non_binding():
+    [fw] = _row("gap-10")["framework"]
+    assert fw["status"] == "NON-BINDING" and fw["page"] == 23
+    assert fw["quote"] == "Availability of AI models in the local language used in the human interface"
+    assert "(p. 23; framework, non-binding)" in gaps.render()
+    path = kb.REPO / fw["file"]
+    if not path.exists():
+        pytest.skip("kb/sources/ is local only")
+    assert fw["quote"] in path.read_text(encoding="utf-8")
+
+
+def test_gap_10_global_example_is_canada_ola_part_iv():
+    examples = _row("gap-10")["global_examples"]
+    assert {ex["clause"]: ex["quote"] for ex in examples} == CANADA
+    assert {ex["file"] for ex in examples} == {"kb/sources/global/canada-ola-part-iv.txt"}
+    assert "Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27" in gaps.table()
+
+
+def test_canada_quotes_are_verbatim_in_the_fetched_file():
+    path = GLOBAL_DIR / "canada-ola-part-iv.txt"
+    if not path.exists():
+        pytest.skip("kb/sources/global/ is local only (gitignored, addendum item 15)")
+    text = path.read_text(encoding="utf-8")
+    assert text.startswith("Source: https://laws-lois.justice.gc.ca/eng/acts/O-3.01/")
+    for quote in CANADA.values():
+        assert _norm(quote) in _norm(text)
+
+
+def test_arabic_records_candidate_is_unchanged():
+    [cand] = [c for c in data.load_gaps()["candidates"] if c["name"] == "Arabic records"]
+    assert [s["clause"] for s in cand["searched"]] == ["consumer-law-15-2020-en:8(4)", "cabinet-66-2023-en:43(5)",
+                                                       "consumer-law-15-2020-en:4(5)"]
+
+
+def test_adviser_register_lists_gap_10():
+    from onyx.agents.adviser import Adviser
+    assert "10. gap-10: Arabic at equal quality" in "\n".join(Adviser.extra_lines(None))

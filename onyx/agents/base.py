@@ -24,6 +24,8 @@ v4.1 (Task 9, unscored): the adviser's register lists gap-8 and the candidate at
 v5 (order 2026-10-22): line 1 carves the de-identified model-provider payload out of disclose_account; line 3 addresses the sender of the step and names the human from the facts. Scored as C5. Recorded C3 and C4 runs replay as recorded.
 
 v5, register grown (Task 15, unscored): the adviser's register adds gap-9 and candidate-79bis-2-fine-schedule at lines 9 and 11; label stays v5; recorded runs replay as recorded.
+
+v5, register grown again (Task 20, unscored): the adviser's register adds gap-10 at line 10, so the candidates move to lines 11 and 12; label stays v5; recorded runs replay as recorded.
 """
 
 from __future__ import annotations

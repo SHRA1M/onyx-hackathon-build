@@ -21,7 +21,7 @@ ADDRESSEES = ("TDRA", "UAE Data Office", "the consumer-protection authority", "C
 COMPETITOR = ("yes", "no", "not read")
 # short names for the table, by the file a global example quotes
 SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172",
-         "coppa-": "16 CFR"}
+         "coppa-": "16 CFR", "canada-ola-": "Canada OLA"}
 
 
 def _short(path: str) -> str:
@@ -98,6 +98,10 @@ def render() -> str:
                   "**Clauses searched**", ""]
         for s in row["searched"]:
             lines += _searched(s)
+        # a framework row is no clause of law: listed with the searched clauses, marked non-binding (order Task 20)
+        for fw in row.get("framework", []):
+            lines += [f"- {fw['document']}, {fw['clause']} (p. {fw['page']}; framework, non-binding): {fw['says']}",
+                      f"  - EN (`{fw['file']}`): \"{fw['quote']}\""]
         lines += ["", f"**UAE position.** {row['uae_position']}", ""]
         if row.get("standard_text"):
             lines += _quotes("The standard's own text", row["standard_text"])

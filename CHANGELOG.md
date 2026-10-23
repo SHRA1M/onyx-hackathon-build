@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-10-24
+
+- Added (order 2026-10-24-task-20-gap-10-arabic-parity): register row gap-10 (Arabic at equal quality, method, standards gap, TDRA) in `onyx/data/gaps.json`, with nine searched clauses, a `framework` line (Readiness 2.0 dimension 6, non-binding; `onyx/gaps.py` renders it) and Canada OLA ss. 22, 26, 27 from `kb/sources/global/canada-ola-part-iv.txt` (fetched from laws-lois.justice.gc.ca, local only). Five clauses added to `kb/chunks/` (CPR 4.25.3, 17.3; Consumer Law 25(1), 26; licence 16.7), no existing line changed. README and `docs/gaps.md` regenerated (ten rows); one sentence on gap 10 in `docs/report.md`, `docs/report.docx` rebuilt (5 pages). The adviser's register gains line 10; `tests/test_prompt_v3.py` uses gap-11 as its non-id. The order's competitor basis named two entries; held unnamed (Iyas, 2026-10-24, Task 16 ruling).
+
 ## 2026-10-23
 
 - Changed (order 2026-10-23-task-19b-gap-1-arabic): `text_ar` in `onyx/data/proposed/gap-1.json` is Iyas's wording, copied from the order line (its two straight quotes stored as `\"` so the JSON parses; the decoded value is the order's string). `docs/replay/whatif-S2-gap-1.md` and `docs/replay/index.html` regenerated. Both S2 what-if runs print the same two changed decisions; `text_en`, value, gate, rules, keys, runs and report unchanged.

@@ -247,6 +247,39 @@
    "competitor_basis": "order 2026-10-22 Task 15 gives no competitor reading"
   },
   {
+   "id": "gap-10",
+   "line": "Arabic at equal quality",
+   "gap": "Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language.",
+   "kind": "method",
+   "category": "standards gap",
+   "addressee": ["TDRA"],
+   "searched": [
+    {"clause": "tdra-cpr-v2-en:3.2.2", "says": "Written information in Arabic or English as the Consumer prefers; both where the preference is unknown. 3.2.1 allows it in electronic form, so an app chat is inside it (inferred). The language is set, not its quality.", "quote": "shall be written in the Arabic language or in the English Language as preferred by the Consumer"},
+    {"clause": "tdra-cpr-v2-en:4.25.3", "says": "The RBT price-confirmation message (PSCM) goes out 'in the appropriate language': RBT only.", "quote": "provide the Subscriber with a PSCM in the appropriate language"},
+    {"clause": "tdra-cpr-v2-en:17.3", "says": "A price-rise notice: at least three Arabic and two English national newspapers. Which language, not how well.", "quote": "advertisements in at least three (3) Arabic language national newspapers; advertisements in at least two (2) English language national newspapers"},
+    {"clause": "consumer-law-15-2020-en:26", "says": "Consumer data, advertisements and contracts in Arabic; other languages may be added.", "quote": "The data, advertisements, and contracts related to the Consumer shall be made in Arabic, and other languages may be used in addition to Arabic."},
+    {"clause": "consumer-law-15-2020-en:25(1)", "says": "E-commerce suppliers give adequate information in Arabic on the product or service, the contract, payment and warranty.", "quote": "adequate information in Arabic about the product or Service provided"},
+    {"clause": "consumer-law-15-2020-en:8(4)", "says": "The invoice in Arabic.", "quote": "The Invoice shall be in Arabic"},
+    {"clause": "cabinet-66-2023-en:43(5)", "says": "Annex 2: AED 100,000 for Art 8(4) (invoice not in Arabic) and AED 100,000 for Art 26 (data, advertisements and contracts not in Arabic).", "quote": "AED 100.000 Article 26 The provider fails to write data, advertisements and contracts related to the consumer in Arabic."},
+    {"clause": "licence-2-2026:16.7", "says": "The licence's Arabic version binds; the English is for guidance. A document rule, not a service rule.", "quote": "The Arabic language version of this License is the binding version."},
+    {"clause": "qos-v3-en:9.5", "says": "Annex A: every T indicator counts orders, faults, waits and complaints; none is reported per language. All 43 QoS chunks searched for language, Arabic, English and لغة: no hit.", "quote": "Average queue time for calls to the call centre"}
+   ],
+   "framework": [
+    {"document": "ITU AI Readiness 2.0 (2026-01), dimension 6 Human Interface", "clause": "d6_m02", "page": 23, "file": "kb/sources/itu-readiness-dimensions.json", "status": "NON-BINDING", "says": "A readiness metric: whether AI models exist in the local language of the interface. No duty, no quality measure.", "quote": "Availability of AI models in the local language used in the human interface"}
+   ],
+   "uae_position": "The language duty is binding and fined; Mizan meets it by answering in the subscriber's language with the clause quoted in that language. Nothing says the Arabic answer must be as good as the English one, and nothing measures it: the QoS Policy counts waits and faults, not languages. Mizan's own figures show the gap can be measured: action recall 0.96 English and 0.94 Arabic, citation validity 0.99 and 1.00 (C5, two runs per scenario per language); the Arabic S2 run cites the Arabic chunk ids. Searched 2026-10-24 in both languages.",
+   "global_examples": [
+    {"document": "Canada, Official Languages Act, R.S.C. 1985, c. 31 (4th Supp.), Part IV", "clause": "s. 22", "file": "kb/sources/global/canada-ola-part-iv.txt", "status": "VERIFIED", "quote": "Every federal institution has the duty to ensure that any member of the public can communicate with and obtain available services from its head or central office in either official language"},
+    {"document": "Canada, Official Languages Act, R.S.C. 1985, c. 31 (4th Supp.), Part IV", "clause": "s. 26", "file": "kb/sources/global/canada-ola-part-iv.txt", "status": "VERIFIED", "quote": "Every federal institution that regulates persons or organizations with respect to any of their activities that relate to the health, safety or security of members of the public has the duty to ensure, through its regulation of those persons or organizations, wherever it is reasonable to do so in the circumstances, that members of the public can communicate with and obtain available services from those persons or organizations in relation to those activities in both official languages."},
+    {"document": "Canada, Official Languages Act, R.S.C. 1985, c. 31 (4th Supp.), Part IV", "clause": "s. 27", "file": "kb/sources/global/canada-ola-part-iv.txt", "status": "VERIFIED", "quote": "the duty applies in respect of oral and written communications and in respect of any documents or activities that relate to those communications or services."}
+   ],
+   "global_none": "",
+   "recommendation": "TDRA to add to the QoS Policy, for every automated consumer channel, the same indicators per language (answer accuracy against the Licensee's own policy text, hand-over time, abstention), reported separately for Arabic and English, with a parity band; Canada's Official Languages Act s. 26 shows a regulator imposing the language duty on regulated service providers, and s. 27 extends it to oral channels.",
+   "exposed_by": "C5 per-language scoring (M, D nodes); mapping (SRC)",
+   "competitor": "no",
+   "competitor_basis": "One entry read has no language row in its gap table; another asks the same question for its country's two official languages (reading note), which is why the candidate was searched."
+  },
+  {
    "id": "candidate-4-4-fixed-term-bundle",
    "line": "whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4",
    "gap": "Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.",

@@ -15,6 +15,7 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 | gap-7 | No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's conduct. | absence | standards gap | TDRA | IMDA 2.1.2 | all |
 | gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | none; the recommendation is the example | S2-3 |
 | gap-9 | A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
+| gap-10 | Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language. | method | standards gap | TDRA | Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27 | C5 per-language scoring (M, D nodes); mapping (SRC) |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
 | candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 
@@ -324,6 +325,48 @@ Kind: method. Category: legislative gap. Addressee: TDRA, Cabinet. Exposed by: m
 - US COPPA Rule, 16 CFR 312.5 (Parental consent), 312.5(b)(1) (VERIFIED, `kb/sources/global/coppa-16cfr312-5.txt`): "reasonably calculated, in light of available technology, to ensure that the person providing consent is the child's parent"
 
 **Recommendation.** TDRA to issue the Art 11 instructions with the caregiver check an automated channel must run before activating or changing a service, and the consent method for under-13 data. Resolution 106 Art 4(2) already lists acceptable age-verification mechanisms for social media platforms, and 16 CFR 312.5(b) lists acceptable consent methods; the Art 11 instructions can name a list of the same shape for telecom channels.
+
+## gap-10: Arabic at equal quality
+
+Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language.
+
+Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: C5 per-language scoring (M, D nodes); mapping (SRC).
+
+**Clauses searched**
+
+- `tdra-cpr-v2-en:3.2.2` (p. 10): Written information in Arabic or English as the Consumer prefers; both where the preference is unknown. 3.2.1 allows it in electronic form, so an app chat is inside it (inferred). The language is set, not its quality.
+  - EN: "shall be written in the Arabic language or in the English Language as preferred by the Consumer"
+  - AR (the whole chunk): "تُكتب باللغة العربية أو باللغة الإنجليزية على حسب تفضيل المستهلك، أما في الحالات التي يكون فيها التفضيل غير محدد فيجب كتابة المعلومات بكلتا اللغتين."
+- `tdra-cpr-v2-en:4.25.3` (p. 19): The RBT price-confirmation message (PSCM) goes out 'in the appropriate language': RBT only.
+  - EN: "provide the Subscriber with a PSCM in the appropriate language"
+  - AR (the whole chunk): "يجب على المرخص له التصرف فوراً لتزويد المشترك برسالة تأكيد ما بعد الاشتراك باللغة المناسبة. يجب أن تؤدي رسالة تأكيد ما بعد الاشتراك إلى التالي كحد أدنى: (أ) تأكيد سعر خدمة نغمة المتصل المعنية؛ (ب) التبليغ عن أي رسوم تُفرض بصفة متكررة؛ و (ج) تقديم تفاصيل إجراء الإلغاء."
+- `tdra-cpr-v2-en:17.3` (p. 51): A price-rise notice: at least three Arabic and two English national newspapers. Which language, not how well.
+  - EN: "advertisements in at least three (3) Arabic language national newspapers; advertisements in at least two (2) English language national newspapers"
+  - AR (the whole chunk): "يجب على المرخص لهم اتخاذ كافة التدابير المعقولة لتقديم الإشعار المشار إليه في المادة الفرعية17.2 وفي هذا السياق تشمل التدابير المعقولة جميع ما يلي: الإعلان على الأقل في 3 صحف محلية باللغة العربية والإعلان على الأقل في اثنتين من الصحف المحلية باللغة الإنجليزية، إشعار واضح على الموقع الإلكتروني للمرخص له، رسائل نصية فردية للمشتركين (حسب الاقتضاء)؛ ورسائل بريد إلكتروني فردية للمشتركين (حسب الاقتضاء)."
+- `consumer-law-15-2020-en:26` (p. 10): Consumer data, advertisements and contracts in Arabic; other languages may be added.
+  - EN: "The data, advertisements, and contracts related to the Consumer shall be made in Arabic, and other languages may be used in addition to Arabic."
+- `consumer-law-15-2020-en:25(1)` (p. 10): E-commerce suppliers give adequate information in Arabic on the product or service, the contract, payment and warranty.
+  - EN: "adequate information in Arabic about the product or Service provided"
+- `consumer-law-15-2020-en:8(4)` (p. 6): The invoice in Arabic.
+  - EN: "The Invoice shall be in Arabic"
+- `cabinet-66-2023-en:43(5)` (p. 24): Annex 2: AED 100,000 for Art 8(4) (invoice not in Arabic) and AED 100,000 for Art 26 (data, advertisements and contracts not in Arabic).
+  - EN: "AED 100.000 Article 26 The provider fails to write data, advertisements and contracts related to the consumer in Arabic."
+- `licence-2-2026:16.7` (p. 47): The licence's Arabic version binds; the English is for guidance. A document rule, not a service rule.
+  - EN: "The Arabic language version of this License is the binding version."
+- `qos-v3-en:9.5` (p. 17): Annex A: every T indicator counts orders, faults, waits and complaints; none is reported per language. All 43 QoS chunks searched for language, Arabic, English and لغة: no hit.
+  - EN: "Average queue time for calls to the call centre"
+- ITU AI Readiness 2.0 (2026-01), dimension 6 Human Interface, d6_m02 (p. 23; framework, non-binding): A readiness metric: whether AI models exist in the local language of the interface. No duty, no quality measure.
+  - EN (`kb/sources/itu-readiness-dimensions.json`): "Availability of AI models in the local language used in the human interface"
+
+**UAE position.** The language duty is binding and fined; Mizan meets it by answering in the subscriber's language with the clause quoted in that language. Nothing says the Arabic answer must be as good as the English one, and nothing measures it: the QoS Policy counts waits and faults, not languages. Mizan's own figures show the gap can be measured: action recall 0.96 English and 0.94 Arabic, citation validity 0.99 and 1.00 (C5, two runs per scenario per language); the Arabic S2 run cites the Arabic chunk ids. Searched 2026-10-24 in both languages.
+
+**Global example**
+
+- Canada, Official Languages Act, R.S.C. 1985, c. 31 (4th Supp.), Part IV, s. 22 (VERIFIED, `kb/sources/global/canada-ola-part-iv.txt`): "Every federal institution has the duty to ensure that any member of the public can communicate with and obtain available services from its head or central office in either official language"
+- Canada, Official Languages Act, R.S.C. 1985, c. 31 (4th Supp.), Part IV, s. 26 (VERIFIED, `kb/sources/global/canada-ola-part-iv.txt`): "Every federal institution that regulates persons or organizations with respect to any of their activities that relate to the health, safety or security of members of the public has the duty to ensure, through its regulation of those persons or organizations, wherever it is reasonable to do so in the circumstances, that members of the public can communicate with and obtain available services from those persons or organizations in relation to those activities in both official languages."
+- Canada, Official Languages Act, R.S.C. 1985, c. 31 (4th Supp.), Part IV, s. 27 (VERIFIED, `kb/sources/global/canada-ola-part-iv.txt`): "the duty applies in respect of oral and written communications and in respect of any documents or activities that relate to those communications or services."
+
+**Recommendation.** TDRA to add to the QoS Policy, for every automated consumer channel, the same indicators per language (answer accuracy against the Licensee's own policy text, hand-over time, abstention), reported separately for Arabic and English, with a parity band; Canada's Official Languages Act s. 26 shows a regulator imposing the language duty on regulated service providers, and s. 27 extends it to oral channels.
 
 ## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
 

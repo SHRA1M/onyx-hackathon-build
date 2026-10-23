@@ -139,7 +139,8 @@ languages, before the gap was claimed. The addressee is the body whose text woul
 
 Gap 8 is in the standard itself: Y.3172 clause 8.1 gives every node one outcome, the output moving on, while
 CPR 26.7.2 requires the output withheld and the conversation handed to a person. Mizan carries this at D as a hand-over with no sink; the standard
-needs that outcome and its reference point.
+needs that outcome and its reference point. Gap 10: the texts fix the language of service and fine its omission;
+none fixes its quality per language, which our per-language figures show is measurable.
 
 Recommendations. TDRA: a stated time and action when a chat becomes a Consumer Complaint, measured like T1(2a) (1);
 the AI agent placed among the Article 4 sales media (2); the Article 33 trust level 24.10 requires (3); conduct
