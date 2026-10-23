@@ -28,7 +28,7 @@ Ladder step 3 skipped (hq: Figure 2 panel (a) carries the 0.96 and 0.94 figures 
 4. `git diff --stat`: `docs/report.md`, `docs/report.docx`, `CHANGELOG.md`, plus this report-back.
 5. Word: 5 pages, 2,169 words.
 6. `git diff c5cea32 -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py runs/`: printed nothing.
-7. `uv run pytest`: 386 passed. CI: see the commit's run.
+7. `uv run pytest`: 386 passed. CI run 40039491351 on 30e02c4: green.
 
 ## Differs from the order
 
