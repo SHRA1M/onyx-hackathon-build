@@ -1,0 +1,10 @@
+# Report-back: Task 19, what-if replay (2026-10-23; hq ruling: clock on block only)
+
+1. Built at 7615029, CI run 39995571844 success. Tests: 378 pass (14 new in `tests/test_whatif.py`). `gap-1.json` is the order's text verbatim; no field added.
+2. Changes, `runs/c5/S2/run1.jsonl` (en) and `runs/c5/S2/ar/run1.jsonl` (ar), identical in both: `S2-3-care` `draft_reply` block to block, + obligation "hand over within 2 minutes of 2026-10-16 10:12 (synthetic) (proposed-gap-1, not law)"; `S2-5-coordinator` `route` hold to allow, + check and finding (no hand-over time in the log). 8 of 10 decisions identical; S2-4 byte-identical to the plain replay (test). The S2-5 hold carried only `deny_by_default` reasons.
+3. Report: the item 5 sentence took Word to 6 pages; ladder step 1 ("A judge's added step" paragraph dropped) gave 5 pages, 2,178 words. Value check passed; no tagged figure touched.
+4. Viewer: it embeds runs, not the .md pages, so the picker gains "What-if: S2 under the rule gap 1 recommends", which opens the page's text under a link to `whatif-S2-gap-1.md`. Existing viewer tests unchanged and passing.
+5. Item 7f, `git diff --stat 1acf952..HEAD -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py onyx/selftest.py onyx/runs.py kb runs onyx/data/gaps.json eval/results.md` printed nothing (empty output).
+6. Sweep of all 212 replayable committed runs: no run outside S2 changes. In older S2 runs where S2-4 was itself a block (C3 `runs/S2/`, bakeoff, opus-filter-v2), S2-4 gains the clock too, as the block-only rule says. No page or claim reads those runs. 5 partial logs under `_failed/` do not replay at all.
+7. One addition the order did not name: the wrappers install only on governed runs, since on an ungoverned log they would bring the gate back in.
+8. Open for hq: align `report-draft-2026-10-23.md` (S2 sentence added; the "A judge's added step" paragraph gone). Iyas checks the Arabic rule text in `onyx/data/proposed/gap-1.json` before publication.
