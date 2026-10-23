@@ -278,3 +278,16 @@ Moved from background (superseded or old):
 - Regenerated `docs/replay/whatif-S2-gap-1.md` (`whatif runs/c5/S2/run1.jsonl --rule gap-1`) and `docs/replay/index.html` (`replay-page --html`), one line each. What-if output on the en and ar C5 S2 runs captured before and after: identical (S2-3 block to block + obligation, S2-5 hold to allow + check, finding; 8 of 10 identical).
 - Checks: old text only in the Task 19 and 19b filed orders; new text once in JSON, page, viewer; item 7f diff against 1acf952 empty; 378 tests pass; check-data ok; report files untouched (5 pages stand, Word not re-run). Built at c5cea32, CI run 40031528270 green.
 - A stale empty `.git/index.lock` (no git process running) blocked the first commit; removed.
+
+## 2026-10-24: Twenty-eighth wrap, Task 20 gap-10 (Arabic at equal quality)
+
+- Order filed (358d600), built at 5dbb250 (CI run 40036518055 green), report-back 026d8c2.
+- Fetch: scrapling `make_request` with a `#wb-cont` selector returned only the title; curl of `page-2.html` and `page-3.html` (laws-lois.justice.gc.ca) into the scratchpad, HTML stripped by a script, Part IV ss. 21 to 33 saved as `kb/sources/global/canada-ola-part-iv.txt`. Act current to 2026-09-30. ss. 22, 26, 27 verbatim.
+- Every chunk claim in the order matched; the 43 QoS chunks carry no language word in either language. Five chunk lines inserted in document order (no existing line changed), `kb ingest` 130.
+- Row gap-10 with nine searched clauses (QoS by 9.5, the only committed QoS chunk) and a new `framework` field for the Readiness 2.0 d6_m02 line (non-binding); `gaps.py` gained the Canada label and the framework render. Tests in `tests/test_gaps.py`; `tests/test_prompt_v3.py` non-id changed to gap-11; candidates now at adviser lines 11 and 12.
+- The order's competitor basis named two entries; `test_no_other_entry_is_named_in_a_tracked_file` failed on it. Iyas chose the unnamed wording.
+- Report: one sentence after the gap 8 paragraph; README "Ten rows"; docx 5 pages, 2,204 words. 386 tests, check-data ok; protected diff from c5cea32 empty (`onyx/scorer.py` named by the order does not exist; `onyx/eval.py` unchanged).
+- Tried: a Python heredoc to edit tests failed its own assert (the Git Bash quoting trap); redone with the Edit tool.
+- Moved here from the background (still true, least current):
+  - 2026-10-23 (hq rulings on Task 12's first stop, filed in the order): a plain decimal outside 0.00 to 1.00 matches only the named run set, rounded (2.33 is 2.3); a single digit alone in brackets is a list marker. Ids (S1, S3-4, C5, v3) are skipped as names.
+  - 2026-10-23 (Iyas, rulings on Task 12's second stop, filed in the order): docx creator "Team Onyx"; captions plain 10 pt, backticks dropped, bold header labels accepted; a paragraph with two tags is checked sentence by sentence, each against its own tag (the Results paragraph: C5 sentences against the C5 column, the latency sentence against the C3 latency lines). The five-page cut is hq's, by a new order replacing `docs/report.md`.
