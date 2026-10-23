@@ -1,10 +1,10 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-23 (twenty-sixth wrap, Opus: Task 18 item 6 added; Task 19, the what-if replay, built on hq's block-only ruling).
+Updated 2026-10-23 (twenty-seventh wrap, Opus: Task 19b, gap 1 rule's Arabic text replaced with Iyas's wording).
 
 ## What this is
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). Latest: `2026-10-23-task-19-whatif-replay.md` (7615029, CI green run 39995571844; hq's block-only ruling is `D:\Projects\hq\uni\ai-for-good-hackathon\task-19-ruling-block-only-2026-10-23.md`), after `2026-10-23-task-18-report-five-pages.md` (1acf952; item 6 at 6259011 on hq's ruling). hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. No order in hand. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). Latest: `2026-10-23-task-19b-gap-1-arabic.md` (c5cea32, CI green run 40031528270), after `2026-10-23-task-19-whatif-replay.md` (7615029, CI green run 39995571844; hq's block-only ruling is `D:\Projects\hq\uni\ai-for-good-hackathon\task-19-ruling-block-only-2026-10-23.md`), after `2026-10-23-task-18-report-five-pages.md` (1acf952; item 6 at 6259011 on hq's ruling). hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. No order in hand. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
 
 ## Stack and how it runs
 
@@ -44,11 +44,13 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - 2026-10-23 (Iyas, rulings on Task 12's second stop, filed in the order): docx creator "Team Onyx"; captions plain 10 pt, backticks dropped, bold header labels accepted; a paragraph with two tags is checked sentence by sentence, each against its own tag (the Results paragraph: C5 sentences against the C5 column, the latency sentence against the C3 latency lines). The five-page cut is hq's, by a new order replacing `docs/report.md`.
 - 2026-10-23 (Task 18 item 5): README opens with `## For the reviewer` (the four criteria, one place each) under the synthetic-data notice; the README layout tests expect it as the first heading.
 - 2026-10-23 (hq ruling on Task 19's stop): the proposed gap-1 clock goes only on a `block` verdict; S2-4 (already with H-01) never gains it. On the C5 S2 runs, en and ar, S2-3 gains the clock and S2-5 goes hold to allow with the hand-over-time finding; 8 of 10 decisions identical. Older S2 runs where S2-4 was a block gain it at S2-4 too (reported, no page reads them).
+- 2026-10-23 (Iyas, Task 19b): `text_ar` of `onyx/data/proposed/gap-1.json` is Iyas's wording; its two straight quotes are stored as `\"`, so the decoded value is the order's string. What-if decisions unchanged.
 - 2026-10-23 (Iyas): the replay viewer follows the markdown pages (Task 14's rule kept), so English S3 to S5 show C5 run1.
 - 2026-10-23 (Task 12 item 6): a candidate row carries the register id when the key names exactly one `candidate-` id at that step (`local_id` keeps `candidate-S1-6`). Gap recall reads the log's flag_gap and abstention gaps, not candidates.jsonl, so the fix changes no score.
 
 ## Traps
 
+- An order string with straight double quotes goes into JSON through `json.dumps`, never a raw text replace (Task 19b broke the file once that way).
 - Every Y.3172 chunk carries page 1 (chunker quirk); a gap row gives its own `page`. `kb/sources/global/` is gitignored, so the verbatim global-quote test skips in CI.
 
 - USD 1.12 is left of the USD 20 prepaid balance: no live run fits a full batch. Any new live run needs Iyas to top up first.
@@ -75,7 +77,6 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Open
 
 - hq aligns `report-draft-2026-10-23.md` to `docs/report.md` (Task 19 S2 sentence added, "A judge's added step" paragraph dropped).
-- Iyas checks the Arabic `text_ar` in `onyx/data/proposed/gap-1.json` before publication.
 - Part B of Task 12 (video script, judge card) waits for hq's order.
 - Master Task 10's Rich `onyx/demo.py` tables not built (Files line, not a checklist item).
 - README team line names three members until hq confirms their spellings.

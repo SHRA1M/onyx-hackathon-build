@@ -271,3 +271,10 @@ Moved from background (superseded or old):
   - 2026-10-22 (hq, Task 16 report-back rulings, filed in the order): accepted as built. `page_of` returns None only when every committed chunk of a document says page 1; S1 `grounded_in` lists 17.4 and 17.4.1. The two entry names inside the filed order stay until hq strips them with the clean-history public repo before 2026-11-09; the name test skips `docs/work-orders/` until then.
   - 2026-10-22 (hq, Task 17 ruling 4, 151402f): figure SVGs are byte-checked against the committed files across machines; PNGs only against a same-machine redraw (test draws twice; CI's `git diff` excludes `docs/fig/*.png`). Committed PNGs are the Windows ones.
   - 2026-10-22 (hq rulings on Task 17's first stop): panel (b) draws the C3 Governed and Ungoverned tables with its own caption line, no column added to results.md; item 4 (report hook) waits for Task 12, which places both figures.
+
+## 2026-10-23: Twenty-seventh wrap, Task 19b gap 1 Arabic text
+
+- Order filed (fc2c02e). `text_ar` in `onyx/data/proposed/gap-1.json` set from the filed order's line programmatically. A first raw text replace broke the JSON on the string's two straight quotes; redone through `json.dumps` (stored as `\"`), decoded value asserted equal to the order's string.
+- Regenerated `docs/replay/whatif-S2-gap-1.md` (`whatif runs/c5/S2/run1.jsonl --rule gap-1`) and `docs/replay/index.html` (`replay-page --html`), one line each. What-if output on the en and ar C5 S2 runs captured before and after: identical (S2-3 block to block + obligation, S2-5 hold to allow + check, finding; 8 of 10 identical).
+- Checks: old text only in the Task 19 and 19b filed orders; new text once in JSON, page, viewer; item 7f diff against 1acf952 empty; 378 tests pass; check-data ok; report files untouched (5 pages stand, Word not re-run). Built at c5cea32, CI run 40031528270 green.
+- A stale empty `.git/index.lock` (no git process running) blocked the first commit; removed.
