@@ -283,6 +283,18 @@ def test_readme_register_row_is_hqs_wording():
     assert row.split(" | ")[1] == GAP_79
 
 
+LAW_PROVENANCE = (
+    "The Telecommunications Law 3/2003 is read from the federal legislation portal's consolidated texts, English and "
+    "Arabic; Arabic prevails, Arabic Articles 13, 14 and 72 to 79 bis were read from page images, and Art 14(3) is "
+    "quoted from the Arabic because the portal's English mistranslates it (manifest notes)."
+)
+
+
+def test_readme_knowledge_base_paragraph_ends_with_hqs_law_sentence():  # Task 18 item 6, hq ruling 2026-10-23
+    paragraph = README.split("\nKnowledge base: 36 VERIFIED", 1)[1].split("\n\n", 1)[0]
+    assert " ".join(paragraph.split()).endswith(LAW_PROVENANCE)
+
+
 def test_gaps_md_labels_pages_p():
     text = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
     assert "` (page " not in text and "`licence-2-2026:16.3.3` (p. 45)" in text  # the label, not a row's own words
