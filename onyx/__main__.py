@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from onyx import audit, bakeoff, coordinator, data, eval, gaps, kb, replay_page, runs, selftest
+from onyx import audit, bakeoff, coordinator, data, eval, gaps, kb, replay_page, runs, selftest, whatif
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -22,6 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     selftest.register(subparsers)
     gaps.register(subparsers)
     replay_page.register(subparsers)
+    whatif.register(subparsers)
     return parser
 
 

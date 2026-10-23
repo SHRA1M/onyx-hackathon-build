@@ -16,13 +16,15 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
-from onyx import audit, data, eval as eval_mod, gate, kb, replay_page, runs
+from onyx import audit, data, eval as eval_mod, gate, kb, replay_page, runs, whatif
 
 OUT = kb.REPO / "docs" / "replay" / "index.html"
 NOTICE = "The operator, subscribers and numbers are synthetic; the law texts are real, linked and hashed."
 HEADLINE = ("citation_validity", "action_recall", "abstention", "gap_recall")
 NAMES = {"citation_validity": "citation validity", "action_recall": "action recall", "abstention": "abstention",
          "gap_recall": "gap recall", "ungoverned_claims_allowed": "ungoverned claims allowed"}
+WHATIF_RUN = replay_page.RUNS / "c5" / "S2" / "run1.jsonl"
+WHATIF_LABEL = "What-if: S2 under the rule gap 1 recommends"
 WORDS = {gate.ALLOW: ("allow", "v-allow"), gate.HOLD: ("hold", "v-hold"), gate.BLOCK: ("block", "v-block"),
          gate.INSUFFICIENT: ("insufficient evidence", "v-insufficient")}
 
@@ -235,6 +237,13 @@ class Viewer:
                 headlines.append(headline)
             sections.append(f'<section class="scenario" data-sid="{sid}"><h2>{sid}: {escape(scenario["title_en"])} '
                             f'{_text(scenario["title_ar"], lang="ar")}</h2>\n' + "\n".join(runs_html) + "</section>")
+        # Task 19 item 2: the what-if page's text, opened from the picker, under a link to the page
+        name = whatif.page_name(WHATIF_RUN, "gap-1")
+        sid = name.removesuffix(".md")
+        picker.append(f'<button data-sid="{sid}">{escape(WHATIF_LABEL)}</button>')
+        sections.append(f'<section class="whatif" data-sid="{sid}"><h2>{escape(WHATIF_LABEL)}</h2>\n'
+                        f'<p class="meta"><a href="{name}">{name}</a></p>\n'
+                        f'<pre class="text" dir="auto">{escape(whatif.render(WHATIF_RUN, "gap-1"))}</pre></section>')
         events = json.dumps(self.events, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         events = events.replace("</", "<\\/").replace("<!--", "<\\!--")
         return TEMPLATE.format(css=CSS, js=JS, headlines="\n".join(headlines), picker="\n".join(picker),
@@ -322,8 +331,9 @@ q.quote { display: inline-block; margin: 2px 0; }
 .ungoverned { margin-top: 12px; padding: 6px 10px; border: 1px dashed var(--line); }
 .ungoverned summary { cursor: pointer; color: var(--muted); }
 code { font-size: .9em; overflow-wrap: anywhere; }
-.scenario, .run, .step, .headline { display: none; }
-.scenario.on, .run.on, .step.on, .headline.on { display: block; }
+.scenario, .whatif, .run, .step, .headline { display: none; }
+.scenario.on, .whatif.on, .run.on, .step.on, .headline.on { display: block; }
+pre.text { white-space: pre-wrap; font: inherit; font-size: .92em; }
 body.present { font-size: 22.4px; }
 body.present .picker { display: none; }
 """
@@ -337,7 +347,7 @@ JS = """
     return run ? all(".step", run) : [];
   }
   function show() {
-    all(".scenario").forEach(function (el) { el.classList.toggle("on", el.dataset.sid === sid); });
+    all(".scenario, .whatif").forEach(function (el) { el.classList.toggle("on", el.dataset.sid === sid); });
     all(".run").forEach(function (el) { el.classList.toggle("on", el.dataset.sid === sid && el.dataset.lang === lang); });
     all(".headline").forEach(function (el) {
       el.classList.toggle("on", el.dataset.sid === sid && el.dataset.lang === lang);
@@ -347,7 +357,7 @@ JS = """
     var list = steps();
     index = Math.max(0, Math.min(index, list.length - 1));
     list.forEach(function (el, i) { el.classList.toggle("on", i === index); });
-    document.getElementById("count").textContent = "Step " + (index + 1) + " of " + list.length;
+    document.getElementById("count").textContent = list.length ? "Step " + (index + 1) + " of " + list.length : "";
   }
   function move(delta) {
     var list = steps();

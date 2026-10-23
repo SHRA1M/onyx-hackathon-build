@@ -9,7 +9,7 @@
 The four published criteria, each with the one place that shows it:
 
 1. Knowledge base: `kb/manifest.csv` (40 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`.
-2. Agent capability in error scenarios, and the gaps: `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`.
+2. Agent capability in error scenarios, and the gaps: `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay
 3. Auditability: `uv run python -m onyx selftest` recomputes every figure in `docs/report.docx` from the committed hash-chained logs in `runs/`; `uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl` re-decides one run offline.
 4. ITU-T Y.3172 and the Readiness Framework: `docs/report.docx`, sections 3 and 4, and the Y.3172 mapping table below.
 
@@ -50,7 +50,7 @@ complaint or a disconnection. The binding texts do, and Mizan's gates are writte
 
 ## Gap register
 
-Nine rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each row's clauses searched, both languages, global quotes and recommendation are in [`docs/gaps.md`](docs/gaps.md).
+Nine rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each row's clauses searched, both languages, global quotes and recommendation are in [`docs/gaps.md`](docs/gaps.md). Gap 1 is also tested, not only stated: `uv run python -m onyx whatif runs/c5/S2/run1.jsonl --rule gap-1` replays the recorded S2 run under the rule the register recommends (proposed, not law): the held step S2-5 is released, the hand-over duty gains a two-minute clock, and one new finding appears: the rule needs the hand-over time recorded, which this log does not carry. Page: `docs/replay/whatif-S2-gap-1.md`.
 
 <!-- gap-register:start -->
 | id | gap | kind | category | addressee | global example | exposed by |
