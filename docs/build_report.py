@@ -426,6 +426,7 @@ def write(builder: Builder, out: Path) -> None:
     with zipfile.ZipFile(buffer) as src, zipfile.ZipFile(out, "w", zipfile.ZIP_STORED) as dst:
         for info in src.infolist():
             entry = zipfile.ZipInfo(info.filename, date_time=ZIP_TIME)
+            entry.create_system = 0  # zipfile writes 3 on Linux, 0 on Windows
             entry.external_attr = 0o600 << 16
             dst.writestr(entry, src.read(info.filename))
 

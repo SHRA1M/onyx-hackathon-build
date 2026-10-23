@@ -4,6 +4,7 @@ One entry per fix: date, what broke, what changed.
 
 ## 2026-10-23
 
+- Broke: CI failed on the first push of the report build: the docx built on Linux differed from the Windows one by one byte, the zip central directory's "made on" system (3 on Linux, 0 on Windows). Changed: `docs/build_report.py` writes 0 on every machine; the committed docx is unchanged.
 - Added (order 2026-10-23-task-12-report-build, hq rulings 1 and 2): `docs/build_report.py` writes `docs/report.docx` from `docs/report.md` on `docs/report-template.docx` after checking every figure in a tagged paragraph against `eval/results.md`; byte-identical builds; CI builds it. `scripts/report_pages.ps1` counts pages through Word. python-docx joins the dev extras.
 - Broke: the S1, S3, S4 and S5 replay pages read C3 runs while the scored run is C5. Changed (item 5): S3 to S5 read their first English C5 run citing the grounding clauses; S1 stays on C3 (no run cites CPR 17.4); README table, paragraph and the two "Run it without a key" replay lines updated; the viewer follows the pages in English (Iyas).
 - Broke: the coordinator wrote candidate rows as `candidate-S1-6` while the register and key say `candidate-4-4-fixed-term-bundle`. Changed (item 6): the row carries the key's one `candidate-` id at that step, `local_id` the old form. Committed runs and candidates files unchanged.
