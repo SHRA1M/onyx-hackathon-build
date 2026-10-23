@@ -8,3 +8,4 @@
 6. Departures: three older README tests (Task 9 and Task 16 layout) now expect "For the reviewer" as the first heading; the 0.01 value test follows the new line wrap. No provenance-sentence test, since the sentence is held.
 7. Tests: 363 pass; selftest prints "figures match a fresh eval of runs/".
 8. Open for hq: the item 6 wording (for example "read from the portal's consolidated texts, English from its text layer, Arabic Articles 13, 14 and 72 to 79 bis from page images").
+9. Item 6 built at 6259011 (hq ruling 2026-10-23): hq's sentence closes the README "Knowledge base" paragraph; test `test_readme_knowledge_base_paragraph_ends_with_hqs_law_sentence`; 364 pass; CI run 39993970699 success.
