@@ -1,22 +1,23 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-23 (twenty-fourth wrap, Opus).
+Updated 2026-10-23 (twenty-fifth wrap, Opus).
 
 ## Objective
 
-Finish Task 12 part A (`docs/work-orders/2026-10-23-task-12-report-build.md`). Built and committed; stopped at item 4
-because `docs/report.docx` is 9 pages against a limit of 5. hq trims `docs/report.md` (scenarios first).
+Close Task 18 (`docs/work-orders/2026-10-23-task-18-report-five-pages.md`). Built and pushed (1acf952, CI green):
+the report is 5 pages, 2,175 words; Figures 1 and 2 redrawn at 16 cm; README "For the reviewer" block in. Item 6
+(the Telecom Law provenance sentence) is held: the Arabic manifest row says page images, the sentence says text
+layers, no OCR.
 
 ## Next moves
 
-1. Apply hq's trim lines to `docs/report.md`; rebuild with `uv run python docs/build_report.py`.
-2. Count pages: `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1`. Five or fewer: put the count in
-   `docs/report-back/2026-10-23-task-12-report-build.md`, commit, push, check CI.
-3. Then Part B (video script, judge card) when hq orders it.
+1. Take hq's reworded item 6 sentence; add it at the end of the README "Knowledge base" paragraph with a test;
+   full suite, commit, push, check CI.
+2. Then Task 12 Part B (video script, judge card) when hq orders it.
 
 ## Open questions
 
-- hq: the trim; whether the docx creator should stop reading the template author.
+- hq: item 6 wording (report-back `docs/report-back/2026-10-23-task-18-report-five-pages.md` quotes both rows).
 - hq: strips the two entry names from the filed Task 16 order before 2026-11-09.
 - USD 1.12 left of the USD 20 balance: any live run needs a top-up.
 - hq: the team members' spellings for the README team line.
