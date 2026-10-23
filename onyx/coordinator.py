@@ -249,9 +249,22 @@ class Coordinator:
         if release.kind == "inject" or not result.gaps:
             self._candidate(release, result, event_hash)
 
+    def _register_candidate(self, release: Release) -> str | None:
+        """The one `candidate-` id the scenario's key names at this inject's step, or None (order 2026-10-23 Task 12
+        item 6): the row then carries the register's id, as the key and onyx/data/gaps.json do."""
+        path = data.KEYS_DIR / f"{self.sid}.json"
+        if release.kind == "inject" or not path.exists():
+            return None
+        ids = [g for s in data.load_key(self.sid)["steps"] if s["n"] == release.n
+               for g in s.get("gaps", []) if g.startswith("candidate-")]
+        return ids[0] if len(ids) == 1 else None
+
     def _candidate(self, release: Release, result: StepResult, event_hash: str) -> None:
         self.gaps_dir.mkdir(parents=True, exist_ok=True)
-        row = {"id": f"candidate-{release.inject}", "scenario": self.sid, "inject": release.inject,
+        local_id = f"candidate-{release.inject}"
+        register_id = self._register_candidate(release)
+        ids = {"id": register_id, "local_id": local_id} if register_id else {"id": local_id}
+        row = {**ids, "scenario": self.sid, "inject": release.inject,
                "lang": self.lang, "text": release.text, "status": "candidate",
                "clauses_searched": result.searched, "gaps_named": result.gaps, "log": str(self.log.path),
                "log_hash": event_hash}

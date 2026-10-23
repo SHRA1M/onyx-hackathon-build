@@ -173,8 +173,9 @@ def test_readme_scored_run_is_c5_with_the_figures_eval_wrote():
 def test_s2_replay_page_reads_the_first_c5_run_with_the_hand_over_and_step_4_allowed():
     from onyx import replay_page
     assert replay_page.source("S2") == replay_page.RUNS / "c5" / "S2" / "ar" / "run1.jsonl"
-    for sid in ("S1", "S3", "S4", "S5"):
-        assert replay_page.source(sid) == replay_page.RUNS / sid / "run1.jsonl"
+    # order 2026-10-23 Task 12 item 5: S3 to S5 read their first English C5 run; S1 stays on C3 (test_report.py)
+    for sid in ("S3", "S4", "S5"):
+        assert replay_page.source(sid) == replay_page.RUNS / "c5" / sid / "run1.jsonl"
     page = replay_page.render(replay_page.source("S2"))
     assert "`runs/c5/S2/ar/run1.jsonl`" in page and replay_page.C5_S2_LINE in page
 

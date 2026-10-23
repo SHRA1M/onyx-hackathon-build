@@ -5,8 +5,9 @@ committed logs, rules.json and the manifest; the script only shows one step at a
 
 Runs shown, per scenario and language: the markdown page's rule (replay_page.source). S2 reads the first C5 run in
 that language whose step 3 carries the hand-over with both quotes and whose step 4 is allowed; with none (English),
-the first C5 run whose step 3 carries the hand-over. Beside each, the C3 ungoverned run 1 of the same scenario and
-language. Figures are eval.run_metrics on those runs, never typed."""
+the first C5 run whose step 3 carries the hand-over. In English, S1, S3, S4 and S5 show the markdown page's run (a
+C5 run where one cites the grounding clauses, order 2026-10-23 Task 12 item 5, Iyas's ruling); in Arabic, C3 run 1.
+Beside each, the C3 ungoverned run 1 of the same scenario and language. Figures are eval.run_metrics on those runs, never typed."""
 
 from __future__ import annotations
 
@@ -36,6 +37,8 @@ def source(sid: str, lang: str) -> Path:
         c5 = [p for n in (1, 2) if (p := runs.run_path(replay_page.RUNS / "c5", sid, n, lang)).exists()]
         for path in [p for p in c5 if replay_page._shows_handover(p)] + [p for p in c5 if _step3_handover(p)]:
             return path
+    if lang == "en":
+        return replay_page.source(sid)
     return runs.run_path(replay_page.RUNS, sid, 1, lang)
 
 

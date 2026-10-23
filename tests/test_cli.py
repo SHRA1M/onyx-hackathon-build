@@ -92,7 +92,7 @@ def test_quickstart_holds_the_order_commands():
     lines = _quickstart()
     assert lines[0].startswith("git clone ") and "uv sync" in lines
     assert "uv run python -m onyx selftest" in lines
-    assert any(re.fullmatch(r"uv run python -m onyx replay runs/S2/(ar/)?run\d\.jsonl", l) for l in lines)
+    assert any(re.fullmatch(r"uv run python -m onyx replay runs/(c5/)?S2/(ar/)?run\d\.jsonl", l) for l in lines)
     assert "uv run pytest -q" in lines
 
 

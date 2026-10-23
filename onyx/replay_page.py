@@ -4,7 +4,9 @@ proposal, the gate's verdict, the clause ids with their quotes, and both languag
 abstention. Text only, read from the committed log and rules.json; byte-identical on every run.
 
 S2 reads the first C5 run (runs/c5/S2: English run1, run2, then Arabic) whose step 3 carries the hand-over with both
-quotes and whose step 4, the human's, is allowed, when there is one (order 2026-10-22 item 12); the page says so."""
+quotes and whose step 4, the human's, is allowed, when there is one (order 2026-10-22 item 12); the page says so.
+S1, S3, S4 and S5 read the first English C5 run (run1, then run2) that cites every clause the scenario is grounded in,
+in a proposal or a gate verdict; with none, the C3 run above (order 2026-10-23 Task 12 item 5)."""
 
 from __future__ import annotations
 
@@ -29,14 +31,33 @@ def _shows_handover(path: Path) -> bool:
     return step3 and step4
 
 
+def cites_grounding(path: Path, sid: str) -> bool:
+    """Every grounded_in clause of the scenario is cited in the run: a proposal's clause id, or the clause of a rule
+    a gate verdict names."""
+    rules = _rules()
+    cited: set[str] = set()
+    for e in runs._events(path):
+        if e["action"] == "propose":
+            cited |= {c for p in e["new_value"]["proposals"] for c in p.get("clause_ids", [])}
+        elif e["action"] == "gate":
+            cited |= {f"{rules[r]['document_id']}:{rules[r]['chunk']}" if r in rules else r
+                      for r in e.get("clause_ids") or []}
+    return all(c["clause_id"] in cited for c in data.load_scenario(sid)["grounded_in"]["clauses"])
+
+
 def source(sid: str) -> Path:
-    """The run a scenario's page reads: runs/S<n>/run1.jsonl, or for S2 the first C5 run showing the hand-over."""
+    """The run a scenario's page reads (module docstring): a C5 run where one qualifies, else runs/S<n>/run1.jsonl."""
     if sid == "S2":
         for lang in runs.LANGS:
             for n in (1, 2):
                 path = runs.run_path(RUNS / "c5", sid, n, lang)
                 if path.exists() and _shows_handover(path):
                     return path
+    else:
+        for n in (1, 2):
+            path = runs.run_path(RUNS / "c5", sid, n, "en")
+            if path.exists() and cites_grounding(path, sid):
+                return path
     return RUNS / sid / "run1.jsonl"
 
 
@@ -98,7 +119,7 @@ def render(path: str | Path) -> str:
              f"Model `{config.get('model')}`, prompt {config.get('prompt', 'not logged (labels began with v4)')}, "
              f"{config.get('mode')}, "
              f"{config.get('lang')}. Hash chain: {'ok' if audit.verify(path) else 'BROKEN'}."]
-    if "c5" in path.resolve().relative_to(RUNS).parts:
+    if sid == "S2" and "c5" in path.resolve().relative_to(RUNS).parts:
         lines += ["", C5_S2_LINE]
     for e in events[1:]:
         nv = e["new_value"] or {}

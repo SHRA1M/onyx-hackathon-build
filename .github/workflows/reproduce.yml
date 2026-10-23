@@ -33,6 +33,9 @@ jobs:
       - run: uv run --no-sync python -m onyx gaps
       - run: uv run --no-sync python -m onyx replay-page
       - run: uv run --no-sync python -m onyx replay-page --html
+      # order 2026-10-23-task-12-report-build: the report, built before the figures are redrawn, so it embeds the
+      # committed PNGs and stays byte-identical across machines; the value check fails the step on a wrong figure
+      - run: uv run --no-sync python docs/build_report.py
       # order 2026-10-22-task-17-figures: Figure 1 and Figure 2, redrawn from the README table and eval/results.md
       - run: uv run --no-sync python scripts/fig_architecture.py
       - run: uv run --no-sync python scripts/fig_results.py
