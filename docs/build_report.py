@@ -19,7 +19,7 @@ Value check (item 3, hq rulings 1 and 2 of 2026-10-23): in each tagged paragraph
   - a two-decimal number from 0.00 to 1.00, or a plain decimal outside it: a unitless value, rounded likewise;
   - anything else: "cannot classify", and the build fails.
 Values come from the Governed and Ungoverned tables and their latency lines (C3), the "C3, C4 and C5" table and the
-per-scenario C3 / C4 / C5 table (C3 and C5 columns), and the Misses line (C5).
+per-scenario C3 / C4 / C5 table (C3 and C5 columns), and the Misses line (C5). A paragraph with both tags is checked sentence by sentence, each against its own tag.
 
     uv run python docs/build_report.py [--md docs/report.md] [--out docs/report.docx]
 """
@@ -57,6 +57,7 @@ FIXED_DATE = dt.datetime(2026, 10, 23, tzinfo=dt.timezone.utc)
 ZIP_TIME = (2026, 10, 23, 0, 0, 0)
 TABLE_WIDTH = 9359  # the template table's width, dxa
 FONT = "Times New Roman"
+CREATOR = "Team Onyx"
 
 TAG = re.compile(r"\s*`\[(C[35])\b[^\]]*\]`")
 TOKEN = re.compile(r"(?P<marker>\(\d\)(?![\d.]))"
@@ -193,9 +194,28 @@ def _rounded(value: Decimal, token: str) -> Decimal:
     return value.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
 
 
+def _parts(para: str) -> list[tuple[str, list[str]]]:
+    """A paragraph with one run set whole; one with two split into sentences, each under the tag it carries, else
+    the last tag before it, else the first after it (hq ruling, 2026-10-23: the Results paragraph's C5 and C3
+    parts are checked apart)."""
+    names = list(dict.fromkeys(tags(para)))
+    if len(names) < 2:
+        return [(para, names)]
+    sentences = re.split(r"(?<=\.)\s+(?=[A-Z*(])", para)
+    named = [list(dict.fromkeys(tags(s))) for s in sentences]
+    for order in (range(1, len(named)), range(len(named) - 2, -1, -1)):
+        for i in order:
+            j = i - 1 if order.step == 1 else i + 1
+            named[i] = named[i] or named[j]
+    return list(zip(sentences, named))
+
+
 def check_paragraph(para: str, sets: dict[str, RunSet]) -> list[str]:
     """Each figure token of a tagged paragraph that matches no value of the named run sets, with why."""
-    named = [sets[name] for name in dict.fromkeys(tags(para))]
+    return [problem for part, names in _parts(para) for problem in _check(part, [sets[n] for n in names])]
+
+
+def _check(para: str, named: list[RunSet]) -> list[str]:
     values = [v for s in named for v in s.values]
     units = [u for s in named for u in s.units]
     pairs = set().union(*(s.pairs for s in named))
@@ -414,6 +434,7 @@ def render(report: Report) -> Builder:
     core = b.doc.core_properties
     core.created = FIXED_DATE
     core.modified = FIXED_DATE
+    core.author = core.last_modified_by = CREATOR  # hq ruling, 2026-10-23: not the template's author
     return b
 
 

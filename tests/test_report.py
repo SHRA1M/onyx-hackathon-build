@@ -103,6 +103,14 @@ def test_core_dates_are_fixed(built):
     assert "2026-10-23T00:00:00Z" in core
 
 
+def test_the_creator_is_team_onyx_and_the_template_author_is_gone(built):
+    core = _xml(built, "docProps/core.xml")
+    assert "<dc:creator>Team Onyx</dc:creator>" in core
+    with zipfile.ZipFile(built) as z:
+        for name in z.namelist():
+            assert b"Meng" not in z.read(name), name
+
+
 def test_a_missing_figure_fails_the_build(tmp_path):
     md = tmp_path / "report.md"
     md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("fig2-results.png", "fig9-missing.png"),
@@ -122,6 +130,27 @@ def test_a_tagged_value_changed_by_001_fails_naming_the_token(tmp_path):
     output = result.stdout + result.stderr
     assert result.returncode != 0
     assert "0.97" in output and "Results" in output
+
+
+def test_a_c3_only_value_in_the_c5_part_of_the_results_paragraph_fails(tmp_path):
+    text = REPORT_MD.read_text(encoding="utf-8")
+    assert "gap recall 0.87." in text
+    md = tmp_path / "report.md"
+    md.write_text(text.replace("gap recall 0.87.", "gap recall 0.86."), encoding="utf-8", newline="\n")
+    result = _build(md, tmp_path / "out.docx")
+    assert result.returncode != 0 and "0.86: no value in the run set" in result.stdout + result.stderr
+
+
+@pytest.mark.parametrize("para, bad", [
+    ("Recall 0.96 `[C5, x]`. The gate took 0.46 ms and 0.96 `[C3, y]`.", "0.96"),   # 0.96 is C5 only
+    ("Recall 0.86 `[C5, x]`. The gate took 0.46 ms `[C3, y]`.", "0.86"),            # 0.86 is C3 only
+    ("Recall 0.87 and 0.46 ms `[C5, x]`. Then 7.8 s `[C3, y]`.", "0.46 ms"),        # C5 has no latency line
+])
+def test_a_paragraph_with_two_tags_checks_each_sentence_against_its_own_tag(para, bad):
+    build = _load()
+    sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
+    problems = build.check_paragraph(para, sets)
+    assert len(problems) == 1 and problems[0].startswith(f"{bad}:")
 
 
 def test_every_tagged_paragraph_of_the_report_passes():

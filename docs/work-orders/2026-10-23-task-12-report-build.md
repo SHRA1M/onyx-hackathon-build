@@ -90,3 +90,15 @@ script, never typed. The builder is that script.
    A match from another run set does not count. Nothing else widens.
 2. **A single digit alone in brackets, (1) to (9), is a list marker** and is skipped. Two or more digits, or a digit
    with a unit or a decimal point inside the brackets, is still checked.
+
+## Rulings on the build's second stop (Iyas, 2026-10-23)
+
+Commit and push as built; CI must be green.
+
+1. **Docx creator.** Set the docx creator to "Team Onyx" and drop the template author.
+2. **Rendering choices.** Captions plain 10 pt, backticks dropped, bold header labels: all accepted.
+3. **The Results paragraph.** Keep both tags, but the C3 clause (gate and model latency, 222 decisions, 156 calls)
+   must match the C3 latency lines and the C5 figures must match the C5 column. If the check cannot split a
+   paragraph by sub-tag, leave it as is and say so in the report-back.
+4. **Five pages.** The five-page cut is hq's: a new order will replace `docs/report.md`; do not trim. The
+   report-back gives pages 9, words 3,241, the page-6 sentence, and the scorer note on gap recall.
