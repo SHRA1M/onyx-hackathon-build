@@ -32,10 +32,7 @@ subscribers are synthetic; no consumer data was used.
 **The problem and the existing protections.** A consumer-care AI at a UAE operator can, in one conversation, add a
 paid service, disclose account data, suspend a service and answer a complaint. Each act has a binding rule written
 for a sales call, a shop or an IVR; nothing tells a conversational agent where its mandate ends, and nothing
-records, in a form a regulator can check, which clause each act relied on. The existing protections stop short of
-the channel: the OTP for third-party charges (CPR 4.11) applies only to the sales media the CPR names (gap 2), and
-the IVR hand-over clock in the Quality of Service Policy v3.0 (T1(2a)) starts after the IVR choice, so a chat that
-becomes a complaint has no trigger (gap 1).
+records, in a form a regulator can check, which clause each act relied on.
 
 **Our solution.** Five agents with bounded mandates (care, the policy and legal adviser, the Data Office, the TDRA
 agent, and a coordinator that releases each step only to the agent it names). The model proposes a verb with clause
@@ -136,15 +133,14 @@ languages, before the gap was claimed. The addressee is the body whose text woul
 | 7 | No binding UAE text sets conduct standards for an AI agent dealing with a consumer | standards | TDRA | IMDA 2.1.2 |
 | 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | the recommendation is the example |
 | 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the implementing texts (Arts 6, 11, 16) are unpublished; nothing says how an automated channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
+| 10 | Arabic on an automated channel: the language is set and its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); no text requires the Arabic answer to be as good as the English one, and the QoS Policy has no indicator per language | standards | TDRA | Canada OLA ss. 22, 26, 27 |
 
 Gap 8 is in the standard itself: Y.3172 clause 8.1 gives every node one outcome, the output moving on, while
-CPR 26.7.2 requires the output withheld and the conversation handed to a person. Mizan carries this at D as a hand-over with no sink; the standard
-needs that outcome and its reference point. Gap 10: the texts fix the language of service and fine its omission;
-none fixes its quality per language, which our per-language figures show is measurable.
+CPR 26.7.2 requires the output withheld and the conversation handed to a person. Gap 10 is measurable: action recall 0.96 English, 0.94 Arabic (C5) is the indicator the QoS Policy lacks.
 
 Recommendations. TDRA: a stated time and action when a chat becomes a Consumer Complaint, measured like T1(2a) (1);
 the AI agent placed among the Article 4 sales media (2); the Article 33 trust level 24.10 requires (3); conduct
-standards for AI agents in consumer care (7); the Art 11 instructions with a caregiver check (9). The UAE Data
+standards for AI agents in consumer care (7); the Art 11 instructions with a caregiver check (9); QoS indicators per language, Arabic and English reported separately with a parity band (10). The UAE Data
 Office: the 18(4) procedure (4); the processor terms, transfer controls and country list (5); whether spoken consent
 meets 6(1)(b) (2). The Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome that routes the
 case to a named human (8).
@@ -156,5 +152,4 @@ records an approval. Before the final on 2026-12-08: the seven
 unseen scenarios run cold, with no keys; the routing step (D-2); a team member approves holds in new runs; a
 data-protection practitioner reads the gates' law. What ITU can reuse: the Arabic clause chunks and runs, for the
 Sandbox Network for Arabic-AI (SNAI); the manifest and the 36 verified records, for the call for domain-specific
-open knowledge bases; the five agent manifests, for the global open repository of AI agents and metadata. The gates, scenarios and keys are offered to TDRA as a test bench for any licensee's
-consumer-facing AI agent.
+open knowledge bases; the five agent manifests, for the global open repository of AI agents and metadata.
