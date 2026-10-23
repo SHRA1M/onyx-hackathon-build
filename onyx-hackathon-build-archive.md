@@ -291,3 +291,12 @@ Moved from background (superseded or old):
 - Moved here from the background (still true, least current):
   - 2026-10-23 (hq rulings on Task 12's first stop, filed in the order): a plain decimal outside 0.00 to 1.00 matches only the named run set, rounded (2.33 is 2.3); a single digit alone in brackets is a list marker. Ids (S1, S3-4, C5, v3) are skipped as names.
   - 2026-10-23 (Iyas, rulings on Task 12's second stop, filed in the order): docx creator "Team Onyx"; captions plain 10 pt, backticks dropped, bold header labels accepted; a paragraph with two tags is checked sentence by sentence, each against its own tag (the Results paragraph: C5 sentences against the C5 column, the latency sentence against the C3 latency lines). The five-page cut is hq's, by a new order replacing `docs/report.md`.
+
+## 2026-10-24: Twenty-ninth wrap, Task 21 gap 10 in the report's table and recommendations
+
+- Order filed (96d6388), built at 30e02c4 (CI run 40039491351 green), report-back in the same commit, CI run named in a follow-up commit.
+- The order's three edits took the report to 6 pages (2,274 words). Order allowed one ladder step: step 2 (test bench sentence) still 6 (2,255); stopped and asked.
+- hq ruling in chat: keep step 2, skip step 3 (Figure 2 panel (a) carries 0.96 and 0.94), take step 4 (gaps 1 and 2 use-case sentence): still 6 (2,199). Stopped.
+- hq ruling file `task-21-ruling-page-six-2026-10-24.md`: cut A (shorter row 10, gap 10 sentence, item (10)) still 6 (2,189); cut B (dropped "Mizan carries this at D ... reference point.") gave 5 pages, 2,169 words. Page 6 began "What ITU can reuse" at every 6-page build.
+- Fewer words than the 5-page Task 20 build (2,204) yet 6 pages: the table row is what costs the space.
+- Checks: 10 table rows, old sentence gone, list ends (10), protected diff from c5cea32 empty, 386 tests pass.
