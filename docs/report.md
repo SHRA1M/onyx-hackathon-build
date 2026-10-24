@@ -10,8 +10,7 @@
 Mizan is a consumer-care AI for a synthetic UAE operator, built around three choices. The case is a subscriber in a
 chat or on a call, not an institution in a drill. The model proposes and plain code written from the binding UAE
 texts decides: every allow, hold or block names the clause it relied on, its page and its words, in English and
-Arabic. It runs and is scored in both languages, because the texts are published in both. Every step
-goes to a hash-chained log that a judge can replay offline without an API key.
+Arabic. It is scored in both languages, because the texts are published in both. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay again under a proposed rule: a what-if question for the policymaker.
 
 The first contact at a UAE operator is already an AI, and e& reported 371,476 customer complaints in its UAE
 operations for 2025 (e&, Sustainability Report Appendices 2025, Appendix 1). The binding texts already bar such an
@@ -29,13 +28,10 @@ subscribers are synthetic; no consumer data was used.
 
 ## Description of the use case
 
-**The problem and the existing protections.** A consumer-care AI at a UAE operator can, in one conversation, add a
-paid service, disclose account data, suspend a service and answer a complaint. Each act has a binding rule written
-for a sales call, a shop or an IVR; nothing tells a conversational agent where its mandate ends, and nothing
+**The problem and the existing protections.** The four acts above each have a binding rule written for a sales call, a shop or an IVR; nothing tells a conversational agent where its mandate ends, and nothing
 records, in a form a regulator can check, which clause each act relied on.
 
-**Our solution.** Five agents with bounded mandates (care, the policy and legal adviser, the Data Office, the TDRA
-agent, and a coordinator that releases each step only to the agent it names). The model proposes a verb with clause
+**Our solution.** Five agents with bounded mandates (care, the policy and legal adviser, the Data Office, TDRA, and a coordinator that releases each step only to the agent it names). The model proposes a verb with clause
 ids and a verbatim quote. Plain-code gates written from the binding texts return allow, hold (a named human must act
 first), block, or insufficient evidence (the agent abstains; a candidate gap is logged). The cases the texts reserve
 for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a contested automated decision
@@ -60,15 +56,15 @@ gate version and key hashes. **SB-1** selftest and the full suite run in CI on e
 
 | Node | Mizan (requirement) | Readiness 2.0 dimension or factor; its metric; evidence in the running system | Documents |
 |---|---|---|---|
-| SRC | injects; manifest with URL, hash, status, language (SRC-1, SRC-2) | 11 AI for Inclusion, "support for regional languages": every clause given in Arabic where published; Arabic runs scored | CPR v2.0 EN and AR; Telecom Law 3/2003 |
-| C | per-agent inbox, staged release (C-1) | 7 Strategy Alignment, "coordination between service providers": operator, regulator and Data Office are separate agents (S5) | Licence 2/2026 (9.1, 9.2.4); PDPL |
+| SRC | injects; manifest with URL, hash, status, language (SRC-1, SRC-2) | 11 AI for Inclusion, "support for regional languages": every clause in Arabic where published; Arabic runs scored | CPR v2.0 EN and AR; Telecom Law 3/2003 |
+| C | per-agent inbox, staged release (C-1) | 7 Strategy Alignment, "coordination between service providers": operator, regulator and Data Office as separate agents (S5) | Licence 2/2026 (9.1, 9.2.4); PDPL |
 | PP | clause chunks; mandate-scoped retrieval (PP-1) | 10 AI & Policies, "policies for nodes in AI pipelines": the policy text is the retrieval unit | all KB rows; `kb/export/` |
-| M | one adapter, any OpenAI-compatible model (M-1) | 6 Human Interface, "AI models in the local language": drafts in both languages; the gate stands between draft and subscriber | PDPL 7(5), 8(1), 13(2), 22, 23; licence 3.4.1 |
-| P | plain-code gates; four verdicts (P-1, P-2) | 8 Collaboration with AI, "comparison with baseline", the baseline "only AI with no human-in-the-loop": the governed-against-ungoverned run | CPR 4.3, 4.10, 4.11, 22.1, 24.6, 24.10, 26.7.2; Cabinet 56/2024; PDPL 18(4) |
-| D | hand-over; deadlines; routing not built (D-1, D-2) | 6 Human Interface: hand-over with both language quotes; no node outcome for it in Y.3172 (gap 8) | CPR 26.13.2, 26.13.3; QoS v3.0 T1(2a) |
+| M | one adapter, any OpenAI-compatible model (M-1) | 6 Human Interface, "AI models in the local language": drafts in both; the gate between draft and subscriber | PDPL 7(5), 8(1), 13(2), 22, 23; licence 3.4.1 |
+| P | plain-code gates; four verdicts (P-1, P-2) | 8 Collaboration with AI, baseline "only AI with no human-in-the-loop": the governed-against-ungoverned run | CPR 4.3, 4.10, 4.11, 22.1, 24.6, 24.10, 26.7.2; Cabinet 56/2024; PDPL 18(4) |
+| D | hand-over; deadlines; routing not built (D-1, D-2) | 6 Human Interface: hand-over with both quotes; no Y.3172 node outcome for it (gap 8) | CPR 26.13.2, 26.13.3; QoS v3.0 T1(2a) |
 | SINK | log; replay; gap register (SINK-1) | 10 AI & Policies, "policy inputs from case briefs": the gap register is an output | Y.3172; Readiness 2.0; IMDA, EU AI Act, GDPR, COPPA |
-| MLFO | staged release; model, prompt, gate version and key hashes per run (MLFO-1) | Standards factor: the pipeline's configuration is recorded and replayable | Y.3172 |
-| ML sandbox | selftest and suite in CI; the governed-against-ungoverned pair (SB-1) | Sandbox factor: the same scenarios with and without the gates on the same model | Y.3172; Readiness 2.0 |
+| MLFO | staged release; model, prompt, gate version and key hashes per run (MLFO-1) | Standards factor: configuration recorded and replayable | Y.3172 |
+| ML sandbox | selftest and suite in CI; the governed-against-ungoverned pair (SB-1) | Sandbox factor: same scenarios with and without gates, same model | Y.3172; Readiness 2.0 |
 
 Five dimensions are claimed with running-system evidence (6, 7, 8, 10, 11); 1 and 13 by documents only; the other
 six are not claimed.
@@ -88,12 +84,11 @@ an expired bundle's renewal is not written: candidate gap.
 **S2, a billing question becomes a complaint.** Care removes a charge with no consent record (4.3): allow. "I never
 ordered this, I am fed up": a Consumer Complaint (2.1.7). Care drafts a reply; the gate blocks it under 26.7.2 and
 licence 9.1, and the coordinator hands the conversation to a named human (D-1). How fast must a chat hand over? No
-text: gap 1. Replayed under the rule the register recommends, the held step releases, the hand-over duty gains its
+text: gap 1. Replayed as a what-if question for the policymaker, under the rule the register recommends, the held step releases, the hand-over duty gains its
 clock, and a new finding appears: the hand-over time must be recorded (`docs/replay/whatif-S2-gap-1.md`).
 
 **S3, a partner wants the data, and the model provider is abroad.** A partner asks for interconnection data: block
-(24.6). A human tries to override and send
-identifiers to the provider abroad: block, no override (P-2; PDPL 22, 23(2); gap 5). A de-identified payload under
+(24.6). An override to send identifiers to the provider abroad: block, no override (P-2; PDPL 22, 23(2); gap 5). A de-identified payload under
 the processor contract: allow, what left logged. A retention offer to a Do Not Call number: block (Cabinet 56/2024).
 
 **S4, non-payment and an automated disconnection.** Disconnection with no warning on file: block (22.1). Notice
@@ -124,16 +119,16 @@ languages, before the gap was claimed. The addressee is the body whose text woul
 
 | # | Gap | Kind | Addressee | Global example |
 |---|---|---|---|---|
-| 1 | Complaint hand-over: trigger and human sourced (CPR 2.1.7, 26.7.2, licence 9.1); stop, hand-over and time limit not written | standards | TDRA | IMDA 2.2.2, 2.4.2 |
+| 1 | Complaint hand-over: the bar and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the stop, the hand-over and its clock are not, so the subscriber stays with the machine and no record shows when it stopped | standards | TDRA | IMDA 2.2.2, 2.4.2 |
 | 2 | Consent elicited by an AI: the CPR sales-medium classification (4.10, 4.17, 4.22) decides whether an OTP is needed; PDPL 6(1)(b) names written or electronic consent, not spoken | coordination | TDRA, UAE Data Office | EU AI Act Art 50(1); IMDA 2.2.2 |
-| 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; Electronic Transactions Art 33 trust levels never mapped to it | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
-| 4 | Automated disconnection: the PDPL 18(4) human review has no procedure, deadline or regulator | responsibilities | UAE Data Office | GDPR Art 22(3) |
-| 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)) was never issued | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |
+| 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; Electronic Transactions Art 33 trust levels never mapped to it, so an operator cannot know what check a voice or chat must pass before it blocks a line or changes a record | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
+| 4 | Automated disconnection: the PDPL 18(4) human review has no procedure, deadline or regulator; a subscriber who contests it has nothing to wait for and nobody to turn to | responsibilities | UAE Data Office | GDPR Art 22(3) |
+| 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)) was never issued, so an operator sending subscriber data to a model abroad guesses at a rule that does not yet exist | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |
 | 6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only | legislative | Cabinet | EU AI Act Art 50(1), 50(5) |
 | 7 | No binding UAE text sets conduct standards for an AI agent dealing with a consumer | standards | TDRA | IMDA 2.1.2 |
 | 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | the recommendation is the example |
 | 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the implementing texts (Arts 6, 11, 16) are unpublished; nothing says how an automated channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
-| 10 | Arabic on an automated channel: the language is set and its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); no text requires the Arabic answer to be as good as the English one, and the QoS Policy has no indicator per language | standards | TDRA | Canada OLA ss. 22, 26, 27 |
+| 10 | Arabic on an automated channel: the language is set and its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); no text requires the Arabic answer to be as good as the English one, and the QoS Policy has no indicator per language, so the Arabic speaker can get the worse answer and nothing measures it | standards | TDRA | Canada OLA ss. 22, 26, 27 |
 
 Gap 8 is in the standard itself: Y.3172 clause 8.1 gives every node one outcome, the output moving on, while
 CPR 26.7.2 requires the output withheld and the conversation handed to a person. Gap 10 is measurable: action recall 0.96 English, 0.94 Arabic (C5) is the indicator the QoS Policy lacks.
@@ -148,8 +143,6 @@ case to a named human (8).
 ## Limits and next steps
 
 The answer keys are ours, hashed before the first run; the humans in the recorded runs are scripted, and no run
-records an approval. Before the final on 2026-12-08: the seven
-unseen scenarios run cold, with no keys; the routing step (D-2); a team member approves holds in new runs; a
-data-protection practitioner reads the gates' law. What ITU can reuse: the Arabic clause chunks and runs, for the
+records an approval. Before the final: the seven unseen scenarios run cold, no keys; routing (D-2); a team member approves holds; a data-protection practitioner reads the gates' law. What ITU can reuse: the Arabic clause chunks and runs, for the
 Sandbox Network for Arabic-AI (SNAI); the manifest and the 36 verified records, for the call for domain-specific
 open knowledge bases; the five agent manifests, for the global open repository of AI agents and metadata.
