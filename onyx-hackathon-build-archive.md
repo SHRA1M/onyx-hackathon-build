@@ -300,3 +300,12 @@ Moved from background (superseded or old):
 - hq ruling file `task-21-ruling-page-six-2026-10-24.md`: cut A (shorter row 10, gap 10 sentence, item (10)) still 6 (2,189); cut B (dropped "Mizan carries this at D ... reference point.") gave 5 pages, 2,169 words. Page 6 began "What ITU can reuse" at every 6-page build.
 - Fewer words than the 5-page Task 20 build (2,204) yet 6 pages: the table row is what costs the space.
 - Checks: 10 table rows, old sentence gone, list ends (10), protected diff from c5cea32 empty, 386 tests pass.
+
+## 2026-10-24: Thirtieth wrap, Task 22 consequences in the gap rows
+
+- Order filed in its own commit (e367548), built at 34dc036 (CI run 40134100696 green), CI run named in the report-back in a follow-up commit.
+- Iyas's answers before the build: the section C anchor wrapped across two lines counts as found; no PDF (none ever built), docx only; file the order and note the extra file in check 1.
+- Edits A to D gave 6 pages, 2,371 words. Ladder steps 1 to 6 (Readiness sentence out; rows 6, 7, 8, 2, 9 back to old text) stayed 6, ending at 2,261 words, 57 words (4 lines) on page 6. Stopped.
+- hq ruling `task-22-ruling-page-six-2026-10-24.md`: cut C (five sentences shortened: Introduction, use-case problem, Our solution, S3, Limits) gave 5 pages, 2,224 words; C6 not needed.
+- Checks: tagged-paragraph grep empty, protected diff from c5cea32 empty, 386 tests pass.
+- Superseded in the background: report at 2,169 words (Task 21); the Task 21 open question on the gaps 1 and 2 sentence; the Task 18 and 19 order lines in "What this is" (Task 19 at 7615029, CI 39995571844, block-only ruling `task-19-ruling-block-only-2026-10-23.md`; Task 18 at 1acf952, item 6 at 6259011).
