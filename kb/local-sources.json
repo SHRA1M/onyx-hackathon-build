@@ -319,5 +319,61 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "tdra-registration-policy-2011-en": {
+  "file": "perplexity-2026-10-24/fetched-2026-10-24/tdra-registration-policy-2011-en.pdf",
+  "text": "perplexity-2026-10-24/fetched-2026-10-24/tdra-registration-policy-2011-en.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "eu-dsa-2022-2065-art12-20": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/eu-dsa-2022-2065-art12-20.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "eu-crd-2011-83-art8": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/eu-crd-2011-83-art8.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "eu-ecommerce-2000-31-art10-11": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/eu-ecommerce-2000-31-art10-11.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "gdpr-art12-28-33": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/gdpr-art12-28-33.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "us-47cfr-64-2010": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/us-47cfr-64-2010.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "ca-ola-s22-27": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/ca-ola-s22-27.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }

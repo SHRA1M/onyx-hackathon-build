@@ -34,7 +34,7 @@
   {
    "id": "gap-2",
    "line": "consent elicited by an AI (channel classification)",
-   "gap": "Consent elicited by an AI: the CPR medium classification (4.10, 4.17, 4.22) decides whether an OTP is needed, and PDPL 6(1)(b) names consent 'in writing or electronically', not spoken.",
+   "gap": "Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL wants consent to the data processing 'in writing or electronically' (6(1)(b)); one spoken 'yes' can buy the service and still not permit the data use, and nobody has said which medium an AI chat or voice agent is.",
    "kind": "method",
    "category": "coordination problem",
    "addressee": ["TDRA", "UAE Data Office"],
@@ -70,7 +70,9 @@
     {"clause": "tdra-cpr-v2-en:20.11.1", "says": "Verification by security questions or the Licensee's own procedures.", "quote": "by asking the relevant security questions, or by following such other procedures used by the Licensee for identification purposes"},
     {"clause": "etransactions-46-2021-en:33(1)", "says": "Three trust levels, low, medium and high, for electronic identification.", "quote": "The levels of security and trust of the Electronic Identification System and the Digital Identity issued thereby are three: low, medium and high"},
     {"clause": "etransactions-46-2021-en:33(4)", "says": "TDRA sets authentication procedures; none mapped to CPR 24.10.", "quote": "Authentication Procedures to confirm the identity of any person to the Relying Party."},
-    {"clause": "decision-16-2026-ar:4.17", "says": "On a loss report the licensee verifies the reporter's identity; the method is not stated (Arabic only)."}
+    {"clause": "decision-16-2026-ar:4.17", "says": "On a loss report the licensee verifies the reporter's identity; the method is not stated (Arabic only)."},
+    {"clause": "tdra-registration-policy-2011-en:6.1.1", "says": "At registration the Licensee checks the Registration Information against the Identification Documents. Another event (registration); it maps no telecom-care act to a trust level.", "quote": "verifying the Registration Information against the information contained in the Identification Documents"},
+    {"clause": "tdra-registration-policy-2011-en:6.1.2", "says": "At registration the Licensee compares each original Identification Document with its copy. Another event (registration); it maps no telecom-care act to a trust level.", "quote": "comparing each original Identification Document against the copy submitted during the Registration Process"}
    ],
    "uae_position": "A voice or chat agent that discloses account data after security questions is within the letter of the CPR; the national trust levels exist but no text says which level 24.10 needs on a remote channel.",
    "global_examples": [
@@ -86,7 +88,7 @@
   {
    "id": "gap-4",
    "line": "automated disconnection review",
-   "gap": "Automated disconnection: PDPL 18(4) human review has no procedure, deadline or regulator; the 18(2) contract escape is undercut by Cabinet 66/2023 34(1), (3), (5) (inferred interaction, both quoted).",
+   "gap": "Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions).",
    "kind": "method",
    "category": "unclear responsibilities",
    "addressee": ["UAE Data Office"],
@@ -96,7 +98,10 @@
     {"clause": "pdpl-45-2021-en:18(4)", "says": "Human review on request, not conditioned on 18(1); no procedure, deadline or regulator.", "quote": "The Controller shall include the human element in reviewing automated processing decisions at the request of the Data Subject."},
     {"clause": "cabinet-66-2023-en:34(1)", "says": "A prohibited term: the provider terminates unilaterally.", "quote": "unilaterally terminate it without referring to the consumer"},
     {"clause": "cabinet-66-2023-en:34(3)", "says": "A prohibited term: the provider alone judges conformity.", "quote": "Authorising the provider to determine by himself and without referring to the consumer whether the goods or service subject of the contract is in conformity"},
-    {"clause": "cabinet-66-2023-en:34(5)", "says": "A prohibited term: unilateral change of a subscription, except a notified upgrade.", "quote": "the right to unilaterally change the characteristics of the goods or the terms of the consumer use of the service in the case of services subscription contracts"}
+    {"clause": "cabinet-66-2023-en:34(5)", "says": "A prohibited term: unilateral change of a subscription, except a notified upgrade.", "quote": "the right to unilaterally change the characteristics of the goods or the terms of the consumer use of the service in the case of services subscription contracts"},
+    {"clause": "pdpl-45-2021-en:24(1)", "says": "The data subject may complain to the Bureau (the Data Office).", "quote": "The Data Subject shall have the right to submit complaints to the Bureau"},
+    {"clause": "pdpl-45-2021-en:24(2)", "says": "The Bureau receives and examines the complaint; no period is set.", "quote": "shall examine such complaints in coordination with the Controller and the Processor"},
+    {"clause": "pdpl-45-2021-en:25", "says": "The 30 days run for a grievance against the Bureau's own decisions, not for a complaint under 24.", "quote": "within (30) thirty days as of the date on which a notice of such administrative decision or penalty is given"}
    ],
    "uae_position": "The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations were never issued.",
    "global_examples": [
@@ -142,7 +147,7 @@
   {
    "id": "gap-6",
    "line": "AI disclosure",
-   "gap": "AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only.",
+   "gap": "AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'.",
    "kind": "scope",
    "category": "legislative gap",
    "addressee": ["Cabinet"],
@@ -168,11 +173,12 @@
   {
    "id": "gap-7",
    "line": "five mentions no standard",
-   "gap": "No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's conduct.",
+   "gap": "No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent.",
    "kind": "absence",
    "category": "standards gap",
    "addressee": ["TDRA"],
    "searched": [
+    {"clause": "tdra-cpr-v2-en:3.3", "says": "Transparency, fairness and complete, accurate information in all dealings: a general duty, not one specific to an automated agent.", "quote": "Licensees shall act with transparency and fairness in all dealings with Consumers"},
     {"clause": "tdra-cpr-v2-en:25.14.1", "says": "Directory enquiries by an AIA: charges waived if it fails. A billing rule, not a conduct standard.", "quote": "enquiry is processed by an artificial intelligence assistance (AIA)"},
     {"clause": "tdra-cpr-v2-en:26.7.2", "says": "Non-human agents excluded from complaint conversations. A bar, not a conduct standard.", "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."},
     {"clause": "spam-calls-v4-en:3.3", "says": "Point (iii): a synthesised voice can make a Spam Call. A definition.", "quote": "the audible message contains a natural or a synthesised voice"},
@@ -222,7 +228,7 @@
   {
    "id": "gap-9",
    "line": "a child on the line",
-   "gap": "A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child.",
+   "gap": "A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions to providers and the Art 16 penalties are unpublished, and Cabinet Resolution 106/2026's age checks reach social media platforms only (Art 2); nothing says how a telecom channel learns the person is a child.",
    "kind": "method",
    "category": "legislative gap",
    "addressee": ["TDRA", "Cabinet"],
@@ -280,6 +286,35 @@
    "competitor_basis": "One entry read has no language row in its gap table; another asks the same question for its country's two official languages (reading note), which is why the candidate was searched."
   },
   {
+   "id": "gap-11",
+   "line": "a misheard order",
+   "gap": "A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back.",
+   "kind": "method",
+   "category": "standards gap",
+   "addressee": ["TDRA"],
+   "searched": [
+    {"clause": "tdra-cpr-v2-en:4.7.1", "says": "Consent is opt-in, by positive affirmative action taken freely by the Subscriber; it assumes the action is the Subscriber's own, not the channel's reading of it.", "quote": "relying on positive affirmative action(s) taken freely by the Subscriber"},
+    {"clause": "tdra-cpr-v2-en:4.10", "says": "Digital applications: no single click; a multi-step process, with 2FA unless justified or specified otherwise.", "quote": "The process shall always be a multi-step approach"},
+    {"clause": "tdra-cpr-v2-en:4.11", "says": "Where 2FA is mandated, the default is an OTP.", "quote": "the default method of 2FA shall, in the absence of any approved alternative, be one-time password (OTP)."},
+    {"clause": "tdra-cpr-v2-en:4.17.3", "says": "Telephone sales: a voice recording of the verbal consent. It stores what was said, not what the channel understood.", "quote": "the Licensee shall make a voice recording of the Subscriber giving verbal consent to the terms and conditions for the service"},
+    {"clause": "tdra-cpr-v2-en:4.22.3", "says": "Licensee App purchases: an on-screen yes/no defaults to no, against an accidental yes.", "quote": "shall always be set as the default answer to avoid accidental"},
+    {"clause": "tdra-cpr-v2-en:4.23.2", "says": "Online purchases: a 2FA procedure for each purchase.", "quote": "for each purchase, the Consumer shall be required to follow a 2FA procedure to confirm agreement to the purchase of the Service"},
+    {"clause": "tdra-cpr-v2-en:4.23.3", "says": "Online purchases: the same no-by-default rule for an on-screen yes/no.", "quote": "shall always be set as the default answer to avoid accidental"},
+    {"clause": "etransactions-46-2021-en:12(7)", "says": "An error in an electronic document is reached only when it comes from a technical failure in transmission, not from the system's own reading of the words.", "quote": "an error has occurred in the Electronic Document as a result of a technical failure during transmission"},
+    {"clause": "etransactions-46-2021-en:11(2)", "says": "An automated contract binds if the person knows, or should know, a system makes it; nothing on what the system understood.", "quote": "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."}
+   ],
+   "uae_position": "The CPR already knows the problem on a screen: the safe default is 'no' (4.22.3, 4.23.3) and a purchase needs a second factor (4.23.2). On a voice or chat channel the system, not the subscriber, decides what was said; the OTP then confirms that the subscriber wants something, not that the channel understood the right thing. ET 12(7) reaches transmission errors only. No published TDRA text requires the channel to state the service, price and term it understood and take a correction before the second factor.",
+   "global_examples": [
+    {"document": "e-Commerce Directive 2000/31/EC, consolidated 2024-02-17", "clause": "Art 11(2)", "file": "kb/sources/global/eu-ecommerce-2000-31-art10-11.txt", "status": "VERIFIED", "quote": "the service provider makes available to the recipient of the service appropriate, effective and accessible technical means allowing him to identify and correct input errors, prior to the placing of the order."},
+    {"document": "Consumer Rights Directive 2011/83/EU, consolidated 2026-09-27", "clause": "Art 8(2)", "file": "kb/sources/global/eu-crd-2011-83-art8.txt", "status": "VERIFIED", "quote": "the trader shall make the consumer aware in a clear and prominent manner, and directly before the consumer places his order, of the information provided for in Article 6(1), points (a), (e), (la), (o) and (p)."}
+   ],
+   "global_none": "",
+   "recommendation": "TDRA: on a voice or chat channel, before the 2FA step, the channel states the service, price and term it understood and accepts a correction; the read-back is logged with the consent record (sub-article 3.9).",
+   "exposed_by": "mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run.",
+   "competitor": "not read",
+   "competitor_basis": "order 2026-10-24 Task 23"
+  },
+  {
    "id": "candidate-4-4-fixed-term-bundle",
    "line": "whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4",
    "gap": "Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.",
@@ -327,9 +362,16 @@
     {"clause": "cabinet-66-2023-en:43(5)", "says": "Annex 2: AED 100,000 for an invoice not in Arabic.", "quote": "The provider fails to issue the invoice in Arabic."},
     {"clause": "consumer-law-15-2020-en:4(5)", "says": "Privacy and security of the consumer's data; says nothing on language.", "quote": "Protecting the privacy and security of his data"}
    ]},
-  {"name": "Breach notification without a period", "line": "The Controller notifies the Bureau of a breach within a period the never-issued Executive Regulations were to set.",
+  {"name": "Breach notification without a period", "line": "The Controller notifies the Bureau (9(1)) and the data subject (9(2)) of a breach within a period the never-issued Executive Regulations were to set. Example: GDPR Art 33(1), 'not later than 72 hours after having become aware of it'.",
    "searched": [
-    {"clause": "pdpl-45-2021-en:9(1)", "says": "The period is left to the Executive Regulations.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"}
+    {"clause": "pdpl-45-2021-en:9(1)", "says": "The period is left to the Executive Regulations.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"},
+    {"clause": "pdpl-45-2021-en:9(2)", "says": "The notice to the data subject: the period is left to the Executive Regulations too.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"}
+   ]},
+  {"name": "Sub-processor authorisation", "line": "The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. Example: GDPR Art 28(2), 'The processor shall not engage another processor without prior specific or general written authorisation of the controller.'",
+   "searched": [
+    {"clause": "pdpl-45-2021-en:7(5)", "says": "The Controller appoints only a Processor with sufficient guarantees.", "quote": "Appoint the Processor which has sufficient guarantees"},
+    {"clause": "pdpl-45-2021-en:8(1)", "says": "The Processor acts on the Controller's instructions and contract.", "quote": "Carry out the processing in accordance with the instructions of the Controller"},
+    {"clause": "pdpl-45-2021-en:8(10)", "says": "Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.", "quote": "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"}
    ]},
   {"name": "The Executive Order unpublished", "line": "The Executive Order ranks above the Regulatory Framework in the licence's order of precedence, and its text is not published.",
    "searched": [

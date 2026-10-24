@@ -21,7 +21,8 @@ ADDRESSEES = ("TDRA", "UAE Data Office", "the consumer-protection authority", "C
 COMPETITOR = ("yes", "no", "not read")
 # short names for the table, by the file a global example quotes
 SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172",
-         "coppa-": "16 CFR", "canada-ola-": "Canada OLA"}
+         "coppa-": "16 CFR", "canada-ola-": "Canada OLA", "eu-ecommerce-": "E-Commerce Dir. 2000/31",
+         "eu-crd-": "CRD 2011/83"}
 
 
 def _short(path: str) -> str:
