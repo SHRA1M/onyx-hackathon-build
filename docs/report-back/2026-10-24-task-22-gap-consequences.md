@@ -29,12 +29,12 @@ Cut C6 not taken: five pages after C.
 
 ## Checks
 
-1. `git diff --stat 6a0aaf7`: see below (the committed result).
+1. `git diff --stat 6a0aaf7`: `CHANGELOG.md`, this report-back, `docs/report.docx`, `docs/report.md`, the filed order (5 files).
 2. `git diff 6a0aaf7 -- docs/report.md`: rows 1, 3, 4, 5, 10 new; section B's seven cells; section D's two sentences; cut C's five edits. Section C and rows 2, 6, 7, 8, 9 cut by the ladder (old text).
 3. `git diff 6a0aaf7 -- docs/report.md | grep -E '^[-+].*\[C[35]'`: printed nothing.
 4. `git diff c5cea32 -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py runs/`: printed nothing.
 5. Word (`scripts/report_pages.ps1`): 5 pages, 2,224 words.
-6. `uv run pytest`: 386 passed. CI: see below.
+6. `uv run pytest`: 386 passed. CI run 40134100696 on 34dc036: green. Committed and pushed.
 
 ## Differs from the order
 
