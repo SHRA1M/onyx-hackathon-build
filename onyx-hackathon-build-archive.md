@@ -337,3 +337,14 @@ Moved from background (superseded or old):
 - `kb/local-sources.json`: the two `text` values changed from `../../../engineering/onyx-hackathon-build/kb/sources/...` to `standards-text/...`; nothing else. Commit 6477407.
 - Branch was at 75281a3, two wrap-doc commits past the order's 8596e95; merged as is.
 - Checks: kb verify VERIFIED 46, check-data ok, 386 tests pass. Merged `task-24` into main without squash (420c14d), pushed; CI run 40213102487 green on 420c14d.
+
+## 2026-10-25: Thirty-fourth wrap, Task 25 (the site) built and merged
+
+- Order `2026-10-25-task-25-site.md` (filed 54c69bf). Plan approved by Iyas before code: 100 logs (the order's "60" was hq's miscount: C3 alone is 60, C4 and C5 add 20 each), a raw-number JSON reader in the page, verify.html about 5 MB.
+- Found before planning: a naive Node canonicaliser broke 3 of 2,104 hashes (`model_ms` 10447.0, 6555.0, 4509.0 in runs/c5/S2/ar/run1, runs/S1/run3, runs/ungoverned/S5/run3). Fixed by parsing each number as source text.
+- Built: `onyx/html_kit.py` (moved from the viewer, old page byte-identical), `onyx/site.py`, `site` command, `tests/test_site.py` (18, red first), CI step after the figure scripts (an earlier placement broke `test_ci_runs_both_figure_scripts_before_the_diff`, which reads the first `git diff`), README "Open the site", two screenshots. Commit 6a12296, report-back c788b78, merge e1e81cc; CI 40219984220 and 40220128812 (branch), 40220134358 (main), all green.
+- Browser: Playwright refused file://; headless Chrome loaded all six pages from file:// and verified two logs green; clicks via Playwright on a local server (filters 3 UNVERIFIED and 15 Arabic, runs link to verify green, tampered line broken at seq 5).
+- Checks: 404 tests pass, protected diff empty, site twice with no change, 20 index figures equal results.json, kb verify 46, check-data ok.
+- Moved from the background (old or settled):
+  - `gh run` status lags on GitHub (2026-10-22: a 42 s job showed in progress for 17 min after every step passed); read the job's steps with `gh run view <id> --json jobs`.
+  - 2026-10-22 (hq Task 16 and its rulings): README leads with hq's first paragraph, `## Why` (e& 371,476 and TDRA 23,464, three linked sources), `## Three things to look at first`, then the register; headings "Run it without a key" and "What we do not claim". No other entry is named in the repo; the competitor read lives in hq only (the repo copy was removed outside this session). CPR 17.4, 17.4.1, 4.20.1 and licence 16.3.3 added to kb/chunks (ruling 1). PDF page test compares with whitespace removed (ruling 3).
