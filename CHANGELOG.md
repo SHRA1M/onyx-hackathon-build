@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-10-26
+
+- Fixed (order 2026-10-25-task-26-gap-rows-clocks, hq ruling task-26-stop-ruling-2026-10-26): register rows 1 and 2 overstated their gaps. Row 1 said the complaint hand-over had no clock, but CPR 26.13.3 and 26.14.2 are clocks for the complaint; row 2 said a spoken "yes" does not permit the data use, but PDPL 4(9) permits the processing the contract needs. Changed: `onyx/data/gaps.json` gap-1 and gap-2 `gap` and `uae_position` reworded; `searched` gains 13 entries (gap-1 +6, gap-2 +1, gap-4 +2, gap-10 +2, gap-11 +2), PDPL 11(1)(b) and ET 12(4)(c) cited by their parent chunks 11(1) and 12(4). `kb/chunks` 144 to 151 records: 7 copied byte for byte from `kb/chunks-full` (CPR 26.2, 26.14.1; PDPL 4(9), 11(1), 12(2); ET 12(4), 13(5)), no existing line changed. Report rows 1, 2 and 5 reworded (5 pages, 2,222 words, no cut). `tests/test_gaps.py`: the gap-10 list test extended by the two A5 clauses; two Task 26 tests. Regenerated `docs/gaps.md`, the README table, `docs/site/gaps.html`, `docs/report.docx`. 406 tests; eval unchanged.
+
 ## 2026-10-25
 
 - Added (order 2026-10-25-task-25-site): `python -m onyx site` writes `docs/site/`, six static pages that open from file:// (overview with the C5 and C3 figures read from `eval/results.json` and their definitions from `eval/results.md`; runs, the replay viewer with a "Verify this log" link per run; the gap register; the manifest with status and language filters; verify, which recomputes the hash chain of any of the 100 C3, C4 and C5 logs with WebCrypto; the S2 what-if side by side). The page's canonical JSON keeps each number as the log wrote it: a plain JSON.parse turns Python's 10447.0 into 10447 and broke 3 of 2,104 hashes. Shared CSS and helpers moved from `onyx/replay_viewer.py` to `onyx/html_kit.py`; `docs/replay/index.html` unchanged byte for byte. CI regenerates the site and fails on a byte difference. README section "Open the site" with two screenshots. Gate, rules, keys, mandates, runs, eval, report and figures unchanged.
