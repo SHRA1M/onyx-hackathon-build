@@ -4,7 +4,7 @@ Mizan knowledge base, exported from `kb/manifest.csv` by `python -m onyx kb expo
 Each document sits in the subfolder of its category; full texts are copied only where `kb fetch` holds them.
 
 
-## UAE_Binding/ (29 files)
+## UAE_Binding/ (32 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -37,6 +37,9 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 27 | `decision-16-2026-ar.pdf` | `regulation` | TDRA Decision 16/2026 on the use of mobile telecommunications devices (issued 2026-05-11), Arabic only | VERIFIED | `0278aec14e47…` | 11 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/Updated-regulations-and-ruling/Use-of-Mobile-Telecommunications-Devices-Ar.ashx) |
 | 28 | `instructions-1-2014-ar.pdf` | `regulation` | TDRA Instructions 1/2014 on accessibility of telecommunications for People of Determination, Arabic only | VERIFIED | `b9ebfc40c67e…` | 5 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/AR/People-of-determination-accessibility-to-telecommunication.ashx) |
 | 29 | `tdra-registration-policy-2011-en.pdf` | `policy` | TDRA Regulatory Policy: Registration Requirements for Mobile Consumers, Version 1.0 (2011-09-27) | VERIFIED | `5108ee3e9f20…` | 17 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/Registration-Requirements-for-Mobile-Consumers-Policy-pdf.ashx) |
+| 30 | `law-14-2023-en.pdf` | `law` | Federal Decree-Law No. 14 of 2023 Concerning the Modern Technology-Based Trade | VERIFIED | `a52f4dcc2315…` | 17 | [link](https://uaelegislation.gov.ae/en/legislations/2150/download) |
+| 31 | `law-14-2023-ar.pdf` | `law` | Federal Decree-Law No. 14 of 2023, Arabic | VERIFIED | `4769f8f1af60…` | 11 | [link](https://uaelegislation.gov.ae/ar/legislations/2150/download) |
+| 32 | `cabres-28-2023-en.pdf` | `regulation` | Cabinet Resolution No. 28 of 2023, Executive Regulations of Federal Decree-Law 46/2021 | VERIFIED | `89ab2b52d9d5…` | 30 | [link](https://uaelegislation.gov.ae/en/legislations/2199/download) |
 
 ## UAE_Advisory/ (3 files)
 

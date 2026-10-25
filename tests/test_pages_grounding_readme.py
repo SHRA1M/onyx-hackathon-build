@@ -291,7 +291,7 @@ LAW_PROVENANCE = (
 
 
 def test_readme_knowledge_base_paragraph_ends_with_hqs_law_sentence():  # Task 18 item 6, hq ruling 2026-10-23
-    paragraph = README.split("\nKnowledge base: 43 VERIFIED", 1)[1].split("\n\n", 1)[0]
+    paragraph = README.split("\nKnowledge base: 46 VERIFIED", 1)[1].split("\n\n", 1)[0]
     assert " ".join(paragraph.split()).endswith(LAW_PROVENANCE)
 
 
