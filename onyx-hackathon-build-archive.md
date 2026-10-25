@@ -317,3 +317,16 @@ Moved from background (superseded or old):
 - Built: TDRA registration policy (tdra.gov.ae 200, matches hq copy) and six global extracts (EUR-Lex by scrapling with wait_selector; eCFR versioner API, needs `--compressed`; Justice Laws pages 2 and 3, s. 27 on page 3). Manifest 47 rows, 43 VERIFIED, nine foreign (old text said four, the rule gave three). gap-11, gaps 2, 4, 6, 7, 9 reworded, breach candidate extended (not duplicated), sub-processor candidate added. 138 cited chunks. Adviser register line 11 (Task 15 and 20 precedent, label v5).
 - Report: C1 to C8 gave 6 pages, 2,334 words; ladder 1 to 4 left 6 pages, 2,286 words, page 6 starting "What ITU can reuse". Stopped; hq cuts on 2026-10-25.
 - Checks: 386 tests pass, check-data ok, kb verify clean, protected diff from c5cea32 empty, eval unchanged, manifest added rows only.
+
+## 2026-10-25: Thirty-second wrap, Task 23 finished and merged, Task 24 built
+
+- hq ruling `task-23-ruling-five-pages-2026-10-25.md`: cut D (six shortenings) left 6 pages, 2,250 words; E1 (Gap 8 sentence) 6 pages, 2,224 words, 17 words on 2 lines of page 6. Stopped. Addendum `task-23-ruling-addendum-2026-10-25.md`: cut F (Error scenarios one-line paragraph dropped; ITU reuse sentence to one line) gave 5 pages, 2,181 words. Why D moved little: each cut shortened a last line without emptying one.
+- Register (Part 2, 3): gap-2 EU AI Act 50(1) replaced by CRD 8(2); gap-4 gains GDPR 12(3) and DSA 20(6); gap-1 DSA 12(1); gap-3 47 CFR 64.2010(b). `onyx/gaps.py` gained DSA and 47 CFR short labels. Committed f53eff1, merged cc7b73b (no squash), CI 40211462109 green.
+- Task 24: Trade Law 14/2023 EN and AR, Cabinet 28/2023 EN from hq's browser-saved PDFs (hashes match the order); text by pypdf (no PyMuPDF here), running headers removed; extracts kept in `kb/sources/` (not hq's `standards-text/`: the repo writes nothing outside itself). Seven `searched` entries in gaps 1, 2, 3, 6, 7, 11; Art 5(5) left out. Counts 50 / 46 / 9; "eleven" became "fifteen" (binding VERIFIED UAE instruments besides the four named; 13 on the Task 23 manifest). Branch `task-24`, 8596e95, CI 40212609968 green, not merged.
+- One slip caught: the gap-2 `searched` entry first landed in `global_examples` (list closes at another indent); moved before the chunk build.
+- Checks both tasks: 386 tests pass, check-data ok, kb verify clean, eval unchanged, frozen diff from c5cea32 / cc7b73b empty, tagged-paragraph grep empty.
+- Moved from the background (superseded or settled long ago):
+  - 2026-10-23 (Iyas, Task 19b): `text_ar` of `onyx/data/proposed/gap-1.json` is Iyas's wording; its two straight quotes are stored as `\"`, so the decoded value is the order's string. What-if decisions unchanged.
+  - 2026-10-23 (Iyas): the replay viewer follows the markdown pages (Task 14's rule kept), so English S3 to S5 show C5 run1.
+  - 2026-10-23 (Task 12 item 6): a candidate row carries the register id when the key names exactly one `candidate-` id at that step (`local_id` keeps `candidate-S1-6`). Gap recall reads the log's flag_gap and abstention gaps, not candidates.jsonl, so the fix changes no score.
+  - For hq (report-back 2026-10-21-pending-and-task8): confirm the addressee rule, the obligation-proxy definition and the hand-over latency definition.
