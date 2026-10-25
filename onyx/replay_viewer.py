@@ -17,16 +17,16 @@ from pathlib import Path
 from typing import Any
 
 from onyx import audit, data, eval as eval_mod, gate, kb, replay_page, runs, whatif
+from onyx.html_kit import CSS, NOTICE, WORDS, inline_json
+from onyx.html_kit import cite as _cite, page as _page, quote as _quote, rel as _rel, text as _text
+from onyx.html_kit import verdict as _verdict
 
 OUT = kb.REPO / "docs" / "replay" / "index.html"
-NOTICE = "The operator, subscribers and numbers are synthetic; the law texts are real, linked and hashed."
 HEADLINE = ("citation_validity", "action_recall", "abstention", "gap_recall")
 NAMES = {"citation_validity": "citation validity", "action_recall": "action recall", "abstention": "abstention",
          "gap_recall": "gap recall", "ungoverned_claims_allowed": "ungoverned claims allowed"}
 WHATIF_RUN = replay_page.RUNS / "c5" / "S2" / "run1.jsonl"
 WHATIF_LABEL = "What-if: S2 under the rule gap 1 recommends"
-WORDS = {gate.ALLOW: ("allow", "v-allow"), gate.HOLD: ("hold", "v-hold"), gate.BLOCK: ("block", "v-block"),
-         gate.INSUFFICIENT: ("insufficient evidence", "v-insufficient")}
 
 
 def _step3_handover(path: Path) -> bool:
@@ -50,45 +50,6 @@ def _is_handover(e: dict[str, Any]) -> bool:
     return e["verdict"] == gate.BLOCK and replay_page.HANDOVER_QUOTES <= labels
 
 
-def _rel(path: Path) -> str:
-    return path.relative_to(kb.REPO).as_posix()
-
-
-def _text(text: str, cls: str = "", tag: str = "span", lang: str | None = None) -> str:
-    """A text block; Arabic text (or lang='ar') renders right to left."""
-    lang = lang or ("ar" if kb._is_arabic(text) else "en")
-    attrs = f' class="{cls}"' if cls else ""
-    attrs += ' lang="ar" dir="rtl"' if lang == "ar" else ""
-    return f"<{tag}{attrs}>{escape(text)}</{tag}>"
-
-
-def _quote(text: str, lang: str | None = None) -> str:
-    lang = lang or ("ar" if kb._is_arabic(text) else "en")
-    rtl = ' lang="ar" dir="rtl"' if lang == "ar" else ""
-    return f'<q class="quote" data-lang="{lang}"{rtl}>{escape(text)}</q>'
-
-
-def _page(document_id: str, clause: str) -> str:
-    """ "p. N" for a committed chunk's page (kb.page_of), a link to the PDF at that page where the manifest's url is
-    the document itself; "" where there is no page (order 2026-10-22 Task 16 item 1)."""
-    page = kb.page_of(document_id, clause)
-    if not page:
-        return ""
-    url = kb.page_link(document_id, page)
-    return f'<a class="src" href="{escape(url)}">p. {page}</a>' if url else f"p. {page}"
-
-
-def _cite(clause_id: str) -> str:
-    document_id, _, clause = clause_id.partition(":")
-    page = _page(document_id, clause) if clause else ""
-    return f"<code>{escape(clause_id)}</code>" + (f" ({page})" if page else "")
-
-
-def _verdict(verdict: str) -> str:
-    word, cls = WORDS[verdict]
-    return f'<span class="verdict {cls}">{word}</span>'
-
-
 def _fig(path: Path, metric: str, value: Any) -> str:
     shown = eval_mod._fig(value) if isinstance(value, float) else ("n/a" if value is None else str(value))
     return (f'{NAMES[metric]} <span class="fig" data-run="{_rel(path)}" data-metric="{metric}" '
@@ -107,7 +68,9 @@ def _steps(events: list[dict[str, Any]]) -> dict[int, list[dict[str, Any]]]:
 
 
 class Viewer:
-    def __init__(self) -> None:
+    def __init__(self, verify: str | None = None) -> None:
+        """verify: the site's verify page (order Task 25); each run's header then links to it. None: no link."""
+        self.verify = verify
         self.rules = {r["id"]: r for r in data.load_rules()}
         self.urls = {d: row["url"] for d, row in kb.manifest_by_id().items()}
         self.knowledge, self.by_chunk = gate.Knowledge.load(), eval_mod._rules_by_chunk()
@@ -197,6 +160,11 @@ class Viewer:
                 body.append("<p>Nothing stopped it.</p>")
         return '<details class="ungoverned"><summary>Without the gates</summary>' + "".join(body) + "</details>"
 
+    def verify_link(self, path: Path) -> str:
+        if not self.verify:
+            return ""
+        return f' <a class="button verify" href="{self.verify}#{_rel(path)}">Verify this log</a>'
+
     def run(self, sid: str, lang: str) -> tuple[str, str]:
         """The run's block and its headline line."""
         path = source(sid, lang)
@@ -216,15 +184,17 @@ class Viewer:
                 f"<p class=\"meta\">Run <code>{_rel(path)}</code>, prompt "
                 f"{escape(config.get('prompt', 'not logged (labels began with v4)'))}, model "
                 f"<code>{escape(config.get('model', ''))}</code>, {escape(config.get('mode', ''))}, {lang}; "
-                f"hash chain: {'ok' if audit.verify(path) else 'BROKEN'}.</p>",
+                f"hash chain: {'ok' if audit.verify(path) else 'BROKEN'}.{self.verify_link(path)}</p>",
                 f'<p class="meta">Without the gates: <code>{_rel(free)}</code>, '
-                f'{_fig(free, "ungoverned_claims_allowed", free_metrics["ungoverned_claims_allowed"])} (eval).</p>']
+                f'{_fig(free, "ungoverned_claims_allowed", free_metrics["ungoverned_claims_allowed"])} (eval).'
+                f'{self.verify_link(free)}</p>']
         body = [self.step(n, total, steps[n], scenario, free_steps.get(n)) for n in sorted(steps) if n]
         headline = (f'<p class="headline" data-sid="{sid}" data-lang="{lang}">Figures for <code>{_rel(path)}</code> '
                     f"(eval.run_metrics): " + ", ".join(_fig(path, m, metrics[m]) for m in HEADLINE) + ".</p>")
         return "\n".join(head + body + ["</div>"]), headline
 
-    def render(self) -> str:
+    def render(self, nav: str = "", css: str = CSS) -> str:
+        """nav: a bar above the header (the site's, order Task 25); css: the page's styles."""
         sections, headlines, picker = [], [], []
         for sid in replay_page.SCENARIOS:
             scenario = data.load_scenario(sid)
@@ -244,10 +214,8 @@ class Viewer:
         sections.append(f'<section class="whatif" data-sid="{sid}"><h2>{escape(WHATIF_LABEL)}</h2>\n'
                         f'<p class="meta"><a href="{name}">{name}</a></p>\n'
                         f'<pre class="text" dir="auto">{escape(whatif.render(WHATIF_RUN, "gap-1"))}</pre></section>')
-        events = json.dumps(self.events, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-        events = events.replace("</", "<\\/").replace("<!--", "<\\!--")
-        return TEMPLATE.format(css=CSS, js=JS, headlines="\n".join(headlines), picker="\n".join(picker),
-                               sections="\n".join(sections), events=events)
+        return TEMPLATE.format(css=css, js=JS, nav=nav, headlines="\n".join(headlines), picker="\n".join(picker),
+                               sections="\n".join(sections), events=inline_json(self.events))
 
 
 def render() -> str:
@@ -271,7 +239,7 @@ TEMPLATE = """<!doctype html>
 <style>{css}</style>
 </head>
 <body>
-<header>
+{nav}<header>
 <h1>Mizan replay</h1>
 <div class="headlines">
 {headlines}
@@ -292,50 +260,6 @@ TEMPLATE = """<!doctype html>
 <script>{js}</script>
 </body>
 </html>
-"""
-
-CSS = """
-:root { --ink: #1c1f24; --muted: #5b6270; --line: #d8dbe0; --bg: #ffffff; --panel: #f5f6f8;
-  --allow: #1a7f37; --hold: #9a6700; --block: #c62828; --insufficient: #5f6773; }
-* { box-sizing: border-box; }
-body { margin: 0; padding: 0 16px 48px; background: var(--bg); color: var(--ink);
-  font: 16px/1.5 "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif; }
-[lang="ar"] { font-family: "Segoe UI", "Geeza Pro", "Noto Naskh Arabic", "Arabic Typesetting", Tahoma, Arial,
-  sans-serif; }
-header { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 0; z-index: 1; }
-h1 { margin: 4px 0; font-size: 1.4em; }
-h2 { font-size: 1.2em; margin: 16px 0 4px; }
-h3 { font-size: 1.05em; margin: 12px 0 6px; }
-h4 { font-size: .95em; margin: 12px 0 4px; color: var(--muted); }
-button { font: inherit; padding: 4px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 4px;
-  cursor: pointer; }
-button.on { background: var(--ink); color: var(--bg); }
-.bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 6px 0; }
-.picker { display: flex; flex-wrap: wrap; gap: 6px; }
-.picker button { text-align: start; }
-.headline, .meta { margin: 2px 0; color: var(--muted); font-size: .9em; }
-.notice { margin: 8px 0; padding: 6px 10px; background: var(--panel); border-left: 4px solid var(--hold); }
-.message { padding: 10px 12px; background: var(--panel); border-radius: 4px; font-size: 1.05em; }
-ul { padding-inline-start: 20px; margin: 4px 0; }
-li { margin: 4px 0; }
-.clauses { font-size: .92em; }
-q.quote { display: inline-block; margin: 2px 0; }
-.verdict { display: inline-block; padding: 0 8px; border-radius: 10px; color: #fff; font-weight: 600; }
-.v-allow { background: var(--allow); }
-.v-hold { background: var(--hold); }
-.v-block { background: var(--block); }
-.v-insufficient { background: var(--insufficient); }
-.handover { margin: 10px 0; padding: 8px 12px; border: 2px solid var(--block); border-radius: 4px; }
-.handover h4 { margin-top: 0; color: var(--block); }
-.abstain { margin: 10px 0; padding: 8px 12px; border: 2px solid var(--insufficient); border-radius: 4px; }
-.ungoverned { margin-top: 12px; padding: 6px 10px; border: 1px dashed var(--line); }
-.ungoverned summary { cursor: pointer; color: var(--muted); }
-code { font-size: .9em; overflow-wrap: anywhere; }
-.scenario, .whatif, .run, .step, .headline { display: none; }
-.scenario.on, .whatif.on, .run.on, .step.on, .headline.on { display: block; }
-pre.text { white-space: pre-wrap; font: inherit; font-size: .92em; }
-body.present { font-size: 22.4px; }
-body.present .picker { display: none; }
 """
 
 JS = """
