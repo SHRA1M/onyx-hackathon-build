@@ -1,13 +1,12 @@
-# Report-back: Task 23, gap hunt (DRAFT, paused 2026-10-24)
+# Report-back: Task 23, gap hunt (finished 2026-10-25)
 
 Order: `docs/work-orders/2026-10-24-task-23-gap-hunt.md` (filed 7c9b32b). Base: d770363 (after Task 22's 1aeb31a).
-Branch: `task-23-wip` (not merged to main). No model calls, USD 0.
+Branch: `task-23-wip`, paused 2026-10-24 at d2d47d1, finished 2026-10-25 under hq's rulings `task-23-ruling-five-pages-2026-10-25.md` and `task-23-ruling-addendum-2026-10-25.md`, merged to `main` (no squash). No model calls, USD 0.
 
-## Status: paused at the page limit
+## Status: done, 5 pages, 2,181 words
 
-- Report: **6 pages, 2,286 words** (Word, `scripts/report_pages.ps1`). **Ladder exhausted.** hq decides the 5-page cut.
-- First sentence on page 6: "What ITU can reuse: the Arabic clause chunks and runs, for the Sandbox Network for Arabic-AI (SNAI); the manifest and the 43 verified records, for the call for domain-specific open knowledge bases; the five agent manifests, for the global open repository of AI agents and metadata."
-- **Task 24** (`D:\Projects\hq\uni\ai-for-good-hackathon\task-24-uae-texts-order-2026-10-24.md`) waits until Task 23 is merged.
+- Report: **5 pages, 2,181 words** (Word, `scripts/report_pages.ps1`). Cuts: ladder steps 1 to 4, cut D (D1 to D6), cut E1, cut F (F1, F2). Cut F3 not needed.
+- **Task 24** (`D:\Projects\hq\uni\ai-for-good-hackathon\task-24-uae-texts-order-2026-10-24.md`) can start: Task 23 is merged.
 
 | Build | Pages | Words | Page 6 starts |
 | --- | --- | --- | --- |
@@ -16,8 +15,11 @@ Branch: `task-23-wip` (not merged to main). No model calls, USD 0.
 | ladder 2 (row 4 tail dropped) | 6 | 2,308 | "Before the final..." |
 | ladder 3 (row 11 tail dropped) | 6 | 2,295 | "What ITU can reuse..." |
 | ladder 4 (C6 sentence dropped) | 6 | 2,286 | "What ITU can reuse..." |
+| cut D (D1 to D6) | 6 | 2,250 | "What ITU can reuse..." (tail) |
+| cut E1 (Gap 8 sentence dropped) | 6 | 2,224 | "What ITU can reuse..." (tail, 17 words, 2 lines) |
+| cut F (F1, F2) | 5 | 2,181 | none |
 
-All four ladder steps stay applied in `docs/report.md` on the branch.
+All the cuts above are applied in `docs/report.md`. Every old text of D, E1 and F was found verbatim (line breaks only differed).
 
 ## Iyas's answers before the build (2026-10-24)
 
@@ -64,11 +66,30 @@ All four ladder steps stay applied in `docs/report.md` on the branch.
 | us-47cfr-64-2010 | VERIFIED | 8d8f50f5a9bf |
 | ca-ola-s22-27 | VERIFIED | 47b831156cb3 |
 
+## hq's rulings carried out (2026-10-25)
+
+- Points 1 to 3 above: accepted by hq. Answers 2 and 4: stand.
+- Point 4, register and report examples made to match (`onyx/data/gaps.json`): gap-2's EU AI Act Art 50(1) entry replaced by CRD 2011/83 Art 8(2) ("The trader shall ensure that the consumer, when placing his order, explicitly acknowledges that the order implies an obligation to pay."), CRD first, IMDA 2.2.2 second; gap-4 gains GDPR Art 12(3) (first sentence) after Art 22(3). Rule from today: the report never cites a global example the register lacks.
+- Point 5: no count line added; check 4 as rewritten: `grep -c '^| gap-' docs/gaps.md` prints 11 and README line 53 reads "Eleven rows".
+- Part 3, fetched clauses entered in the register (rows in `docs/report.md` unchanged): gap-1 DSA Art 12(1), gap-4 DSA Art 20(6), gap-3 47 CFR 64.2010(b) first sentence. Each quote checked as occurring once, verbatim, on one line of its file. The DSA 20(6) start words also open Art 20(3); the entry quotes the 20(6) sentence only. GDPR 12(4) stays uncited.
+- Document labels for the new entries (the ruling gave none; taken from the manifest titles): "Digital Services Act, Regulation (EU) 2022/2065" and "47 CFR 64.2010, safeguards on the disclosure of CPNI (US FCC)", clause "64.2010(b)". `onyx/gaps.py` gains the short labels "DSA 2022/2065" and "47 CFR" so the table renders them (without them `python -m onyx gaps` stops).
+- `docs/gaps.md` and the README table regenerated (`python -m onyx gaps`).
+
+## Checks run 2026-10-25 (after the cuts and the register edits)
+
+- `uv run pytest`: 386 passed.
+- `python -m onyx check-data`: "check-data ok: every quote verbatim, every rule cites a clause".
+- `python -m onyx kb verify`: VERIFIED 43, REFERENCED 1, UNVERIFIED 3, HISTORICAL 0; every fetched source matches its sha256.
+- `eval` recomputed (60 runs); `git diff -- eval/results.md eval/results.json`: empty.
+- `git diff c5cea32 -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py runs/`: empty.
+- `grep -c '^| gap-' docs/gaps.md`: 11. README line 53 begins "Eleven rows".
+- CI on `main`: named in the report to hq.
+
 ## Open for hq
 
-- The 5-page cut.
-- Answers 2 and 4 above, and points 2, 4 and 5: confirm or rule.
-- Task 24 after the merge.
+- Copy `docs/report.md` over `report-draft-2026-10-23.md`.
+- The full names of the three ITU calls, dropped from the report by F2, go to the README reviewer block on submission day.
+- Task 24.
 
 ## Part A2 clauses, verbatim from the fetched files
 

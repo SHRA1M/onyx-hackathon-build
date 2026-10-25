@@ -2,6 +2,11 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-10-25
+
+- Fixed (hq ruling task-23-ruling-five-pages-2026-10-25 and its addendum): the report was at 6 pages, 2,286 words after ladder steps 1 to 4. Cut D (D1 to D6: Our solution log sentence, S2 what-if, Gap 8 sentence, the ITU reuse sentence, gap section intro, Introduction knowledge-base line) left 6 pages, 2,250 words; cut E1 (the Gap 8 sentence dropped) left 6 pages, 2,224 words; cut F (F1: the Error scenarios one-line paragraph dropped; F2: the ITU reuse sentence to one line) brought it to 5 pages, 2,181 words. `docs/report.docx` rebuilt. Register: gap-2's EU AI Act 50(1) example replaced by CRD 8(2) (CRD first, IMDA second), gap-4 gains GDPR 12(3), so the register holds every example rows 2 and 4 cite; gap-1 gains DSA 12(1), gap-3 47 CFR 64.2010(b), gap-4 DSA 20(6), quotes copied from the KB files. `onyx/gaps.py` gains the DSA and 47 CFR short labels. `docs/gaps.md` and the README table regenerated. Rule from today: the report never cites a global example the register lacks. Gate, rules, keys, mandates, runs, scorer, figures, tagged paragraphs and table rows unchanged.
+- Changed: Task 23 merged to `main` from `task-23-wip` (no squash).
+
 ## 2026-10-24
 
 - Changed, paused (order 2026-10-24-task-23-gap-hunt, branch `task-23-wip`, not merged): KB gains the TDRA registration policy and six global extracts (DSA 12, 20; CRD 8; e-Commerce 10, 11; GDPR 12, 28, 33; 47 CFR 64.2010; Canada OLA ss. 22 to 27): 47 documents, 43 VERIFIED. Trade Law 14/2023 and Cabinet 28/2023 not added (portal 403, no PDF in hq; Iyas: build without, Task 24 adds them). Register: gap-11 (a misheard order, method, standards gap, TDRA); gaps 2, 4, 6, 7, 9 reworded; searched clauses added to gaps 3, 4, 7; breach candidate extended, sub-processor candidate added. Eight clauses added to `kb/chunks/`, no existing line changed. `docs/report.md` C1 to C8 and the count lines; adviser register line 11 (label stays v5). Broke: the report went to 6 pages, 2,334 words; ladder steps 1 to 4 left it at 6 pages, 2,286 words. Waits for hq's cut.

@@ -6,10 +6,10 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 
 | id | gap | kind | category | addressee | global example | exposed by |
 | --- | --- | --- | --- | --- | --- | --- |
-| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2 | S2-3 |
-| gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL wants consent to the data processing 'in writing or electronically' (6(1)(b)); one spoken 'yes' can buy the service and still not permit the data use, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | EU AI Act Art 50(1); IMDA 2.2.2 | S1-4 |
-| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c) | S5 (verification step) |
-| gap-4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3) | S4-4, S4-5 |
+| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1) | S2-3 |
+| gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL wants consent to the data processing 'in writing or electronically' (6(1)(b)); one spoken 'yes' can buy the service and still not permit the data use, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2 | S1-4 |
+| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b) | S5 (verification step) |
+| gap-4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3); GDPR Art 12(3); DSA 2022/2065 Art 20(6) | S4-4, S4-5 |
 | gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1) | S3-3 |
 | gap-6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'. | scope | legislative gap | Cabinet | EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113 | S1-3 |
 | gap-7 | No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent. | absence | standards gap | TDRA | IMDA 2.1.2 | all |
@@ -57,6 +57,7 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.2.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Human override rate i.e. the frequency at which humans reject or modify agent actions."
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.2.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Human response times during review of agent actions."
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.4.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Provide users with the respective human contact points who are responsible for the agents, whom the users can alert if the agents malfunction or if they are dissatisfied with a decision."
+- Digital Services Act, Regulation (EU) 2022/2065, Art 12(1) (VERIFIED, `kb/sources/global/eu-dsa-2022-2065-art12-20.txt`): "Providers of intermediary services shall designate a single point of contact to enable recipients of the service to communicate directly and rapidly with them, by electronic means and in a user-friendly manner, including by allowing recipients of the service to choose the means of communication, which shall not solely rely on automated tools."
 
 **Recommendation.** TDRA to state, for every automated channel, what happens when a conversation becomes a Consumer Complaint: the agent stops, the named human takes over, within a stated time, measured like T1(2a) for chat and app.
 
@@ -92,7 +93,7 @@ Kind: method. Category: coordination problem. Addressee: TDRA, UAE Data Office. 
 
 **Global example**
 
-- EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27, Art 50(1) (VERIFIED, `kb/sources/global/eu-ai-act-art50-art113-20260727.txt`): "Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system"
+- Consumer Rights Directive 2011/83/EU, consolidated 2026-09-27, Art 8(2) (VERIFIED, `kb/sources/global/eu-crd-2011-83-art8.txt`): "The trader shall ensure that the consumer, when placing his order, explicitly acknowledges that the order implies an obligation to pay."
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.2.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Irreversible actions e.g. permanently deleting data, sending communications, making payments"
 
 **Recommendation.** TDRA to classify an AI agent in each sales medium of Article 4 and say whether 2FA applies; the UAE Data Office to say whether a recorded spoken consent meets PDPL 6(1)(b).
@@ -128,6 +129,7 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verifica
 
 - eIDAS, Regulation (EU) No 910/2014, Art 8(1) (VERIFIED, `kb/sources/global/eidas-910-2014-art8.txt`): "shall specify assurance levels low, substantial and/or high for electronic identification means issued under that scheme."
 - eIDAS, Regulation (EU) No 910/2014, Art 8(3)(c) (VERIFIED, `kb/sources/global/eidas-910-2014-art8.txt`): "the authentication mechanism, through which the natural or legal person uses the electronic identification means to confirm its identity to a relying party;"
+- 47 CFR 64.2010, safeguards on the disclosure of CPNI (US FCC), 64.2010(b) (VERIFIED, `kb/sources/global/us-47cfr-64-2010.txt`): "Telecommunications carriers may only disclose call detail information over the telephone, based on customer-initiated telephone contact, if the customer first provides the carrier with a password, as described in paragraph (e) of this section, that is not prompted by the carrier asking for readily available biographical information, or account information."
 
 **Recommendation.** TDRA to name the Art 33 trust level that an adequate verification process under 24.10 requires on a remote channel, as eIDAS Art 8 ties each assurance level to an authentication mechanism.
 
@@ -163,6 +165,8 @@ Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Ex
 **Global example**
 
 - GDPR, Regulation (EU) 2016/679, Art 22(3) (VERIFIED, `kb/sources/global/gdpr-art22.txt`): "at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision."
+- GDPR, Regulation (EU) 2016/679, Art 12(3) (VERIFIED, `kb/sources/global/gdpr-art12-28-33.txt`): "The controller shall provide information on action taken on a request under Articles 15 to 22 to the data subject without undue delay and in any event within one month of receipt of the request."
+- Digital Services Act, Regulation (EU) 2022/2065, Art 20(6) (VERIFIED, `kb/sources/global/eu-dsa-2022-2065-art12-20.txt`): "Providers of online platforms shall ensure that the decisions, referred to in paragraph 5, are taken under the supervision of appropriately qualified staff, and not solely on the basis of automated means."
 
 **Recommendation.** UAE Data Office to issue the 18(4) review procedure: who reviews, the deadline, how the subscriber puts a point of view and contests, and which regulator hears a refusal.
 
