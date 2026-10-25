@@ -6,8 +6,8 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 
 | id | gap | kind | category | addressee | global example | exposed by |
 | --- | --- | --- | --- | --- | --- | --- |
-| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1) | S2-3 |
-| gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL wants consent to the data processing 'in writing or electronically' (6(1)(b)); one spoken 'yes' can buy the service and still not permit the data use, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2 | S1-4 |
+| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (acknowledge at once by telephone, 26.13.3; conclude in twenty business days, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it, whether the time is recorded. QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1) | S2-3 |
+| gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL permits the processing the contract needs without consent (4(9)) and wants any further processing consented 'in writing or electronically' (6(1)(b)); one spoken 'yes' buys the service and consents to nothing beyond it, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2 | S1-4 |
 | gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b) | S5 (verification step) |
 | gap-4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3); GDPR Art 12(3); DSA 2022/2065 Art 20(6) | S4-4, S4-5 |
 | gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1) | S3-3 |
@@ -22,7 +22,7 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 
 ## gap-1: complaint hand-over
 
-Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice.
+Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (acknowledge at once by telephone, 26.13.3; conclude in twenty business days, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it, whether the time is recorded. QoS T1(2a) measures only the wait after the IVR choice.
 
 Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 
@@ -43,6 +43,24 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 - `tdra-cpr-v2-en:26.13.1` (p. 66): A duty to help a Consumer formulate and lodge a complaint; no step for an automated channel.
   - EN: "reasonably assist any Consumer, so requesting such assistance, to formulate and to lodge a Consumer Complaint with the Licensee"
   - AR (the whole chunk): "مساعدة أي مستهلك بشكل معقول، حال طلبه هذه المساعدة، في صياغة وتقديم شكواه لدى المرخص له؛ و"
+- `tdra-cpr-v2-en:26.2` (p. 64): Complaints resolved properly and promptly; no step for the moment an automated conversation turns into one.
+  - EN: "investigate and resolve Consumer Complaints properly and promptly"
+  - AR (the whole chunk): "يجب على المرخص لهم وضع وصون إجراءات فعالة للتحقيق في شكاوى المستهلكين وحلها بطريقة سليمة وفي حينها، سواء أتم تقديم الشكوى مباشرة من المستهلك أو تم تقديمها عبر الهيئة. حيث يجب أن تكون الإجراءات التي يتخذها المرخص له سهلة الاستخدام ولا يجدر بها أن تكون معقدة أو مرهقة أو مستهلكة للوقت إلى حد يردع المستهلكين من تقديم شكوى للمرخص له."
+- `tdra-cpr-v2-en:26.6` (p. 65): Trained people respond in a timely and prompt manner; no time stated.
+  - EN: "receive, process, and respond to Consumer Complaints in a timely and prompt manner"
+  - AR (the whole chunk): "يجب على المرخص لهم الحفاظ على عدد كافٍ من الموظفين المدربين تدريباً مناسباً لاستقبال ومعالجة والرد على الشكاوى المقدمة من المستهلكين في الوقت المناسب وبالسرعة اللازمة. صفحة51 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
+- `tdra-cpr-v2-en:26.13.2` (p. 66): Acknowledgement with a reference number and an indicative time-frame; nothing on who or what issues it on an automated channel.
+  - EN: "acknowledge the receipt of each Consumer Complaint by providing the complainant with a reference number for the complaint and the indicative time-frame"
+  - AR (the whole chunk): "الإقرار باستلام كل شكوى مستهلك عن طريق تزويد المشتكي برقم مرجعي للشكوى والإطار الزمني الاسترشادي المطلوب من المرخص له للتحقيق في الشكوى وحلها."
+- `tdra-cpr-v2-en:26.13.3` (p. 66): The acknowledgement clock: at once by telephone or visit, one business day for a written complaint. Chat and app are not named; an acknowledgement is not a hand-over.
+  - EN: "immediately in the case of complaints submitted by telephone or personal visit, and within one (1) business day in the case of a written complaint"
+  - AR (the whole chunk): "ويجب تقديم الإقرارالمذكور أعلاه فوراً في حال تقديم الشكاوى عبر الهاتف أو الزيارة الشخصية، وخلال يوم عمل واحد في حالة الشكوى الخطية."
+- `tdra-cpr-v2-en:26.14.1` (p. 66): Resolve on first contact where possible; with 26.7.2 the first contact on an automated channel cannot be the one that resolves.
+  - EN: "Where possible, Licensees shall seek to resolve a Consumer Complaint on first contact."
+  - AR (the whole chunk): ".يجب أن يسعى المرخص لهم إلى حل شكوى المستهلك من أول تواصل إن أمكن ذلك"
+- `tdra-cpr-v2-en:26.14.2` (p. 66): The conclusion clock: twenty business days. A clock for the complaint, not for the transfer to a person.
+  - EN: "conclude Consumer Complaints within twenty (20) business days after receipt or as soon as practical in all circumstances"
+  - AR (the whole chunk): "بشكل عام، يجب على المرخص لهم حل شكوى المستهلك في غضون عشرين (20 ) يوم عمل بعد استلام الشكوى أو في أقرب وقت ممكن في جميع الأحوال."
 - `licence-2-2026:9.1` (p. 22): Trained personnel for complaints, at licence level, on every channel (Arabic: موظفين مدربين). No hand-over procedure or time.
   - EN: "The Licensee shall maintain adequate trained personnel to receive and respond promptly to complaints and disputes from Customers."
   - AR (the whole chunk): "توفير ما يلزم من موظفين مدربين"
@@ -51,7 +69,7 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 - `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: complaint numbers and means always available with qualified staff; a staffed complaint channel, no stop, hand-over or clock for an AI chat.
   - EN: "Designate numbers and means of communication regarding complaints, which shall be always available without interruption with qualified staff"
 
-**UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it; no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over.
+**UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it. The CPR wants first-contact resolution (26.14.1) and bars the machine from the conversation (26.7.2); nothing joins the two: no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over. The acknowledgement clock (26.13.3) names telephone, visit and written complaints, not chat or app, and a reference number is not a conversation.
 
 **Global example**
 
@@ -65,7 +83,7 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 
 ## gap-2: consent elicited by an AI (channel classification)
 
-Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL wants consent to the data processing 'in writing or electronically' (6(1)(b)); one spoken 'yes' can buy the service and still not permit the data use, and nobody has said which medium an AI chat or voice agent is.
+Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL permits the processing the contract needs without consent (4(9)) and wants any further processing consented 'in writing or electronically' (6(1)(b)); one spoken 'yes' buys the service and consents to nothing beyond it, and nobody has said which medium an AI chat or voice agent is.
 
 Kind: method. Category: coordination problem. Addressee: TDRA, UAE Data Office. Exposed by: S1-4.
 
@@ -88,12 +106,14 @@ Kind: method. Category: coordination problem. Addressee: TDRA, UAE Data Office. 
   - AR (the whole chunk): "تطبق الشروط التالية في الحالات التي يتم فيها شراء خدمة3 :عبر تطبيق المرخص له"
 - `etransactions-46-2021-en:12(2)` (p. 17): What an automated system sends is the operator's own act.
   - EN: "If it is sent by an electronic medium automated and programmed to operate automatically by or on behalf of the Originator."
+- `pdpl-45-2021-en:4(9)` (p. 8): Processing the contract needs is permitted without consent; the seam is only for processing beyond it.
+  - EN: "If the processing is necessary to perform a contract to which the Data Subject is a party, or to take measures at the request of the Data Subject with the aim of concluding, amending or terminating a contract."
 - `pdpl-45-2021-en:6(1)` (p. 9): Data-processing consent in writing or electronically; spoken is not named.
   - EN: "whether in writing or electronically"
 - `law-14-2023-en:13(2)` (p. 13): Trade Law 14/2023: a digital contract is valid on offer and acceptance that meet the digital identity and digital signature requirements; no medium is named for spoken consent through an AI channel.
   - EN: "Fulfillment of the offer and acceptance and the contractual relationship executed upon satisfying the requirements of the digital identity and digital signature."
 
-**UAE position.** No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes; a spoken consent through the agent covers the purchase (4.7.2) but not a new processing purpose under PDPL 6(1)(b). Mizan takes the strict reading (4.10 plus OTP, 4.11).
+**UAE position.** No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes. The processing the contract needs is lawful without consent (4(9)); a spoken consent through the agent covers the purchase (4.7.2) but not a processing purpose beyond the contract, which 6(1)(b) wants in writing or electronically. Mizan takes the strict reading (4.10 plus OTP, 4.11).
 
 **Global example**
 
@@ -155,6 +175,10 @@ Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Ex
   - EN: "If the automated processing is agreed upon under the contract made between the Data Subject and the Controller."
 - `pdpl-45-2021-en:18(4)` (p. 22): Human review on request, not conditioned on 18(1); no procedure, deadline or regulator.
   - EN: "The Controller shall include the human element in reviewing automated processing decisions at the request of the Data Subject."
+- `pdpl-45-2021-en:11(1)` (p. 15): 11(1)(b): the Data Protection Officer receives requests and complaints: an internal route, no deadline.
+  - EN: "Receiving requests and complaints related to Personal Data in accordance with provisions of this Decree-Law and its Executive Regulations."
+- `pdpl-45-2021-en:12(2)` (p. 17): The data subject may go straight to the DPO; no response time.
+  - EN: "The Data Subject may communicate directly with the Data Protection Officer about all matters relating to his/ her personal data processing"
 - `cabinet-66-2023-en:34(1)` (p. 18): A prohibited term: the provider terminates unilaterally.
   - EN: "unilaterally terminate it without referring to the consumer"
 - `cabinet-66-2023-en:34(3)` (p. 18): A prohibited term: the provider alone judges conformity.
@@ -387,6 +411,12 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: C5 per-langu
   - EN: "The Arabic language version of this License is the binding version."
 - `qos-v3-en:9.5` (p. 17): Annex A: every T indicator counts orders, faults, waits and complaints; none is reported per language. All 43 QoS chunks searched for language, Arabic, English and لغة: no hit.
   - EN: "Average queue time for calls to the call centre"
+- `tdra-cpr-v2-en:26.2` (p. 64): An unqualified standard, 'properly and promptly', that applies to Arabic as to English; no measure per language.
+  - EN: "investigate and resolve Consumer Complaints properly and promptly"
+  - AR (the whole chunk): "يجب على المرخص لهم وضع وصون إجراءات فعالة للتحقيق في شكاوى المستهلكين وحلها بطريقة سليمة وفي حينها، سواء أتم تقديم الشكوى مباشرة من المستهلك أو تم تقديمها عبر الهيئة. حيث يجب أن تكون الإجراءات التي يتخذها المرخص له سهلة الاستخدام ولا يجدر بها أن تكون معقدة أو مرهقة أو مستهلكة للوقت إلى حد يردع المستهلكين من تقديم شكوى للمرخص له."
+- `tdra-cpr-v2-en:26.6` (p. 65): 'Properly trained' personnel; nothing on the language they answer in or how well.
+  - EN: "an adequate number of properly trained personal to receive, process, and respond to Consumer Complaints"
+  - AR (the whole chunk): "يجب على المرخص لهم الحفاظ على عدد كافٍ من الموظفين المدربين تدريباً مناسباً لاستقبال ومعالجة والرد على الشكاوى المقدمة من المستهلكين في الوقت المناسب وبالسرعة اللازمة. صفحة51 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
 - ITU AI Readiness 2.0 (2026-01), dimension 6 Human Interface, d6_m02 (p. 23; framework, non-binding): A readiness metric: whether AI models exist in the local language of the interface. No duty, no quality measure.
   - EN (`kb/sources/itu-readiness-dimensions.json`): "Availability of AI models in the local language used in the human interface"
 
@@ -431,6 +461,10 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
   - AR (the whole chunk): "في حال عُرض على المستهلكين خيار بنعم أو لا على الشاشة كجزء من عملية الشراء، يجب دائماً تحديد الخيار "لا" بشكل افتراضي لتجنب اختيار "نعم" بالخطأ؛ و"
 - `etransactions-46-2021-en:12(7)` (p. 18): An error in an electronic document is reached only when it comes from a technical failure in transmission, not from the system's own reading of the words.
   - EN: "an error has occurred in the Electronic Document as a result of a technical failure during transmission"
+- `etransactions-46-2021-en:12(4)` (p. 18): 12(4)(c): an addressee may not rely on a document it is unreasonable to attribute to the originator; a transcript of the subscriber's words is the operator's own system's output, not a document the subscriber issued.
+  - EN: "If it is unreasonable for the Addressee to consider the Electronic Document to be issued by the Originator or to act on this basis."
+- `etransactions-46-2021-en:13(5)` (p. 19): The law separates receipt from content; it imposes no read-back of the content understood.
+  - EN: "an acknowledgment of receipt does not mean acknowledgment of the content of the Electronic Document."
 - `etransactions-46-2021-en:11(2)` (p. 17): An automated contract binds if the person knows, or should know, a system makes it; nothing on what the system understood.
   - EN: "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."
 - `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: a complaint channel always available with qualified staff; nothing on reading back an order before it is confirmed.

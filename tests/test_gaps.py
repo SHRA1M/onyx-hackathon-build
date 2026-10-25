@@ -267,7 +267,8 @@ def test_gap_10_searches_the_orders_clauses():
     searched = [s["clause"] for s in _row("gap-10")["searched"]]
     assert searched == ["tdra-cpr-v2-en:3.2.2", "tdra-cpr-v2-en:4.25.3", "tdra-cpr-v2-en:17.3",
                         "consumer-law-15-2020-en:26", "consumer-law-15-2020-en:25(1)", "consumer-law-15-2020-en:8(4)",
-                        "cabinet-66-2023-en:43(5)", "licence-2-2026:16.7", "qos-v3-en:9.5"]
+                        "cabinet-66-2023-en:43(5)", "licence-2-2026:16.7", "qos-v3-en:9.5",
+                        "tdra-cpr-v2-en:26.2", "tdra-cpr-v2-en:26.6"]  # order 2026-10-25 Task 26, A5
     assert "inferred" in _row("gap-10")["searched"][0]["says"]  # 3.2.1 (electronic form) reaches an app chat
 
 
@@ -314,3 +315,42 @@ def test_arabic_records_candidate_is_unchanged():
 def test_adviser_register_lists_gap_10():
     from onyx.agents.adviser import Adviser
     assert "10. gap-10: Arabic at equal quality" in "\n".join(Adviser.extra_lines(None))
+
+
+# --- order 2026-10-25 Task 26: rows 1 and 2 pre-empt the CPR clocks and PDPL 4(9); searched lists extended ----------
+
+TASK_26_ADDED = {
+    "gap-1": ["tdra-cpr-v2-en:26.2", "tdra-cpr-v2-en:26.6", "tdra-cpr-v2-en:26.13.2", "tdra-cpr-v2-en:26.13.3",
+              "tdra-cpr-v2-en:26.14.1", "tdra-cpr-v2-en:26.14.2"],
+    "gap-2": ["pdpl-45-2021-en:4(9)"],
+    "gap-4": ["pdpl-45-2021-en:11(1)", "pdpl-45-2021-en:12(2)"],  # 11(1)(b) cites its parent chunk (hq ruling 2026-10-26)
+    "gap-10": ["tdra-cpr-v2-en:26.2", "tdra-cpr-v2-en:26.6"],
+    "gap-11": ["etransactions-46-2021-en:12(4)", "etransactions-46-2021-en:13(5)"],  # 12(4)(c) likewise
+}
+
+
+def test_task_26_searched_entries_are_placed_as_ordered():
+    clauses = {rid: [s["clause"] for s in _row(rid)["searched"]] for rid in TASK_26_ADDED}
+    after = {"gap-1": "tdra-cpr-v2-en:26.13.1", "gap-4": "pdpl-45-2021-en:18(4)",
+             "gap-10": "qos-v3-en:9.5", "gap-11": "etransactions-46-2021-en:12(7)"}
+    for rid, prev in after.items():
+        i = clauses[rid].index(prev) + 1
+        assert clauses[rid][i:i + len(TASK_26_ADDED[rid])] == TASK_26_ADDED[rid], rid
+    i = clauses["gap-2"].index("pdpl-45-2021-en:6(1)")
+    assert clauses["gap-2"][i - 1] == "pdpl-45-2021-en:4(9)"
+    for rid in TASK_26_ADDED:
+        for s in _row(rid)["searched"]:
+            if s["clause"] in TASK_26_ADDED[rid]:
+                assert sorted(s) == ["clause", "quote", "says"], (rid, s["clause"])
+    assert _row("gap-4")["searched"][clauses["gap-4"].index("pdpl-45-2021-en:11(1)")]["says"].startswith("11(1)(b)")
+    assert _row("gap-11")["searched"][clauses["gap-11"].index("etransactions-46-2021-en:12(4)")]["says"].startswith(
+        "12(4)(c)")
+
+
+def test_task_26_rows_1_and_2_name_the_clocks_and_4_9():
+    assert "the complaint has clocks (acknowledge at once by telephone, 26.13.3; conclude in twenty business days, " \
+           "26.14.2); the transfer has none" in _row("gap-1")["gap"]
+    assert _row("gap-1")["uae_position"].endswith("and a reference number is not a conversation.")
+    assert "the PDPL permits the processing the contract needs without consent (4(9))" in _row("gap-2")["gap"]
+    assert "one spoken 'yes' buys the service and consents to nothing beyond it" in _row("gap-2")["gap"]
+    assert "The processing the contract needs is lawful without consent (4(9))" in _row("gap-2")["uae_position"]
