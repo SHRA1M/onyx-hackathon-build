@@ -273,5 +273,5 @@ def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
     lines = readme[block:readme.index("Mizan puts a consumer on the line")].strip().splitlines()
     numbered = [line for line in lines if re.match(r"\d\. ", line)]
     assert [line[:2] for line in numbered] == ["1.", "2.", "3.", "4."]
-    assert numbered[0].startswith("1. Knowledge base: `kb/manifest.csv` (47 rows")
+    assert numbered[0].startswith("1. Knowledge base: `kb/manifest.csv` (50 rows")
     assert numbered[3].startswith("4. ITU-T Y.3172 and the Readiness Framework:")

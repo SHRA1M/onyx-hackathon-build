@@ -8,7 +8,7 @@
 
 The four published criteria, each with the one place that shows it:
 
-1. Knowledge base: `kb/manifest.csv` (47 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`.
+1. Knowledge base: `kb/manifest.csv` (50 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`.
 2. Agent capability in error scenarios, and the gaps: `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay
 3. Auditability: `uv run python -m onyx selftest` recomputes every figure in `docs/report.docx` from the committed hash-chained logs in `runs/`; `uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl` re-decides one run offline.
 4. ITU-T Y.3172 and the Readiness Framework: `docs/report.docx`, sections 3 and 4, and the Y.3172 mapping table below.
@@ -20,7 +20,7 @@ clauses. Every step is written to a hash-chained log that replays offline, with 
 
 Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, and three members.
 
-Knowledge base: 43 VERIFIED (text on disk, sha256 matches), 1 REFERENCED (opened, text not held), 3 UNVERIFIED
+Knowledge base: 46 VERIFIED (text on disk, sha256 matches), 1 REFERENCED (opened, text not held), 3 UNVERIFIED
 (asserted, not published; they back no claim) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
 [The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
 16 rows link a landing page because the document link could not be verified. The Telecommunications Law 3/2003 is

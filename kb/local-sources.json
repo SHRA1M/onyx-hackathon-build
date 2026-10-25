@@ -375,5 +375,29 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "law-14-2023-en": {
+  "file": "perplexity-2026-10-24/fetched-2026-10-24/law-14-2023-en.pdf",
+  "text": "standards-text/law-14-2023-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "law-14-2023-ar": {
+  "file": "perplexity-2026-10-24/fetched-2026-10-24/law-14-2023-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabres-28-2023-en": {
+  "file": "perplexity-2026-10-24/fetched-2026-10-24/cabres-28-2023-en.pdf",
+  "text": "standards-text/cabres-28-2023-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }

@@ -48,6 +48,8 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
   - AR (the whole chunk): "توفير ما يلزم من موظفين مدربين"
 - `qos-v3-en:9.5` (p. 17): Annex A, T1(2a): the only time measured is the wait after the IVR choice, under two minutes, indicative. A bot before that choice, and chat or app, are unmeasured.
   - EN: "Average time (seconds) spent waiting from the time the Customer has selected the IVR choice to speak to an agent until the Customer is connected to an agent"
+- `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: complaint numbers and means always available with qualified staff; a staffed complaint channel, no stop, hand-over or clock for an AI chat.
+  - EN: "Designate numbers and means of communication regarding complaints, which shall be always available without interruption with qualified staff"
 
 **UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it; no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over.
 
@@ -88,6 +90,8 @@ Kind: method. Category: coordination problem. Addressee: TDRA, UAE Data Office. 
   - EN: "If it is sent by an electronic medium automated and programmed to operate automatically by or on behalf of the Originator."
 - `pdpl-45-2021-en:6(1)` (p. 9): Data-processing consent in writing or electronically; spoken is not named.
   - EN: "whether in writing or electronically"
+- `law-14-2023-en:13(2)` (p. 13): Trade Law 14/2023: a digital contract is valid on offer and acceptance that meet the digital identity and digital signature requirements; no medium is named for spoken consent through an AI channel.
+  - EN: "Fulfillment of the offer and acceptance and the contractual relationship executed upon satisfying the requirements of the digital identity and digital signature."
 
 **UAE position.** No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes; a spoken consent through the agent covers the purchase (4.7.2) but not a new processing purpose under PDPL 6(1)(b). Mizan takes the strict reading (4.10 plus OTP, 4.11).
 
@@ -122,6 +126,10 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verifica
   - EN: "verifying the Registration Information against the information contained in the Identification Documents"
 - `tdra-registration-policy-2011-en:6.1.2` (p. 11): At registration the Licensee compares each original Identification Document with its copy. Another event (registration); it maps no telecom-care act to a trust level.
   - EN: "comparing each original Identification Document against the copy submitted during the Registration Process"
+- `cabres-28-2023-en:15(9)` (p. 11): A trust service provider tells the relying party the security and trust level of the Digital Identity used. Another event (trust services); it maps no telecom-care act to a trust level.
+  - EN: "of levels of security and trust of the used Digital Identity as part of the service provision"
+- `cabres-28-2023-en:24(3)` (p. 18): TDRA may check that a procedure equivalent to appearance in person is used before a qualified certificate issues. Another event (qualified certificates); it maps no telecom-care act to a trust level.
+  - EN: "Where the Qualified Trust Service Provider uses a procedure equivalent to the appearance in person to verify the identity and capacity of the Person"
 
 **UAE position.** A voice or chat agent that discloses account data after security questions is within the letter of the CPR; the national trust levels exist but no text says which level 24.10 needs on a remote channel.
 
@@ -231,6 +239,8 @@ Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
   - EN: "Automated communication systems may be used for marketing"
 - `spam-calls-v4-en:3.3` (p. 7): Synthesised voices contemplated; no duty to disclose the machine.
   - EN: "the audible message contains a natural or a synthesised voice"
+- `law-14-2023-en:1` (p. 1): Trade Law 14/2023, definition of 'Modern Technology': artificial intelligence is named as a means of trade; no duty to tell the consumer.
+  - EN: "whether electronic, digital, biometric, artificial intelligence technology, blockchain technology"
 
 **UAE position.** Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only UAE text that says it.
 
@@ -273,6 +283,10 @@ Kind: absence. Category: standards gap. Addressee: TDRA. Exposed by: all.
   - EN: "If it is sent by an electronic medium automated and programmed to operate automatically by or on behalf of the Originator."
 - `cabinet-57-2024-en:7` (p. 5): Table No. (1), row 16: a fine for using automatic calling or marketing in breach of Cabinet 56/2024 (Clause (6)). A penalty, not a conduct standard.
   - EN: "16 Using automatic calling or marketing"
+- `law-14-2023-en:1` (p. 1): Trade Law 14/2023, definition of 'Modern Technology': artificial intelligence is named. A definition, not a conduct standard.
+  - EN: "whether electronic, digital, biometric, artificial intelligence technology, blockchain technology"
+- `law-14-2023-en:5(7)` (p. 8): Trade Law 14/2023: no misleading dealing or incorrect data. A general duty, not one specific to an automated agent.
+  - EN: "Refraining from dealing in a misleading manner or provide incorrect data that does not give the true description of the good or service."
 
 **UAE position.** The binding texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct.
 
@@ -419,6 +433,8 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
   - EN: "an error has occurred in the Electronic Document as a result of a technical failure during transmission"
 - `etransactions-46-2021-en:11(2)` (p. 17): An automated contract binds if the person knows, or should know, a system makes it; nothing on what the system understood.
   - EN: "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."
+- `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: a complaint channel always available with qualified staff; nothing on reading back an order before it is confirmed.
+  - EN: "Designate numbers and means of communication regarding complaints, which shall be always available without interruption with qualified staff"
 
 **UAE position.** The CPR already knows the problem on a screen: the safe default is 'no' (4.22.3, 4.23.3) and a purchase needs a second factor (4.23.2). On a voice or chat channel the system, not the subscriber, decides what was said; the OTP then confirms that the subscriber wants something, not that the channel understood the right thing. ET 12(7) reaches transmission errors only. No published TDRA text requires the channel to state the service, price and term it understood and take a correction before the second factor.
 
