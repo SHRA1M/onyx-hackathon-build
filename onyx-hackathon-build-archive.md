@@ -330,3 +330,10 @@ Moved from background (superseded or old):
   - 2026-10-23 (Iyas): the replay viewer follows the markdown pages (Task 14's rule kept), so English S3 to S5 show C5 run1.
   - 2026-10-23 (Task 12 item 6): a candidate row carries the register id when the key names exactly one `candidate-` id at that step (`local_id` keeps `candidate-S1-6`). Gap recall reads the log's flag_gap and abstention gaps, not candidates.jsonl, so the fix changes no score.
   - For hq (report-back 2026-10-21-pending-and-task8): confirm the addressee rule, the obligation-proxy definition and the hand-over latency definition.
+
+## 2026-10-25: Thirty-third wrap, Task 24 closed and merged
+
+- hq's `task-24-merge-order-2026-10-25.md` accepted all three report-back points: Art 5(5) stays out of gap-11; "fifteen" stands (hq recounted 19 binding VERIFIED non-foreign, minus the four named); the two text extracts moved to hq's `standards-text/` (byte-identical to `kb/sources/`, checked with `cmp`).
+- `kb/local-sources.json`: the two `text` values changed from `../../../engineering/onyx-hackathon-build/kb/sources/...` to `standards-text/...`; nothing else. Commit 6477407.
+- Branch was at 75281a3, two wrap-doc commits past the order's 8596e95; merged as is.
+- Checks: kb verify VERIFIED 46, check-data ok, 386 tests pass. Merged `task-24` into main without squash (420c14d), pushed; CI run 40213102487 green on 420c14d.

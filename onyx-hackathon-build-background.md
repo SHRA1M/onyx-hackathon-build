@@ -1,10 +1,10 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-25 (thirty-second wrap, Opus: Task 23 finished and merged; Task 24 built on branch `task-24`, not merged).
+Updated 2026-10-25 (thirty-third wrap, Opus: Task 24 closed by hq and merged to main).
 
 ## What this is
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). In hand: `2026-10-24-task-24-uae-texts.md` on branch `task-24` (8596e95, CI green run 40212609968; not merged, the order names no merge; report-back `docs/report-back/2026-10-25-task-24-uae-texts.md`). main holds Task 23 (merge cc7b73b, CI green run 40211462109; built under hq's ruling and addendum of 2026-10-25), after Task 22 (34dc036), Task 21 (30e02c4), Task 20 (5dbb250), Task 19b (c5cea32). Older orders and commits: the archive. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). main holds Task 24 (merge 420c14d, CI green run 40213102487; closed by hq's `task-24-merge-order-2026-10-25.md`), after Task 23 (cc7b73b), Task 22 (34dc036), Task 21 (30e02c4), Task 20 (5dbb250), Task 19b (c5cea32). Older orders and commits: the archive. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
 
 ## Stack and how it runs
 
@@ -12,8 +12,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Where things live
 
-- `kb/manifest.csv` (50 rows on `task-24`, 46 VERIFIED, 9 foreign), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts in `kb/sources/`, running headers removed, pointed to from hq by `../../../engineering/onyx-hackathon-build/kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 16 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
-- `kb/chunks/*.jsonl`: only the 144 cited clauses (rules, mandates, gap rows and scenario `grounded_in`), 18 documents on `task-24` (committed). `kb.page_of(document_id, clause)`: the chunk's page, None when not committed or when every committed chunk of the document says page 1 (itu-t-y3172); `kb.page_link` gives `url#page=N` only where the manifest url is the PDF itself. Shown as "p. N" (the PDF page index) in replay pages, viewer, gaps.md; the KB export has a Pages column. `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
+- `kb/manifest.csv` (50 rows, 46 VERIFIED, 9 foreign), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 16 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
+- `kb/chunks/*.jsonl`: only the 144 cited clauses (rules, mandates, gap rows and scenario `grounded_in`), 18 documents (committed). `kb.page_of(document_id, clause)`: the chunk's page, None when not committed or when every committed chunk of the document says page 1 (itu-t-y3172); `kb.page_link` gives `url#page=N` only where the manifest url is the PDF itself. Shown as "p. N" (the PDF page index) in replay pages, viewer, gaps.md; the KB export has a Pages column. `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
 - `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs; a `documents` list per agent), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts, and `grounded_in` {clauses [{clause_id, page}], line, source}: hq's line, Task 16), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
 - `onyx/audit.py` (Task 4): `AuditLog(path, clock)` with `start(scenario_id)` and `append(event) -> hash`; `verify(path)`, `first_break(path)`, `iter_model_responses(path)`, `key_hashes()`, `FIELDS`. Tests `tests/test_audit.py`.
@@ -44,7 +44,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - 2026-10-23 (hq ruling on Task 19's stop): the proposed gap-1 clock goes only on a `block` verdict; S2-4 (already with H-01) never gains it. On the C5 S2 runs, en and ar, S2-3 gains the clock and S2-5 goes hold to allow with the hand-over-time finding; 8 of 10 decisions identical. Older S2 runs where S2-4 was a block gain it at S2-4 too (reported, no page reads them).
 - 2026-10-24 (Iyas, Task 20): gap-10's competitor basis names no entry (Task 16 ruling); the order's names stay in hq.
 - 2026-10-25 (hq, Task 23 ruling): the report never cites a global example the register lacks; the register may hold more. gap-11 kind "method" stands.
-- 2026-10-25 (Task 24): Trade Law 14/2023 Art 5(5) is not in gap-11 (it makes the purchase count as acceptance; no safe default).
+- 2026-10-25 (Task 24, hq accepted): Trade Law 14/2023 Art 5(5) is not in gap-11 (it makes the purchase count as acceptance; no safe default). The report says "fifteen other UAE laws, resolutions and TDRA instruments" (19 binding VERIFIED non-foreign, minus the four named).
 
 ## Traps
 
@@ -75,8 +75,6 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- hq: check "fifteen other UAE laws, resolutions and TDRA instruments" (report line 23; was "eleven", which the manifest never gave; rule in the Task 24 report-back).
-- hq: merge `task-24` to main (the order names no merge); whether the two Task 24 text extracts should move to hq's `standards-text/`.
 - hq copies `docs/report.md` over `report-draft-2026-10-23.md`; the three ITU call names go to the README reviewer block on submission day (Task 23 F2).
 - Part B of Task 12 (video script, judge card) waits for hq's order.
 - Master Task 10's Rich `onyx/demo.py` tables not built (Files line, not a checklist item).
@@ -91,4 +89,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Wait for hq's word on Task 24 (merge `task-24`, the "fifteen" count), then the next order. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1` (limit 5).
+Take the next order from `D:\Projects\hq\uni\ai-for-good-hackathon\`. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1` (limit 5).
