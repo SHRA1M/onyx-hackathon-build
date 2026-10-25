@@ -45,7 +45,8 @@ sub-paragraph, the quote the sub-paragraph's words. (The ruling says "7 of the 1
 6. `eval` and `eval --runs runs/scripted` recomputed: `git diff -- eval/` prints nothing.
 7. Pages 5, words 2,222; cuts none.
 9. `pytest`: 406 passed. kb verify 46 VERIFIED; check-data ok; selftest figures match; 217 logs chain ok; replay,
-   replay-page, figures, report and site rebuilt; only the listed files changed.
+   replay-page, figures, report and site rebuilt; only the listed files changed. Merged to main (241c936), pushed;
+   CI green: run 40246430008 (main) and 40246430014 (task-26).
 
 B5: `docs/site/gaps.html` shows "the transfer has none" (gap 1) and "consents to nothing beyond it" (gap 2). The D row
 of the mapping table (`docs/report.md` line 62, "CPR 26.13.2, 26.13.3; QoS v3.0 T1(2a)") is unchanged.
