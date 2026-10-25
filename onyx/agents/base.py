@@ -26,6 +26,8 @@ v5 (order 2026-10-22): line 1 carves the de-identified model-provider payload ou
 v5, register grown (Task 15, unscored): the adviser's register adds gap-9 and candidate-79bis-2-fine-schedule at lines 9 and 11; label stays v5; recorded runs replay as recorded.
 
 v5, register grown again (Task 20, unscored): the adviser's register adds gap-10 at line 10, so the candidates move to lines 11 and 12; label stays v5; recorded runs replay as recorded.
+
+v5, register grown a third time (Task 23, unscored): the adviser's register adds gap-11 at line 11, so the candidates move to lines 12 and 13; label stays v5; recorded runs replay as recorded.
 """
 
 from __future__ import annotations

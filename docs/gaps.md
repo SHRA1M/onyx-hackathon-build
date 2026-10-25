@@ -6,16 +6,17 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 
 | id | gap | kind | category | addressee | global example | exposed by |
 | --- | --- | --- | --- | --- | --- | --- |
-| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2 | S2-3 |
-| gap-2 | Consent elicited by an AI: the CPR medium classification (4.10, 4.17, 4.22) decides whether an OTP is needed, and PDPL 6(1)(b) names consent 'in writing or electronically', not spoken. | method | coordination problem | TDRA, UAE Data Office | EU AI Act Art 50(1); IMDA 2.2.2 | S1-4 |
-| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c) | S5 (verification step) |
-| gap-4 | Automated disconnection: PDPL 18(4) human review has no procedure, deadline or regulator; the 18(2) contract escape is undercut by Cabinet 66/2023 34(1), (3), (5) (inferred interaction, both quoted). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3) | S4-4, S4-5 |
+| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1); the mechanics are not (stop, hand over, how fast), and QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1) | S2-3 |
+| gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL wants consent to the data processing 'in writing or electronically' (6(1)(b)); one spoken 'yes' can buy the service and still not permit the data use, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2 | S1-4 |
+| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b) | S5 (verification step) |
+| gap-4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3); GDPR Art 12(3); DSA 2022/2065 Art 20(6) | S4-4, S4-5 |
 | gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1) | S3-3 |
-| gap-6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only. | scope | legislative gap | Cabinet | EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113 | S1-3 |
-| gap-7 | No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's conduct. | absence | standards gap | TDRA | IMDA 2.1.2 | all |
+| gap-6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'. | scope | legislative gap | Cabinet | EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113 | S1-3 |
+| gap-7 | No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent. | absence | standards gap | TDRA | IMDA 2.1.2 | all |
 | gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | none; the recommendation is the example | S2-3 |
-| gap-9 | A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
+| gap-9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions to providers and the Art 16 penalties are unpublished, and Cabinet Resolution 106/2026's age checks reach social media platforms only (Art 2); nothing says how a telecom channel learns the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
 | gap-10 | Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language. | method | standards gap | TDRA | Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27 | C5 per-language scoring (M, D nodes); mapping (SRC) |
+| gap-11 | A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back. | method | standards gap | TDRA | E-Commerce Dir. 2000/31 Art 11(2); CRD 2011/83 Art 8(2) | mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run. |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
 | candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 
@@ -56,12 +57,13 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.2.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Human override rate i.e. the frequency at which humans reject or modify agent actions."
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.2.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Human response times during review of agent actions."
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.4.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Provide users with the respective human contact points who are responsible for the agents, whom the users can alert if the agents malfunction or if they are dissatisfied with a decision."
+- Digital Services Act, Regulation (EU) 2022/2065, Art 12(1) (VERIFIED, `kb/sources/global/eu-dsa-2022-2065-art12-20.txt`): "Providers of intermediary services shall designate a single point of contact to enable recipients of the service to communicate directly and rapidly with them, by electronic means and in a user-friendly manner, including by allowing recipients of the service to choose the means of communication, which shall not solely rely on automated tools."
 
 **Recommendation.** TDRA to state, for every automated channel, what happens when a conversation becomes a Consumer Complaint: the agent stops, the named human takes over, within a stated time, measured like T1(2a) for chat and app.
 
 ## gap-2: consent elicited by an AI (channel classification)
 
-Consent elicited by an AI: the CPR medium classification (4.10, 4.17, 4.22) decides whether an OTP is needed, and PDPL 6(1)(b) names consent 'in writing or electronically', not spoken.
+Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL wants consent to the data processing 'in writing or electronically' (6(1)(b)); one spoken 'yes' can buy the service and still not permit the data use, and nobody has said which medium an AI chat or voice agent is.
 
 Kind: method. Category: coordination problem. Addressee: TDRA, UAE Data Office. Exposed by: S1-4.
 
@@ -91,7 +93,7 @@ Kind: method. Category: coordination problem. Addressee: TDRA, UAE Data Office. 
 
 **Global example**
 
-- EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27, Art 50(1) (VERIFIED, `kb/sources/global/eu-ai-act-art50-art113-20260727.txt`): "Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system"
+- Consumer Rights Directive 2011/83/EU, consolidated 2026-09-27, Art 8(2) (VERIFIED, `kb/sources/global/eu-crd-2011-83-art8.txt`): "The trader shall ensure that the consumer, when placing his order, explicitly acknowledges that the order implies an obligation to pay."
 - IMDA Model AI Governance Framework for Agentic AI v1.5, 2.2.2 (VERIFIED, `kb/sources/global/imda-agentic-ai-v1.5.txt`): "Irreversible actions e.g. permanently deleting data, sending communications, making payments"
 
 **Recommendation.** TDRA to classify an AI agent in each sales medium of Article 4 and say whether 2FA applies; the UAE Data Office to say whether a recorded spoken consent meets PDPL 6(1)(b).
@@ -116,6 +118,10 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verifica
   - EN: "Authentication Procedures to confirm the identity of any person to the Relying Party."
 - `decision-16-2026-ar:4.17` (p. 10): On a loss report the licensee verifies the reporter's identity; the method is not stated (Arabic only).
   - AR (the whole chunk): "عند استلام بلاغ فقدان أو سرقة، يتعين على المرخص له التحقق فوراً من صحة البيانات المقدمة، بما في ذلك التحقق من هوية مقدم البلاغ."
+- `tdra-registration-policy-2011-en:6.1.1` (p. 11): At registration the Licensee checks the Registration Information against the Identification Documents. Another event (registration); it maps no telecom-care act to a trust level.
+  - EN: "verifying the Registration Information against the information contained in the Identification Documents"
+- `tdra-registration-policy-2011-en:6.1.2` (p. 11): At registration the Licensee compares each original Identification Document with its copy. Another event (registration); it maps no telecom-care act to a trust level.
+  - EN: "comparing each original Identification Document against the copy submitted during the Registration Process"
 
 **UAE position.** A voice or chat agent that discloses account data after security questions is within the letter of the CPR; the national trust levels exist but no text says which level 24.10 needs on a remote channel.
 
@@ -123,12 +129,13 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verifica
 
 - eIDAS, Regulation (EU) No 910/2014, Art 8(1) (VERIFIED, `kb/sources/global/eidas-910-2014-art8.txt`): "shall specify assurance levels low, substantial and/or high for electronic identification means issued under that scheme."
 - eIDAS, Regulation (EU) No 910/2014, Art 8(3)(c) (VERIFIED, `kb/sources/global/eidas-910-2014-art8.txt`): "the authentication mechanism, through which the natural or legal person uses the electronic identification means to confirm its identity to a relying party;"
+- 47 CFR 64.2010, safeguards on the disclosure of CPNI (US FCC), 64.2010(b) (VERIFIED, `kb/sources/global/us-47cfr-64-2010.txt`): "Telecommunications carriers may only disclose call detail information over the telephone, based on customer-initiated telephone contact, if the customer first provides the carrier with a password, as described in paragraph (e) of this section, that is not prompted by the carrier asking for readily available biographical information, or account information."
 
 **Recommendation.** TDRA to name the Art 33 trust level that an adequate verification process under 24.10 requires on a remote channel, as eIDAS Art 8 ties each assurance level to an authentication mechanism.
 
 ## gap-4: automated disconnection review
 
-Automated disconnection: PDPL 18(4) human review has no procedure, deadline or regulator; the 18(2) contract escape is undercut by Cabinet 66/2023 34(1), (3), (5) (inferred interaction, both quoted).
+Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions).
 
 Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Exposed by: S4-4, S4-5.
 
@@ -146,12 +153,20 @@ Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Ex
   - EN: "Authorising the provider to determine by himself and without referring to the consumer whether the goods or service subject of the contract is in conformity"
 - `cabinet-66-2023-en:34(5)` (p. 18): A prohibited term: unilateral change of a subscription, except a notified upgrade.
   - EN: "the right to unilaterally change the characteristics of the goods or the terms of the consumer use of the service in the case of services subscription contracts"
+- `pdpl-45-2021-en:24(1)` (p. 26): The data subject may complain to the Bureau (the Data Office).
+  - EN: "The Data Subject shall have the right to submit complaints to the Bureau"
+- `pdpl-45-2021-en:24(2)` (p. 27): The Bureau receives and examines the complaint; no period is set.
+  - EN: "shall examine such complaints in coordination with the Controller and the Processor"
+- `pdpl-45-2021-en:25` (p. 27): The 30 days run for a grievance against the Bureau's own decisions, not for a complaint under 24.
+  - EN: "within (30) thirty days as of the date on which a notice of such administrative decision or penalty is given"
 
 **UAE position.** The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations were never issued.
 
 **Global example**
 
 - GDPR, Regulation (EU) 2016/679, Art 22(3) (VERIFIED, `kb/sources/global/gdpr-art22.txt`): "at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision."
+- GDPR, Regulation (EU) 2016/679, Art 12(3) (VERIFIED, `kb/sources/global/gdpr-art12-28-33.txt`): "The controller shall provide information on action taken on a request under Articles 15 to 22 to the data subject without undue delay and in any event within one month of receipt of the request."
+- Digital Services Act, Regulation (EU) 2022/2065, Art 20(6) (VERIFIED, `kb/sources/global/eu-dsa-2022-2065-art12-20.txt`): "Providers of online platforms shall ensure that the decisions, referred to in paragraph 5, are taken under the supervision of appropriately qualified staff, and not solely on the basis of automated means."
 
 **Recommendation.** UAE Data Office to issue the 18(4) review procedure: who reviews, the deadline, how the subscriber puts a point of view and contests, and which regulator hears a refusal.
 
@@ -199,7 +214,7 @@ Kind: method. Category: legislative gap. Addressee: UAE Data Office. Exposed by:
 
 ## gap-6: AI disclosure
 
-AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) makes it a validity condition for sales only.
+AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'.
 
 Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
 
@@ -229,12 +244,15 @@ Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
 
 ## gap-7: five mentions no standard
 
-No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's conduct.
+No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent.
 
 Kind: absence. Category: standards gap. Addressee: TDRA. Exposed by: all.
 
 **Clauses searched**
 
+- `tdra-cpr-v2-en:3.3` (p. 10): Transparency, fairness and complete, accurate information in all dealings: a general duty, not one specific to an automated agent.
+  - EN: "Licensees shall act with transparency and fairness in all dealings with Consumers"
+  - AR (the whole chunk): "يجب على المرخص لهم التصرف بشفافية في جميع التعاملات مع المستهلكين بخصوص الخدمات المعروضة و/أو المقدمة من المرخص لهم إلى المستهلكين ويجب أن تكون جميع المعلومات المقدمة إلى المستهلكين، وقت تقديمها، مستوفاة وتتسم بالشفافية والدقة والصحة."
 - `tdra-cpr-v2-en:25.14.1` (p. 64): Directory enquiries by an AIA: charges waived if it fails. A billing rule, not a conduct standard.
   - EN: "enquiry is processed by an artificial intelligence assistance (AIA)"
   - AR (the whole chunk): "معالجة استفسار المستهلك بواسطة مساعد ذكاء اصطناعي ((AIA؛ و"
@@ -293,7 +311,7 @@ Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S2-3.
 
 ## gap-9: a child on the line
 
-A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are unpublished, and no text addressed to a telecom provider says how an automated channel learns that the person is a child.
+A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions to providers and the Art 16 penalties are unpublished, and Cabinet Resolution 106/2026's age checks reach social media platforms only (Art 2); nothing says how a telecom channel learns the person is a child.
 
 Kind: method. Category: legislative gap. Addressee: TDRA, Cabinet. Exposed by: mapping (SRC, P); U2 (drill bank, not run).
 
@@ -368,6 +386,49 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: C5 per-langu
 
 **Recommendation.** TDRA to add to the QoS Policy, for every automated consumer channel, the same indicators per language (answer accuracy against the Licensee's own policy text, hand-over time, abstention), reported separately for Arabic and English, with a parity band; Canada's Official Languages Act s. 26 shows a regulator imposing the language duty on regulated service providers, and s. 27 extends it to oral channels.
 
+## gap-11: a misheard order
+
+A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back.
+
+Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run..
+
+**Clauses searched**
+
+- `tdra-cpr-v2-en:4.7.1` (p. 14): Consent is opt-in, by positive affirmative action taken freely by the Subscriber; it assumes the action is the Subscriber's own, not the channel's reading of it.
+  - EN: "relying on positive affirmative action(s) taken freely by the Subscriber"
+  - AR (the whole chunk): "يجب أن تكون عملية الحصول على الموافقة نزيهة وشفافة ومُحكمة ويجب أن ترتكز على إجراء "خيار الاشتراك" الذي يعتمد على عملية التأكيد بالإيجاب أو التأكيدات الإيجابية التي يقوم بها المشترك بحرية لتأكيد موافقته على تلقي الخدمة المعنية و/أو الدفع مقابلها؛"
+- `tdra-cpr-v2-en:4.10` (p. 15): Digital applications: no single click; a multi-step process, with 2FA unless justified or specified otherwise.
+  - EN: "The process shall always be a multi-step approach"
+  - AR (the whole chunk): "في جميع التطبيقات الرقمية، يجب ألا تعتمد عملية أخذ موافقة المشترك على تلقي الخدمات و/أو الدفع مقابلها، على عملية "بنقرة واحدة". يجب أن تتبع هذه العملية منهجية متعددة الخطوات وما لم يتم التبرير موضوعياً بخلاف ذلك، أو تحديد خلاف ذلك صراحةً، يجب أن تتطلب العملية من المستهلك إتمام إجراء المصادقة الثنائية (ما يدعى أيضاً التحقق بخطوتين أو اختصاراً 2FA)؛"
+- `tdra-cpr-v2-en:4.11` (p. 15): Where 2FA is mandated, the default is an OTP.
+  - EN: "the default method of 2FA shall, in the absence of any approved alternative, be one-time password (OTP)."
+  - AR (the whole chunk): "عندما تنص هذه الأنظمة على استخدام المصادقة الثنائية كوسيلة لتأكيد موافقة المشترك على تلقي خدمة ما و/أو الدفع مقابلها، فإن الطريقة الافتراضية لتلك المصادقة، في حالة عدم وجود أي بديل معتمد، يجب أن تكون كلمة المرور لمرة واحدة (OTP.)"
+- `tdra-cpr-v2-en:4.17.3` (p. 16): Telephone sales: a voice recording of the verbal consent. It stores what was said, not what the channel understood.
+  - EN: "the Licensee shall make a voice recording of the Subscriber giving verbal consent to the terms and conditions for the service"
+  - AR (the whole chunk): "يجب على المرخص له القيام بتسجيل صوتي يثبت موافقة المشترك الشفوية على شروط وأحكام الخدمة؛ و"
+- `tdra-cpr-v2-en:4.22.3` (p. 18): Licensee App purchases: an on-screen yes/no defaults to no, against an accidental yes.
+  - EN: "shall always be set as the default answer to avoid accidental"
+  - AR (the whole chunk): "في حال عُرض على المستهلك خيار بنعم أو لا على الشاشة كجزء من عملية الشراء، يجب دائماً تحديد الخيار "لا" بشكل افتراضي لتجنب اختيار "نعم" بالخطأ؛ و"
+- `tdra-cpr-v2-en:4.23.2` (p. 18): Online purchases: a 2FA procedure for each purchase.
+  - EN: "for each purchase, the Consumer shall be required to follow a 2FA procedure to confirm agreement to the purchase of the Service"
+  - AR (the whole chunk): "يجب على المستهلك، في كل عملية شراء، اتباع إجراء المصادقة الثنائية لتوكيد الاتفاق على شراء الخدمة؛ 3 يتم تعريف مصطلح "الخدمة" على النحو الوارد في المادة الفرعية4.2 صفحة15 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
+- `tdra-cpr-v2-en:4.23.3` (p. 18): Online purchases: the same no-by-default rule for an on-screen yes/no.
+  - EN: "shall always be set as the default answer to avoid accidental"
+  - AR (the whole chunk): "في حال عُرض على المستهلكين خيار بنعم أو لا على الشاشة كجزء من عملية الشراء، يجب دائماً تحديد الخيار "لا" بشكل افتراضي لتجنب اختيار "نعم" بالخطأ؛ و"
+- `etransactions-46-2021-en:12(7)` (p. 18): An error in an electronic document is reached only when it comes from a technical failure in transmission, not from the system's own reading of the words.
+  - EN: "an error has occurred in the Electronic Document as a result of a technical failure during transmission"
+- `etransactions-46-2021-en:11(2)` (p. 17): An automated contract binds if the person knows, or should know, a system makes it; nothing on what the system understood.
+  - EN: "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."
+
+**UAE position.** The CPR already knows the problem on a screen: the safe default is 'no' (4.22.3, 4.23.3) and a purchase needs a second factor (4.23.2). On a voice or chat channel the system, not the subscriber, decides what was said; the OTP then confirms that the subscriber wants something, not that the channel understood the right thing. ET 12(7) reaches transmission errors only. No published TDRA text requires the channel to state the service, price and term it understood and take a correction before the second factor.
+
+**Global example**
+
+- e-Commerce Directive 2000/31/EC, consolidated 2024-02-17, Art 11(2) (VERIFIED, `kb/sources/global/eu-ecommerce-2000-31-art10-11.txt`): "the service provider makes available to the recipient of the service appropriate, effective and accessible technical means allowing him to identify and correct input errors, prior to the placing of the order."
+- Consumer Rights Directive 2011/83/EU, consolidated 2026-09-27, Art 8(2) (VERIFIED, `kb/sources/global/eu-crd-2011-83-art8.txt`): "the trader shall make the consumer aware in a clear and prominent manner, and directly before the consumer places his order, of the information provided for in Article 6(1), points (a), (e), (la), (o) and (p)."
+
+**Recommendation.** TDRA: on a voice or chat channel, before the 2FA step, the channel states the service, price and term it understood and accepts a correction; the read-back is logged with the consent record (sub-article 3.9).
+
 ## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
 
 Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.
@@ -428,10 +489,23 @@ Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only 
 
 ### Breach notification without a period
 
-The Controller notifies the Bureau of a breach within a period the never-issued Executive Regulations were to set.
+The Controller notifies the Bureau (9(1)) and the data subject (9(2)) of a breach within a period the never-issued Executive Regulations were to set. Example: GDPR Art 33(1), 'not later than 72 hours after having become aware of it'.
 
 - `pdpl-45-2021-en:9(1)` (p. 13): The period is left to the Executive Regulations.
   - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
+- `pdpl-45-2021-en:9(2)` (p. 14): The notice to the data subject: the period is left to the Executive Regulations too.
+  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
+
+### Sub-processor authorisation
+
+The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. Example: GDPR Art 28(2), 'The processor shall not engage another processor without prior specific or general written authorisation of the controller.'
+
+- `pdpl-45-2021-en:7(5)` (p. 11): The Controller appoints only a Processor with sufficient guarantees.
+  - EN: "Appoint the Processor which has sufficient guarantees"
+- `pdpl-45-2021-en:8(1)` (p. 11): The Processor acts on the Controller's instructions and contract.
+  - EN: "Carry out the processing in accordance with the instructions of the Controller"
+- `pdpl-45-2021-en:8(10)` (p. 13): Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.
+  - EN: "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"
 
 ### The Executive Order unpublished
 

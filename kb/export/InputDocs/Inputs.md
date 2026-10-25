@@ -4,7 +4,7 @@ Mizan knowledge base, exported from `kb/manifest.csv` by `python -m onyx kb expo
 Each document sits in the subfolder of its category; full texts are copied only where `kb fetch` holds them.
 
 
-## UAE_Binding/ (28 files)
+## UAE_Binding/ (29 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -36,6 +36,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 26 | `cybercrimes-34-2021-ar.pdf` | `law` | Federal Decree-Law No. 34 of 2021, Arabic | VERIFIED | `1d367a497550…` | 33 | [landing page](https://uaelegislation.gov.ae/ar/legislations/1526) (document link not verified) |
 | 27 | `decision-16-2026-ar.pdf` | `regulation` | TDRA Decision 16/2026 on the use of mobile telecommunications devices (issued 2026-05-11), Arabic only | VERIFIED | `0278aec14e47…` | 11 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/Updated-regulations-and-ruling/Use-of-Mobile-Telecommunications-Devices-Ar.ashx) |
 | 28 | `instructions-1-2014-ar.pdf` | `regulation` | TDRA Instructions 1/2014 on accessibility of telecommunications for People of Determination, Arabic only | VERIFIED | `b9ebfc40c67e…` | 5 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/AR/People-of-determination-accessibility-to-telecommunication.ashx) |
+| 29 | `tdra-registration-policy-2011-en.pdf` | `policy` | TDRA Regulatory Policy: Registration Requirements for Mobile Consumers, Version 1.0 (2011-09-27) | VERIFIED | `5108ee3e9f20…` | 17 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/Registration-Requirements-for-Mobile-Consumers-Policy-pdf.ashx) |
 
 ## UAE_Advisory/ (3 files)
 
@@ -54,12 +55,18 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 3 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `a3cc9bfd2b09…` |  | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c6aac69d9692dcae95b5b498a416befcfb/simulation/data/framework/dimensions.json) |
 | 4 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
 
-## Global_Examples/ (2 files)
+## Global_Examples/ (8 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
 | 1 | `eu-ai-act-2026-07-27.txt` | `extract` | Regulation (EU) 2024/1689 (AI Act), consolidated 2026-07-27, Articles 50 and 113 (extract) | VERIFIED | `c64fb4a0a259…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727) |
 | 2 | `gdpr-art22.txt` | `extract` | Regulation (EU) 2016/679 (GDPR), Article 22 (extract) | VERIFIED | `3366fa9a67f2…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02016R0679-20160504) |
+| 3 | `eu-dsa-2022-2065-art12-20.txt` | `extract` | Regulation (EU) 2022/2065 (Digital Services Act), Articles 12 and 20 (extract) | VERIFIED | `1d5517ad09d2…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32022R2065) |
+| 4 | `eu-crd-2011-83-art8.txt` | `extract` | Directive 2011/83/EU (Consumer Rights), consolidated 2026-09-27, Article 8 (extract) | VERIFIED | `4e475ce16077…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02011L0083-20260927) |
+| 5 | `eu-ecommerce-2000-31-art10-11.txt` | `extract` | Directive 2000/31/EC (e-Commerce), consolidated 2024-02-17, Articles 10 and 11 (extract) | VERIFIED | `484dd3dc2a5e…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02000L0031-20240217) |
+| 6 | `gdpr-art12-28-33.txt` | `extract` | Regulation (EU) 2016/679 (GDPR), Articles 12, 28 and 33 (extract) | VERIFIED | `af51a747069e…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02016R0679-20160504) |
+| 7 | `us-47cfr-64-2010.txt` | `extract` | 47 CFR 64.2010, Safeguards on the disclosure of customer proprietary network information (extract) | VERIFIED | `8d8f50f5a9bf…` |  | [link](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-B/part-64/subpart-U/section-64.2010) |
+| 8 | `ca-ola-s22-27.txt` | `extract` | Official Languages Act (Canada), R.S.C. 1985, c. 31 (4th Supp.), ss. 22 to 27 (extract) | VERIFIED | `47b831156cb3…` |  | [link](https://laws-lois.justice.gc.ca/eng/acts/O-3.01/page-2.html) |
 
 ## Unverified/ (3 files)
 

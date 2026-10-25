@@ -309,3 +309,11 @@ Moved from background (superseded or old):
 - hq ruling `task-22-ruling-page-six-2026-10-24.md`: cut C (five sentences shortened: Introduction, use-case problem, Our solution, S3, Limits) gave 5 pages, 2,224 words; C6 not needed.
 - Checks: tagged-paragraph grep empty, protected diff from c5cea32 empty, 386 tests pass.
 - Superseded in the background: report at 2,169 words (Task 21); the Task 21 open question on the gaps 1 and 2 sentence; the Task 18 and 19 order lines in "What this is" (Task 19 at 7615029, CI 39995571844, block-only ruling `task-19-ruling-block-only-2026-10-23.md`; Task 18 at 1acf952, item 6 at 6259011).
+
+## 2026-10-24: Thirty-first wrap, Task 23 gap hunt paused at 6 pages
+
+- Order filed at 7c9b32b; all work on branch `task-23-wip` (Iyas: not main). Local main reset to origin/main after branching, so the order commit lives on the branch only.
+- Stops before the build, Iyas's answers: the three UAE texts blocked (portal 403; hq's `law-14-2023-en.pdf` and `cabres-28-2023-en.pdf` were the 5,495-byte challenge page; no Arabic file): build without, Task 24 adds them. gap-11 kind: "method" (order said "standards", not a kind). Every count updated, not only C8. Extra files allowed (chunks, local-sources, export, two `onyx/gaps.py` labels, pinned tests).
+- Built: TDRA registration policy (tdra.gov.ae 200, matches hq copy) and six global extracts (EUR-Lex by scrapling with wait_selector; eCFR versioner API, needs `--compressed`; Justice Laws pages 2 and 3, s. 27 on page 3). Manifest 47 rows, 43 VERIFIED, nine foreign (old text said four, the rule gave three). gap-11, gaps 2, 4, 6, 7, 9 reworded, breach candidate extended (not duplicated), sub-processor candidate added. 138 cited chunks. Adviser register line 11 (Task 15 and 20 precedent, label v5).
+- Report: C1 to C8 gave 6 pages, 2,334 words; ladder 1 to 4 left 6 pages, 2,286 words, page 6 starting "What ITU can reuse". Stopped; hq cuts on 2026-10-25.
+- Checks: 386 tests pass, check-data ok, kb verify clean, protected diff from c5cea32 empty, eval unchanged, manifest added rows only.

@@ -13,7 +13,7 @@ import pytest
 from onyx import data, gaps, kb
 
 ROWS = data.load_gaps()["gaps"]
-ORDER_IDS = [f"gap-{n}" for n in range(1, 11)] +["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
+ORDER_IDS = [f"gap-{n}" for n in range(1, 12)] +["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
 GLOBAL_DIR = kb.KB_DIR / "sources" / "global"
 REGISTER_ID = re.compile(r"^(gap-\d+|candidate-[\w-]+)$")
 
@@ -115,11 +115,11 @@ def test_readme_leads_with_the_register():
 
 # --- order 2026-10-21-task-9-fixes-tasks-10-11, Part A ------------------------------------------------------------
 
-GAP_7 = ("No binding UAE text sets conduct standards for an AI agent dealing with a consumer. The clauses that name AI "
-         "or an automated agent set a charge waiver (CPR 25.14.1), a bar (26.7.2), a definition (Spam Calls v4 "
-         "3.3(iii)), a permission (Cabinet 56/2024 5(6)) and a tool (Child Digital Safety 10(1)(g)); PDPL 18 and "
-         "Electronic Transactions 11 to 13 govern automated decisions and contracts as outcomes, not the agent's "
-         "conduct.")
+# reworded by order 2026-10-24 Task 23, B2
+GAP_7 = ("No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of "
+         "fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars "
+         "misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated "
+         "agent.")
 
 
 def test_gap_7_is_hqs_text_and_a_standards_gap():
@@ -144,11 +144,11 @@ def test_public_outputs_carry_no_competitor_column(tmp_path):
 
 # --- order 2026-10-22-task-15-gap-9-child -------------------------------------------------------------------------
 
-GAP_9 = ("A child on the line: the Child Digital Safety Law 26/2025 makes the caregiver sign the service terms where the "
-         "beneficiary is a child (11(1)(b)) and requires verified caregiver consent for under-13 data (7(1)), but the "
-         "Cabinet classification (Art 6), the TDRA instructions to providers (Art 11) and the penalties (Art 16) are "
-         "unpublished, and no text addressed to a telecom provider says how an automated channel learns that the "
-         "person is a child.")
+# reworded by order 2026-10-24 Task 23, B2
+GAP_9 = ("A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 "
+         "data needs verified caregiver consent (7(1)); the Art 11 instructions to providers and the Art 16 penalties are "
+         "unpublished, and Cabinet Resolution 106/2026's age checks reach social media platforms only (Art 2); nothing "
+         "says how a telecom channel learns the person is a child.")
 COPPA = {"312.5(a)(1)": "obtain verifiable parental consent before any collection, use, or disclosure of personal "
                         "information from children",
          "312.5(b)(1)": "reasonably calculated, in light of available technology, to ensure that the person providing "
@@ -216,16 +216,16 @@ def test_candidate_79bis_2_row():
 def test_readme_register_has_twelve_rows_and_the_child_left_the_candidates():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     table = readme.split(gaps.START, 1)[1].split(gaps.END, 1)[0]
-    assert table.count("\n| ") == 12 + 2  # gap-1 to gap-10 and two candidate rows, plus the header and separator
+    assert table.count("\n| ") == 13 + 2  # gap-1 to gap-11 and two candidate rows, plus the header and separator
     names = [c["name"] for c in data.load_gaps()["candidates"]]
-    assert "A child on the line" not in names and len(names) == 3
+    assert "A child on the line" not in names and len(names) == 4  # Task 23 B3: sub-processor authorisation added
     assert "### A child on the line" not in (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
 
 
 def test_adviser_register_lists_gap_9_and_the_candidate():
     from onyx.agents.adviser import Adviser
     text = "\n".join(Adviser.extra_lines(None))  # the register lines read no instance state
-    assert "9. gap-9: " in text and "12. candidate-79bis-2-fine-schedule: " in text  # gap-10 at line 10 (Task 20)
+    assert "9. gap-9: " in text and "13. candidate-79bis-2-fine-schedule: " in text  # gap-10, gap-11 at lines 10, 11 (Tasks 20, 23)
 
 
 # --- order 2026-10-24-task-20-gap-10-arabic-parity ----------------------------------------------------------------
