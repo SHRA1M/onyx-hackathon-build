@@ -378,7 +378,7 @@
  },
  "law-14-2023-en": {
   "file": "perplexity-2026-10-24/fetched-2026-10-24/law-14-2023-en.pdf",
-  "text": "../../../engineering/onyx-hackathon-build/kb/sources/law-14-2023-en.txt",
+  "text": "standards-text/law-14-2023-en.txt",
   "splitter": "article",
   "pair_of": "",
   "top": false,
@@ -394,7 +394,7 @@
  },
  "cabres-28-2023-en": {
   "file": "perplexity-2026-10-24/fetched-2026-10-24/cabres-28-2023-en.pdf",
-  "text": "../../../engineering/onyx-hackathon-build/kb/sources/cabres-28-2023-en.txt",
+  "text": "standards-text/cabres-28-2023-en.txt",
   "splitter": "article",
   "pair_of": "",
   "top": false,
