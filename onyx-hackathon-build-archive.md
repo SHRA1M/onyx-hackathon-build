@@ -348,3 +348,16 @@ Moved from background (superseded or old):
 - Moved from the background (old or settled):
   - `gh run` status lags on GitHub (2026-10-22: a 42 s job showed in progress for 17 min after every step passed); read the job's steps with `gh run view <id> --json jobs`.
   - 2026-10-22 (hq Task 16 and its rulings): README leads with hq's first paragraph, `## Why` (e& 371,476 and TDRA 23,464, three linked sources), `## Three things to look at first`, then the register; headings "Run it without a key" and "What we do not claim". No other entry is named in the repo; the competitor read lives in hq only (the repo copy was removed outside this session). CPR 17.4, 17.4.1, 4.20.1 and licence 16.3.3 added to kb/chunks (ruling 1). PDF page test compares with whitespace removed (ruling 3).
+
+## 2026-10-26: Task 26 merged; Task 27 built and paused three times on the report's length
+
+- Task 26 (gap rows 1 and 2, 13 searched entries): stopped once (7 clauses only in `kb/chunks-full`, two clause ids not chunks), resumed on hq's ruling, merged to main 241c936, CI green runs 40246430008 (main) and 40246430014 (task-26).
+- Task 27 (gap-12 "No metric for where an agent's authority ends", ITU-T Y.3173 into the KB, report row 12): stop 1 (Readiness 2.0 not chunked, Appendix I.1 has no chunk); stop 2 (row 12 made the report 6 pages); stop 3 (hq's cuts F1 row 12, F2 row 2, F3 row 1 left 6 pages, 2,285 / 2,279 / 2,274 words). Also done: "51 documents" twice in the report, the site prints a row's `note`.
+- Tried: `kb chunk` over the whole kb reverted the hand-fixed CPR and licence chunk files; restored from git, Y.3173 lines copied from chunks-full. `powershell -ExecutionPolicy Bypass` through Bash denied by the classifier; the PowerShell tool runs the script.
+- Checks at the pause: 411 tests, kb verify 51 (47 VERIFIED), check-data ok, protected diff 0 bytes, site twice identical, `git diff d8284eb --stat -- kb/chunks/` only itu-t-y3173.jsonl.
+- Moved from the background:
+  - 2026-10-23 (hq ruling on Task 19's stop): the proposed gap-1 clock goes only on a `block` verdict; S2-4 (already with H-01) never gains it. On the C5 S2 runs, en and ar, S2-3 gains the clock and S2-5 goes hold to allow with the hand-over-time finding; 8 of 10 decisions identical. Older S2 runs where S2-4 was a block gain it at S2-4 too (reported, no page reads them).
+  - `check-data` compares quotes with our chunks, not with the PDFs. The 2026-10-21 pdftotext audit found 13 of 110 quotes not verbatim in pdftotext output (8 layout only); see the report-back.
+  - Chaining commit and push after a test with `;` pushes a red commit (c8c08e2, 2026-10-22): chain with `&&`. A test run before a new file is tracked passes locally and fails in CI (the name test met the filed order only in CI).
+  - Windows globbing is case-insensitive: `runs/S*` also matches `runs/scripted`. Filter on `Path(p).parts[1]` in S1..S5 or ungoverned.
+  - A batch loop that pipes a check through `tail` loses its exit code: use `set -o pipefail` or capture `$?` before piping, or a stop rule silently passes.

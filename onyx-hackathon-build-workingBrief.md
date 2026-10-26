@@ -1,16 +1,18 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-25 (thirty-fourth wrap, Opus).
+Updated 2026-10-26 (thirty-fifth wrap, Opus).
 
 ## Objective
 
-Task 25, the site, is merged to main (e1e81cc, CI green run 40220134358): `docs/site/` opens from disk; report-back
-`docs/report-back/2026-10-25-task-25-site.md`. Report: 5 pages, 2,181 words. No order in hand.
+Finish Task 27 (order `docs/work-orders/2026-10-26-task-27-gap-12-agentic-readiness.md`) on branch `task-27`
+(6fd5c26, not merged, not pushed). Everything is built and green except the report: 6 pages after hq's cuts F1 to F3,
+page 6 holds 3 lines, 37 words. Stop note: `docs/report-back/2026-10-26-task-27-stop-3.md`.
 
 ## Next moves
 
-1. hq reads the Task 25 report-back.
-2. The next order from `D:\Projects\hq\uni\ai-for-good-hackathon\`.
+1. hq rules on the third stop; apply its cut, rebuild, recount (limit 5).
+2. Rerun every check, write `docs/report-back/2026-10-26-task-27-gap-12-agentic-readiness.md` and the CHANGELOG entry.
+3. Merge `task-27` to main, push, confirm CI green, name the run.
 
 ## Open questions
 
