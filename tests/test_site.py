@@ -162,7 +162,7 @@ def test_gaps_rows_and_texts(pages):
     rows = [e for e in elements if e["tag"] == "section" and "gap-row" in e["attrs"].get("class", "")]
     ids = [r["attrs"]["data-id"] for r in rows]
     assert sorted(ids) == sorted(r["id"] for r in register["gaps"])
-    assert len([i for i in ids if i.startswith("gap-")]) == 11
+    assert len([i for i in ids if i.startswith("gap-")]) == 12  # gap-12, order 2026-10-26 Task 27
     assert ids == site.gap_order()
     by_id = {r["id"]: r for r in register["gaps"]}
     for row in rows:
@@ -320,3 +320,14 @@ def test_javascript_names_the_first_broken_event(tmp_path):
                           text=True, encoding="utf-8", check=True)
     ok = json.loads(done.stdout)
     assert audit.first_break(tampered) == 5 and ok.index(False) + 1 == 5 and all(ok[:4])
+
+
+def test_a_rows_note_shows_on_the_site_as_on_the_register_page(pages):
+    """hq ruling 2026-10-26 on the Task 27 second stop, question 3: the site and docs/gaps.md never disagree."""
+    elements = _parse(pages["gaps.html"])
+    rows = {r["attrs"]["data-id"]: r for r in elements if r["tag"] == "section" and "gap-row" in r["attrs"].get("class", "")}
+    gaps_md = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
+    noted = [g for g in data.load_gaps()["gaps"] if g.get("note")]
+    assert [g["id"] for g in noted] == ["gap-12"]
+    for g in noted:
+        assert g["note"] in rows[g["id"]]["text"] and g["note"] in gaps_md

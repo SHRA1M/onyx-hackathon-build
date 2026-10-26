@@ -72,7 +72,8 @@ def test_two_image_parts_no_template_example_and_no_run_set_tag(built):
         media = [n for n in z.namelist() if n.startswith("word/media/")]
     assert len(media) == 2
     text = re.sub(r"<[^>]+>", "", _xml(built))
-    for gone in ("smart pen", "NOTE", "Step-1", "Team Name"):
+    # the template's notes read "NOTE:" and "NOTE-"; row 12 quotes Y.3173's "Table 7-2 NOTE 1" (order Task 27, C1)
+    for gone in ("smart pen", "NOTE:", "NOTE-", "Step-1", "Team Name"):
         assert gone not in text, gone
     assert not re.search(r"\[C[35]", text)
     assert "`" not in text and "**" not in text
@@ -92,7 +93,7 @@ def test_the_mapping_table_replaces_the_template_table_and_tables_keep_its_style
     assert len(doc.tables) == 2
     mapping, gaps = doc.tables
     assert mapping.rows[0].cells[0].text == "Node" and mapping.rows[1].cells[0].text == "SRC"
-    assert gaps.rows[0].cells[0].text == "#" and gaps.rows[9].cells[0].text == "9"
+    assert gaps.rows[0].cells[0].text == "#" and gaps.rows[10].cells[0].text == "9"  # row 12 follows row 11 (Task 27)
     for table in doc.tables:
         assert table.style.style_id == "TableGridLight"
         assert all(r.bold for c in table.rows[0].cells for p in c.paragraphs for r in p.runs)
@@ -273,5 +274,5 @@ def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
     lines = readme[block:readme.index("Mizan puts a consumer on the line")].strip().splitlines()
     numbered = [line for line in lines if re.match(r"\d\. ", line)]
     assert [line[:2] for line in numbered] == ["1.", "2.", "3.", "4."]
-    assert numbered[0].startswith("1. Knowledge base: `kb/manifest.csv` (50 rows")
+    assert numbered[0].startswith("1. Knowledge base: `kb/manifest.csv` (51 rows")  # Y.3173 joined, Task 27
     assert numbered[3].startswith("4. ITU-T Y.3172 and the Readiness Framework:")

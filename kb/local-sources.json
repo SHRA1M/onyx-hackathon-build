@@ -240,6 +240,14 @@
   "top": true,
   "strip": "^\\s*\\d*\\s*Rec\\. ITU-T Y\\.3172 \\(06/2019\\)\\s*(\\d+?(?=\\d\\.\\d))?"
  },
+ "itu-t-y3173": {
+  "file": "standards-text/itu-t-y3173-2020-02.pdf",
+  "text": "standards-text/itu-t-y3173-2020-02.txt",
+  "splitter": "decimal",
+  "pair_of": "",
+  "top": true,
+  "strip": "^\\s*\\d*\\s*Rec\\. ITU-T Y\\.3173 \\(02/2020\\)\\s*(\\d+?(?=\\d\\.\\d))?"
+ },
  "itu-readiness-2-0": {
   "file": "standards-text/itu-ai-readiness-report-2-0-2026-01.pdf",
   "text": "",

@@ -8,7 +8,7 @@
 
 The four published criteria, each with the one place that shows it:
 
-1. Knowledge base: `kb/manifest.csv` (50 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`.
+1. Knowledge base: `kb/manifest.csv` (51 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`.
 2. Agent capability in error scenarios, and the gaps: `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay
 3. Auditability: `uv run python -m onyx selftest` recomputes every figure in `docs/report.docx` from the committed hash-chained logs in `runs/`; `uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl` re-decides one run offline.
 4. ITU-T Y.3172 and the Readiness Framework: `docs/report.docx`, sections 3 and 4, and the Y.3172 mapping table below.
@@ -20,7 +20,7 @@ clauses. Every step is written to a hash-chained log that replays offline, with 
 
 Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, and three members.
 
-Knowledge base: 46 VERIFIED (text on disk, sha256 matches), 1 REFERENCED (opened, text not held), 3 UNVERIFIED
+Knowledge base: 47 VERIFIED (text on disk, sha256 matches), 1 REFERENCED (opened, text not held), 3 UNVERIFIED
 (asserted, not published; they back no claim) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
 [The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
 16 rows link a landing page because the document link could not be verified. The Telecommunications Law 3/2003 is
@@ -50,7 +50,7 @@ complaint or a disconnection. The binding texts do, and Mizan's gates are writte
 
 ## Gap register
 
-Eleven rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each row's clauses searched, both languages, global quotes and recommendation are in [`docs/gaps.md`](docs/gaps.md). Gap 1 is also tested, not only stated: `uv run python -m onyx whatif runs/c5/S2/run1.jsonl --rule gap-1` replays the recorded S2 run under the rule the register recommends (proposed, not law): the held step S2-5 is released, the hand-over duty gains a two-minute clock, and one new finding appears: the rule needs the hand-over time recorded, which this log does not carry. Page: `docs/replay/whatif-S2-gap-1.md`.
+Twelve rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each row's clauses searched, both languages, global quotes and recommendation are in [`docs/gaps.md`](docs/gaps.md). Gap 1 is also tested, not only stated: `uv run python -m onyx whatif runs/c5/S2/run1.jsonl --rule gap-1` replays the recorded S2 run under the rule the register recommends (proposed, not law): the held step S2-5 is released, the hand-over duty gains a two-minute clock, and one new finding appears: the rule needs the hand-over time recorded, which this log does not carry. Page: `docs/replay/whatif-S2-gap-1.md`.
 
 <!-- gap-register:start -->
 | id | gap | kind | category | addressee | global example | exposed by |
@@ -66,6 +66,7 @@ Eleven rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each
 | gap-9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions to providers and the Art 16 penalties are unpublished, and Cabinet Resolution 106/2026's age checks reach social media platforms only (Art 2); nothing says how a telecom channel learns the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
 | gap-10 | Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language. | method | standards gap | TDRA | Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27 | C5 per-language scoring (M, D nodes); mapping (SRC) |
 | gap-11 | A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back. | method | standards gap | TDRA | E-Commerce Dir. 2000/31 Art 11(2); CRD 2011/83 Art 8(2) | mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run. |
+| gap-12 | Standards gap, addressed to ITU: Readiness 2.0 measures the human acting on an AI output (D9 inference-to-action latency, decisions on AI alerts) and the human shaping the inference (D8), and states that accountability of final decisions remains with humans (D10). Y.3173 grades L0 to L5 by who performs each step and gives a human's instructions the highest authority (Table 7-2 NOTE 1). Neither has a metric for an agent that acts toward a person: the stop point, the hand-over rate, the hand-over latency. Y.3173 cites SAE J3016 and drops its fallback column, the request to intervene. | absence | standards gap | ITU | SAE J3016 (Y.3173 Table I.1) level 3; SAE J3016 (Y.3173 Table I.1) level 4 | S1 |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
 | candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 <!-- gap-register:end -->

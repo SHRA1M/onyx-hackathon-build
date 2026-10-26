@@ -49,14 +49,15 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 2 | `mocai-ai-ethics-2022.pdf` | `guideline` | AI Ethics Principles and Guidelines (December 2022) | VERIFIED | `f761ec3b1891…` | 25 | [link](https://u.ae/-/media/AI-publications/MOCAI-AI-Ethics-EN-1.pdf) |
 | 3 | `ai-deepfake-guide-2021.txt` | `guideline` | Deepfake Guide 2021 | VERIFIED | `2d4911da01e7…` |  | [link](https://u.ae/-/media/AI-publications/AI-DeepFake-Guide-EN-2021.pdf) |
 
-## Framework/ (4 files)
+## Framework/ (5 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
 | 1 | `itu-t-y3172.pdf` | `standard` | ITU-T Y.3172 (06/2019) Architectural framework for machine learning in future networks including IMT-2020 | VERIFIED | `e42f9a3be3f9…` | 34 | [landing page](https://www.itu.int/rec/T-REC-Y.3172/en) (document link not verified) |
-| 2 | `itu-readiness-2-0.pdf` | `report` | ITU AI Ready: Analysis Towards a Standardized Readiness Framework, Report 2.0 (January 2026) | VERIFIED | `71191768d46b…` | 55 | [link](https://www.itu.int/dms_pub/itu-t/opb/ai4g/T-AI4G-AI4GOOD-2025-6-PDF-E.pdf) |
-| 3 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `a3cc9bfd2b09…` |  | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c6aac69d9692dcae95b5b498a416befcfb/simulation/data/framework/dimensions.json) |
-| 4 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
+| 2 | `itu-t-y3173.pdf` | `standard` | ITU-T Y.3173 (02/2020) Framework for evaluating intelligence levels of future networks including IMT-2020 | VERIFIED | `63f65c25f573…` | 34 | [link](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-Y.3173-202002-I!!PDF-E&type=items) |
+| 3 | `itu-readiness-2-0.pdf` | `report` | ITU AI Ready: Analysis Towards a Standardized Readiness Framework, Report 2.0 (January 2026) | VERIFIED | `71191768d46b…` | 55 | [link](https://www.itu.int/dms_pub/itu-t/opb/ai4g/T-AI4G-AI4GOOD-2025-6-PDF-E.pdf) |
+| 4 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `a3cc9bfd2b09…` |  | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c6aac69d9692dcae95b5b498a416befcfb/simulation/data/framework/dimensions.json) |
+| 5 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
 
 ## Global_Examples/ (8 files)
 

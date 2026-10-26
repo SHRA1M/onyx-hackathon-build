@@ -17,6 +17,7 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 | gap-9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions to providers and the Art 16 penalties are unpublished, and Cabinet Resolution 106/2026's age checks reach social media platforms only (Art 2); nothing says how a telecom channel learns the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
 | gap-10 | Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language. | method | standards gap | TDRA | Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27 | C5 per-language scoring (M, D nodes); mapping (SRC) |
 | gap-11 | A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back. | method | standards gap | TDRA | E-Commerce Dir. 2000/31 Art 11(2); CRD 2011/83 Art 8(2) | mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run. |
+| gap-12 | Standards gap, addressed to ITU: Readiness 2.0 measures the human acting on an AI output (D9 inference-to-action latency, decisions on AI alerts) and the human shaping the inference (D8), and states that accountability of final decisions remains with humans (D10). Y.3173 grades L0 to L5 by who performs each step and gives a human's instructions the highest authority (Table 7-2 NOTE 1). Neither has a metric for an agent that acts toward a person: the stop point, the hand-over rate, the hand-over latency. Y.3173 cites SAE J3016 and drops its fallback column, the request to intervene. | absence | standards gap | ITU | SAE J3016 (Y.3173 Table I.1) level 3; SAE J3016 (Y.3173 Table I.1) level 4 | S1 |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | none on disk | S1-6 |
 | candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 
@@ -478,6 +479,64 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
 - Consumer Rights Directive 2011/83/EU, consolidated 2026-09-27, Art 8(2) (VERIFIED, `kb/sources/global/eu-crd-2011-83-art8.txt`): "the trader shall make the consumer aware in a clear and prominent manner, and directly before the consumer places his order, of the information provided for in Article 6(1), points (a), (e), (la), (o) and (p)."
 
 **Recommendation.** TDRA: on a voice or chat channel, before the 2FA step, the channel states the service, price and term it understood and accepts a correction; the read-back is logged with the consent record (sub-article 3.9).
+
+## gap-12: No metric for where an agent's authority ends
+
+Standards gap, addressed to ITU: Readiness 2.0 measures the human acting on an AI output (D9 inference-to-action latency, decisions on AI alerts) and the human shaping the inference (D8), and states that accountability of final decisions remains with humans (D10). Y.3173 grades L0 to L5 by who performs each step and gives a human's instructions the highest authority (Table 7-2 NOTE 1). Neither has a metric for an agent that acts toward a person: the stop point, the hand-over rate, the hand-over latency. Y.3173 cites SAE J3016 and drops its fallback column, the request to intervene.
+
+Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S1.
+
+Found after the scored runs; S1's expected gaps and the keys are unchanged, so C5 gap recall does not count it.
+
+**Clauses searched**
+
+- `itu-t-y3173:3.2.1` (p. 1): The definition: the level is how much automation, AI included, the network applies. Nothing on when the system must stop.
+  - EN: "Level of application of automation capabil ities including those enabled by the integration of artificial intelligence techniques in the network."
+- `itu-t-y3173:6.1` (p. 4): The levels' stated use is liability in contracts; the stop is not graded.
+  - EN: "Network intelligence levels may be used for specifying liability aspects in contractual agreements"
+- `itu-t-y3173:7.2` (p. 6): Table 7-1: each of the five dimensions (demand mapping, data collection, analysis, decision, action implementation) is graded by who performs it.
+  - EN: "a) Human; b) Human and System; c) System."
+- `itu-t-y3173:7.2` (p. 7): Table 7-2 NOTE 1: at every level L0 to L5 a human may intervene and a human's order wins. The human may override; nothing requires the system to ask.
+  - EN: "For each network intelligence level, the decision process has to support intervention by human being, i.e., decisions and execution instructions provided by a human being have the highest authority."
+- `itu-t-y3173:8.2` (p. 9): Analysis and decision by ML models and policy nodes, action by SINK nodes: the gap-8 node set, still with no outcome that stops and hands over.
+  - EN: "the analysis and decision processes are performed by ML models and policy nodes, and the action implementation process is supported by SINK nodes."
+- `itu-t-y3173:9` (p. 12 to 13): Appendix I.1, Table I.1 (the chunker folds the appendices into clause 9): SAE level 3, as Y.3173 reproduces it. The system requests intervention and expects the human to answer; SAE grades this in a fallback column Y.3173's own tables drop.
+  - EN: "with the expectation that the human driver will respond appropriately to a request to intervene"
+- `itu-t-y3173:9` (p. 12 to 13): Appendix I.1, Table I.1 (the chunker folds the appendices into clause 9): SAE level 4 performs the fallback itself when nobody answers the request to intervene.
+  - EN: "even if a human driver does not respond appropriately to a request to intervene"
+- ITU AI Readiness 2.0 (2026-01), Basic Framework, Digital Infrastructure, Basic Framework (p. 12; framework, non-binding): The report hands its automation scale to Y.3173.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "Levels of automation [Y.3173]"
+- ITU AI Readiness 2.0 (2026-01), dimension 5, D5 (p. 23; framework, non-binding): A metric for how much is automated; none for where automation must stop.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "Level of automation achieved by integrating AI."
+- ITU AI Readiness 2.0 (2026-01), dimension 8 Collaboration with AI, D8 (p. 25; framework, non-binding): The human shapes the inference; no stop for an agent that acts.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "The final inference is decided collaboratively by humans and AI"
+- ITU AI Readiness 2.0 (2026-01), dimension 9 Impacts of Humans in AI Integration, D9 (p. 27; framework, non-binding): Measured one way: the AI alerts and the human acts (also: decisions on human actions based on AI alerts). The mirror, an agent that acts and must stop, has no metric.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "inference-to-action latency: average time from first inference to human action"
+- ITU AI Readiness 2.0 (2026-01), dimension 10 AI & Policies, D10 (p. 29; framework, non-binding): Accountability for final decisions stays with humans: a principle, with no metric for where the agent's authority ends.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "This includes accountabil- ity of final decisions, which remains with humans."
+- ITU AI Readiness 2.0 (2026-01), dimension 11 AI for Inclusion, D11 (p. 31; framework, non-binding): Agents are counted as present in the user interface; nothing on what they may do.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "Use of agents for the user interface, e.g., question answers on the domain, such as navigation."
+- ITU AI Readiness 2.0 (2026-01), chapter 4, ch. 4 gap list (p. 35 to 36; framework, non-binding): The report's own standards gaps: data, generative AI and energy readiness. No agent-authority gap.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "Standards gaps, such as data harmonization, generative AI, and energy readiness for AI, remain critical to be addressed."
+- ITU AI Readiness 2.0 (2026-01), toolkit, REQ-027 NOTE (p. 40; framework, non-binding): The toolkit gives agents a job without a limit.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "regular compliance reports would be produced for this by agents"
+- ITU AI Readiness 2.0 (2026-01), FAQ, FAQ 11 (p. 47; framework, non-binding): Law is out of the report's scope, so no legal stop point is expected from it.
+  - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "Legal considerations are not within the scope of this study."
+
+**UAE position.** CPR 26.7.2 and licence 9.1 fix one stop point (a complaint conversation) with no metric; that is gap-1. No UAE text grades agent authority; none was expected to (Readiness FAQ 11 puts law out of scope).
+
+**The standard's own text**
+
+- ITU-T Y.3173 (02/2020), 7.2, Table 7-2 NOTE 1, page 7 (VERIFIED, `kb/sources/global/itu-t-y3173-2020-02.txt`): "For each network intelligence level, the decision process has to support intervention by human being, i.e., decisions and execution instructions provided by a human being have the highest authority."
+- ITU-T Y.3173 (02/2020), Appendix I.1, Table I.1, page 12 (chunk 9) (VERIFIED, `kb/sources/global/itu-t-y3173-2020-02.txt`): "with the expectation that the human driver will respond appropriately to a request to intervene"
+- ITU-T Y.3173 (02/2020), Appendix I.1, Table I.1, page 13 (chunk 9) (VERIFIED, `kb/sources/global/itu-t-y3173-2020-02.txt`): "even if a human driver does not respond appropriately to a request to intervene"
+
+**Global example**
+
+- SAE J3016, as reproduced in ITU-T Y.3173 (02/2020) Table I.1, level 3 (VERIFIED, `kb/sources/global/itu-t-y3173-2020-02.txt`): "with the expectation that the human driver will respond appropriately to a request to intervene"
+- SAE J3016, as reproduced in ITU-T Y.3173 (02/2020) Table I.1, level 4 (VERIFIED, `kb/sources/global/itu-t-y3173-2020-02.txt`): "even if a human driver does not respond appropriately to a request to intervene"
+
+**Recommendation.** ITU-T to add to Y.3173 a fallback dimension in the SAE sense (does the system request intervention, under what condition, and what happens if no human answers), and to Readiness D9 two metrics beside inference-to-action latency: hand-over rate and hand-over latency (agent stop to human pick-up) for agents that act toward a person, plus the existence of defined stop points. What-if question for the policymaker: if TDRA required the hand-over moment to be logged (gap-1's rule), both metrics become measurable from the log.
 
 ## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
 

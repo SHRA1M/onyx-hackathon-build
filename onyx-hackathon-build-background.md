@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-25 (thirty-fourth wrap, Opus: Task 25, the site, built and merged to main).
+Updated 2026-10-26 (thirty-fifth wrap, Opus: Task 26 merged; Task 27 paused on `task-27` at 6 pages).
 
 ## What this is
 
@@ -40,11 +40,11 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Decisions settled
 
 - 2026-10-22 (C5 result, hq accepted): governed (en / ar) citation validity 0.99 / 1.00, action recall 0.96 / 0.94, obligation proxy 0.57 / 0.56, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 5 of 112: S3-4 care (recipient human on the coordinator's step, 3 runs), S4-4 data office (addressee not "Human agent ...", 2 runs); both stay disclosed, no v6 (budget spent). C5 USD 5.41; recorded total USD 18.88 of 20.00. The README and selftest headline is C5; C3 is the ungoverned baseline.
-- 2026-10-23 (Task 18 item 5): README opens with `## For the reviewer` (the four criteria, one place each) under the synthetic-data notice; the README layout tests expect it as the first heading.
-- 2026-10-23 (hq ruling on Task 19's stop): the proposed gap-1 clock goes only on a `block` verdict; S2-4 (already with H-01) never gains it. On the C5 S2 runs, en and ar, S2-3 gains the clock and S2-5 goes hold to allow with the hand-over-time finding; 8 of 10 decisions identical. Older S2 runs where S2-4 was a block gain it at S2-4 too (reported, no page reads them).
 - 2026-10-24 (Iyas, Task 20): gap-10's competitor basis names no entry (Task 16 ruling); the order's names stay in hq.
 - 2026-10-25 (hq, Task 23 ruling): the report never cites a global example the register lacks; the register may hold more. gap-11 kind "method" stands.
 - 2026-10-25 (Task 25, Iyas): verify lists 100 logs (the order's 60 was hq's miscount); runs.html is a second render of the viewer and `docs/replay/index.html` stays; gap rows in the report's order, gap-7 and the candidate rows after.
+- 2026-10-26 (hq, Task 26 ruling): a clause found only in `kb/chunks-full` is copied byte for byte; a sub-clause with no chunk is cited by its parent chunk (PDPL 11(1), ET 12(4)).
+- 2026-10-26 (hq, Task 27 rulings): Readiness 2.0 is cited in a row's `framework` list from `kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`, not chunked; Y.3173 Appendix I.1 is cited as `itu-t-y3173:9` (the chunker folds appendices into clause 9). Report: "51 documents". The site shows a row's `note` as `docs/gaps.md` does. Departures (gaps.py SHORT label and `note`, test pins, README counts, Adviser register line 12, prompt stays v5) accepted.
 - 2026-10-25 (Task 24, hq accepted): Trade Law 14/2023 Art 5(5) is not in gap-11 (it makes the purchase count as acceptance; no safe default). The report says "fifteen other UAE laws, resolutions and TDRA instruments" (19 binding VERIFIED non-foreign, minus the four named).
 
 ## Traps
@@ -55,26 +55,25 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - USD 1.12 is left of the USD 20 prepaid balance: no live run fits a full batch. Any new live run needs Iyas to top up first.
 - The Playwright browser tool blocks `file://`: serve the folder with `uv run python -m http.server` (bare `python` is the Store alias). For a true file:// check use headless Chrome (`chrome.exe --headless=new --dump-dom` or `--screenshot`); its WebCrypto works on file://. Playwright writes `.playwright-mcp/` in the repo root (not gitignored): delete it.
 - Opus 5.5 through the OpenAI-compatible endpoint returns `finish_reason: content_filter` on most of our consumer-care prompts (empty or cut replies); `parse_output` reads them as unparseable. Check finish reasons before reading a parse-failure count.
-- Windows globbing is case-insensitive: `runs/S*` also matches `runs/scripted`. Filter on `Path(p).parts[1]` in S1..S5 or ungoverned.
-- A batch loop that pipes a check through `tail` loses its exit code: use `set -o pipefail` or capture `$?` before piping, or a stop rule silently passes.
 - A live run that dies leaves a partial log that blocks a re-run. Move it to `runs/bakeoff/_failed/` (or the matching `_failed` folder) so its spend still counts, then `record ... --skip-existing`. Background `record` buffers stdout: run it with `python -u` to see the estimate line.
 - The ChromaDB index (`data/chromadb`, gitignored) goes stale after any `kb chunk`: live retrieval then returns clause ids not in `kb/chunks` and the run dies (KeyError). Run `python -m onyx kb ingest` after every `kb chunk`. Rebuilt 2026-10-22 (121 in kb_main).
 
 - A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` and `kb/chunks/tdra-cpr-v2-en.jsonl`, and re-apply the hand fixes (next item).
+- Never run `kb chunk` over the whole kb (hq, 2026-10-26): chunk one document at a time and `git diff --stat kb/chunks/` before committing. Y.3173 chunks, like Y.3172, all carry page 1.
+- `powershell -ExecutionPolicy Bypass` from Bash is denied by the auto-mode classifier: run `& "...\scripts\report_pages.ps1"` in the PowerShell tool.
 - A `kb chunk` rebuild undoes hand fixes in committed chunks: licence 3.4.1 'pur suant' and 9.1 'billin g' (pypdf errors; the committed file has them right), and the CPR 4.7.3 'opt-out' and 24.7 'anti-competitive' (the extraction keeps 'opt- out', 'anti- competitive'), and licence 16.3.3 'non-compliance' (extraction 'non -compliance'). Adding a clause: copy its line from `kb/chunks-full/`, apply these fixes, keep every committed line, then `kb ingest` (138 in kb_main after Task 23; not rerun for Task 24's 144 chunks: run it before any live run). Licence 9.3 now matches the rebuild. Never commit a rebuilt licence or CPR file unchanged.
-- `check-data` compares quotes with our chunks, not with the PDFs. The 2026-10-21 pdftotext audit found 13 of 110 quotes not verbatim in pdftotext output (8 layout only); see the report-back.
 - `kb fetch` rewrites `url_accessed` and `http_status` in the manifest to the run's date: do not commit a manifest changed only by a fetch.
 - The UAE legislation portal answers 403 to scripts (a 5,495-byte HTML page; hq copies of that size are the page, not the PDF); Y.3172 and EUR-Lex URLs are pages, so their bytes never match. EUR-Lex via scrapling needs `wait_selector` (else 202, empty).
 - PyMuPDF and pdfium reverse the lam-alef on TDRA and portal Arabic text layers; pypdf and pdftotext keep it. The hq .txt files are PyMuPDF output (except the licence, re-extracted with pypdf 2026-10-21): re-extract with pypdf before chunking any other Arabic source. pdftotext adds bidi control marks.
 - `.gitattributes` forces LF so hashes match on every machine. matplotlib on Windows writes SVG with CRLF: the figure scripts strip it before writing.
 - matplotlib PNG bytes differ between Windows and the Linux CI (SVG bytes match). Never compare a figure PNG with the committed file (ruling 4).
 - Stop a background server with its own task, never `taskkill` by image name (2026-10-22: that closes every Python process on Iyas's PC).
-- Chaining commit and push after a test with `;` pushes a red commit (c8c08e2, 2026-10-22): chain with `&&`. A test run before a new file is tracked passes locally and fails in CI (the name test met the filed order only in CI).
 - `gaps.json` is hand-formatted and its lists close at different indents (gap-2 `searched` closes with two spaces): insert by parsing the block, then check each entry landed in the right list. A quote's start words can occur twice in a file (DSA 20(3) and 20(6)): assert the quote occurs once.
 - The copied `docs/sources/` text files carry non-UTF-8 bytes: read them with `errors="replace"`. Python heredocs in Git Bash mangle quotes and turn a written \n into a real newline: write the script to the scratchpad, or use the Edit tool.
 
 ## Open
 
+- Task 27 (branch `task-27`, 6fd5c26, not merged, not pushed): gap-12 and Y.3173 built (KB 51, 47 VERIFIED; 411 tests). Report still 6 pages after hq's cuts F1 to F3 (2,274 words; page 6 holds 3 lines, 37 words). Stop note `docs/report-back/2026-10-26-task-27-stop-3.md` waits for hq's next cut. Then: final report-back (spellings "capabil ities", "accountabil- ity"; started 2026-10-26 02:58 Amman), CHANGELOG, merge, push, CI.
 - Submission-day order: GitHub Pages source = `docs/site/`.
 - hq copies `docs/report.md` over `report-draft-2026-10-23.md`; the three ITU call names go to the README reviewer block on submission day (Task 23 F2).
 - Part B of Task 12 (video script, judge card) waits for hq's order.
@@ -90,4 +89,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Take the next order from `D:\Projects\hq\uni\ai-for-good-hackathon\`. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1` (limit 5).
+Resume Task 27 on `task-27` with hq's ruling on the third stop. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).
