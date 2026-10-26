@@ -40,7 +40,6 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Decisions settled
 
 - 2026-10-22 (C5 result, hq accepted): governed (en / ar) citation validity 0.99 / 1.00, action recall 0.96 / 0.94, obligation proxy 0.57 / 0.56, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 5 of 112: S3-4 care (recipient human on the coordinator's step, 3 runs), S4-4 data office (addressee not "Human agent ...", 2 runs); both stay disclosed, no v6 (budget spent). C5 USD 5.41; recorded total USD 18.88 of 20.00. The README and selftest headline is C5; C3 is the ungoverned baseline.
-- 2026-10-23 (Task 18 item 5): README opens with `## For the reviewer` (the four criteria, one place each) under the synthetic-data notice; the README layout tests expect it as the first heading.
 - 2026-10-24 (Iyas, Task 20): gap-10's competitor basis names no entry (Task 16 ruling); the order's names stay in hq.
 - 2026-10-25 (hq, Task 23 ruling): the report never cites a global example the register lacks; the register may hold more. gap-11 kind "method" stands.
 - 2026-10-25 (Task 25, Iyas): verify lists 100 logs (the order's 60 was hq's miscount); runs.html is a second render of the viewer and `docs/replay/index.html` stays; gap rows in the report's order, gap-7 and the candidate rows after.

@@ -361,3 +361,4 @@ Moved from background (superseded or old):
   - Chaining commit and push after a test with `;` pushes a red commit (c8c08e2, 2026-10-22): chain with `&&`. A test run before a new file is tracked passes locally and fails in CI (the name test met the filed order only in CI).
   - Windows globbing is case-insensitive: `runs/S*` also matches `runs/scripted`. Filter on `Path(p).parts[1]` in S1..S5 or ungoverned.
   - A batch loop that pipes a check through `tail` loses its exit code: use `set -o pipefail` or capture `$?` before piping, or a stop rule silently passes.
+  - 2026-10-23 (Task 18 item 5): README opens with `## For the reviewer` (the four criteria, one place each) under the synthetic-data notice; the README layout tests expect it as the first heading.
