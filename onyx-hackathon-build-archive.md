@@ -362,3 +362,10 @@ Moved from background (superseded or old):
   - Windows globbing is case-insensitive: `runs/S*` also matches `runs/scripted`. Filter on `Path(p).parts[1]` in S1..S5 or ungoverned.
   - A batch loop that pipes a check through `tail` loses its exit code: use `set -o pipefail` or capture `$?` before piping, or a stop rule silently passes.
   - 2026-10-23 (Task 18 item 5): README opens with `## For the reviewer` (the four criteria, one place each) under the synthetic-data notice; the README layout tests expect it as the first heading.
+
+## 2026-10-26: Task 27 finished, report at 5 pages, merged
+
+- hq's third ruling (`task-27-stop-3-ruling-2026-10-26.md`): T1 "47 are verified" (the report said 46 after Y.3173 came in), T2 "Y.3172, Y.3173 and" in the knowledge-base sentence; then cuts G1 to G6, rebuilt and recounted after each. T1/T2 6 pages 2,275 words; G1 2,265; G2 2,256; G3 2,246; G4 2,239; G5 2,234, all 6 pages; G6 (the Gap 10 sentence joins the recommendations paragraph) 5 pages, 2,234 words. G7 not needed.
+- Checks: report diff against d8284eb holds F1 to F3, the two "51"s, T1, T2, G1 to G6 only, `[C3/C5]` grep empty; protected diff empty; eval recomputed, no diff; kb verify 47 VERIFIED; check-data ok; site twice identical; 411 tests.
+- Report-back written, CHANGELOG entry. Merged task-27 to main with `--no-ff` (bb48d42), pushed; CI green 40320563219 (main), 40320540518 (task-27).
+- Moved from the background: a live run that dies leaves a partial log that blocks a re-run; move it to `runs/bakeoff/_failed/` (or the matching `_failed` folder) so its spend still counts, then `record ... --skip-existing`. Background `record` buffers stdout: run it with `python -u`.

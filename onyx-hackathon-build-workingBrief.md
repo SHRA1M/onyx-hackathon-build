@@ -1,18 +1,16 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-26 (thirty-fifth wrap, Opus).
+Updated 2026-10-26 (thirty-sixth wrap, Opus).
 
 ## Objective
 
-Finish Task 27 (order `docs/work-orders/2026-10-26-task-27-gap-12-agentic-readiness.md`) on branch `task-27`
-(6fd5c26, not merged, not pushed). Everything is built and green except the report: 6 pages after hq's cuts F1 to F3,
-page 6 holds 3 lines, 37 words. Stop note: `docs/report-back/2026-10-26-task-27-stop-3.md`.
+Task 27 is merged (main bb48d42, CI green). No order is open. Next: hq's next order (Task 28 or the submission-day
+order). Submission 2026-11-09.
 
 ## Next moves
 
-1. hq rules on the third stop; apply its cut, rebuild, recount (limit 5).
-2. Rerun every check, write `docs/report-back/2026-10-26-task-27-gap-12-agentic-readiness.md` and the CHANGELOG entry.
-3. Merge `task-27` to main, push, confirm CI green, name the run.
+1. hq reads `docs/report-back/2026-10-26-task-27-gap-12-agentic-readiness.md`.
+2. Take the next dated order from hq; nothing is built without one.
 
 ## Open questions
 

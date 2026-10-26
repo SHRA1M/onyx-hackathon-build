@@ -64,3 +64,7 @@ Four sessions on 2026-10-26, three stops for hq. Not timed more closely.
 - Counts checked against the manifest this session: 51 documents, 47 VERIFIED, 3 UNVERIFIED ("three unpublished").
   The other numbers in the stop 3 trap list (fifteen, nine, 107 of 112, 222, 156) are untouched by this task and
   were not rechecked; eval recomputed with an empty diff.
+
+## Merge and CI
+
+Merged to main without squash (bb48d42), pushed. CI green: run 40320563219 on main, run 40320540518 on `task-27`.
