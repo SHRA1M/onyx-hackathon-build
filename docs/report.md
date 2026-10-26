@@ -21,21 +21,20 @@ Complaints".
 
 The knowledge base holds 51 documents: the Telecommunications Law 3/2003, the
 CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and fifteen other UAE laws, resolutions and
-TDRA instruments; ITU-T Y.3172 and the AI Readiness Report 2.0; and
-nine foreign texts used only as global examples. 46 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
-clause the gates cite word for word against it; three unpublished texts back no claim. The operator and its
-subscribers are synthetic; no consumer data was used.
+TDRA instruments; ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
+nine foreign texts used only as global examples. 47 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+clause the gates cite word for word against it; three unpublished texts back no claim. No consumer data was used.
 
 ## Description of the use case
 
 **The problem and the existing protections.** The four acts above each have a binding rule written for a sales call, a shop or an IVR; nothing tells a conversational agent where its mandate ends, and nothing
 records, in a form a regulator can check, which clause each act relied on.
 
-**Our solution.** Five agents with bounded mandates (care, the policy and legal adviser, the Data Office, TDRA, and a coordinator that releases each step only to the agent it names). The model proposes a verb with clause
-ids and a verbatim quote. Plain-code gates written from the binding texts return allow, hold (a named human must act
+**Our solution.** Five agents with bounded mandates (care, the policy and legal adviser, the Data Office, TDRA and a coordinator). The model proposes a verb with clause
+ids and a verbatim quote. Plain-code gates return allow, hold (a named human must act
 first), block, or insufficient evidence (the agent abstains; a candidate gap is logged). The cases the texts reserve
 for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a contested automated decision
-(PDPL 18(4)), and every hold; no human approves every answer, because the texts do not ask for it. `replay` re-decides a recorded run offline from its log; `eval` recomputes every figure in this report from the logs.
+(PDPL 18(4)), and every hold; no human approves every answer, because the texts do not ask for it. `eval` recomputes every figure in this report from the logs.
 
 **What is different.** The same five scenarios run governed and ungoverned on the same model: ungoverned, 2.3 (English) and 2.1 (Arabic) proposals per run passed that the gates reject
 `[C3, prompt v3, three runs per scenario per language]`.
@@ -111,7 +110,7 @@ scenario per language: gate rejection governed, and claims allowed ungoverned.*
 ## Policy gaps and standards gaps derived from the mapping exercise
 
 Found by absence: for each gap the register lists the documents and clauses searched, in both
-languages, before the gap was claimed. The addressee is the body whose text would close it.
+languages, before the gap was claimed.
 
 | # | Gap | Kind | Addressee | Global example |
 |---|---|---|---|---|
@@ -127,14 +126,12 @@ languages, before the gap was claimed. The addressee is the body whose text woul
 | 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions and Art 16 penalties are unpublished, and Resolution 106/2026's age checks reach social media only (Art 2); nothing says how a telecom channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
 | 10 | Arabic on an automated channel: the language is set and its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); no text requires the Arabic answer to be as good as the English one, and the QoS Policy has no indicator per language, so the Arabic speaker can get the worse answer and nothing measures it | standards | TDRA | Canada OLA ss. 22, 26, 27 |
 
-Gap 10 is measurable: action recall 0.96 English, 0.94 Arabic (C5) is the indicator the QoS Policy lacks.
-
 Recommendations. TDRA: a stated time and action when a chat becomes a Consumer Complaint, measured like T1(2a) (1);
 the AI agent placed among the Article 4 sales media (2); the Article 33 trust level 24.10 requires (3); a read-back of the
 understood order before the OTP on voice and chat channels (11); the Art 11 instructions with a caregiver check (9); QoS indicators per language, Arabic and English reported separately with a parity band (10). The UAE Data
 Office: the 18(4) procedure (4); the processor terms, transfer controls and country list (5); whether spoken consent
 meets 6(1)(b) (2). The Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome that routes the
-case to a named human (8).
+case to a named human (8). Gap 10 is measurable: action recall 0.96 English, 0.94 Arabic (C5) is the indicator the QoS Policy lacks.
 
 ## Limits and next steps
 
