@@ -213,10 +213,11 @@ def _gap(row: dict[str, Any]) -> str:
     examples = (_examples("Global example", row["global_examples"]) if row["global_examples"] else
                 f"<h4>Global example</h4><p>{escape(row['global_none'])}</p>")
     standard = _examples("The standard's own text", row["standard_text"]) if row.get("standard_text") else ""
+    note = f'<p>{escape(row["note"])}</p>' if row.get("note") else ""  # as docs/gaps.md (hq ruling 2026-10-26, Task 27)
     return (f'<section class="gap-row" data-id="{row["id"]}" id="{row["id"]}">'
             f'<h2>{escape(row["id"])}: {escape(row["line"])}</h2><p>{escape(row["gap"])}</p>'
             f'<p class="meta">Kind: {escape(row["kind"])}. Category: {escape(row["category"])}. Addressee: '
-            f'{escape(", ".join(row["addressee"]))}. Exposed by: {escape(row["exposed_by"])}.</p>'
+            f'{escape(", ".join(row["addressee"]))}. Exposed by: {escape(row["exposed_by"])}.</p>{note}'
             f'<h4>Clauses searched</h4><ul class="clauses">{searched}</ul>'
             f'<h4>UAE position</h4><p>{escape(row["uae_position"])}</p>{standard}{examples}'
             f'<h4>Recommendation</h4><p>{escape(row["recommendation"])}</p></section>')
