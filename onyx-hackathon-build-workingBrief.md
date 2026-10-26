@@ -1,16 +1,15 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-26 (thirty-sixth wrap, Opus).
+Updated 2026-10-26 (thirty-seventh wrap, Opus).
 
 ## Objective
 
-Task 27 is merged (main bb48d42, CI green). No order is open. Next: hq's next order (Task 28 or the submission-day
+Task 27 is closed: verified by hq, CI green on bb48d42 and on the wrap 132d277. No order is open. Next: hq's next order (Task 28 or the submission-day
 order). Submission 2026-11-09.
 
 ## Next moves
 
-1. hq reads `docs/report-back/2026-10-26-task-27-gap-12-agentic-readiness.md`.
-2. Take the next dated order from hq; nothing is built without one.
+1. Take the next dated order from hq; nothing is built without one.
 
 ## Open questions
 

@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-26 (thirty-sixth wrap, Opus: Task 27 merged, report at 5 pages).
+Updated 2026-10-26 (thirty-seventh wrap, Opus: Task 27 verified by hq, CI green on 132d277).
 
 ## What this is
 
@@ -73,7 +73,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 27 merged to main (bb48d42), CI green runs 40320563219 (main) and 40320540518 (task-27). Report-back `docs/report-back/2026-10-26-task-27-gap-12-agentic-readiness.md` waits for hq to read.
+- Task 27 closed: verified by hq 2026-10-26; main bb48d42 (CI 40320563219), task-27 CI 40320540518, wrap 132d277 CI 40322274674 green. No order open.
 - Submission-day order: GitHub Pages source = `docs/site/`.
 - hq copies `docs/report.md` over `report-draft-2026-10-23.md`; the three ITU call names go to the README reviewer block on submission day (Task 23 F2).
 - Part B of Task 12 (video script, judge card) waits for hq's order.
@@ -89,4 +89,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Ask hq for the next order (Task 28 or the submission-day order). Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).
+No new task until hq sends one (Task 28 or the submission-day order). Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).

@@ -369,3 +369,8 @@ Moved from background (superseded or old):
 - Checks: report diff against d8284eb holds F1 to F3, the two "51"s, T1, T2, G1 to G6 only, `[C3/C5]` grep empty; protected diff empty; eval recomputed, no diff; kb verify 47 VERIFIED; check-data ok; site twice identical; 411 tests.
 - Report-back written, CHANGELOG entry. Merged task-27 to main with `--no-ff` (bb48d42), pushed; CI green 40320563219 (main), 40320540518 (task-27).
 - Moved from the background: a live run that dies leaves a partial log that blocks a re-run; move it to `runs/bakeoff/_failed/` (or the matching `_failed` folder) so its spend still counts, then `record ... --skip-existing`. Background `record` buffers stdout: run it with `python -u`.
+
+## 2026-10-26: Task 27 verified by hq, closed
+
+- hq verified Task 27 (diff, protected files, kb verify 47/1/3, check-data, site and eval unchanged, 411 tests, 5 pages and 2,234 words, CI 40320563219 on bb48d42).
+- Both CI run ids (main 40320563219, task-27 40320540518) were already in the report-back's "Merge and CI" section from wrap 132d277; no edit needed. CI on 132d277: run 40322274674 green.
