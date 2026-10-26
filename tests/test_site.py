@@ -162,7 +162,7 @@ def test_gaps_rows_and_texts(pages):
     rows = [e for e in elements if e["tag"] == "section" and "gap-row" in e["attrs"].get("class", "")]
     ids = [r["attrs"]["data-id"] for r in rows]
     assert sorted(ids) == sorted(r["id"] for r in register["gaps"])
-    assert len([i for i in ids if i.startswith("gap-")]) == 11
+    assert len([i for i in ids if i.startswith("gap-")]) == 12  # gap-12, order 2026-10-26 Task 27
     assert ids == site.gap_order()
     by_id = {r["id"]: r for r in register["gaps"]}
     for row in rows:

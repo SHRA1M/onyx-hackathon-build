@@ -13,7 +13,7 @@ import pytest
 from onyx import data, gaps, kb
 
 ROWS = data.load_gaps()["gaps"]
-ORDER_IDS = [f"gap-{n}" for n in range(1, 12)] +["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
+ORDER_IDS = [f"gap-{n}" for n in range(1, 13)] + ["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
 GLOBAL_DIR = kb.KB_DIR / "sources" / "global"
 REGISTER_ID = re.compile(r"^(gap-\d+|candidate-[\w-]+)$")
 
@@ -216,7 +216,7 @@ def test_candidate_79bis_2_row():
 def test_readme_register_has_twelve_rows_and_the_child_left_the_candidates():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     table = readme.split(gaps.START, 1)[1].split(gaps.END, 1)[0]
-    assert table.count("\n| ") == 13 + 2  # gap-1 to gap-11 and two candidate rows, plus the header and separator
+    assert table.count("\n| ") == 14 + 2  # gap-1 to gap-12 (Task 27) and two candidate rows, plus header and separator
     names = [c["name"] for c in data.load_gaps()["candidates"]]
     assert "A child on the line" not in names and len(names) == 4  # Task 23 B3: sub-processor authorisation added
     assert "### A child on the line" not in (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
@@ -225,7 +225,7 @@ def test_readme_register_has_twelve_rows_and_the_child_left_the_candidates():
 def test_adviser_register_lists_gap_9_and_the_candidate():
     from onyx.agents.adviser import Adviser
     text = "\n".join(Adviser.extra_lines(None))  # the register lines read no instance state
-    assert "9. gap-9: " in text and "13. candidate-79bis-2-fine-schedule: " in text  # gap-10, gap-11 at lines 10, 11 (Tasks 20, 23)
+    assert "9. gap-9: " in text and "14. candidate-79bis-2-fine-schedule: " in text  # gap-10, 11, 12 at lines 10 to 12 (Tasks 20, 23, 27)
 
 
 # --- order 2026-10-24-task-20-gap-10-arabic-parity ----------------------------------------------------------------
@@ -354,3 +354,52 @@ def test_task_26_rows_1_and_2_name_the_clocks_and_4_9():
     assert "the PDPL permits the processing the contract needs without consent (4(9))" in _row("gap-2")["gap"]
     assert "one spoken 'yes' buys the service and consents to nothing beyond it" in _row("gap-2")["gap"]
     assert "The processing the contract needs is lawful without consent (4(9))" in _row("gap-2")["uae_position"]
+
+
+# --- order 2026-10-26 Task 27: gap-12, where an agent's authority ends (hq ruling task-27-stop-ruling-2026-10-26) ----
+
+READINESS_TEXT = GLOBAL_DIR / "itu-ai-readiness-report-2-0-2026-01.txt"
+
+
+def test_gap_12_row_is_the_orders():
+    row = _row("gap-12")
+    assert row["line"] == "No metric for where an agent's authority ends"
+    assert (row["kind"], row["category"], row["addressee"], row["exposed_by"]) == (
+        "absence", "standards gap", ["ITU"], "S1")
+    assert row["competitor"] == "no" and row["global_none"] == ""
+    assert [s["clause"] for s in row["searched"]] == [
+        "itu-t-y3173:3.2.1", "itu-t-y3173:6.1", "itu-t-y3173:7.2", "itu-t-y3173:7.2", "itu-t-y3173:8.2",
+        "itu-t-y3173:9", "itu-t-y3173:9"]  # Readiness 2.0 is framework, not searched (ruling item 1)
+    for s in row["searched"]:
+        assert sorted(s) == ["clause", "page", "quote", "says"], s["clause"]
+    for s in row["searched"][-2:]:  # Appendix I.1 through chunk 9 (ruling item 2)
+        assert s["says"].startswith("Appendix I.1, Table I.1 (the chunker folds the appendices into clause 9)")
+    assert len(row["standard_text"]) == 3 and len(row["global_examples"]) == 2
+
+
+def test_gap_12_readiness_is_nine_non_binding_framework_lines():
+    framework = _row("gap-12")["framework"]
+    assert [fw["page"] for fw in framework] == [12, 23, 25, 27, 29, 31, "35 to 36", 40, 47]
+    assert [fw["clause"] for fw in framework] == ["Basic Framework", "D5", "D8", "D9", "D10", "D11",
+                                                  "ch. 4 gap list", "REQ-027 NOTE", "FAQ 11"]
+    for fw in framework:
+        assert fw["status"] == "NON-BINDING" and fw["file"] == "kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt"
+        assert fw["document"].startswith("ITU AI Readiness 2.0 (2026-01)") and fw["says"] and fw["quote"]
+
+
+def test_gap_12_framework_quotes_are_verbatim_in_the_readiness_text():
+    if not READINESS_TEXT.exists():
+        pytest.skip("kb/sources/global/ is local only (gitignored, addendum item 15)")
+    text = READINESS_TEXT.read_text(encoding="utf-8")
+    assert text.startswith("Source: https://www.itu.int/dms_pub/itu-t/opb/ai4g/T-AI4G-AI4GOOD-2025-6-PDF-E.pdf")
+    for fw in _row("gap-12")["framework"]:
+        assert _norm(fw["quote"]) in _norm(text), fw["clause"]
+
+
+def test_gap_12_note_is_under_its_heading_and_the_keys_do_not_flag_it():
+    md = gaps.render()
+    section = md.split("## gap-12:", 1)[1].split("\n## ", 1)[0]
+    assert "Found after the scored runs; S1's expected gaps and the keys are unchanged, so C5 gap recall does not " \
+           "count it." in section
+    assert all("gap-12" not in data.load_key(sid)["gaps_expected"] for sid in ("S1", "S2", "S3", "S4", "S5"))
+    assert "SAE J3016 (Y.3173 Table I.1) level 3" in gaps.table()

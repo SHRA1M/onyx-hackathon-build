@@ -22,7 +22,8 @@ COMPETITOR = ("yes", "no", "not read")
 # short names for the table, by the file a global example quotes
 SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172",
          "coppa-": "16 CFR", "canada-ola-": "Canada OLA", "eu-ecommerce-": "E-Commerce Dir. 2000/31",
-         "eu-crd-": "CRD 2011/83", "eu-dsa-": "DSA 2022/2065", "us-47cfr-": "47 CFR"}
+         "eu-crd-": "CRD 2011/83", "eu-dsa-": "DSA 2022/2065", "us-47cfr-": "47 CFR",
+         "itu-t-y3173": "SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
 
 
 def _short(path: str) -> str:
@@ -95,8 +96,10 @@ def render() -> str:
         lines += [f"## {row['id']}: {row['line']}", "",
                   f"{row['gap']}", "",
                   f"Kind: {row['kind']}. Category: {row['category']}. Addressee: {', '.join(row['addressee'])}. "
-                  f"Exposed by: {row['exposed_by']}.", "",
-                  "**Clauses searched**", ""]
+                  f"Exposed by: {row['exposed_by']}.", ""]
+        if row.get("note"):  # a row's own sentence under its heading (order 2026-10-26 Task 27, B4)
+            lines += [row["note"], ""]
+        lines += ["**Clauses searched**", ""]
         for s in row["searched"]:
             lines += _searched(s)
         # a framework row is no clause of law: listed with the searched clauses, marked non-binding (order Task 20)
