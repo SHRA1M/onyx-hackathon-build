@@ -33,7 +33,7 @@
    "to": "adviser",
    "kind": "classification",
    "text_en": "A subscriber has opened a chat inside the Sahab app. Classify the channel for sales and for complaints in this conversation.",
-   "text_ar": "فتحت مشتركة محادثة داخل تطبيق سحاب. صنّف القناة من حيث البيع ومن حيث الشكاوى في هذه المحادثة.",
+   "text_ar": "قامت إحدى المشتركات بفتح محادثة داخل تطبيق \"سحاب\". حدِّد صفة القناة المستخدمة في هذه المحادثة مرتين: مرة وفق قواعد المبيعات، ومرة وفق قواعد الشكاوى.",
    "facts": {"channel": "app_chat"}
   },
   {
@@ -42,7 +42,7 @@
    "to": "care",
    "kind": "subscriber_message",
    "text_en": "Why is my bill AED 230 this month? It is usually around 185.",
-   "text_ar": "لماذا فاتورتي 230 درهماً هذا الشهر؟ عادةً تكون حوالي 185.",
+   "text_ar": "لماذا تبلغ فاتورتي 230 درهماً هذا الشهر؟ عادةً ما تكون بحدود 185 درهماً.",
    "facts": {"verification_level_set_by_adviser": "medium (app login, device binding)"}
   },
   {
@@ -51,7 +51,7 @@
    "to": "care",
    "kind": "subscriber_message",
    "text_en": "I never ordered any premium content. This is wrong. Remove it and refund me, I am fed up with this.",
-   "text_ar": "لم أطلب أي محتوى مميز أبداً. هذا خطأ. أزيلوه وأعيدوا لي المبلغ، لقد سئمت من هذا.",
+   "text_ar": "لم أطلب مطلقاً أي محتوى مدفوع. هذا غير صحيح؛ أزيلوا هذا المحتوى وأعيدوا لي أموالي، فقد سئمت من هذا الأمر.",
    "facts": {"grievance_expressed": true, "time": "2026-10-16 10:12 (synthetic)"}
   },
   {
@@ -60,7 +60,7 @@
    "to": "care",
    "kind": "human_request",
    "text_en": "Human agent H-01: draft a reply for me to send. The charge has no consent record, so it is removed and credited on the next invoice.",
-   "text_ar": "الموظف البشري H-01: جهّز لي مسودة رد لأرسلها. لا يوجد سجل موافقة على الرسم، لذلك سيُزال ويُقيَّد لصالحها في الفاتورة القادمة.",
+   "text_ar": "الوكيل البشري H-01: يرجى صياغة رد لأقوم بإرساله. لا يوجد سجل يثبت الموافقة على هذه التكلفة، لذا تمت إزالتها وسيتم احتساب قيمتها كرصيد دائن في الفاتورة القادمة.",
    "facts": {"human_actor": "Human agent H-01 (synthetic)", "complaint_reference": "SAH-C-2026-0417 (synthetic)"}
   },
   {
@@ -69,7 +69,7 @@
    "to": "adviser",
    "kind": "question",
    "text_en": "After the grievance at step 3, how fast must the app chatbot stop and hand the conversation to a human, and which text sets that time?",
-   "text_ar": "بعد التذمر في الخطوة 3، ما السرعة التي يجب أن يتوقف بها روبوت المحادثة في التطبيق ويحوّل المحادثة إلى إنسان، وأي نص يحدد ذلك الوقت؟",
+   "text_ar": "بعد أن عبّرت المشتركة عن استيائها في الخطوة الثالثة، ما هي السرعة المطلوبة لتوقف روبوت الدردشة (chatbot) في التطبيق عن العمل ونقل المحادثة إلى موظف بشري؟ وما هو النص الذي يحدد هذا الإطار الزمني؟",
    "facts": {},
    "pending_proposal": {"agent": "coordinator", "verb": "route", "target": "S2-3 hand-over", "args": {"handover_step": 3, "mark": "within_time"}}
   },
@@ -79,7 +79,7 @@
    "to": "tdra",
    "kind": "regulator_request",
    "text_en": "TDRA requests the operator's complaint record for October in the TDRA format, including open complaints and their time-frames.",
-   "text_ar": "تطلب الهيئة سجل شكاوى المشغل لشهر أكتوبر بصيغة الهيئة، بما في ذلك الشكاوى المفتوحة ومهلها الزمنية.",
+   "text_ar": "تطلب هيئة تنظيم الاتصالات والحكومة الرقمية (TDRA) سجل شكاوى المشغل الخاص بشهر أكتوبر، وذلك وفقاً للنموذج المعتمد لدى الهيئة، على أن يتضمن السجل الشكاوى القائمة (المفتوحة) والأطر الزمنية المتعلقة بها.",
    "facts": {"staged_release": "the TDRA agent receives the record, not the chat transcript or the subscriber's account data"}
   }
  ]

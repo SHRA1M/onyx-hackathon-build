@@ -86,7 +86,7 @@ def replay_events(path: str | Path, rule: dict[str, Any] | None = None) -> list[
         raise ValueError(f"{path}: chain broken; not replayed")
     events = runs._events(path)
     config = events[0]["new_value"]
-    scenario = data.load_scenario(events[0]["entity_id"])
+    scenario = runs.recorded_scenario(events)
     # the same reading of the log as runs.replay (copied, runs.py is not edited)
     mandate = any(e["new_value"].get("sources_mandate") for e in events if e["action"] == "propose")
     recorded_mandates = {e["actor"]: e["new_value"]["sources_mandate"] for e in reversed(events)

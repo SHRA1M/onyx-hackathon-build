@@ -12,8 +12,9 @@ The guard runs before a live run's first call. Its estimate is calls x tokens x 
 - for Sonnet 5.5 on the five scenarios, the C4 actual cost per scenario (order 2026-10-22 item 6, from the C4
   report-back, USD for 4 governed runs: 2 per language) per run asked, plus 10 percent for prompt v5's longer care
   lines.
-It refuses a run whose estimate is over --max-usd (default USD 5), or that would take recorded live spend past USD 20
-(the prepaid balance, order 2026-10-22). `runs.record` checks the recorded spend again after each run and stops there.
+It refuses a run whose estimate is over --max-usd (default USD 5), or that would take recorded live spend past USD 30
+(order 2026-10-22; raised from USD 20 by Iyas 2026-10-27, Task 28, after a USD 100 credit). `runs.record` checks
+the recorded spend again after each run and stops there.
 """
 
 from __future__ import annotations
@@ -31,7 +32,7 @@ from onyx import data
 PRICES_PATH = data.DATA_DIR / "model_prices.json"
 RUNS_DIR = Path(__file__).resolve().parents[1] / "runs"
 DEFAULT_MAX_USD = 5
-TOTAL_CAP_USD = 20  # the prepaid balance, hard (order 2026-10-22)
+TOTAL_CAP_USD = 30  # hard; USD 20 until Iyas raised it 2026-10-27 (Task 28, USD 100 credit)
 BYTES_PER_TOKEN = 4
 C4_MODEL = "claude-sonnet-5-5"
 C4_ACTUAL_USD = {"S1": 1.31, "S2": 1.08, "S3": 1.01, "S4": 1.05, "S5": 0.82}  # docs/report-back/...-part-c4.md
