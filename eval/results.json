@@ -432,11 +432,11 @@
    "all": {
     "ar": {
      "abstention": 1.0,
-     "action_recall": 0.94,
-     "action_recall_earlier": 0.94,
+     "action_recall": 1.0,
+     "action_recall_earlier": 0.96,
      "citation_validity": 1.0,
      "gap_recall": 0.8667,
-     "obligation_proxy": 0.5639,
+     "obligation_proxy": 0.584,
      "runs": 10,
      "ungoverned_claims_allowed": null,
      "ungoverned_runs": 0
@@ -497,12 +497,12 @@
     "S3": {
      "ar": {
       "abstention": 1.0,
-      "action_recall": 0.8,
-      "action_recall_earlier": 0.8,
+      "action_recall": 1.0,
+      "action_recall_earlier": 1.0,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
       "handover_latency_steps": null,
-      "obligation_proxy": 0.3571
+      "obligation_proxy": 0.4642
      },
      "en": {
       "abstention": 1.0,
@@ -517,12 +517,12 @@
     "S4": {
      "ar": {
       "abstention": 1.0,
-      "action_recall": 0.9,
-      "action_recall_earlier": 0.9,
+      "action_recall": 1.0,
+      "action_recall_earlier": 0.8,
       "citation_validity": 1.0,
       "gap_recall": 1.0,
       "handover_latency_steps": 0.0,
-      "obligation_proxy": 0.5294
+      "obligation_proxy": 0.4118
      },
      "en": {
       "abstention": 1.0,
@@ -542,7 +542,7 @@
       "citation_validity": 1.0,
       "gap_recall": 1.0,
       "handover_latency_steps": 0.0,
-      "obligation_proxy": 0.5
+      "obligation_proxy": 0.6111
      },
      "en": {
       "abstention": 1.0,
@@ -561,7 +561,7 @@
    "S3-4": {
     "agent": "care",
     "ar": [
-     2,
+     0,
      2
     ],
     "en": [
@@ -573,7 +573,7 @@
    "S4-4": {
     "agent": "data_office",
     "ar": [
-     1,
+     0,
      2
     ],
     "en": [
@@ -608,19 +608,19 @@
    },
    {
     "calls": 5,
-    "completion_tokens": 8158,
-    "cost_usd": 0.374326,
+    "completion_tokens": 8698,
+    "cost_usd": 0.380838,
     "model": "claude-sonnet-5-5",
     "path": "c5/S1/ar/run1.jsonl",
-    "prompt_tokens": 146373
+    "prompt_tokens": 146929
    },
    {
     "calls": 5,
-    "completion_tokens": 7287,
-    "cost_usd": 0.365616,
+    "completion_tokens": 8595,
+    "cost_usd": 0.379808,
     "model": "claude-sonnet-5-5",
     "path": "c5/S1/ar/run2.jsonl",
-    "prompt_tokens": 146373
+    "prompt_tokens": 146929
    },
    {
     "calls": 5,
@@ -640,19 +640,19 @@
    },
    {
     "calls": 5,
-    "completion_tokens": 6182,
-    "cost_usd": 0.29023,
+    "completion_tokens": 5600,
+    "cost_usd": 0.286362,
     "model": "claude-sonnet-5-5",
     "path": "c5/S2/ar/run1.jsonl",
-    "prompt_tokens": 114205
+    "prompt_tokens": 115181
    },
    {
     "calls": 5,
-    "completion_tokens": 5972,
-    "cost_usd": 0.28813,
+    "completion_tokens": 5981,
+    "cost_usd": 0.290172,
     "model": "claude-sonnet-5-5",
     "path": "c5/S2/ar/run2.jsonl",
-    "prompt_tokens": 114205
+    "prompt_tokens": 115181
    },
    {
     "calls": 5,
@@ -672,19 +672,19 @@
    },
    {
     "calls": 5,
-    "completion_tokens": 5748,
-    "cost_usd": 0.285344,
+    "completion_tokens": 5421,
+    "cost_usd": 0.284142,
     "model": "claude-sonnet-5-5",
     "path": "c5/S3/ar/run1.jsonl",
-    "prompt_tokens": 113932
+    "prompt_tokens": 114966
    },
    {
     "calls": 5,
-    "completion_tokens": 5792,
-    "cost_usd": 0.285784,
+    "completion_tokens": 5561,
+    "cost_usd": 0.285542,
     "model": "claude-sonnet-5-5",
     "path": "c5/S3/ar/run2.jsonl",
-    "prompt_tokens": 113932
+    "prompt_tokens": 114966
    },
    {
     "calls": 5,
@@ -704,19 +704,19 @@
    },
    {
     "calls": 5,
-    "completion_tokens": 6198,
-    "cost_usd": 0.287932,
+    "completion_tokens": 7048,
+    "cost_usd": 0.298772,
     "model": "claude-sonnet-5-5",
     "path": "c5/S4/ar/run1.jsonl",
-    "prompt_tokens": 112976
+    "prompt_tokens": 114146
    },
    {
     "calls": 5,
-    "completion_tokens": 7059,
-    "cost_usd": 0.296542,
+    "completion_tokens": 7009,
+    "cost_usd": 0.298382,
     "model": "claude-sonnet-5-5",
     "path": "c5/S4/ar/run2.jsonl",
-    "prompt_tokens": 112976
+    "prompt_tokens": 114146
    },
    {
     "calls": 6,
@@ -736,19 +736,19 @@
    },
    {
     "calls": 6,
-    "completion_tokens": 6046,
-    "cost_usd": 0.234884,
+    "completion_tokens": 5875,
+    "cost_usd": 0.23446,
     "model": "claude-sonnet-5-5",
     "path": "c5/S5/ar/run1.jsonl",
-    "prompt_tokens": 87212
+    "prompt_tokens": 87855
    },
    {
     "calls": 6,
-    "completion_tokens": 5057,
-    "cost_usd": 0.224994,
+    "completion_tokens": 6129,
+    "cost_usd": 0.237,
     "model": "claude-sonnet-5-5",
     "path": "c5/S5/ar/run2.jsonl",
-    "prompt_tokens": 87212
+    "prompt_tokens": 87855
    }
   ]
  },

@@ -97,8 +97,8 @@ Each cell is the mean over the governed runs of all five scenarios (ungoverned c
 | Row | C3 en | C3 ar | C4 en | C4 ar | C5 en | C5 ar |
 |---|---|---|---|---|---|---|
 | Citation validity (hq rule) | 0.99 | 1.00 | 1.00 | 1.00 | 0.99 | 1.00 |
-| Action recall (corrected addressee rule; earlier rule in brackets) | 0.75 (0.71) | 0.73 (0.71) | 0.93 (0.89) | 0.95 (0.91) | 0.96 (0.96) | 0.94 (0.94) |
-| Obligation proxy | 0.32 | 0.35 | 0.47 | 0.50 | 0.57 | 0.56 |
+| Action recall (corrected addressee rule; earlier rule in brackets) | 0.75 (0.71) | 0.73 (0.71) | 0.93 (0.89) | 0.95 (0.91) | 0.96 (0.96) | 1.00 (0.96) |
+| Obligation proxy | 0.32 | 0.35 | 0.47 | 0.50 | 0.57 | 0.58 |
 | Gap recall | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 |
 | Abstention | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
 | Ungoverned claims allowed | 2.33 | 2.13 | n/a | n/a | n/a | n/a |
@@ -121,11 +121,11 @@ Prompt named on each C5 run_start: governed v5; ungoverned none recorded.
 | S2 | en | 0.95 / 1.00 / 0.94 | 0.89 (0.89) / 0.83 (0.83) / 1.00 (1.00) | 0.47 / 0.12 / 0.47 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
 | S2 | ar | 1.00 / 1.00 / 1.00 | 0.83 (0.83) / 0.83 (0.83) / 1.00 (1.00) | 0.47 / 0.12 / 0.65 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
 | S3 | en | 1.00 / 1.00 / 1.00 | 0.60 (0.60) / 0.80 (0.80) / 0.90 (0.90) | 0.31 / 0.32 / 0.36 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
-| S3 | ar | 1.00 / 1.00 / 1.00 | 0.67 (0.67) / 0.90 (0.90) / 0.80 (0.80) | 0.21 / 0.32 / 0.36 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S3 | ar | 1.00 / 1.00 / 1.00 | 0.67 (0.67) / 0.90 (0.90) / 1.00 (1.00) | 0.21 / 0.32 / 0.46 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
 | S4 | en | 1.00 / 1.00 / 1.00 | 0.67 (0.47) / 1.00 (0.80) / 0.90 (0.90) | 0.24 / 0.53 / 0.65 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
-| S4 | ar | 1.00 / 1.00 / 1.00 | 0.47 (0.40) / 1.00 (0.80) / 0.90 (0.90) | 0.24 / 0.65 / 0.53 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S4 | ar | 1.00 / 1.00 / 1.00 | 0.47 (0.40) / 1.00 (0.80) / 1.00 (0.80) | 0.24 / 0.65 / 0.41 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
 | S5 | en | 1.00 / 1.00 / 1.00 | 1.00 (1.00) / 1.00 (1.00) / 1.00 (1.00) | 0.17 / 0.61 / 0.61 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
-| S5 | ar | 1.00 / 1.00 / 1.00 | 1.00 (1.00) / 1.00 (1.00) / 1.00 (1.00) | 0.39 / 0.61 / 0.50 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
+| S5 | ar | 1.00 / 1.00 / 1.00 | 1.00 (1.00) / 1.00 (1.00) / 1.00 (1.00) | 0.39 / 0.61 / 0.61 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 |
 
 ### Misses per step after v5 (C5)
 
@@ -133,10 +133,10 @@ Governed runs whose proposals at the step miss the key's verb or addressee, of t
 
 | Step | Agent | Key verb | en | ar |
 |---|---|---|---|---|
-| S3-4 | care | draft_reply | 1 of 2 | 2 of 2 |
-| S4-4 | data_office | request_human_review | 1 of 2 | 1 of 2 |
+| S3-4 | care | draft_reply | 1 of 2 | 0 of 2 |
+| S4-4 | data_office | request_human_review | 1 of 2 | 0 of 2 |
 
-Misses: 5 of 112 key steps, in 2 steps.
+Misses: 2 of 112 key steps, in 2 steps.
 
 ## Tokens and cost
 
@@ -240,26 +240,26 @@ Total: USD 5.2786 over 104 calls.
 |---|---|---|---|---|---|
 | c5/S1/run1.jsonl | claude-sonnet-5-5 | 5 | 112112 | 7115 | USD 0.2954 |
 | c5/S1/run2.jsonl | claude-sonnet-5-5 | 5 | 112112 | 6423 | USD 0.2885 |
-| c5/S1/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 146373 | 8158 | USD 0.3743 |
-| c5/S1/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 146373 | 7287 | USD 0.3656 |
+| c5/S1/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 146929 | 8698 | USD 0.3808 |
+| c5/S1/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 146929 | 8595 | USD 0.3798 |
 | c5/S2/run1.jsonl | claude-sonnet-5-5 | 5 | 105245 | 4959 | USD 0.2601 |
 | c5/S2/run2.jsonl | claude-sonnet-5-5 | 5 | 105245 | 5029 | USD 0.2608 |
-| c5/S2/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 114205 | 6182 | USD 0.2902 |
-| c5/S2/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 114205 | 5972 | USD 0.2881 |
+| c5/S2/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 115181 | 5600 | USD 0.2864 |
+| c5/S2/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 115181 | 5981 | USD 0.2902 |
 | c5/S3/run1.jsonl | claude-sonnet-5-5 | 5 | 88545 | 5160 | USD 0.2287 |
 | c5/S3/run2.jsonl | claude-sonnet-5-5 | 5 | 88545 | 4467 | USD 0.2218 |
-| c5/S3/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 113932 | 5748 | USD 0.2853 |
-| c5/S3/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 113932 | 5792 | USD 0.2858 |
+| c5/S3/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 114966 | 5421 | USD 0.2841 |
+| c5/S3/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 114966 | 5561 | USD 0.2855 |
 | c5/S4/run1.jsonl | claude-sonnet-5-5 | 5 | 90995 | 5883 | USD 0.2408 |
 | c5/S4/run2.jsonl | claude-sonnet-5-5 | 5 | 90995 | 5281 | USD 0.2348 |
-| c5/S4/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 112976 | 6198 | USD 0.2879 |
-| c5/S4/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 112976 | 7059 | USD 0.2965 |
+| c5/S4/ar/run1.jsonl | claude-sonnet-5-5 | 5 | 114146 | 7048 | USD 0.2988 |
+| c5/S4/ar/run2.jsonl | claude-sonnet-5-5 | 5 | 114146 | 7009 | USD 0.2984 |
 | c5/S5/run1.jsonl | claude-sonnet-5-5 | 6 | 70378 | 4546 | USD 0.1862 |
 | c5/S5/run2.jsonl | claude-sonnet-5-5 | 6 | 70378 | 4345 | USD 0.1842 |
-| c5/S5/ar/run1.jsonl | claude-sonnet-5-5 | 6 | 87212 | 6046 | USD 0.2349 |
-| c5/S5/ar/run2.jsonl | claude-sonnet-5-5 | 6 | 87212 | 5057 | USD 0.2250 |
+| c5/S5/ar/run1.jsonl | claude-sonnet-5-5 | 6 | 87855 | 5875 | USD 0.2345 |
+| c5/S5/ar/run2.jsonl | claude-sonnet-5-5 | 6 | 87855 | 6129 | USD 0.2370 |
 
-Total: USD 5.3350 over 104 calls.
+Total: USD 5.3767 over 104 calls.
 
 ## Definitions
 
