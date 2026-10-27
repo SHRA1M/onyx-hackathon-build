@@ -84,7 +84,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
 - Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 reversed-ligature hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
-- Arabic in the scenario steps (`text_ar`) not yet read by Iyas on a page; scenarios are not hashed, wording fixes allowed.
+- Iyas read all S1 to S5 `text_ar` on 2026-10-27; his wording is in `docs/report-back/2026-10-27-arabic-step-review.md` (26 lines). Not applied: needs an hq order; before submission or after the shortlist is his open call.
+- ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
 - hq strips the two entry names from the filed Task 16 order before 2026-11-09 (clean-history public repo).
 
 ## Next action

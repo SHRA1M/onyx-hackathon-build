@@ -374,3 +374,11 @@ Moved from background (superseded or old):
 
 - hq verified Task 27 (diff, protected files, kb verify 47/1/3, check-data, site and eval unchanged, 411 tests, 5 pages and 2,234 words, CI 40320563219 on bb48d42).
 - Both CI run ids (main 40320563219, task-27 40320540518) were already in the report-back's "Merge and CI" section from wrap 132d277; no edit needed. CI on 132d277: run 40322274674 green.
+
+## 2026-10-27: Iyas's Arabic read of S1 to S5; ITU email
+
+- No order. Built a local page (scratchpad, not committed) with all 28 `text_ar` lines beside `text_en`; Iyas read them and typed his wording for 26 (S1.2 and S1.4 read right).
+- Four of his lines moved off the English; settled with him the same day: S2.1 "حدِّد صفة ... مرتين" (both rule sets, not either/or), S2.5 "عبّرت المشتركة عن استيائها" (grievance, not a filed complaint), S3.2 "سجلات الربط البيني" restored with names in Arabic and "(الهاتف)" kept, S5.1 "شركة سحاب" and "(Consumer Dispute)". S2's subscriber is Maryam, so S2 is feminine; S1 stays masculine.
+- Filed as `docs/report-back/2026-10-27-arabic-step-review.md` (commit 8ffbd4b, pushed). Nothing in `onyx/data/` changed.
+- Read ITU's welcome email (aiforgoodlab@itu.int, 2026-10-27) and the event page: new to hq are the submission address aiforgoodlab@itu.int and Session 6 on 2026-11-07. Iyas carries both to hq.
+- Repo confirmed private, no GitHub Pages site yet.
