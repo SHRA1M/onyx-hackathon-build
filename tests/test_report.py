@@ -124,9 +124,9 @@ def test_a_missing_figure_fails_the_build(tmp_path):
 
 def test_a_tagged_value_changed_by_001_fails_naming_the_token(tmp_path):
     text = REPORT_MD.read_text(encoding="utf-8")
-    assert "against the frozen keys 0.96 / 0.94" in text
+    assert "against the frozen keys 0.96 / 1.00" in text
     md = tmp_path / "report.md"
-    md.write_text(text.replace("keys 0.96 / 0.94", "keys 0.97 / 0.94"), encoding="utf-8", newline="\n")
+    md.write_text(text.replace("keys 0.96 / 1.00", "keys 0.97 / 1.00"), encoding="utf-8", newline="\n")
     result = _build(md, tmp_path / "out.docx")
     output = result.stdout + result.stderr
     assert result.returncode != 0
@@ -166,7 +166,7 @@ def test_every_tagged_paragraph_of_the_report_passes():
 def test_the_run_sets_hold_the_values_the_order_names():
     build = _load()
     sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
-    assert (107, 112) in sets["C5"].pairs
+    assert (110, 112) in sets["C5"].pairs
     assert any(u == "ms" and str(v) == "0.458" for v, u in sets["C3"].units)
     assert any(u == "ms" and str(v) == "7837.607" for v, u in sets["C3"].units)
     assert any(str(v) == "2.33" for v in sets["C3"].values)

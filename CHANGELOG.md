@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-10-28
+
+- Changed (order task-28-close-order-2026-10-28, hq): the C5 Arabic figures in the text. Broke: `README.md`, `docs/report.md` and register row gap-10 still said action recall 0.94 Arabic, obligation proxy 0.56 and 107 (5 missed) of 112 key steps after the Task 28 re-record. Changed: 1.00 Arabic, 0.58, 110 of 112 (2 missed, both English, one run each in S3-4 and S4-4, verdict right, addressee missed); `onyx/data/gaps.json` gap-10; `docs/gaps.md`, `docs/site/gaps.html` and `docs/report.docx` regenerated (5 pages, 2,231 words); the six test lines that pinned the old figures. 413 tests.
+
 ## 2026-10-27
 
 - Changed (order 2026-10-27-task-28-arabic-steps): Iyas's Arabic step text on 26 of the 28 S1 to S5 steps (S1.1, S1.3, S1.5, S1.6, S2.1 to S2.6, S3.1 to S3.5, S4.1 to S4.5, S5.1 to S5.6), copied by program from `docs/report-back/2026-10-27-arabic-step-review.md` (the four settled rows for S2.1, S2.5, S3.2 and S5.1; S1.6 "موظف خدمة العملاء", S5.6 TDRA's full name). S1.2, S1.4, `text_en` and U1 to U7 unchanged. The 10 C5 Arabic runs on the old text moved to `runs/_superseded/c5-ar-2026-10-27/` (still counted in recorded spend) and were recorded again: Sonnet 5.5, prompt v5, 2 runs per scenario, USD 2.98, no run failed. Broke: replay rebuilt each step from today's scenario file, so every Arabic log recorded on the old text (C3, C4, ungoverned, bake-offs) replayed to different verdicts. Changed (Iyas, 2026-10-27): `runs.recorded_scenario` gives replay and what-if the step text each log released. Broke: the USD 20 recorded-spend stop refused the re-record (USD 18.87 spent). Changed (Iyas, 2026-10-27, after the USD 100 credit): `cost.TOTAL_CAP_USD` is 30. C5 Arabic action recall 0.94 to 1.00, 110 of 112 key steps (was 107); eval, replay pages, site and Figure 2 regenerated. The C3 ungoverned Arabic runs (prompt v3) stay as recorded (Iyas).

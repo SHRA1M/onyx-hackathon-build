@@ -172,7 +172,7 @@ THREE = [
     "- A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.",
     "- Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in "
     "`docs/replay/`.",
-    "- Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 0.94 Arabic on C5 "
+    "- Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 1.00 Arabic on C5 "
     "(`eval/results.md`).",
 ]
 LAST_LIMIT = ("- No source on file shows how a UAE operator's assistant is governed; the Etisalat Virtual Assistant page "
@@ -217,7 +217,7 @@ def test_readme_three_things_and_the_c5_figures():
     section = _section("Three things to look at first")
     assert [l for l in section.splitlines() if l.startswith("- ")] == THREE
     results = json.loads((kb.REPO / "eval" / "results.json").read_text(encoding="utf-8"))["c5"]["C5"]["all"]
-    assert (f"{results['en']['action_recall']:.2f}", f"{results['ar']['action_recall']:.2f}") == ("0.96", "0.94")
+    assert (f"{results['en']['action_recall']:.2f}", f"{results['ar']['action_recall']:.2f}") == ("0.96", "1.00")
 
 
 def test_readme_headings_in_the_orders_order():

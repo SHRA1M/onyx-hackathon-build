@@ -255,7 +255,7 @@ def test_gap_10_is_the_orders_text():
     assert (row["kind"], row["category"], row["addressee"]) == ("method", "standards gap", ["TDRA"])
     assert row["exposed_by"] == "C5 per-language scoring (M, D nodes); mapping (SRC)"
     assert row["uae_position"].startswith("The language duty is binding and fined; Mizan meets it by answering")
-    assert "action recall 0.96 English and 0.94 Arabic, citation validity 0.99 and 1.00" in row["uae_position"]
+    assert "action recall 0.96 English and 1.00 Arabic, citation validity 0.99 and 1.00" in row["uae_position"]
     assert row["uae_position"].endswith("Searched 2026-10-24 in both languages.")
     assert row["recommendation"].startswith("TDRA to add to the QoS Policy, for every automated consumer channel")
     assert row["recommendation"].endswith("and s. 27 extends it to oral channels.")
