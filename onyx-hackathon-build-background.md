@@ -52,7 +52,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - Every Y.3172 chunk carries page 1 (chunker quirk); a gap row gives its own `page`. `kb/sources/global/` is gitignored, so the verbatim global-quote test skips in CI.
 
 - Recorded spend USD 21.85 against the USD 30 stop; the API organisation holds USD 100 promotional credit (granted 2026-10-27, expires 2026-11-25). `record`'s estimate counts both languages even when one is skipped.
-- Arabic printed to a redirected file from Windows Python is mangled: set `PYTHONIOENCODING=utf-8`.
+- Arabic printed to a redirected file from Windows Python comes out in cp1256: run `python -X utf8` (`-I` ignores `PYTHONIOENCODING`). Git Bash has no `iconv`.
 - The Playwright browser tool blocks `file://`: serve the folder with `uv run python -m http.server` (bare `python` is the Store alias). For a true file:// check use headless Chrome (`chrome.exe --headless=new --dump-dom` or `--screenshot`); its WebCrypto works on file://. Playwright writes `.playwright-mcp/` in the repo root (not gitignored): delete it.
 - Opus 5.5 through the OpenAI-compatible endpoint returns `finish_reason: content_filter` on most of our consumer-care prompts (empty or cut replies); `parse_output` reads them as unparseable. Check finish reasons before reading a parse-failure count.
 - A count check lists every number the report states, not only the one the task touched (hq, 2026-10-26: "50" became "51" and "46" stayed).
