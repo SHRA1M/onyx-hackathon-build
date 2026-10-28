@@ -116,8 +116,8 @@ def test_guard_refuses_over_the_cap_before_any_call(tmp_path, monkeypatch):
     assert printed and "estimate" in printed[0].lower() and "USD" in printed[0]
 
 
-def test_guard_default_cap_is_five_usd_and_the_total_stop_is_twenty():
-    assert cost.DEFAULT_MAX_USD == 5 and cost.TOTAL_CAP_USD == 20  # order 2026-10-22: the prepaid balance
+def test_guard_default_cap_is_five_usd_and_the_total_stop_is_thirty():
+    assert cost.DEFAULT_MAX_USD == 5 and cost.TOTAL_CAP_USD == 30  # Iyas, 2026-10-27 (Task 28): USD 100 credit added
 
 
 def test_estimate_is_printed_before_the_first_call(tmp_path, monkeypatch):
@@ -154,12 +154,12 @@ def test_guard_uses_recorded_tokens_and_counts_output_once_measured(tmp_path, mo
     assert est.spent_usd == pytest.approx(est.usd)  # the first run's actual spend, same calls and tokens
 
 
-def test_guard_refuses_when_total_spend_would_pass_twenty(tmp_path, monkeypatch):
+def test_guard_refuses_when_total_spend_would_pass_thirty(tmp_path, monkeypatch):
     _clear_env(monkeypatch)
     complete, calls = _with_usage("claude-opus-5-5")
     monkeypatch.setattr(model.OpenAICompatibleModel, "complete", complete)
-    monkeypatch.setattr(cost, "spent_usd", lambda root: 20.0)
-    with pytest.raises(cost.SpendRefused, match="would pass USD 20"):
+    monkeypatch.setattr(cost, "spent_usd", lambda root: 30.0)
+    with pytest.raises(cost.SpendRefused, match="would pass USD 30"):
         runs.record("live", tmp_path / "runs", scenarios=("S1",), runs=1, langs=("en",), modes=("governed",),
                     env=_env(tmp_path), retriever=scripted.retriever("S1"), max_usd=5, spend_root=tmp_path / "runs",
                     out=lambda s: None)
@@ -213,10 +213,10 @@ def _stop_after_first_run(tmp_path, monkeypatch, spent, max_usd):
     return written, printed
 
 
-def test_record_stops_between_runs_when_the_recorded_total_reaches_twenty(tmp_path, monkeypatch):
-    written, printed = _stop_after_first_run(tmp_path, monkeypatch, [0.0, 20.0], max_usd=5)
+def test_record_stops_between_runs_when_the_recorded_total_reaches_thirty(tmp_path, monkeypatch):
+    written, printed = _stop_after_first_run(tmp_path, monkeypatch, [0.0, 30.0], max_usd=5)
     assert [p.name for p in written] == ["run1.jsonl"]
-    assert "stopped" in printed[-1] and "USD 20" in printed[-1] and "run2.jsonl" in printed[-1]
+    assert "stopped" in printed[-1] and "USD 30" in printed[-1] and "run2.jsonl" in printed[-1]
 
 
 def test_record_stops_between_runs_when_the_batch_reaches_its_cap(tmp_path, monkeypatch):

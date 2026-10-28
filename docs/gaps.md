@@ -421,7 +421,7 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: C5 per-langu
 - ITU AI Readiness 2.0 (2026-01), dimension 6 Human Interface, d6_m02 (p. 23; framework, non-binding): A readiness metric: whether AI models exist in the local language of the interface. No duty, no quality measure.
   - EN (`kb/sources/itu-readiness-dimensions.json`): "Availability of AI models in the local language used in the human interface"
 
-**UAE position.** The language duty is binding and fined; Mizan meets it by answering in the subscriber's language with the clause quoted in that language. Nothing says the Arabic answer must be as good as the English one, and nothing measures it: the QoS Policy counts waits and faults, not languages. Mizan's own figures show the gap can be measured: action recall 0.96 English and 0.94 Arabic, citation validity 0.99 and 1.00 (C5, two runs per scenario per language); the Arabic S2 run cites the Arabic chunk ids. Searched 2026-10-24 in both languages.
+**UAE position.** The language duty is binding and fined; Mizan meets it by answering in the subscriber's language with the clause quoted in that language. Nothing says the Arabic answer must be as good as the English one, and nothing measures it: the QoS Policy counts waits and faults, not languages. Mizan's own figures show the gap can be measured: action recall 0.96 English and 1.00 Arabic, citation validity 0.99 and 1.00 (C5, two runs per scenario per language); the Arabic S2 run cites the Arabic chunk ids. Searched 2026-10-24 in both languages.
 
 **Global example**
 

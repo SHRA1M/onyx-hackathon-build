@@ -40,6 +40,16 @@ def _events(path: str | Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines()]
 
 
+def recorded_scenario(events: list[dict[str, Any]]) -> dict[str, Any]:
+    """The log's scenario with each step's text as the log released it: a log recorded before a step's text changed
+    (Task 28's Arabic) replays on the text its agents were sent."""
+    scenario, lang = data.load_scenario(events[0]["entity_id"]), events[0]["new_value"].get("lang", "en")
+    sent = {e["new_value"]["n"]: e["new_value"]["text"] for e in events
+            if e["action"] == "release_event" and e["new_value"]["kind"] != "inject"}
+    return {**scenario, "steps": [{**s, f"text_{lang}": sent.get(s["n"], s.get(f"text_{lang}", ""))}
+                                  for s in scenario["steps"]]}
+
+
 def decisions(path: str | Path) -> list[tuple[Any, ...]]:
     """What a replay must reproduce: every gate verdict, abstention and override, with its clause ids."""
     return [(e["entity_id"], e["action"], e["verdict"], tuple(e["clause_ids"])) for e in _events(path)
@@ -51,7 +61,7 @@ def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS
            retriever: Any = None, max_usd: float = cost.DEFAULT_MAX_USD, spend_root: str | Path = cost.RUNS_DIR,
            out: Callable[[str], Any] = print, skip_existing: bool = False) -> list[Path]:
     """A live run stops before any call when the key has no value (MissingModelKey) or when the spend guard
-    refuses (cost.SpendRefused), and between runs once the recorded spend reaches USD 20 or this batch's spend
+    refuses (cost.SpendRefused), and between runs once the recorded spend reaches USD 30 or this batch's spend
     reaches max_usd; it then prints the runs not recorded. `retriever` replaces kb_main in tests only.
     skip_existing keeps a recorded run and records only the missing ones (after a run died; move its partial log
     out first); without it an existing run raises."""
@@ -116,7 +126,8 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
         raise ValueError(f"{path}: chain broken; not replayed")
     events = _events(path)
     config = events[0]["new_value"]
-    scenario = data.load_scenario(events[0]["entity_id"])
+    lang = config.get("lang", "en")
+    scenario = recorded_scenario(events)
     # a log recorded before prompt v2 gave no mandate clauses; its replay gives none either
     mandate = any(e["new_value"].get("sources_mandate") for e in events if e["action"] == "propose")
     # a log recorded before prompt v4 had a narrower mandate; each agent gets the mandate clauses its log recorded
@@ -129,7 +140,7 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
     with tempfile.TemporaryDirectory() as tmp:
         run = coordinator.Coordinator(scenario, model_mod.RecordedModel(path), RecordedRetriever(events),
                                       log_path=Path(tmp) / "replay.jsonl", gaps_dir=Path(tmp) / "gaps",
-                                      lang=config.get("lang", "en"), governed=config.get("mode") != "ungoverned",
+                                      lang=lang, governed=config.get("mode") != "ungoverned",
                                       mandate_clauses=mandate, notes_gaps=notes_gaps,
                                       recorded_mandates=recorded_mandates, resolve_ids=resolve)
         run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode", "clause_resolution"}})

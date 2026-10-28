@@ -29,7 +29,7 @@
    "to": "adviser",
    "kind": "classification",
    "text_en": "A subscriber has opened a chat inside the Sahab app. Classify the sales channel for any purchase in this conversation.",
-   "text_ar": "فتح مشترك محادثة داخل تطبيق سحاب. صنّف قناة البيع لأي عملية شراء في هذه المحادثة.",
+   "text_ar": "قام أحد المشتركين بفتح محادثة داخل تطبيق \"سحاب\". صنِّف قناة المبيعات لأي عملية شراء تتم ضمن هذه المحادثة.",
    "facts": {"channel": "app_chat", "device": "subscriber's phone, Sahab app"}
   },
   {
@@ -47,7 +47,7 @@
    "to": "care",
    "kind": "offer",
    "text_en": "Offer the subscriber the UK roaming bundle from the catalogue, with the price and term.",
-   "text_ar": "اعرض على المشترك باقة تجوال المملكة المتحدة من الكتالوج مع السعر والمدة.",
+   "text_ar": "اعرض على المشترك باقة التجوال في المملكة المتحدة المتاحة ضمن القائمة، مع توضيح السعر وفترة الصلاحية.",
    "facts": {"automated_disclosure_logged": false}
   },
   {
@@ -65,7 +65,7 @@
    "to": "care",
    "kind": "subscriber_message",
    "text_en": "OTP 4471 entered. I accept the terms shown on screen.",
-   "text_ar": "أدخلت رمز التحقق 4471. أوافق على الشروط المعروضة على الشاشة.",
+   "text_ar": "تم إدخال رمز التحقق (OTP) 4471. أوافق على الشروط الموضحة على الشاشة.",
    "facts": {"otp_completed": true, "otp_matches": true, "terms_accepted": "explicit tap on 'Accept'; the yes/no control defaulted to 'no'", "consent_form": "electronic interaction, stored"}
   },
   {
@@ -74,7 +74,7 @@
    "to": "adviser",
    "kind": "question",
    "text_en": "Day 8. The 7-day bundle has ended and the subscriber is still abroad. The care agent proposes to extend it for another 7 days at AED 95 as a 'renewal of an existing service' under CPR 4.4, with no new consent step. Does CPR 4.4 cover this extension?",
-   "text_ar": "اليوم الثامن. انتهت باقة الأيام السبعة والمشترك ما زال خارج الدولة. يقترح وكيل الرعاية تمديدها سبعة أيام أخرى بمبلغ 95 درهماً بوصفها «تجديداً لخدمة قائمة» بموجب البند 4.4 من لائحة حماية المستهلك، دون خطوة موافقة جديدة. هل يشمل البند 4.4 هذا التمديد؟",
+   "text_ar": "اليوم الثامن. انتهت باقة الأيام السبعة، ولا يزال المشترك خارج البلاد. يقترح موظف خدمة العملاء تمديد الباقة لسبعة أيام أخرى مقابل 95 درهماً إماراتياً، وذلك باعتبارها \"تجديداً لخدمة قائمة\" وفقاً للبند 4.4 من قواعد حماية المستهلك (CPR 4.4)، دون الحاجة إلى الحصول على موافقة جديدة من المشترك. هل يغطي البند 4.4 من قواعد حماية المستهلك هذا التمديد؟",
    "facts": {"bundle_status": "expired on day 7; fixed-term, non-recurring per the catalogue", "new_consent": "none"},
    "pending_proposal": {"agent": "care", "verb": "propose_change", "target": "subscriber", "args": {"change": "renew", "sku": "ROAM-UK-7D", "price_aed": 95, "term_days": 7, "basis": "renewal"}}
   }

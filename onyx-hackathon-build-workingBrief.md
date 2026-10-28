@@ -1,22 +1,21 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-27 (thirty-eighth wrap, Opus).
+Updated 2026-10-27 (thirty-ninth wrap, Opus).
 
 ## Objective
 
-No order is open. Iyas's Arabic read of S1 to S5 is filed for hq (`docs/report-back/2026-10-27-arabic-step-review.md`).
-Next: hq's next order (Arabic step text, Task 28 or the submission-day order). Submission 2026-11-09.
+Close Task 28 (Arabic step text and the C5 Arabic re-record). Built on branch `task-28`, pushed, not merged.
+Report-back: `docs/report-back/2026-10-27-task-28-arabic-steps.md`. Submission 2026-11-09.
 
 ## Next moves
 
-1. Take the next dated order from hq; nothing is built without one.
+1. Wait for hq's change to `README.md` (lines 49, 155-156) and `docs/report.md` (100, 134) with the new C5 Arabic figures (1.00, 110 of 112, obligation proxy 0.58), and the rebuilt `docs/report.docx`.
+2. Then run the full CI sequence locally, merge `task-28` to main (ask Iyas before pushing main), confirm CI green on both, name the runs in the report-back.
 
 ## Open questions
 
-- Arabic step fixes: before submission (assistant's advice) or after the shortlist; Iyas has not chosen.
-- Submission-day order: GitHub Pages source = `docs/site/`; submission email aiforgoodlab@itu.int (ITU, 2026-10-27).
-- hq: copy `docs/report.md` over `report-draft-2026-10-23.md`; ITU call names to the README on submission day.
+- hq: the post-sweep order (2026-10-31) may change prompts or scenarios and re-record again.
+- Submission-day order: GitHub Pages source = `docs/site/`; submission email aiforgoodlab@itu.int.
 - hq: strips the two entry names from the filed Task 16 and Task 20 orders before 2026-11-09.
-- USD 1.12 left of the USD 20 balance: any live run needs a top-up.
 - hq: the team members' spellings for the README team line.
 - `/setup-matt-pocock-skills` not yet run.

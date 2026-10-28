@@ -97,8 +97,8 @@ proceeds: allow; TDRA requests the report.
 **Results**, two runs per scenario per language, means over S1 to S5, English / Arabic `[C5, governed, two runs per
 scenario per language, mean over S1 to S5, en / ar]`: citation validity 0.99 / 1.00 (one cited id in the English S2
 runs lacked its language ending); action recall
-against the frozen keys 0.96 / 0.94 (107 of 112 key steps; the five misses fall in two steps, S3-4 and S4-4, where
-the verdict was right and the proposal's addressee did not match the key's form); abstention on the one
+against the frozen keys 0.96 / 1.00 (110 of 112 key steps; the two misses are both English, one run each in S3-4 and S4-4, where the
+proposal missed the key's verb or addressee); abstention on the one
 unanswerable step per scenario 1.00; gap recall 0.87. The gate decides in a median of 0.46 ms; the model's proposal
 takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
 
@@ -131,7 +131,7 @@ the AI agent placed among the Article 4 sales media (2); the Article 33 trust le
 understood order before the OTP on voice and chat channels (11); the Art 11 instructions with a caregiver check (9); QoS indicators per language, Arabic and English reported separately with a parity band (10). The UAE Data
 Office: the 18(4) procedure (4); the processor terms, transfer controls and country list (5); whether spoken consent
 meets 6(1)(b) (2). The Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome that routes the
-case to a named human (8). Gap 10 is measurable: action recall 0.96 English, 0.94 Arabic (C5) is the indicator the QoS Policy lacks.
+case to a named human (8). Gap 10 is measurable: action recall 0.96 English, 1.00 Arabic (C5) is the indicator the QoS Policy lacks.
 
 ## Limits and next steps
 
