@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-26 (thirty-seventh wrap, Opus: Task 27 verified by hq, CI green on 132d277).
+Updated 2026-10-27 (thirty-ninth wrap, Opus: Task 28 built on branch task-28, not merged).
 
 ## What this is
 
@@ -39,10 +39,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
-- 2026-10-22 (C5 result, hq accepted): governed (en / ar) citation validity 0.99 / 1.00, action recall 0.96 / 0.94, obligation proxy 0.57 / 0.56, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 5 of 112: S3-4 care (recipient human on the coordinator's step, 3 runs), S4-4 data office (addressee not "Human agent ...", 2 runs); both stay disclosed, no v6 (budget spent). C5 USD 5.41; recorded total USD 18.88 of 20.00. The README and selftest headline is C5; C3 is the ungoverned baseline.
-- 2026-10-24 (Iyas, Task 20): gap-10's competitor basis names no entry (Task 16 ruling); the order's names stay in hq.
+- 2026-10-22 (C5 result, hq accepted): governed (en / ar) citation validity 0.99 / 1.00, action recall 0.96 / 0.94, obligation proxy 0.57 / 0.56, gap recall 0.87 / 0.87, abstention 1 / 1. Misses 5 of 112: S3-4 care (recipient human on the coordinator's step, 3 runs), S4-4 data office (addressee not "Human agent ...", 2 runs); both stay disclosed, no v6. C5 USD 5.41. Arabic superseded by Task 28 (next line). The README and selftest headline is C5; C3 is the ungoverned baseline.
+- 2026-10-27 (Iyas, Task 28): Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`), ar action recall 1.00, 110 of 112 (2 English misses). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
 - 2026-10-25 (hq, Task 23 ruling): the report never cites a global example the register lacks; the register may hold more. gap-11 kind "method" stands.
-- 2026-10-25 (Task 25, Iyas): verify lists 100 logs (the order's 60 was hq's miscount); runs.html is a second render of the viewer and `docs/replay/index.html` stays; gap rows in the report's order, gap-7 and the candidate rows after.
 - 2026-10-26 (hq, Task 26 ruling): a clause found only in `kb/chunks-full` is copied byte for byte; a sub-clause with no chunk is cited by its parent chunk (PDPL 11(1), ET 12(4)).
 - 2026-10-26 (hq, Task 27 rulings): Readiness 2.0 is cited in a row's `framework` list from `kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`, not chunked; Y.3173 Appendix I.1 is cited as `itu-t-y3173:9` (the chunker folds appendices into clause 9). Report: "51 documents", "47 are verified", "Y.3172, Y.3173 and". The site shows a row's `note` as `docs/gaps.md` does. Departures (gaps.py SHORT label and `note`, test pins, README counts, Adviser register line 12, prompt stays v5) accepted.
 - 2026-10-25 (Task 24, hq accepted): Trade Law 14/2023 Art 5(5) is not in gap-11 (it makes the purchase count as acceptance; no safe default). The report says "fifteen other UAE laws, resolutions and TDRA instruments" (19 binding VERIFIED non-foreign, minus the four named).
@@ -52,7 +51,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - An order string with straight double quotes goes into JSON through `json.dumps`, never a raw text replace (Task 19b broke the file once that way).
 - Every Y.3172 chunk carries page 1 (chunker quirk); a gap row gives its own `page`. `kb/sources/global/` is gitignored, so the verbatim global-quote test skips in CI.
 
-- USD 1.12 is left of the USD 20 prepaid balance: no live run fits a full batch. Any new live run needs Iyas to top up first.
+- Recorded spend USD 21.85 against the USD 30 stop; the API organisation holds USD 100 promotional credit (granted 2026-10-27, expires 2026-11-25). `record`'s estimate counts both languages even when one is skipped.
+- Arabic printed to a redirected file from Windows Python is mangled: set `PYTHONIOENCODING=utf-8`.
 - The Playwright browser tool blocks `file://`: serve the folder with `uv run python -m http.server` (bare `python` is the Store alias). For a true file:// check use headless Chrome (`chrome.exe --headless=new --dump-dom` or `--screenshot`); its WebCrypto works on file://. Playwright writes `.playwright-mcp/` in the repo root (not gitignored): delete it.
 - Opus 5.5 through the OpenAI-compatible endpoint returns `finish_reason: content_filter` on most of our consumer-care prompts (empty or cut replies); `parse_output` reads them as unparseable. Check finish reasons before reading a parse-failure count.
 - A count check lists every number the report states, not only the one the task touched (hq, 2026-10-26: "50" became "51" and "46" stayed).
@@ -73,21 +73,20 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 27 closed: verified by hq 2026-10-26; main bb48d42 (CI 40320563219), task-27 CI 40320540518, wrap 132d277 CI 40322274674 green. No order open.
+- Task 28 open on branch `task-28` (pushed, not merged): CI fails until hq updates the C5 Arabic figures in `README.md` (lines 49, 155-156) and `docs/report.md` (100, 134) and rebuilds the docx; then merge to main once CI is green. Report-back `docs/report-back/2026-10-27-task-28-arabic-steps.md`. CI run 40605630830.
 - Submission-day order: GitHub Pages source = `docs/site/`.
 - hq copies `docs/report.md` over `report-draft-2026-10-23.md`; the three ITU call names go to the README reviewer block on submission day (Task 23 F2).
 - Part B of Task 12 (video script, judge card) waits for hq's order.
-- Master Task 10's Rich `onyx/demo.py` tables not built (Files line, not a checklist item).
 - README team line names three members until hq confirms their spellings.
 - The S2 replay page reads an Arabic run (hq accepted); its step texts are Arabic.
 - C3 S2 en run3 cites `tdra-cpr-v2-en:9.1` for `licence-2-2026:9.1` (a different document): stays invalid under resolution (0.95).
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
 - Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 reversed-ligature hits under every extractor; not read, not chunked.
 - The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
-- Iyas read all S1 to S5 `text_ar` on 2026-10-27; his wording is in `docs/report-back/2026-10-27-arabic-step-review.md` (26 lines). Not applied: needs an hq order; before submission or after the shortlist is his open call.
+- U1 to U7 Arabic not read by Iyas (ruling default: no).
 - ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
 - hq strips the two entry names from the filed Task 16 order before 2026-11-09 (clean-history public repo).
 
 ## Next action
 
-No new task until hq sends one (Task 28 or the submission-day order). Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).
+Task 28: when hq's README and report change lands on `task-28`, run the full CI sequence, merge to main, confirm CI green on both, name the runs in the report-back. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).

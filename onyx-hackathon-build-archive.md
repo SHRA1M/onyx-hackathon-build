@@ -382,3 +382,14 @@ Moved from background (superseded or old):
 - Filed as `docs/report-back/2026-10-27-arabic-step-review.md` (commit 8ffbd4b, pushed). Nothing in `onyx/data/` changed.
 - Read ITU's welcome email (aiforgoodlab@itu.int, 2026-10-27) and the event page: new to hq are the submission address aiforgoodlab@itu.int and Session 6 on 2026-11-07. Iyas carries both to hq.
 - Repo confirmed private, no GitHub Pages site yet.
+
+## 2026-10-27: Task 28, Arabic step text and the C5 Arabic re-record (branch task-28, not merged)
+
+Order `docs/work-orders/2026-10-27-task-28-arabic-steps.md` (hq, Fable). Built by Opus 5.5.
+- Part A (b3e93a5): 26 `text_ar` lines copied by program from the 2026-10-27 report-back (four settled rows, S1.6 and S5.6 consistency edits); A3 table 26 equal, S1.2 and S1.4 unchanged.
+- Stop 1: the text change made every Arabic log recorded on the old text replay to different verdicts (4 tests). Iyas: replay uses the logged text; `runs.recorded_scenario`, used by replay and whatif; test first on `runs/c4/S1/ar/run1.jsonl`.
+- Stop 2: `cost.TOTAL_CAP_USD` 20 would refuse (USD 18.87 recorded). Iyas: 30.
+- Stop 3: ungoverned Arabic cells exist (15 C3 runs, prompt v3; about USD 1.45 more, over the USD 4 limit). Iyas: governed C5 only.
+- B (75cd890, 302f803): 10 C5 Arabic runs `git mv` to `runs/_superseded/c5-ar-2026-10-27/`, recorded again per scenario with `record --source live --root runs/c5 --scenarios <S> --modes governed --runs 2 --skip-existing`; USD 2.98, no failures, no retries.
+- C (8fa9c3e): ar action recall 0.94 to 1.00, 107 to 110 of 112, S4 ar obligation proxy 0.53 to 0.41; stop 4 (moves over 0.05), Iyas: keep the runs, hq rewrites README and report figures. Verify page: 100 logs, 10 new chains ok in the browser. Branch pushed (a43baf8); CI 40605630830 fails only on the README and report figure tests, as expected.
+- Moved from background: "Master Task 10's Rich `onyx/demo.py` tables not built (Files line, not a checklist item)"; "2026-10-24 (Iyas, Task 20): gap-10's competitor basis names no entry"; "2026-10-25 (Task 25, Iyas): verify lists 100 logs (the order's 60 was hq's miscount); runs.html is a second render of the viewer and `docs/replay/index.html` stays; gap rows in the report's order, gap-7 and the candidate rows after"; "USD 1.12 left of the USD 20 balance" (superseded by the USD 100 credit).
