@@ -1,10 +1,10 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-29 (forty-first wrap, Opus: Task 29 Part A built, PR #1 CI green, not merged).
+Updated 2026-10-29 (forty-second session, Opus: PR #1 merged, hq ruled the hold reason, Part B report-back rules set).
 
 ## What this is
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). main holds Task 28 (merge 148ad90, then report-back df7c29c; CI green run 40680830466; report-backs `docs/report-back/2026-10-27-task-28-arabic-steps.md` and `2026-10-28-task-28-close.md`), after Task 27 and earlier. Task 29 (`docs/work-orders/2026-10-29-task-29-field-take.md`, four parts A to D, one PR each, merged by 2026-11-03) is open on branch `task-29`: Part A on PR #1, CI green, waiting for Iyas to merge. Older orders and commits: the archive. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). main holds Task 28 (merge 148ad90, then report-back df7c29c; CI green run 40680830466; report-backs `docs/report-back/2026-10-27-task-28-arabic-steps.md` and `2026-10-28-task-28-close.md`), after Task 27 and earlier. Task 29 (`docs/work-orders/2026-10-29-task-29-field-take.md`, four parts A to D, one PR each, merged by 2026-11-03) is open: Part A merged to main through PR #1 (2026-10-29, Iyas's go, CI green). Older orders and commits: the archive. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
 
 ## Stack and how it runs
 
@@ -39,11 +39,12 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
+- 2026-10-29 (hq, Task 29 A ruling): Part B fixes the hold reason. On the model-down path only, `gate.decide_pending` says the model was unavailable, not that the adviser answered INSUFFICIENT_EVIDENCE. `onyx/gate.py` joins Part B's files for this one change; every C3, C4, C5 log still replays unchanged (`tests/test_replay_unchanged.py`).
+- 2026-10-29 (Iyas, `_reference/how-we-build.md`): from Part B on, every report-back pastes the full `uv run pytest` output and repeats the Limits line: touches only the named files, never `runs/` or the keys; fails closed (USD 0, nothing recorded, nothing pushed outward, stop and ask); owner of any failure is Iyas.
 - 2026-10-27 (C5 as it stands, after Task 28): governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps (2 English misses, disclosed, no v6); the README and selftest headline is C5; C3 is the ungoverned baseline. Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
 - 2026-10-25 (hq, Task 23 ruling): the report never cites a global example the register lacks; the register may hold more. gap-11 kind "method" stands.
 - 2026-10-26 (hq, Task 26 ruling): a clause found only in `kb/chunks-full` is copied byte for byte; a sub-clause with no chunk is cited by its parent chunk (PDPL 11(1), ET 12(4)).
 - 2026-10-26 (hq, Task 27 rulings): Readiness 2.0 is cited in a row's `framework` list from `kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`, not chunked; Y.3173 Appendix I.1 is cited as `itu-t-y3173:9` (the chunker folds appendices into clause 9). Report: "51 documents", "47 are verified", "Y.3172, Y.3173 and". The site shows a row's `note` as `docs/gaps.md` does. Departures (gaps.py SHORT label and `note`, test pins, README counts, Adviser register line 12, prompt stays v5) accepted.
-- 2026-10-25 (Task 24, hq accepted): Trade Law 14/2023 Art 5(5) is not in gap-11 (it makes the purchase count as acceptance; no safe default). The report says "fifteen other UAE laws, resolutions and TDRA instruments" (19 binding VERIFIED non-foreign, minus the four named).
 
 ## Traps
 
@@ -73,18 +74,14 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- hq (Task 29 A report-back): `gate.decide_pending`'s deny-by-default reason says "the adviser answered INSUFFICIENT_EVIDENCE on S2-3" on the model-down hold, where no adviser answered. `gate.py` untouched; reword in a later order or leave.
 - hq: the post-sweep order (2026-10-31) may change prompts or scenarios and re-record again.
 - Submission-day order: GitHub Pages source = `docs/site/`.
 - hq copies `docs/report.md` over `report-draft-2026-10-23.md`; the three ITU call names go to the README reviewer block on submission day (Task 23 F2).
 - README team line names three members until hq confirms their spellings.
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
-- Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 reversed-ligature hits under every extractor; not read, not chunked.
-- The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them.
-- U1 to U7 Arabic not read by Iyas (ruling default: no).
 - ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
 - hq strips the two entry names from the filed Task 16 order before 2026-11-09 (clean-history public repo).
 
 ## Next action
 
-Iyas merges PR #1 (Task 29 Part A). Then Part B (eval: gaps against keys, Wilson intervals, citation failures by kind) on 2026-10-31, after session 5 and sweep 4b; if either changes anything, hq re-rules before Part C. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).
+Part B on 2026-10-31 (eval: gaps against keys, Wilson intervals, citation failures by kind, plus the model-down hold reason in `gate.py`), after session 5 and sweep 4b; if either changes anything, hq re-rules before Part C. Its report-back pastes the full test output and repeats the Limits line (Decisions, 2026-10-29). Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).

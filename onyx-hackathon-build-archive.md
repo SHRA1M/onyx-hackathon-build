@@ -416,3 +416,11 @@ Order `docs/work-orders/2026-10-29-task-29-field-take.md` (hq, Fable; filed cda6
 - Part B of Task 12 (video script, judge card) waits for hq's order.
 - The S2 replay page reads an Arabic run (hq accepted); its step texts are Arabic.
 - C3 S2 en run3 cites `tdra-cpr-v2-en:9.1` for `licence-2-2026:9.1` (a different document): stays invalid under resolution (0.95).
+
+## 2026-10-29: forty-second session, PR #1 merge and Part B rulings
+
+- Iyas: merge PR #1 once the latest CI run is green; hq ruled the hold reason (Part B changes `gate.decide_pending` on the model-down path only, `gate.py` added to Part B's files); report-backs from Part B on paste the full test output and repeat the Limits line. All three written into background and brief.
+- Moved from background: - "2026-10-25 (Task 24, hq accepted): Trade Law 14/2023 Art 5(5) is not in gap-11 (it makes the purchase count as acceptance; no safe default). The report says "fifteen other UAE laws, resolutions and TDRA instruments" (19 binding VERIFIED non-foreign, minus the four named)."
+- Moved from background (open): "The hq research notes quote Arabic from the broken .txt files; an hq session should re-check them." and "U1 to U7 Arabic not read by Iyas (ruling default: no)."
+- Superseded open item: "hq (Task 29 A report-back): `gate.decide_pending`'s deny-by-default reason says "the adviser answered INSUFFICIENT_EVIDENCE on S2-3" on the model-down hold, where no adviser answered." Ruled 2026-10-29: fix in Part B.
+- Moved from background (open): "Telecom Law and Cabinet 57/2024 Arabic still show about 95 to 136 reversed-ligature hits under every extractor; not read, not chunked."
