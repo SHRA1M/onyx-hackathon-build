@@ -17,7 +17,7 @@ gate holds and hands the conversation to Human agent H-01 (synthetic), the same 
 - `git diff --stat df7c29c -- runs onyx/data/keys`: empty.
 - Browser (Playwright, local server): `docs/site/modeldown.html` shows the table and the "No model took part" line;
   the viewer's "Model down: S2, the call at step 3 fails" button opens the page's text beside the what-if button.
-- CI: **not run**. The push of `task-29` was blocked in this session; it waits for Iyas's go. No PR yet.
+- CI: green on PR #1 (https://github.com/SHRA1M/onyx-hackathon-build/pull/1), workflow `reproduce`, runs 40970301611 and 40970439847, 1m50s each, including the new model-down regeneration and the site diff.
 
 ## What differs from the order, and why
 
