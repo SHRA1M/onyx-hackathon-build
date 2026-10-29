@@ -16,7 +16,7 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
-from onyx import audit, data, eval as eval_mod, gate, kb, replay_page, runs, whatif
+from onyx import audit, data, eval as eval_mod, gate, kb, modeldown, replay_page, runs, whatif
 from onyx.html_kit import CSS, NOTICE, WORDS, inline_json
 from onyx.html_kit import cite as _cite, page as _page, quote as _quote, rel as _rel, text as _text
 from onyx.html_kit import verdict as _verdict
@@ -27,6 +27,8 @@ NAMES = {"citation_validity": "citation validity", "action_recall": "action reca
          "gap_recall": "gap recall", "ungoverned_claims_allowed": "ungoverned claims allowed"}
 WHATIF_RUN = replay_page.RUNS / "c5" / "S2" / "run1.jsonl"
 WHATIF_LABEL = "What-if: S2 under the rule gap 1 recommends"
+MODELDOWN_AT = 3
+MODELDOWN_LABEL = "Model down: S2, the call at step 3 fails"
 
 
 def _step3_handover(path: Path) -> bool:
@@ -214,6 +216,14 @@ class Viewer:
         sections.append(f'<section class="whatif" data-sid="{sid}"><h2>{escape(WHATIF_LABEL)}</h2>\n'
                         f'<p class="meta"><a href="{name}">{name}</a></p>\n'
                         f'<pre class="text" dir="auto">{escape(whatif.render(WHATIF_RUN, "gap-1"))}</pre></section>')
+        # Task 29 Part A: the model-down page's text, beside the what-if
+        name = modeldown.page_name(WHATIF_RUN)
+        sid = name.removesuffix(".md")
+        picker.append(f'<button data-sid="{sid}">{escape(MODELDOWN_LABEL)}</button>')
+        sections.append(f'<section class="whatif" data-sid="{sid}"><h2>{escape(MODELDOWN_LABEL)}</h2>\n'
+                        f'<p class="meta"><a href="{name}">{name}</a></p>\n'
+                        f'<pre class="text" dir="auto">{escape(modeldown.render(WHATIF_RUN, MODELDOWN_AT))}</pre>'
+                        "</section>")
         return TEMPLATE.format(css=css, js=JS, nav=nav, headlines="\n".join(headlines), picker="\n".join(picker),
                                sections="\n".join(sections), events=inline_json(self.events))
 

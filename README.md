@@ -52,6 +52,8 @@ complaint or a disconnection. The binding texts do, and Mizan's gates are writte
 
 Twelve rows, generated from `onyx/data/gaps.json` by `python -m onyx gaps`; each row's clauses searched, both languages, global quotes and recommendation are in [`docs/gaps.md`](docs/gaps.md). Gap 1 is also tested, not only stated: `uv run python -m onyx whatif runs/c5/S2/run1.jsonl --rule gap-1` replays the recorded S2 run under the rule the register recommends (proposed, not law): the held step S2-5 is released, the hand-over duty gains a two-minute clock, and one new finding appears: the rule needs the hand-over time recorded, which this log does not carry. Page: `docs/replay/whatif-S2-gap-1.md`.
 
+The model can also die, and the gate still decides: `uv run python -m onyx model-down runs/c5/S2/run1.jsonl --at 3` replays the recorded S2 run with the model call at step 3 made to fail (fault injection: the model call is made to fail at this step; nothing else changes). The care agent's step logs `model_unavailable`, the coordinator authors an `escalate_to_human` proposal in plain code, and the gate's deny-by-default hold hands the conversation to Human agent H-01, the same named human the recorded run reaches. No model takes part in that step; every later decision keeps its verdict. A live run takes the same path when a real model fails after its last retry, instead of crashing. Page: `docs/replay/model-down-S2.md`.
+
 <!-- gap-register:start -->
 | id | gap | kind | category | addressee | global example | exposed by |
 | --- | --- | --- | --- | --- | --- | --- |

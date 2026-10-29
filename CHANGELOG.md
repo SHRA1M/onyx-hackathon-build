@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-10-29
+
+- Fixed (order 2026-10-29-task-29-field-take, Part A): a dead model killed the run. Broke: `OpenAICompatibleModel` raises after its fourth attempt and `coordinator.py` had no except path, so a live run crashed mid-scenario with nothing logged for the step. Changed: the coordinator catches what the adapter raises (`model.UNAVAILABLE`), the step's agent logs `model_unavailable` (error class, attempts, elapsed, step), and the coordinator submits a plain-code `escalate_to_human` proposal to the gate as a pending proposal (addendum 29); the run continues. The retry loop is unchanged. `model.FailingModel` and `python -m onyx model-down` replay a recorded run with one call made to fail; `docs/replay/model-down-S2.md`, the viewer entry and `docs/site/modeldown.html` (a seventh site page) show S2 with step 3 failing: hold, handed to Human agent H-01. No live model call; no log or key changed. Added `tests/test_replay_unchanged.py` (every C3, C4 and C5 log replays as recorded; the order named it as existing, it did not). 522 tests (421 before the new replay test).
+
 ## 2026-10-28
 
 - Changed (order task-28-close-order-2026-10-28, hq): the C5 Arabic figures in the text. Broke: `README.md`, `docs/report.md` and register row gap-10 still said action recall 0.94 Arabic, obligation proxy 0.56 and 107 (5 missed) of 112 key steps after the Task 28 re-record. Changed: 1.00 Arabic, 0.58, 110 of 112 (2 missed, both English, one run each in S3-4 and S4-4, verdict right, addressee missed); `onyx/data/gaps.json` gap-10; `docs/gaps.md`, `docs/site/gaps.html` and `docs/report.docx` regenerated (5 pages, 2,231 words); the six test lines that pinned the old figures. 413 tests.

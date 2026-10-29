@@ -16,7 +16,7 @@ import pytest
 from onyx import audit, data, kb, site, whatif
 from onyx.__main__ import build_parser
 
-PAGES = ("index.html", "runs.html", "gaps.html", "kb.html", "verify.html", "whatif.html")
+PAGES = ("index.html", "runs.html", "gaps.html", "kb.html", "verify.html", "whatif.html", "modeldown.html")
 
 
 class Page(HTMLParser):
@@ -62,7 +62,7 @@ def _results():
     return json.loads((kb.REPO / "eval" / "results.json").read_text(encoding="utf-8"))
 
 
-def test_six_pages_linked_from_one_bar(pages):
+def test_seven_pages_linked_from_one_bar(pages):
     assert tuple(pages) == PAGES
     for name, html in pages.items():
         links = [e["attrs"]["href"] for e in _parse(html) if e["tag"] == "a" and "site-link" in

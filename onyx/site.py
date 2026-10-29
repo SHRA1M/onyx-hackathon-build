@@ -1,6 +1,7 @@
-"""The Mizan site (order 2026-10-25-task-25-site): `python -m onyx site` writes docs/site/, six static pages that open
+"""The Mizan site (order 2026-10-25-task-25-site): `python -m onyx site` writes docs/site/, seven static pages that open
 from file:// with no server and no network call: index (the figures and counts), runs (the replay viewer), gaps (the
-register), kb (the manifest), verify (the hash chain recomputed in the browser) and whatif (S2 under gap 1's rule).
+register), kb (the manifest), verify (the hash chain recomputed in the browser), whatif (S2 under gap 1's rule) and
+modeldown (S2 with the model call at step 3 made to fail, Task 29 Part A).
 Every figure, row and quote is read from eval/results.json, eval/results.md, the run logs, kb/manifest.csv and
 onyx/data/gaps.json by plain code; none is typed here. Byte-identical on every run.
 
@@ -13,11 +14,12 @@ from __future__ import annotations
 
 import collections
 import json
+import re
 from html import escape
 from pathlib import Path
 from typing import Any
 
-from onyx import audit, data, eval as eval_mod, kb, replay_page, replay_viewer, runs, whatif
+from onyx import audit, data, eval as eval_mod, kb, modeldown, replay_page, replay_viewer, runs, whatif
 from onyx.html_kit import CSS, NOTICE, inline_json, quote, text, verdict
 
 OUT = kb.REPO / "docs" / "site"
@@ -28,7 +30,8 @@ REPO_URL = "https://github.com/SHRA1M/onyx-hackathon-build"
 WHATIF_RUN, WHATIF_RULE = replay_viewer.WHATIF_RUN, "gap-1"
 SENTENCE = "A quote that is not word for word in a verified clause is rejected before it reaches the subscriber."
 PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("gaps.html", "Gap register"),
-         ("kb.html", "Knowledge base"), ("verify.html", "Verify a log"), ("whatif.html", "What-if"))
+         ("kb.html", "Knowledge base"), ("verify.html", "Verify a log"), ("whatif.html", "What-if"),
+         ("modeldown.html", "Model down"))
 C5_HEADLINE = ("citation_validity", "action_recall", "abstention", "gap_recall")
 # the labels the report uses, and the name of each metric's definition in eval/results.md
 LABELS = {"citation_validity": "Citation validity", "action_recall": "Action recall", "abstention": "Abstention",
@@ -153,6 +156,7 @@ every step goes to a hash-chained log you can verify on this site.</p>
 <a class="card link" href="kb.html"><b>Knowledge base</b><br>Every document, its status and its SHA-256.</a>
 <a class="card link" href="verify.html"><b>Verify a log</b><br>Recompute any run's hash chain in this browser.</a>
 <a class="card link" href="whatif.html"><b>What-if</b><br>S2 replayed under the rule gap 1 recommends.</a>
+<a class="card link" href="modeldown.html"><b>Model down</b><br>S2 with the model call at step 3 made to fail.</a>
 </div>
 <h2>Governed, C5 ({runs_c5} runs per language)</h2>
 <table class="grid figs"><thead><tr><th>Figure</th><th>English</th><th>Arabic</th></tr></thead>
@@ -178,9 +182,11 @@ def runs_page() -> str:
     html = replay_viewer.Viewer(verify="verify.html").render(nav=nav("runs.html"), css=CSS + SITE_CSS)
     # the viewer's what-if page sits beside the old page, docs/replay/
     name = whatif.page_name(WHATIF_RUN, WHATIF_RULE)
-    old = f'<a href="{name}">{name}</a>'
-    assert html.count(old) == 1
-    return html.replace(old, f'<a href="../replay/{name}">{name}</a>')
+    for name in (name, modeldown.page_name(WHATIF_RUN)):
+        old = f'<a href="{name}">{name}</a>'
+        assert html.count(old) == 1
+        html = html.replace(old, f'<a href="../replay/{name}">{name}</a>')
+    return html
 
 
 # --- gaps.html -------------------------------------------------------------------------------------------------
@@ -348,11 +354,46 @@ def whatif_page() -> str:
     return _frame("whatif.html", "Mizan: what-if", body)
 
 
+# --- modeldown.html --------------------------------------------------------------------------------------------
+
+def _code(cell: str) -> str:
+    return re.sub(r"`([^`]+)`", r"<code>\1</code>", escape(cell))
+
+
+def modeldown_page() -> str:
+    at = replay_viewer.MODELDOWN_AT
+    recorded_events, down_events = runs._events(WHATIF_RUN), modeldown.replay_events(WHATIF_RUN, at)
+    before, after = modeldown._rows(recorded_events, at), modeldown._rows(down_events, at)
+    same, total, notes = modeldown.stays(recorded_events, down_events, at)
+    sid = recorded_events[0]["entity_id"]
+    rows = "".join(f'<tr data-step="{sid}-{n}"><td><code>{sid}-{n}</code></td>'
+                   + "".join("<td><ul>" + "".join(f"<li>{_code(c)}</li>" for c in side.get(n, ["none"])) + "</ul></td>"
+                             for side in (before, after)) + "</tr>"
+                   for n in sorted(set(before) | set(after)))
+    path = replay_viewer._rel(WHATIF_RUN)
+    md = modeldown.page_name(WHATIF_RUN)
+    body = (f"<h1>Model down: {escape(sid)}, the call at step {at} fails</h1>"
+            f'<p class="notice">{escape(NOTICE)}</p>'
+            f'<p class="lead">{escape(modeldown.LABEL)}</p>'
+            f'<p>Run <code>{path}</code>, hash chain {"ok" if audit.verify(WHATIF_RUN) else "BROKEN"} '
+            f'<a class="button verify" href="verify.html#{path}">Verify this log</a>. Replayed offline from the '
+            "logged model responses; no model call. Left: what the recorded run decided. Right: the same replay with "
+            f"the model call at step {at} raising what the model adapter raises after its last attempt. Text page: "
+            f'<a href="../replay/{md}">{md}</a>.</p>'
+            f"<h2>Step {at} and after</h2>"
+            '<div class="tablewrap"><table class="grid whatif-table"><thead><tr><th>step</th><th>recorded</th>'
+            "<th>model-down</th></tr></thead><tbody>" + rows + "</tbody></table></div>"
+            f"<h2>What stays</h2><p>{same} of {total} decisions outside step {at} identical.</p>"
+            + "".join(f"<p>{_code(n)}</p>" for n in notes)
+            + f"<p><b>No model took part in step {at} of the model-down column.</b></p>")
+    return _frame("modeldown.html", "Mizan: model down", body)
+
+
 # --- write -----------------------------------------------------------------------------------------------------
 
 def render() -> dict[str, str]:
     return {"index.html": index(), "runs.html": runs_page(), "gaps.html": gaps_page(), "kb.html": kb_page(),
-            "verify.html": verify_page(), "whatif.html": whatif_page()}
+            "verify.html": verify_page(), "whatif.html": whatif_page(), "modeldown.html": modeldown_page()}
 
 
 def write(out: str | Path = OUT) -> list[Path]:
