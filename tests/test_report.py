@@ -352,15 +352,15 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 59 documents" in text and "55 are verified" in text and "seventeen foreign texts" in text
+    assert "holds 64 documents" in text and "59 are verified" in text and "seventeen foreign texts" in text
 
 
 @pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "**SRC-2** 51 documents"])
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 59 documents", "47 are verified": "55 are verified",
-             "nine foreign texts": "seventeen foreign texts", "**SRC-2** 51 documents": "**SRC-2** 59 documents"}[wrong]
+    right = {"holds 51 documents": "holds 64 documents", "47 are verified": "59 are verified",
+             "nine foreign texts": "seventeen foreign texts", "**SRC-2** 51 documents": "**SRC-2** 64 documents"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
@@ -368,7 +368,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("55 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("59 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
@@ -385,3 +385,12 @@ def test_report_has_no_row_7_gap_7_stays_in_the_register():
     # Task 31 C: gap 7 is out of the report's table (since Task 25); Iyas 2026-10-30: leave it out, the register
     # and the site carry Utah and Moffatt
     assert not any(line.startswith("| 7 |") for line in REPORT_MD.read_text(encoding="utf-8").splitlines())
+
+
+# --- order 2026-10-30-task-32-operator-codes, Part C ----------------------------------------------------------
+
+def test_report_row_1_names_dus_chatbot_channel_and_no_operator_is_said_to_break_anything():
+    text = REPORT_MD.read_text(encoding="utf-8")
+    row = next(line for line in text.splitlines() if line.startswith("| 1 |"))
+    assert row.split("|")[2].strip().endswith("; du's code names a chatbot channel and sets no hand-over rule")
+    assert not re.search(r"(\be&|\bdu\b|\bEtisalat\b|\bEITC\b)[^.\n]{0,80}\b(breach|break|violat|fail)", text)

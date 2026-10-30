@@ -4,7 +4,7 @@ Mizan knowledge base, exported from `kb/manifest.csv` by `python -m onyx kb expo
 Each document sits in the subfolder of its category; full texts are copied only where `kb fetch` holds them.
 
 
-## UAE_Binding/ (32 files)
+## UAE_Binding/ (34 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -40,14 +40,18 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 30 | `law-14-2023-en.pdf` | `law` | Federal Decree-Law No. 14 of 2023 Concerning the Modern Technology-Based Trade | VERIFIED | `a52f4dcc2315…` | 17 | [link](https://uaelegislation.gov.ae/en/legislations/2150/download) |
 | 31 | `law-14-2023-ar.pdf` | `law` | Federal Decree-Law No. 14 of 2023, Arabic | VERIFIED | `4769f8f1af60…` | 11 | [link](https://uaelegislation.gov.ae/ar/legislations/2150/download) |
 | 32 | `cabres-28-2023-en.pdf` | `regulation` | Cabinet Resolution No. 28 of 2023, Executive Regulations of Federal Decree-Law 46/2021 | VERIFIED | `89ab2b52d9d5…` | 30 | [link](https://uaelegislation.gov.ae/en/legislations/2199/download) |
+| 33 | `cabres-106-2026-ar.pdf` | `regulation` | Cabinet Resolution No. 106 of 2026 Regarding the Regulation of Children's Access to Social Media Platforms, Arabic | VERIFIED | `18a7068c8ffa…` | 7 | [landing page](https://uaelegislation.gov.ae/ar/legislations/4506) (document link not verified) |
+| 34 | `cabres-106-2026-en.txt` | `regulation` | Cabinet Resolution No. 106 of 2026 Regarding the Regulation of Children's Access to Social Media Platforms | VERIFIED | `c589e279e6b1…` |  | [landing page](https://uaelegislation.gov.ae/en/legislations/4506) (document link not verified) |
 
-## UAE_Advisory/ (3 files)
+## UAE_Advisory/ (5 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
 | 1 | `tdra-dispute-service-page` | `web_page` | TDRA service page: dispute resolution with service providers | REFERENCED |  |  | [link](https://tdra.gov.ae/en/Services/dispute-resolution-with-service-providers) |
 | 2 | `mocai-ai-ethics-2022.pdf` | `guideline` | AI Ethics Principles and Guidelines (December 2022) | VERIFIED | `f761ec3b1891…` | 25 | [link](https://u.ae/-/media/AI-publications/MOCAI-AI-Ethics-EN-1.pdf) |
 | 3 | `ai-deepfake-guide-2021.txt` | `guideline` | Deepfake Guide 2021 | VERIFIED | `2d4911da01e7…` |  | [link](https://u.ae/-/media/AI-publications/AI-DeepFake-Guide-EN-2021.pdf) |
+| 4 | `eand-code-of-practice-en.pdf` | `operator code` | e& Code of Practice regarding customer affairs | VERIFIED | `4b6383a7523a…` | 13 | [link](https://eand.com/en/system/com/assets/docs/general/code-of-practice-for-customer-affairs.pdf) |
+| 5 | `du-code-of-practice-en.pdf` | `operator code` | du (EITC) Code of Practice | VERIFIED | `8f8014d981c1…` | 5 | [link](https://www.du.ae/files/1430740188355) |
 
 ## Framework/ (5 files)
 
@@ -80,12 +84,13 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 15 | `eu-roaming-2022-612-art14.txt` | `extract` | Regulation (EU) 2022/612 (roaming), Articles 14 and 24 (extract) | VERIFIED | `65797bd94bac…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32022R0612) |
 | 16 | `eu-ai-act-2026-07-27-art14-26.txt` | `extract` | Regulation (EU) 2024/1689 (AI Act), consolidated 2026-07-27, Articles 14 and 26 (extract) | VERIFIED | `b1c7492a9ede…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727) |
 
-## Unverified/ (3 files)
+## Unverified/ (4 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
 | 1 | `cabinet-agentic-ai-framework-2026-05-18` | `unpublished` | Cabinet framework of roles of ministries and federal entities in the Agentic AI project (approved 2026-05-18) | UNVERIFIED |  |  | [link](https://mediaoffice.ae/en/news/2026/may/18-05/mohammed-bin-rashid-chairs-uae-cabinet-meeting) |
 | 2 | `executive-order-3-2004` | `unpublished` | Supreme Committee Resolution No. 3 of 2004 issuing the Executive Order of the Telecommunications Law | UNVERIFIED |  |  | not recorded |
 | 3 | `pdpl-executive-regulations` | `unpublished` | PDPL Executive Regulations (Art 28 of Federal Decree-Law 45/2021) | UNVERIFIED |  |  | not recorded |
+| 4 | `csc-ai-security-policy-v1-1` | `policy` | The National Cyber Security Policy for Artificial Intelligence, v1.1 | UNVERIFIED |  |  | [link](https://csc.gov.ae/documents/38662/1042755/National+Cyber+Security+Policy+for+Artificial+Intelligence_v1.1.pdf/aeca22fd-f413-f1ac-a01f-14446e62f982) |
 
 sha256 values in full: `kb/manifest.csv`.

@@ -71,6 +71,14 @@ Spain's Ley 10/2025 reaches electronic communications services, telephone servic
   - EN: "Average time (seconds) spent waiting from the time the Customer has selected the IVR choice to speak to an agent until the Customer is connected to an agent"
 - `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: complaint numbers and means always available with qualified staff; a staffed complaint channel, no stop, hand-over or clock for an AI chat.
   - EN: "Designate numbers and means of communication regarding complaints, which shall be always available without interruption with qualified staff"
+- `du-code-of-practice-en:10` (p. 4, `kb/sources/du-code-of-practice-en.pdf`): CPR 26.13.3 and 26.14.2 restated as 'will try'; no hand-over clause.
+  - EN: "We will acknowledge your complaint immediately, in case you submit your complaint by telephone or personal visit, and within one (1) business days in case you send us your complaint in writing."
+- `du-code-of-practice-en:10` (p. 4, `kb/sources/du-code-of-practice-en.pdf`): CPR 26.13.3 and 26.14.2 restated as 'will try'; no hand-over clause.
+  - EN: "If we cannot resolve your complaint immediately, we will try to resolve it as soon as possible, within 20 business days of the date of your complaint."
+- `du-code-of-practice-en:Annex 1` (p. 5, `kb/sources/du-code-of-practice-en.pdf`): The code names a chatbot as a complaint channel and sets no rule for it.
+  - EN: "Chatbot WhatsApp 058-2428268 (058Chatbot)"
+- `eand-code-of-practice-en:7` (p. 9, `kb/sources/eand-code-of-practice-en.pdf`): No deadline, no hand-over, no AI named.
+  - EN: "We aim to rectify your problems as soon as possible."
 
 **UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it. The CPR wants first-contact resolution (26.14.1) and bars the machine from the conversation (26.7.2); nothing joins the two: no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over. The acknowledgement clock (26.13.3) names telephone, visit and written complaints, not chat or app, and a reference number is not a conversation.
 
@@ -120,6 +128,8 @@ Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the aut
   - EN: "whether in writing or electronically"
 - `law-14-2023-en:13(2)` (p. 13): Trade Law 14/2023: a digital contract is valid on offer and acceptance that meet the digital identity and digital signature requirements; no medium is named for spoken consent through an AI channel.
   - EN: "Fulfillment of the offer and acceptance and the contractual relationship executed upon satisfying the requirements of the digital identity and digital signature."
+- `eand-code-of-practice-en:4` (p. 5, `kb/sources/eand-code-of-practice-en.pdf`): The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no read-back, no AI named.
+  - EN: "For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s web site), and IVR system. In this case the subscription shall be legal and binding to the customer with immediate effect"
 
 **UAE position.** No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes. The processing the contract needs is lawful without consent (4(9)); a spoken consent through the agent covers the purchase (4.7.2) but not a processing purpose beyond the contract, which 6(1)(b) wants in writing or electronically. Mizan takes the strict reading (4.10 plus OTP, 4.11).
 
@@ -322,6 +332,10 @@ Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its c
   - EN: "whether electronic, digital, biometric, artificial intelligence technology, blockchain technology"
 - `law-14-2023-en:5(7)` (p. 8): Trade Law 14/2023: no misleading dealing or incorrect data. A general duty, not one specific to an automated agent.
   - EN: "Refraining from dealing in a misleading manner or provide incorrect data that does not give the true description of the good or service."
+- `du-code-of-practice-en:Annex 1` (p. 5, `kb/sources/du-code-of-practice-en.pdf`): The only UAE texts naming an operator chatbot are the operators' own non-contractual codes; neither sets a conduct standard.
+  - EN: "Chatbot WhatsApp 058-2428268 (058Chatbot)"
+- `eand-code-of-practice-en:1` (p. 3, `kb/sources/eand-code-of-practice-en.pdf`): The only UAE texts naming an operator chatbot are the operators' own non-contractual codes; neither sets a conduct standard.
+  - EN: "Nothing in this Code of Practice forms a contract or part of any contract between Etisalat and its customers."
 
 **UAE position.** The binding texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct.
 
@@ -384,6 +398,10 @@ Kind: method. Category: legislative gap. Addressee: TDRA, Cabinet. Exposed by: m
 - `tdra-cpr-v2-en:4.7` (p. 14): The consent provisions for receiving or paying for a Service follow; none sets an age condition on a sale.
   - EN: "with reference to a Subscriber"
   - AR (the whole chunk): ":في سياق هذه الأنظمة وبالرجوع إلى موافقة المشترك على تلقي الخدمة و/أو الدفع مقابلها، يتم تطبيق الأحكام التالية"
+- `cabres-106-2026-en:2` (`kb/sources/cabres-106-2026-en.txt`): Scope: social media platforms only; a telecom care channel is not one. Portal: the Arabic text prevails (cabres-106-2026-ar); Arabic not quote-checked, PDF text extraction scrambled.
+  - EN: "This Resolution shall apply to all Social Media Platforms whose services are made available within the State or directed at users therein."
+- `cabres-106-2026-en:4(3)` (`kb/sources/cabres-106-2026-en.txt`): Self-declared age is not recognised, on social media platforms (Art 2). Portal: the Arabic text prevails (cabres-106-2026-ar); Arabic not quote-checked, PDF text extraction scrambled.
+  - EN: "Self-declaration of age, or any other Age Verification mechanism not approved in accordance with the provisions of this Resolution, shall not be recognized."
 
 **UAE position.** The duty is the law's own words; the operator's licence 3.2 makes it a licence condition; the instruments that would set the age signal, the caregiver check and the penalties do not exist yet (searched 2026-10-16 and 2026-10-22, both languages). Two published texts come near and neither reaches a telecom channel. Cabinet Resolution 106/2026 (issued 2026-06-17, in force 2026-06-30) 'shall apply to all Social Media Platforms whose services are made available within the State or directed at users therein' (Art 2); it lists age-verification mechanisms for those platforms (Art 4(2)) and says 'Self-declaration of age ... shall not be recognized' (Art 4(3)), but its standards are still to be 'approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority' (Arts 3(4)(c), 4(1)(h), 4(2)(d)) and its penalties are those 'prescribed under the list of administrative penalties issued pursuant to the provisions of the Decree by Law' (Art 7(1), 7(2)), the Art 16 list that is not published. TDRA's 'Telecom for Minors' page (consumer hub, updated 2026-10-01) describes an initiative launched 'in collaboration with licensed telecommunications service providers' that 'Supports the goals of the UAE child digital safety law'; its terms 'are determined by each service provider', the links 'are provided for consumer information only', and it is not on the TDRA Regulations and Ruling register.
 
@@ -431,6 +449,8 @@ Wales's Standards bind public bodies under a compliance notice (reg 3(1)), not o
 - `tdra-cpr-v2-en:26.6` (p. 65): 'Properly trained' personnel; nothing on the language they answer in or how well.
   - EN: "an adequate number of properly trained personal to receive, process, and respond to Consumer Complaints"
   - AR (the whole chunk): "يجب على المرخص لهم الحفاظ على عدد كافٍ من الموظفين المدربين تدريباً مناسباً لاستقبال ومعالجة والرد على الشكاوى المقدمة من المستهلكين في الوقت المناسب وبالسرعة اللازمة. صفحة51 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
+- `du-code-of-practice-en:Annex 1` (p. 5, `kb/sources/du-code-of-practice-en.pdf`): Languages for human care; nothing on the chatbot's languages or quality.
+  - EN: "contact du Customer Care representatives 24 hours, 7 days a week, to receive general, billing and technical support in Arabic, English, Hindi, Bengali and Malayalam for du mobile lines and for du home services in Arabic, English and Hindi."
 - ITU AI Readiness 2.0 (2026-01), dimension 6 Human Interface, d6_m02 (p. 23; framework, non-binding): A readiness metric: whether AI models exist in the local language of the interface. No duty, no quality measure.
   - EN (`kb/sources/itu-readiness-dimensions.json`): "Availability of AI models in the local language used in the human interface"
 
@@ -486,6 +506,8 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
   - EN: "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."
 - `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: a complaint channel always available with qualified staff; nothing on reading back an order before it is confirmed.
   - EN: "Designate numbers and means of communication regarding complaints, which shall be always available without interruption with qualified staff"
+- `eand-code-of-practice-en:4` (p. 5, `kb/sources/eand-code-of-practice-en.pdf`): The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no read-back, no AI named.
+  - EN: "For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s web site), and IVR system. In this case the subscription shall be legal and binding to the customer with immediate effect"
 
 **UAE position.** The CPR already knows the problem on a screen: the safe default is 'no' (4.22.3, 4.23.3) and a purchase needs a second factor (4.23.2). On a voice or chat channel the system, not the subscriber, decides what was said; the OTP then confirms that the subscriber wants something, not that the channel understood the right thing. ET 12(7) reaches transmission errors only. No published TDRA text requires the channel to state the service, price and term it understood and take a correction before the second factor.
 

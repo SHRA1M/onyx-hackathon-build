@@ -471,5 +471,45 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "eand-code-of-practice-en": {
+  "file": "standards-text/eand-code-of-practice-customer-affairs-en.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "du-code-of-practice-en": {
+  "file": "standards-text/du-code-of-practice-en.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabres-106-2026-ar": {
+  "file": "standards-text/cabinet-resolution-106-2026-children-social-media-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabres-106-2026-en": {
+  "file": "standards-text/cabinet-resolution-106-2026-children-social-media-en.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "csc-ai-security-policy-v1-1": {
+  "file": "",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }
