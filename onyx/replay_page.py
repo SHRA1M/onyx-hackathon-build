@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from onyx import audit, data, kb, runs
+from onyx.html_kit import tag
 
 RUNS = kb.REPO / "runs"
 OUT = kb.REPO / "docs" / "replay"
@@ -72,8 +73,14 @@ def _page(clause_id: str) -> int | None:
 
 
 def cite(clause_id: str) -> str:
+    """`document:clause` (p. N) [binding, UAE]: the page, then the binding tag (order 2026-10-29-task-29 Part C1)."""
     page = _page(clause_id)
-    return f"`{clause_id}`" + (f" (p. {page})" if page else "")
+    document_id, _, clause = clause_id.partition(":")
+    return f"`{clause_id}`" + (f" (p. {page})" if page else "") + f" {tag(document_id, clause)}"
+
+
+def _rule_tag(rule_id: str, rules: dict[str, dict[str, Any]]) -> str:
+    return tag(rules[rule_id]["document_id"], rules[rule_id]["chunk"])
 
 
 def _clauses(ids: list[str], rules: dict[str, dict[str, Any]]) -> list[str]:
@@ -84,7 +91,8 @@ def _clauses(ids: list[str], rules: dict[str, dict[str, Any]]) -> list[str]:
             out.append(f"  - `{rule_id}`")
             continue
         page = kb.page_of(rule["document_id"], rule["chunk"])
-        out.append(f"  - `{rule_id}` {rule['label']}{f', p. {page}' if page else ''}: \"{rule['quote']}\"")
+        out.append(f"  - `{rule_id}` {rule['label']}{f', p. {page}' if page else ''} {_rule_tag(rule_id, rules)}: "
+                   f"\"{rule['quote']}\"")
     return out
 
 
@@ -142,12 +150,13 @@ def render(path: str | Path) -> str:
             if quotes:
                 lines.append("- Hand-over, both languages:")
                 for q in quotes:
-                    lines += _both(q["label"], q["en"], q["ar"])
+                    lines += _both(f"{q['label']} {_rule_tag(q['clause'], rules)}", q["en"], q["ar"])
         elif e["action"] == "abstain":
             lines.append(f"- Abstention: **{nv['answer']}**; gap flagged: {', '.join(nv['gaps']) or 'none'}")
             lines.append("- Clauses searched, both languages:")
             for s in nv["searched"]:
-                lines += _both(s["label"], s["says"], rules.get(s["rule"], {}).get("quote_ar", ""))
+                lines += _both(f"{s['label']} {_rule_tag(s['rule'], rules)}", s["says"],
+                               rules.get(s["rule"], {}).get("quote_ar", ""))
         elif e["action"] == "override_refused":
             lines.append(f"- Override refused: {e['reason']}")
         else:

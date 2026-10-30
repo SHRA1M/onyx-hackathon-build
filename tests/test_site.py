@@ -331,3 +331,23 @@ def test_a_rows_note_shows_on_the_site_as_on_the_register_page(pages):
     assert [g["id"] for g in noted] == ["gap-12"]
     for g in noted:
         assert g["note"] in rows[g["id"]]["text"] and g["note"] in gaps_md
+
+
+def test_runs_page_cites_carry_binding_tags(pages):  # order 2026-10-29-task-29 Part C1
+    import re
+    html = pages["runs.html"]
+    codes = re.findall(r"<code>[a-z0-9-]+:[^<]+</code>", html)
+    tagged = re.findall(r'<code>[a-z0-9-]+:[^<]+</code>(?: \((?:<a [^>]*>)?p\. \d+(?:</a>)?\))? <span class="tag" '
+                        r'data-binding="(?:binding|advisory|method)"', html)
+    assert codes and len(tagged) == len(codes)
+
+
+def test_kb_page_links_the_datasheet(pages):  # order 2026-10-29-task-29 Part C2
+    assert '<a href="../../kb/DATASHEET.md">kb/DATASHEET.md</a>' in pages["kb.html"]
+    assert (kb.REPO / "docs" / "site" / "../../kb/DATASHEET.md").resolve().exists()
+
+
+def test_readme_first_screen_links_the_datasheet():
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    line = next(l for l in readme.splitlines() if l.startswith("1. Knowledge base:"))
+    assert "`kb/export/InputDocs/Inputs.md`" in line and "`kb/DATASHEET.md`" in line

@@ -17,6 +17,10 @@ jobs:
       # committed chunks and extracts. `kb verify` checks the manifest and any source on disk.
       - run: uv run --no-sync python -m onyx kb verify
       - run: uv run --no-sync python -m onyx check-data
+      # order 2026-10-29-task-29 Part C2: the datasheet, byte-identical from the manifest and the chunks
+      - run: uv run --no-sync python -m onyx kb datasheet
+      # order 2026-10-29-task-29 Part C3: the ML Intent, byte-identical from the committed data
+      - run: uv run --no-sync python -m onyx intent
       - run: uv run --no-sync pytest -q
       - run: uv run --no-sync python -m onyx selftest
       - name: verify-log on every committed run log
