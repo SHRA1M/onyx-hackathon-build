@@ -134,7 +134,7 @@ framework, the PDPL executive regulations, the CSC policy; tested).
 | 9 | hq copy | `docs/report.md` copied to `D:\Projects\hq\uni\ai-for-good-hackathon\report-draft-2026-10-23.md` (old kept as `.bak-2026-10-30-task-33`); both sha256 `e1d6c4b2...` |
 | 10 | Limits | `git diff main -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py runs/ onyx/model.py onyx/prompts onyx/agents kb/chunks eval/`: 0 lines |
 | 11 | Full suite | `607 passed` |
-| 12 | CI on the PR | see the PR |
+| 12 | CI on PR #9 | push run 41114092776 and PR run 41114124399 on b0a930d: `pass` (1m55s, 1m54s); "227 logs: chain ok"; S1 to S5 replay match |
 
 ## Open questions for hq
 
