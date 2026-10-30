@@ -24,12 +24,50 @@ SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": 
          "coppa-": "16 CFR", "canada-ola-": "Canada OLA", "eu-ecommerce-": "E-Commerce Dir. 2000/31",
          "eu-crd-": "CRD 2011/83", "eu-dsa-": "DSA 2022/2065", "us-47cfr-": "47 CFR",
          "es-ley-10-2025": "Spain Ley 10/2025", "wales-wls-": "Wales WLS", "us-tsr-": "US TSR 16 CFR",  # Task 30
+         "sg-eta-": "Singapore ETA", "us-utah-": "Utah Code", "ca-bccrt-": "Moffatt v. Air Canada 2024 BCCRT 149",
+         "eu-roaming-": "EU Roaming Reg 2022/612",  # Task 31
          "itu-t-y3173": "SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
 
 
 def _short(path: str) -> str:
     name = Path(path).name
     return next(label for prefix, label in SHORT.items() if name.startswith(prefix))
+
+
+# a global example file whose name is not a manifest id: the manifest instrument it extracts (Task 31 Part D)
+INSTRUMENT = {"gdpr-": "gdpr", "canada-ola-": "ca-ola", "imda-": "imda-mgf-agentic", "itu-t-y3173": "itu-t-y3173"}
+
+
+def _binding(path: str) -> bool:
+    """True when the example's document is binding in the manifest: by document id, else by instrument."""
+    rows = kb.load_manifest()
+    stem = Path(path).stem
+    row = next((r for r in rows if r["document_id"] == stem), None)
+    if row:
+        return row["binding_status"] == "binding"
+    instrument = next((i for prefix, i in INSTRUMENT.items() if stem.startswith(prefix)), None)
+    return any(r["instrument"] == instrument and r["binding_status"] == "binding" for r in rows)
+
+
+def elsewhere(gap_id: str) -> dict[str, Any]:
+    """A flagged gap for the replay pages (order Task 31 Part D): its line and one example from elsewhere: the one
+    marked `"elsewhere": true` (the report's cell), else the first whose document is binding in the manifest, else
+    the first (Iyas, 2026-10-30). label "" with no example (gap-8);
+    label None for a candidate, which shows its line only. None for an id the register does not hold."""
+    row = next((r for r in data.load_gaps()["gaps"] if r["id"] == gap_id), None)
+    if row is None:
+        return None
+    if gap_id.startswith("candidate-"):
+        return {"id": gap_id, "line": row["line"], "label": None, "quote": None}
+    examples = row["global_examples"]
+    if not examples:
+        return {"id": gap_id, "line": row["line"], "label": "", "quote": ""}
+    ex = next((e for e in examples if e.get("elsewhere")), None) or next(
+        (e for e in examples if _binding(e["file"])), examples[0])
+    return {"id": gap_id, "line": row["line"], "label": f"{_short(ex['file'])} {ex['clause']}", "quote": ex["quote"]}
+
+
+NONE_FOUND = "Elsewhere: none found; this recommendation is the example."
 
 
 def _cell(text: str) -> str:
@@ -80,7 +118,8 @@ def _searched(s: dict[str, Any]) -> list[str]:
 def _quotes(title: str, examples: list[dict[str, Any]]) -> list[str]:
     out = [f"**{title}**", ""]
     for ex in examples:
-        out.append(f"- {ex['document']}, {ex['clause']} ({ex['status']}, `{ex['file']}`): \"{ex['quote']}\"")
+        says = f"{ex['says']} " if ex.get("says") else ""  # a caveat printed beside the quote (Task 31, AI Act)
+        out.append(f"- {ex['document']}, {ex['clause']} ({ex['status']}, `{ex['file']}`): {says}\"{ex['quote']}\"")
     return out + [""]
 
 

@@ -328,7 +328,7 @@ def test_a_rows_note_shows_on_the_site_as_on_the_register_page(pages):
     rows = {r["attrs"]["data-id"]: r for r in elements if r["tag"] == "section" and "gap-row" in r["attrs"].get("class", "")}
     gaps_md = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
     noted = [g for g in data.load_gaps()["gaps"] if g.get("note")]
-    assert [g["id"] for g in noted] == ["gap-1", "gap-10", "gap-12"]  # gap-1 and gap-10 scope lines (Task 30)
+    assert [g["id"] for g in noted] == ["gap-1", "gap-2", "gap-7", "gap-10", "gap-12"]  # Task 30 scope lines; gap-2, gap-7 (Task 31)
     for g in noted:
         assert g["note"] in rows[g["id"]]["text"] and g["note"] in gaps_md
 

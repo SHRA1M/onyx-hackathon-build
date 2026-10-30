@@ -23,7 +23,7 @@
     "page_count": {"type": "string", "pattern": "^(\\d+)?$"},
     "fetched_at": {"type": "string", "pattern": "^(\\d{4}-\\d{2}-\\d{2})?$"},
     "status": {"enum": ["VERIFIED", "REFERENCED", "UNVERIFIED", "HISTORICAL"]},
-    "binding_status": {"enum": ["binding", "advisory", "method"]},
+    "binding_status": {"enum": ["binding", "advisory", "method", "decision"]},
     "jurisdiction": {"enum": ["UAE", "foreign", "international"]},
     "language": {"type": "string", "pattern": "^(en|ar|es)(,(en|ar))?$"},
     "is_official_translation": {"type": "string", "minLength": 1},

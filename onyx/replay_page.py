@@ -102,6 +102,20 @@ def grounded(scenario: dict[str, Any]) -> str:
     return f"Grounded in: {', '.join(cite(c['clause_id']) for c in g['clauses'])}. {g['line']}"
 
 
+def _flagged(gap_ids: list[str], register: str = "../site/gaps.html") -> list[str]:
+    """Each flagged gap's line, an example from elsewhere and its register link (order Task 31 Part D)."""
+    from onyx import gaps  # render only: read from onyx/data/gaps.json at render time
+
+    out = []
+    for e in filter(None, map(gaps.elsewhere, gap_ids)):
+        out.append(f"  - {e['id']}: {e['line']}")
+        if e["label"] is None:  # a candidate: its line only
+            continue
+        out.append(f"    - Elsewhere: {e['label']}: \"{e['quote']}\"" if e["label"] else f"    - {gaps.NONE_FOUND}")
+        out.append(f"    - Register: [{e['id']}]({register}#{e['id']})")
+    return out
+
+
 def _both(label: str, en: str, ar: str) -> list[str]:
     return [f"  - {label} EN: \"{en}\"", f"  - {label} AR: \"{ar or 'no Arabic text on file'}\""]
 
@@ -153,6 +167,7 @@ def render(path: str | Path) -> str:
                     lines += _both(f"{q['label']} {_rule_tag(q['clause'], rules)}", q["en"], q["ar"])
         elif e["action"] == "abstain":
             lines.append(f"- Abstention: **{nv['answer']}**; gap flagged: {', '.join(nv['gaps']) or 'none'}")
+            lines += _flagged(nv["gaps"])
             lines.append("- Clauses searched, both languages:")
             for s in nv["searched"]:
                 lines += _both(f"{s['label']} {_rule_tag(s['rule'], rules)}", s["says"],

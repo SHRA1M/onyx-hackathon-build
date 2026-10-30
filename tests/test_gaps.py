@@ -374,7 +374,7 @@ def test_gap_12_row_is_the_orders():
         assert sorted(s) == ["clause", "page", "quote", "says"], s["clause"]
     for s in row["searched"][-2:]:  # Appendix I.1 through chunk 9 (ruling item 2)
         assert s["says"].startswith("Appendix I.1, Table I.1 (the chunker folds the appendices into clause 9)")
-    assert len(row["standard_text"]) == 3 and len(row["global_examples"]) == 2
+    assert len(row["standard_text"]) == 3 and len(row["global_examples"]) == 5  # SAE L3, L4; roaming x2, AI Act (Task 31)
 
 
 def test_gap_12_readiness_is_nine_non_binding_framework_lines():
@@ -486,3 +486,144 @@ def test_gap_5_records_the_portal_check():
     assert _row("gap-5")["uae_position"].endswith(GAP_5_PORTAL)
     note = kb.manifest_by_id()["pdpl-executive-regulations"]["notes"]
     assert note == "Not issued as of 2026-10-30 (portal related-legislations checked)"
+
+
+# --- order 2026-10-30-task-31-binding-examples ----------------------------------------------------------------
+
+SG = "kb/sources/global/sg-eta-2010-s15.txt"
+UTAH = "kb/sources/global/us-utah-13-77-102.txt"
+MOFFATT = "kb/sources/global/ca-bccrt-2024-149-moffatt.txt"
+ROAMING = "kb/sources/global/eu-roaming-2022-612-art14.txt"
+AI_ACT_14 = "kb/sources/global/eu-ai-act-2026-07-27-art14-26.txt"
+AI_ACT_CAVEAT = ("High-risk systems only. Chapter III Sections 1 to 3 apply from 2027-12-02 (Annex III) and 2028-08-02 "
+                 "(Annex I), Regulation (EU) 2026/1744 Art 1(40)(b).")
+TASK_31_QUOTES = {
+    (SG, "s. 15"): "A contract formed by the interaction of an automated message system and a natural person, or by the "
+                   "interaction of automated message systems, is not to be denied validity or enforceability solely on "
+                   "the ground that no natural person reviewed or intervened in each of the individual actions carried "
+                   "out by the automated message systems or the resulting contract.",
+    (UTAH, "13-77-102"): "It is not a defense to the violation of any statute administered and enforced by the division "
+                         "under Section 13-2-102 that generative artificial intelligence: (1) made the violative "
+                         "statement; (2) undertook the violative act; or (3) was used in furtherance of the violation.",
+    (MOFFATT, "para 27"): "While a chatbot has an interactive component, it is still just a part of Air Canada’s "
+                          "website. It should be obvious to Air Canada that it is responsible for all the information on "
+                          "its website. It makes no difference whether the information comes from a static page or a "
+                          "chatbot.",
+    (MOFFATT, "para 28"): "I find Air Canada did not take reasonable care to ensure its chatbot was accurate.",
+    (ROAMING, "Art 14(4)"): "If the roaming customer does not respond as prompted in the notification received, the "
+                            "roaming provider shall immediately cease to provide and to charge the roaming customer for "
+                            "regulated data roaming services, unless and until the roaming customer requests the "
+                            "continued or renewed provision of those services.",
+    (ROAMING, "Art 14(4), last subparagraph"): "Whenever a roaming customer requests the removal or reinstatement of a "
+                                              "financial or volume limit facility, the change shall be made within one "
+                                              "working day of receipt of the request",
+    (AI_ACT_14, "Art 14(4)(e)"): "to intervene in the operation of the high-risk AI system or interrupt the system "
+                                 "through a ‘stop’ button or a similar procedure that allows the system to come "
+                                 "to a halt in a safe state.",
+}
+GAP_2_RECOMMENDATION = ("TDRA to classify an AI agent in each sales medium of Article 4 and say whether 2FA applies; the "
+                        "UAE Data Office to say whether a recorded spoken consent meets PDPL 6(1)(b).")
+GAP_7_RECOMMENDATION = ("TDRA to set conduct standards for AI agents in consumer care (limits, oversight, logs), as IMDA's "
+                        "framework does as a whole; Mizan's gates are one worked form of them.")
+
+
+def _task_31_examples() -> list[dict]:
+    files = {f for f, _ in TASK_31_QUOTES}
+    return [ex for gap_id in ("gap-2", "gap-7", "gap-12") for ex in _row(gap_id)["global_examples"] if ex["file"] in files]
+
+
+def test_task_31_examples_are_the_orders_quotes():
+    got = {(ex["file"], ex["clause"]): ex["quote"] for ex in _task_31_examples()}
+    assert got == TASK_31_QUOTES
+    assert all(ex["status"] == "VERIFIED" for ex in _task_31_examples())
+
+
+def test_gap_2_adds_singapore_s_15_recommendation_unchanged():
+    row = _row("gap-2")
+    assert [ex["file"] for ex in row["global_examples"]][-1] == SG
+    assert row["note"] == ("Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the automated "
+                           "contract; neither names the sales medium.")
+    assert row["recommendation"] == GAP_2_RECOMMENDATION
+    assert _examples_in("gap-2", "kb/sources/global/eu-crd-2011-83-art8.txt")  # existing examples stay
+
+
+def test_gap_7_binding_examples_replace_imda_which_stays_in_the_recommendation():
+    row = _row("gap-7")
+    assert [ex["file"] for ex in row["global_examples"]] == [UTAH, MOFFATT, MOFFATT]
+    assert row["recommendation"] == GAP_7_RECOMMENDATION and "IMDA" in row["recommendation"]
+    assert row["note"] == ("Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's "
+                           "words (CAD 812.02). The UAE has the general duty (CPR 3.3) and no AI-specific one.")
+    assert "Utah Code 13-77-102; Moffatt v. Air Canada 2024 BCCRT 149 para 27" in gaps.table()
+
+
+def test_gap_12_keeps_sae_and_adds_roaming_and_the_ai_act_with_its_caveat():
+    row = _row("gap-12")
+    files = [ex["file"] for ex in row["global_examples"]]
+    assert files == ["kb/sources/global/itu-t-y3173-2020-02.txt"] * 2 + [ROAMING, ROAMING, AI_ACT_14]
+    [ai] = _examples_in("gap-12", AI_ACT_14)
+    assert ai["says"] == AI_ACT_CAVEAT
+    section = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8").split("## gap-12:", 1)[1]
+    assert AI_ACT_CAVEAT in section  # printed beside the quote
+    assert "EU Roaming Reg 2022/612 Art 14(4)" in gaps.table() and "EU AI Act Art 14(4)(e)" in gaps.table()
+
+
+def test_task_31_quotes_are_verbatim_in_their_files():
+    if not GLOBAL_DIR.exists():
+        pytest.skip("kb/sources/global/ is local only (gitignored, addendum item 15)")
+    found = 0
+    for ex in _task_31_examples():
+        assert _norm(ex["quote"]) in _norm(kb.read_text(kb.REPO / ex["file"])), ex["clause"]
+        found += 1
+    assert found == 7
+
+
+# --- Task 31 Part D: the flagged gap explains itself on the replay pages (render only) -------------------------
+# Elsewhere: the example marked "elsewhere": true (the report's cell), else the first whose document is binding in
+# the manifest, else the first (Iyas, 2026-10-30)
+
+def test_elsewhere_markers_are_the_reports_cells():
+    marked = {r["id"]: [(Path(e["file"]).name, e["clause"]) for e in r["global_examples"] if e.get("elsewhere")]
+              for r in ROWS}
+    assert {k: v for k, v in marked.items() if v} == {
+        "gap-1": [("es-ley-10-2025.txt", "Art 8(2)")], "gap-3": [("eidas-910-2014-art8.txt", "Art 8(1)")],
+        "gap-10": [("wales-wls-no1-2015-sch1.txt", "Standard 15")]}
+    assert gaps.elsewhere("gap-3")["label"] == "eIDAS Art 8(1)"
+    assert gaps.elsewhere("gap-10")["label"] == "Wales WLS Standard 15"
+
+
+def test_elsewhere_is_the_marked_example_else_the_first_binding_else_the_first():
+    assert gaps.elsewhere("gap-1")["label"] == "Spain Ley 10/2025 Art 8(2)"  # marked; DSA Art 12(1) is the first binding
+    assert gaps.elsewhere("gap-5")["label"] == "GDPR Art 28(3)(a)"
+    assert gaps.elsewhere("gap-7")["label"] == "Utah Code 13-77-102"
+    assert gaps.elsewhere("gap-12")["label"] == "EU Roaming Reg 2022/612 Art 14(4)"  # SAE via Y.3173 is method
+    assert gaps.elsewhere("gap-9")["label"] == "16 CFR 312.5(a)(1)"  # no binding row: the first example
+    assert gaps.elsewhere("gap-8") == {"id": "gap-8", "line": _row("gap-8")["line"], "label": "", "quote": ""}
+    candidate = _row("candidate-4-4-fixed-term-bundle")
+    assert gaps.elsewhere(candidate["id"]) == {"id": candidate["id"], "line": candidate["line"], "label": None,
+                                               "quote": None}  # a candidate shows its line only
+    assert gaps.elsewhere("gap-99") is None
+
+
+def test_elsewhere_quotes_are_register_quotes():
+    for row in ROWS:
+        e = gaps.elsewhere(row["id"])
+        if e["quote"]:
+            assert e["quote"] in [ex["quote"] for ex in row["global_examples"]]
+
+
+def test_replay_markdown_explains_each_flagged_gap_under_the_abstention_line():
+    s2 = (kb.REPO / "docs" / "replay" / "S2.md").read_text(encoding="utf-8")
+    after = s2.split("gap flagged: gap-1, gap-8, gap-12", 1)[1]
+    assert f"- gap-1: {_row('gap-1')['line']}" in after
+    assert "Elsewhere: Spain Ley 10/2025 Art 8(2)" in after and "../site/gaps.html#gap-1" in after
+    assert "Elsewhere: none found; this recommendation is the example." in after
+    s3 = (kb.REPO / "docs" / "replay" / "S3.md").read_text(encoding="utf-8")
+    assert "Elsewhere: GDPR Art 28(3)(a)" in s3.split("gap flagged: gap-5", 1)[1]
+
+
+def test_replay_viewer_and_site_runs_link_the_flagged_gap_to_the_register():
+    viewer = (kb.REPO / "docs" / "replay" / "index.html").read_text(encoding="utf-8")
+    runs_page = (kb.REPO / "docs" / "site" / "runs.html").read_text(encoding="utf-8")
+    assert "Elsewhere: Spain Ley 10/2025 Art 8(2)" in viewer and "Elsewhere: GDPR Art 28(3)(a)" in viewer
+    assert 'href="../site/gaps.html#gap-1"' in viewer and 'href="gaps.html#gap-1"' in runs_page
+    assert "Elsewhere: none found; this recommendation is the example." in viewer

@@ -231,6 +231,33 @@ def test_task_30_three_global_sources_are_verified_binding_foreign():
         assert len(r["sha256"]) == 64 and r["url"].startswith("https://") and "never a deciding clause" in r["notes"]
         assert kb.LOCAL[document_id]["file"].endswith(f"kb/sources/global/{document_id}.txt")
     assert rows["us-tsr-16cfr310"]["url"].startswith("https://www.ecfr.gov/")  # official, not a mirror
+    # the counts moved to Task 31's test below (59, 55, 17)
+
+
+# --- order 2026-10-30-task-31-binding-examples ----------------------------------------------------------------
+
+TASK_31_HOSTS = {"sg-eta-2010-s15": "https://sso.agc.gov.sg/", "us-utah-13-77-102": "https://le.utah.gov/",
+                 "ca-bccrt-2024-149-moffatt": "https://decisions.civilresolutionbc.ca/",
+                 "eu-roaming-2022-612-art14": "https://eur-lex.europa.eu/",
+                 "eu-ai-act-2026-07-27-art14-26": "https://eur-lex.europa.eu/"}
+
+
+def test_task_31_five_extracts_are_verified_foreign_from_the_official_sites():
+    rows = kb.manifest_by_id()
+    for document_id, host in TASK_31_HOSTS.items():
+        r = rows[document_id]
+        binding = "decision" if document_id == "ca-bccrt-2024-149-moffatt" else "binding"
+        assert (r["status"], r["binding_status"], r["jurisdiction"], r["language"], r["source_type"]) == \
+            ("VERIFIED", binding, "foreign", "en", "extract"), document_id
+        assert r["url"].startswith(host) and r["fetched_at"] == "2026-10-30" and r["http_status"] == "200"
+        assert len(r["sha256"]) == 64 and int(r["bytes"]) > 0 and "never a deciding clause" in r["notes"]
+        assert kb.LOCAL[document_id]["file"].endswith(f"kb/sources/global/{document_id}.txt")
+    ai = rows["eu-ai-act-2026-07-27-art14-26"]
+    assert ai["url"] == rows["eu-ai-act-2026-07-27"]["url"]  # same consolidated URL, a new row
+    assert ai["notes"].startswith("High-risk systems only. Chapter III Sections 1 to 3 apply from 2027-12-02 (Annex "
+                                  "III) and 2028-08-02 (Annex I), Regulation (EU) 2026/1744 Art 1(40)(b).")
+    schema = json.loads((kb.KB_DIR / "manifest.schema.json").read_text(encoding="utf-8"))
+    assert schema["properties"]["binding_status"]["enum"] == ["binding", "advisory", "method", "decision"]
     manifest = kb.load_manifest()
-    assert (len(manifest), len(kb.verified_rows(manifest))) == (54, 50)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 12
+    assert (len(manifest), len(kb.verified_rows(manifest))) == (59, 55)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 17
