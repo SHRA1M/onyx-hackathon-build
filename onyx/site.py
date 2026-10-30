@@ -192,6 +192,10 @@ def runs_page() -> str:
 # --- gaps.html -------------------------------------------------------------------------------------------------
 
 def _searched(s: dict[str, Any]) -> str:
+    if s.get("file"):  # quoted from the stored source, no chunk (Task 32)
+        page = f'p. {s["page"]}, ' if s.get("page") else ""  # a web page's text has none (106/2026 English)
+        return (f'<li><code>{escape(s["clause"])}</code> ({page}<code>{escape(s["file"])}</code>): '
+                f'{escape(s["says"])}<br>EN: {quote(s["quote"], "en")}</li>')
     document_id, clause = s["clause"].split(":", 1)
     chunk = kb.get_chunk(document_id, clause)
     parts = [f'<code>{escape(s["clause"])}</code> (p. {s.get("page", chunk["page"])}): {escape(s["says"])}']

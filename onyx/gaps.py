@@ -99,6 +99,9 @@ def table() -> str:
 
 
 def _searched(s: dict[str, Any]) -> list[str]:
+    if s.get("file"):  # quoted from the stored source, no chunk (Task 32: operator codes, 106/2026)
+        page = f"p. {s['page']}, " if s.get("page") else ""  # a web page's text has none (106/2026 English)
+        return [f"- `{s['clause']}` ({page}`{s['file']}`): {s['says']}", f"  - EN: \"{s['quote']}\""]
     document_id, clause = s["clause"].split(":", 1)
     chunk = kb.get_chunk(document_id, clause)
     # "p.": the PDF page index (order Task 16 item 1); a row's own page, read from the text on disk, where the chunk's is wrong (every Y.3172 chunk says page 1)

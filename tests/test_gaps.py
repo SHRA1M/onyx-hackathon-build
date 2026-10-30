@@ -41,9 +41,11 @@ def test_every_gap_cites_searched_clauses_in_kb():
         row.setdefault("id", row.get("name"))
         assert row["searched"], f"{row['id']}: no clause searched"
         for s in row["searched"]:
+            assert s["says"], s["clause"]
+            if s.get("file"):  # quoted from the stored source, no chunk (Task 32): test_task_32_quotes_are_verbatim
+                continue
             document_id, clause = s["clause"].split(":", 1)
             chunk = kb.get_chunk(document_id, clause)  # KeyError: not a committed chunk
-            assert s["says"], s["clause"]
             if s.get("quote"):
                 assert _norm(s["quote"]) in _norm(chunk["text_en"]) or _norm(s["quote"]) in _norm(chunk["text_ar"]), \
                     f"{row['id']} {s['clause']}: quote not verbatim in the chunk"
@@ -54,7 +56,8 @@ def test_searched_clauses_are_committed_chunks():
     cited = data.cited_chunks()
     for row in ROWS + data.load_gaps()["candidates"]:
         for s in row["searched"]:
-            assert tuple(s["clause"].split(":", 1)) in cited, s["clause"]
+            if not s.get("file"):
+                assert tuple(s["clause"].split(":", 1)) in cited, s["clause"]
 
 
 def test_every_global_example_is_verified_status():
@@ -177,7 +180,8 @@ def test_gap_9_searches_the_orders_clauses():
     searched = [s["clause"] for s in _row("gap-9")["searched"]]
     # 10(1)(g) sits in chunk 10(1) and 11(2) in chunk 11(1): the chunker keeps them together, as gap-7 cites 10(1)
     assert searched == [f"{CDS}:7(1)", f"{CDS}:9(2)", f"{CDS}:10(1)", f"{CDS}:11(1)", f"{CDS}:11(1)",
-                        "tdra-cpr-v2-en:4.3", "tdra-cpr-v2-en:4.7"]
+                        "tdra-cpr-v2-en:4.3", "tdra-cpr-v2-en:4.7",
+                        "cabres-106-2026-en:2", "cabres-106-2026-en:4(3)"]  # Task 32
 
 
 def test_gap_9_arabic_is_verbatim_in_the_source_file():
@@ -268,7 +272,8 @@ def test_gap_10_searches_the_orders_clauses():
     assert searched == ["tdra-cpr-v2-en:3.2.2", "tdra-cpr-v2-en:4.25.3", "tdra-cpr-v2-en:17.3",
                         "consumer-law-15-2020-en:26", "consumer-law-15-2020-en:25(1)", "consumer-law-15-2020-en:8(4)",
                         "cabinet-66-2023-en:43(5)", "licence-2-2026:16.7", "qos-v3-en:9.5",
-                        "tdra-cpr-v2-en:26.2", "tdra-cpr-v2-en:26.6"]  # order 2026-10-25 Task 26, A5
+                        "tdra-cpr-v2-en:26.2", "tdra-cpr-v2-en:26.6",  # order 2026-10-25 Task 26, A5
+                        "du-code-of-practice-en:Annex 1"]  # Task 32
     assert "inferred" in _row("gap-10")["searched"][0]["says"]  # 3.2.1 (electronic form) reaches an app chat
 
 
@@ -627,3 +632,124 @@ def test_replay_viewer_and_site_runs_link_the_flagged_gap_to_the_register():
     assert "Elsewhere: Spain Ley 10/2025 Art 8(2)" in viewer and "Elsewhere: GDPR Art 28(3)(a)" in viewer
     assert 'href="../site/gaps.html#gap-1"' in viewer and 'href="gaps.html#gap-1"' in runs_page
     assert "Elsewhere: none found; this recommendation is the example." in viewer
+
+
+# --- order 2026-10-30-task-32-operator-codes: searched entries quoted from the stored source, no chunk ----------
+# Iyas, 2026-10-30: a searched entry may name its stored file; its quote is checked word for word against that file
+# (local only: kb/sources/ is gitignored); gap 9's two 106/2026 entries sit under the English row
+
+DU = "kb/sources/du-code-of-practice-en.pdf"
+EAND = "kb/sources/eand-code-of-practice-en.pdf"
+R106 = "kb/sources/cabres-106-2026-en.txt"
+DU_10 = "CPR 26.13.3 and 26.14.2 restated as 'will try'; no hand-over clause."
+CHATBOT = "Chatbot WhatsApp 058-2428268 (058Chatbot)"
+GAP_7_SAYS = ("The only UAE texts naming an operator chatbot are the operators' own non-contractual codes; neither sets "
+              "a conduct standard.")
+IVR_SAYS = ("The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no "
+            "read-back, no AI named.")
+IVR_QUOTE = ("For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID "
+             "verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s "
+             "web site), and IVR system. In this case the subscription shall be legal and binding to the customer "
+             "with immediate effect")
+ARABIC_PREVAILS = ("Portal: the Arabic text prevails (cabres-106-2026-ar); Arabic not quote-checked, PDF text "
+                   "extraction scrambled.")
+TASK_32_SEARCHED = {
+    "gap-1": [
+        ("du-code-of-practice-en:10", DU, DU_10,
+         "We will acknowledge your complaint immediately, in case you submit your complaint by telephone or personal "
+         "visit, and within one (1) business days in case you send us your complaint in writing."),
+        ("du-code-of-practice-en:10", DU, DU_10,
+         "If we cannot resolve your complaint immediately, we will try to resolve it as soon as possible, within 20 "
+         "business days of the date of your complaint."),
+        ("du-code-of-practice-en:Annex 1", DU,
+         "The code names a chatbot as a complaint channel and sets no rule for it.", CHATBOT),
+        ("eand-code-of-practice-en:7", EAND, "No deadline, no hand-over, no AI named.",
+         "We aim to rectify your problems as soon as possible."),
+    ],
+    "gap-2": [("eand-code-of-practice-en:4", EAND, IVR_SAYS, IVR_QUOTE)],
+    "gap-11": [("eand-code-of-practice-en:4", EAND, IVR_SAYS, IVR_QUOTE)],
+    "gap-7": [
+        ("du-code-of-practice-en:Annex 1", DU, GAP_7_SAYS, CHATBOT),
+        ("eand-code-of-practice-en:1", EAND, GAP_7_SAYS,
+         "Nothing in this Code of Practice forms a contract or part of any contract between Etisalat and its customers."),
+    ],
+    "gap-10": [
+        ("du-code-of-practice-en:Annex 1", DU, "Languages for human care; nothing on the chatbot's languages or quality.",
+         "contact du Customer Care representatives 24 hours, 7 days a week, to receive general, billing and technical "
+         "support in Arabic, English, Hindi, Bengali and Malayalam for du mobile lines and for du home services in "
+         "Arabic, English and Hindi."),
+    ],
+    "gap-9": [
+        ("cabres-106-2026-en:2", R106, f"Scope: social media platforms only; a telecom care channel is not one. "
+                                       f"{ARABIC_PREVAILS}",
+         "This Resolution shall apply to all Social Media Platforms whose services are made available within the "
+         "State or directed at users therein."),
+        ("cabres-106-2026-en:4(3)", R106, f"Self-declared age is not recognised, on social media platforms (Art 2). "
+                                          f"{ARABIC_PREVAILS}",
+         "Self-declaration of age, or any other Age Verification mechanism not approved in accordance with the "
+         "provisions of this Resolution, shall not be recognized."),
+    ],
+}
+
+
+def _filed(gap_id: str) -> list[dict]:
+    return [s for s in _row(gap_id)["searched"] if s.get("file")]
+
+
+def test_task_32_searched_entries_are_the_orders_appended_last():
+    for gap_id, expected in TASK_32_SEARCHED.items():
+        got = [(s["clause"], s["file"], s["says"], s["quote"]) for s in _filed(gap_id)]
+        assert got == expected, gap_id
+        assert _row(gap_id)["searched"][-len(expected):] == _filed(gap_id), gap_id  # appended after the chunked ones
+    assert not [r["id"] for r in ROWS + data.load_gaps()["candidates"]
+                if any(s.get("file") for s in r["searched"]) and r.get("id") not in TASK_32_SEARCHED]
+
+
+def test_task_32_files_are_verified_manifest_sources_with_a_page():
+    manifest = kb.manifest_by_id()
+    for gap_id in TASK_32_SEARCHED:
+        for s in _filed(gap_id):
+            document_id = s["clause"].split(":", 1)[0]
+            assert manifest[document_id]["status"] == "VERIFIED"
+            assert s["file"] == f"kb/sources/{document_id}{kb._suffix(document_id)}"
+            assert int(s["page"]) >= 1 if s["file"].endswith(".pdf") else "page" not in s  # a web page has none
+
+
+def test_task_32_operator_entries_call_the_code_a_code_never_a_law_or_a_breach():
+    for gap_id in TASK_32_SEARCHED:
+        for s in _filed(gap_id):
+            if "code-of-practice" not in s["clause"]:
+                continue
+            assert not re.search(r"\b(law|laws|breach\w*|break\w*|violat\w*|non-?complian\w*)\b", s["says"], re.I), s
+            assert "rule" not in s["says"].lower() or "sets no rule" in s["says"]  # the code sets none; it is none
+    for path in ("docs/gaps.md", "docs/report.md", "README.md"):
+        text = (kb.REPO / path).read_text(encoding="utf-8")
+        assert not re.search(r"(\be&|\bdu\b|\bEtisalat\b|\bEITC\b)[^.\n]{0,60}\b(breach|break|violat)", text), path
+
+
+def _stored(path: Path) -> str:
+    if path.suffix == ".pdf":
+        import pypdf
+        return "\n".join(page.extract_text() or "" for page in pypdf.PdfReader(path).pages)
+    return kb.read_text(path)
+
+
+def test_task_32_quotes_are_verbatim_in_the_stored_text():
+    files = {kb.REPO / s["file"] for g in TASK_32_SEARCHED for s in _filed(g)}
+    if not all(f.exists() for f in files):
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
+    found = 0
+    for gap_id in TASK_32_SEARCHED:
+        for s in _filed(gap_id):
+            text = _stored(kb.REPO / s["file"])
+            assert _norm(s["quote"]) in _norm(text), (gap_id, s["clause"])
+            found += 1
+    assert found == 11
+
+
+def test_task_32_entries_print_in_the_register_and_on_the_site():
+    md = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
+    html = (kb.REPO / "docs" / "site" / "gaps.html").read_text(encoding="utf-8")
+    assert f"- `du-code-of-practice-en:Annex 1` (p. {_filed('gap-1')[2]['page']}, `{DU}`): " in md
+    assert "Covers du and Virgin Mobile UAE" not in md  # the manifest note stays in the KB
+    assert "<code>eand-code-of-practice-en:4</code>" in html and "<code>kb/sources/eand-code-of-practice-en.pdf</code>" in html

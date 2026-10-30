@@ -163,7 +163,8 @@ LANDING_ROWS = {
     "telecom-law-3-2003-en", "telecom-law-3-2003-ar", "etransactions-46-2021-ar", "consumer-law-15-2020-en",
     "consumer-law-15-2020-ar", "cabinet-66-2023-en", "cabinet-66-2023-ar", "cabinet-56-2024-en", "cabinet-56-2024-ar",
     "cabinet-57-2024-en", "cabinet-57-2024-ar", "child-digital-safety-26-2025-en", "child-digital-safety-26-2025-ar",
-    "cybercrimes-34-2021-en", "cybercrimes-34-2021-ar", "itu-t-y3172"}
+    "cybercrimes-34-2021-en", "cybercrimes-34-2021-ar", "itu-t-y3172",
+    "cabres-106-2026-ar", "cabres-106-2026-en"}  # Task 32: the order's portal page URLs; hq saved the texts
 
 
 def test_no_portal_url_except_the_marked_landing_rows():
@@ -258,6 +259,74 @@ def test_task_31_five_extracts_are_verified_foreign_from_the_official_sites():
                                   "III) and 2028-08-02 (Annex I), Regulation (EU) 2026/1744 Art 1(40)(b).")
     schema = json.loads((kb.KB_DIR / "manifest.schema.json").read_text(encoding="utf-8"))
     assert schema["properties"]["binding_status"]["enum"] == ["binding", "advisory", "method", "decision"]
+    # the counts moved to Task 32's test below (64, 59, 17)
+
+
+# --- order 2026-10-30-task-32-operator-codes ------------------------------------------------------------------
+
+OPERATOR_CODES = {
+    "eand-code-of-practice-en": (
+        "e& (Etisalat)", "https://eand.com/en/system/com/assets/docs/general/code-of-practice-for-customer-affairs.pdf",
+        "4b6383a7523a3e2b6122dc923199583be7a1f15cbf26c6e6172f39fa31d05ddd", "13",
+        "§1: not a contract or part of one. No version or date printed.",
+        "standards-text/eand-code-of-practice-customer-affairs-en.pdf"),
+    "du-code-of-practice-en": (
+        "EITC (du)", "https://www.du.ae/files/1430740188355",
+        "8f8014d981c1a407715a03ddb6fbd28192b81d52f414150a3f64b68d42e8e34d", "5",
+        "§1: approved by the TDRA; not a contract or part of one. No date printed. Covers du and Virgin Mobile UAE.",
+        "standards-text/du-code-of-practice-en.pdf"),
+}
+TASK_32_IDS = [*OPERATOR_CODES, "cabres-106-2026-ar", "cabres-106-2026-en", "csc-ai-security-policy-v1-1"]
+CSC_NOTES = ("Host unreachable from Amman 2026-10-17 and 2026-10-30; no Internet Archive copy. Described at u.ae (page "
+             "updated 2026-07-02): six chapters, Governance, Infrastructure and Application Security, Algorithm "
+             "Security, Operational Safety, Adversarial AI Attacks, AI Monitoring and Response. Not read.")
+
+
+def test_task_32_operator_codes_are_verified_advisory_operator_codes():
+    rows = kb.manifest_by_id()
+    for document_id, (issuer, url, sha, pages, notes, local) in OPERATOR_CODES.items():
+        r = rows[document_id]
+        assert (r["status"], r["binding_status"], r["jurisdiction"], r["language"], r["source_type"]) == \
+            ("VERIFIED", "advisory", "UAE", "en", "operator code"), document_id
+        assert (r["issuer"], r["url"], r["sha256"], r["page_count"], r["fetched_at"]) == (issuer, url, sha, pages,
+                                                                                           "2026-10-30")
+        assert r["notes"] == notes and r["http_status"] == "200"
+        assert kb.LOCAL[document_id]["file"] == local
+        if HQ_DIR.exists():  # the operator's file today is hq's copy, byte for byte
+            assert kb.sha256_file(HQ_DIR / local) == sha
+
+
+def test_task_32_resolution_106_2026_rows_arabic_prevails():
+    rows = kb.manifest_by_id()
+    ar, en = rows["cabres-106-2026-ar"], rows["cabres-106-2026-en"]
+    for r, lang in ((ar, "ar"), (en, "en")):
+        assert (r["status"], r["binding_status"], r["jurisdiction"], r["language"], r["instrument"]) == \
+            ("VERIFIED", "binding", "UAE", lang, "cabres-106-2026")
+        assert r["url"] == f"https://uaelegislation.gov.ae/{lang}/legislations/4506"
+        assert "Regulation of Children's Access to Social Media Platforms" in r["title"]
+        assert "Issued 2026-06-17, effective 2026-06-30, Official Gazette 826 of 2026-06-29" in r["notes"]
+    assert ar["page_count"] == "7" and ar["is_official_translation"] == "original"
+    assert "Portal: the Arabic text prevails." in en["notes"]
+    assert kb.LOCAL["cabres-106-2026-ar"]["file"] == "standards-text/cabinet-resolution-106-2026-children-social-media-ar.pdf"
+    assert kb.LOCAL["cabres-106-2026-en"]["file"] == "standards-text/cabinet-resolution-106-2026-children-social-media-en.txt"
+
+
+def test_task_32_csc_policy_is_unverified_and_says_why():
+    r = kb.manifest_by_id()["csc-ai-security-policy-v1-1"]
+    assert (r["status"], r["binding_status"], r["jurisdiction"], r["language"], r["sha256"]) == \
+        ("UNVERIFIED", "advisory", "UAE", "en", "")
+    assert r["url"].startswith("https://csc.gov.ae/documents/38662/1042755/National+Cyber+Security+Policy+for+")
+    assert r["title"].startswith("The National Cyber Security Policy for Artificial Intelligence, v1.1")
+    assert r["issuer"] == "UAE Cyber Security Council"
+    assert CSC_NOTES in r["notes"] and "binding status unknown" in r["notes"]
+
+
+def test_task_32_rows_have_no_chunks_and_the_counts_are_the_orders():
+    cited = {d for d, _ in data.cited_chunks()}
+    for document_id in TASK_32_IDS:
+        assert not kb.has_chunks(document_id) and document_id not in cited, document_id
     manifest = kb.load_manifest()
-    assert (len(manifest), len(kb.verified_rows(manifest))) == (59, 55)
+    status = lambda s: sum(r["status"] == s for r in manifest)
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (64, 59, 4, 1)
     assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 17
+    assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"}) == 29

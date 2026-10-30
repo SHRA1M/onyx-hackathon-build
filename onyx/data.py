@@ -40,7 +40,8 @@ def cited_chunks() -> set[tuple[str, str]]:
             cited |= {(ref["document_id"], ref["chunk"]) for ref in verb["clause_ids"]}
     register = load_gaps()
     for row in register["gaps"] + register.get("candidates", []):
-        cited |= {tuple(s["clause"].split(":", 1)) for s in row.get("searched", [])}
+        # an entry naming its stored file is quoted from that file, not a chunk (Task 32)
+        cited |= {tuple(s["clause"].split(":", 1)) for s in row.get("searched", []) if not s.get("file")}
     for path in sorted(SCENARIOS_DIR.glob("S*.json")):  # each scenario's grounding clauses (order Task 16 item 2)
         grounded = json.loads(path.read_text(encoding="utf-8")).get("grounded_in", {})
         cited |= {tuple(c["clause_id"].split(":", 1)) for c in grounded.get("clauses", [])}
