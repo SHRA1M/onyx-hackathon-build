@@ -291,8 +291,8 @@ def test_gap_10_framework_line_is_readiness_dimension_6_non_binding():
 
 def test_gap_10_global_example_is_canada_ola_part_iv():
     examples = _row("gap-10")["global_examples"]
-    assert {ex["clause"]: ex["quote"] for ex in examples} == CANADA
-    assert {ex["file"] for ex in examples} == {"kb/sources/global/canada-ola-part-iv.txt"}
+    canada = [ex for ex in examples if ex["file"] == "kb/sources/global/canada-ola-part-iv.txt"]
+    assert {ex["clause"]: ex["quote"] for ex in canada} == CANADA  # Wales joined beside it (Task 30)
     assert "Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27" in gaps.table()
 
 
@@ -403,3 +403,82 @@ def test_gap_12_note_is_under_its_heading_and_the_keys_do_not_flag_it():
            "count it." in section
     assert all("gap-12" not in data.load_key(sid)["gaps_expected"] for sid in ("S1", "S2", "S3", "S4", "S5"))
     assert "SAE J3016 (Y.3173 Table I.1) level 3" in gaps.table()
+
+
+# --- order 2026-10-30-task-30-global-examples -----------------------------------------------------------------
+
+SPAIN = "kb/sources/global/es-ley-10-2025.txt"
+WALES = "kb/sources/global/wales-wls-no1-2015-sch1.txt"
+TSR = "kb/sources/global/us-tsr-16cfr310.txt"
+SPAIN_QUOTES = [
+    ("Art 8(2)", "en cualquier momento de la interacción, desde su inicio."),
+    ("Art 8(2)", "garantizando que el 95\u202f% de las solicitudes de atención personalizadas sean atendidas, de media, "
+                 "en un plazo inferior a tres minutos desde que la clientela efectúe la solicitud."),
+    ("Art 8(3)", "que deberá atenderle en el transcurso de esa misma comunicación."),
+]
+WALES_QUOTES = {
+    "Standard 15": "If you have performance indicators for dealing with telephone calls, you must ensure that those "
+                   "performance indicators do not treat telephone calls made in Welsh any less favourably than calls "
+                   "made in English.",
+    "Standard 22": "Any automated telephone systems that you have must provide the complete automated service in Welsh.",
+    "Standard 60": "You must ensure that any self service machines that you have function fully in Welsh, and the Welsh "
+                   "language must be treated no less favourably than the English language in relation to that machine.",
+}
+GAP_5_PORTAL = ("Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists "
+                "only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A "
+                "vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.")
+
+
+def _examples_in(gap_id: str, file: str) -> list[dict]:
+    return [ex for ex in _row(gap_id)["global_examples"] if ex["file"] == file]
+
+
+def test_gap_1_spain_ley_10_2025_art_8_beside_imda():
+    spain = _examples_in("gap-1", SPAIN)
+    assert [ex["clause"] for ex in spain] == ["Art 8(2)", "Art 8(2)", "Art 8(3)"]
+    for (clause, end), ex in zip(SPAIN_QUOTES, spain):
+        assert ex["quote"].endswith(end) and ex["status"] == "VERIFIED", clause
+        assert ex["document"].startswith("Spain, Ley 10/2025")
+    assert _examples_in("gap-1", "kb/sources/global/imda-agentic-ai-v1.5.txt")  # existing examples stay
+    row = _row("gap-1")
+    assert row["recommendation"].endswith("the TDRA time can take Spain's shape (a human on request at any moment; "
+                                          "95% of requests within three minutes).")
+    assert "Art 2(1)(d)" in row["note"] and "Art 2(6)" in row["note"]
+    assert "Spain Ley 10/2025 Art 8(2); Spain Ley 10/2025 Art 8(3)" in gaps.table()
+
+
+def test_gap_10_wales_standards_15_22_60_beside_canada():
+    wales = _examples_in("gap-10", WALES)
+    assert {ex["clause"]: ex["quote"] for ex in wales} == WALES_QUOTES
+    assert all(ex["status"] == "VERIFIED" and ex["document"].startswith("Wales, Welsh Language Standards") for ex in wales)
+    assert "reg 2(1)(b)" in _row("gap-10")["note"] and "not operators" in _row("gap-10")["note"]
+    assert "Wales WLS Standard 15; Wales WLS Standard 22; Wales WLS Standard 60" in gaps.table()
+
+
+def test_gap_11_tsr_310_3_a_3_ii_lead_and_items_a_to_h_as_one_quote():
+    [tsr] = _examples_in("gap-11", TSR)
+    assert tsr["clause"] == "310.3(a)(3)(ii)" and tsr["status"] == "VERIFIED"
+    assert tsr["quote"].startswith("Express oral authorization which is audio-recorded")
+    assert "receipt of all of the following information: (A) An accurate description" in tsr["quote"]
+    assert all(f"({c}) " in tsr["quote"] for c in "ABCDEFGH")
+    assert tsr["quote"].endswith("(H) The date of the customer's or donor's oral authorization;")
+    assert _examples_in("gap-11", "kb/sources/global/eu-ecommerce-2000-31-art10-11.txt")  # existing stays
+    assert "US TSR 16 CFR 310.3(a)(3)(ii)" in gaps.table()
+
+
+def test_task_30_quotes_are_verbatim_in_their_files():
+    if not GLOBAL_DIR.exists():
+        pytest.skip("kb/sources/global/ is local only (gitignored, addendum item 15)")
+    found = 0
+    for gap_id in ("gap-1", "gap-10", "gap-11"):
+        for ex in _row(gap_id)["global_examples"]:
+            if ex["file"] in (SPAIN, WALES, TSR):
+                assert _norm(ex["quote"]) in _norm(kb.read_text(kb.REPO / ex["file"])), (gap_id, ex["clause"])
+                found += 1
+    assert found == 7
+
+
+def test_gap_5_records_the_portal_check():
+    assert _row("gap-5")["uae_position"].endswith(GAP_5_PORTAL)
+    note = kb.manifest_by_id()["pdpl-executive-regulations"]["notes"]
+    assert note == "Not issued as of 2026-10-30 (portal related-legislations checked)"

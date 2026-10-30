@@ -23,6 +23,7 @@ COMPETITOR = ("yes", "no", "not read")
 SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172",
          "coppa-": "16 CFR", "canada-ola-": "Canada OLA", "eu-ecommerce-": "E-Commerce Dir. 2000/31",
          "eu-crd-": "CRD 2011/83", "eu-dsa-": "DSA 2022/2065", "us-47cfr-": "47 CFR",
+         "es-ley-10-2025": "Spain Ley 10/2025", "wales-wls-": "Wales WLS", "us-tsr-": "US TSR 16 CFR",  # Task 30
          "itu-t-y3173": "SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
 
 

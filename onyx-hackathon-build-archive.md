@@ -447,3 +447,19 @@ Order `docs/work-orders/2026-10-29-task-29-field-take.md` (hq, Fable; filed cda6
   - 2026-10-26 (hq, Task 27 rulings): Readiness 2.0 is cited in a row's `framework` list from `kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`, not chunked; Y.3173 Appendix I.1 is cited as `itu-t-y3173:9` (the chunker folds appendices into clause 9). Report: "51 documents", "47 are verified", "Y.3172, Y.3173 and". The site shows a row's `note` as `docs/gaps.md` does. Departures (gaps.py SHORT label and `note`, test pins, README counts, Adviser register line 12, prompt stays v5) accepted.
   - hq copies `docs/report.md` over `report-draft-2026-10-23.md`; the three ITU call names go to the README reviewer block on submission day (Task 23 F2).
   - Next action (old): Part C in a new session (2026-11-01 in the order): C1 binding tag on every cite, C2 `kb datasheet`, C3 ML Intent if time; one PR, CI green, report-back with the full test output and the Limits line (Decisions, 2026-10-29). Then Part D on 2026-11-02 (three-decimal rule, Decisions 2026-10-30). Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).
+
+## 2026-10-30: forty-fifth wrap, Task 30 built (PR #5)
+
+- Built `docs/work-orders/2026-10-30-task-30-global-examples.md` on branch `task-30` (commits 507d721, report-back update): three VERIFIED sources fetched (BOE PDF by curl and pdftotext; legislation.gov.uk XHTML with a browser User-Agent; eCFR versioner API after the page returned 302 to an access check), stored under `kb/sources/global/` and `kb/sources/`, manifest rows, `kb/local-sources.json` entries. Counts 54 / 50 / 12, as the order expected.
+- Stopped once: `kb/manifest.schema.json` allowed only en/ar; Iyas allowed `es`.
+- Register: gap 1 Spain Art 8(2) x2 and 8(3), recommendation clause on Spain's shape, scope line in `note`; gap 10 Wales Std 15, 22, 60, scope in `note`; gap 11 TSR 310.3(a)(3)(ii) lead plus (A) to (H) as one quote; gap 5 portal line; PDPL executive regulations notes. `onyx/gaps.py` got three short labels.
+- Report: cells for rows 1, 10, 11 swapped; counts 54 / 50 / twelve; `build_report.check_kb_counts` added. 5 pages, 2,215 words first count, no cuts.
+- Tests: 16 new; `test_site` noted-rows list now gap-1, gap-10, gap-12; two README/report tests read counts from the manifest. 568 passed locally; CI 556 passed, 12 skipped.
+- Tried: Python heredocs in Git Bash turned \\n and \\u202f into real characters; fixed through the Edit tool and a scratchpad script.
+- hq copy: `report-draft-2026-10-23.md` replaced; `.bak-2026-10-30` already existed, so the previous draft is `.bak-2026-10-30-task-30`.
+- Moved from background (superseded):
+  - Next action (old): Task 29 is closed. Wait for hq's next order: the post-sweep order (2026-10-31) or the submission-day order. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).
+  - The Playwright browser tool blocks `file://`: serve the folder with `uv run python -m http.server` (bare `python` is the Store alias). For a true file:// check use headless Chrome (`chrome.exe --headless=new --dump-dom` or `--screenshot`); its WebCrypto works on file://. Playwright writes `.playwright-mcp/` in the repo root (not gitignored): delete it.
+  - `.gitattributes` forces LF so hashes match on every machine. matplotlib on Windows writes SVG with CRLF: the figure scripts strip it before writing.
+  - matplotlib PNG bytes differ between Windows and the Linux CI (SVG bytes match). Never compare a figure PNG with the committed file (ruling 4).
+  - ChromaDB index Rebuilt 2026-10-22 (121 in kb_main).

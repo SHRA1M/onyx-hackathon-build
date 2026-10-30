@@ -48,6 +48,7 @@ from docx.shared import Cm, Pt
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 
+from onyx import kb
 from onyx.eval import wilson
 
 REPO = Path(__file__).resolve().parent.parent
@@ -276,6 +277,27 @@ def _check(para: str, named: list[RunSet]) -> list[str]:
     return problems
 
 
+NUMBER_WORDS = ("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen "
+                "seventeen eighteen nineteen twenty").split()
+# the knowledge-base counts the report states, each read against kb/manifest.csv (order Task 30, Part C)
+KB_COUNTS = {"documents": re.compile(r"(?:holds|\*\*SRC-2\*\*)\s+(\d+)\s+documents"),
+             "verified": re.compile(r"(\d+)\s+are\s+verified"),
+             "foreign": re.compile(r"\b([a-z]+)\s+foreign\s+texts")}
+
+
+def check_kb_counts(md: str) -> list[str]:
+    rows = kb.load_manifest()
+    actual = {"documents": len(rows), "verified": len(kb.verified_rows(rows)),
+              "foreign": sum(r["jurisdiction"] == "foreign" for r in rows)}
+    problems = []
+    for name, pattern in KB_COUNTS.items():
+        for m in pattern.finditer(md):
+            value = NUMBER_WORDS.index(m[1]) if m[1] in NUMBER_WORDS else int(m[1]) if m[1].isdigit() else None
+            if value != actual[name]:
+                problems.append(f"{' '.join(m[0].split())}: kb/manifest.csv has {actual[name]} ({name})")
+    return problems
+
+
 def check_values(md: str, results: str) -> list[str]:
     sets = run_sets(results)
     failures = []
@@ -500,6 +522,10 @@ def main(argv=None) -> int:
     failures = check_values(md, RESULTS.read_text(encoding="utf-8"))
     if failures:
         print("value check failed (eval/results.md):", *failures, sep="\n", file=sys.stderr)
+        return 1
+    failures = check_kb_counts(md)
+    if failures:
+        print("knowledge-base count check failed (kb/manifest.csv):", *failures, sep="\n", file=sys.stderr)
         return 1
     write(render(parse(md)), Path(args.out))
     print(Path(args.out).resolve().relative_to(REPO).as_posix() if Path(args.out).resolve().is_relative_to(REPO)

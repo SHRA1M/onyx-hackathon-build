@@ -407,5 +407,29 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "es-ley-10-2025": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/es-ley-10-2025.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "wales-wls-no1-2015-sch1": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/wales-wls-no1-2015-sch1.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "us-tsr-16cfr310": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/us-tsr-16cfr310.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }
