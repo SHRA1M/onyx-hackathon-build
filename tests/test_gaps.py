@@ -42,7 +42,7 @@ def test_every_gap_cites_searched_clauses_in_kb():
         assert row["searched"], f"{row['id']}: no clause searched"
         for s in row["searched"]:
             assert s["says"], s["clause"]
-            if s.get("file"):  # quoted from the stored source, no chunk (Task 32): test_task_32_quotes_are_verbatim
+            if s.get("file") or s.get("url"):  # stored source or URL, no chunk (Task 32, Task 35b): own tests
                 continue
             document_id, clause = s["clause"].split(":", 1)
             chunk = kb.get_chunk(document_id, clause)  # KeyError: not a committed chunk
@@ -56,7 +56,7 @@ def test_searched_clauses_are_committed_chunks():
     cited = data.cited_chunks()
     for row in ROWS + data.load_gaps()["candidates"]:
         for s in row["searched"]:
-            if not s.get("file"):
+            if not (s.get("file") or s.get("url")):  # a URL-cited text has no chunk (Task 35b)
                 assert tuple(s["clause"].split(":", 1)) in cited, s["clause"]
 
 
@@ -558,7 +558,7 @@ def test_gap_2_adds_singapore_s_15_recommendation_unchanged():
 
 def test_gap_7_binding_examples_replace_imda_which_stays_in_the_recommendation():
     row = _row("gap-7")
-    assert [ex["file"] for ex in row["global_examples"]] == [UTAH, MOFFATT, MOFFATT]
+    assert [ex["file"] for ex in row["global_examples"]][:3] == [UTAH, MOFFATT, MOFFATT]  # Task 35b appends
     assert row["recommendation"] == GAP_7_RECOMMENDATION and "IMDA" in row["recommendation"]
     assert row["note"] == ("Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's "
                            "words (CAD 812.02). The UAE has the general duty (CPR 3.3) and no AI-specific one.")
@@ -697,7 +697,7 @@ TASK_32_SEARCHED = {
 
 
 def _filed(gap_id: str) -> list[dict]:
-    return [s for s in _row(gap_id)["searched"] if s.get("file")]
+    return [s for s in _row(gap_id)["searched"] if s.get("file") or s.get("url")]  # no chunk (Task 32, 35b)
 
 
 def _filed_32(gap_id: str) -> list[dict]:
@@ -711,13 +711,14 @@ def test_task_32_searched_entries_are_the_orders_appended_last():
         filed = _filed(gap_id)
         assert _row(gap_id)["searched"][-len(filed):] == filed, gap_id  # appended after the chunked ones
     assert not [r["id"] for r in ROWS + data.load_gaps()["candidates"] if any(s.get("file") for s in r["searched"])
-                and r.get("id") not in {**TASK_32_SEARCHED, **TASK_33_SEARCHED, **TASK_35_SEARCHED}]
+                and r.get("id") not in {**TASK_32_SEARCHED, **TASK_33_SEARCHED, **TASK_35_SEARCHED,
+                                        **TASK_35B_SEARCHED}]
 
 
 def test_task_32_files_are_verified_manifest_sources_with_a_page():
     manifest = kb.manifest_by_id()
     for gap_id in TASK_32_SEARCHED:
-        for s in _filed(gap_id):
+        for s in (s for s in _filed(gap_id) if s.get("file")):  # a URL-cited text has no row (Task 35b)
             document_id = s["clause"].split(":", 1)[0]
             assert manifest[document_id]["status"] == "VERIFIED"
             assert s["file"] == f"kb/sources/{document_id}{kb._suffix(document_id)}"
@@ -943,11 +944,15 @@ TASK_35_SEARCHED = {  # gap id: [(clause, file, page)], appended after every ear
 
 
 def _task_35_examples(gap_id: str) -> list[dict]:
-    return _row(gap_id)["global_examples"][-len(TASK_35_EXAMPLES[gap_id]):]
+    later = len(TASK_35B_APPENDED.get(gap_id, []))  # Task 35b's entries follow Task 35's
+    rows = _row(gap_id)["global_examples"]
+    return rows[len(rows) - later - len(TASK_35_EXAMPLES[gap_id]):len(rows) - later]
 
 
 def _task_35_searched(gap_id: str) -> list[dict]:
-    return _row(gap_id)["searched"][-len(TASK_35_SEARCHED[gap_id]):]
+    later = len(TASK_35B_SEARCHED.get(gap_id, []))  # Task 35b's entries follow Task 35's
+    rows = _row(gap_id)["searched"]
+    return rows[len(rows) - later - len(TASK_35_SEARCHED[gap_id]):len(rows) - later]
 
 
 def test_task_35_examples_are_appended_and_the_leads_stay():
@@ -1039,5 +1044,136 @@ def test_task_35_entries_render_on_the_register_and_the_site_arabic_rtl():
     for gap_id in TASK_35_SEARCHED:
         for s in _task_35_searched(gap_id):
             assert f"- `{s['clause']}` (" in md and f"<code>{escape(s['clause'])}</code>" in html, s["clause"]
+    assert (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8") == md
+    assert (kb.REPO / "docs" / "site" / "gaps.html").read_text(encoding="utf-8") == html
+
+
+# --- order 2026-10-30-task-35b-bot-disclosure (Addendum B): bot-disclosure statutes on gaps 1, 6 and 7 ----------
+# Quotes come from hq's read file's table or, where the stored source has a text layer, verbatim from it; nothing
+# retyped (Addendum B). The California extracts carry the read file's quotes only (tests/test_kb.py).
+
+BOT_READ = Path("D:/Projects/hq/uni/ai-for-good-hackathon/perplexity-2026-10-30/"
+                "bot-disclosure-statutes-read-2026-10-30-fable.md")
+KOREA_HTML = Path("D:/Projects/hq/uni/ai-for-good-hackathon/standards-text/bot-disclosure-2026-10-30/"
+                  "korea-ai-basic-act-klri-en.html")
+MAINE = "kb/sources/global/maine-1500-dd.txt"
+INDIA = "kb/sources/global/india-trai-tccrr-2012.txt"
+CA_BPC = "kb/sources/global/california-bpc-17940-17943.txt"
+CA_HSC = "kb/sources/global/california-hsc-1339-75.txt"
+AI_ACT_50 = "kb/sources/global/eu-ai-act-art50-art113-20260727.txt"
+TX = "kb/sources/texas-bcc-552.html"
+HSC_SOURCE = "kb/sources/california-hsc-1339-75.txt"
+KLRI = "https://elaw.klri.re.kr/eng_service/lawView.do?hseq=73499&lang=ENG"
+TRAI_DRAFT = "https://trai.gov.in/sites/default/files/2026-05/Regulation_07052026.pdf"
+COMPANION_LINE = "The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service."
+INDIA_3_9 = [(INDIA, "reg 3(9)", 4), (INDIA, "reg 3(9), proviso", 5)]
+TASK_35B_LEAD = [(MAINE, "§1500-DD(2)", None), (CA_BPC, "§17941(a)", None), (CA_BPC, "§17941(b)", None)]  # gap-6
+TASK_35B_APPENDED = {  # gap id: [(file, clause, page)], after every earlier example
+    "gap-1": INDIA_3_9,
+    "gap-7": INDIA_3_9 + [(CA_HSC, "§1339.75(a)(1)(C)", None), (CA_HSC, "§1339.75(a)(2)", None)],
+}
+TASK_35B_SEARCHED = {  # gap id: [(clause, file, url)], after every earlier entry
+    "gap-1": [("california-hsc-1339-75:1339.75(a)(2)", HSC_SOURCE, None)],
+    "gap-6": [("texas-bcc-552:552.051(b)", TX, None), ("texas-bcc-552:552.051(c)", TX, None),
+              ("kr-ai-framework-act-20676:31(1)", None, KLRI)],
+    "gap-7": [("trai-tccrr-fourth-amendment-2026-draft:3(11)", None, TRAI_DRAFT)],
+}
+
+
+def _35b_appended(gap_id: str) -> list[dict]:
+    return _row(gap_id)["global_examples"][-len(TASK_35B_APPENDED[gap_id]):]
+
+
+def _35b_searched(gap_id: str) -> list[dict]:
+    return _row(gap_id)["searched"][-len(TASK_35B_SEARCHED[gap_id]):]
+
+
+def test_task_35b_gap_6_maine_leads_california_second_the_ai_act_third():
+    files = [(ex["file"], ex["clause"], ex.get("page")) for ex in _row("gap-6")["global_examples"]]
+    assert files[:3] == TASK_35B_LEAD
+    assert [f for f, _, _ in files[3:]] == [AI_ACT_50] * 3  # Art 50(1), 50(5), 113 unchanged, now third
+    maine, bpc_a, _ = _row("gap-6")["global_examples"][:3]
+    assert maine["says"].startswith("Plainest binding text: trade and commerce, text or voice, disclose or it is an "
+                                    "unfair practice")
+    assert "In-force date not on the statute page." in maine["says"]
+    assert "a duty only when the bot is used to deceive; disclosure is the defence" in bpc_a["says"]  # intent caveat
+    table = gaps.table()
+    assert "Maine §1500-DD(2); California BPC §17941(a); California BPC §17941(b); EU AI Act Art 50(1)" in table
+    # the report's cell (Addendum B item 3, 5 pages held) and the replay pages' example: Maine, the first binding one
+    report = (kb.REPO / "docs" / "report.md").read_text(encoding="utf-8")
+    assert "| Cabinet | Maine §1500-DD; EU AI Act Art 50(1) |" in report
+    assert gaps.elsewhere("gap-6")["label"] == "Maine §1500-DD(2)" and not any(
+        ex.get("elsewhere") for ex in _row("gap-6")["global_examples"])
+
+
+def test_task_35b_gap_7_and_gap_1_examples_are_appended():
+    for gap_id, expected in TASK_35B_APPENDED.items():
+        got = _35b_appended(gap_id)
+        assert [(ex["file"], ex["clause"], ex.get("page")) for ex in got] == expected, gap_id
+        assert all(ex["status"] == "VERIFIED" and not ex.get("elsewhere") for ex in got), gap_id
+        assert got[0]["says"], gap_id
+    assert _35b_appended("gap-1")[0]["says"] == ("A regulator orders the automated channel to offer a person; "
+                                                 "no clock.")
+    assert gaps.elsewhere("gap-1")["label"] == "Spain Ley 10/2025 Art 8(2)"  # Spain stays lead
+    assert gaps.elsewhere("gap-7")["label"] == "Utah Code 13-77-102"  # Utah stays first
+    assert "India TRAI TCCRR 2012 reg 3(9)" in gaps.table() and "California HSC §1339.75(a)(2)" in gaps.table()
+
+
+def test_task_35b_searched_entries_are_appended_last():
+    for gap_id, expected in TASK_35B_SEARCHED.items():
+        got = _35b_searched(gap_id)
+        assert [(s["clause"], s.get("file"), s.get("url")) for s in got] == expected, gap_id
+        assert all(s["says"] and s["quote"] for s in got), gap_id
+    [korea] = [s for s in _35b_searched("gap-6") if s.get("url")]
+    assert "English is a reference translation; in-force date unverified." in korea["says"]
+    [draft] = _35b_searched("gap-7")
+    assert draft["says"].startswith("Draft, not law") and "draft" in draft["clause"]
+    assert "Brazil" not in json.dumps(data.load_gaps(), ensure_ascii=False)  # dropped by Iyas 2026-10-30
+
+
+def test_task_35b_quotes_are_verbatim_in_the_stored_text():
+    files = [kb.REPO / f for f in (MAINE, INDIA, CA_BPC, CA_HSC, HSC_SOURCE)]
+    if not all(f.exists() for f in files) or not BOT_READ.exists() or not KOREA_HTML.exists():
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
+    read = _norm(BOT_READ.read_text(encoding="utf-8"))
+    korea = _norm(re.sub(r"<[^>]+>", " ", KOREA_HTML.read_text(encoding="utf-8")))
+    checked = 0
+    for ex in _row("gap-6")["global_examples"][:3] + [e for g in TASK_35B_APPENDED for e in _35b_appended(g)]:
+        text = _norm(kb.read_text(kb.REPO / ex["file"]))
+        assert _norm(ex["quote"]) in text, ex["clause"]
+        if ex.get("page"):  # the PDF page the quote sits on
+            before = text[:text.index(_norm(ex["quote"]))]
+            assert re.findall(r"=== PAGE (\d+) ===", before)[-1] == str(ex["page"]), ex["clause"]
+        checked += 1
+    for gap_id in TASK_35B_SEARCHED:
+        for s in _35b_searched(gap_id):
+            if s.get("file") == TX:  # the stored page is a script shell: the read file's table
+                assert _norm(s["quote"]) in read, s["clause"]
+            elif s.get("url") == KLRI:  # checked against the stored KLRI page, not the URL bytes (Addendum B)
+                assert _norm(s["quote"]) in korea, s["clause"]
+            elif s.get("url") == TRAI_DRAFT:  # no row: the build checked it against the fetched draft
+                continue
+            else:
+                assert _norm(s["quote"]) in _norm(kb.read_text(kb.REPO / s["file"])), s["clause"]
+            checked += 1
+    assert checked == 3 + 2 + 4 + 4
+
+
+def test_task_35b_entries_render_on_the_register_and_the_site():
+    from html import escape
+
+    from onyx import site
+    md, html = gaps.render(), site.gaps_page()
+    assert md.count(COMPANION_LINE) == 1 and html.count(COMPANION_LINE) == 1
+    for gap_id in TASK_35B_SEARCHED:
+        for s in _35b_searched(gap_id):
+            assert f"- `{s['clause']}` (" in md and f"<code>{escape(s['clause'])}</code>" in html, s["clause"]
+            if s.get("url"):
+                assert f"{s['url']}): {s['says']}" in md, s["clause"]
+                assert f'<a href="{escape(s["url"])}">{escape(s["url"])}</a>' in html, s["clause"]
+    for gap_id in ("gap-1", "gap-6", "gap-7"):
+        page = site._gap(_row(gap_id))
+        for ex in _row(gap_id)["global_examples"]:
+            assert escape(ex["quote"]) in page, (gap_id, ex["clause"])
     assert (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8") == md
     assert (kb.REPO / "docs" / "site" / "gaps.html").read_text(encoding="utf-8") == html

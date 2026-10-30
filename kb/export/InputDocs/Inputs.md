@@ -73,7 +73,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 6 | `3gpp-ts-28-535-v19.pdf` | `standard` | ETSI TS 128 535 V19.0.0 (2025-10), 3GPP TS 28.535, Management services for communication service assurance; Requirements | VERIFIED | `f43be1bda69e…` | 24 | [link](https://www.etsi.org/deliver/etsi_ts/128500_128599/128535/19.00.00_60/ts_128535v190000p.pdf) |
 | 7 | `etsi-gs-zsm-009-1-v1-1-1.pdf` | `standard` | ETSI GS ZSM 009-1 V1.1.1 (2021-06), Zero-touch network and Service Management (ZSM); Closed-Loop Automation; Part 1: Enablers | VERIFIED | `492bac221401…` | 40 | [link](https://www.etsi.org/deliver/etsi_gs/ZSM/001_099/00901/01.01.01_60/gs_ZSM00901v010101p.pdf) |
 
-## Global_Examples/ (26 files)
+## Global_Examples/ (31 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -103,6 +103,11 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 24 | `saudi-cst-user-protection-552-1445-en.pdf` | `regulation` | CST, Regulations of User Rights Protection Rules, RC05, second version, February 2024 (Saudi Arabia), English | VERIFIED | `113cc118ff4e…` | 34 | [link](https://www.cst.gov.sa/-/media/D372076E57474D16915514D5C2B32C84.pdf) |
 | 25 | `saudi-cst-user-protection-552-1445-ar.pdf` | `regulation` | CST, Regulations of User Rights Protection Rules, RC05, 2024 (Saudi Arabia), Arabic | VERIFIED | `eaa4035d46b5…` | 32 | [link](https://www.cst.gov.sa/-/media/44F95AD6EA7D4781A57976B9DCAA5B91.pdf) |
 | 26 | `qatar-decree-law-16-2010-ar.md` | `extract` | Decree-Law No. 16 of 2010, Electronic Transactions and Commerce Law (Qatar), Arabic, Articles 1 (one definition), 2, 19, 27 and 53 to 57 (extract) | VERIFIED | `505cb4cdae5f…` |  | [link](https://almeezan.qa/legislations/decree-law/2010/16/general) |
+| 27 | `maine-1500-dd.html` | `law` | Maine Revised Statutes, Title 10, §1500-DD, Required disclosure of use of artificial intelligence chatbot to engage in trade and commerce | VERIFIED | `85e41c95d590…` |  | [link](https://legislature.maine.gov/statutes/10/title10sec1500-DD-1.html) |
+| 28 | `india-trai-tccrr-2012.pdf` | `regulation` | Telecom Consumers Complaint Redressal Regulations, 2012 (1 of 2012), No. 305-20/2009-QoS, 2012-01-05, as amended 2013 (India) | VERIFIED | `5d0b0da12fc5…` | 13 | [link](https://trai.gov.in/sites/default/files/2024-09/CA_05012012.pdf) |
+| 29 | `texas-bcc-552.html` | `law` | Texas Business and Commerce Code, Chapter 552 (Acts 2025, 89th Leg., R.S., ch. 1174, HB 149, §4) | VERIFIED | `dbfba8a96dc3…` |  | [link](https://statutes.capitol.texas.gov/GetStatute.aspx?Code=BC&Value=552) |
+| 30 | `california-bpc-17940-17943.txt` | `extract` | California Business and Professions Code §17940 to 17943, Bots (Stats. 2018 c. 892, SB 1001) (extract) | VERIFIED | `cfa4c3ccba6c…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17941) |
+| 31 | `california-hsc-1339-75.txt` | `extract` | California Health and Safety Code §1339.75, generative AI in patient communications (Stats. 2024 c. 848, AB 3030) (extract) | VERIFIED | `86d9eda28fb0…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75) |
 
 ## Unverified/ (3 files)
 

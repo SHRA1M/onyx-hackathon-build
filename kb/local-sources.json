@@ -663,5 +663,45 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "maine-1500-dd": {
+  "file": "standards-text/bot-disclosure-2026-10-30/maine-1500-DD.html",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "india-trai-tccrr-2012": {
+  "file": "standards-text/bot-disclosure-2026-10-30/india-trai-tccrr-2012.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "texas-bcc-552": {
+  "file": "standards-text/bot-disclosure-2026-10-30/texas-bcc-552.html",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "california-bpc-17940-17943": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/california-bpc-17940-17943.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "california-hsc-1339-75": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/california-hsc-1339-75.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }

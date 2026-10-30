@@ -20,10 +20,10 @@ without consent (24.6), disconnecting without warning (22.1) and handling a comp
 to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer
 Complaints".
 
-The knowledge base holds 83 documents: the Telecommunications Law 3/2003, the
+The knowledge base holds 88 documents: the Telecommunications Law 3/2003, the
 CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-eight other UAE texts;
 ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-twenty-nine foreign texts used only as global examples. 78 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+thirty-four foreign texts used only as global examples. 83 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
@@ -42,7 +42,7 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 
 ## Use case requirement
 
-One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 83 documents with URL, SHA-256 and status,
+One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 88 documents with URL, SHA-256 and status,
 chunked by clause. **C-1** each agent sees only the steps released to it. **PP-1** retrieval is scoped to the
 agent's mandate; a cited id outside the clauses given is invalid. **M-1** one model behind an OpenAI-compatible
 adapter. **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one block without
@@ -117,7 +117,7 @@ languages, before the gap was claimed.
 | 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; Electronic Transactions Art 33 trust levels never mapped to it | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
 | 4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline, and the complaint route to the Data Office (Art 24) has no clock either | responsibilities | UAE Data Office | GDPR Art 22(3), 12(3) |
 | 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)) has not been issued | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |
-| 6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person "knows, or is supposed to know" the system contracts automatically | legislative | Cabinet | EU AI Act Art 50(1), 50(5) |
+| 6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person "knows, or is supposed to know" the system contracts automatically | legislative | Cabinet | Maine §1500-DD; EU AI Act Art 50(1) |
 | 11 | A misheard order: the CPR defaults an on-screen answer to "no" to avoid an accidental "yes" (4.22.3, 4.23.3) and wants an OTP per purchase (4.23.2); nothing says what a voice or chat channel must do when it interprets the words itself | standards | TDRA | US TSR 16 CFR 310.3(a)(3)(ii) |
 | 12 | Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1) and its hand-over is Readiness D9's inference-to-action latency in the other direction; mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes. Left open at ITU's request (2026-10-30). | standards | ITU | EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from 2027) |
 | 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | 3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4 |
