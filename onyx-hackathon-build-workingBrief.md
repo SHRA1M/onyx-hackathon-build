@@ -40,7 +40,7 @@ wrap commit). Every change before 2026-11-06; submission 2026-11-09.
 - The other 9 foreign rows: re-fetched 2026-10-30 by a helper, rebuilt file byte-equal to the manifest SHA-256 for
   all 9 (IMDA, 47 CFR, Canada OLA, Spain, Wales, US TSR, Singapore, Utah, Moffatt). Results:
   `C:\Users\SUPER\AppData\Local\Temp\claude\D--Projects-engineering-onyx-hackathon-build\2cb68851-a7c5-4f1b-8cc6-41cb61f443dc\scratchpad\partb\results.md`
-  (scratchpad; copy the table into the report-back early, it may be cleared).
+  (copied to `docs/report-back/2026-10-30-task-33-partb-refetch-notes.md`; fold it into the report-back).
 
 ## Next moves, in order
 
