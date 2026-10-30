@@ -27,7 +27,9 @@
     {"clause": "du-code-of-practice-en:10", "file": "kb/sources/du-code-of-practice-en.pdf", "page": 4, "says": "CPR 26.13.3 and 26.14.2 restated as 'will try'; no hand-over clause.", "quote": "We will acknowledge your complaint immediately, in case you submit your complaint by telephone or personal visit, and within one (1) business days in case you send us your complaint in writing."},
     {"clause": "du-code-of-practice-en:10", "file": "kb/sources/du-code-of-practice-en.pdf", "page": 4, "says": "CPR 26.13.3 and 26.14.2 restated as 'will try'; no hand-over clause.", "quote": "If we cannot resolve your complaint immediately, we will try to resolve it as soon as possible, within 20 business days of the date of your complaint."},
     {"clause": "du-code-of-practice-en:Annex 1", "file": "kb/sources/du-code-of-practice-en.pdf", "page": 5, "says": "The code names a chatbot as a complaint channel and sets no rule for it.", "quote": "Chatbot WhatsApp 058-2428268 (058Chatbot)"},
-    {"clause": "eand-code-of-practice-en:7", "file": "kb/sources/eand-code-of-practice-en.pdf", "page": 9, "says": "No deadline, no hand-over, no AI named.", "quote": "We aim to rectify your problems as soon as possible."}
+    {"clause": "eand-code-of-practice-en:7", "file": "kb/sources/eand-code-of-practice-en.pdf", "page": 9, "says": "No deadline, no hand-over, no AI named.", "quote": "We aim to rectify your problems as soon as possible."},
+    {"clause": "executive-order-3-2004:32", "file": "kb/sources/executive-order-3-2004.pdf", "page": 13, "says": "The licensee reports complaint numbers and the procedures taken to TDRA on request; a reporting duty, nothing on the hand-over or its timing.", "quote": "Upon the Authority's request and within the specified time period indicated therein, the Licensee shall provide a report in the format set by the Authority showing the number of complaints against them and the taken procedures in this regard for the period covered in the report."},
+    {"clause": "cabres-200-2025-en:Schedule row 7", "file": "kb/sources/cabres-200-2025-en.pdf", "page": 7, "says": "Where 14/2023 applies, no complaints mechanism is fined (warning, then AED 2,000 to 20,000 and twenty days' closure); still no stop, hand-over or clock.", "quote": "Failure to allocate a mechanism for handling complaints."}
    ],
    "uae_position": "The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it. The CPR wants first-contact resolution (26.14.1) and bars the machine from the conversation (26.7.2); nothing joins the two: no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over. The acknowledgement clock (26.13.3) names telephone, visit and written complaints, not chat or app, and a reference number is not a conversation.",
    "global_examples": [
@@ -41,7 +43,7 @@
     {"document": "Spain, Ley 10/2025 de 26 de diciembre, servicios de atención a la clientela (BOE-A-2025-26698)", "clause": "Art 8(3)", "file": "kb/sources/global/es-ley-10-2025.txt", "status": "VERIFIED", "quote": "En caso de insatisfacción con la atención recibida por parte del operador, quien haya iniciado la comunicación podrá solicitar que se transfiera la comunicación a una persona física supervisora o a un departamento específico de calidad, que deberá atenderle en el transcurso de esa misma comunicación."}
    ],
    "global_none": "",
-   "note": "Spain's Ley 10/2025 reaches electronic communications services, telephone services included (Art 2(1)(d)); for them the sector rules apply first and this law is supplementary (Art 2(6)).",
+   "note": "Spain's Ley 10/2025 reaches electronic communications services, telephone services included (Art 2(1)(d)); for them the sector rules apply first and this law is supplementary (Art 2(6)). In force 2025-12-28; companies have until 2026-12-28 to adapt (disposición transitoria única).",
    "recommendation": "TDRA to state, for every automated channel, what happens when a conversation becomes a Consumer Complaint: the agent stops, the named human takes over, within a stated time, measured like T1(2a) for chat and app; the TDRA time can take Spain's shape (a human on request at any moment; 95% of requests within three minutes).",
    "exposed_by": "S2-3",
    "competitor": "no",
@@ -64,7 +66,8 @@
     {"clause": "pdpl-45-2021-en:4(9)", "says": "Processing the contract needs is permitted without consent; the seam is only for processing beyond it.", "quote": "If the processing is necessary to perform a contract to which the Data Subject is a party, or to take measures at the request of the Data Subject with the aim of concluding, amending or terminating a contract."},
     {"clause": "pdpl-45-2021-en:6(1)", "says": "Data-processing consent in writing or electronically; spoken is not named.", "quote": "whether in writing or electronically"},
     {"clause": "law-14-2023-en:13(2)", "says": "Trade Law 14/2023: a digital contract is valid on offer and acceptance that meet the digital identity and digital signature requirements; no medium is named for spoken consent through an AI channel.", "quote": "Fulfillment of the offer and acceptance and the contractual relationship executed upon satisfying the requirements of the digital identity and digital signature."},
-    {"clause": "eand-code-of-practice-en:4", "file": "kb/sources/eand-code-of-practice-en.pdf", "page": 5, "says": "The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no read-back, no AI named.", "quote": "For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s web site), and IVR system. In this case the subscription shall be legal and binding to the customer with immediate effect"}
+    {"clause": "eand-code-of-practice-en:4", "file": "kb/sources/eand-code-of-practice-en.pdf", "page": 5, "says": "The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no read-back, no AI named.", "quote": "For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s web site), and IVR system. In this case the subscription shall be legal and binding to the customer with immediate effect"},
+    {"clause": "cabres-200-2025-en:Schedule row 1", "file": "kb/sources/cabres-200-2025-en.pdf", "page": 5, "says": "Where 14/2023 applies, failing to verify the offer and acceptance is fined (AED 2,000 up to 100,000 and closure); what verifies a spoken 'yes' through an AI channel is unsaid.", "quote": "failure to verify the offer and acceptance required for the validity of the contract."}
   ],
    "uae_position": "No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes. The processing the contract needs is lawful without consent (4(9)); a spoken consent through the agent covers the purchase (4.7.2) but not a processing purpose beyond the contract, which 6(1)(b) wants in writing or electronically. Mizan takes the strict reading (4.10 plus OTP, 4.11).",
    "global_examples": [
@@ -73,7 +76,7 @@
     {"document": "Singapore, Electronic Transactions Act 2010, current version as at 30 Oct 2026", "clause": "s. 15", "file": "kb/sources/global/sg-eta-2010-s15.txt", "status": "VERIFIED", "quote": "A contract formed by the interaction of an automated message system and a natural person, or by the interaction of automated message systems, is not to be denied validity or enforceability solely on the ground that no natural person reviewed or intervened in each of the individual actions carried out by the automated message systems or the resulting contract."}
    ],
    "global_none": "",
-   "note": "Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the automated contract; neither names the sales medium.",
+   "note": "Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the automated contract; neither names the sales medium. The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps the statutory name.",
    "recommendation": "TDRA to classify an AI agent in each sales medium of Article 4 and say whether 2FA applies; the UAE Data Office to say whether a recorded spoken consent meets PDPL 6(1)(b).",
    "exposed_by": "S1-4",
    "competitor": "no",
@@ -253,8 +256,12 @@
     {"document": "ITU-T Y.3172 (06/2019)", "clause": "7.1, page 4", "file": "kb/sources/global/itu-t-y3172-2019-06.txt", "status": "VERIFIED", "quote": "give network design recommendations without human intervention."}
    ],
    "uae_position": "CPR 26.7.2 and licence 9.1 require a human in a complaint conversation; Mizan's P node gate returns a hand-over that Y.3172 has no outcome for, so it is mapped outside the standard's node set.",
-   "global_examples": [],
-   "global_none": "none; the recommendation is the example",
+   "global_examples": [
+    {"document": "3GPP TS 28.535 V19.0.0 (ETSI TS 128 535, 2025-10), communication service assurance", "clause": "§4.2.3", "file": "kb/sources/global/3gpp-ts-28-535-v19.txt", "status": "VERIFIED", "quote": "The management system collects, analyses and presents the data to the human operator or other management entity, but the human operator or other management entity decides which action to take."},
+    {"document": "ETSI GS ZSM 009-1 V1.1.1 (2021-06), Closed-Loop Automation; Enablers", "clause": "§7.2.2.4", "file": "kb/sources/global/etsi-gs-zsm-009-1-v1-1-1.txt", "status": "VERIFIED", "quote": "The customization flow may be used to configure the CL, monitor its continuous operations, approve/reject recommendations, explain the CL operation and decisions"}
+   ],
+   "examples_note": "Both are method texts, like Y.3172: 3GPP defines the open control loop, where the system presents and the human decides; ETSI ZSM defines a flow for a human operator to approve or reject a recommendation. Neither names a withheld output routed to a named person with its own reference point; the recommendation stands as the fuller version.",
+   "global_none": "",
    "recommendation": "ITU-T to add a policy-node outcome that withholds the model's output and routes the case to a named human (hand-over), with its own reference point, so a regulator's human-in-the-loop rule maps into the pipeline.",
    "exposed_by": "S2-3",
    "competitor": "no",
@@ -421,9 +428,12 @@
     {"clause": "tdra-cpr-v2-en:4.4", "says": "The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.", "quote": "where an existing Service, that is to say a service that a Subscriber has expressly ordered, is extended or renewed on terms which are:"}
    ],
    "uae_position": "Candidate from the keys session (S1 step 6): the text does not say whether a lapsed fixed-term bundle is still an existing Service.",
-   "global_examples": [],
-   "global_none": "none on disk",
-   "recommendation": "TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3.",
+   "global_examples": [
+    {"document": "Directive (EU) 2018/1972, European Electronic Communications Code (legislation.gov.uk copy of the adopted text)", "clause": "Art 105(3)", "file": "kb/sources/global/eu-eecc-2018-1972-art105.txt", "status": "VERIFIED", "quote": "Before the contract is automatically prolonged, providers shall inform end-users, in a prominent and timely manner and on a durable medium, of the end of the contractual commitment and of the means by which to terminate the contract."},
+    {"document": "Germany, Telekommunikationsgesetz (TKG) 2021", "clause": "§ 56(3)", "file": "kb/sources/global/de-tkg-2021-para-56.txt", "status": "VERIFIED", "says": "Our English, not an official translation: after the initial term, a tacitly renewed contract may be ended at any time on one month's notice; before the renewal the provider must tell the end-user, on a durable medium, of the renewal, how to prevent it, and the right to end the renewed contract.", "quote": "kann der Endnutzer einen solchen Vertrag nach Ablauf der anfänglichen Vertragslaufzeit jederzeit unter Einhaltung einer Kündigungsfrist von einem Monat kündigen. Der Anbieter muss den Endnutzer rechtzeitig vor einer Verlängerung des Vertrages auf einem dauerhaften Datenträger hinweisen auf 1. die stillschweigende Verlängerung des Vertrages, 2. die Möglichkeit, die Verlängerung des Vertrages durch seine rechtzeitige Kündigung zu verhindern, und 3. das Recht, einen verlängerten Vertrag nach Satz 1 zu kündigen."}
+   ],
+   "global_none": "",
+   "recommendation": "TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3, and, if 4.4, require the warning before and the one-month exit after.",
    "exposed_by": "S1-6",
    "competitor": "no",
    "competitor_basis": "README and its gap table list no such gap"
@@ -432,7 +442,7 @@
   {
    "id": "candidate-79bis-2-fine-schedule",
    "line": "the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished",
-   "gap": "The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure.",
+   "gap": "The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2).",
    "kind": "absence",
    "category": "legislative gap",
    "addressee": ["Cabinet"],
@@ -440,7 +450,10 @@
     {"clause": "telecom-law-3-2003-en:79 bis", "says": "Paragraph (1): a breach of the Law or anything issued under it is fined AED 50,000 to 200,000.", "quote": "shall be punished with a fine that is not less than AED (50,000) Fifty Thousand Dirhams and does not exceed AED (200,000) Two Hundred Thousand Dirhams", "quote_ar": "يعاقب بالغرامة التي لا تقل عن (50.000) خمسون ألف درهم ولا تجاوز (200.000) مائتي ألف درهم كل من خالف أي حكم آخر من أحكام القانون أو لائحته التنفيذية أو الأنظمة أو القرارات أو التعليمات أو القواعد الصادرة بموجبهما.", "file_ar": "docs/sources/telecom-law-and-licences-2026-10-17.md"},
     {"clause": "telecom-law-3-2003-en:79 bis", "says": "Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.", "quote": "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees", "quote_ar": "لمجلس الإدارة توقيع غرامات إدارية بحق المرخص لهم في حال مخالفتهم أحكام القانون أو لائحته التنفيذية أو القرارات أو الأنظمة أو السياسات أو التعليمات الصادرة عن مجلس الإدارة أو الهيئة.", "file_ar": "docs/sources/telecom-law-and-licences-2026-10-17.md"},
     {"clause": "licence-2-2026:16.3.2", "says": "A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.", "quote": "The penalty shall be not less than Dirhams 50,000 and not more than Dirhams 200,000"},
-    {"clause": "licence-2-2026:16.3.3", "says": "The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material."}
+    {"clause": "licence-2-2026:16.3.3", "says": "The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material."},
+    {"clause": "cabres-52-2024-ar:2(2)", "file": "kb/sources/cabres-52-2024-ar.pdf", "page": 2, "says": "TDRA may double a fine when the same violation is repeated within a year; an itemised schedule TDRA administers under the neighbouring trust-services law, binding trust service providers, not telecom licensees. Portal English: 'The Authority may double the value of the administrative fine specified in the Table attached to this resolution in the event of the repetition of the same Administrative Violation before one year has passed from the date of its first time.' Arabic quoted as the PDF text layer gives it (two spacing faults: مضاعفةقيمة, مض ي).", "quote": "يجوز للهيئة مضاعفةقيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات المخالفة الإدارية قبل مض ي سنة من تاريخ ارتكابها لأول مرة"},
+    {"clause": "cabres-200-2025-en:3(3)", "file": "kb/sources/cabres-200-2025-en.pdf", "page": 2, "says": "The Ministry of Economy may skip the gradation for a serious violation and impose the more severe penalty.", "quote": "the Ministry may, in cases of serious violations, impose the more severe administrative penalty without adhering to the gradation"},
+    {"clause": "executive-order-3-2004:42", "file": "kb/sources/executive-order-3-2004.pdf", "page": 16, "says": "A fine power for apparatus authorisations, no amount; not the licensee schedule.", "quote": "The Authority may perform any of the following in case any of the Authorised or concerned persons in the Telecommunication Apparatus breaches the terms and restrictions that the Authorisations were granted upon,: (a) impose a financial fine against the violator ; (b) abolish the issued Authorization."}
    ],
    "uae_position": "Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Whether the Board may fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq 2026-10-22).",
    "global_examples": [],
@@ -469,7 +482,7 @@
     {"clause": "pdpl-45-2021-en:8(1)", "says": "The Processor acts on the Controller's instructions and contract.", "quote": "Carry out the processing in accordance with the instructions of the Controller"},
     {"clause": "pdpl-45-2021-en:8(10)", "says": "Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.", "quote": "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"}
    ]},
-  {"name": "The Executive Order unpublished", "line": "The Executive Order ranks above the Regulatory Framework in the licence's order of precedence, and its text is not published.",
+  {"name": "The Executive Order, read in full", "line": "The Executive Order, read in full (75 articles, English; the Arabic prevails): Art 30 directives, Art 32 complaint reporting, Art 42 apparatus fines, Art 47 quality-of-service reporting. Nothing on an automated channel, consent, a hand-over or a licensee fine amount.",
    "searched": [
     {"clause": "licence-2-2026:16.2", "says": "Point (b): the Executive Order is second in precedence.", "quote": "its Executive Order to the Federal Law by Decree No. 3 of 2003"}
    ]}

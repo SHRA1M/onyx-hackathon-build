@@ -25,7 +25,7 @@
     "status": {"enum": ["VERIFIED", "REFERENCED", "UNVERIFIED", "HISTORICAL"]},
     "binding_status": {"enum": ["binding", "advisory", "method", "decision"]},
     "jurisdiction": {"enum": ["UAE", "foreign", "international"]},
-    "language": {"type": "string", "pattern": "^(en|ar|es)(,(en|ar))?$"},
+    "language": {"type": "string", "pattern": "^(en|ar|es|de)(,(en|ar))?$"},
     "is_official_translation": {"type": "string", "minLength": 1},
     "source_type": {"type": "string", "minLength": 1},
     "country": {"type": "string", "minLength": 1},

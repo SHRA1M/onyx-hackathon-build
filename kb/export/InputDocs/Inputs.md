@@ -4,7 +4,7 @@ Mizan knowledge base, exported from `kb/manifest.csv` by `python -m onyx kb expo
 Each document sits in the subfolder of its category; full texts are copied only where `kb fetch` holds them.
 
 
-## UAE_Binding/ (34 files)
+## UAE_Binding/ (40 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -36,14 +36,20 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 26 | `cybercrimes-34-2021-ar.pdf` | `law` | Federal Decree-Law No. 34 of 2021, Arabic | VERIFIED | `1d367a497550…` | 33 | [landing page](https://uaelegislation.gov.ae/ar/legislations/1526) (document link not verified) |
 | 27 | `decision-16-2026-ar.pdf` | `regulation` | TDRA Decision 16/2026 on the use of mobile telecommunications devices (issued 2026-05-11), Arabic only | VERIFIED | `0278aec14e47…` | 11 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/Updated-regulations-and-ruling/Use-of-Mobile-Telecommunications-Devices-Ar.ashx) |
 | 28 | `instructions-1-2014-ar.pdf` | `regulation` | TDRA Instructions 1/2014 on accessibility of telecommunications for People of Determination, Arabic only | VERIFIED | `b9ebfc40c67e…` | 5 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/AR/People-of-determination-accessibility-to-telecommunication.ashx) |
-| 29 | `tdra-registration-policy-2011-en.pdf` | `policy` | TDRA Regulatory Policy: Registration Requirements for Mobile Consumers, Version 1.0 (2011-09-27) | VERIFIED | `5108ee3e9f20…` | 17 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/Registration-Requirements-for-Mobile-Consumers-Policy-pdf.ashx) |
-| 30 | `law-14-2023-en.pdf` | `law` | Federal Decree-Law No. 14 of 2023 Concerning the Modern Technology-Based Trade | VERIFIED | `a52f4dcc2315…` | 17 | [link](https://uaelegislation.gov.ae/en/legislations/2150/download) |
-| 31 | `law-14-2023-ar.pdf` | `law` | Federal Decree-Law No. 14 of 2023, Arabic | VERIFIED | `4769f8f1af60…` | 11 | [link](https://uaelegislation.gov.ae/ar/legislations/2150/download) |
-| 32 | `cabres-28-2023-en.pdf` | `regulation` | Cabinet Resolution No. 28 of 2023, Executive Regulations of Federal Decree-Law 46/2021 | VERIFIED | `89ab2b52d9d5…` | 30 | [link](https://uaelegislation.gov.ae/en/legislations/2199/download) |
-| 33 | `cabres-106-2026-ar.pdf` | `regulation` | Cabinet Resolution No. 106 of 2026 Regarding the Regulation of Children's Access to Social Media Platforms, Arabic | VERIFIED | `18a7068c8ffa…` | 7 | [landing page](https://uaelegislation.gov.ae/ar/legislations/4506) (document link not verified) |
-| 34 | `cabres-106-2026-en.txt` | `regulation` | Cabinet Resolution No. 106 of 2026 Regarding the Regulation of Children's Access to Social Media Platforms | VERIFIED | `c589e279e6b1…` |  | [landing page](https://uaelegislation.gov.ae/en/legislations/4506) (document link not verified) |
+| 29 | `executive-order-3-2004.pdf` | `executive order` | Supreme Committee Resolution No. 3 of 2004 issuing the Executive Order of the Telecommunications Law | VERIFIED | `23f3e4022033…` | 28 | [link](https://tdra.gov.ae/-/media/About/Legal-References/LAW/LAW-English/Decision-of-the-Supreme-Committee-for-the-Supervision-of-the-Telecommunications-Sector-No-3-of-2004.ashx) |
+| 30 | `tdra-registration-policy-2011-en.pdf` | `policy` | TDRA Regulatory Policy: Registration Requirements for Mobile Consumers, Version 1.0 (2011-09-27) | VERIFIED | `5108ee3e9f20…` | 17 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/Registration-Requirements-for-Mobile-Consumers-Policy-pdf.ashx) |
+| 31 | `law-14-2023-en.pdf` | `law` | Federal Decree-Law No. 14 of 2023 Concerning the Modern Technology-Based Trade | VERIFIED | `a52f4dcc2315…` | 17 | [link](https://uaelegislation.gov.ae/en/legislations/2150/download) |
+| 32 | `law-14-2023-ar.pdf` | `law` | Federal Decree-Law No. 14 of 2023, Arabic | VERIFIED | `4769f8f1af60…` | 11 | [link](https://uaelegislation.gov.ae/ar/legislations/2150/download) |
+| 33 | `cabres-28-2023-en.pdf` | `regulation` | Cabinet Resolution No. 28 of 2023, Executive Regulations of Federal Decree-Law 46/2021 | VERIFIED | `89ab2b52d9d5…` | 30 | [link](https://uaelegislation.gov.ae/en/legislations/2199/download) |
+| 34 | `cabres-106-2026-ar.pdf` | `regulation` | Cabinet Resolution No. 106 of 2026 Regarding the Regulation of Children's Access to Social Media Platforms, Arabic | VERIFIED | `18a7068c8ffa…` | 7 | [landing page](https://uaelegislation.gov.ae/ar/legislations/4506) (document link not verified) |
+| 35 | `cabres-106-2026-en.txt` | `regulation` | Cabinet Resolution No. 106 of 2026 Regarding the Regulation of Children's Access to Social Media Platforms | VERIFIED | `c589e279e6b1…` |  | [landing page](https://uaelegislation.gov.ae/en/legislations/4506) (document link not verified) |
+| 36 | `executive-order-3-2004-ar.pdf` | `executive order` | Supreme Committee Resolution No. 3 of 2004 issuing the Executive Order of the Telecommunications Law, Arabic | VERIFIED | `99cb1e43df26…` | 33 | [link](https://tdra.gov.ae/-/media/About/Legal-References/LAW/LAW-Arabic/Decision-of-the-Supreme-Committee-for-the-Supervision-of-the-Telecommunications-Sector-No-3-of-2004A.ashx) |
+| 37 | `cabres-200-2025-en.pdf` | `regulation` | Cabinet Resolution No. 200 of 2025 Regarding the Schedule of Administrative Violations and Penalties for Acts Committed in Violation of Federal Decree-Law No. 14 of 2023 | VERIFIED | `cdff987ad304…` | 9 | [landing page](https://uaelegislation.gov.ae/en/legislations/3989) (document link not verified) |
+| 38 | `cabres-200-2025-ar.pdf` | `regulation` | Cabinet Resolution No. 200 of 2025 Regarding the Schedule of Administrative Violations and Penalties for Acts Committed in Violation of Federal Decree-Law No. 14 of 2023, Arabic | VERIFIED | `ad851801ec71…` | 6 | [landing page](https://uaelegislation.gov.ae/ar/legislations/3989) (document link not verified) |
+| 39 | `cabres-52-2024-ar.pdf` | `regulation` | Cabinet Resolution No. 52 of 2024 Concerning the Administrative Penalties for Violating Federal Decree-Law No. 46 of 2021 (Electronic Transactions and Trust Services) and its Executive Regulations, Arabic | VERIFIED | `32c667ed6310…` | 6 | [landing page](https://uaelegislation.gov.ae/ar/legislations/2585) (document link not verified) |
+| 40 | `cabres-52-2024-en.txt` | `regulation` | Cabinet Resolution No. 52 of 2024 Concerning the Administrative Penalties for Violating Federal Decree-Law No. 46 of 2021 (Electronic Transactions and Trust Services) and its Executive Regulations | VERIFIED | `85f6e4cb46a4…` |  | [landing page](https://uaelegislation.gov.ae/en/legislations/2585) (document link not verified) |
 
-## UAE_Advisory/ (5 files)
+## UAE_Advisory/ (6 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -52,8 +58,9 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 3 | `ai-deepfake-guide-2021.txt` | `guideline` | Deepfake Guide 2021 | VERIFIED | `2d4911da01e7…` |  | [link](https://u.ae/-/media/AI-publications/AI-DeepFake-Guide-EN-2021.pdf) |
 | 4 | `eand-code-of-practice-en.pdf` | `operator code` | e& Code of Practice regarding customer affairs | VERIFIED | `4b6383a7523a…` | 13 | [link](https://eand.com/en/system/com/assets/docs/general/code-of-practice-for-customer-affairs.pdf) |
 | 5 | `du-code-of-practice-en.pdf` | `operator code` | du (EITC) Code of Practice | VERIFIED | `8f8014d981c1…` | 5 | [link](https://www.du.ae/files/1430740188355) |
+| 6 | `fed-ai-data-authority-2026-06-14` | `announcement` | Mohammed bin Rashid approves establishing the Federal Authority for Artificial Intelligence and Data | REFERENCED |  |  | [link](https://dgov.tdra.gov.ae/ar/media-hub/news/mohammed-bin-rashid-approves-establishing-artificial-intelligence-and-data-authority) |
 
-## Framework/ (5 files)
+## Framework/ (7 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -62,8 +69,10 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 3 | `itu-readiness-2-0.pdf` | `report` | ITU AI Ready: Analysis Towards a Standardized Readiness Framework, Report 2.0 (January 2026) | VERIFIED | `71191768d46b…` | 55 | [link](https://www.itu.int/dms_pub/itu-t/opb/ai4g/T-AI4G-AI4GOOD-2025-6-PDF-E.pdf) |
 | 4 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `a3cc9bfd2b09…` |  | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c6aac69d9692dcae95b5b498a416befcfb/simulation/data/framework/dimensions.json) |
 | 5 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
+| 6 | `3gpp-ts-28-535-v19.pdf` | `standard` | ETSI TS 128 535 V19.0.0 (2025-10), 3GPP TS 28.535, Management services for communication service assurance; Requirements | VERIFIED | `f43be1bda69e…` | 24 | [link](https://www.etsi.org/deliver/etsi_ts/128500_128599/128535/19.00.00_60/ts_128535v190000p.pdf) |
+| 7 | `etsi-gs-zsm-009-1-v1-1-1.pdf` | `standard` | ETSI GS ZSM 009-1 V1.1.1 (2021-06), Zero-touch network and Service Management (ZSM); Closed-Loop Automation; Part 1: Enablers | VERIFIED | `492bac221401…` | 40 | [link](https://www.etsi.org/deliver/etsi_gs/ZSM/001_099/00901/01.01.01_60/gs_ZSM00901v010101p.pdf) |
 
-## Global_Examples/ (16 files)
+## Global_Examples/ (18 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -76,21 +85,22 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 7 | `us-47cfr-64-2010.txt` | `extract` | 47 CFR 64.2010, Safeguards on the disclosure of customer proprietary network information (extract) | VERIFIED | `8d8f50f5a9bf…` |  | [link](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-B/part-64/subpart-U/section-64.2010) |
 | 8 | `ca-ola-s22-27.txt` | `extract` | Official Languages Act (Canada), R.S.C. 1985, c. 31 (4th Supp.), ss. 22 to 27 (extract) | VERIFIED | `47b831156cb3…` |  | [link](https://laws-lois.justice.gc.ca/eng/acts/O-3.01/page-2.html) |
 | 9 | `es-ley-10-2025.txt` | `law` | Ley 10/2025, de 26 de diciembre, por la que se regulan los servicios de atención a la clientela (Spain), BOE-A-2025-26698 | VERIFIED | `5e9c5e3ee6b5…` |  | [link](https://www.boe.es/boe/dias/2025/12/27/pdfs/BOE-A-2025-26698.pdf) |
-| 10 | `wales-wls-no1-2015-sch1.txt` | `extract` | Welsh Language Standards (No. 1) Regulations 2015, SI 2015/996 (W. 68), Schedule 1 (extract) | VERIFIED | `6e6c99d16a1a…` |  | [link](https://www.legislation.gov.uk/wsi/2015/996/schedule/1/made/data.xht?view=snippet&wrap=true) |
+| 10 | `wales-wls-no1-2015-sch1.txt` | `extract` | Welsh Language Standards (No. 1) Regulations 2015, SI 2015/996 (W. 68), Schedule 1 (extract) | VERIFIED | `8ae75b07fd2c…` |  | [link](https://www.legislation.gov.uk/wsi/2015/996/schedule/1/data.xht?view=snippet&wrap=true) |
 | 11 | `us-tsr-16cfr310.txt` | `extract` | 16 CFR 310.3, Telemarketing Sales Rule, Deceptive telemarketing acts or practices (extract) | VERIFIED | `587aa42b5c79…` |  | [link](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-310) |
 | 12 | `sg-eta-2010-s15.txt` | `extract` | Electronic Transactions Act 2010 (Singapore), section 15 (extract) | VERIFIED | `6b4f70b8c0e2…` |  | [link](https://sso.agc.gov.sg/Act/ETA2010?ProvIds=pr15-) |
 | 13 | `us-utah-13-77-102.txt` | `extract` | Utah Code 13-77-102, Liability for violation of consumer protection law, effective 2026-05-06 (extract) | VERIFIED | `55bb3659f84c…` |  | [link](https://le.utah.gov/xcode/Title13/Chapter77/C13-77-S102_2026050620260506.pdf) |
 | 14 | `ca-bccrt-2024-149-moffatt.txt` | `extract` | Moffatt v. Air Canada, 2024 BCCRT 149, Civil Resolution Tribunal (British Columbia), 2024-02-14 (extract) | VERIFIED | `83f7b6e9656d…` |  | [link](https://decisions.civilresolutionbc.ca/crt/crtd/en/item/525448/index.do?iframe=true) |
 | 15 | `eu-roaming-2022-612-art14.txt` | `extract` | Regulation (EU) 2022/612 (roaming), Articles 14 and 24 (extract) | VERIFIED | `65797bd94bac…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32022R0612) |
 | 16 | `eu-ai-act-2026-07-27-art14-26.txt` | `extract` | Regulation (EU) 2024/1689 (AI Act), consolidated 2026-07-27, Articles 14 and 26 (extract) | VERIFIED | `b1c7492a9ede…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727) |
+| 17 | `eu-eecc-2018-1972-art105.txt` | `extract` | Directive (EU) 2018/1972 (European Electronic Communications Code), Article 105 (extract) | VERIFIED | `afa1a1d4b0c2…` |  | [link](https://www.legislation.gov.uk/eudr/2018/1972/article/105/adopted/data.xml) |
+| 18 | `de-tkg-2021-para-56.txt` | `extract` | Telekommunikationsgesetz (TKG) 2021, § 56 (extract) | VERIFIED | `ed78ba96775f…` |  | [link](https://www.gesetze-im-internet.de/tkg_2021/__56.html) |
 
-## Unverified/ (4 files)
+## Unverified/ (3 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
 | 1 | `cabinet-agentic-ai-framework-2026-05-18` | `unpublished` | Cabinet framework of roles of ministries and federal entities in the Agentic AI project (approved 2026-05-18) | UNVERIFIED |  |  | [link](https://mediaoffice.ae/en/news/2026/may/18-05/mohammed-bin-rashid-chairs-uae-cabinet-meeting) |
-| 2 | `executive-order-3-2004` | `unpublished` | Supreme Committee Resolution No. 3 of 2004 issuing the Executive Order of the Telecommunications Law | UNVERIFIED |  |  | not recorded |
-| 3 | `pdpl-executive-regulations` | `unpublished` | PDPL Executive Regulations (Art 28 of Federal Decree-Law 45/2021) | UNVERIFIED |  |  | not recorded |
-| 4 | `csc-ai-security-policy-v1-1` | `policy` | The National Cyber Security Policy for Artificial Intelligence, v1.1 | UNVERIFIED |  |  | [link](https://csc.gov.ae/documents/38662/1042755/National+Cyber+Security+Policy+for+Artificial+Intelligence_v1.1.pdf/aeca22fd-f413-f1ac-a01f-14446e62f982) |
+| 2 | `pdpl-executive-regulations` | `unpublished` | PDPL Executive Regulations (Art 28 of Federal Decree-Law 45/2021) | UNVERIFIED |  |  | not recorded |
+| 3 | `csc-ai-security-policy-v1-1` | `policy` | The National Cyber Security Policy for Artificial Intelligence, v1.1 | UNVERIFIED |  |  | [link](https://csc.gov.ae/documents/38662/1042755/National+Cyber+Security+Policy+for+Artificial+Intelligence_v1.1.pdf/aeca22fd-f413-f1ac-a01f-14446e62f982) |
 
 sha256 values in full: `kb/manifest.csv`.

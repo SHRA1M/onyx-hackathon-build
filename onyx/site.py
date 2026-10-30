@@ -191,11 +191,15 @@ def runs_page() -> str:
 
 # --- gaps.html -------------------------------------------------------------------------------------------------
 
+def _lang(text: str) -> str:
+    return "ar" if kb._is_arabic(text) else "en"  # an Arabic original's own text (Task 33, 52/2024)
+
+
 def _searched(s: dict[str, Any]) -> str:
     if s.get("file"):  # quoted from the stored source, no chunk (Task 32)
         page = f'p. {s["page"]}, ' if s.get("page") else ""  # a web page's text has none (106/2026 English)
         return (f'<li><code>{escape(s["clause"])}</code> ({page}<code>{escape(s["file"])}</code>): '
-                f'{escape(s["says"])}<br>EN: {quote(s["quote"], "en")}</li>')
+                f'{escape(s["says"])}<br>{_lang(s["quote"]).upper()}: {quote(s["quote"], _lang(s["quote"]))}</li>')
     document_id, clause = s["clause"].split(":", 1)
     chunk = kb.get_chunk(document_id, clause)
     parts = [f'<code>{escape(s["clause"])}</code> (p. {s.get("page", chunk["page"])}): {escape(s["says"])}']
@@ -223,6 +227,8 @@ def _gap(row: dict[str, Any]) -> str:
                         f"{quote(fw['quote'], 'en')}</li>" for fw in row.get("framework", []))
     examples = (_examples("Global example", row["global_examples"]) if row["global_examples"] else
                 f"<h4>Global example</h4><p>{escape(row['global_none'])}</p>")
+    if row.get("examples_note"):  # the prose line after the examples, as docs/gaps.md (Task 33, gap-8)
+        examples += f"<p>{escape(row['examples_note'])}</p>"
     standard = _examples("The standard's own text", row["standard_text"]) if row.get("standard_text") else ""
     note = f'<p>{escape(row["note"])}</p>' if row.get("note") else ""  # as docs/gaps.md (hq ruling 2026-10-26, Task 27)
     return (f'<section class="gap-row" data-id="{row["id"]}" id="{row["id"]}">'

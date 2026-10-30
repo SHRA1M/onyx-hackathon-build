@@ -19,11 +19,11 @@ without consent (24.6), disconnecting without warning (22.1) and handling a comp
 to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer
 Complaints".
 
-The knowledge base holds 64 documents: the Telecommunications Law 3/2003, the
-CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and fifteen other UAE laws, resolutions and
+The knowledge base holds 74 documents: the Telecommunications Law 3/2003, the
+CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-seven other UAE laws, resolutions and
 TDRA instruments; ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-seventeen foreign texts used only as global examples. 59 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
-clause the gates cite word for word against it; three unpublished texts back no claim. No consumer data was used.
+twenty-one foreign texts used only as global examples. 69 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
 
@@ -41,7 +41,7 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 
 ## Use case requirement
 
-One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 64 documents with URL, SHA-256 and status,
+One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 74 documents with URL, SHA-256 and status,
 chunked by clause. **C-1** each agent sees only the steps released to it. **PP-1** retrieval is scoped to the
 agent's mandate; a cited id outside the clauses given is invalid. **M-1** one model behind an OpenAI-compatible
 adapter. **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one block without
@@ -120,7 +120,7 @@ languages, before the gap was claimed.
 | 6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person "knows, or is supposed to know" the system contracts automatically | legislative | Cabinet | EU AI Act Art 50(1), 50(5) |
 | 11 | A misheard order: the CPR defaults an on-screen answer to "no" to avoid an accidental "yes" (4.22.3, 4.23.3) and wants an OTP per purchase (4.23.2); nothing says what a voice or chat channel must do when it interprets the words itself | standards | TDRA | US TSR 16 CFR 310.3(a)(3)(ii) |
 | 12 | Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1) and its hand-over is Readiness D9's inference-to-action latency in the other direction; mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes (Table 7-2 NOTE 1 gives a human's order the highest authority; it never requires the system to ask). Left open at ITU's request (2026-10-30). | standards | ITU | EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from 2027) |
-| 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | the recommendation is the example |
+| 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | 3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4 |
 | 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions and Art 16 penalties are unpublished, and Resolution 106/2026's age checks reach social media only (Art 2); nothing says how a telecom channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
 | 10 | Arabic on an automated channel: the language is set and its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); no text requires the Arabic answer to be as good as the English one, and the QoS Policy has no indicator per language | standards | TDRA | Wales WLS Regs 2015 Sch 1 Std 15, 22 |
 
