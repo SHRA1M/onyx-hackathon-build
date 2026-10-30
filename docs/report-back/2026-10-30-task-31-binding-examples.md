@@ -71,7 +71,7 @@ Art 4: in force on the third day after publication.
 | 8 | hq copy | `docs/report.md` sha256 6c075adc... equals `report-draft-2026-10-23.md`; previous kept as `.bak-2026-10-30-task-31` |
 | 9 | Limits | `git diff refs/tags/task-30 -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py runs/ onyx/model.py onyx/prompts`: empty |
 | 10 | Full suite | `581 passed` |
-| 11 | CI on the PR | below, after the push |
+| 11 | CI on `task-31` | run 41071603129 on d24801c `success`: "568 passed, 13 skipped" (the 13 read the gitignored `kb/sources/`) |
 
 Not checked: the subscriber-facing replies are unchanged by construction (render code reads no log field it did not
 before); the replay tests confirm every log replays as recorded.
