@@ -109,3 +109,6 @@ foreign, unchanged). `check-data` ok. `grep -rn "2(1)(b)" onyx/ docs/gaps.md tes
 
 Differs from the order: the manifest `url` still names Schedule 1; reg 3's address is in the row's notes and the
 stored file's header. No change to gates, keys, runs, prompts or eval. USD 0 model spend.
+
+Commit 95bf308 on `task-30`, PR #5, CI run 41062078133 `success`: "556 passed, 12 skipped" (the 12 read the gitignored
+`kb/sources/`). Merge and tag wait for Iyas.
