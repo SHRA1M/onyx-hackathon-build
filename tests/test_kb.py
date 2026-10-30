@@ -397,9 +397,9 @@ def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
     # Task 34 Part C adds eIDAS, COPPA and Licence 3/2026 (Iyas, 2026-10-30: the pin follows the counts);
-    # Task 35 adds six Gulf rows, all foreign (test_task_35_counts)
-    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (83, 78, 3, 2)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 29
+    # Task 35 adds six Gulf rows, all foreign (test_task_35_counts); Task 35b five more (test_task_35b_counts)
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (88, 83, 3, 2)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 34
     # the announcement is not an instrument (order Part A)
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32
@@ -528,7 +528,80 @@ def test_task_35_row_notes_carry_the_orders_caveats():
 def test_task_35_counts():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
-    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (83, 78, 2, 3)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 29
+    # Task 35b adds five foreign rows (test_task_35b_counts)
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (88, 83, 2, 3)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 34
+    assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
+                and r["source_type"] != "announcement"}) == 32  # UAE unchanged
+
+
+# --- order 2026-10-30-task-35b-bot-disclosure (Addendum B): five bot-disclosure rows, binding in their state ---------
+
+BOT = STD + "bot-disclosure-2026-10-30/"
+CA_GLOBAL = "../../../engineering/onyx-hackathon-build/kb/sources/global/"
+TASK_35B = {  # document_id: (sha256, local file, source_type, http_status, page_count)
+    "maine-1500-dd": ("85e41c95d5905780ac6cc4289fbbcb8cccba60bac75c4ea03a25084b568efe2e", BOT + "maine-1500-DD.html",
+                      "law", "200", ""),
+    "india-trai-tccrr-2012": ("5d0b0da12fc58d88ea9cb3924a7bcb3ac0aaf7e2ae11675fd9ce2c1957eb0ef3",
+                              BOT + "india-trai-tccrr-2012.pdf", "regulation", "200", "13"),
+    "texas-bcc-552": ("dbfba8a96dc3cd584157ca66aaafdf67e0ed15dd5a0c8a58f3d4bd0f109fc646", BOT + "texas-bcc-552.html",
+                      "law", "200", ""),
+    # leginfo answers curl with 403: an extract of the read file's quotes, hashed as filed (Addendum B item 1)
+    "california-bpc-17940-17943": ("cfa4c3ccba6c6fd4018618ba541ea4a641d765af5b44ee2634b9a0821feff125",
+                                   CA_GLOBAL + "california-bpc-17940-17943.txt", "extract", "403", ""),
+    "california-hsc-1339-75": ("86d9eda28fb05b61685d04a063874d7d2f98e763e264375f9425e2b7ac69aa2c",
+                               CA_GLOBAL + "california-hsc-1339-75.txt", "extract", "403", ""),
+}
+
+
+def test_task_35b_five_rows_are_verified_foreign_binding_with_no_chunks():
+    rows = kb.manifest_by_id()
+    cited = {d for d, _ in data.cited_chunks()}
+    for document_id, (sha, local, source_type, http, pages) in TASK_35B.items():
+        r = rows[document_id]
+        assert (r["status"], r["binding_status"], r["jurisdiction"], r["language"], r["source_type"], r["sha256"],
+                r["page_count"], r["http_status"]) == \
+            ("VERIFIED", "binding", "foreign", "en", source_type, sha, pages, http), document_id
+        assert r["url"].startswith("https://") and not kb.url_problems(r), document_id
+        assert r["notes"].endswith("Global example; never a deciding clause."), document_id  # never a gate basis
+        assert kb.LOCAL[document_id]["file"] == local
+        if (HQ_DIR / local).exists():
+            assert kb.sha256_file(HQ_DIR / local) == sha and int(r["bytes"]) == (HQ_DIR / local).stat().st_size
+        assert document_id not in cited and not kb.has_chunks(document_id), document_id
+
+
+def test_task_35b_row_notes_print_only_what_the_page_prints():
+    rows = kb.manifest_by_id()
+    assert "In-force date: not on the statute page." in rows["maine-1500-dd"]["notes"]
+    assert '"Effective January 1, 2019. Operative July 1, 2019, pursuant to Section 17943."' in \
+        rows["california-bpc-17940-17943"]["notes"]
+    assert '"Effective January 1, 2025" (AB 3030, Stats. 2024, Ch. 848)' in rows["california-hsc-1339-75"]["notes"]
+    assert '"eff. January 1, 2026"' in rows["texas-bcc-552"]["notes"]
+    assert "the chapter text loads by script and is not in them" in rows["texas-bcc-552"]["notes"]
+    assert "date not verified" in rows["india-trai-tccrr-2012"]["notes"]
+    for document_id in ("california-bpc-17940-17943", "california-hsc-1339-75"):
+        assert "the sha256 is the extract file's" in rows[document_id]["notes"], document_id
+
+
+def test_task_35b_california_extracts_carry_exactly_the_read_files_quotes():
+    read = HQ_DIR / "perplexity-2026-10-30" / "bot-disclosure-statutes-read-2026-10-30-fable.md"
+    files = [kb.REPO / "kb" / "sources" / "global" / f"{d}.txt" for d in ("california-bpc-17940-17943",
+                                                                       "california-hsc-1339-75")]
+    if not read.exists() or not all(f.exists() for f in files):
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15)")
+    table = read.read_text(encoding="utf-8")
+    for f in files:
+        source, _, _, *clauses = f.read_text(encoding="utf-8").rstrip("\n").split("\n")
+        assert source == "Source: " + kb.manifest_by_id()[f.stem]["url"]
+        assert clauses, f.name
+        for line in clauses:
+            assert line.split(": ", 1)[1] in table, line[:40]
+
+
+def test_task_35b_counts():
+    manifest = kb.load_manifest()
+    status = lambda s: sum(r["status"] == s for r in manifest)
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (88, 83, 2, 3)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 34
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32  # UAE unchanged

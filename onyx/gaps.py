@@ -30,11 +30,15 @@ SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": 
          "eu-eecc-": "EECC 2018/1972", "de-tkg-": "TKG 2021",  # Task 33
          "qatar-cra-ccpr-": "Qatar CCPR 2024", "saudi-cst-": "Saudi CST 552/1445",
          "qatar-decree-law-16-": "Qatar 16/2010",  # Task 35
-         "itu-t-y3173": "SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
+         "maine-": "Maine", "california-bpc-": "California BPC", "california-hsc-": "California HSC",
+         "india-trai-": "India TRAI TCCRR 2012",  # Task 35b
+         "itu-t-y3173":"SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
 # the Gulf telecom consumer regulations read (order 2026-10-30 Task 35, Addendum A): the register's preamble and the README
 GULF_LINE = ("The three GCC telecom consumer regulations read (Saudi 2024, Qatar 2024, Kuwait 2022) name no AI channel, "
              "hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, "
              "requiring a route to an employee and a qualified employee on every complaint.")
+# the bot-disclosure statutes read (order 2026-10-30 Task 35b, Addendum B item 2): the register's preamble
+COMPANION_LINE = "The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service."
 
 
 def _short(path: str) -> str:
@@ -107,6 +111,9 @@ def table() -> str:
 
 
 def _searched(s: dict[str, Any]) -> list[str]:
+    if s.get("url"):  # a text with no KB row, cited by its URL (Task 35b: Korea, the TRAI draft)
+        page = f"p. {s['page']}, " if s.get("page") else ""
+        return [f"- `{s['clause']}` ({page}{s['url']}): {s['says']}", f"  - EN: \"{s['quote']}\""]
     if s.get("file"):  # quoted from the stored source, no chunk (Task 32: operator codes, 106/2026)
         page = f"p. {s['page']}, " if s.get("page") else ""  # a web page's text has none (106/2026 English)
         lang = "AR" if kb._is_arabic(s["quote"]) else "EN"  # an Arabic original's own text (Task 33, 52/2024)
@@ -147,7 +154,7 @@ def render() -> str:
              "A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern; a "
              "clause that exists but gives no method is a method gap (addendum item 19). Every row lists the clauses "
              "searched and what each says, English and, where the chunk holds it, Arabic.", "", GULF_LINE, "",
-             table()]
+             COMPANION_LINE, "", table()]
     for row in register["gaps"]:
         lines += [f"## {row['id']}: {row['line']}", "",
                   f"{row['gap']}", "",

@@ -196,6 +196,11 @@ def _lang(text: str) -> str:
 
 
 def _searched(s: dict[str, Any]) -> str:
+    if s.get("url"):  # a text with no KB row, cited by its URL, as docs/gaps.md (Task 35b)
+        page = f'p. {s["page"]}, ' if s.get("page") else ""
+        url = escape(s["url"])
+        return (f'<li><code>{escape(s["clause"])}</code> ({page}<a href="{url}">{url}</a>): {escape(s["says"])}'
+                f'<br>EN: {quote(s["quote"], "en")}</li>')
     if s.get("file"):  # quoted from the stored source, no chunk (Task 32)
         page = f'p. {s["page"]}, ' if s.get("page") else ""  # a web page's text has none (106/2026 English)
         return (f'<li><code>{escape(s["clause"])}</code> ({page}<code>{escape(s["file"])}</code>): '
@@ -260,7 +265,7 @@ def gaps_page() -> str:
             "<p>A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern. "
             "Every row lists the clauses searched and what each says, English and, where the chunk holds it, Arabic. "
             "Rows in the report's order; read from <code>onyx/data/gaps.json</code>.</p>"
-            f"<p>{escape(gaps.GULF_LINE)}</p>"
+            f"<p>{escape(gaps.GULF_LINE)}</p><p>{escape(gaps.COMPANION_LINE)}</p>"
             f'<ol class="toc">{toc}</ol>' + "".join(_gap(by_id[i]) for i in order) +
             f"<h2>Candidates</h2><p>Flagged as candidates; no global example required.</p>{candidates}"
             f'<p class="meta">Sources: {escape(register["source"])}.</p>')
