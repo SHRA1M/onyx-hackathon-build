@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-30 (forty-sixth wrap, Opus: Task 30b merged (PR #6, tag `task-30`); Task 31 built on `task-31`, PR #7, CI green, merge and tag wait for Iyas).
+Updated 2026-10-30 (forty-seventh wrap, Opus: Task 31 merged (PR #7, tag `task-31`); Task 32 built, merged (PR #8) and tagged `task-32`).
 
 ## What this is
 
@@ -12,7 +12,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Where things live
 
-- `kb/manifest.csv` (59 rows, 55 VERIFIED, 17 foreign; Task 30 added Spain Ley 10/2025 (language `es`, whole law), Welsh Language Standards reg 3 and Sch 1, 16 CFR 310.3; Task 31 added Singapore ETA s. 15, Utah 13-77-102, Moffatt v. Air Canada 2024 BCCRT 149 (`binding_status` `decision`), EU roaming 2022/612 Arts 14 and 24, AI Act Arts 14 and 26), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 16 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
+- `kb/manifest.csv` (64 rows, 59 VERIFIED, 4 UNVERIFIED, 17 foreign, 29 UAE instruments; Task 30 added Spain Ley 10/2025 (language `es`, whole law), Welsh Language Standards reg 3 and Sch 1, 16 CFR 310.3; Task 31 added Singapore ETA s. 15, Utah 13-77-102, Moffatt v. Air Canada 2024 BCCRT 149 (`binding_status` `decision`), EU roaming 2022/612 Arts 14 and 24, AI Act Arts 14 and 26; Task 32 added the e& and du codes of practice (`advisory`, `operator code`), 106/2026 Arabic and English (from hq's files, not chunked) and the CSC AI security policy (UNVERIFIED, host unreachable)), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 18 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
 - `kb/chunks/*.jsonl`: only the 144 cited clauses (rules, mandates, gap rows and scenario `grounded_in`), 18 documents (committed). `kb.page_of(document_id, clause)`: the chunk's page, None when not committed or when every committed chunk of the document says page 1 (itu-t-y3172); `kb.page_link` gives `url#page=N` only where the manifest url is the PDF itself. Shown as "p. N" (the PDF page index) in replay pages, viewer, gaps.md; the KB export has a Pages column. `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
 - `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs; a `documents` list per agent), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts, and `grounded_in` {clauses [{clause_id, page}], line, source}: hq's line, Task 16), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
@@ -39,8 +39,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
+- 2026-10-30 (Iyas, Task 32): a gap `searched` entry may name its stored file (`file`, `page` for a PDF) instead of a chunk; `gaps.py` and `site.py` render it, `data.cited_chunks` skips it, and a local test checks the quote word for word (CI skips). Used by the operator codes and gap 9 (106/2026 English; the Arabic text layer is unusable).
 - 2026-10-30 (Iyas, Task 31): replay pages and viewer show each flagged gap's line, one example from elsewhere and a register link (`gaps.elsewhere`): the example marked `"elsewhere": true` in `gaps.json` (gap 1 Spain Art 8(2), gap 3 eIDAS Art 8(1), gap 10 Wales Std 15), else the first binding in the manifest, else the first; candidates show their line only. The report has no row 7 (gap 7 lives in the register and site). An example's `says` prints before its quote (AI Act caveat).
-- 2026-10-30 (hq, Task 30, ruling `sweep-4b-read` section 4): the report's global-example cells lead with the closest binding text: gap 1 Spain Ley 10/2025 Art 8(2), 8(3); gap 10 Wales WLS Std 15, 22; gap 11 US TSR 310.3(a)(3)(ii). IMDA, Canada OLA and the e-Commerce Directive stay in the register. Scope lines sit in each row's `note`. Iyas allowed language `es` in the manifest schema. Gap 5 records the 2026-10-30 portal check (no PDPL executive regulation).
 - 2026-10-29 (Iyas, `_reference/how-we-build.md`): from Part B on, every report-back pastes the full `uv run pytest` output and repeats the Limits line: touches only the named files, never `runs/` or the keys; fails closed (USD 0, nothing recorded, nothing pushed outward, stop and ask); owner of any failure is Iyas.
 - 2026-10-27 (C5 as it stands, after Task 28): governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps (2 English misses, disclosed, no v6); the README and selftest headline is C5; C3 is the ungoverned baseline. Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
 
@@ -51,12 +51,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - Recorded spend USD 21.85 against the USD 30 stop; the API organisation holds USD 100 promotional credit (granted 2026-10-27, expires 2026-11-25). `record`'s estimate counts both languages even when one is skipped.
 - Arabic printed to a redirected file from Windows Python comes out in cp1256: run `python -X utf8` (`-I` ignores `PYTHONIOENCODING`). Git Bash has no `iconv`.
-- A count check lists every number the report states, not only the one the task touched (hq, 2026-10-26: "50" became "51" and "46" stayed).
 - The ChromaDB index (`data/chromadb`, gitignored) goes stale after any `kb chunk`: live retrieval then returns clause ids not in `kb/chunks` and the run dies (KeyError). Run `python -m onyx kb ingest` after every `kb chunk`.
 
 - A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` and `kb/chunks/tdra-cpr-v2-en.jsonl`, and re-apply the hand fixes (next item).
 - Never run `kb chunk` over the whole kb (hq, 2026-10-26): chunk one document at a time and `git diff --stat kb/chunks/` before committing. Y.3173 chunks, like Y.3172, all carry page 1.
-- `grep -r` over `tests/` matches stale `__pycache__/*.pyc` (gitignored) holding old text: delete the stale file or add `--exclude-dir=__pycache__`.
 - `powershell -ExecutionPolicy Bypass` from Bash is denied by the auto-mode classifier: run `& "...\scripts\report_pages.ps1"` in the PowerShell tool.
 - A `kb chunk` rebuild undoes hand fixes in committed chunks: licence 3.4.1 'pur suant' and 9.1 'billin g' (pypdf errors; the committed file has them right), and the CPR 4.7.3 'opt-out' and 24.7 'anti-competitive' (the extraction keeps 'opt- out', 'anti- competitive'), and licence 16.3.3 'non-compliance' (extraction 'non -compliance'). Adding a clause: copy its line from `kb/chunks-full/`, apply these fixes, keep every committed line, then `kb ingest` (138 in kb_main after Task 23; not rerun for Task 24's 144 chunks: run it before any live run). Licence 9.3 now matches the rebuild. Never commit a rebuilt licence or CPR file unchanged.
 - `kb fetch` rewrites `url_accessed` and `http_status` in the manifest to the run's date: do not commit a manifest changed only by a fetch.
@@ -76,9 +74,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - hq: the post-sweep order (2026-10-31) may change prompts or scenarios and re-record again.
 - Submission-day order: GitHub Pages source = `docs/site/`.
-- The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq copy of the report made 2026-10-30 after Task 31 (`.bak-2026-10-30-task-31` kept).
+- The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq copy of the report made 2026-10-30 after Task 32 (`.bak-2026-10-30-task-32` kept).
 - hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet; "fifteen other UAE laws" is the Task 24 count (archive, 2026-10-29), not a datasheet line.
 - hq (Task 31 report-back): eIDAS and COPPA have stored texts but no manifest rows; gap 1's register lists IMDA and the DSA before Spain.
+- hq (Task 32 report-back): the report says "three unpublished texts" with four UNVERIFIED rows (the CSC policy is unreachable, not unpublished); the datasheet's UNVERIFIED definition says "not published"; "fifteen other UAE laws" waits for the submission-day count check.
 - README team line names three members until hq confirms their spellings.
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
 - ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
@@ -86,4 +85,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Iyas merges PR #7 (`! gh pr merge 7 --merge`), then tags `task-31` on main (push as `refs/tags/task-31`). Then wait for hq's next order. Any report wording change: `uv run python docs/build_report.py`, then `scripts/report_pages.ps1` in the PowerShell tool (limit 5; 2,226 words now).
+Task 32 is closed (PR #8 merged, tag `task-32`). Wait for hq's next order: the post-sweep order (2026-10-31) or the submission-day order. Any report wording change: `uv run python docs/build_report.py`, then `scripts/report_pages.ps1` in the PowerShell tool (limit 5; 2,237 words now).
