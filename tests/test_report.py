@@ -341,7 +341,7 @@ def test_the_s2_paragraph_names_the_model_down_page():
 @pytest.mark.parametrize("n, label", [("1", "Spain Ley 10/2025 Art 8(2), 8(3)"),
                                       ("10", "Wales WLS Regs 2015 Sch 1 Std 15, 22"),
                                       ("11", "US TSR 16 CFR 310.3(a)(3)(ii)"),
-                                      ("8", "3GPP TS 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4"),  # Task 33
+                                      ("8", "3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4"),  # Task 33; "TS" dropped to hold 5 pages (Iyas, 2026-10-30)
                                       ("12", "EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from "
                                              "2027)")])
 def test_report_global_example_cells_are_the_closer_examples(n, label):
