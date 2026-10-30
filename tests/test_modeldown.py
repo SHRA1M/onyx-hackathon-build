@@ -134,3 +134,25 @@ def test_readme_paragraph_follows_the_whatif():
     assert "uv run python -m onyx model-down runs/c5/S2/run1.jsonl --at 3" in nxt
     assert "the model call is made to fail at this step; nothing else changes" in nxt
     assert "`docs/replay/model-down-S2.md`" in nxt
+
+
+def _deny(event):
+    return [r["text"] for r in event["new_value"]["reasons"] if r.get("gate") == "deny_by_default"
+            and r.get("kind") == "check"]
+
+
+def test_model_down_hold_says_the_model_was_unavailable():
+    """Task 29 Part B, hq ruling 2026-10-29: on the model-down path the deny-by-default reason says the model was
+    unavailable, not that the adviser answered; it is in the log on the gate event, the step's last event, so
+    nothing acts before it is written (layer 7). The adviser's own pending hold at S2-5 keeps its recorded words."""
+    events = modeldown.replay_events(S2, at=3)
+    step3 = [e for e in events if e["entity_id"].startswith("S2-3")]
+    assert [e["action"] for e in step3] == ["release_event", "model_unavailable", "gate"]
+    assert _deny(step3[-1]) == ["the model was unavailable on S2-3: no model proposed and no VERIFIED clause "
+                                "permits escalate_to_human; held for a human"]
+    assert not any("adviser answered" in r.get("text", "") for r in step3[-1]["new_value"]["reasons"])
+    recorded = runs._events(S2)
+    pending = [(e["entity_id"], _deny(e)) for e in recorded if e["action"] == "gate" and e["new_value"].get("pending")]
+    assert pending and all("the adviser answered INSUFFICIENT_EVIDENCE" in t for _, texts in pending for t in texts)
+    assert pending == [(e["entity_id"], _deny(e)) for e in events if e["action"] == "gate"
+                       and e["new_value"].get("pending") and not e["entity_id"].startswith("S2-3")]
