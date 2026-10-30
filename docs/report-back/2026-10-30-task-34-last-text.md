@@ -105,7 +105,7 @@ VERIFIED 72  REFERENCED 2  UNVERIFIED 3  HISTORICAL 0
 $ kb/DATASHEET.md: "77 manifest rows", "| VERIFIED | 72 |", "| UNVERIFIED | 3 |"
 ```
 
-Full suite: `614 passed in 136.51s`. CI: see the PR.
+Full suite: `614 passed in 136.51s`. CI on PR #10 (head 5c7269a): `reproduce pass` (2m15s and 1m42s, push and pull_request runs).
 
 ```
 $ sha256sum docs/report.md <hq>/report-draft-2026-10-23.md
