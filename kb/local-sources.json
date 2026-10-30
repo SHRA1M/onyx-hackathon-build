@@ -313,9 +313,9 @@
   "strip": ""
  },
  "executive-order-3-2004": {
-  "file": "",
-  "text": "",
-  "splitter": "",
+  "file": "standards-text/executive-order-3-2004-en.pdf",
+  "text": "standards-text/executive-order-3-2004-en.txt",
+  "splitter": "article",
   "pair_of": "",
   "top": false,
   "strip": ""
@@ -505,6 +505,86 @@
   "strip": ""
  },
  "csc-ai-security-policy-v1-1": {
+  "file": "",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "3gpp-ts-28-535-v19": {
+  "file": "standards-text/etsi-ts-128-535-v19.0.0-2025-10.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "etsi-gs-zsm-009-1-v1-1-1": {
+  "file": "standards-text/etsi-gs-zsm-009-1-v1.1.1-2021-06.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "eu-eecc-2018-1972-art105": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/eu-eecc-2018-1972-art105.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "de-tkg-2021-para-56": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/de-tkg-2021-para-56.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "executive-order-3-2004-ar": {
+  "file": "standards-text/executive-order-3-2004-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabres-200-2025-en": {
+  "file": "standards-text/modern-tech-trade-penalties-cabinet-200-2025-en.pdf",
+  "text": "standards-text/modern-tech-trade-penalties-cabinet-200-2025-en.txt",
+  "splitter": "article",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabres-200-2025-ar": {
+  "file": "standards-text/modern-tech-trade-penalties-cabinet-200-2025-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabres-52-2024-ar": {
+  "file": "standards-text/etransactions-penalties-cabinet-52-2024-ar.pdf",
+  "text": "standards-text/etransactions-penalties-cabinet-52-2024-ar.txt",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "cabres-52-2024-en": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/cabres-52-2024-en.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "fed-ai-data-authority-2026-06-14": {
   "file": "",
   "text": "",
   "splitter": "",

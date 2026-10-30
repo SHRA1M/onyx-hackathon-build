@@ -26,6 +26,8 @@ SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": 
          "es-ley-10-2025": "Spain Ley 10/2025", "wales-wls-": "Wales WLS", "us-tsr-": "US TSR 16 CFR",  # Task 30
          "sg-eta-": "Singapore ETA", "us-utah-": "Utah Code", "ca-bccrt-": "Moffatt v. Air Canada 2024 BCCRT 149",
          "eu-roaming-": "EU Roaming Reg 2022/612",  # Task 31
+         "3gpp-ts-28-535": "3GPP TS 28.535", "etsi-gs-zsm-009-1": "ETSI ZSM 009-1",
+         "eu-eecc-": "EECC 2018/1972", "de-tkg-": "TKG 2021",  # Task 33
          "itu-t-y3173": "SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
 
 
