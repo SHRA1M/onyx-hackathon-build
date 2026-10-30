@@ -461,3 +461,5 @@ Order `docs/work-orders/2026-10-29-task-29-field-take.md` (hq, Fable; filed cda6
   - Next action (old): Task 29 is closed. Wait for hq's next order: the post-sweep order (2026-10-31) or the submission-day order. Any report wording change: rebuild with `uv run python docs/build_report.py` and recount with the PowerShell tool running `scripts/report_pages.ps1` (limit 5).
   - The Playwright browser tool blocks `file://`: serve the folder with `uv run python -m http.server` (bare `python` is the Store alias). For a true file:// check use headless Chrome (`chrome.exe --headless=new --dump-dom` or `--screenshot`); its WebCrypto works on file://. Playwright writes `.playwright-mcp/` in the repo root (not gitignored): delete it.
   - `.gitattributes` forces LF so hashes match on every machine. matplotlib on Windows writes SVG with CRLF: the figure scripts strip it before writing.
+  - matplotlib PNG bytes differ between Windows and the Linux CI (SVG bytes match). Never compare a figure PNG with the committed file (ruling 4).
+  - ChromaDB index Rebuilt 2026-10-22 (121 in kb_main).
