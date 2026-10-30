@@ -3,7 +3,7 @@ docs/report.md on docs/report-template.docx. Every figure in a paragraph tagged 
 against eval/results.md first; one that matches no value of the run set the paragraph's tags name fails the build.
 
 Rendering: the template's title paragraph and its six numbered ListParagraph headings are kept, their text replaced;
-the header lines become four paragraphs with the label in bold; every template example and NOTE paragraph goes. Body
+the header lines become five paragraphs with the labels in bold; every template example and NOTE paragraph goes. Body
 paragraphs are Normal with the template's body run (Times New Roman, justified); markdown bold becomes bold runs,
 backticks are dropped, nothing else is interpreted but tables, images and headings. The mapping table reuses the
 template's table in place; the gap table is new, with the same table properties. "Limits and next steps" closes
@@ -112,8 +112,8 @@ def parse(md: str) -> Report:
         if not m:
             raise SystemExit(f"docs/report.md: header line not '**Label:** value': {line!r}")
         header.append((m.group(1), m.group(2)))
-    if len(header) != 4:
-        raise SystemExit("docs/report.md: four header lines expected under the title")
+    if len(header) != 5:  # Task 34: the links take two lines (Iyas)
+        raise SystemExit("docs/report.md: five header lines expected under the title")
     report, current = Report(blocks[0][2:], header), None
     for block in blocks[2:]:
         if block.startswith("## "):
@@ -295,7 +295,7 @@ def _number(word: str) -> int | None:
 KB_COUNTS = {"documents": re.compile(r"(?:holds|\*\*SRC-2\*\*)\s+(\d+)\s+documents"),
              "verified": re.compile(r"(\d+)\s+are\s+verified"),
              "foreign": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+foreign\s+texts"),
-             "uae_other": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+other\s+UAE\s+laws")}
+             "uae_other": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+other\s+UAE\s+(?:laws|texts)")}
 # "the Telecommunications Law 3/2003, the CPR v2.0, Licence 2/2026, the PDPL and N other UAE laws": the UAE
 # instruments (an announcement is none) less the four the sentence names (order Task 33, Part D)
 NAMED_UAE = 4
@@ -479,7 +479,7 @@ def render(report: Report) -> Builder:
         after.addnext(p)
         paragraph = Paragraph(p, b.doc._body)
         _run(paragraph, label, bold=True)
-        _run(paragraph, " " + _plain(value))
+        _runs(paragraph, " " + value)
         after = p
 
     mapping_tbl.getparent().remove(mapping_tbl)

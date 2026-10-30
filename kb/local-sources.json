@@ -591,5 +591,29 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "eidas-910-2014-art8": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/eidas-910-2014-art8.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "coppa-16cfr312-5": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/coppa-16cfr312-5.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "licence-3-2026": {
+  "file": "standards-text/licence-3-2026-eitc-du-public-telecom-en-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }

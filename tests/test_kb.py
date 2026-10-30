@@ -396,11 +396,12 @@ def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
         assert not kb.has_chunks(document_id), document_id
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
-    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (74, 69, 3, 2)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 21
+    # Task 34 Part C adds eIDAS, COPPA and Licence 3/2026 (Iyas, 2026-10-30: the pin follows the counts)
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (77, 72, 3, 2)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 23
     # the announcement is not an instrument (order Part A)
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
-                and r["source_type"] != "announcement"}) == 31
+                and r["source_type"] != "announcement"}) == 32
 
 
 # --- order 2026-10-30-task-33-three-searches Part B ---------------------------------------------------------------
@@ -430,3 +431,38 @@ def test_task_33_spain_and_ai_act_notes():
     assert SPAIN_DATES in [g for g in data.load_gaps()["gaps"] if g["id"] == "gap-1"][0]["note"]
     for document_id in ("eu-ai-act-2026-07-27", "eu-ai-act-2026-07-27-art14-26"):
         assert AI_ACT_1744 in rows[document_id]["notes"], document_id
+
+
+# --- order 2026-10-30 Task 34 Part C: texts the report cites but the manifest lacked --------------------------------
+
+TASK_34 = {  # document_id: (jurisdiction, binding, source_type, sha256, url, local file)
+    "eidas-910-2014-art8": ("foreign", "binding", "extract",
+                            "fa53cfcbef9b82c81029833f10dee1e866c003bfbeaae26d8f6f98da091b6c04",
+                            "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910",
+                            "../../../engineering/onyx-hackathon-build/kb/sources/global/eidas-910-2014-art8.txt"),
+    "coppa-16cfr312-5": ("foreign", "binding", "extract",
+                         "f62f7bff5bb3659e176c669b7aabab412cfca352dc2d996fcafc3bd41b04b6b5",
+                         "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-312/section-312.5",
+                         "../../../engineering/onyx-hackathon-build/kb/sources/global/coppa-16cfr312-5.txt"),
+    "licence-3-2026": ("UAE", "binding", "licence",
+                       "ccafd4ed2d5a960bc1fb2ff27c6161a95a948ee2547ac13b87589a79ddcf7924",
+                       "https://tdra.gov.ae/-/media/About/LICENSING/EN/Licence-32026-EITC-Public.ashx",
+                       STD + "licence-3-2026-eitc-du-public-telecom-en-ar.pdf"),
+}
+
+
+def test_task_34_rows_are_verified_from_the_publishers_files_with_no_chunks():
+    rows = kb.manifest_by_id()
+    cited = {d for d, _ in data.cited_chunks()}
+    for document_id, (jurisdiction, binding, source_type, sha, url, local) in TASK_34.items():
+        r = rows[document_id]
+        assert (r["status"], r["binding_status"], r["jurisdiction"], r["source_type"], r["sha256"], r["url"]) ==             ("VERIFIED", binding, jurisdiction, source_type, sha, url), document_id
+        assert r["http_status"] == "200" and int(r["bytes"]) > 0 and not kb.url_problems(r), document_id
+        assert kb.LOCAL[document_id]["file"] == local
+        held = (kb.REPO / "kb" / "sources" / "global" / f"{document_id}.txt") if jurisdiction == "foreign"             else (HQ_DIR / local)
+        if held.exists():
+            assert kb.sha256_file(held) == sha, document_id
+        assert document_id not in cited and not kb.has_chunks(document_id), document_id
+    for document_id in ("eidas-910-2014-art8", "coppa-16cfr312-5"):
+        assert "never a deciding clause" in rows[document_id]["notes"]
+    assert rows["licence-3-2026"]["page_count"] == "47"
