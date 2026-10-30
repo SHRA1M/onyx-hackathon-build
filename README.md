@@ -8,7 +8,7 @@
 
 The four published criteria, each with the one place that shows it:
 
-1. Knowledge base: `kb/manifest.csv` (74 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md`.
+1. Knowledge base: `kb/manifest.csv` (77 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md`.
 2. Agent capability in error scenarios, and the gaps: `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay
 3. Auditability: `uv run python -m onyx selftest` recomputes every figure in `docs/report.docx` from the committed hash-chained logs in `runs/`; `uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl` re-decides one run offline.
 4. ITU-T Y.3172 and the Readiness Framework: `docs/report.docx`, sections 3 and 4, and the Y.3172 mapping table below.
@@ -18,9 +18,9 @@ ITU AI for Good Lab Hackathon UAE 2026 (telecom track): agents propose each step
 written from binding UAE clauses allow or block it, and the same gates run in Arabic and English from the same
 clauses. Every step is written to a hash-chained log that replays offline, with the clause, its page and its words.
 
-Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, and three members.
+Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, Mohammed Rawashdeh and Yanal Faouri.
 
-Knowledge base: 69 VERIFIED (text on disk, sha256 matches), 2 REFERENCED (opened, text not held), 3 UNVERIFIED
+Knowledge base: 72 VERIFIED (text on disk, sha256 matches), 2 REFERENCED (opened, text not held), 3 UNVERIFIED
 (asserted, not published or not reached; they back no claim) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
 [The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
 18 rows link a landing page because the document link could not be verified. The Telecommunications Law 3/2003 is
@@ -141,6 +141,8 @@ The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox
 | SINK | sink | the hash-chained audit log, the gap register, the replay pages | `onyx/audit.py`, `docs/gaps.md`, `docs/replay/` |
 | MLFO | ML function orchestrator | the coordinator's staged release of steps | `onyx/coordinator.py`; ML Intent: `docs/intent.json` |
 | ML sandbox | ML sandbox | the governed-versus-ungoverned run on the same scenarios | `runs/ungoverned/`, `eval/results.md` |
+
+Y.3172 clause 9, security of the pipeline: no provider key is in the source tree (a test greps every tracked file for the key pattern and fails on a hit); a run reads the KB and keys and writes its log only by appending chained events; the model adapter is the only outward call a run makes (`kb fetch` downloads sources outside a run). Tests: `tests/test_pipeline_security.py`.
 
 ## What we do not claim
 

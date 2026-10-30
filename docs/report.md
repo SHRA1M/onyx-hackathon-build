@@ -1,16 +1,17 @@
 # AI for Good Sandbox Hackathon – Onyx – Mizan
 
 **Team leader:** Iyas Shraim (BAU Faculty of AI)
-**Team members:** Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh
+**Team members:** Mohammed Rawashdeh, Yanal Faouri
 **Contact details:** iyas.shraim@gmail.com, +962 790 602 577
-**GitHub link:** https://github.com/SHRA1M/onyx-hackathon-build (public from 2026-11-09)
+**GitHub link (code):** https://github.com/SHRA1M/onyx-hackathon-build (public from 2026-11-09)
+**Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** `docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/
 
 ## Introduction
 
 Mizan is a consumer-care AI for a synthetic UAE operator, built around three choices. The case is a subscriber in a
 chat or on a call, not an institution in a drill. The model proposes and plain code written from the binding UAE
 texts decides: every allow, hold or block names the clause it relied on, its page and its words, in English and
-Arabic. It is scored in both languages, because the texts are published in both. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay again under a proposed rule: a what-if question for the policymaker.
+Arabic. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay again under a proposed rule: a what-if question for the policymaker.
 
 The first contact at a UAE operator is already an AI, and e& reported 371,476 customer complaints in its UAE
 operations for 2025 (e&, Sustainability Report Appendices 2025, Appendix 1). The binding texts already bar such an
@@ -19,10 +20,10 @@ without consent (24.6), disconnecting without warning (22.1) and handling a comp
 to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer
 Complaints".
 
-The knowledge base holds 74 documents: the Telecommunications Law 3/2003, the
-CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-seven other UAE laws, resolutions and
-TDRA instruments; ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-twenty-one foreign texts used only as global examples. 69 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+The knowledge base holds 77 documents: the Telecommunications Law 3/2003, the
+CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-eight other UAE texts;
+ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
+twenty-three foreign texts used only as global examples. 72 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
@@ -41,7 +42,7 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 
 ## Use case requirement
 
-One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 74 documents with URL, SHA-256 and status,
+One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 77 documents with URL, SHA-256 and status,
 chunked by clause. **C-1** each agent sees only the steps released to it. **PP-1** retrieval is scoped to the
 agent's mandate; a cited id outside the clauses given is invalid. **M-1** one model behind an OpenAI-compatible
 adapter. **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one block without
@@ -73,8 +74,7 @@ six are not claimed.
 ## Error scenarios
 
 **S1, roaming before a flight.** App chat classified (CPR 4.22, 4.10, 4.11). Roaming costs after verification
-(24.10): allow. A bundle offered: hold until the OTP and the consent form, then allow (P-1). Whether CPR 4.4 covers
-an expired bundle's renewal is not written: candidate gap.
+(24.10): allow. A bundle offered: hold until the OTP and the consent form, then allow (P-1).
 
 **S2, a billing question becomes a complaint.** Care removes a charge with no consent record (4.3): allow. "I never
 ordered this, I am fed up": a Consumer Complaint (2.1.7). Care drafts a reply; the gate blocks it under 26.7.2 and
@@ -112,16 +112,16 @@ languages, before the gap was claimed.
 
 | # | Gap | Kind | Addressee | Global example |
 |---|---|---|---|---|
-| 1 | Complaint hand-over: the bar and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (26.13.3, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it; du's code names a chatbot channel and sets no hand-over rule | standards | TDRA | Spain Ley 10/2025 Art 8(2), 8(3) |
+| 1 | Complaint hand-over: the bar and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (26.13.3, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it | standards | TDRA | Spain Ley 10/2025 Art 8(2), 8(3) |
 | 2 | Consent elicited by an AI: the CPR accepts stored spoken consent (4.7.2) and sets the OTP need by sales medium (4.10, 4.17, 4.22), naming no AI channel; the PDPL exempts what the contract needs (4(9)) and wants any further data use consented in writing or electronically (6(1)(b)), so a spoken "yes" buys the service | coordination | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15 |
 | 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; Electronic Transactions Art 33 trust levels never mapped to it | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
 | 4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline, and the complaint route to the Data Office (Art 24) has no clock either | responsibilities | UAE Data Office | GDPR Art 22(3), 12(3) |
 | 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)) has not been issued | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |
 | 6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person "knows, or is supposed to know" the system contracts automatically | legislative | Cabinet | EU AI Act Art 50(1), 50(5) |
 | 11 | A misheard order: the CPR defaults an on-screen answer to "no" to avoid an accidental "yes" (4.22.3, 4.23.3) and wants an OTP per purchase (4.23.2); nothing says what a voice or chat channel must do when it interprets the words itself | standards | TDRA | US TSR 16 CFR 310.3(a)(3)(ii) |
-| 12 | Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1) and its hand-over is Readiness D9's inference-to-action latency in the other direction; mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes (Table 7-2 NOTE 1 gives a human's order the highest authority; it never requires the system to ask). Left open at ITU's request (2026-10-30). | standards | ITU | EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from 2027) |
+| 12 | Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1) and its hand-over is Readiness D9's inference-to-action latency in the other direction; mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes. Left open at ITU's request (2026-10-30). | standards | ITU | EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from 2027) |
 | 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | 3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4 |
-| 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions and Art 16 penalties are unpublished, and Resolution 106/2026's age checks reach social media only (Art 2); nothing says how a telecom channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
+| 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions and Art 16 penalties are unpublished; nothing says how a telecom channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
 | 10 | Arabic on an automated channel: the language is set and its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); no text requires the Arabic answer to be as good as the English one, and the QoS Policy has no indicator per language | standards | TDRA | Wales WLS Regs 2015 Sch 1 Std 15, 22 |
 
 Recommendations. TDRA: a stated time and action when a chat becomes a Consumer Complaint, measured like T1(2a) (1);

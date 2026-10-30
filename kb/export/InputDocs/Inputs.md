@@ -4,7 +4,7 @@ Mizan knowledge base, exported from `kb/manifest.csv` by `python -m onyx kb expo
 Each document sits in the subfolder of its category; full texts are copied only where `kb fetch` holds them.
 
 
-## UAE_Binding/ (40 files)
+## UAE_Binding/ (41 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -48,6 +48,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 38 | `cabres-200-2025-ar.pdf` | `regulation` | Cabinet Resolution No. 200 of 2025 Regarding the Schedule of Administrative Violations and Penalties for Acts Committed in Violation of Federal Decree-Law No. 14 of 2023, Arabic | VERIFIED | `ad851801ec71…` | 6 | [landing page](https://uaelegislation.gov.ae/ar/legislations/3989) (document link not verified) |
 | 39 | `cabres-52-2024-ar.pdf` | `regulation` | Cabinet Resolution No. 52 of 2024 Concerning the Administrative Penalties for Violating Federal Decree-Law No. 46 of 2021 (Electronic Transactions and Trust Services) and its Executive Regulations, Arabic | VERIFIED | `32c667ed6310…` | 6 | [landing page](https://uaelegislation.gov.ae/ar/legislations/2585) (document link not verified) |
 | 40 | `cabres-52-2024-en.txt` | `regulation` | Cabinet Resolution No. 52 of 2024 Concerning the Administrative Penalties for Violating Federal Decree-Law No. 46 of 2021 (Electronic Transactions and Trust Services) and its Executive Regulations | VERIFIED | `85f6e4cb46a4…` |  | [landing page](https://uaelegislation.gov.ae/en/legislations/2585) (document link not verified) |
+| 41 | `licence-3-2026.pdf` | `licence` | Public Telecommunications Licence No. 3/2026 (du), term 2026-08-09 to 2046-08-08, bilingual | VERIFIED | `ccafd4ed2d5a…` | 47 | [link](https://tdra.gov.ae/-/media/About/LICENSING/EN/Licence-32026-EITC-Public.ashx) |
 
 ## UAE_Advisory/ (6 files)
 
@@ -72,7 +73,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 6 | `3gpp-ts-28-535-v19.pdf` | `standard` | ETSI TS 128 535 V19.0.0 (2025-10), 3GPP TS 28.535, Management services for communication service assurance; Requirements | VERIFIED | `f43be1bda69e…` | 24 | [link](https://www.etsi.org/deliver/etsi_ts/128500_128599/128535/19.00.00_60/ts_128535v190000p.pdf) |
 | 7 | `etsi-gs-zsm-009-1-v1-1-1.pdf` | `standard` | ETSI GS ZSM 009-1 V1.1.1 (2021-06), Zero-touch network and Service Management (ZSM); Closed-Loop Automation; Part 1: Enablers | VERIFIED | `492bac221401…` | 40 | [link](https://www.etsi.org/deliver/etsi_gs/ZSM/001_099/00901/01.01.01_60/gs_ZSM00901v010101p.pdf) |
 
-## Global_Examples/ (18 files)
+## Global_Examples/ (20 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -94,6 +95,8 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 16 | `eu-ai-act-2026-07-27-art14-26.txt` | `extract` | Regulation (EU) 2024/1689 (AI Act), consolidated 2026-07-27, Articles 14 and 26 (extract) | VERIFIED | `b1c7492a9ede…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727) |
 | 17 | `eu-eecc-2018-1972-art105.txt` | `extract` | Directive (EU) 2018/1972 (European Electronic Communications Code), Article 105 (extract) | VERIFIED | `afa1a1d4b0c2…` |  | [link](https://www.legislation.gov.uk/eudr/2018/1972/article/105/adopted/data.xml) |
 | 18 | `de-tkg-2021-para-56.txt` | `extract` | Telekommunikationsgesetz (TKG) 2021, § 56 (extract) | VERIFIED | `ed78ba96775f…` |  | [link](https://www.gesetze-im-internet.de/tkg_2021/__56.html) |
+| 19 | `eidas-910-2014-art8.txt` | `extract` | Regulation (EU) No 910/2014 (eIDAS), Article 8, Assurance levels of electronic identification schemes (extract) | VERIFIED | `fa53cfcbef9b…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910) |
+| 20 | `coppa-16cfr312-5.txt` | `extract` | 16 CFR 312.5, Children's Online Privacy Protection Rule, Parental consent (extract) | VERIFIED | `f62f7bff5bb3…` |  | [link](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-312/section-312.5) |
 
 ## Unverified/ (3 files)
 

@@ -63,8 +63,9 @@ def test_six_list_paragraph_headings_in_template_order(built):
     headings = [p.text for p in doc.paragraphs if p.style.name == "List Paragraph"]
     assert headings == HEADINGS
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
-    assert [p.text.split(":")[0] for p in doc.paragraphs[1:5]] == ["Team leader", "Team members", "Contact details",
-                                                                  "GitHub link"]
+    assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
+                                                                  "GitHub link (code)", "Knowledge base"]  # Task 34 (Iyas)
+    assert "Demo video: docs/video/mizan-demo.mp4" in doc.paragraphs[5].text
 
 
 def test_two_image_parts_no_template_example_and_no_run_set_tag(built):
@@ -353,19 +354,19 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 74 documents" in text and "69 are verified" in text and "twenty-one foreign texts" in text  # Task 33
-    assert "twenty-seven other UAE laws" in text  # 31 UAE instruments minus the four the sentence names (Task 33)
+    assert "holds 77 documents" in text and "72 are verified" in text and "twenty-three foreign texts" in text  # Task 34
+    assert "twenty-eight other UAE texts" in text  # 32 UAE instruments minus the four the sentence names (Task 34)
 
 
 @pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
-                                   "**SRC-2** 51 documents", "fifteen other UAE laws"])
+                                   "**SRC-2** 51 documents", "fifteen other UAE texts"])
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 74 documents", "47 are verified": "69 are verified",
-             "nine foreign texts": "twenty-one foreign texts", "twenty-two foreign texts": "twenty-one foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 74 documents",
-             "fifteen other UAE laws": "twenty-seven other UAE laws"}[wrong]
+    right = {"holds 51 documents": "holds 77 documents", "47 are verified": "72 are verified",
+             "nine foreign texts": "twenty-three foreign texts", "twenty-two foreign texts": "twenty-three foreign texts",
+             "**SRC-2** 51 documents": "**SRC-2** 77 documents",
+             "fifteen other UAE texts": "twenty-eight other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
@@ -373,7 +374,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("69 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("72 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
@@ -397,7 +398,9 @@ def test_report_has_no_row_7_gap_7_stays_in_the_register():
 def test_report_row_1_names_dus_chatbot_channel_and_no_operator_is_said_to_break_anything():
     text = REPORT_MD.read_text(encoding="utf-8")
     row = next(line for line in text.splitlines() if line.startswith("| 1 |"))
-    assert row.split("|")[2].strip().endswith("; du's code names a chatbot channel and sets no hand-over rule")
+    # Task 34 A4 cut (b), Iyas: the du clause left the report row for space; the register keeps du's chatbot channel
+    assert "chatbot" not in row.split("|")[2]
+    assert "The code names a chatbot as a complaint channel and sets no rule for it." in         (DOCS / "gaps.md").read_text(encoding="utf-8")
     assert not re.search(r"(\be&|\bdu\b|\bEtisalat\b|\bEITC\b)[^.\n]{0,80}\b(breach|break|violat|fail)", text)
 
 
@@ -418,3 +421,20 @@ def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     assert readme.count(sentence) == 1 and readme.index(sentence) > readme.index("<!-- gap-register:end -->")
     assert "Federal Authority for Artificial Intelligence" not in REPORT_MD.read_text(encoding="utf-8")
+
+
+# --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------
+
+LINKS = ["**GitHub link (code):** https://github.com/SHRA1M/onyx-hackathon-build (public from 2026-11-09)",
+         "**Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** "
+         "`docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** "
+         "https://shra1m.github.io/onyx-hackathon-build/site/"]  # Iyas's A4 answer (1): five header lines
+
+
+def test_task_34_team_and_the_four_labelled_links():
+    lines = REPORT_MD.read_text(encoding="utf-8").splitlines()
+    assert lines[3] == "**Team members:** Mohammed Rawashdeh, Yanal Faouri"
+    assert lines[5:7] == LINKS
+    assert not any(line.startswith("**GitHub link:**") for line in lines)
+    for path in (REPORT_MD, kb.REPO / "README.md"):
+        assert "Saaydeh" not in path.read_text(encoding="utf-8"), path
