@@ -408,3 +408,13 @@ def test_task_33_line_26_names_two_unpublished_texts_and_one_unreachable_one():
     rows = kb.load_manifest()
     assert sorted(r["document_id"] for r in rows if r["status"] == "UNVERIFIED") == [
         "cabinet-agentic-ai-framework-2026-05-18", "csc-ai-security-policy-v1-1", "pdpl-executive-regulations"]
+
+
+def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
+    # order Task 33 Part D: in the report only if 5 pages hold; they do not, so README only
+    sentence = ("The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial "
+                "Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps "
+                "the statutory name.")
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    assert readme.count(sentence) == 1 and readme.index(sentence) > readme.index("<!-- gap-register:end -->")
+    assert "Federal Authority for Artificial Intelligence" not in REPORT_MD.read_text(encoding="utf-8")

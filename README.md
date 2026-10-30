@@ -76,6 +76,8 @@ The model can also die, and the gate still decides: `uv run python -m onyx model
 The global quotes are checked verbatim offline against the fetched texts in `kb/sources/global/` (not committed,
 addendum item 15); CI checks every UAE quote against the committed chunks and the register's structure.
 
+The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps the statutory name.
+
 ## Run it without a key
 
 No API key and no model call. CI runs every line on each push.
