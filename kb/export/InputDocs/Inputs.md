@@ -59,7 +59,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 4 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `a3cc9bfd2b09…` |  | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c6aac69d9692dcae95b5b498a416befcfb/simulation/data/framework/dimensions.json) |
 | 5 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
 
-## Global_Examples/ (8 files)
+## Global_Examples/ (11 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -71,6 +71,9 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 6 | `gdpr-art12-28-33.txt` | `extract` | Regulation (EU) 2016/679 (GDPR), Articles 12, 28 and 33 (extract) | VERIFIED | `af51a747069e…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02016R0679-20160504) |
 | 7 | `us-47cfr-64-2010.txt` | `extract` | 47 CFR 64.2010, Safeguards on the disclosure of customer proprietary network information (extract) | VERIFIED | `8d8f50f5a9bf…` |  | [link](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-B/part-64/subpart-U/section-64.2010) |
 | 8 | `ca-ola-s22-27.txt` | `extract` | Official Languages Act (Canada), R.S.C. 1985, c. 31 (4th Supp.), ss. 22 to 27 (extract) | VERIFIED | `47b831156cb3…` |  | [link](https://laws-lois.justice.gc.ca/eng/acts/O-3.01/page-2.html) |
+| 9 | `es-ley-10-2025.txt` | `law` | Ley 10/2025, de 26 de diciembre, por la que se regulan los servicios de atención a la clientela (Spain), BOE-A-2025-26698 | VERIFIED | `5e9c5e3ee6b5…` |  | [link](https://www.boe.es/boe/dias/2025/12/27/pdfs/BOE-A-2025-26698.pdf) |
+| 10 | `wales-wls-no1-2015-sch1.txt` | `extract` | Welsh Language Standards (No. 1) Regulations 2015, SI 2015/996 (W. 68), Schedule 1 (extract) | VERIFIED | `7fd3f8f49add…` |  | [link](https://www.legislation.gov.uk/wsi/2015/996/schedule/1/made/data.xht?view=snippet&wrap=true) |
+| 11 | `us-tsr-16cfr310.txt` | `extract` | 16 CFR 310.3, Telemarketing Sales Rule, Deceptive telemarketing acts or practices (extract) | VERIFIED | `587aa42b5c79…` |  | [link](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-310) |
 
 ## Unverified/ (3 files)
 

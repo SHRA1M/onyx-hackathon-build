@@ -275,7 +275,7 @@ def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
     lines = readme[block:readme.index("Mizan puts a consumer on the line")].strip().splitlines()
     numbered = [line for line in lines if re.match(r"\d\. ", line)]
     assert [line[:2] for line in numbered] == ["1.", "2.", "3.", "4."]
-    assert numbered[0].startswith("1. Knowledge base: `kb/manifest.csv` (51 rows")  # Y.3173 joined, Task 27
+    assert numbered[0].startswith(f"1. Knowledge base: `kb/manifest.csv` ({len(kb.load_manifest())} rows")  # read, Task 30
     assert numbered[3].startswith("4. ITU-T Y.3172 and the Readiness Framework:")
 
 
@@ -334,3 +334,46 @@ def test_the_s2_paragraph_names_the_model_down_page():
                       "conversation to the same human, with no model in that step (`docs/replay/model-down-S2.md`).")
     assert whatif < down < text.index("**S3,")
     assert (kb.REPO / "docs" / "replay" / "model-down-S2.md").exists()
+
+
+# --- order 2026-10-30-task-30-global-examples, Part C ----------------------------------------------------------
+
+@pytest.mark.parametrize("n, label", [("1", "Spain Ley 10/2025 Art 8(2), 8(3)"),
+                                      ("10", "Wales WLS Regs 2015 Sch 1 Std 15, 22"),
+                                      ("11", "US TSR 16 CFR 310.3(a)(3)(ii)")])
+def test_report_global_example_cells_are_the_closer_examples(n, label):
+    row = next(line for line in REPORT_MD.read_text(encoding="utf-8").splitlines() if line.startswith(f"| {n} |"))
+    assert row.split("|")[-2].strip() == label
+
+
+def test_report_kb_counts_are_read_from_the_manifest():
+    build = _load()
+    text = REPORT_MD.read_text(encoding="utf-8")
+    assert build.check_kb_counts(text) == []
+    assert "holds 54 documents" in text and "50 are verified" in text and "twelve foreign texts" in text
+
+
+@pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "**SRC-2** 51 documents"])
+def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
+    build = _load()
+    text = REPORT_MD.read_text(encoding="utf-8")
+    right = {"holds 51 documents": "holds 54 documents", "47 are verified": "50 are verified",
+             "nine foreign texts": "twelve foreign texts", "**SRC-2** 51 documents": "**SRC-2** 54 documents"}[wrong]
+    assert right in text
+    problems = build.check_kb_counts(text.replace(right, wrong))
+    assert len(problems) == 1 and problems[0].startswith(wrong), problems
+
+
+def test_report_build_refuses_a_wrong_kb_count(tmp_path):
+    md = tmp_path / "report.md"
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("50 are verified", "47 are verified"), encoding="utf-8")
+    assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
+    assert not (tmp_path / "r.docx").exists()
+
+
+def test_readme_kb_counts_are_the_manifests():
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    rows = kb.load_manifest()
+    count = lambda s: sum(r["status"] == s for r in rows)
+    assert (f"\nKnowledge base: {count('VERIFIED')} VERIFIED (text on disk, sha256 matches), {count('REFERENCED')} "
+            f"REFERENCED (opened, text not held), {count('UNVERIFIED')} UNVERIFIED") in readme
