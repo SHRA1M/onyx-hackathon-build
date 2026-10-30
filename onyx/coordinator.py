@@ -17,6 +17,12 @@ is on the record, the coordinator submits that proposal to the gate in the same 
 (gate.decide_pending: deny by default gives hold, a gate rule that blocks gives block), and logs the verdict under
 that agent. A named human's override attempt in the step's facts goes to gate.override: a hold can be released, a
 block cannot, and the refusal is logged with the name (addendum 17).
+
+Model down (order Task 29 Part A): when the model call raises what OpenAICompatibleModel raises after its last attempt,
+the step's agent logs `model_unavailable` (error class, attempts, elapsed, the step) and the coordinator authors a
+plain-code `escalate_to_human` proposal to the named human the case's facts name (complaint step: CPR 26.7.2 and
+licence 9.1, with 26.7.2's words). It goes to the gate as a pending proposal (addendum 29), so deny by default or the
+complaint gate decides, and the run continues with the next step. No model takes part in that step.
 """
 
 from __future__ import annotations
@@ -31,12 +37,14 @@ from typing import Any
 from onyx import audit, data, gate
 from onyx.agents import AGENTS, Adviser
 from onyx.agents.base import INSUFFICIENT_EVIDENCE, AgentOutput, Proposal, Retriever
-from onyx.model import Model
+from onyx.model import UNAVAILABLE, Model, attempts_made
 
 RECORD_FIELDS = ("subscriber", "account", "catalogue")
 SERVES_SUBSCRIBER = {"care", "data_office"}
 QUESTION_KINDS = {"question", "inject"}
 GAPS_DIR = Path("gaps")
+NO_NAMED_HUMAN = "a named trained human (licence 9.1)"
+HANDOVER_RULES = ("cpr-26-7-2", "licence-9-1")  # the complaint gate's hand-over clauses
 DEFAULT_CHANNEL = "app_chat"
 
 
@@ -134,8 +142,12 @@ class Coordinator:
         request_id = f"{self.sid}-{step['n']}-{release.to}"
         if release.kind == "classification":
             return self._classify(release, request_id)
-        output = agent.run(request_id, {"n": release.n, "kind": release.kind, f"text_{self.lang}": release.text,
-                                        "facts": {**release.record, **release.facts}}, self.lang)
+        started = time.perf_counter()
+        try:
+            output = agent.run(request_id, {"n": release.n, "kind": release.kind, f"text_{self.lang}": release.text,
+                                            "facts": {**release.record, **release.facts}}, self.lang)
+        except UNAVAILABLE as error:
+            return self._model_down(error, release, request_id, round((time.perf_counter() - started) * 1000, 3))
         result = StepResult(release.inject, release.to, output)
         for proposal in output.proposals:
             given = output.sources_mandate + output.sources_used  # what the prompt gave (prompt v2)
@@ -201,6 +213,28 @@ class Coordinator:
         for proposal in output.proposals:
             result.verdicts.append((proposal, self._gate(proposal, release, request_id, proposal.clause_ids)))
         return result
+
+    # --- model down (Task 29 Part A) -------------------------------------------------------------------------
+
+    def _model_down(self, error: BaseException, release: Release, request_id: str, elapsed_ms: float) -> StepResult:
+        self.log.append({"actor": release.to, "action": "model_unavailable", "entity_type": "step",
+                         "entity_id": request_id,
+                         "new_value": {"error": type(error).__name__, "attempts": attempts_made(error),
+                                       "elapsed_ms": elapsed_ms, "step": release.inject},
+                         "source": "onyx/coordinator.py",
+                         "reason": "the model call failed after its last attempt; the coordinator hands the step to "
+                                   "the gate with a plain-code proposal, no model"})
+        humans = self._state(release.to, release.inject, []).humans
+        complaint = gate._yes(self.facts.get("grievance_expressed"))
+        rules = [self.rules[r] for r in HANDOVER_RULES] if complaint else []
+        proposal = Proposal(verb="escalate_to_human", target=humans[0] if humans else NO_NAMED_HUMAN,
+                            args={"reason": "model unavailable"},
+                            clause_ids=[f"{r['document_id']}:{r['chunk']}" for r in rules],
+                            quote=rules[0]["quote"] if rules else "",
+                            rationale="model unavailable: authored by the coordinator in plain code (Task 29)")
+        verdict = self._gate(proposal, release, f"{release.inject}-coordinator", [], agent="coordinator",
+                             decide=self.decide_pending, pending=True)
+        return StepResult(release.inject, release.to, None, pending=(proposal, verdict))
 
     # --- abstention -------------------------------------------------------------------------------------------
 

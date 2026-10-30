@@ -84,6 +84,40 @@ class OpenAICompatibleModel:
         raise AssertionError("unreachable")
 
 
+# What OpenAICompatibleModel raises after its last attempt (HTTPError is a URLError). The coordinator catches these.
+UNAVAILABLE = (urllib.error.URLError, TimeoutError, ConnectionError)
+
+
+def attempts_made(error: BaseException) -> int:
+    """How many attempts OpenAICompatibleModel made before raising `error`: one for an HTTP status it never retries,
+    else ATTEMPTS. A FailingModel error carries its own count."""
+    if hasattr(error, "attempts"):
+        return int(error.attempts)
+    if isinstance(error, urllib.error.HTTPError) and error.code not in RETRY_STATUS:
+        return 1
+    return ATTEMPTS
+
+
+def _step(request_id: str) -> str:
+    parts = request_id.split("-")
+    return parts[1] if len(parts) > 1 else ""
+
+
+class FailingModel:
+    """Fault injection (order Task 29 Part A): the call for step `at` (request id `<sid>-<at>-<agent>`) raises what
+    OpenAICompatibleModel raises after its last attempt; every other call goes to the wrapped model unchanged."""
+
+    def __init__(self, inner: Model, at: int) -> None:
+        self.inner, self.at = inner, int(at)
+
+    def complete(self, request_id: str, messages: Messages) -> ModelResponse:
+        if _step(request_id) == str(self.at):
+            error = urllib.error.URLError(f"the model call is made to fail at step {self.at} (fault injection)")
+            error.attempts = ATTEMPTS  # type: ignore[attr-defined]
+            raise error
+        return self.inner.complete(request_id, messages)
+
+
 ENV_NAMES = ("ONYX_MODEL_BASE_URL", "ONYX_MODEL", "ONYX_MODEL_API_KEY")
 
 
