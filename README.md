@@ -137,7 +137,7 @@ The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox
 | D | distributor | coordinator routing, the human hand-over and the deadlines the gates set | `onyx/coordinator.py` |
 | D, hand-over outcome | none found: gap-8 | Y.3172 gives no node outcome that sends an output to a human; Mizan adds it at D | `docs/gaps.md` (gap-8) |
 | SINK | sink | the hash-chained audit log, the gap register, the replay pages | `onyx/audit.py`, `docs/gaps.md`, `docs/replay/` |
-| MLFO | ML function orchestrator | the coordinator's staged release of steps | `onyx/coordinator.py` |
+| MLFO | ML function orchestrator | the coordinator's staged release of steps | `onyx/coordinator.py`; ML Intent: `docs/intent.json` |
 | ML sandbox | ML sandbox | the governed-versus-ungoverned run on the same scenarios | `runs/ungoverned/`, `eval/results.md` |
 
 ## What we do not claim
