@@ -14,13 +14,17 @@ builds byte-identical.
 Value check (item 3, hq rulings 1 and 2 of 2026-10-23): in each tagged paragraph every token holding a digit is
   - a list marker, a single digit alone in brackets: skipped;
   - an id, letters then a digit (S1, S3-4, C5, v3): skipped;
-  - "N of M": a pair in the run set (C5: the Misses line's M minus N, and N of M itself);
+  - "N of M": a pair in the run set (C5: the Misses line's M minus N, and N of M itself; the Pooled line's counts;
+    the gaps-against-keys line's N of M);
+  - "N missed" and "N unexpected": the gaps-against-keys line's counts (C5, Task 29 Part D);
+  - "95% interval L to H": the Wilson interval of a Pooled line count (C5), rounded to each bound's decimals; a bound
+    that rounds to 1.00 while misses exist fails: write it with three decimals (Iyas, 2026-10-30);
   - a number with a unit (ms, s, decisions, calls): a value with that unit, ms shown as s allowed, rounded to the
     token's decimals;
   - a two-decimal number from 0.00 to 1.00, or a plain decimal outside it: a unitless value, rounded likewise;
   - anything else: "cannot classify", and the build fails.
 Values come from the Governed and Ungoverned tables and their latency lines (C3), the "C3, C4 and C5" table and the
-per-scenario C3 / C4 / C5 table (C3 and C5 columns), and the Misses line (C5). A paragraph with both tags is checked sentence by sentence, each against its own tag.
+per-scenario C3 / C4 / C5 table (C3 and C5 columns), and the Misses, Pooled and gaps-against-keys lines (C5). A paragraph with both tags is checked sentence by sentence, each against its own tag.
 
     uv run python docs/build_report.py [--md docs/report.md] [--out docs/report.docx]
 """
@@ -44,6 +48,8 @@ from docx.shared import Cm, Pt
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 
+from onyx.eval import wilson
+
 REPO = Path(__file__).resolve().parent.parent
 TEMPLATE = REPO / "docs" / "report-template.docx"
 REPORT_MD = REPO / "docs" / "report.md"
@@ -64,6 +70,8 @@ CREATOR = "Team Onyx"
 TAG = re.compile(r"\s*`\[(C[35])\b[^\]]*\]`")
 TOKEN = re.compile(r"(?P<marker>\(\d\)(?![\d.]))"
                    r"|(?P<ident>(?<![\w.])[A-Za-z]+\d[\w-]*)"
+                   r"|(?P<interval>(?<![\w.])95% interval (?P<lo>\d\.\d+) to (?P<hi>\d\.\d+))"
+                   r"|(?P<count>(?<![\w.])(?P<cv>\d+) (?P<cu>missed|unexpected)\b)"
                    r"|(?P<of>(?<![\w.])(?P<n>\d+) of (?P<m>\d+)(?![\w.]))"
                    r"|(?P<unit>(?<![\w.])(?P<uv>\d+(?:\.\d+)?) (?P<u>ms|s|decisions|calls)\b)"
                    r"|(?P<num>(?<![\w.])\d+(?:\.\d+)?(?![\w]|\.\d))"
@@ -128,6 +136,8 @@ class RunSet:
     values: list[Decimal] = field(default_factory=list)
     units: list[tuple[Decimal, str]] = field(default_factory=list)
     pairs: set[tuple[int, int]] = field(default_factory=set)
+    counts: set[tuple[int, str]] = field(default_factory=set)
+    pooled: set[tuple[int, int]] = field(default_factory=set)
 
 
 def _section(text: str, heading: str) -> str:
@@ -188,6 +198,17 @@ def run_sets(results: str) -> dict[str, RunSet]:
         raise SystemExit("eval/results.md: no 'Misses:' line")
     missed, total = int(misses[1]), int(misses[2])
     c5.pairs |= {(total - missed, total), (missed, total)}
+    pooled = re.search(r"^Pooled over both languages \(C5\): .*$", section, re.M)
+    if not pooled:
+        raise SystemExit("eval/results.md: no 'Pooled over both languages' line")
+    c5.pooled |= {(int(n), int(m)) for n, m in re.findall(r"(\d+) of (\d+) [^,;]*, 95% interval", pooled[0])}
+    c5.pairs |= c5.pooled
+    found = re.search(r"^(\d+) of (\d+) expected gaps found in every run; (\d+) missed .*?; (\d+) unexpected "
+                      r"register ids flagged\.$", _section(results, "## Gaps against the keys"), re.M)
+    if not found:
+        raise SystemExit("eval/results.md: no 'N of M expected gaps found in every run' line")
+    c5.pairs.add((int(found[1]), int(found[2])))
+    c5.counts |= {(int(found[3]), "missed"), (int(found[4]), "unexpected")}
     return {"C3": c3, "C5": c5}
 
 
@@ -221,12 +242,25 @@ def _check(para: str, named: list[RunSet]) -> list[str]:
     values = [v for s in named for v in s.values]
     units = [u for s in named for u in s.units]
     pairs = set().union(*(s.pairs for s in named))
+    counts = set().union(*(s.counts for s in named))
+    pooled = set().union(*(s.pooled for s in named))
     problems = []
     for m in TOKEN.finditer(para):
         token = m.group(0)
         if m["marker"] or m["ident"]:
             continue
-        if m["of"]:
+        if m["interval"]:
+            bounds = (Decimal(m["lo"]), Decimal(m["hi"]))
+            fits = [(n, total) for n, total in pooled
+                    if bounds == tuple(_rounded(Decimal(str(b)), t) for b, t in zip(wilson(n, total), (m["lo"], m["hi"])))]
+            if not fits:
+                problems.append(f"{token}: no pooled count in the run set has that interval")
+            elif bounds[1] == 1 and all(n < total for n, total in fits):
+                problems.append(f"{token}: misses exist, so the upper bound is below 1; write three decimals")
+        elif m["count"]:
+            if (int(m["cv"]), m["cu"]) not in counts:
+                problems.append(f"{token}: no such count in the run set")
+        elif m["of"]:
             if (int(m["n"]), int(m["m"])) not in pairs:
                 problems.append(f"{token}: no 'N of M' in the run set")
         elif m["unit"]:

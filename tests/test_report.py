@@ -135,9 +135,10 @@ def test_a_tagged_value_changed_by_001_fails_naming_the_token(tmp_path):
 
 def test_a_c3_only_value_in_the_c5_part_of_the_results_paragraph_fails(tmp_path):
     text = REPORT_MD.read_text(encoding="utf-8")
-    assert "gap recall 0.87." in text
+    assert "citation validity 0.99 / 1.00" in text  # Task 29 Part D: "gap recall 0.87" became the B1 line
     md = tmp_path / "report.md"
-    md.write_text(text.replace("gap recall 0.87.", "gap recall 0.86."), encoding="utf-8", newline="\n")
+    md.write_text(text.replace("citation validity 0.99 / 1.00", "citation validity 0.86 / 1.00"), encoding="utf-8",
+                  newline="\n")
     result = _build(md, tmp_path / "out.docx")
     assert result.returncode != 0 and "0.86: no value in the run set" in result.stdout + result.stderr
 
@@ -276,3 +277,60 @@ def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
     assert [line[:2] for line in numbered] == ["1.", "2.", "3.", "4."]
     assert numbered[0].startswith("1. Knowledge base: `kb/manifest.csv` (51 rows")  # Y.3173 joined, Task 27
     assert numbered[3].startswith("4. ITU-T Y.3172 and the Readiness Framework:")
+
+
+# --- Task 29 Part D (order 2026-10-29-task-29-field-take, Part D; release order 2026-10-30) --------------------
+
+def _gap_cell(md: str, n: str) -> str:
+    row = next(line for line in md.splitlines() if line.startswith(f"| {n} |"))
+    return row.split("|")[2]
+
+
+def test_report_gap12_maps_before_claiming():
+    cell = _gap_cell(REPORT_MD.read_text(encoding="utf-8"), "12")
+    assert cell.index("Y.3173") < cell.index("neither") and cell.index("D9") < cell.index("neither")
+    assert cell.strip().endswith("Left open at ITU's request (2026-10-30).")
+    gap = data.load_gaps()["gaps"]
+    row = next(g for g in gap if g["id"] == "gap-12")["gap"]
+    assert row.index("Y.3173") < row.index("neither") and row.index("D9") < row.index("neither")
+
+
+def test_report_figures_match_eval():
+    build = _load()
+    sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
+    text = REPORT_MD.read_text(encoding="utf-8")
+    b1 = "expected gaps: 5 of 7 found in every run, 2 missed (both in S1), 3 unexpected register ids flagged"
+    assert b1 in text and "95% interval 0.937 to 0.995 pooled" in text
+    assert build.check_paragraph(f"Results {b1} `[C5, x]`.", sets) == []
+    assert build.check_paragraph("Recall 110 of 112, 95% interval 0.937 to 0.995 pooled `[C5, x]`.", sets) == []
+
+
+@pytest.mark.parametrize("para, bad", [
+    ("Expected gaps: 4 of 7 found in every run `[C5, x]`.", "4 of 7"),
+    ("Expected gaps: 1 missed `[C5, x]`.", "1 missed"),
+    ("Then 4 unexpected register ids flagged `[C5, x]`.", "4 unexpected"),
+    ("Recall 95% interval 0.938 to 0.995 pooled `[C5, x]`.", "95% interval 0.938 to 0.995"),
+    # a bound that rounds to 1.00 while misses exist is written with three decimals (Iyas, 2026-10-30)
+    ("Recall 95% interval 0.94 to 1.00 pooled `[C5, x]`.", "95% interval 0.94 to 1.00"),
+    ("Recall 95% interval 0.937 to 0.995 pooled `[C3, x]`.", "95% interval 0.937 to 0.995"),
+])
+def test_a_b1_count_or_interval_that_matches_nothing_fails(para, bad):
+    build = _load()
+    sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
+    problems = build.check_paragraph(para, sets)
+    assert len(problems) == 1 and problems[0].startswith(f"{bad}:"), problems
+
+
+def test_the_pooled_citation_interval_reads_too():
+    build = _load()
+    sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
+    assert build.check_paragraph("Validity 95% interval 0.958 to 0.999 `[C5, x]`.", sets) == []  # 130 of 131
+
+
+def test_the_s2_paragraph_names_the_model_down_page():
+    text = REPORT_MD.read_text(encoding="utf-8")
+    whatif = text.index("(`docs/replay/whatif-S2-gap-1.md`).")
+    down = text.index("With the model call made to fail at step 3, the coordinator's deny-by-default hold hands the "
+                      "conversation to the same human, with no model in that step (`docs/replay/model-down-S2.md`).")
+    assert whatif < down < text.index("**S3,")
+    assert (kb.REPO / "docs" / "replay" / "model-down-S2.md").exists()
