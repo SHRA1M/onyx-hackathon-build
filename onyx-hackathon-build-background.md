@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-30 (forty-ninth wrap, Opus: Task 33 merged, PR #9, tag `task-33`; no order open).
+Updated 2026-10-30 (fiftieth wrap, Opus: Task 34 merged, PR #10, tag `task-34`; no order open).
 
 ## What this is
 
@@ -12,7 +12,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Where things live
 
-- `kb/manifest.csv` (on `task-33`: 74 rows, 69 VERIFIED, 3 UNVERIFIED, 2 REFERENCED, 21 foreign, 31 UAE instruments not counting the announcement row; main: 64, 59, 4, 1, 17, 29; Task 30 added Spain Ley 10/2025 (language `es`, whole law), Welsh Language Standards reg 3 and Sch 1, 16 CFR 310.3; Task 31 added Singapore ETA s. 15, Utah 13-77-102, Moffatt v. Air Canada 2024 BCCRT 149 (`binding_status` `decision`), EU roaming 2022/612 Arts 14 and 24, AI Act Arts 14 and 26; Task 32 added the e& and du codes of practice (`advisory`, `operator code`), 106/2026 Arabic and English (from hq's files, not chunked) and the CSC AI security policy (UNVERIFIED, host unreachable)), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 18 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
+- `kb/manifest.csv` (main after Task 34: 77 rows, 72 VERIFIED, 3 UNVERIFIED, 2 REFERENCED, 23 foreign, 32 UAE instruments not counting the announcement row; Task 34 added eIDAS Art 8, COPPA 16 CFR 312.5 and Licence 3/2026, no chunks; per-task additions: archive), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 18 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
 - `kb/chunks/*.jsonl`: only the 144 cited clauses (rules, mandates, gap rows and scenario `grounded_in`), 18 documents (committed). `kb.page_of(document_id, clause)`: the chunk's page, None when not committed or when every committed chunk of the document says page 1 (itu-t-y3172); `kb.page_link` gives `url#page=N` only where the manifest url is the PDF itself. Shown as "p. N" (the PDF page index) in replay pages, viewer, gaps.md; the KB export has a Pages column. `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
 - `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs; a `documents` list per agent), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts, and `grounded_in` {clauses [{clause_id, page}], line, source}: hq's line, Task 16), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
@@ -39,9 +39,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
+- 2026-10-30 (Iyas, Task 34): the report header is five lines, the code link labelled "GitHub link (code)" and one line for knowledge base, demo video and replay site (`build_report.parse` takes five; a header value may hold bold). The report says "N other UAE texts" (count check reads laws or texts). Cuts for 5 pages: gap 12 NOTE clause, gap 1 du clause, Introduction "scored in both languages", S1 CPR 4.4 sentence, gap 9 106/2026 clause; the register keeps the points. README clause 9 line backed by `tests/test_pipeline_security.py`.
 - 2026-10-30 (Iyas, Task 33): the report's row 8 cell is "3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4" ("TS" dropped: the ordered cell made 6 pages); the register and site keep "3GPP TS". The Data Office sentence is in gap-2's note and the README, not the report. A gap row may carry `examples_note`, printed after its examples; a filed `searched` quote in Arabic prints "AR". The report's count check reads "twenty-one" and checks "N other UAE laws" = UAE instruments (no announcement) minus 4.
 - 2026-10-30 (hq, Task 33): id `executive-order-3-2004` kept, not renamed (`mandates.json` cites it); an Arabic `searched` quote keeps the PDF text layer's spacing faults, flagged for Iyas's eye-check.
-- 2026-10-30 (Iyas, Task 31): replay pages and viewer show each flagged gap's line, one example from elsewhere and a register link (`gaps.elsewhere`): the example marked `"elsewhere": true` in `gaps.json` (gap 1 Spain Art 8(2), gap 3 eIDAS Art 8(1), gap 10 Wales Std 15), else the first binding in the manifest, else the first; candidates show their line only. The report has no row 7 (gap 7 lives in the register and site). An example's `says` prints before its quote (AI Act caveat).
 - 2026-10-29 (Iyas, `_reference/how-we-build.md`): from Part B on, every report-back pastes the full `uv run pytest` output and repeats the Limits line: touches only the named files, never `runs/` or the keys; fails closed (USD 0, nothing recorded, nothing pushed outward, stop and ask); owner of any failure is Iyas.
 - 2026-10-27 (C5 as it stands, after Task 28): governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps (2 English misses, disclosed, no v6); the README and selftest headline is C5; C3 is the ungoverned baseline. Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
 
@@ -74,16 +74,16 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Open
 
 - hq: the post-sweep order (2026-10-31) may change prompts or scenarios and re-record again.
-- Submission-day order: GitHub Pages source = `docs/site/`.
-- The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq copy of the report made 2026-10-30 after Task 33 (`.bak-2026-10-30-task-33` kept).
+- Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
+- The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq copy of the report made 2026-10-30 after Task 34 (`.bak-2026-10-30-task-34` kept).
 - hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet.
-- hq (Task 31 report-back): eIDAS and COPPA have stored texts but no manifest rows; gap 1's register lists IMDA and the DSA before Spain.
-- hq (Task 33 report-back): "twenty-seven other UAE laws, resolutions and TDRA instruments" counts operator codes, guidelines and a web page; "other UAE texts" offered. Iyas to eye-check the 52/2024 Art 2(2) Arabic quote against the PDF, p. 2 (two spacing faults kept). The Data Office sentence and the row 1 cell are out of the report for space.
-- README team line names three members until hq confirms their spellings.
+- hq (Task 31 report-back): gap 1's register lists IMDA and the DSA before Spain.
+- hq (Task 34 report-back): eIDAS row is Art 8 as adopted (2014); whether 2024/1183 changed Art 8 is unchecked. The Introduction's "scored in both languages" sentence has no register line.
+- hq (Task 33 report-back): Iyas to eye-check the 52/2024 Art 2(2) Arabic quote against the PDF, p. 2 (two spacing faults kept). The Data Office sentence and the row 1 cell are out of the report for space.
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
 - ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
 - hq strips the two entry names from the filed Task 16 order before 2026-11-09 (clean-history public repo).
 
 ## Next action
 
-Wait for Iyas's next order (he names it next session). Report: 5 pages, 2,243 words; any wording change: `uv run python docs/build_report.py`, then `scripts/report_pages.ps1` (limit 5).
+Wait for Iyas's next order (he names it next session). Report: 5 pages, 2,192 words, no slack; any wording change: `uv run python docs/build_report.py`, then `scripts/report_pages.ps1` (limit 5).
