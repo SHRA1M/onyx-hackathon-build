@@ -401,3 +401,32 @@ def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
     # the announcement is not an instrument (order Part A)
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 31
+
+
+# --- order 2026-10-30-task-33-three-searches Part B ---------------------------------------------------------------
+
+SPAIN_DATES = "In force 2025-12-28; companies have until 2026-12-28 to adapt (disposición transitoria única)."
+AI_ACT_1744 = ("Regulation (EU) 2026/1744 (OJ 2026-07-24) is inside this consolidation; it does not touch Art 50(1) or "
+               "50(5).")
+
+
+def test_task_33_wales_is_held_from_the_current_text():
+    r = kb.manifest_by_id()["wales-wls-no1-2015-sch1"]
+    assert r["url"] == "https://www.legislation.gov.uk/wsi/2015/996/schedule/1/data.xht?view=snippet&wrap=true"
+    assert "as made" not in r["title"] + r["notes"] and "/made" not in r["url"]
+    assert "S.I. 2021/1352 (2021-12-03, reg 3(1))" in r["notes"] and "S.I. 2025/339 (2025-03-28, reg 3(3))" in r["notes"]
+    path = kb.REPO / "kb" / "sources" / "global" / "wales-wls-no1-2015-sch1.txt"
+    if not path.exists():
+        pytest.skip("kb/sources/ is local only (gitignored)")
+    text = path.read_text(encoding="utf-8")
+    assert "/regulation/3/data.xht?view=snippet&wrap=true" in text and "/made/" not in text
+    assert "to a corporate joint committee" in text and "Welsh Revenue Authority" in text
+    assert (kb.REPO / "kb" / "sources" / "wales-wls-no1-2015-sch1.txt").read_bytes() == path.read_bytes()
+
+
+def test_task_33_spain_and_ai_act_notes():
+    rows = kb.manifest_by_id()
+    assert SPAIN_DATES in rows["es-ley-10-2025"]["notes"]
+    assert SPAIN_DATES in [g for g in data.load_gaps()["gaps"] if g["id"] == "gap-1"][0]["note"]
+    for document_id in ("eu-ai-act-2026-07-27", "eu-ai-act-2026-07-27-art14-26"):
+        assert AI_ACT_1744 in rows[document_id]["notes"], document_id

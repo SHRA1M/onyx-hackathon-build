@@ -430,8 +430,9 @@ WALES_QUOTES = {
                    "language must be treated no less favourably than the English language in relation to that machine.",
 }
 WALES_REG_3_1 = ("The Welsh Ministers authorise the Welsh Language Commissioner to give a compliance notice to the Welsh "
-                 "Ministers, to county councils, to county borough councils and to National Park authorities requiring "
-                 "them to comply with any of the standards specified under regulation 2.")  # Task 30b
+                 "Ministers, to county councils, to county borough councils [F1, to a corporate joint committee] and to "
+                 "National Park authorities requiring them to comply with any of the standards specified under "
+                 "regulation 2.")  # Task 30b; Task 33 re-held the current text (S.I. 2021/1352 inserted F1)
 GAP_5_PORTAL = ("Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists "
                 "only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A "
                 "vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.")

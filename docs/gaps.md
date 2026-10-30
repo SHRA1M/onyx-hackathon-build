@@ -27,7 +27,7 @@ Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, l
 
 Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 
-Spain's Ley 10/2025 reaches electronic communications services, telephone services included (Art 2(1)(d)); for them the sector rules apply first and this law is supplementary (Art 2(6)).
+Spain's Ley 10/2025 reaches electronic communications services, telephone services included (Art 2(1)(d)); for them the sector rules apply first and this law is supplementary (Art 2(6)). In force 2025-12-28; companies have until 2026-12-28 to adapt (disposición transitoria única).
 
 **Clauses searched**
 

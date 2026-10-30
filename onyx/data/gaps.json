@@ -43,7 +43,7 @@
     {"document": "Spain, Ley 10/2025 de 26 de diciembre, servicios de atención a la clientela (BOE-A-2025-26698)", "clause": "Art 8(3)", "file": "kb/sources/global/es-ley-10-2025.txt", "status": "VERIFIED", "quote": "En caso de insatisfacción con la atención recibida por parte del operador, quien haya iniciado la comunicación podrá solicitar que se transfiera la comunicación a una persona física supervisora o a un departamento específico de calidad, que deberá atenderle en el transcurso de esa misma comunicación."}
    ],
    "global_none": "",
-   "note": "Spain's Ley 10/2025 reaches electronic communications services, telephone services included (Art 2(1)(d)); for them the sector rules apply first and this law is supplementary (Art 2(6)).",
+   "note": "Spain's Ley 10/2025 reaches electronic communications services, telephone services included (Art 2(1)(d)); for them the sector rules apply first and this law is supplementary (Art 2(6)). In force 2025-12-28; companies have until 2026-12-28 to adapt (disposición transitoria única).",
    "recommendation": "TDRA to state, for every automated channel, what happens when a conversation becomes a Consumer Complaint: the agent stops, the named human takes over, within a stated time, measured like T1(2a) for chat and app; the TDRA time can take Spain's shape (a human on request at any moment; 95% of requests within three minutes).",
    "exposed_by": "S2-3",
    "competitor": "no",
