@@ -59,7 +59,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 4 | `itu-readiness-dimensions.json` | `dataset` | dimensions.json: 13 dimensions and 6 factors of Readiness Report 2.0 (ITU reference code) | VERIFIED | `a3cc9bfd2b09…` |  | [link](https://raw.githubusercontent.com/CrashingGuru/ITUAIReadiness/6c6771c6aac69d9692dcae95b5b498a416befcfb/simulation/data/framework/dimensions.json) |
 | 5 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
 
-## Global_Examples/ (11 files)
+## Global_Examples/ (16 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -74,6 +74,11 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 9 | `es-ley-10-2025.txt` | `law` | Ley 10/2025, de 26 de diciembre, por la que se regulan los servicios de atención a la clientela (Spain), BOE-A-2025-26698 | VERIFIED | `5e9c5e3ee6b5…` |  | [link](https://www.boe.es/boe/dias/2025/12/27/pdfs/BOE-A-2025-26698.pdf) |
 | 10 | `wales-wls-no1-2015-sch1.txt` | `extract` | Welsh Language Standards (No. 1) Regulations 2015, SI 2015/996 (W. 68), Schedule 1 (extract) | VERIFIED | `6e6c99d16a1a…` |  | [link](https://www.legislation.gov.uk/wsi/2015/996/schedule/1/made/data.xht?view=snippet&wrap=true) |
 | 11 | `us-tsr-16cfr310.txt` | `extract` | 16 CFR 310.3, Telemarketing Sales Rule, Deceptive telemarketing acts or practices (extract) | VERIFIED | `587aa42b5c79…` |  | [link](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-310) |
+| 12 | `sg-eta-2010-s15.txt` | `extract` | Electronic Transactions Act 2010 (Singapore), section 15 (extract) | VERIFIED | `6b4f70b8c0e2…` |  | [link](https://sso.agc.gov.sg/Act/ETA2010?ProvIds=pr15-) |
+| 13 | `us-utah-13-77-102.txt` | `extract` | Utah Code 13-77-102, Liability for violation of consumer protection law, effective 2026-05-06 (extract) | VERIFIED | `55bb3659f84c…` |  | [link](https://le.utah.gov/xcode/Title13/Chapter77/C13-77-S102_2026050620260506.pdf) |
+| 14 | `ca-bccrt-2024-149-moffatt.txt` | `extract` | Moffatt v. Air Canada, 2024 BCCRT 149, Civil Resolution Tribunal (British Columbia), 2024-02-14 (extract) | VERIFIED | `83f7b6e9656d…` |  | [link](https://decisions.civilresolutionbc.ca/crt/crtd/en/item/525448/index.do?iframe=true) |
+| 15 | `eu-roaming-2022-612-art14.txt` | `extract` | Regulation (EU) 2022/612 (roaming), Articles 14 and 24 (extract) | VERIFIED | `65797bd94bac…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32022R0612) |
+| 16 | `eu-ai-act-2026-07-27-art14-26.txt` | `extract` | Regulation (EU) 2024/1689 (AI Act), consolidated 2026-07-27, Articles 14 and 26 (extract) | VERIFIED | `b1c7492a9ede…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727) |
 
 ## Unverified/ (3 files)
 

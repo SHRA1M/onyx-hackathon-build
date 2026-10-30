@@ -340,7 +340,9 @@ def test_the_s2_paragraph_names_the_model_down_page():
 
 @pytest.mark.parametrize("n, label", [("1", "Spain Ley 10/2025 Art 8(2), 8(3)"),
                                       ("10", "Wales WLS Regs 2015 Sch 1 Std 15, 22"),
-                                      ("11", "US TSR 16 CFR 310.3(a)(3)(ii)")])
+                                      ("11", "US TSR 16 CFR 310.3(a)(3)(ii)"),
+                                      ("12", "EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from "
+                                             "2027)")])
 def test_report_global_example_cells_are_the_closer_examples(n, label):
     row = next(line for line in REPORT_MD.read_text(encoding="utf-8").splitlines() if line.startswith(f"| {n} |"))
     assert row.split("|")[-2].strip() == label
@@ -350,15 +352,15 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 54 documents" in text and "50 are verified" in text and "twelve foreign texts" in text
+    assert "holds 59 documents" in text and "55 are verified" in text and "seventeen foreign texts" in text
 
 
 @pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "**SRC-2** 51 documents"])
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 54 documents", "47 are verified": "50 are verified",
-             "nine foreign texts": "twelve foreign texts", "**SRC-2** 51 documents": "**SRC-2** 54 documents"}[wrong]
+    right = {"holds 51 documents": "holds 59 documents", "47 are verified": "55 are verified",
+             "nine foreign texts": "seventeen foreign texts", "**SRC-2** 51 documents": "**SRC-2** 59 documents"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
@@ -366,7 +368,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("50 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("55 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
@@ -377,3 +379,9 @@ def test_readme_kb_counts_are_the_manifests():
     count = lambda s: sum(r["status"] == s for r in rows)
     assert (f"\nKnowledge base: {count('VERIFIED')} VERIFIED (text on disk, sha256 matches), {count('REFERENCED')} "
             f"REFERENCED (opened, text not held), {count('UNVERIFIED')} UNVERIFIED") in readme
+
+
+def test_report_has_no_row_7_gap_7_stays_in_the_register():
+    # Task 31 C: gap 7 is out of the report's table (since Task 25); Iyas 2026-10-30: leave it out, the register
+    # and the site carry Utah and Moffatt
+    assert not any(line.startswith("| 7 |") for line in REPORT_MD.read_text(encoding="utf-8").splitlines())

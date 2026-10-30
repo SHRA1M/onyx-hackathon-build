@@ -179,7 +179,7 @@ every step goes to a hash-chained log you can verify on this site.</p>
 # --- runs.html -------------------------------------------------------------------------------------------------
 
 def runs_page() -> str:
-    html = replay_viewer.Viewer(verify="verify.html").render(nav=nav("runs.html"), css=CSS + SITE_CSS)
+    html = replay_viewer.Viewer(verify="verify.html", register="gaps.html").render(nav=nav("runs.html"), css=CSS + SITE_CSS)
     # the viewer's what-if page sits beside the old page, docs/replay/
     name = whatif.page_name(WHATIF_RUN, WHATIF_RULE)
     for name in (name, modeldown.page_name(WHATIF_RUN)):
@@ -207,7 +207,8 @@ def _searched(s: dict[str, Any]) -> str:
 
 def _examples(title: str, examples: list[dict[str, Any]]) -> str:
     items = "".join(f"<li>{escape(ex['document'])}, {escape(ex['clause'])} ({escape(ex['status'])}, "
-                    f"<code>{escape(ex['file'])}</code>): {quote(ex['quote'])}</li>" for ex in examples)
+                    f"<code>{escape(ex['file'])}</code>): {escape(ex['says']) + ' ' if ex.get('says') else ''}"
+                    f"{quote(ex['quote'])}</li>" for ex in examples)  # says: a caveat beside the quote (Task 31)
     return f"<h4>{title}</h4><ul>{items}</ul>"
 
 

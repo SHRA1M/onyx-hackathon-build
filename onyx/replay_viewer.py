@@ -16,7 +16,7 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
-from onyx import audit, data, eval as eval_mod, gate, kb, modeldown, replay_page, runs, whatif
+from onyx import audit, data, eval as eval_mod, gaps, gate, kb, modeldown, replay_page, runs, whatif
 from onyx.html_kit import CSS, NOTICE, WORDS, inline_json
 from onyx.html_kit import cite as _cite, page as _page, quote as _quote, rel as _rel, text as _text
 from onyx.html_kit import tag_html as _tag, verdict as _verdict
@@ -70,9 +70,10 @@ def _steps(events: list[dict[str, Any]]) -> dict[int, list[dict[str, Any]]]:
 
 
 class Viewer:
-    def __init__(self, verify: str | None = None) -> None:
-        """verify: the site's verify page (order Task 25); each run's header then links to it. None: no link."""
-        self.verify = verify
+    def __init__(self, verify: str | None = None, register: str = "../site/gaps.html") -> None:
+        """verify: the site's verify page (order Task 25); each run's header then links to it. None: no link.
+        register: the gap register page a flagged gap links to (order Task 31 Part D)."""
+        self.verify, self.register = verify, register
         self.rules = {r["id"]: r for r in data.load_rules()}
         self.urls = {d: row["url"] for d, row in kb.manifest_by_id().items()}
         self.knowledge, self.by_chunk = gate.Knowledge.load(), eval_mod._rules_by_chunk()
@@ -98,6 +99,20 @@ class Viewer:
     def rule_tag(self, rule_id: str) -> str:
         rule = self.rules[rule_id]
         return _tag(rule["document_id"], rule["chunk"])
+
+    def flagged(self, gap_ids: list[str]) -> str:
+        """Each flagged gap's line, an example from elsewhere with its quote, and the register link (Task 31 D)."""
+        items = []
+        for e in filter(None, map(gaps.elsewhere, gap_ids)):
+            item = f"<code>{escape(e['id'])}</code>: {escape(e['line'])}"
+            if e["label"] is not None:  # a candidate shows its line only
+                # a register quote, verbatim in kb/sources/global/ (test_gaps), not a chunk quote: its own class
+                item += ("<br>Elsewhere: " + escape(e["label"]) + f': <q class="elsewhere" lang="en">{escape(e["quote"])}</q>'
+                         if e["label"]
+                         else "<br>" + escape(gaps.NONE_FOUND))
+                item += f'<br><a href="{escape(self.register)}#{escape(e["id"])}">register: {escape(e["id"])}</a>'
+            items.append(f"<li>{item}</li>")
+        return f"<ul>{''.join(items)}</ul>" if items else ""
 
     def proposal(self, p: dict[str, Any]) -> str:
         cites = ", ".join(_cite(c) for c in p.get("clause_ids") or []) or "no clause"
@@ -137,7 +152,7 @@ class Viewer:
             elif e["action"] == "abstain":
                 gaps = ", ".join(f"<code>{escape(g)}</code>" for g in nv["gaps"]) or "none"
                 abstain = (f'<div class="abstain">Insufficient evidence: logged as a candidate gap. '
-                           f"Gap flagged: {gaps}</div>")
+                           f"Gap flagged: {gaps}{self.flagged(nv['gaps'])}</div>")
             elif e["action"] == "override_refused":
                 notes.append(f"<li>Override attempt: {escape(e['reason'])}. No override.</li>")
         attempted = release["facts"].get("override_attempted_by")

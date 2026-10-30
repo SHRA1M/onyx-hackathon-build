@@ -431,5 +431,45 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "sg-eta-2010-s15": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/sg-eta-2010-s15.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "us-utah-13-77-102": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/us-utah-13-77-102.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "ca-bccrt-2024-149-moffatt": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/ca-bccrt-2024-149-moffatt.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "eu-roaming-2022-612-art14": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/eu-roaming-2022-612-art14.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "eu-ai-act-2026-07-27-art14-26": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/eu-ai-act-2026-07-27-art14-26.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }
