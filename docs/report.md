@@ -20,10 +20,10 @@ without consent (24.6), disconnecting without warning (22.1) and handling a comp
 to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer
 Complaints".
 
-The knowledge base holds 77 documents: the Telecommunications Law 3/2003, the
+The knowledge base holds 83 documents: the Telecommunications Law 3/2003, the
 CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-eight other UAE texts;
 ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-twenty-three foreign texts used only as global examples. 72 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+twenty-nine foreign texts used only as global examples. 78 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
@@ -42,7 +42,7 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 
 ## Use case requirement
 
-One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 77 documents with URL, SHA-256 and status,
+One requirement per Y.3172 node, each implemented and tested unless marked. **SRC-1** injects carry facts, never answers; **SRC-2** 83 documents with URL, SHA-256 and status,
 chunked by clause. **C-1** each agent sees only the steps released to it. **PP-1** retrieval is scoped to the
 agent's mandate; a cited id outside the clauses given is invalid. **M-1** one model behind an OpenAI-compatible
 adapter. **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one block without

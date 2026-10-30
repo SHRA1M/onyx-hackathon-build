@@ -615,5 +615,53 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "qatar-cra-ccpr-2024": {
+  "file": "standards-text/gulf-2026-10-30/qatar-cra-ccpr-2024.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "kuwait-citra-res-69-2022-en": {
+  "file": "standards-text/gulf-2026-10-30/kuwait-citra-res-69-2022-en.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "kuwait-citra-users-rights-ar": {
+  "file": "standards-text/gulf-2026-10-30/kuwait-citra-users-rights-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "saudi-cst-user-protection-552-1445-en": {
+  "file": "standards-text/saudi-cst-user-protection-552-1445-en.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "saudi-cst-user-protection-552-1445-ar": {
+  "file": "standards-text/saudi-cst-user-protection-552-1445-ar.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "qatar-decree-law-16-2010-ar": {
+  "file": "standards-text/gulf-2026-10-30/qatar-decree-law-16-2010-ar-extract.md",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }
