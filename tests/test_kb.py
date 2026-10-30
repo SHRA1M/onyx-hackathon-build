@@ -164,7 +164,8 @@ LANDING_ROWS = {
     "consumer-law-15-2020-ar", "cabinet-66-2023-en", "cabinet-66-2023-ar", "cabinet-56-2024-en", "cabinet-56-2024-ar",
     "cabinet-57-2024-en", "cabinet-57-2024-ar", "child-digital-safety-26-2025-en", "child-digital-safety-26-2025-ar",
     "cybercrimes-34-2021-en", "cybercrimes-34-2021-ar", "itu-t-y3172",
-    "cabres-106-2026-ar", "cabres-106-2026-en"}  # Task 32: the order's portal page URLs; hq saved the texts
+    "cabres-106-2026-ar", "cabres-106-2026-en",  # Task 32: the order's portal page URLs; hq saved the texts
+    "cabres-200-2025-en", "cabres-200-2025-ar", "cabres-52-2024-ar", "cabres-52-2024-en"}  # Task 33, the same way
 
 
 def test_no_portal_url_except_the_marked_landing_rows():
@@ -325,8 +326,78 @@ def test_task_32_rows_have_no_chunks_and_the_counts_are_the_orders():
     cited = {d for d, _ in data.cited_chunks()}
     for document_id in TASK_32_IDS:
         assert not kb.has_chunks(document_id) and document_id not in cited, document_id
+    # the counts moved to Task 33's test below (74, 69, 3, 2, 21, 31)
+
+
+# --- order 2026-10-30-task-33-three-searches Part A ---------------------------------------------------------------
+
+STD = "standards-text/"
+TASK_33 = {  # document_id: (status, binding, jurisdiction, language, source_type, sha256 or "", hq local source)
+    "3gpp-ts-28-535-v19": ("VERIFIED", "method", "foreign", "en", "standard",
+                           "f43be1bda69e707be8e02d197e90218864d36f241152a6cb48c23a492e8321fc", None),
+    "etsi-gs-zsm-009-1-v1-1-1": ("VERIFIED", "method", "foreign", "en", "standard",
+                                 "492bac2214010d4846b847d45dfd8af629f978c92f97704b9ff29a3c926e4c0b", None),
+    "eu-eecc-2018-1972-art105": ("VERIFIED", "binding", "foreign", "en", "extract", None, None),
+    "de-tkg-2021-para-56": ("VERIFIED", "binding", "foreign", "de", "extract", None, None),
+    "executive-order-3-2004": ("VERIFIED", "binding", "UAE", "en", "executive order",
+                               "23f3e4022033142fac09fb7e37281225c2c216fac8cd8c54f02b0e2d6945f2e5", None),
+    "executive-order-3-2004-ar": ("VERIFIED", "binding", "UAE", "ar", "executive order",
+                                  "99cb1e43df2633fb7c3fbc56e2fb643f709036b44d16963f641fc122fee1ab8f", None),
+    "cabres-200-2025-en": ("VERIFIED", "binding", "UAE", "en", None,
+                           "cdff987ad304ef162852be32e693634dfae79dddbf0144e63b24b1561a26972d",
+                           STD + "modern-tech-trade-penalties-cabinet-200-2025-en.pdf"),
+    "cabres-200-2025-ar": ("VERIFIED", "binding", "UAE", "ar", None,
+                           "ad851801ec71e97c5ba855da5b3c35e1ff72c3d313428b03e7346f0a769ace5f",
+                           STD + "modern-tech-trade-penalties-cabinet-200-2025-ar.pdf"),
+    "cabres-52-2024-ar": ("VERIFIED", "binding", "UAE", "ar", None,
+                          "32c667ed631031cb33a25d3ed746904b62ba2d0e4bd2097c3990202404e46693",
+                          STD + "etransactions-penalties-cabinet-52-2024-ar.pdf"),
+    "cabres-52-2024-en": ("VERIFIED", "binding", "UAE", "en", None, None, None),
+    "fed-ai-data-authority-2026-06-14": ("REFERENCED", "advisory", "UAE", "ar", "announcement", "", None),
+}
+
+
+def test_task_33_rows_are_the_orders():
+    rows = kb.manifest_by_id()
+    for document_id, (status, binding, jurisdiction, language, source_type, sha, local) in TASK_33.items():
+        r = rows[document_id]
+        assert (r["status"], r["binding_status"], r["jurisdiction"], r["language"]) ==             (status, binding, jurisdiction, language), document_id
+        if source_type:
+            assert r["source_type"] == source_type, document_id
+        if sha is not None:
+            assert r["sha256"] == sha, document_id
+        if local:
+            assert kb.LOCAL[document_id]["file"] == local
+            if HQ_DIR.exists():  # hq's copy, byte for byte
+                assert kb.sha256_file(HQ_DIR / local) == sha, document_id
+    eo = rows["executive-order-3-2004"]
+    assert (eo["page_count"], eo["is_official_translation"]) == ("28", "yes (cover: Arabic prevails)")
+    assert eo["notes"].startswith("Official Gazette 421, October 2004; amended by Supreme Committee Resolutions 4/2005 "
+                                  "and 2/2006 (two footnotes). The 10-17 fetch saw only a cover page; the full order "
+                                  "was served 2026-10-30.")
+    assert "unpublished" not in eo["notes"].lower()
+    assert rows["executive-order-3-2004-ar"]["page_count"] == "33"
+    assert "German original; no official translation; the row's English gloss is ours." in         rows["de-tkg-2021-para-56"]["notes"]
+    assert "Clause 4.2.3 read the same in V18.2.0." in rows["3gpp-ts-28-535-v19"]["notes"]
+    assert "EUR-Lex" in rows["eu-eecc-2018-1972-art105"]["notes"] and "refused" in rows["eu-eecc-2018-1972-art105"]["notes"]
+    assert "Articles 1 to 8 only; the annex is a separate portal page, not held; see the Arabic row." in         rows["cabres-52-2024-en"]["notes"]
+    assert rows["fed-ai-data-authority-2026-06-14"]["notes"].startswith(
+        "Announcement, not a law: the Data Office's competences move to the new authority; no decree number or "
+        "transfer date published. The PDPL still names the Data Office.")
+    for document_id in ("cabres-200-2025-en", "cabres-200-2025-ar", "cabres-52-2024-ar", "cabres-52-2024-en"):
+        assert "through a browser 2026-10-30" in rows[document_id]["notes"], document_id
+
+
+def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
+    cited = {d for d, _ in data.cited_chunks()}
+    for document_id in TASK_33:
+        if document_id != "executive-order-3-2004":  # an older row; it had no chunks either
+            assert document_id not in cited, document_id
+        assert not kb.has_chunks(document_id), document_id
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
-    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (64, 59, 4, 1)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 17
-    assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"}) == 29
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (74, 69, 3, 2)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 21
+    # the announcement is not an instrument (order Part A)
+    assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
+                and r["source_type"] != "announcement"}) == 31

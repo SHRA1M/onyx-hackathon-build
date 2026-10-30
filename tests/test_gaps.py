@@ -547,7 +547,7 @@ def test_gap_2_adds_singapore_s_15_recommendation_unchanged():
     row = _row("gap-2")
     assert [ex["file"] for ex in row["global_examples"]][-1] == SG
     assert row["note"] == ("Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the automated "
-                           "contract; neither names the sales medium.")
+                           "contract; neither names the sales medium. " + DATA_OFFICE)  # Task 33 appends it
     assert row["recommendation"] == GAP_2_RECOMMENDATION
     assert _examples_in("gap-2", "kb/sources/global/eu-crd-2011-83-art8.txt")  # existing examples stay
 
@@ -602,7 +602,7 @@ def test_elsewhere_is_the_marked_example_else_the_first_binding_else_the_first()
     assert gaps.elsewhere("gap-7")["label"] == "Utah Code 13-77-102"
     assert gaps.elsewhere("gap-12")["label"] == "EU Roaming Reg 2022/612 Art 14(4)"  # SAE via Y.3173 is method
     assert gaps.elsewhere("gap-9")["label"] == "16 CFR 312.5(a)(1)"  # no binding row: the first example
-    assert gaps.elsewhere("gap-8") == {"id": "gap-8", "line": _row("gap-8")["line"], "label": "", "quote": ""}
+    assert gaps.elsewhere("gap-8")["label"] == "3GPP TS 28.535 §4.2.3"  # Task 33: both method texts, the first
     candidate = _row("candidate-4-4-fixed-term-bundle")
     assert gaps.elsewhere(candidate["id"]) == {"id": candidate["id"], "line": candidate["line"], "label": None,
                                                "quote": None}  # a candidate shows its line only
@@ -696,13 +696,18 @@ def _filed(gap_id: str) -> list[dict]:
     return [s for s in _row(gap_id)["searched"] if s.get("file")]
 
 
+def _filed_32(gap_id: str) -> list[dict]:
+    return _filed(gap_id)[:len(TASK_32_SEARCHED[gap_id])]  # Task 33's entries follow them
+
+
 def test_task_32_searched_entries_are_the_orders_appended_last():
     for gap_id, expected in TASK_32_SEARCHED.items():
-        got = [(s["clause"], s["file"], s["says"], s["quote"]) for s in _filed(gap_id)]
+        got = [(s["clause"], s["file"], s["says"], s["quote"]) for s in _filed_32(gap_id)]
         assert got == expected, gap_id
-        assert _row(gap_id)["searched"][-len(expected):] == _filed(gap_id), gap_id  # appended after the chunked ones
-    assert not [r["id"] for r in ROWS + data.load_gaps()["candidates"]
-                if any(s.get("file") for s in r["searched"]) and r.get("id") not in TASK_32_SEARCHED]
+        filed = _filed(gap_id)
+        assert _row(gap_id)["searched"][-len(filed):] == filed, gap_id  # appended after the chunked ones
+    assert not [r["id"] for r in ROWS + data.load_gaps()["candidates"] if any(s.get("file") for s in r["searched"])
+                and r.get("id") not in {**TASK_32_SEARCHED, **TASK_33_SEARCHED}]
 
 
 def test_task_32_files_are_verified_manifest_sources_with_a_page():
@@ -735,12 +740,12 @@ def _stored(path: Path) -> str:
 
 
 def test_task_32_quotes_are_verbatim_in_the_stored_text():
-    files = {kb.REPO / s["file"] for g in TASK_32_SEARCHED for s in _filed(g)}
+    files = {kb.REPO / s["file"] for g in TASK_32_SEARCHED for s in _filed_32(g)}
     if not all(f.exists() for f in files):
         pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
     found = 0
     for gap_id in TASK_32_SEARCHED:
-        for s in _filed(gap_id):
+        for s in _filed_32(gap_id):
             text = _stored(kb.REPO / s["file"])
             assert _norm(s["quote"]) in _norm(text), (gap_id, s["clause"])
             found += 1
@@ -753,3 +758,139 @@ def test_task_32_entries_print_in_the_register_and_on_the_site():
     assert f"- `du-code-of-practice-en:Annex 1` (p. {_filed('gap-1')[2]['page']}, `{DU}`): " in md
     assert "Covers du and Virgin Mobile UAE" not in md  # the manifest note stays in the KB
     assert "<code>eand-code-of-practice-en:4</code>" in html and "<code>kb/sources/eand-code-of-practice-en.pdf</code>" in html
+
+
+# --- order 2026-10-30-task-33-three-searches Part C ---------------------------------------------------------------
+
+DATA_OFFICE = ("The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial "
+               "Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps "
+               "the statutory name.")
+EO = "kb/sources/executive-order-3-2004.pdf"
+R200 = "kb/sources/cabres-200-2025-en.pdf"
+R52 = "kb/sources/cabres-52-2024-ar.pdf"
+TASK_33_SEARCHED = {  # gap id: [(clause, file, says starts with, quote)], after Task 32's
+    "gap-1": [
+        ("executive-order-3-2004:32", EO, "The licensee reports complaint numbers and the procedures taken to TDRA on "
+         "request; a reporting duty, nothing on the hand-over or its timing.",
+         "Upon the Authority's request and within the specified time period indicated therein, the Licensee shall "
+         "provide a report in the format set by the Authority showing the number of complaints against them and the "
+         "taken procedures in this regard for the period covered in the report."),
+        ("cabres-200-2025-en:Schedule row 7", R200, "Where 14/2023 applies, no complaints mechanism is fined (warning, "
+         "then AED 2,000 to 20,000 and twenty days' closure); still no stop, hand-over or clock.",
+         "Failure to allocate a mechanism for handling complaints."),
+    ],
+    "gap-2": [
+        ("cabres-200-2025-en:Schedule row 1", R200, "Where 14/2023 applies, failing to verify the offer and acceptance "
+         "is fined (AED 2,000 up to 100,000 and closure); what verifies a spoken 'yes' through an AI channel is unsaid.",
+         "failure to verify the offer and acceptance required for the validity of the contract."),
+    ],
+    "candidate-79bis-2-fine-schedule": [
+        ("cabres-52-2024-ar:2(2)", R52, "TDRA may double a fine when the same violation is repeated within a year",
+         "يجوز للهيئة مضاعفةقيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات "
+         "المخالفة الإدارية قبل مض ي سنة من تاريخ ارتكابها لأول مرة"),
+        ("cabres-200-2025-en:3(3)", R200, "The Ministry of Economy may skip the gradation for a serious violation",
+         "the Ministry may, in cases of serious violations, impose the more severe administrative penalty without "
+         "adhering to the gradation"),
+        ("executive-order-3-2004:42", EO, "A fine power for apparatus authorisations, no amount; not the licensee "
+         "schedule.",
+         "The Authority may perform any of the following in case any of the Authorised or concerned persons in the "
+         "Telecommunication Apparatus breaches the terms and restrictions that the Authorisations were granted upon,: "
+         "(a) impose a financial fine against the violator ; (b) abolish the issued Authorization."),
+    ],
+}
+GAP_8_NOTE = ("Both are method texts, like Y.3172: 3GPP defines the open control loop, where the system presents and the "
+              "human decides; ETSI ZSM defines a flow for a human operator to approve or reject a recommendation. "
+              "Neither names a withheld output routed to a named person with its own reference point; the "
+              "recommendation stands as the fuller version.")
+TASK_33_EXAMPLES = {
+    "gap-8": [
+        ("kb/sources/global/3gpp-ts-28-535-v19.txt", "§4.2.3",
+         "The management system collects, analyses and presents the data to the human operator or other management "
+         "entity, but the human operator or other management entity decides which action to take."),
+        ("kb/sources/global/etsi-gs-zsm-009-1-v1-1-1.txt", "§7.2.2.4",
+         "The customization flow may be used to configure the CL, monitor its continuous operations, approve/reject "
+         "recommendations, explain the CL operation and decisions"),
+    ],
+    "candidate-4-4-fixed-term-bundle": [
+        ("kb/sources/global/eu-eecc-2018-1972-art105.txt", "Art 105(3)",
+         "Before the contract is automatically prolonged, providers shall inform end-users, in a prominent and timely "
+         "manner and on a durable medium, of the end of the contractual commitment and of the means by which to "
+         "terminate the contract."),
+        ("kb/sources/global/de-tkg-2021-para-56.txt", "§ 56(3)", None),  # a run, "kann der Endnutzer" to "kündigen."
+    ],
+}
+
+
+def _filed_33(gap_id: str) -> list[dict]:
+    return _filed(gap_id)[len(TASK_32_SEARCHED.get(gap_id, [])):]
+
+
+def test_task_33_searched_entries_follow_task_32s():
+    for gap_id, expected in TASK_33_SEARCHED.items():
+        filed = _filed_33(gap_id)
+        assert [(s["clause"], s["file"], s["quote"]) for s in filed] == [(c, f, q) for c, f, _, q in expected], gap_id
+        for s, (_, _, says, _) in zip(filed, expected):
+            assert s["says"].startswith(says), (gap_id, s["clause"])
+            assert int(s["page"]) >= 1
+
+
+def test_task_33_global_examples_replace_the_none_cells():
+    for gap_id, expected in TASK_33_EXAMPLES.items():
+        row = _row(gap_id)
+        assert row["global_none"] == "", gap_id
+        assert [(ex["file"], ex["clause"]) for ex in row["global_examples"]] == [(f, c) for f, c, _ in expected]
+        for ex, (_, _, quote) in zip(row["global_examples"], expected):
+            assert quote is None or ex["quote"] == quote
+    tkg = _row("candidate-4-4-fixed-term-bundle")["global_examples"][1]
+    assert tkg["quote"].startswith("kann der Endnutzer") and tkg["quote"].endswith("kündigen.")
+    assert tkg["says"].startswith("Our English, not an official translation:")  # the gloss is ours
+    assert _row("candidate-4-4-fixed-term-bundle")["recommendation"].endswith(
+        "falls under 4.4 or needs fresh consent under 4.3, and, if 4.4, require the warning before and the one-month "
+        "exit after.")
+    assert _row("gap-8")["examples_note"] == GAP_8_NOTE
+    assert "3GPP TS 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4" in gaps.table()
+    assert "EECC 2018/1972 Art 105(3); TKG 2021 § 56(3)" in gaps.table()
+
+
+def test_task_33_quotes_are_verbatim_in_the_stored_text():
+    entries = [s for g in TASK_33_SEARCHED for s in _filed_33(g)]
+    entries += [ex for g in TASK_33_EXAMPLES for ex in _row(g)["global_examples"]]
+    if not all((kb.REPO / e["file"]).exists() for e in entries):
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
+    for e in entries:
+        assert _norm(e["quote"]) in _norm(_stored(kb.REPO / e["file"])), e["file"]
+    assert len(entries) == 10
+
+
+def test_task_33_gap_8_note_prints_after_the_examples_on_the_register_and_the_site():
+    section = gaps.render().split("## gap-8:", 1)[1].split("\n## ", 1)[0]
+    assert section.index("§7.2.2.4") < section.index(GAP_8_NOTE) < section.index("**Recommendation.**")
+    from onyx import site
+    html = site._gap(_row("gap-8"))
+    assert html.index("7.2.2.4") < html.index(GAP_8_NOTE) < html.index("<h4>Recommendation</h4>")
+
+
+def test_task_33_arabic_file_quote_is_labelled_ar():
+    from onyx import site
+    [s] = [s for s in _row("candidate-79bis-2-fine-schedule")["searched"] if s["clause"] == "cabres-52-2024-ar:2(2)"]
+    assert gaps._searched(s)[1] == f'  - AR: "{s["quote"]}"'
+    assert "<br>AR: " in site._searched(s) and 'dir="rtl"' in site._searched(s)
+    [en] = [s for s in _row("gap-1")["searched"] if s["clause"] == "executive-order-3-2004:32"]
+    assert gaps._searched(en)[1].startswith("  - EN: ") and "<br>EN: " in site._searched(en)
+
+
+def test_task_33_executive_order_is_read_not_unpublished():
+    [eo] = [c for c in data.load_gaps()["candidates"] if c["name"].startswith("The Executive Order")]
+    assert eo["name"] == "The Executive Order, read in full"
+    assert eo["line"] == ("The Executive Order, read in full (75 articles, English; the Arabic prevails): Art 30 "
+                          "directives, Art 32 complaint reporting, Art 42 apparatus fines, Art 47 quality-of-service "
+                          "reporting. Nothing on an automated channel, consent, a hand-over or a licensee fine amount.")
+    assert [s["clause"] for s in eo["searched"]] == ["licence-2-2026:16.2"]  # the licence cite stays
+    for path in ("docs/gaps.md", "kb/DATASHEET.md", "docs/report.md", "README.md"):
+        text = (kb.REPO / path).read_text(encoding="utf-8")
+        assert not re.search(r"Executive Order[^.\n]{0,80}unpublished|unpublished[^.\n]{0,40}Executive Order", text), path
+
+
+def test_task_33_data_office_sentence_once_in_the_register():
+    assert gaps.render().count(DATA_OFFICE) == 1
+    assert _row("gap-2")["addressee"] == ["TDRA", "UAE Data Office"]  # addressee fields unchanged

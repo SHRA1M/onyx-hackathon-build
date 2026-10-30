@@ -103,7 +103,8 @@ def table() -> str:
 def _searched(s: dict[str, Any]) -> list[str]:
     if s.get("file"):  # quoted from the stored source, no chunk (Task 32: operator codes, 106/2026)
         page = f"p. {s['page']}, " if s.get("page") else ""  # a web page's text has none (106/2026 English)
-        return [f"- `{s['clause']}` ({page}`{s['file']}`): {s['says']}", f"  - EN: \"{s['quote']}\""]
+        lang = "AR" if kb._is_arabic(s["quote"]) else "EN"  # an Arabic original's own text (Task 33, 52/2024)
+        return [f"- `{s['clause']}` ({page}`{s['file']}`): {s['says']}", f"  - {lang}: \"{s['quote']}\""]
     document_id, clause = s["clause"].split(":", 1)
     chunk = kb.get_chunk(document_id, clause)
     # "p.": the PDF page index (order Task 16 item 1); a row's own page, read from the text on disk, where the chunk's is wrong (every Y.3172 chunk says page 1)
@@ -156,6 +157,8 @@ def render() -> str:
             lines += _quotes("The standard's own text", row["standard_text"])
         if row["global_examples"]:
             lines += _quotes("Global example", row["global_examples"])
+            if row.get("examples_note"):  # the prose line after the examples (Task 33, gap-8)
+                lines += [row["examples_note"], ""]
         else:
             lines += [f"**Global example.** {row['global_none']}", ""]
         lines += [f"**Recommendation.** {row['recommendation']}", ""]
