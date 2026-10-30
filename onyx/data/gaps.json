@@ -309,7 +309,7 @@
     {"document": "Wales, Welsh Language Standards (No. 1) Regulations 2015, SI 2015/996 (W. 68), Schedule 1", "clause": "Standard 60", "file": "kb/sources/global/wales-wls-no1-2015-sch1.txt", "status": "VERIFIED", "quote": "You must ensure that any self service machines that you have function fully in Welsh, and the Welsh language must be treated no less favourably than the English language in relation to that machine."}
    ],
    "global_none": "",
-   "note": "Wales's Standards bind public bodies under a compliance notice (reg 2(1)(b)), not operators.",
+   "note": "Wales's Standards bind public bodies under a compliance notice (reg 3(1)), not operators.",
    "recommendation": "TDRA to add to the QoS Policy, for every automated consumer channel, the same indicators per language (answer accuracy against the Licensee's own policy text, hand-over time, abstention), reported separately for Arabic and English, with a parity band; Canada's Official Languages Act s. 26 shows a regulator imposing the language duty on regulated service providers, and s. 27 extends it to oral channels.",
    "exposed_by": "C5 per-language scoring (M, D nodes); mapping (SRC)",
    "competitor": "no",
