@@ -80,7 +80,7 @@ manifest SHA-256 (the condition `fetch` uses). No `csc-ai-security-policy-v1-1.p
 | 9 | Limits | `git diff main -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py runs/ onyx/model.py onyx/prompts onyx/agents kb/chunks eval/`: 0 lines |
 | 10 | Full suite | `591 passed in 115.62s` |
 | 11 | Site, Playwright | `docs/site/gaps.html`: 11 entries render with clause, page, file, says and quote; only console error a favicon 404 from the local test server |
-| 12 | CI on the PR | not run: branch not pushed (waits for Iyas's go) |
+| 12 | CI on PR #8 | push run 41079753091 and PR run 41079763599 on fdb31c0: `success`; "577 passed, 14 skipped" (the 14 read the gitignored `kb/sources/`); "227 logs: chain ok"; S1 to S5 replay match |
 
 ## Open questions for hq
 
