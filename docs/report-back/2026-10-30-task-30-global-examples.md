@@ -86,3 +86,26 @@ rows 54, VERIFIED 50, foreign 12
 1. The Wales scope line (reg 2(1)(b)) is not in the stored file, which holds Schedule 1 only; it rests on the ruling's
    read. Store the regulations' body too, or leave it?
 2. Gap 10's `recommendation` still names Canada OLA ss. 26 and 27; the report cell now names Wales. Fine as is?
+
+## Task 30b: Wales scope citation (order 2026-10-30-task-30b-wales-scope-fix)
+
+Built on `task-30`, same PR #5. Answers open question 1 above; question 2 is settled by hq (gap 10 keeps naming
+Canada, both examples held).
+
+- Fetched regulation 3 as made: `https://www.legislation.gov.uk/wsi/2015/996/regulation/3/made/data.xht?view=snippet&wrap=true`
+  (curl, browser User-Agent, HTTP 200). Reg 3(1) reads word for word as the order quotes it.
+- Stored text `wales-wls-no1-2015-sch1.txt`: reg 3(1) and 3(2) inserted above Schedule 1, marked "Regulation 3, as made
+  (added 2026-10-30, Task 30b)". Both local copies (`kb/sources/` and `kb/sources/global/`) changed alike. sha256
+  `7fd3f8f4...` (43,169 bytes) to `6e6c99d1...` (43,943 bytes); manifest row updated (hash, size, notes).
+- `reg 2(1)(b)` to `reg 3(1)` in gap-10's note, `docs/gaps.md`, `tests/test_gaps.py`, and the manifest row's notes (the
+  same wrong citation sat there; the order did not list it). `docs/site/gaps.html`, `docs/site/kb.html` and
+  `kb/export/InputDocs/Inputs.md` regenerated from them.
+- `test_task_30_quotes_are_verbatim_in_their_files` also checks the reg 3(1) sentence: failed on the old stored text,
+  passes on the new.
+
+Checks: `kb verify` VERIFIED 50, REFERENCED 1, UNVERIFIED 3, every fetched source matches its sha256 (54 documents, 12
+foreign, unchanged). `check-data` ok. `grep -rn "2(1)(b)" onyx/ docs/gaps.md tests/`: nothing. Full suite 568 passed.
+`scripts/report_pages.ps1`: pages 5, words 2215 (no report text change; the report never cited reg 2(1)(b)).
+
+Differs from the order: the manifest `url` still names Schedule 1; reg 3's address is in the row's notes and the
+stored file's header. No change to gates, keys, runs, prompts or eval. USD 0 model spend.

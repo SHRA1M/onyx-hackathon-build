@@ -424,6 +424,9 @@ WALES_QUOTES = {
     "Standard 60": "You must ensure that any self service machines that you have function fully in Welsh, and the Welsh "
                    "language must be treated no less favourably than the English language in relation to that machine.",
 }
+WALES_REG_3_1 = ("The Welsh Ministers authorise the Welsh Language Commissioner to give a compliance notice to the Welsh "
+                 "Ministers, to county councils, to county borough councils and to National Park authorities requiring "
+                 "them to comply with any of the standards specified under regulation 2.")  # Task 30b
 GAP_5_PORTAL = ("Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists "
                 "only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A "
                 "vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.")
@@ -451,7 +454,7 @@ def test_gap_10_wales_standards_15_22_60_beside_canada():
     wales = _examples_in("gap-10", WALES)
     assert {ex["clause"]: ex["quote"] for ex in wales} == WALES_QUOTES
     assert all(ex["status"] == "VERIFIED" and ex["document"].startswith("Wales, Welsh Language Standards") for ex in wales)
-    assert "reg 2(1)(b)" in _row("gap-10")["note"] and "not operators" in _row("gap-10")["note"]
+    assert "reg 3(1)" in _row("gap-10")["note"] and "not operators" in _row("gap-10")["note"]
     assert "Wales WLS Standard 15; Wales WLS Standard 22; Wales WLS Standard 60" in gaps.table()
 
 
@@ -476,6 +479,7 @@ def test_task_30_quotes_are_verbatim_in_their_files():
                 assert _norm(ex["quote"]) in _norm(kb.read_text(kb.REPO / ex["file"])), (gap_id, ex["clause"])
                 found += 1
     assert found == 7
+    assert _norm(WALES_REG_3_1) in _norm(kb.read_text(kb.REPO / WALES))  # gap-10 note's reg 3(1), Task 30b
 
 
 def test_gap_5_records_the_portal_check():

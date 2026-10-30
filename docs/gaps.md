@@ -394,7 +394,7 @@ Arabic on an automated channel: the texts set the language (CPR 3.2.2: written i
 
 Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: C5 per-language scoring (M, D nodes); mapping (SRC).
 
-Wales's Standards bind public bodies under a compliance notice (reg 2(1)(b)), not operators.
+Wales's Standards bind public bodies under a compliance notice (reg 3(1)), not operators.
 
 **Clauses searched**
 

@@ -72,7 +72,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 7 | `us-47cfr-64-2010.txt` | `extract` | 47 CFR 64.2010, Safeguards on the disclosure of customer proprietary network information (extract) | VERIFIED | `8d8f50f5a9bf…` |  | [link](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-B/part-64/subpart-U/section-64.2010) |
 | 8 | `ca-ola-s22-27.txt` | `extract` | Official Languages Act (Canada), R.S.C. 1985, c. 31 (4th Supp.), ss. 22 to 27 (extract) | VERIFIED | `47b831156cb3…` |  | [link](https://laws-lois.justice.gc.ca/eng/acts/O-3.01/page-2.html) |
 | 9 | `es-ley-10-2025.txt` | `law` | Ley 10/2025, de 26 de diciembre, por la que se regulan los servicios de atención a la clientela (Spain), BOE-A-2025-26698 | VERIFIED | `5e9c5e3ee6b5…` |  | [link](https://www.boe.es/boe/dias/2025/12/27/pdfs/BOE-A-2025-26698.pdf) |
-| 10 | `wales-wls-no1-2015-sch1.txt` | `extract` | Welsh Language Standards (No. 1) Regulations 2015, SI 2015/996 (W. 68), Schedule 1 (extract) | VERIFIED | `7fd3f8f49add…` |  | [link](https://www.legislation.gov.uk/wsi/2015/996/schedule/1/made/data.xht?view=snippet&wrap=true) |
+| 10 | `wales-wls-no1-2015-sch1.txt` | `extract` | Welsh Language Standards (No. 1) Regulations 2015, SI 2015/996 (W. 68), Schedule 1 (extract) | VERIFIED | `6e6c99d16a1a…` |  | [link](https://www.legislation.gov.uk/wsi/2015/996/schedule/1/made/data.xht?view=snippet&wrap=true) |
 | 11 | `us-tsr-16cfr310.txt` | `extract` | 16 CFR 310.3, Telemarketing Sales Rule, Deceptive telemarketing acts or practices (extract) | VERIFIED | `587aa42b5c79…` |  | [link](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-310) |
 
 ## Unverified/ (3 files)
