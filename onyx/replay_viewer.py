@@ -19,7 +19,7 @@ from typing import Any
 from onyx import audit, data, eval as eval_mod, gate, kb, modeldown, replay_page, runs, whatif
 from onyx.html_kit import CSS, NOTICE, WORDS, inline_json
 from onyx.html_kit import cite as _cite, page as _page, quote as _quote, rel as _rel, text as _text
-from onyx.html_kit import verdict as _verdict
+from onyx.html_kit import tag_html as _tag, verdict as _verdict
 
 OUT = kb.REPO / "docs" / "replay" / "index.html"
 HEADLINE = ("citation_validity", "action_recall", "abstention", "gap_recall")
@@ -91,8 +91,13 @@ class Viewer:
         ar = f"<br>{_quote(rule['quote_ar'], 'ar')}" if rule.get("quote_ar") else ""
         page = _page(rule["document_id"], rule["chunk"])
         page = f", {page}" if page else ""
-        return (f"<li><code>{escape(rule_id)}</code> {escape(rule['label'])}{page}{link}<br>{_quote(rule['quote'])}"
+        tag = _tag(rule["document_id"], rule["chunk"])
+        return (f"<li><code>{escape(rule_id)}</code> {escape(rule['label'])}{page} {tag}{link}<br>{_quote(rule['quote'])}"
                 f"{ar}</li>")
+
+    def rule_tag(self, rule_id: str) -> str:
+        rule = self.rules[rule_id]
+        return _tag(rule["document_id"], rule["chunk"])
 
     def proposal(self, p: dict[str, Any]) -> str:
         cites = ", ".join(_cite(c) for c in p.get("clause_ids") or []) or "no clause"
@@ -127,7 +132,7 @@ class Viewer:
                 if _is_handover(e) and not handover:
                     quotes = [r for r in nv["reasons"] if r.get("kind") == "quote"]
                     handover = ('<div class="handover"><h4>Handed to a human</h4><ul>' + "".join(
-                        f"<li>{escape(r['label'])}<br>{_quote(r['en'], 'en')}<br>{_quote(r['ar'], 'ar')}</li>"
+                        f"<li>{escape(r['label'])} {self.rule_tag(r['clause'])}<br>{_quote(r['en'], 'en')}<br>{_quote(r['ar'], 'ar')}</li>"
                         for r in quotes) + "</ul></div>")
             elif e["action"] == "abstain":
                 gaps = ", ".join(f"<code>{escape(g)}</code>" for g in nv["gaps"]) or "none"

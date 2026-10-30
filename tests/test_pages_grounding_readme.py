@@ -63,7 +63,7 @@ def test_replay_page_prints_pages_on_cites_and_rule_lines():
     page = replay_page.render(replay_page.RUNS / "S2" / "run1.jsonl")
     assert "`tdra-cpr-v2-en:26.7.2` (p. 65)" in page
     rule = next(r for r in data.load_rules() if r["id"] == "cpr-26-7-2")
-    assert f"CPR 26.7.2, p. 65: \"{rule['quote']}\"" in page
+    assert f"CPR 26.7.2, p. 65 [binding, UAE]: \"{rule['quote']}\"" in page
     assert "(page " not in page
 
 
@@ -310,3 +310,55 @@ def test_gaps_and_replay_pages_are_byte_identical_on_a_second_run(tmp_path):
     second = [p.read_bytes() for p in replay_page.write(tmp_path / "two")]
     assert first == second
     assert first == [(replay_page.OUT / f"{s}.md").read_bytes() for s in replay_page.SCENARIOS]
+
+
+# --- order 2026-10-29-task-29 Part C1: a binding tag on every cite --------------------------------------------
+
+TAG = r"\[(binding|advisory|method), (UAE|foreign|international)\]"
+HTML_TAG = r'<span class="tag" data-binding="(binding|advisory|method)" data-jurisdiction="(UAE|foreign|international)">'
+
+
+def _replay_pages() -> list[str]:
+    return [replay_page.render(replay_page.source(sid)) for sid in replay_page.SCENARIOS]
+
+
+def test_every_cite_carries_binding_tag():
+    for page in _replay_pages():
+        ids = re.findall(r"`[a-z0-9-]+:[^`]+`", page)
+        tagged = re.findall(r"`[a-z0-9-]+:[^`]+`(?: \(p\. \d+\))? " + TAG, page)
+        assert ids and len(tagged) == len(ids), page[:80]
+        for line in page.splitlines():
+            if re.match(r"  - `[a-z0-9-]+`", line) or re.match(r"  - [^`\"]+ (EN|AR): ", line):
+                assert re.search(TAG, line), line
+    html = replay_viewer.render()
+    codes = re.findall(r"<code>[a-z0-9-]+:[^<]+</code>", html)
+    tagged = re.findall(r"<code>[a-z0-9-]+:[^<]+</code>(?: \((?:<a [^>]*>)?p\. \d+(?:</a>)?\))? " + HTML_TAG, html)
+    assert codes and len(tagged) == len(codes)
+    for item in re.findall(r'<ul class="clauses">(.*?)</ul>', html):
+        for li in re.findall(r"<li>(.*?)</li>", item):
+            assert re.search(HTML_TAG, li), li
+
+
+def test_tag_reads_the_rule_row_then_the_manifest():
+    from onyx import html_kit
+    assert html_kit.binding("tdra-cpr-v2-en", "26.7.2") == ("binding", "UAE")
+    assert html_kit.binding("itu-t-y3173", "7.2") == ("method", "international")
+    assert html_kit.binding("gdpr-art22", "22(3)") == ("binding", "foreign")
+    with pytest.raises(KeyError):
+        html_kit.binding("no-such-document", "1")
+
+
+def test_design_basis_never_binding():
+    from onyx import gate, html_kit
+    for basis in (gate.IMDA_2_2_2, gate.EU_AI_ACT_50, gate.GDPR_22_3):
+        status, jurisdiction = html_kit.binding(basis["source"], basis["clause"], design_basis=True)
+        assert status == "method" and jurisdiction in {"foreign", "international"}, basis
+    assert "binding" not in html_kit.tag(gate.EU_AI_ACT_50["source"], gate.EU_AI_ACT_50["clause"], design_basis=True)
+
+
+def test_a_bare_id_is_tagged_by_its_law_and_says_so():  # Iyas, 2026-10-29
+    from onyx import html_kit
+    assert html_kit.tag("pdpl-45-2021", "22(1)") == "[binding, UAE] (id lacks its language ending)"
+    assert html_kit.tag("pdpl-45-2021-en", "22(1)") == "[binding, UAE]"
+    s3 = replay_page.render(replay_page.source("S3"))
+    assert "`pdpl-45-2021:22(1)` [binding, UAE] (id lacks its language ending)" in s3
