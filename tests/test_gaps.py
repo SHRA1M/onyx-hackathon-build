@@ -622,7 +622,7 @@ def test_replay_markdown_explains_each_flagged_gap_under_the_abstention_line():
     after = s2.split("gap flagged: gap-1, gap-8, gap-12", 1)[1]
     assert f"- gap-1: {_row('gap-1')['line']}" in after
     assert "Elsewhere: Spain Ley 10/2025 Art 8(2)" in after and "../site/gaps.html#gap-1" in after
-    assert "Elsewhere: none found; this recommendation is the example." in after
+    assert "Elsewhere: 3GPP TS 28.535 §4.2.3" in after  # gap-8's "none found" until Task 33
     s3 = (kb.REPO / "docs" / "replay" / "S3.md").read_text(encoding="utf-8")
     assert "Elsewhere: GDPR Art 28(3)(a)" in s3.split("gap flagged: gap-5", 1)[1]
 
@@ -632,7 +632,7 @@ def test_replay_viewer_and_site_runs_link_the_flagged_gap_to_the_register():
     runs_page = (kb.REPO / "docs" / "site" / "runs.html").read_text(encoding="utf-8")
     assert "Elsewhere: Spain Ley 10/2025 Art 8(2)" in viewer and "Elsewhere: GDPR Art 28(3)(a)" in viewer
     assert 'href="../site/gaps.html#gap-1"' in viewer and 'href="gaps.html#gap-1"' in runs_page
-    assert "Elsewhere: none found; this recommendation is the example." in viewer
+    assert "Elsewhere: 3GPP TS 28.535 §4.2.3" in viewer  # gap-8's "none found" until Task 33
 
 
 # --- order 2026-10-30-task-32-operator-codes: searched entries quoted from the stored source, no chunk ----------

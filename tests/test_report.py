@@ -341,6 +341,7 @@ def test_the_s2_paragraph_names_the_model_down_page():
 @pytest.mark.parametrize("n, label", [("1", "Spain Ley 10/2025 Art 8(2), 8(3)"),
                                       ("10", "Wales WLS Regs 2015 Sch 1 Std 15, 22"),
                                       ("11", "US TSR 16 CFR 310.3(a)(3)(ii)"),
+                                      ("8", "3GPP TS 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4"),  # Task 33
                                       ("12", "EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from "
                                              "2027)")])
 def test_report_global_example_cells_are_the_closer_examples(n, label):
@@ -352,15 +353,19 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 64 documents" in text and "59 are verified" in text and "seventeen foreign texts" in text
+    assert "holds 74 documents" in text and "69 are verified" in text and "twenty-one foreign texts" in text  # Task 33
+    assert "twenty-seven other UAE laws" in text  # 31 UAE instruments minus the four the sentence names (Task 33)
 
 
-@pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "**SRC-2** 51 documents"])
+@pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
+                                   "**SRC-2** 51 documents", "fifteen other UAE laws"])
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 64 documents", "47 are verified": "59 are verified",
-             "nine foreign texts": "seventeen foreign texts", "**SRC-2** 51 documents": "**SRC-2** 64 documents"}[wrong]
+    right = {"holds 51 documents": "holds 74 documents", "47 are verified": "69 are verified",
+             "nine foreign texts": "twenty-one foreign texts", "twenty-two foreign texts": "twenty-one foreign texts",
+             "**SRC-2** 51 documents": "**SRC-2** 74 documents",
+             "fifteen other UAE laws": "twenty-seven other UAE laws"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
@@ -368,7 +373,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("59 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("69 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
@@ -394,3 +399,12 @@ def test_report_row_1_names_dus_chatbot_channel_and_no_operator_is_said_to_break
     row = next(line for line in text.splitlines() if line.startswith("| 1 |"))
     assert row.split("|")[2].strip().endswith("; du's code names a chatbot channel and sets no hand-over rule")
     assert not re.search(r"(\be&|\bdu\b|\bEtisalat\b|\bEITC\b)[^.\n]{0,80}\b(breach|break|violat|fail)", text)
+
+
+def test_task_33_line_26_names_two_unpublished_texts_and_one_unreachable_one():
+    text = REPORT_MD.read_text(encoding="utf-8")
+    assert "two unpublished texts and one unreachable one back no claim" in text
+    assert "three unpublished texts" not in text
+    rows = kb.load_manifest()
+    assert sorted(r["document_id"] for r in rows if r["status"] == "UNVERIFIED") == [
+        "cabinet-agentic-ai-framework-2026-05-18", "csc-ai-security-policy-v1-1", "pdpl-executive-regulations"]

@@ -279,20 +279,37 @@ def _check(para: str, named: list[RunSet]) -> list[str]:
 
 NUMBER_WORDS = ("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen "
                 "seventeen eighteen nineteen twenty").split()
+TENS = {"twenty": 20, "thirty": 30}  # "twenty-one" (Task 33)
+
+
+def _number(word: str) -> int | None:
+    if word.isdigit():
+        return int(word)
+    if word in NUMBER_WORDS:
+        return NUMBER_WORDS.index(word)
+    tens, _, unit = word.partition("-")
+    return TENS[tens] + NUMBER_WORDS.index(unit) if tens in TENS and unit in NUMBER_WORDS[1:10] else None
+
+
 # the knowledge-base counts the report states, each read against kb/manifest.csv (order Task 30, Part C)
 KB_COUNTS = {"documents": re.compile(r"(?:holds|\*\*SRC-2\*\*)\s+(\d+)\s+documents"),
              "verified": re.compile(r"(\d+)\s+are\s+verified"),
-             "foreign": re.compile(r"\b([a-z]+)\s+foreign\s+texts")}
+             "foreign": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+foreign\s+texts"),
+             "uae_other": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+other\s+UAE\s+laws")}
+# "the Telecommunications Law 3/2003, the CPR v2.0, Licence 2/2026, the PDPL and N other UAE laws": the UAE
+# instruments (an announcement is none) less the four the sentence names (order Task 33, Part D)
+NAMED_UAE = 4
 
 
 def check_kb_counts(md: str) -> list[str]:
     rows = kb.load_manifest()
+    uae = {r["instrument"] for r in rows if r["jurisdiction"] == "UAE" and r["source_type"] != "announcement"}
     actual = {"documents": len(rows), "verified": len(kb.verified_rows(rows)),
-              "foreign": sum(r["jurisdiction"] == "foreign" for r in rows)}
+              "foreign": sum(r["jurisdiction"] == "foreign" for r in rows), "uae_other": len(uae) - NAMED_UAE}
     problems = []
     for name, pattern in KB_COUNTS.items():
         for m in pattern.finditer(md):
-            value = NUMBER_WORDS.index(m[1]) if m[1] in NUMBER_WORDS else int(m[1]) if m[1].isdigit() else None
+            value = _number(m[1])
             if value != actual[name]:
                 problems.append(f"{' '.join(m[0].split())}: kb/manifest.csv has {actual[name]} ({name})")
     return problems
