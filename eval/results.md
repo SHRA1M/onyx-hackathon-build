@@ -94,15 +94,17 @@ Clause-id resolution added 2026-10-21 (hq, after C4 S1): an id missing its langu
 
 Each cell is the mean over the governed runs of all five scenarios (ungoverned claims allowed: the mean per ungoverned run). C3: prompt v3; C4: prompt v4; C5: prompt v5; all Sonnet 5.5.
 
-| Row | C3 en | C3 ar | C4 en | C4 ar | C5 en | C5 ar |
-|---|---|---|---|---|---|---|
-| Citation validity (hq rule) | 0.99 | 1.00 | 1.00 | 1.00 | 0.99 | 1.00 |
-| Action recall (corrected addressee rule; earlier rule in brackets) | 0.75 (0.71) | 0.73 (0.71) | 0.93 (0.89) | 0.95 (0.91) | 0.96 (0.96) | 1.00 (0.96) |
-| Obligation proxy | 0.32 | 0.35 | 0.47 | 0.50 | 0.57 | 0.58 |
-| Gap recall | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 |
-| Abstention | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
-| Ungoverned claims allowed | 2.33 | 2.13 | n/a | n/a | n/a | n/a |
-| Runs (governed / ungoverned) | 15 / 15 | 15 / 15 | 10 / 0 | 10 / 0 | 10 / 0 | 10 / 0 |
+| Row | C3 en | C3 ar | C4 en | C4 ar | C5 en | C5 ar | C5 en 95% interval | C5 ar 95% interval |
+|---|---|---|---|---|---|---|---|---|
+| Citation validity (hq rule) | 0.99 | 1.00 | 1.00 | 1.00 | 0.99 | 1.00 | 0.93 to 1.00 (71 of 72) | 0.94 to 1.00 (59 of 59) |
+| Action recall (corrected addressee rule; earlier rule in brackets) | 0.75 (0.71) | 0.73 (0.71) | 0.93 (0.89) | 0.95 (0.91) | 0.96 (0.96) | 1.00 (0.96) | 0.88 to 0.99 (54 of 56) | 0.94 to 1.00 (56 of 56) |
+| Obligation proxy | 0.32 | 0.35 | 0.47 | 0.50 | 0.57 | 0.58 |  |  |
+| Gap recall | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 | 0.87 |  |  |
+| Abstention | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |  |  |
+| Ungoverned claims allowed | 2.33 | 2.13 | n/a | n/a | n/a | n/a |  |  |
+| Runs (governed / ungoverned) | 15 / 15 | 15 / 15 | 10 / 0 | 10 / 0 | 10 / 0 | 10 / 0 |  |  |
+
+Pooled over both languages (C5): action recall 110 of 112 key steps, 95% interval 0.94 to 1.00; citation validity 130 of 131 citing proposals, 95% interval 0.96 to 1.00. Intervals are around the pooled share; the cells left of them are means over runs.
 
 Prompt v5 changes two care lines (the de-identified model-provider payload is draft_reply; a draft_reply is addressed to the step's sender, the human named from the facts) after the C4 misses; governed only, 2 runs per cell; the ungoverned baseline stays C3 on prompt v3.
 
@@ -137,6 +139,35 @@ Governed runs whose proposals at the step miss the key's verb or addressee, of t
 | S4-4 | data_office | request_human_review | 1 of 2 | 0 of 2 |
 
 Misses: 2 of 112 key steps, in 2 steps.
+
+## Gaps against the keys (C5)
+
+Over the C5 runs, against each key's gaps_expected; flags are the set gap recall reads (flag_gap proposals and the abstention's gaps). Unexpected: register ids flagged that the key does not name, with the runs that flagged them. Gap recall itself does not change.
+
+| Scenario | Lang | Runs | Expected | Found in every run | Found in some runs | Missed | Unexpected | Flags naming no register id |
+|---|---|---|---|---|---|---|---|---|
+| S1 | en | 2 | gap-2, gap-6, candidate-4-4-fixed-term-bundle | candidate-4-4-fixed-term-bundle | none | gap-2, gap-6 | none | 0 |
+| S1 | ar | 2 | gap-2, gap-6, candidate-4-4-fixed-term-bundle | candidate-4-4-fixed-term-bundle | none | gap-2, gap-6 | none | 0 |
+| S2 | en | 2 | gap-1 | gap-1 | none | none | gap-8 (2 of 2 runs) | 0 |
+| S2 | ar | 2 | gap-1 | gap-1 | none | none | gap-8 (2 of 2 runs), gap-12 (2 of 2 runs) | 0 |
+| S3 | en | 2 | gap-5 | gap-5 | none | none | none | 0 |
+| S3 | ar | 2 | gap-5 | gap-5 | none | none | none | 0 |
+| S4 | en | 2 | gap-4 | gap-4 | none | none | gap-1 (1 of 2 runs) | 0 |
+| S4 | ar | 2 | gap-4 | gap-4 | none | none | none | 0 |
+| S5 | en | 2 | gap-3 | gap-3 | none | none | none | 0 |
+| S5 | ar | 2 | gap-3 | gap-3 | none | none | none | 0 |
+
+5 of 7 expected gaps found in every run; 2 missed (S1 gap-2, S1 gap-6); 3 unexpected register ids flagged.
+
+## Citation failures by kind (C5)
+
+Shown only, never compared. Validity here means the quote is verbatim in the cited VERIFIED chunk the agent was given; a citation that fails never reaches an action (the gate rejects it before the act).
+
+| Run | Step | Cited id | Kind |
+|---|---|---|---|
+| S2/run2.jsonl | S2-4-care | tdra-cpr-v2-4.3 | id unknown |
+
+Per kind: id unknown 1, id in another document 0, quote not verbatim 0, chunk not VERIFIED 0.
 
 ## Tokens and cost
 
@@ -299,3 +330,6 @@ the prompt of the step's agent (mandate clauses or retrieved), over the steps th
 chunk given is the model's; a miss without it is retrieval's.
 - tokens and cost, per run: model calls, prompt and completion tokens from each reply's usage, and USD priced from
 onyx/data/model_prices.json; "price unknown" where the model has no price row or a reply carries no usage.
+- 95% interval (C5, Wilson score, z = 1.96, beside action recall and citation validity, with its count): the interval treats key steps as independent trials; they are not (steps of one run share a conversation), so read it as a rough width, not a guarantee.
+- gaps against the keys (C5, shown only): per scenario and language, the key's expected gaps found in every run, in some runs, or in none, and the register ids flagged that the key does not name.
+- citation failures by kind (C5, shown only, never compared): each invalid citation as id unknown, id in another document, quote not verbatim or chunk not VERIFIED, the first that applies. Validity here means the quote is verbatim in the cited VERIFIED chunk the agent was given; a citation that fails never reaches an action (the gate rejects it before the act).

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from onyx import audit, data, eval as onyx_eval, model, runs
+from onyx import audit, data, eval as onyx_eval, gate, model, runs
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTED = ROOT / "runs" / "scripted"
@@ -150,3 +150,78 @@ def test_must_cite_given_is_shown_not_compared(tmp_path):
     row = results["scenarios"]["S2"]["governed"]["en"]
     assert set(row["must_cite_given"]) == {"min", "max"}
     assert "Must-cite given" in (tmp_path / "results.md").read_text(encoding="utf-8")
+
+
+# --- Task 29 Part B (order 2026-10-29-task-29-field-take): gaps against the keys, intervals, citation failures ---
+
+C5_RESULTS = ROOT / "eval" / "results.json"
+
+
+def test_wilson_known_values():
+    """95% Wilson score interval, worked by hand from the formula (z = 1.96): 110 of 112 and 54 of 56."""
+    assert [round(v, 3) for v in onyx_eval.wilson(110, 112)] == [0.937, 0.995]
+    assert [round(v, 3) for v in onyx_eval.wilson(54, 56)] == [0.879, 0.990]
+    assert onyx_eval.wilson(56, 56)[1] == 1.0 and onyx_eval.wilson(0, 10)[0] == 0.0
+    assert onyx_eval.wilson(0, 0) is None
+
+
+def test_gaps_vs_keys_s1_misses_two():
+    """S1 C5: the key expects three gaps; the candidate is found in every run, gap-2 and gap-6 in none."""
+    table = onyx_eval.gaps_against_keys(ROOT / "runs" / "c5")
+    s1 = {r["lang"]: r for r in table["rows"] if r["scenario"] == "S1"}
+    for lang in ("en", "ar"):
+        assert s1[lang]["runs"] == 2
+        assert s1[lang]["expected"] == ["gap-2", "gap-6", "candidate-4-4-fixed-term-bundle"]
+        assert s1[lang]["found_every_run"] == ["candidate-4-4-fixed-term-bundle"]
+        assert s1[lang]["found_some_runs"] == {} and s1[lang]["missed"] == ["gap-2", "gap-6"]
+    s2 = {r["lang"]: r for r in table["rows"] if r["scenario"] == "S2"}
+    assert s2["en"]["unexpected"] == {"gap-8": 2} and s2["ar"]["unexpected"] == {"gap-8": 2, "gap-12": 2}
+    assert all(r["flags_without_register_id"] == 0 for r in table["rows"])
+    summary = table["summary"]
+    assert (summary["expected"], summary["found_every_run"], summary["missed"], summary["unexpected"]) == (
+        7, 5, ["S1 gap-2", "S1 gap-6"], 3)
+    assert table["line"] == ("5 of 7 expected gaps found in every run; 2 missed (S1 gap-2, S1 gap-6); "
+                               "3 unexpected register ids flagged")
+
+
+def test_citation_failures_by_kind_in_c5():
+    """B3, shown only: C5's one invalid citation names a chunk id that does not exist (its language ending lost)."""
+    table = onyx_eval.citation_failures(ROOT / "runs" / "c5")
+    assert table["failures"] == [{"run": "S2/run2.jsonl", "step": "S2-4-care", "cited": ["tdra-cpr-v2-4.3"],
+                                  "kind": "id unknown"}]
+    assert table["by_kind"] == {"id unknown": 1, "id in another document": 0, "quote not verbatim": 0,
+                                "chunk not VERIFIED": 0}
+    assert table["by_lang"] == {"en": [71, 72], "ar": [59, 59]}  # valid, citing proposals
+
+
+def test_citation_failure_kinds():
+    kb = gate.Knowledge.load()
+    quote = "The Licensee shall maintain adequate trained personnel to receive and respond promptly to complaints"
+    given = ["licence-2-2026:9.1", "tdra-cpr-v2-en:4.6"]
+    elsewhere = {"clause_ids": ["tdra-cpr-v2-en:4.6"], "quote": quote}
+    assert onyx_eval.citation_failure(elsewhere, kb, given) == ("id in another document", ["tdra-cpr-v2-en:4.6"])
+    invented = {"clause_ids": ["licence-2-2026:9.1"], "quote": "The Licensee may answer complaints whenever it likes"}
+    assert onyx_eval.citation_failure(invented, kb, given) == ("quote not verbatim", ["licence-2-2026:9.1"])
+    assert onyx_eval.citation_failure({"clause_ids": ["licence-2-2026:9.1"], "quote": quote}, kb, given) is None
+
+
+def test_c5_results_carry_the_three_sections():
+    """The committed eval output: B1's summary line under c5.gaps_vs_keys, B2's intervals with n, B3's table; the
+    README results block shows the pooled action-recall interval only, read from results.json."""
+    c5 = json.loads(C5_RESULTS.read_text(encoding="utf-8"))["c5"]
+    assert c5["gaps_vs_keys"]["line"] == onyx_eval.gaps_against_keys(ROOT / "runs" / "c5")["line"]
+    recall = c5["intervals"]["action_recall"]
+    assert (recall["pooled"]["hits"], recall["pooled"]["n"], recall["en"]["n"], recall["ar"]["n"]) == (110, 112, 56, 56)
+    assert [round(v, 3) for v in recall["pooled"]["ci95"]] == [0.937, 0.995]
+    validity = c5["intervals"]["citation_validity"]
+    assert (validity["en"]["hits"], validity["en"]["n"], validity["ar"]["n"]) == (71, 72, 59)
+    assert c5["citation_failures"]["by_kind"]["id unknown"] == 1
+    md = (ROOT / "eval" / "results.md").read_text(encoding="utf-8")
+    for heading in ("## Gaps against the keys (C5)", "## Citation failures by kind (C5)"):
+        assert heading in md
+    assert c5["gaps_vs_keys"]["line"] in md
+    assert ("the interval treats key steps as independent trials; they are not (steps of one run share a "
+            "conversation), so read it as a rough width, not a guarantee") in md
+    lo, hi = recall["pooled"]["ci95"]
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"110 of 112 key steps, 95% interval {lo:.2f} to {hi:.2f}" in " ".join(readme.split())

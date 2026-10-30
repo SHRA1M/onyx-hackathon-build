@@ -98,6 +98,22 @@ def _ratio(hit: int, total: int) -> float | None:
     return round(hit / total, 4) if total else None
 
 
+Z95 = 1.96
+
+
+def wilson(hits: int, n: int, z: float = Z95) -> tuple[float, float] | None:
+    """The Wilson score interval for hits of n trials (95% at z = 1.96): the centre p + z^2/2n and the half-width
+    z * sqrt(p(1 - p)/n + z^2/4n^2), both over 1 + z^2/n. Unlike p +- z * sqrt(p(1 - p)/n) it stays inside 0 to 1
+    and keeps a width at 0 or n hits. None for no trials. Order Task 29 Part B2: no library."""
+    if not n:
+        return None
+    p, z2 = hits / n, z * z
+    denominator = 1 + z2 / n
+    centre = (p + z2 / (2 * n)) / denominator
+    half = z * (p * (1 - p) / n + z2 / (4 * n * n)) ** 0.5 / denominator
+    return max(0.0, centre - half), min(1.0, centre + half)
+
+
 def action_hits(events: list[dict[str, Any]], key: dict[str, Any], scenario: dict[str, Any],
                 corrected: bool = True) -> dict[int, bool]:
     """Per key step, whether the key's agent proposed the key's verb to the expected addressee. corrected=False is
@@ -145,6 +161,112 @@ def _citation_valid(proposal: dict[str, Any], kb: gate.Knowledge, given: list[st
     return len(quote) >= data.MIN_QUOTE and any(quote in t for t in texts if t)
 
 
+def _given(events: list[dict[str, Any]]):
+    """For a gate event: the clauses given for the step, the prompt's, or the proposal's own where no prompt was
+    sent."""
+    prompts = {e["entity_id"]: e["new_value"].get("sources_mandate", []) + e["new_value"]["sources_used"]
+               for e in events if e["action"] == "propose"}
+    return lambda e: prompts.get(e["entity_id"], e["old_value"].get("clause_ids") or [])
+
+
+FAILURE_KINDS = ("id unknown", "id in another document", "quote not verbatim", "chunk not VERIFIED")
+
+
+def citation_failure(proposal: dict[str, Any], kb: gate.Knowledge, given: list[str]) -> tuple[str, list[str]] | None:
+    """Order Task 29 Part B3, shown only: why a citation fails citation validity, with the ids it names, or None when
+    it is valid. The first that applies: a cited id (after resolution) names no chunk; a cited chunk is not VERIFIED;
+    the quote is verbatim in a given clause of a document no cited id is in; else the quote is not verbatim (or under
+    the minimum length) in the cited chunks."""
+    cited = gate.resolve_ids(proposal.get("clause_ids") or [], given)[0]
+    chunks = {cid: kb.chunk(cid) for cid in cited}
+    if unknown := [cid for cid, chunk in chunks.items() if chunk is None]:
+        return "id unknown", unknown
+    if unverified := [cid for cid, chunk in chunks.items() if chunk.get("status") != "VERIFIED"]:
+        return "chunk not VERIFIED", unverified
+    if _citation_valid(proposal, kb, given):
+        return None
+    quote = re.sub(r"\s+", " ", proposal.get("quote", "")).strip()
+    documents = {cid.partition(":")[0] for cid in cited}
+    for cid in given:
+        chunk = kb.chunk(cid)
+        if cid.partition(":")[0] not in documents and chunk and len(quote) >= data.MIN_QUOTE and any(
+                quote in re.sub(r"\s+", " ", chunk.get(f, "") or "").strip() for f in ("text_en", "text_ar")):
+            return "id in another document", cited
+    return "quote not verbatim", cited
+
+
+def citation_failures(root: str | Path) -> dict[str, Any]:
+    """Every invalid citation in the governed runs of a run folder (runs/c5), with its run, step, the ids that fail
+    and the kind; the count per kind; per language, valid and citing proposals (the counts behind the interval).
+    Citing proposals as in citation validity: a flag_gap citing nothing is left out."""
+    kb = gate.Knowledge.load()
+    failures, by_lang = [], {lang: [0, 0] for lang in LANGS}
+    for sid in SCENARIOS:
+        for lang in LANGS:
+            for n in range(1, RUNS + 1):
+                if not (path := run_path(root, sid, n, lang, True)).exists():
+                    continue
+                events = _events(path)
+                given = _given(events)
+                for e in _gates(events, pending=False):
+                    if e["old_value"]["verb"] == "flag_gap" and not e["old_value"].get("clause_ids"):
+                        continue
+                    failure = citation_failure(e["old_value"], kb, given(e))
+                    by_lang[lang][1] += 1
+                    by_lang[lang][0] += failure is None
+                    if failure:
+                        failures.append({"run": path.relative_to(root).as_posix(), "step": e["entity_id"],
+                                         "cited": failure[1], "kind": failure[0]})
+    return {"failures": failures, "by_kind": {k: sum(f["kind"] == k for f in failures) for k in FAILURE_KINDS},
+            "by_lang": by_lang}
+
+
+def _flagged(proposals: list[dict[str, Any]], abstains: dict[int, dict[str, Any]]) -> set[str]:
+    """What a run flagged: each flag_gap proposal's args.gap (else its target) and every abstention's gaps. Gap recall
+    and the gaps-against-keys table read the same set."""
+    return {str(e["old_value"]["args"].get("gap") or e["old_value"]["target"]) for e in proposals
+            if e["old_value"]["verb"] == "flag_gap"} | {g for e in abstains.values() for g in e["new_value"]["gaps"]}
+
+
+def _run_flags(events: list[dict[str, Any]]) -> set[str]:
+    abstains = {_step(e["entity_id"]): e for e in events if e["action"] == "abstain" and e["actor"] == "adviser"}
+    return _flagged(_gates(events, pending=False), abstains)
+
+
+def gaps_against_keys(root: str | Path) -> dict[str, Any]:
+    """Order Task 29 Part B1, over the governed runs of a run folder (runs/c5): per scenario and language, the key's
+    expected gaps found in every run, found in some (with the run count), missed; the register ids flagged that the
+    key does not name (with the run count); and the flags that name no register id. The summary counts per scenario,
+    both languages together: an expected gap is found in every run when every run of the scenario flagged it."""
+    root = Path(root)
+    register = [g["id"] for g in data.load_gaps()["gaps"]]
+    rows, every, missed, unexpected = [], 0, [], set()
+    total = 0
+    for sid in SCENARIOS:
+        expected = data.load_key(sid)["gaps_expected"]
+        per_scenario: list[set[str]] = []
+        for lang in LANGS:
+            flags = [_run_flags(_events(p)) for n in range(1, RUNS + 1)
+                     if (p := run_path(root, sid, n, lang, True)).exists()]
+            per_scenario += flags
+            found = {g: sum(g in f for f in flags) for g in expected}
+            others = {g: sum(g in f for f in flags) for g in register if g not in expected}
+            rows.append({"scenario": sid, "lang": lang, "runs": len(flags), "expected": expected,
+                         "found_every_run": [g for g in expected if flags and found[g] == len(flags)],
+                         "found_some_runs": {g: c for g, c in found.items() if 0 < c < len(flags)},
+                         "missed": [g for g in expected if not found[g]],
+                         "unexpected": {g: c for g, c in others.items() if c},
+                         "flags_without_register_id": sum(len(f - set(register)) for f in flags)})
+            unexpected |= {(sid, g) for g, c in others.items() if c}
+        total += len(expected)
+        every += sum(bool(per_scenario) and all(g in f for f in per_scenario) for g in expected)
+        missed += [f"{sid} {g}" for g in expected if not any(g in f for f in per_scenario)]
+    line = (f"{every} of {total} expected gaps found in every run; {len(missed)} missed ({', '.join(missed) or 'none'}); "
+            f"{len(unexpected)} unexpected register ids flagged")
+    return {"line": line, "rows": rows, "summary": {"expected": total, "found_every_run": every, "missed": missed,
+                                                    "unexpected": len(unexpected)}}
+
+
 def _signature(events: list[dict[str, Any]]) -> dict[str, tuple[Any, ...]]:
     return {f"{e['entity_id']}:{e['action']}": (e["verdict"], tuple(sorted(e["clause_ids"]))) for e in events
             if e["action"] in {"gate", "abstain"}}
@@ -155,12 +277,7 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
     """earlier_addressee=True scores action_recall on the addressee rule before 2026-10-21, and resolve=False the ids
     as cited (the bake-off tables)."""
     events = _events(path)
-    prompts = {e["entity_id"]: e["new_value"].get("sources_mandate", []) + e["new_value"]["sources_used"]
-               for e in events if e["action"] == "propose"}
-
-    def given(e: dict[str, Any]) -> list[str]:
-        """The clauses given for the step: the prompt's, or the proposal's own where no prompt was sent."""
-        return prompts.get(e["entity_id"], e["old_value"].get("clause_ids") or [])
+    given = _given(events)
 
     def valid(e: dict[str, Any], resolved: bool = resolve) -> bool:
         return _citation_valid(e["old_value"], kb, given(e) if resolved else None)
@@ -195,8 +312,7 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
         total += len(step["obligations"])
         met += len(step["obligations"]) if reached and set(step["must_cite"]) <= on_record else 0
 
-    flagged = {str(e["old_value"]["args"].get("gap") or e["old_value"]["target"]) for e in proposals
-               if e["old_value"]["verb"] == "flag_gap"} | {g for e in abstains.values() for g in e["new_value"]["gaps"]}
+    flagged = _flagged(proposals, abstains)
     handover = None
     if key.get("handover_step"):
         for n in sorted(by_step):
@@ -232,6 +348,7 @@ def run_metrics(path: Path, key: dict[str, Any], scenario: dict[str, Any], kb: g
         "action_recall_earlier": _ratio(sum(earlier.values()), len(earlier)),
         "obligation_proxy": _ratio(met, total),
         "gap_recall": _ratio(len(set(key["gaps_expected"]) & flagged), len(key["gaps_expected"])),
+        "flagged": sorted(flagged),
         "abstention": int(abstains.get(key["abstain_step"], {}).get("verdict") == gate.INSUFFICIENT),
         "handover_latency_steps": handover,
         "ungoverned_claims_allowed": None if governed else len(claims),
@@ -382,8 +499,19 @@ def _c5(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[
     c5 = _rerun(root / C5, kb, by_chunk)
     scored = sum(m[lang][1] for m in c5["misses"].values() for lang in LANGS)
     missed = {k: v for k, v in c5["misses"].items() if v["en"][0] or v["ar"][0]}
+    failures = citation_failures(root / C5)
+    recall = {lang: [sum(m[lang][1] - m[lang][0] for m in c5["misses"].values()),
+                     sum(m[lang][1] for m in c5["misses"].values())] for lang in LANGS}
     return {"C5": _summary(c5["scored"]), "prompts": c5["prompts"], "runs": c5["runs"], "misses": missed,
-            "key_steps": scored}
+            "key_steps": scored, "gaps_vs_keys": gaps_against_keys(root / C5), "citation_failures": failures,
+            "intervals": {"action_recall": _intervals(recall), "citation_validity": _intervals(failures["by_lang"])}}
+
+
+def _intervals(counts: dict[str, list[int]]) -> dict[str, Any]:
+    """Per language and pooled over both: hits, n and the 95% Wilson interval (order Task 29 Part B2)."""
+    counts = {**counts, "pooled": [sum(counts[lang][0] for lang in LANGS), sum(counts[lang][1] for lang in LANGS)]}
+    return {k: {"hits": hits, "n": n, "ci95": [round(v, 4) for v in wilson(hits, n) or ()] or None}
+            for k, (hits, n) in counts.items()}
 
 
 def _cell(span: dict[str, Any]) -> str:
@@ -447,6 +575,54 @@ def _fig(value: float | None) -> str:
     return "n/a" if value is None else f"{value:.2f}"
 
 
+def _interval(row: dict[str, Any], counts: bool = True) -> str:
+    if row["ci95"] is None:
+        return "n/a"
+    lo, hi = row["ci95"]
+    return f"{lo:.2f} to {hi:.2f}" + (f" ({row['hits']} of {row['n']})" if counts else "")
+
+
+GAPS_LINE = ("Over the C5 runs, against each key's gaps_expected; flags are the set gap recall reads (flag_gap "
+             "proposals and the abstention's gaps). Unexpected: register ids flagged that the key does not name, with "
+             "the runs that flagged them. Gap recall itself does not change.")
+FAILURES_LINE = ("Validity here means the quote is verbatim in the cited VERIFIED chunk the agent was given; a citation "
+                 "that fails never reaches an action (the gate rejects it before the act).")
+C5_DEFINITIONS = [
+    "- 95% interval (C5, Wilson score, z = 1.96, beside action recall and citation validity, with its count): the "
+    "interval treats key steps as independent trials; they are not (steps of one run share a conversation), so read "
+    "it as a rough width, not a guarantee.",
+    "- gaps against the keys (C5, shown only): per scenario and language, the key's expected gaps found in every run, "
+    "in some runs, or in none, and the register ids flagged that the key does not name.",
+    "- citation failures by kind (C5, shown only, never compared): each invalid citation as id unknown, id in another "
+    "document, quote not verbatim or chunk not VERIFIED, the first that applies. " + FAILURES_LINE,
+]
+
+
+def _ids(ids: list[str] | dict[str, int], runs: int = 0) -> str:
+    if isinstance(ids, dict):
+        return ", ".join(f"{g} ({c} of {runs} runs)" for g, c in ids.items()) or "none"
+    return ", ".join(ids) or "none"
+
+
+def _c5_sections(results: dict[str, Any]) -> list[str]:
+    """Order Task 29 Part B1 and B3, after the C3, C4 and C5 section."""
+    if "c5" not in results:
+        return []
+    gaps, failures = results["c5"]["gaps_vs_keys"], results["c5"]["citation_failures"]
+    lines = ["## Gaps against the keys (C5)", "", GAPS_LINE, "",
+             "| Scenario | Lang | Runs | Expected | Found in every run | Found in some runs | Missed | Unexpected | "
+             "Flags naming no register id |", "|---|---|---|---|---|---|---|---|---|"]
+    lines += [f"| {r['scenario']} | {r['lang']} | {r['runs']} | {_ids(r['expected'])} | {_ids(r['found_every_run'])} | "
+              f"{_ids(r['found_some_runs'], r['runs'])} | {_ids(r['missed'])} | {_ids(r['unexpected'], r['runs'])} | "
+              f"{r['flags_without_register_id']} |" for r in gaps["rows"]]
+    lines += ["", gaps["line"] + ".", "",
+              "## Citation failures by kind (C5)", "", "Shown only, never compared. " + FAILURES_LINE, "",
+              "| Run | Step | Cited id | Kind |", "|---|---|---|---|"]
+    lines += [f"| {f['run']} | {f['step']} | {', '.join(f['cited'])} | {f['kind']} |" for f in failures["failures"]]
+    lines += ["", "Per kind: " + ", ".join(f"{k} {n}" for k, n in failures["by_kind"].items()) + ".", ""]
+    return lines
+
+
 def _c4_lines(results: dict[str, Any]) -> list[str]:
     """The C4 table beside C3 (order 2026-10-21-task-8-part-c4 item 6), when runs/c4 exists; with C5 beside both when
     runs/c5 exists (order 2026-10-22 item 10)."""
@@ -455,24 +631,35 @@ def _c4_lines(results: dict[str, Any]) -> list[str]:
     c4, c5 = results["c4"], results.get("c5")
     summaries = {"C3": c4["C3"], "C4": c4["C4"], **({"C5": c5["C5"]} if c5 else {})}
     names = list(summaries)
+    intervals = [f"C5 {lang} 95% interval" for lang in LANGS] if c5 else []
     lines = [f"## {'C3, C4 and C5' if c5 else 'C4 beside C3'} (governed, en / ar)", "",
              "Each cell is the mean over the governed runs of all five scenarios (ungoverned claims allowed: the mean "
              "per ungoverned run). C3: prompt v3; C4: prompt v4; " +
              ("C5: prompt v5; all Sonnet 5.5." if c5 else "both Sonnet 5.5."), "",
-             "| Row | " + " | ".join(f"{n} {lang}" for n in names for lang in LANGS) + " |",
-             "|---|" + "---|" * (len(names) * len(LANGS))]
+             "| Row | " + " | ".join([f"{n} {lang}" for n in names for lang in LANGS] + intervals) + " |",
+             "|---|" + "---|" * (len(names) * len(LANGS) + len(intervals))]
 
-    def cells(fn) -> str:
-        return " | ".join(fn(summaries[run]["all"][lang]) for run in names for lang in LANGS)
+    def cells(fn, metric: str = "") -> str:
+        shown = [fn(summaries[run]["all"][lang]) for run in names for lang in LANGS]
+        if c5:
+            shown += [_interval(c5["intervals"][metric][lang]) if metric in c5["intervals"] else "" for lang in LANGS]
+        return " | ".join(shown)
     for label, metric in SUMMARY:
         if metric == "action_recall":
             lines.append("| Action recall (corrected addressee rule; earlier rule in brackets) | " + cells(
-                lambda r: f"{_fig(r['action_recall'])} ({_fig(r['action_recall_earlier'])})") + " |")
+                lambda r: f"{_fig(r['action_recall'])} ({_fig(r['action_recall_earlier'])})", metric) + " |")
         else:
-            lines.append(f"| {label} | " + cells(lambda r, m=metric: _fig(r[m])) + " |")
+            lines.append(f"| {label} | " + cells(lambda r, m=metric: _fig(r[m]), metric) + " |")
     lines += ["| Ungoverned claims allowed | " + cells(lambda r: _fig(r["ungoverned_claims_allowed"])) + " |",
               "| Runs (governed / ungoverned) | " + cells(lambda r: f"{r['runs']} / {r['ungoverned_runs']}") + " |", ""]
     if c5:
+        pooled = c5["intervals"]
+        lines += [f"Pooled over both languages (C5): action recall {pooled['action_recall']['pooled']['hits']} of "
+                  f"{pooled['action_recall']['pooled']['n']} key steps, 95% interval "
+                  f"{_interval(pooled['action_recall']['pooled'], counts=False)}; citation validity "
+                  f"{pooled['citation_validity']['pooled']['hits']} of {pooled['citation_validity']['pooled']['n']} "
+                  f"citing proposals, 95% interval {_interval(pooled['citation_validity']['pooled'], counts=False)}. "
+                  "Intervals are around the pooled share; the cells left of them are means over runs.", ""]
         lines += [C5_LINE, ""]
     lines += [C4_LINE, "", C4_RUNS_LINE, "",
               "Prompt named on each C4 run_start: governed " + (", ".join(c4["prompts"]["governed"]) or "none") +
@@ -540,6 +727,7 @@ def _markdown(results: dict[str, Any]) -> str:
     lines += _both_ways(results)
     lines += _resolution(results)
     lines += _c4_lines(results)
+    lines += _c5_sections(results)
     prices = cost.load_prices()
     lines += ["## Tokens and cost", "",
               f"Priced from {prices['source']} (read {prices['read']}), base input and output prices; a model with no "
@@ -554,6 +742,7 @@ def _markdown(results: dict[str, Any]) -> str:
                   "|---|---|---|---|---|---|", *_cost_rows(results["c5"]["runs"])]
     lines += ["## Definitions", "", *[line.strip() for line in __doc__.split("Metrics,", 1)[1].splitlines()[1:]
                                       if line.strip()]]
+    lines += C5_DEFINITIONS if "c5" in results else []
     return "\n".join(lines) + "\n"
 
 

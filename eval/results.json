@@ -556,6 +556,269 @@
     }
    }
   },
+  "citation_failures": {
+   "by_kind": {
+    "chunk not VERIFIED": 0,
+    "id in another document": 0,
+    "id unknown": 1,
+    "quote not verbatim": 0
+   },
+   "by_lang": {
+    "ar": [
+     59,
+     59
+    ],
+    "en": [
+     71,
+     72
+    ]
+   },
+   "failures": [
+    {
+     "cited": [
+      "tdra-cpr-v2-4.3"
+     ],
+     "kind": "id unknown",
+     "run": "S2/run2.jsonl",
+     "step": "S2-4-care"
+    }
+   ]
+  },
+  "gaps_vs_keys": {
+   "line": "5 of 7 expected gaps found in every run; 2 missed (S1 gap-2, S1 gap-6); 3 unexpected register ids flagged",
+   "rows": [
+    {
+     "expected": [
+      "gap-2",
+      "gap-6",
+      "candidate-4-4-fixed-term-bundle"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "candidate-4-4-fixed-term-bundle"
+     ],
+     "found_some_runs": {},
+     "lang": "en",
+     "missed": [
+      "gap-2",
+      "gap-6"
+     ],
+     "runs": 2,
+     "scenario": "S1",
+     "unexpected": {}
+    },
+    {
+     "expected": [
+      "gap-2",
+      "gap-6",
+      "candidate-4-4-fixed-term-bundle"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "candidate-4-4-fixed-term-bundle"
+     ],
+     "found_some_runs": {},
+     "lang": "ar",
+     "missed": [
+      "gap-2",
+      "gap-6"
+     ],
+     "runs": 2,
+     "scenario": "S1",
+     "unexpected": {}
+    },
+    {
+     "expected": [
+      "gap-1"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-1"
+     ],
+     "found_some_runs": {},
+     "lang": "en",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S2",
+     "unexpected": {
+      "gap-8": 2
+     }
+    },
+    {
+     "expected": [
+      "gap-1"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-1"
+     ],
+     "found_some_runs": {},
+     "lang": "ar",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S2",
+     "unexpected": {
+      "gap-12": 2,
+      "gap-8": 2
+     }
+    },
+    {
+     "expected": [
+      "gap-5"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-5"
+     ],
+     "found_some_runs": {},
+     "lang": "en",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S3",
+     "unexpected": {}
+    },
+    {
+     "expected": [
+      "gap-5"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-5"
+     ],
+     "found_some_runs": {},
+     "lang": "ar",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S3",
+     "unexpected": {}
+    },
+    {
+     "expected": [
+      "gap-4"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-4"
+     ],
+     "found_some_runs": {},
+     "lang": "en",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S4",
+     "unexpected": {
+      "gap-1": 1
+     }
+    },
+    {
+     "expected": [
+      "gap-4"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-4"
+     ],
+     "found_some_runs": {},
+     "lang": "ar",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S4",
+     "unexpected": {}
+    },
+    {
+     "expected": [
+      "gap-3"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-3"
+     ],
+     "found_some_runs": {},
+     "lang": "en",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S5",
+     "unexpected": {}
+    },
+    {
+     "expected": [
+      "gap-3"
+     ],
+     "flags_without_register_id": 0,
+     "found_every_run": [
+      "gap-3"
+     ],
+     "found_some_runs": {},
+     "lang": "ar",
+     "missed": [],
+     "runs": 2,
+     "scenario": "S5",
+     "unexpected": {}
+    }
+   ],
+   "summary": {
+    "expected": 7,
+    "found_every_run": 5,
+    "missed": [
+     "S1 gap-2",
+     "S1 gap-6"
+    ],
+    "unexpected": 3
+   }
+  },
+  "intervals": {
+   "action_recall": {
+    "ar": {
+     "ci95": [
+      0.9358,
+      1.0
+     ],
+     "hits": 56,
+     "n": 56
+    },
+    "en": {
+     "ci95": [
+      0.8788,
+      0.9902
+     ],
+     "hits": 54,
+     "n": 56
+    },
+    "pooled": {
+     "ci95": [
+      0.9372,
+      0.9951
+     ],
+     "hits": 110,
+     "n": 112
+    }
+   },
+   "citation_validity": {
+    "ar": {
+     "ci95": [
+      0.9389,
+      1.0
+     ],
+     "hits": 59,
+     "n": 59
+    },
+    "en": {
+     "ci95": [
+      0.9254,
+      0.9975
+     ],
+     "hits": 71,
+     "n": 72
+    },
+    "pooled": {
+     "ci95": [
+      0.958,
+      0.9987
+     ],
+     "hits": 130,
+     "n": 131
+    }
+   }
+  },
   "key_steps": 112,
   "misses": {
    "S3-4": {

@@ -155,7 +155,7 @@ The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox
 - Bake-off: [`eval/bakeoff.md`](eval/bakeoff.md), one governed run per scenario (S1 to S5) per language per model.
 - Scored run: [`eval/results.md`](eval/results.md), C5, Sonnet on prompt v5, two runs per scenario per language,
   governed (English / Arabic): action recall 0.96 / 1.00, citation validity 0.99 / 1.00, obligation proxy
-  0.57 / 0.58; 2 of 112 key steps missed.
+  0.57 / 0.58; 2 of 112 key steps missed (pooled action recall 110 of 112 key steps, 95% interval 0.94 to 1.00).
 - Ungoverned baseline: C3, Sonnet on prompt v3, three runs per scenario per mode per language.
 
 Clause-id resolution (2026-10-21, hq): a cited id missing its language ending (`-en`, `-ar`) resolves to the one
