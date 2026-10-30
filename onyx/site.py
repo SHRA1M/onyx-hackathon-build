@@ -19,7 +19,7 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
-from onyx import audit, data, eval as eval_mod, kb, modeldown, replay_page, replay_viewer, runs, whatif
+from onyx import audit, data, eval as eval_mod, gaps, kb, modeldown, replay_page, replay_viewer, runs, whatif
 from onyx.html_kit import CSS, NOTICE, inline_json, quote, text, verdict
 
 OUT = kb.REPO / "docs" / "site"
@@ -213,11 +213,18 @@ def _searched(s: dict[str, Any]) -> str:
     return "<li>" + "<br>".join(parts) + "</li>"
 
 
+def _example(ex: dict[str, Any]) -> str:
+    page = f"p. {ex['page']}, " if ex.get("page") else ""  # the PDF page, as docs/gaps.md (Task 35)
+    lang = "AR: " if kb._is_arabic(ex["quote"]) else ""  # an Arabic original's own text, as docs/gaps.md (Task 35)
+    ar = (f"<br>AR (p. {ex['page_ar']}, <code>{escape(ex['file_ar'])}</code>): {quote(ex['quote_ar'], 'ar')}"
+          if ex.get("quote_ar") else "")  # the Arabic beside the English (Task 35, Saudi 552/1445)
+    return (f"<li>{escape(ex['document'])}, {escape(ex['clause'])} ({escape(ex['status'])}, {page}"
+            f"<code>{escape(ex['file'])}</code>): {escape(ex['says']) + ' ' if ex.get('says') else ''}"
+            f"{lang}{quote(ex['quote'])}{ar}</li>")  # says: a caveat beside the quote (Task 31)
+
+
 def _examples(title: str, examples: list[dict[str, Any]]) -> str:
-    items = "".join(f"<li>{escape(ex['document'])}, {escape(ex['clause'])} ({escape(ex['status'])}, "
-                    f"<code>{escape(ex['file'])}</code>): {escape(ex['says']) + ' ' if ex.get('says') else ''}"
-                    f"{quote(ex['quote'])}</li>" for ex in examples)  # says: a caveat beside the quote (Task 31)
-    return f"<h4>{title}</h4><ul>{items}</ul>"
+    return f"<h4>{title}</h4><ul>{''.join(_example(ex) for ex in examples)}</ul>"
 
 
 def _gap(row: dict[str, Any]) -> str:
@@ -253,6 +260,7 @@ def gaps_page() -> str:
             "<p>A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern. "
             "Every row lists the clauses searched and what each says, English and, where the chunk holds it, Arabic. "
             "Rows in the report's order; read from <code>onyx/data/gaps.json</code>.</p>"
+            f"<p>{escape(gaps.GULF_LINE)}</p>"
             f'<ol class="toc">{toc}</ol>' + "".join(_gap(by_id[i]) for i in order) +
             f"<h2>Candidates</h2><p>Flagged as candidates; no global example required.</p>{candidates}"
             f'<p class="meta">Sources: {escape(register["source"])}.</p>')

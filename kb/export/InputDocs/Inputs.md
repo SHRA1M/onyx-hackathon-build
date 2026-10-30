@@ -73,7 +73,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 6 | `3gpp-ts-28-535-v19.pdf` | `standard` | ETSI TS 128 535 V19.0.0 (2025-10), 3GPP TS 28.535, Management services for communication service assurance; Requirements | VERIFIED | `f43be1bda69e…` | 24 | [link](https://www.etsi.org/deliver/etsi_ts/128500_128599/128535/19.00.00_60/ts_128535v190000p.pdf) |
 | 7 | `etsi-gs-zsm-009-1-v1-1-1.pdf` | `standard` | ETSI GS ZSM 009-1 V1.1.1 (2021-06), Zero-touch network and Service Management (ZSM); Closed-Loop Automation; Part 1: Enablers | VERIFIED | `492bac221401…` | 40 | [link](https://www.etsi.org/deliver/etsi_gs/ZSM/001_099/00901/01.01.01_60/gs_ZSM00901v010101p.pdf) |
 
-## Global_Examples/ (20 files)
+## Global_Examples/ (26 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -97,6 +97,12 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 18 | `de-tkg-2021-para-56.txt` | `extract` | Telekommunikationsgesetz (TKG) 2021, § 56 (extract) | VERIFIED | `ed78ba96775f…` |  | [link](https://www.gesetze-im-internet.de/tkg_2021/__56.html) |
 | 19 | `eidas-910-2014-art8.txt` | `extract` | Regulation (EU) No 910/2014 (eIDAS), Article 8, Assurance levels of electronic identification schemes (extract) | VERIFIED | `fa53cfcbef9b…` |  | [link](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910) |
 | 20 | `coppa-16cfr312-5.txt` | `extract` | 16 CFR 312.5, Children's Online Privacy Protection Rule, Parental consent (extract) | VERIFIED | `f62f7bff5bb3…` |  | [link](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-312/section-312.5) |
+| 21 | `qatar-cra-ccpr-2024.pdf` | `regulation` | Communications Consumer Protection Regulation (Qatar CRA), CRA President's Decision 39/2024, CRACA/2024/10/02, October 2024, bilingual | VERIFIED | `c8a04d663cad…` | 69 | [link](https://www.cra.gov.qa/-/media/System/C/3/F/C/C3FC33E54B585B91A7134F7C9786FD17/COMMUNICATIONS-CONSUMER-PROTECTION-REGULATION-FINAL.ashx?download=1) |
+| 22 | `kuwait-citra-res-69-2022-en.pdf` | `decision` | CITRA Resolution No. (69) of 2022, The Regulation of Protecting Communications and Information Technology Services Users' Rights (Kuwait), issuing decision, English | VERIFIED | `4c9f2e4d7469…` | 2 | [link](https://www.citra.gov.kw/sites/en/LegalReferences/Resolution-No-69(2022)-The-Regulation-of-Protecting-Communications-and-Information-Technology-Services-Users-Rights.pdf) |
+| 23 | `kuwait-citra-users-rights-ar.pdf` | `regulation` | CITRA, Regulation of Protecting Communications and Information Technology Services Users' Rights (Kuwait), version 1.3, Arabic | VERIFIED | `5107d9d0eafc…` | 18 | [link](https://www.citra.gov.kw/sites/ar/LegalReferences/protection.pdf) |
+| 24 | `saudi-cst-user-protection-552-1445-en.pdf` | `regulation` | CST, Regulations of User Rights Protection Rules, RC05, second version, February 2024 (Saudi Arabia), English | VERIFIED | `113cc118ff4e…` | 34 | [link](https://www.cst.gov.sa/-/media/D372076E57474D16915514D5C2B32C84.pdf) |
+| 25 | `saudi-cst-user-protection-552-1445-ar.pdf` | `regulation` | CST, Regulations of User Rights Protection Rules, RC05, 2024 (Saudi Arabia), Arabic | VERIFIED | `eaa4035d46b5…` | 32 | [link](https://www.cst.gov.sa/-/media/44F95AD6EA7D4781A57976B9DCAA5B91.pdf) |
+| 26 | `qatar-decree-law-16-2010-ar.md` | `extract` | Decree-Law No. 16 of 2010, Electronic Transactions and Commerce Law (Qatar), Arabic, Articles 1 (one definition), 2, 19, 27 and 53 to 57 (extract) | VERIFIED | `505cb4cdae5f…` |  | [link](https://almeezan.qa/legislations/decree-law/2010/16/general) |
 
 ## Unverified/ (3 files)
 

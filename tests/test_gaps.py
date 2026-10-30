@@ -273,7 +273,9 @@ def test_gap_10_searches_the_orders_clauses():
                         "consumer-law-15-2020-en:26", "consumer-law-15-2020-en:25(1)", "consumer-law-15-2020-en:8(4)",
                         "cabinet-66-2023-en:43(5)", "licence-2-2026:16.7", "qos-v3-en:9.5",
                         "tdra-cpr-v2-en:26.2", "tdra-cpr-v2-en:26.6",  # order 2026-10-25 Task 26, A5
-                        "du-code-of-practice-en:Annex 1"]  # Task 32
+                        "du-code-of-practice-en:Annex 1",  # Task 32
+                        "saudi-cst-user-protection-552-1445-en:9.2.2", "saudi-cst-user-protection-552-1445-en:16.4",
+                        "saudi-cst-user-protection-552-1445-en:26.6"]  # Task 35
     assert "inferred" in _row("gap-10")["searched"][0]["says"]  # 3.2.1 (electronic form) reaches an app chat
 
 
@@ -372,12 +374,13 @@ def test_gap_12_row_is_the_orders():
     assert (row["kind"], row["category"], row["addressee"], row["exposed_by"]) == (
         "absence", "standards gap", ["ITU"], "S1")
     assert row["competitor"] == "no" and row["global_none"] == ""
-    assert [s["clause"] for s in row["searched"]] == [
+    earlier = row["searched"][:-len(TASK_35_SEARCHED["gap-12"])]  # Task 35 appends three filed entries
+    assert [s["clause"] for s in earlier] == [
         "itu-t-y3173:3.2.1", "itu-t-y3173:6.1", "itu-t-y3173:7.2", "itu-t-y3173:7.2", "itu-t-y3173:8.2",
         "itu-t-y3173:9", "itu-t-y3173:9"]  # Readiness 2.0 is framework, not searched (ruling item 1)
-    for s in row["searched"]:
+    for s in earlier:
         assert sorted(s) == ["clause", "page", "quote", "says"], s["clause"]
-    for s in row["searched"][-2:]:  # Appendix I.1 through chunk 9 (ruling item 2)
+    for s in earlier[-2:]:  # Appendix I.1 through chunk 9 (ruling item 2)
         assert s["says"].startswith("Appendix I.1, Table I.1 (the chunker folds the appendices into clause 9)")
     assert len(row["standard_text"]) == 3 and len(row["global_examples"]) == 5  # SAE L3, L4; roaming x2, AI Act (Task 31)
 
@@ -546,7 +549,7 @@ def test_task_31_examples_are_the_orders_quotes():
 
 def test_gap_2_adds_singapore_s_15_recommendation_unchanged():
     row = _row("gap-2")
-    assert [ex["file"] for ex in row["global_examples"]][-1] == SG
+    assert [ex["file"] for ex in row["global_examples"]][-1 - len(TASK_35_EXAMPLES["gap-2"])] == SG  # Task 35 follows
     assert row["note"] == ("Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the automated "
                            "contract; neither names the sales medium. " + DATA_OFFICE)  # Task 33 appends it
     assert row["recommendation"] == GAP_2_RECOMMENDATION
@@ -708,7 +711,7 @@ def test_task_32_searched_entries_are_the_orders_appended_last():
         filed = _filed(gap_id)
         assert _row(gap_id)["searched"][-len(filed):] == filed, gap_id  # appended after the chunked ones
     assert not [r["id"] for r in ROWS + data.load_gaps()["candidates"] if any(s.get("file") for s in r["searched"])
-                and r.get("id") not in {**TASK_32_SEARCHED, **TASK_33_SEARCHED}]
+                and r.get("id") not in {**TASK_32_SEARCHED, **TASK_33_SEARCHED, **TASK_35_SEARCHED}]
 
 
 def test_task_32_files_are_verified_manifest_sources_with_a_page():
@@ -823,7 +826,8 @@ TASK_33_EXAMPLES = {
 
 
 def _filed_33(gap_id: str) -> list[dict]:
-    return _filed(gap_id)[len(TASK_32_SEARCHED.get(gap_id, [])):]
+    start = len(TASK_32_SEARCHED.get(gap_id, []))
+    return _filed(gap_id)[start:start + len(TASK_33_SEARCHED[gap_id])]  # Task 35's entries follow them
 
 
 def test_task_33_searched_entries_follow_task_32s():
@@ -895,3 +899,145 @@ def test_task_33_executive_order_is_read_not_unpublished():
 def test_task_33_data_office_sentence_once_in_the_register():
     assert gaps.render().count(DATA_OFFICE) == 1
     assert _row("gap-2")["addressee"] == ["TDRA", "UAE Data Office"]  # addressee fields unchanged
+
+
+# --- order 2026-10-30-task-35-gulf-rows, base and Addendum A: Gulf examples and searched entries ------------------
+# The English quotes are checked against kb/sources/global/ (local only) and the Arabic from the CST page images
+# against hq's read file; nothing here was transcribed by the build (Addendum A, limits).
+
+GULF_LINE = ("The three GCC telecom consumer regulations read (Saudi 2024, Qatar 2024, Kuwait 2022) name no AI channel, "
+             "hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, "
+             "requiring a route to an employee and a qualified employee on every complaint.")
+QA_PDF, QA_TXT = "kb/sources/qatar-cra-ccpr-2024.pdf", "kb/sources/global/qatar-cra-ccpr-2024.txt"
+KW_AR = "kb/sources/kuwait-citra-users-rights-ar.pdf"
+SA_EN = "kb/sources/saudi-cst-user-protection-552-1445-en.pdf"
+SA_TXT = "kb/sources/global/saudi-cst-user-protection-552-1445-en.txt"
+SA_AR = "kb/sources/saudi-cst-user-protection-552-1445-ar.pdf"
+Q16, Q16_TXT = "kb/sources/qatar-decree-law-16-2010-ar.md", "kb/sources/global/qatar-decree-law-16-2010-ar.txt"
+SAUDI_READ = Path("D:/Projects/hq/uni/ai-for-good-hackathon/perplexity-2026-10-30/saudi-cst-552-read-2026-10-30-fable.md")
+TASK_35_EXAMPLES = {  # gap id: [(file, clause, page)], appended after the existing examples
+    "gap-1": [(SA_TXT, "§13.1.1", 14), (SA_TXT, "§13.1.2", 14), (SA_TXT, "§26.5.2", 29)],
+    "gap-2": [(SA_TXT, "§5.1.2", 8), (SA_TXT, "§5.1.3", 8)],
+    "gap-3": [(QA_TXT, "§1.2 (Customer Consent)", 6), (SA_TXT, "§10.7", 13)],
+    "gap-11": [(Q16_TXT, "Art 56(1)", None), (Q16_TXT, "Art 19", None)],
+}
+TASK_35_SEARCHED = {  # gap id: [(clause, file, page)], appended after every earlier entry
+    "gap-1": [("kuwait-citra-users-rights-ar:9 (2.9, 4.9, 5.9)", KW_AR, 12),
+              ("saudi-cst-user-protection-552-1445-en:26.4", SA_EN, 28),
+              ("saudi-cst-user-protection-552-1445-en:13.1.3", SA_EN, 15)],
+    "gap-2": [("qatar-cra-ccpr-2024:1.2", QA_PDF, 6), ("kuwait-citra-users-rights-ar:3-1", KW_AR, 6),
+              ("saudi-cst-user-protection-552-1445-en:9.5", SA_EN, 12)],
+    "gap-3": [("saudi-cst-user-protection-552-1445-en:9.6", SA_EN, 12),
+              ("saudi-cst-user-protection-552-1445-en:23.1", SA_EN, 23)],
+    "gap-6": [("saudi-cst-user-protection-552-1445-ar:5.1.4", SA_AR, 8), ("qatar-decree-law-16-2010-ar:53(2)", Q16, None),
+              ("qatar-decree-law-16-2010-ar:27", Q16, None)],
+    "gap-10": [("saudi-cst-user-protection-552-1445-en:9.2.2", SA_EN, 11),
+               ("saudi-cst-user-protection-552-1445-en:16.4", SA_EN, 17),
+               ("saudi-cst-user-protection-552-1445-en:26.6", SA_EN, 29)],
+    "gap-11": [("saudi-cst-user-protection-552-1445-en:10.3", SA_EN, 12),
+               ("saudi-cst-user-protection-552-1445-en:10.4", SA_EN, 12),
+               ("saudi-cst-user-protection-552-1445-en:23.6", SA_EN, 24)],
+    "gap-12": [("saudi-cst-user-protection-552-1445-en:30.2", SA_EN, 32), ("qatar-decree-law-16-2010-ar:1", Q16, None),
+               ("qatar-decree-law-16-2010-ar:27", Q16, None)],
+}
+
+
+def _task_35_examples(gap_id: str) -> list[dict]:
+    return _row(gap_id)["global_examples"][-len(TASK_35_EXAMPLES[gap_id]):]
+
+
+def _task_35_searched(gap_id: str) -> list[dict]:
+    return _row(gap_id)["searched"][-len(TASK_35_SEARCHED[gap_id]):]
+
+
+def test_task_35_examples_are_appended_and_the_leads_stay():
+    for gap_id, expected in TASK_35_EXAMPLES.items():
+        got = _task_35_examples(gap_id)
+        assert [(ex["file"], ex["clause"], ex.get("page")) for ex in got] == expected, gap_id
+        assert all(ex["status"] == "VERIFIED" and not ex.get("elsewhere") for ex in got), gap_id
+        assert got[0]["says"], gap_id  # what the example says, on its first quote
+    assert gaps.elsewhere("gap-1")["label"] == "Spain Ley 10/2025 Art 8(2)"  # Spain stays lead
+    assert gaps.elsewhere("gap-3")["label"] == "eIDAS Art 8(1)"  # eIDAS stays lead
+    qatar = _task_35_examples("gap-3")[0]
+    assert qatar["says"] == "Named verification routes for a remote consent, no assurance level."
+    assert qatar["quote"].startswith("b. collected through the Number of the Customer")
+    assert qatar["quote"].endswith("capturing genuine consent.")
+    assert " c. via the Service Provider’s call center" in qatar["quote"] and " d. via digital means" in qatar["quote"]
+    for ex in _task_35_examples("gap-1"):  # English as printed, the Arabic beside it from the page image
+        assert ex["file_ar"] == SA_AR and ex["page_ar"] in (14, 28) and kb._is_arabic(ex["quote_ar"])
+    table = gaps.table()
+    for label in ("Saudi CST 552/1445 §13.1.1", "Saudi CST 552/1445 §26.5.2", "Saudi CST 552/1445 §5.1.2",
+                  "Qatar CCPR 2024 §1.2 (Customer Consent)", "Saudi CST 552/1445 §10.7", "Qatar 16/2010 Art 56(1)",
+                  "Qatar 16/2010 Art 19"):
+        assert label in table, label
+
+
+def test_task_35_searched_entries_are_appended_last():
+    for gap_id, expected in TASK_35_SEARCHED.items():
+        got = _task_35_searched(gap_id)
+        assert [(s["clause"], s["file"], s.get("page")) for s in got] == expected, gap_id
+        assert all(s["says"] and s["quote"] for s in got), gap_id
+    [kw_9] = [s for s in _task_35_searched("gap-1") if s["clause"].startswith("kuwait")]
+    assert kw_9["quote"] == "وان لا يزيد معدل انتظار المشتركين على الخط اكثر من 3 دقيقة"
+    assert kw_9["says"] == ("A 3-minute average wait on the complaints line and a dedicated department; no "
+                            "bot-to-human hand-over rule.")
+    [kw_3] = [s for s in _task_35_searched("gap-2") if s["clause"].startswith("kuwait")]
+    assert kw_3["quote"] == "ويجوز ان تكون الموافقة خطية على عقد الاشتراك او شفهية او رسالة الكترونية"
+    assert kw_3["says"] == "Spoken consent allowed; the AI channel unnamed."
+    assert all(kb._is_arabic(s["quote"]) for s in _task_35_searched("gap-6"))  # Arabic quotes, AR label
+
+
+def test_task_35_quotes_are_verbatim_in_the_stored_text():
+    squash = lambda t: re.sub(r"\s+", "", t)  # pypdf splits words ("succe ssful"); compare without whitespace
+    files = {kb.REPO / f for f in (QA_PDF, QA_TXT, KW_AR, SA_TXT, Q16, Q16_TXT)}
+    if not all(f.exists() for f in files) or not SAUDI_READ.exists():
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
+    stored = {f: squash(_stored(f)) for f in files}
+    read = squash(SAUDI_READ.read_text(encoding="utf-8"))
+    checked = 0
+    for gap_id in TASK_35_SEARCHED:
+        for s in _task_35_searched(gap_id):
+            if s["file"] == SA_AR:  # the image-only Arabic: the read file's table
+                assert squash(s["quote"]) in read, s["clause"]
+            else:
+                assert squash(s["quote"]) in stored[kb.REPO / (SA_TXT if s["file"] == SA_EN else s["file"])], \
+                    (gap_id, s["clause"])
+            checked += 1
+    for gap_id in TASK_35_EXAMPLES:
+        for ex in _task_35_examples(gap_id):
+            assert squash(ex["quote"]) in stored[kb.REPO / ex["file"]], (gap_id, ex["clause"])
+            if ex.get("quote_ar"):
+                assert squash(ex["quote_ar"]) in read, ex["clause"]
+            if ex.get("page"):  # the PDF page the quote sits on
+                text = re.sub(r"\s+", " ", kb.read_text(kb.REPO / ex["file"]))
+                before = text[:text.index(re.sub(r"\s+", " ", ex["quote"]))]
+                assert re.findall(r"=== PAGE (\d+) ===", before)[-1] == str(ex["page"]), ex["clause"]
+            checked += 1
+    assert checked == 20 + 9
+
+
+def test_task_35_entries_render_on_the_register_and_the_site_arabic_rtl():
+    from html import escape
+
+    from onyx import site
+    md, html = gaps.render(), site.gaps_page()
+    assert md.count(GULF_LINE) == 1 and html.count(GULF_LINE) == 1
+    assert (kb.REPO / "README.md").read_text(encoding="utf-8").count(GULF_LINE) == 1
+    saudi = _task_35_examples("gap-1")[0]
+    assert f"- {saudi['document']}, §13.1.1 (VERIFIED, p. 14, `{SA_TXT}`): {saudi['says']} \"{saudi['quote']}\"" in md
+    assert f"  - AR (p. 14, `{SA_AR}`): \"{saudi['quote_ar']}\"" in md
+    q56 = _task_35_examples("gap-11")[0]
+    assert f"(VERIFIED, `{Q16_TXT}`): {q56['says']} AR: \"{q56['quote']}\"" in md
+    assert f"AR (p. 14, <code>{SA_AR}</code>): " in site._gap(_row("gap-1"))
+    for row_id in ("gap-1", "gap-2", "gap-6", "gap-11", "gap-12"):
+        page = site._gap(_row(row_id))
+        entries = _row(row_id)["global_examples"] + _row(row_id)["searched"]
+        arabic = [q for e in entries for q in (e.get("quote_ar"), e.get("quote")) if q and kb._is_arabic(q)]
+        assert arabic, row_id
+        for q in arabic:
+            assert f'lang="ar" dir="rtl">{escape(q)}</q>' in page, (row_id, q[:30])
+    for gap_id in TASK_35_SEARCHED:
+        for s in _task_35_searched(gap_id):
+            assert f"- `{s['clause']}` (" in md and f"<code>{escape(s['clause'])}</code>" in html, s["clause"]
+    assert (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8") == md
+    assert (kb.REPO / "docs" / "site" / "gaps.html").read_text(encoding="utf-8") == html

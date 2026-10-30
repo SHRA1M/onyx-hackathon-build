@@ -396,9 +396,10 @@ def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
         assert not kb.has_chunks(document_id), document_id
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
-    # Task 34 Part C adds eIDAS, COPPA and Licence 3/2026 (Iyas, 2026-10-30: the pin follows the counts)
-    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (77, 72, 3, 2)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 23
+    # Task 34 Part C adds eIDAS, COPPA and Licence 3/2026 (Iyas, 2026-10-30: the pin follows the counts);
+    # Task 35 adds six Gulf rows, all foreign (test_task_35_counts)
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (83, 78, 3, 2)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 29
     # the announcement is not an instrument (order Part A)
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32
@@ -466,3 +467,68 @@ def test_task_34_rows_are_verified_from_the_publishers_files_with_no_chunks():
     for document_id in ("eidas-910-2014-art8", "coppa-16cfr312-5"):
         assert "never a deciding clause" in rows[document_id]["notes"]
     assert rows["licence-3-2026"]["page_count"] == "47"
+
+
+# --- order 2026-10-30-task-35-gulf-rows, base and Addendum A: six Gulf rows, binding in their state ----------------
+
+GULF = STD + "gulf-2026-10-30/"
+TASK_35 = {  # document_id: (sha256, local file, language, source_type, page_count)
+    "qatar-cra-ccpr-2024": ("c8a04d663cad91b8b39800e509201cdc703d78b4f5efaffae6a5143594ece53d",
+                            GULF + "qatar-cra-ccpr-2024.pdf", "en,ar", "regulation", "69"),
+    "kuwait-citra-res-69-2022-en": ("4c9f2e4d746969e39866e94e3c256ec30406af316bbe90c5fdec6d2df8685bfa",
+                                    GULF + "kuwait-citra-res-69-2022-en.pdf", "en", "decision", "2"),
+    "kuwait-citra-users-rights-ar": ("5107d9d0eafc55a9c680edd568b9e0e186c2a1810d75725e87ca14e4def7d5bb",
+                                     GULF + "kuwait-citra-users-rights-ar.pdf", "ar", "regulation", "18"),
+    "saudi-cst-user-protection-552-1445-en": ("113cc118ff4eb0f6b36415eafd3557f50bd01712ca5cc68670484a592857969d",
+                                              STD + "saudi-cst-user-protection-552-1445-en.pdf", "en", "regulation", "34"),
+    "saudi-cst-user-protection-552-1445-ar": ("eaa4035d46b5cf0b203f70746f3d4768f3a9b6e831f329143798c30aac8a4f10",
+                                              STD + "saudi-cst-user-protection-552-1445-ar.pdf", "ar", "regulation", "32"),
+    "qatar-decree-law-16-2010-ar": ("505cb4cdae5f07e22537d4c58523efcf9f8ce20ab84c354083335801d289881a",
+                                    GULF + "qatar-decree-law-16-2010-ar-extract.md", "ar", "extract", ""),
+}
+
+
+def test_task_35_six_rows_are_verified_foreign_binding_with_no_chunks():
+    rows = kb.manifest_by_id()
+    cited = {d for d, _ in data.cited_chunks()}
+    for document_id, (sha, local, language, source_type, pages) in TASK_35.items():
+        r = rows[document_id]
+        assert (r["status"], r["binding_status"], r["jurisdiction"], r["language"], r["source_type"], r["sha256"],
+                r["page_count"], r["http_status"]) == \
+            ("VERIFIED", "binding", "foreign", language, source_type, sha, pages, "200"), document_id
+        assert r["url"].startswith("https://") and not kb.url_problems(r), document_id
+        assert "never a deciding clause" in r["notes"], document_id  # binding in its own state, never a gate basis
+        assert kb.LOCAL[document_id]["file"] == local
+        if (HQ_DIR / local).exists():
+            assert kb.sha256_file(HQ_DIR / local) == sha and int(r["bytes"]) == (HQ_DIR / local).stat().st_size
+        assert document_id not in cited and not kb.has_chunks(document_id), document_id
+
+
+def test_task_35_row_notes_carry_the_orders_caveats():
+    rows = kb.manifest_by_id()
+    assert "in-force date not read" in rows["qatar-cra-ccpr-2024"]["notes"].lower()
+    assert "Which language prevails: not stated" in rows["qatar-cra-ccpr-2024"]["notes"]
+    assert "Art 4 in force on publication in the Official Gazette (date not found)" in \
+        rows["kuwait-citra-res-69-2022-en"]["notes"]
+    assert "whether every clause stood on 2022-04-21 is not known" in rows["kuwait-citra-users-rights-ar"]["notes"]
+    for document_id in ("saudi-cst-user-protection-552-1445-en", "saudi-cst-user-protection-552-1445-ar"):
+        notes = rows[document_id]["notes"]
+        assert "552/1445 of 08/02/2024, replaces 423/1441" in notes and \
+            "2024-05-08 (computed from the 90 days; not printed)" in notes, document_id
+    assert rows["saudi-cst-user-protection-552-1445-ar"]["notes"].startswith(
+        "Text layer unreadable; quotes transcribed from page images, two independent readings agree; not eye-checked by "
+        "a person.")
+    assert "URL returns 200" in rows["qatar-decree-law-16-2010-ar"]["notes"]
+    # Kuwait's decision (en) and regulation (ar) are two texts, not one text in two languages
+    assert rows["kuwait-citra-res-69-2022-en"]["instrument"] != rows["kuwait-citra-users-rights-ar"]["instrument"]
+    assert rows["saudi-cst-user-protection-552-1445-en"]["instrument"] == \
+        rows["saudi-cst-user-protection-552-1445-ar"]["instrument"]
+
+
+def test_task_35_counts():
+    manifest = kb.load_manifest()
+    status = lambda s: sum(r["status"] == s for r in manifest)
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (83, 78, 2, 3)
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 29
+    assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
+                and r["source_type"] != "announcement"}) == 32  # UAE unchanged

@@ -28,7 +28,13 @@ SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": 
          "eu-roaming-": "EU Roaming Reg 2022/612",  # Task 31
          "3gpp-ts-28-535": "3GPP TS 28.535", "etsi-gs-zsm-009-1": "ETSI ZSM 009-1",
          "eu-eecc-": "EECC 2018/1972", "de-tkg-": "TKG 2021",  # Task 33
+         "qatar-cra-ccpr-": "Qatar CCPR 2024", "saudi-cst-": "Saudi CST 552/1445",
+         "qatar-decree-law-16-": "Qatar 16/2010",  # Task 35
          "itu-t-y3173": "SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
+# the Gulf telecom consumer regulations read (order 2026-10-30 Task 35, Addendum A): the register's preamble and the README
+GULF_LINE = ("The three GCC telecom consumer regulations read (Saudi 2024, Qatar 2024, Kuwait 2022) name no AI channel, "
+             "hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, "
+             "requiring a route to an employee and a qualified employee on every complaint.")
 
 
 def _short(path: str) -> str:
@@ -125,7 +131,11 @@ def _quotes(title: str, examples: list[dict[str, Any]]) -> list[str]:
     out = [f"**{title}**", ""]
     for ex in examples:
         says = f"{ex['says']} " if ex.get("says") else ""  # a caveat printed beside the quote (Task 31, AI Act)
-        out.append(f"- {ex['document']}, {ex['clause']} ({ex['status']}, `{ex['file']}`): {says}\"{ex['quote']}\"")
+        page = f"p. {ex['page']}, " if ex.get("page") else ""  # the PDF page, where the source is a PDF (Task 35)
+        lang = "AR: " if kb._is_arabic(ex["quote"]) else ""  # an Arabic original's own text (Task 35, Qatar 16/2010)
+        out.append(f"- {ex['document']}, {ex['clause']} ({ex['status']}, {page}`{ex['file']}`): {says}{lang}\"{ex['quote']}\"")
+        if ex.get("quote_ar"):  # the Arabic beside the English, from the page image (Task 35, Saudi 552/1445)
+            out.append(f"  - AR (p. {ex['page_ar']}, `{ex['file_ar']}`): \"{ex['quote_ar']}\"")
     return out + [""]
 
 
@@ -136,7 +146,7 @@ def render() -> str:
              "and scenarios are synthetic; the law texts are real.", "",
              "A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern; a "
              "clause that exists but gives no method is a method gap (addendum item 19). Every row lists the clauses "
-             "searched and what each says, English and, where the chunk holds it, Arabic.", "",
+             "searched and what each says, English and, where the chunk holds it, Arabic.", "", GULF_LINE, "",
              table()]
     for row in register["gaps"]:
         lines += [f"## {row['id']}: {row['line']}", "",

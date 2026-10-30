@@ -354,7 +354,7 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 77 documents" in text and "72 are verified" in text and "twenty-three foreign texts" in text  # Task 34
+    assert "holds 83 documents" in text and "78 are verified" in text and "twenty-nine foreign texts" in text  # Task 35
     assert "twenty-eight other UAE texts" in text  # 32 UAE instruments minus the four the sentence names (Task 34)
 
 
@@ -363,9 +363,9 @@ def test_report_kb_counts_are_read_from_the_manifest():
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 77 documents", "47 are verified": "72 are verified",
-             "nine foreign texts": "twenty-three foreign texts", "twenty-two foreign texts": "twenty-three foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 77 documents",
+    right = {"holds 51 documents": "holds 83 documents", "47 are verified": "78 are verified",
+             "nine foreign texts": "twenty-nine foreign texts", "twenty-two foreign texts": "twenty-nine foreign texts",
+             "**SRC-2** 51 documents": "**SRC-2** 83 documents",
              "fifteen other UAE texts": "twenty-eight other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
@@ -374,7 +374,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("72 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("78 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
