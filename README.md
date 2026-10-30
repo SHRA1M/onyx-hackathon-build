@@ -8,7 +8,7 @@
 
 The four published criteria, each with the one place that shows it:
 
-1. Knowledge base: `kb/manifest.csv` (51 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`.
+1. Knowledge base: `kb/manifest.csv` (51 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md`.
 2. Agent capability in error scenarios, and the gaps: `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay
 3. Auditability: `uv run python -m onyx selftest` recomputes every figure in `docs/report.docx` from the committed hash-chained logs in `runs/`; `uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl` re-decides one run offline.
 4. ITU-T Y.3172 and the Readiness Framework: `docs/report.docx`, sections 3 and 4, and the Y.3172 mapping table below.

@@ -286,7 +286,8 @@ def kb_page() -> str:
         "</tr>" for r in rows)
     body = (f'<h1>Knowledge base</h1><p class="notice">{escape(NOTICE)}</p>'
             f"<p>{count_cells}. Read from <code>kb/manifest.csv</code>; <code>python -m onyx kb verify</code> checks "
-            f"every fetched source against its sha256.</p>" + "".join(filters) +
+            f"every fetched source against its sha256. What it holds and its limits: "
+            f'<a href="../../kb/DATASHEET.md">kb/DATASHEET.md</a>.</p>' + "".join(filters) +
             f'<p class="meta" id="shown"></p><div class="tablewrap"><table class="grid kb"><thead><tr>{head}</tr>'
             f"</thead><tbody>{body_rows}</tbody></table></div>")
     return _frame("kb.html", "Mizan: knowledge base", body, KB_JS)
