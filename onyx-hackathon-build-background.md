@@ -1,10 +1,10 @@
 # onyx-hackathon-build: background
 
-Updated 2026-10-30 (forty-eighth wrap, Opus: Task 33 half built on branch `task-33`, not pushed; the working brief holds the handover).
+Updated 2026-10-30 (forty-ninth wrap, Opus: Task 33 merged, PR #9, tag `task-33`; no order open).
 
 ## What this is
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). main holds Task 32 (PR #8, tag `task-32`); each task since 29 is one PR and one tag. Older orders and commits: the archive. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (the order chain to Task 16 with commits is in the archive, 2026-10-22 twenty-second wrap). main holds Task 33 (PR #9, tag `task-33`); each task since 29 is one PR and one tag. Older orders and commits: the archive. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
 
 ## Stack and how it runs
 
@@ -39,8 +39,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
+- 2026-10-30 (Iyas, Task 33): the report's row 8 cell is "3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4" ("TS" dropped: the ordered cell made 6 pages); the register and site keep "3GPP TS". The Data Office sentence is in gap-2's note and the README, not the report. A gap row may carry `examples_note`, printed after its examples; a filed `searched` quote in Arabic prints "AR". The report's count check reads "twenty-one" and checks "N other UAE laws" = UAE instruments (no announcement) minus 4.
 - 2026-10-30 (hq, Task 33): id `executive-order-3-2004` kept, not renamed (`mandates.json` cites it); an Arabic `searched` quote keeps the PDF text layer's spacing faults, flagged for Iyas's eye-check.
-- 2026-10-30 (Iyas, Task 32): a gap `searched` entry may name its stored file (`file`, `page` for a PDF) instead of a chunk; `gaps.py` and `site.py` render it, `data.cited_chunks` skips it, and a local test checks the quote word for word (CI skips). Used by the operator codes and gap 9 (106/2026 English; the Arabic text layer is unusable).
 - 2026-10-30 (Iyas, Task 31): replay pages and viewer show each flagged gap's line, one example from elsewhere and a register link (`gaps.elsewhere`): the example marked `"elsewhere": true` in `gaps.json` (gap 1 Spain Art 8(2), gap 3 eIDAS Art 8(1), gap 10 Wales Std 15), else the first binding in the manifest, else the first; candidates show their line only. The report has no row 7 (gap 7 lives in the register and site). An example's `says` prints before its quote (AI Act caveat).
 - 2026-10-29 (Iyas, `_reference/how-we-build.md`): from Part B on, every report-back pastes the full `uv run pytest` output and repeats the Limits line: touches only the named files, never `runs/` or the keys; fails closed (USD 0, nothing recorded, nothing pushed outward, stop and ask); owner of any failure is Iyas.
 - 2026-10-27 (C5 as it stands, after Task 28): governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps (2 English misses, disclosed, no v6); the README and selftest headline is C5; C3 is the ungoverned baseline. Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
@@ -56,13 +56,13 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` and `kb/chunks/tdra-cpr-v2-en.jsonl`, and re-apply the hand fixes (next item).
 - Never run `kb chunk` over the whole kb (hq, 2026-10-26): chunk one document at a time and `git diff --stat kb/chunks/` before committing. Y.3173 chunks, like Y.3172, all carry page 1.
-- `powershell -ExecutionPolicy Bypass` from Bash is denied by the auto-mode classifier: run `& "...\scripts\report_pages.ps1"` in the PowerShell tool.
+- Report pages: `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1 [-Path x.docx]` from Bash worked on 2026-10-30 (denied earlier; then use the PowerShell tool). Word measures the gap table's narrow last column: a longer cell can add a page.
 - A `kb chunk` rebuild undoes hand fixes in committed chunks: licence 3.4.1 'pur suant' and 9.1 'billin g' (pypdf errors; the committed file has them right), and the CPR 4.7.3 'opt-out' and 24.7 'anti-competitive' (the extraction keeps 'opt- out', 'anti- competitive'), and licence 16.3.3 'non-compliance' (extraction 'non -compliance'). Adding a clause: copy its line from `kb/chunks-full/`, apply these fixes, keep every committed line, then `kb ingest` (138 in kb_main after Task 23; not rerun for Task 24's 144 chunks: run it before any live run). Licence 9.3 now matches the rebuild. Never commit a rebuilt licence or CPR file unchanged.
 - `kb fetch` rewrites `url_accessed` and `http_status` in the manifest to the run's date: do not commit a manifest changed only by a fetch.
 - The UAE legislation portal answers 403 to scripts (a 5,495-byte HTML page; hq copies of that size are the page, not the PDF); Y.3172 and EUR-Lex URLs are pages, so their bytes never match. Since 2026-10-30 EUR-Lex answers every script with HTTP 202 and an AWS WAF JavaScript challenge; read it in Iyas's Chrome only (hq ruling), never a workaround.
 - PyMuPDF and pdfium reverse the lam-alef on TDRA and portal Arabic text layers; pypdf and pdftotext keep it. The hq .txt files are PyMuPDF output (except the licence, re-extracted with pypdf 2026-10-21): re-extract with pypdf before chunking any other Arabic source. pdftotext adds bidi control marks.
 - ecfr.gov pages send curl to an access check (302): read eCFR through `https://www.ecfr.gov/api/versioner/v1/full/<date>/title-N.xml?part=&section=` with `--compressed` (406 without it). BOE PDFs: pdftotext gives one paragraph per line; "95 %" holds U+202F.
-- Pushing a feature branch and `gh pr create` work from the session; `gh pr merge` is refused by the auto-mode classifier (Iyas: `! gh pr merge N --merge`), and a push to main waits for his go. A branch `task-29` and the tag `task-29` share a name: push the tag as `refs/tags/task-29`. Logs under `runs/_failed/` and `runs/bakeoff/_failed/` do not replay (crashed runs); `tests/test_replay_unchanged.py` covers C3, C4 and C5 only.
+- Pushing a feature branch, `gh pr create` and, on Iyas's word, `gh pr merge N --merge` work from the session (merge was refused once before Task 33); a push to main waits for his go. A branch and its tag share each task's name: push the tag as `refs/tags/task-NN`. Logs under `runs/_failed/` and `runs/bakeoff/_failed/` do not replay (crashed runs); `tests/test_replay_unchanged.py` covers C3, C4 and C5 only.
 - Stop a background server with its own task, never `taskkill` by image name (2026-10-22: that closes every Python process on Iyas's PC).
 - `gaps.json` is hand-formatted and its lists close at different indents (gap-2 `searched` closes with two spaces): insert by parsing the block, then check each entry landed in the right list. A quote's start words can occur twice in a file (DSA 20(3) and 20(6)): assert the quote occurs once.
 - The copied `docs/sources/` text files carry non-UTF-8 bytes: read them with `errors="replace"`. Python heredocs in Git Bash mangle quotes and turn a written \n into a real newline: write the script to the scratchpad, or use the Edit tool.
@@ -75,10 +75,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - hq: the post-sweep order (2026-10-31) may change prompts or scenarios and re-record again.
 - Submission-day order: GitHub Pages source = `docs/site/`.
-- The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq copy of the report made 2026-10-30 after Task 32 (`.bak-2026-10-30-task-32` kept).
-- hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet; "fifteen other UAE laws" is the Task 24 count (archive, 2026-10-29), not a datasheet line.
+- The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq copy of the report made 2026-10-30 after Task 33 (`.bak-2026-10-30-task-33` kept).
+- hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet.
 - hq (Task 31 report-back): eIDAS and COPPA have stored texts but no manifest rows; gap 1's register lists IMDA and the DSA before Spain.
-- hq (Task 32 report-back): the report says "three unpublished texts" with four UNVERIFIED rows (the CSC policy is unreachable, not unpublished); the datasheet's UNVERIFIED definition says "not published"; "fifteen other UAE laws" waits for the submission-day count check.
+- hq (Task 33 report-back): "twenty-seven other UAE laws, resolutions and TDRA instruments" counts operator codes, guidelines and a web page; "other UAE texts" offered. Iyas to eye-check the 52/2024 Art 2(2) Arabic quote against the PDF, p. 2 (two spacing faults kept). The Data Office sentence and the row 1 cell are out of the report for space.
 - README team line names three members until hq confirms their spellings.
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
 - ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
@@ -86,4 +86,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Finish Task 33 on branch `task-33` from the working brief's numbered steps (order `docs/work-orders/2026-10-30-task-33-three-searches.md`). Any report wording change: `uv run python docs/build_report.py`, then `scripts/report_pages.ps1` in the PowerShell tool (limit 5; 2,237 words now).
+Wait for Iyas's next order (he names it next session). Report: 5 pages, 2,243 words; any wording change: `uv run python docs/build_report.py`, then `scripts/report_pages.ps1` (limit 5).
