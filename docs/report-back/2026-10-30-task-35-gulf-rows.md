@@ -109,7 +109,8 @@ foreign_binding_with_no_chunks`, `test_task_35_row_notes_carry_the_orders_caveat
 in_the_stored_text` (29 quotes, and each example's page), `test_task_35_entries_render_...`.
 
 CI's generators (datasheet, intent, gaps, replay-page, model-down, report build, site) were rerun locally: no file
-changed after them. CI on the PR: see the PR's checks. This file is updated once it reports.
+changed after them. CI on PR #11 (https://github.com/SHRA1M/onyx-hackathon-build/pull/11): `reproduce pass` (runs
+41138192632 and 41138269899, push and pull request). Not merged, not tagged.
 
 ## Merge danger and blast radius
 
