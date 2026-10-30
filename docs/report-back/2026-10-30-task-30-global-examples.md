@@ -78,7 +78,8 @@ rows 54, VERIFIED 50, foreign 12
 5. `git diff refs/tags/task-29 -- onyx/gate.py onyx/data/rules.json onyx/data/keys onyx/data/mandates.json onyx/eval.py runs/ onyx/model.py onyx/prompts`: empty.
 6. `scripts/report_pages.ps1`: `pages: 5`, `words: 2215`.
 7. hq copy: `docs/report.md` sha256 c7aa325d... equals `hq/uni/ai-for-good-hackathon/report-draft-2026-10-23.md`.
-8. Commit, PR, CI: see the PR.
+8. Commit 507d721 on `task-30`, PR #5, CI run 41058857982 `completed success`: "556 passed, 12 skipped" (the 12
+   read the gitignored `kb/sources/`, which CI does not hold). Merge and tag wait for Iyas.
 
 ## Open questions for hq
 
