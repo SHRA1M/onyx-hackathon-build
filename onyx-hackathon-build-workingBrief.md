@@ -1,28 +1,28 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-30 (fifty-second wrap, Opus). Handover for the next session.
+Updated 2026-11-01 (fifty-third wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Tasks 35 and 35b are merged and tagged on main (PRs #11, #12; tags `task-35`, `task-35b`). Nothing waits on hq from
-them. Iyas brings the next order next session (hq's post-sweep order is due 2026-10-31). Every change before
-2026-11-06; submission 2026-11-09.
+Finish Task 36 (`docs/work-orders/2026-11-01-task-36-template-items.md`) on branch `task-36` (local, four commits,
+not pushed). Items 2 (`onyx why`) and 3 (gap-4 rule and page) are built and tested; item 1 (report headings and new
+sections) is in `docs/report.md`, but Word says 6 pages. Every change before 2026-11-06; submission 2026-11-09.
 
 ## State
 
-- main: KB 88 documents (83 VERIFIED, 2 REFERENCED, 3 UNVERIFIED), 34 foreign, 32 UAE instruments.
-- Report 5 pages, 2,193 words, no slack: gap 6 cell "Maine §1500-DD; EU AI Act Art 50(1)"; gap 1, gap 7 row and gap 3
-  additions each made 6. hq's report copy is current.
-- Full suite 630 passed; CI green on PR #12.
+- Report on `task-36`: 6 pages, 2,424 words, 12 lines on page 6 after order cuts 1 to 4 and hq's ruling cuts 1 and 2.
+- Stop 2 filed: `docs/report-back/2026-11-01-task-36-stop-2.md` (count, every line on page 6, questions for hq).
+- Full suite 641 passed. Not pushed, no PR.
 
 ## Open questions (with hq)
 
-- In-force dates unverified: Maine §1500-DD, India TCCRR (Gazette), Korea Art 31.
-- The Saudi Arabic quotes are image-read twice, not eye-checked; Qatar CCPR §7 to §9 unread.
-- Carried: eIDAS 2024/1183 and Art 8 unchecked; the 52/2024 Art 2(2) Arabic eye-check; GitHub Pages from `/docs` on
-  submission day; the demo video lands 2026-11-08.
+- Which cut takes the last 12 lines: hq-written gap cells, a shorter Recommendations, narrower figures, other.
+- The filed order names the template's example team; the order says that name never appears in the repo.
+- Carried: in-force dates (Maine, India TCCRR, Korea Art 31); Saudi Arabic eye-check; GitHub Pages on submission day.
 
 ## Next moves
 
-1. `git status`, `git pull` on main.
-2. Take the order Iyas gives; file it under `docs/work-orders/`, branch `task-NN` from main.
+1. `git status`; `git checkout task-36`.
+2. Apply hq's stop-2 answer word for word; build the report; `scripts/report_pages.ps1` must say 5.
+3. Then the order's item 4: README demo list and `why` line, `verify.html` line (`python -m onyx site`), hq report
+   copy, CHANGELOG, selftest figures (C5 0.96 / 1.00, citation 0.99 / 1.00), PR, report-back with outputs pasted.
