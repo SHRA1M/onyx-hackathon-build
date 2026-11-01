@@ -18,9 +18,9 @@ from onyx.model import MockModel
 
 DOCS = kb.REPO / "docs"
 REPORT_MD = DOCS / "report.md"
-HEADINGS = ["Introduction", "Description of the use case", "Use case requirement",
-            "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies", "Error scenarios",
-            "Policy gaps and standards gaps derived from the mapping exercise"]
+HEADINGS = ["Introduction", "Description of the use case", "What is the role played by AI?", "Requirements",
+            "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies", "Demo scenarios",
+            "Error scenarios", "Policy gaps and standards gaps derived from the mapping exercise"]  # Task 36 item 1
 
 
 def _load():
@@ -57,7 +57,7 @@ def test_two_builds_are_byte_identical_and_match_the_committed_docx(built, tmp_p
     assert built.read_bytes() == (DOCS / "report.docx").read_bytes(), "run `python docs/build_report.py`"
 
 
-def test_six_list_paragraph_headings_in_template_order(built):
+def test_eight_list_paragraph_headings_in_template_order(built):
     from docx import Document
     doc = Document(str(built))
     headings = [p.text for p in doc.paragraphs if p.style.name == "List Paragraph"]
@@ -250,7 +250,7 @@ def test_every_table_cell_is_10_pt_with_no_space_before_or_after(built):
                     assert p.runs and all(r.font.size == Pt(10) for r in p.runs), cell.text
 
 
-def test_both_pictures_are_16_cm_wide_and_keep_with_next(built):
+def test_both_pictures_are_12_cm_wide_and_keep_with_next(built):
     from docx import Document
     from docx.shared import Cm
     doc = Document(str(built))
@@ -258,14 +258,14 @@ def test_both_pictures_are_16_cm_wide_and_keep_with_next(built):
     assert len(pictures) == 2
     for p in pictures:
         assert p.paragraph_format.keep_with_next is True
-        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(16)
+        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(12)  # Task 36 stop ruling
 
 
-def test_the_six_headings_keep_with_next(built):
+def test_the_eight_headings_keep_with_next(built):
     from docx import Document
     doc = Document(str(built))
     headings = [p for p in doc.paragraphs if p.style.name == "List Paragraph"]
-    assert len(headings) == 6 and all(p.paragraph_format.keep_with_next for p in headings)
+    assert len(headings) == 8 and all(p.paragraph_format.keep_with_next for p in headings)
 
 
 def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
@@ -301,7 +301,11 @@ def test_report_figures_match_eval():
     sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
     text = REPORT_MD.read_text(encoding="utf-8")
     b1 = "expected gaps: 5 of 7 found in every run, 2 missed (both in S1), 3 unexpected register ids flagged"
-    assert b1 in text and "95% interval 0.937 to 0.995 pooled" in text
+    assert b1 in text
+    # Task 36 cut 3: the interval left the report's Results; it stays in eval's output and the README
+    assert "95% interval" not in text.split("**Results**")[1].split("## ")[0]
+    for where in ("eval/results.md", "README.md"):
+        assert "110 of 112 key steps, 95% interval 0.94 to 1.00" in (kb.REPO / where).read_text(encoding="utf-8")
     assert build.check_paragraph(f"Results {b1} `[C5, x]`.", sets) == []
     assert build.check_paragraph("Recall 110 of 112, 95% interval 0.937 to 0.995 pooled `[C5, x]`.", sets) == []
 

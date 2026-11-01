@@ -2,13 +2,14 @@
 docs/report.md on docs/report-template.docx. Every figure in a paragraph tagged `[C5, ...]` or `[C3, ...]` is checked
 against eval/results.md first; one that matches no value of the run set the paragraph's tags name fails the build.
 
-Rendering: the template's title paragraph and its six numbered ListParagraph headings are kept, their text replaced;
+Rendering: the template's title paragraph and its six numbered ListParagraph headings are kept, their text replaced,
+and two copies of one carry the sections the template lists unnumbered (Task 36);
 the header lines become five paragraphs with the labels in bold; every template example and NOTE paragraph goes. Body
 paragraphs are Normal with the template's body run (Times New Roman, justified); markdown bold becomes bold runs,
 backticks are dropped, nothing else is interpreted but tables, images and headings. The mapping table reuses the
 template's table in place; the gap table is new, with the same table properties. "Limits and next steps" closes
 section 6 under a bold lead, with no heading. Run-set tags are stripped. Task 18 item 2: table cells 10 pt with no
-space before or after, both figures 16 cm wide, picture paragraphs and the six headings keep with next. Fixed core dates and zip times make two
+space before or after, both figures 12 cm wide (Task 36), picture paragraphs and the six headings keep with next. Fixed core dates and zip times make two
 builds byte-identical.
 
 Value check (item 3, hq rulings 1 and 2 of 2026-10-23): in each tagged paragraph every token holding a digit is
@@ -56,11 +57,14 @@ TEMPLATE = REPO / "docs" / "report-template.docx"
 REPORT_MD = REPO / "docs" / "report.md"
 REPORT_DOCX = REPO / "docs" / "report.docx"
 RESULTS = REPO / "eval" / "results.md"
-SECTIONS = ["Introduction", "Description of the use case", "Use case requirement",
-            "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies", "Error scenarios",
-            "Policy gaps and standards gaps derived from the mapping exercise"]
+MAPPING = "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies"
+SECTIONS = ["Introduction", "Description of the use case", "What is the role played by AI?", "Requirements", MAPPING,
+            "Demo scenarios", "Error scenarios", "Policy gaps and standards gaps derived from the mapping exercise"]
+# order 2026-11-01-task-36 item 1: the template's six numbered headings carry six sections; the two the template
+# lists as plain lines ("What is the role played by AI?", "Demo scenarios") get a copy of a numbered heading
+ADDED = {"What is the role played by AI?", "Demo scenarios"}
 TAIL = "Limits and next steps"
-FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(16), "docs/fig/fig2-results.png": Cm(16)}  # Task 18 item 2b
+FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(12), "docs/fig/fig2-results.png": Cm(12)}  # Task 36 stop ruling (was 16 cm, Task 18 item 2b)
 FIXED_DATE = dt.datetime(2026, 10, 23, tzinfo=dt.timezone.utc)
 ZIP_TIME = (2026, 10, 23, 0, 0, 0)
 TABLE_WIDTH = 9359  # the template table's width, dxa
@@ -295,7 +299,8 @@ def _number(word: str) -> int | None:
 KB_COUNTS = {"documents": re.compile(r"(?:holds|\*\*SRC-2\*\*)\s+(\d+)\s+documents"),
              "verified": re.compile(r"(\d+)\s+are\s+verified"),
              "foreign": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+foreign\s+texts"),
-             "uae_other": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+other\s+UAE\s+(?:laws|texts)")}
+             "uae_other": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+other\s+UAE\s+(?:laws|texts)"),
+             "uae": re.compile(r"\b(\d+)\s+UAE\s+instruments")}  # Task 36 item 1: the method paragraph
 # "the Telecommunications Law 3/2003, the CPR v2.0, Licence 2/2026, the PDPL and N other UAE laws": the UAE
 # instruments (an announcement is none) less the four the sentence names (order Task 33, Part D)
 NAMED_UAE = 4
@@ -305,7 +310,8 @@ def check_kb_counts(md: str) -> list[str]:
     rows = kb.load_manifest()
     uae = {r["instrument"] for r in rows if r["jurisdiction"] == "UAE" and r["source_type"] != "announcement"}
     actual = {"documents": len(rows), "verified": len(kb.verified_rows(rows)),
-              "foreign": sum(r["jurisdiction"] == "foreign" for r in rows), "uae_other": len(uae) - NAMED_UAE}
+              "foreign": sum(r["jurisdiction"] == "foreign" for r in rows), "uae_other": len(uae) - NAMED_UAE,
+              "uae": len(uae)}
     problems = []
     for name, pattern in KB_COUNTS.items():
         for m in pattern.finditer(md):
@@ -483,7 +489,16 @@ def render(report: Report) -> Builder:
         after = p
 
     mapping_tbl.getparent().remove(mapping_tbl)
-    for name, heading in zip(SECTIONS, headings):
+    template_headings, placed = iter(headings), []
+    for name in SECTIONS:
+        if name in ADDED:
+            added = copy.deepcopy(headings[0])
+            _strip_ids(added)
+            placed[-1].addnext(added)
+            placed.append(added)
+        else:
+            placed.append(next(template_headings))
+    for name, heading in zip(SECTIONS, placed):
         b.heading(heading, name)
         blocks = list(report.sections[name])
         if name == SECTIONS[-1] and TAIL in report.sections:
@@ -493,7 +508,7 @@ def render(report: Report) -> Builder:
         tables_seen = 0
         for i, block in enumerate(blocks):
             if block.startswith("|"):
-                reuse = mapping_tbl if name == SECTIONS[3] and tables_seen == 0 else None
+                reuse = mapping_tbl if name == MAPPING and tables_seen == 0 else None
                 after = b.table(after, block, reuse)
                 tables_seen += 1
             elif block.startswith("!["):
