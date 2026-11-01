@@ -4,7 +4,7 @@ Updated 2026-11-01 (fifty-third wrap, Opus: Task 36 in progress on branch `task-
 
 ## What this is
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (chain to Task 16: archive, 2026-10-22). main holds Task 35b (PR #12, tag `task-35b`); `task-36` (local, not pushed) holds Task 36 so far; each task since 29 is one PR and one tag. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (chain to Task 16: archive, 2026-10-22). main holds Task 35b (PR #12, tag `task-35b`); `task-36` (pushed, no PR) holds Task 36 so far; each task since 29 is one PR and one tag. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
 
 ## Stack and how it runs
 
@@ -71,7 +71,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - Open for hq (Tasks 35, 35b; detail in the archive, 2026-11-01): in-force dates of Maine, India TCCRR and Korea Art 31; the Saudi Arabic eye-check; Qatar CCPR §7 to §9 unread; the datasheet language table skips the six Gulf rows.
 - Task 36 waits on hq (stop 2, `docs/report-back/2026-11-01-task-36-stop-2.md`): 6 pages, 12 lines over (gap 10's last line, Recommendations, Limits). Still to do after 5 pages: README demo list and `why` line, `why` on `verify.html` (`python -m onyx site`), hq copy `report-draft-2026-10-23.md`, CHANGELOG line for the report, selftest check, PR (no merge or tag until Iyas says), final report-back `docs/report-back/2026-11-01-task-36-template-items.md` with the `why` and `whatif` outputs pasted.
-- The filed Task 36 order names the template's example team, which the order itself says never appears in the repo; frozen file, raised with Iyas 2026-11-01.
+- 2026-11-01 (hq): the filed Task 36 order may keep the template's example team name; the report, README and site never carry it (`test_the_template_example_team_never_appears_in_report_readme_or_site`).
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
 - The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq updated its report copy after Task 35b (2026-10-30).
 - hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet.
@@ -81,4 +81,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Resume Task 36 on branch `task-36` (`git checkout task-36`; not pushed) with hq's answer to stop 2. Apply hq's text word for word, `uv run python docs/build_report.py`, `scripts/report_pages.ps1` (limit 5); at 5, finish the order's item 4 list (Open, first item).
+Resume Task 36 on branch `task-36` (`git checkout task-36`, `git pull`) with hq's answer to stop 2. Apply hq's text word for word, `uv run python docs/build_report.py`, `scripts/report_pages.ps1` (limit 5); at 5, finish the order's item 4 list (Open, first item).

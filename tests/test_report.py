@@ -442,3 +442,12 @@ def test_task_34_team_and_the_four_labelled_links():
     assert not any(line.startswith("**GitHub link:**") for line in lines)
     for path in (REPORT_MD, kb.REPO / "README.md"):
         assert "Saaydeh" not in path.read_text(encoding="utf-8"), path
+
+
+def test_the_template_example_team_never_appears_in_report_readme_or_site():
+    # hq, 2026-11-01: the filed Task 36 order may quote the template's example team; nothing a reader sees may
+    name = bytes([86, 105, 115, 104, 110, 117]).decode()  # spelled by code so this file does not carry it
+    paths = [DOCS / "report.md", kb.REPO / "README.md", *sorted((DOCS / "site").glob("*.html"))]
+    assert all(name not in p.read_text(encoding="utf-8") for p in paths)
+    with zipfile.ZipFile(DOCS / "report.docx") as z:
+        assert name not in z.read("word/document.xml").decode("utf-8")

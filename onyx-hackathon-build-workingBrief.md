@@ -4,8 +4,8 @@ Updated 2026-11-01 (fifty-third wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Finish Task 36 (`docs/work-orders/2026-11-01-task-36-template-items.md`) on branch `task-36` (local, four commits,
-not pushed). Items 2 (`onyx why`) and 3 (gap-4 rule and page) are built and tested; item 1 (report headings and new
+Finish Task 36 (`docs/work-orders/2026-11-01-task-36-template-items.md`) on branch `task-36` (pushed 2026-11-01,
+no PR yet). Items 2 (`onyx why`) and 3 (gap-4 rule and page) are built and tested; item 1 (report headings and new
 sections) is in `docs/report.md`, but Word says 6 pages. Every change before 2026-11-06; submission 2026-11-09.
 
 ## State
@@ -17,7 +17,6 @@ sections) is in `docs/report.md`, but Word says 6 pages. Every change before 202
 ## Open questions (with hq)
 
 - Which cut takes the last 12 lines: hq-written gap cells, a shorter Recommendations, narrower figures, other.
-- The filed order names the template's example team; the order says that name never appears in the repo.
 - Carried: in-force dates (Maine, India TCCRR, Korea Art 31); Saudi Arabic eye-check; GitHub Pages on submission day.
 
 ## Next moves
