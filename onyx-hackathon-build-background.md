@@ -71,7 +71,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - Open for hq (Tasks 35, 35b; detail in the archive, 2026-11-01): in-force dates of Maine, India TCCRR and Korea Art 31; the Saudi Arabic eye-check; Qatar CCPR §7 to §9 unread; the datasheet language table skips the six Gulf rows.
 - Task 36 waits on hq (stop 2, `docs/report-back/2026-11-01-task-36-stop-2.md`): 6 pages, 12 lines over (gap 10's last line, Recommendations, Limits). Still to do after 5 pages: README demo list and `why` line, `why` on `verify.html` (`python -m onyx site`), hq copy `report-draft-2026-10-23.md`, CHANGELOG line for the report, selftest check, PR (no merge or tag until Iyas says), final report-back `docs/report-back/2026-11-01-task-36-template-items.md` with the `why` and `whatif` outputs pasted.
-- 2026-11-01 (hq): the filed Task 36 order may keep the template's example team name; the report, README and site never carry it (`test_the_template_example_team_never_appears_in_report_readme_or_site`).
+- 2026-11-01 (hq): the filed Task 36 order may keep the template's example team name; the report, README and site never carry it (a test in `tests/test_report.py` checks).
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
 - The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq updated its report copy after Task 35b (2026-10-30).
 - hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet.
