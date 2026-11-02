@@ -94,7 +94,8 @@ def test_the_mapping_table_replaces_the_template_table_and_tables_keep_its_style
     assert len(doc.tables) == 2
     mapping, gaps = doc.tables
     assert mapping.rows[0].cells[0].text == "Node" and mapping.rows[1].cells[0].text == "SRC"
-    assert gaps.rows[0].cells[0].text == "#" and gaps.rows[10].cells[0].text == "9"  # row 12 follows row 11 (Task 27)
+    assert gaps.rows[0].cells[0].text == "#" and gaps.rows[10].cells[0].text == "11"  # Task 37, rows in number order
+    assert gaps.rows[11].cells[0].text == "12"  # Task 37, rows in number order
     for table in doc.tables:
         assert table.style.style_id == "TableGridLight"
         assert all(r.bold for c in table.rows[0].cells for p in c.paragraphs for r in p.runs)
@@ -451,3 +452,15 @@ def test_the_template_example_team_never_appears_in_report_readme_or_site():
     assert all(name not in p.read_text(encoding="utf-8") for p in paths)
     with zipfile.ZipFile(DOCS / "report.docx") as z:
         assert name not in z.read("word/document.xml").decode("utf-8")
+
+
+# --- Task 37 item 1 (order 2026-11-02-task-37-audit-fixes) -----------------------------------------------------
+
+def test_no_numbered_section_pointer_into_the_report():
+    """README, the site and the datasheet name a report section by its heading, never by a number (Task 36 renumbered
+    them). Only pointers into the report count: a law's or a source note's own sections are left alone."""
+    repo = kb.REPO
+    files = [repo / "README.md", repo / "kb" / "DATASHEET.md", *sorted((repo / "docs" / "site").glob("*.html"))]
+    pointer = re.compile(r"report(\.docx|\.md)?[^.;\n<]{0,40}?\bsections?\s+\d", re.IGNORECASE)
+    hits = [f"{f.name}: {m.group(0)}" for f in files for m in pointer.finditer(f.read_text(encoding="utf-8"))]
+    assert hits == []
