@@ -82,7 +82,7 @@ Two different things are code, and neither of them is the model.
 1. **The chunker** is code that splits a text at its own clause numbers. It is deterministic, it applies no model,
    and it produces the records in Annex A. It does not interpret the law.
 2. **The gates** are code written by the team from the binding clauses: 13 deciding functions in `onyx/gate.py`,
-   mapped in `GATES` from the 17 verbs the agents may propose (a verb may have several, and one with none is allowed once the base checks pass: the verb is in the agent's mandate, the step was released to the agent, a clause is cited, each cited clause was retrieved for the step and is VERIFIED, the quote is 20 or more characters verbatim in a cited clause, and a stated deadline is the rules.json value; a verb with no entry in `GATES` is held for a human). A gate reads the
+   mapped in `GATES` from the 16 verbs the agents may propose (a verb may have several, and one with none is allowed once the base checks pass: the verb is in the agent's mandate, the step was released to the agent, a clause is cited, each cited clause was retrieved for the step and is VERIFIED, the quote is 20 or more characters verbatim in a cited clause, and a stated deadline is the rules.json value; a verb with no entry in `GATES` is held for a human). A gate reads the
    proposal and the state of the conversation (channel, facts on file, consent record, warning given, verification
    done, humans on shift) and applies the rules that bind that verb. It returns a verdict with the rule ids it
    relied on, each rule carrying its clause, page and verbatim quote in both languages.
