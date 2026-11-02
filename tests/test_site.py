@@ -349,5 +349,5 @@ def test_kb_page_links_the_datasheet(pages):  # order 2026-10-29-task-29 Part C2
 
 def test_readme_first_screen_links_the_datasheet():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
-    line = next(l for l in readme.splitlines() if l.startswith("1. Knowledge base:"))
+    line = next(l for l in readme.splitlines() if l.startswith("| Knowledge base |"))  # Task 39 C: a table row
     assert "`kb/export/InputDocs/Inputs.md`" in line and "`kb/DATASHEET.md`" in line

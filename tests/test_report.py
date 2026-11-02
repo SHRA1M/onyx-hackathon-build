@@ -272,13 +272,38 @@ def test_the_eight_headings_keep_with_next(built):
 def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     notice = readme.index("> **Synthetic data.**")
-    block = readme.index("## For the reviewer\n\nThe four published criteria, each with the one place that shows it:")
+    block = readme.index("## For the reviewer\n\nThe four published criteria, each with its evidence and one way to "
+                         "check it:")
     assert notice < block < readme.index("Mizan puts a consumer on the line")
     lines = readme[block:readme.index("Mizan puts a consumer on the line")].strip().splitlines()
-    numbered = [line for line in lines if re.match(r"\d\. ", line)]
-    assert [line[:2] for line in numbered] == ["1.", "2.", "3.", "4."]
-    assert numbered[0].startswith(f"1. Knowledge base: `kb/manifest.csv` ({len(kb.load_manifest())} rows")  # read, Task 30
-    assert numbered[3].startswith("4. ITU-T Y.3172 and the Readiness Framework:")
+    rows = [line for line in lines if line.startswith("| ") and not line.startswith("| Criterion")]  # Task 39 C
+    assert len(rows) == 4
+    assert rows[0].startswith(f"| Knowledge base | `kb/manifest.csv` ({len(kb.load_manifest())} rows")  # read, Task 30
+    assert rows[3].startswith("| ITU-T Y.3172 and the Readiness Framework |")
+
+
+def test_the_reviewer_table_names_only_commands_and_paths_that_exist():
+    """Task 39 C: every `python -m onyx <command>` in the table is in `python -m onyx --help`, every backticked path
+    (and every path a command names) exists, and every link is a heading of the README."""
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    block = readme.split("## For the reviewer\n", 1)[1].split("Mizan puts a consumer on the line", 1)[0]
+    rows = [line for line in block.splitlines() if line.startswith("| ") and not line.startswith("| Criterion")]
+    assert len(rows) == 4 and all(len(row.strip("|").split(" | ")) == 3 for row in rows)
+    helptext = subprocess.run([sys.executable, "-m", "onyx", "--help"], capture_output=True, text=True,
+                              cwd=kb.REPO, check=True).stdout
+    listed = set(re.findall(r"^    (\S+)\s", helptext, re.M))
+    ticked = [t for row in rows for t in re.findall(r"`([^`]+)`", row)]
+    commands = [t for t in ticked if "python -m onyx" in t]
+    assert len(commands) == 3
+    for command in commands:
+        words = command.split("python -m onyx ", 1)[1].split()
+        assert words[0] in listed, command
+        assert all((kb.REPO / w).exists() for w in words if "/" in w), command
+    paths = [t.split(" ")[0] for t in ticked if t not in commands]
+    assert paths and all((kb.REPO / p).exists() for p in paths), paths
+    anchors = re.findall(r"\]\(#([^)]+)\)", "\n".join(rows))
+    headings = {re.sub(r"[^a-z0-9 -]", "", h.lower()).replace(" ", "-") for h in re.findall(r"^## (.+)$", readme, re.M)}
+    assert anchors and set(anchors) <= headings, anchors
 
 
 # --- Task 29 Part D (order 2026-10-29-task-29-field-take, Part D; release order 2026-10-30) --------------------

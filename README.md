@@ -6,12 +6,14 @@
 
 ## For the reviewer
 
-The four published criteria, each with the one place that shows it:
+The four published criteria, each with its evidence and one way to check it:
 
-1. Knowledge base: `kb/manifest.csv` (88 rows, status, sha256, both languages); `python -m onyx kb verify` prints the counts; the downloadable copy is `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md`.
-2. Agent capability in error scenarios, and the gaps: `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay
-3. Auditability: `uv run python -m onyx selftest` recomputes every figure in `docs/report.docx` from the committed hash-chained logs in `runs/`; `uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl` re-decides one run offline.
-4. ITU-T Y.3172 and the Readiness Framework: `docs/report.docx`, the Requirements and Mapping sections, and the Y.3172 mapping table below.
+| Criterion | Evidence | How to check it |
+|---|---|---|
+| Knowledge base | `kb/manifest.csv` (88 rows, status, sha256, both languages); the downloadable copy `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md` | `uv run python -m onyx kb verify` prints the counts |
+| Agent capability in error scenarios, and the gaps | `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay | `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` explains one step from its log |
+| Auditability | the committed hash-chained logs in `runs/`; `docs/report.pdf` | `uv run python -m onyx selftest` recomputes the report's figures from `runs/` |
+| ITU-T Y.3172 and the Readiness Framework | `docs/report.pdf`, the Requirements and Mapping sections | [the Y.3172 mapping table below](#y3172-mapping) |
 
 The report's annex (data and model, clause to code, the governed test, what ITU can reuse) is in `docs/report.pdf` after page 5.
 
