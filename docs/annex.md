@@ -172,7 +172,11 @@ gate rejection rate per scenario is in the table, printed as the range over the 
 | S5 | 2 | 2 | 0.33 to 0.38 | 0.33 to 0.38 |
 
 **Reading it.** The model is not reckless: in most steps it proposes the lawful act. But across a five-step
-conversation it lets about two held-or-blocked steps through per run, and it does so in both languages. That is the
+conversation it lets about two held-or-blocked steps through per run, and it does so in both languages. The cost of
+the gate is the hand-over: the governed run stops at the step the key marks and passes the conversation to a named
+human. In the three scored scenarios that contain a hand-over (S2, S4, S5) the hand-over latency row in
+`eval/results.md` is 0 steps in both languages: the run hands over at the key's step, not later; S1 and S3 have no
+hand-over step. The subscriber is served by a person at that step instead of charged by a machine. That is the
 number a regulator should want to know about any AI that acts for a licensee, and it is why Mizan puts the decision
 in code.
 

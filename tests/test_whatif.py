@@ -116,8 +116,9 @@ def test_readme_carries_the_two_sentences_and_the_reviewer_line():
             "replays the recorded S2 run under the rule the register recommends (proposed, not law): the held step "
             "S2-5 is released, the hand-over duty gains a two-minute clock, and one new finding appears: the rule needs "
             "the hand-over time recorded, which this log does not carry. Page: `docs/replay/whatif-S2-gap-1.md`.") in flat
-    line2 = next(l for l in README.splitlines() if l.startswith("2. Agent capability in error scenarios"))
-    assert line2.endswith("; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay")
+    row = next(l for l in README.splitlines() if l.startswith("| Agent capability in error scenarios"))  # Task 39 C
+    evidence = row.strip("|").split(" | ")[1]
+    assert evidence.endswith("; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay")
 
 
 def test_index_links_the_page_and_opens_its_text():

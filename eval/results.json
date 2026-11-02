@@ -819,6 +819,94 @@
     }
    }
   },
+  "key_clauses": {
+   "by_scenario": {
+    "S1": {
+     "ar": {
+      "mandate": 36,
+      "retrieval": 2,
+      "shown": 38,
+      "total": 48
+     },
+     "en": {
+      "mandate": 36,
+      "retrieval": 6,
+      "shown": 42,
+      "total": 48
+     }
+    },
+    "S2": {
+     "ar": {
+      "mandate": 32,
+      "retrieval": 2,
+      "shown": 34,
+      "total": 46
+     },
+     "en": {
+      "mandate": 32,
+      "retrieval": 4,
+      "shown": 36,
+      "total": 46
+     }
+    },
+    "S3": {
+     "ar": {
+      "mandate": 34,
+      "retrieval": 0,
+      "shown": 34,
+      "total": 54
+     },
+     "en": {
+      "mandate": 34,
+      "retrieval": 12,
+      "shown": 46,
+      "total": 54
+     }
+    },
+    "S4": {
+     "ar": {
+      "mandate": 32,
+      "retrieval": 0,
+      "shown": 32,
+      "total": 54
+     },
+     "en": {
+      "mandate": 32,
+      "retrieval": 4,
+      "shown": 36,
+      "total": 54
+     }
+    },
+    "S5": {
+     "ar": {
+      "mandate": 26,
+      "retrieval": 2,
+      "shown": 28,
+      "total": 32
+     },
+     "en": {
+      "mandate": 26,
+      "retrieval": 0,
+      "shown": 26,
+      "total": 32
+     }
+    }
+   },
+   "pooled": {
+    "ar": {
+     "mandate": 160,
+     "retrieval": 6,
+     "shown": 166,
+     "total": 234
+    },
+    "en": {
+     "mandate": 160,
+     "retrieval": 26,
+     "shown": 186,
+     "total": 234
+    }
+   }
+  },
   "key_steps": 112,
   "misses": {
    "S3-4": {

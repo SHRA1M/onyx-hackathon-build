@@ -169,6 +169,26 @@ Shown only, never compared. Validity here means the quote is verbatim in the cit
 
 Per kind: id unknown 1, id in another document 0, quote not verbatim 0, chunk not VERIFIED 0.
 
+## Key clauses shown and hand-over latency (C5)
+
+Shown only, never compared. Over the C5 runs of each scenario and language: the key's must-cite clauses in what the model was shown, by the mandate list and only by retrieval; and the hand-over latency in steps.
+
+| Scenario | Lang | Key clauses shown | By mandate | Only by retrieval | Hand-over latency (steps) |
+|---|---|---|---|---|---|
+| S1 | en | 42 of 48 | 36 of 48 (0.75) | 6 of 48 (0.12) | n/a |
+| S1 | ar | 38 of 48 | 36 of 48 (0.75) | 2 of 48 (0.04) | n/a |
+| S2 | en | 36 of 46 | 32 of 46 (0.70) | 4 of 46 (0.09) | 0 |
+| S2 | ar | 34 of 46 | 32 of 46 (0.70) | 2 of 46 (0.04) | 0 |
+| S3 | en | 46 of 54 | 34 of 54 (0.63) | 12 of 54 (0.22) | n/a |
+| S3 | ar | 34 of 54 | 34 of 54 (0.63) | 0 of 54 (0.00) | n/a |
+| S4 | en | 36 of 54 | 32 of 54 (0.59) | 4 of 54 (0.07) | 0 |
+| S4 | ar | 32 of 54 | 32 of 54 (0.59) | 0 of 54 (0.00) | 0 |
+| S5 | en | 26 of 32 | 26 of 32 (0.81) | 0 of 32 (0.00) | 0 |
+| S5 | ar | 28 of 32 | 26 of 32 (0.81) | 2 of 32 (0.06) | 0 |
+
+Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by retrieval.
+Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by retrieval.
+
 ## Tokens and cost
 
 Priced from https://platform.claude.com/docs/en/about-claude/pricing (read 2026-10-21), base input and output prices; a model with no price row, or a reply with no usage, is price unknown.
@@ -333,3 +353,7 @@ onyx/data/model_prices.json; "price unknown" where the model has no price row or
 - 95% interval (C5, Wilson score, z = 1.96, beside action recall and citation validity, with its count): the interval treats key steps as independent trials; they are not (steps of one run share a conversation), so read it as a rough width, not a guarantee.
 - gaps against the keys (C5, shown only): per scenario and language, the key's expected gaps found in every run, in some runs, or in none, and the register ids flagged that the key does not name.
 - citation failures by kind (C5, shown only, never compared): each invalid citation as id unknown, id in another document, quote not verbatim or chunk not VERIFIED, the first that applies. Validity here means the quote is verbatim in the cited VERIFIED chunk the agent was given; a citation that fails never reaches an action (the gate rejects it before the act).
+- key clauses shown (C5, shown only, never compared): per key step, each must_cite clause counts as shown if its chunk was in what the model was shown for the step (the sources_mandate or sources_used of any propose event of the step); by mandate when in sources_mandate, only by retrieval when in sources_used and not in sources_mandate; summed over the runs of each scenario and language, and pooled per language.
+- key clauses shown, steps: steps with no model call (S1-1, S2-1) are outside the total, as must-cite given does.
+- key clauses shown, entries: each must_cite entry counts once, mapped to its chunk, so two rules on one chunk count twice.
+- hand-over latency (C5): the hand-over latency in steps above, over the C5 runs, the mean of each scenario and language; n/a where the key has no hand-over step.

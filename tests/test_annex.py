@@ -170,3 +170,17 @@ def test_the_built_report_has_the_annex_after_a_page_break(tmp_path):
     assert len(doc.tables) == 4  # mapping, gaps, the C3 table, where to look
     code = next(p for p in doc.paragraphs[annex:] if p.text.startswith("def complaint_gate"))
     assert all(r.font.size.pt == 8 and r.font.name == "Courier New" for r in code.runs)
+
+
+def test_annex_c_handover_sentences_match_the_c5_cells():
+    """Task 39 D (ruling task-39-stops-ruling-2026-11-02, D3 and D4): Annex C names S2, S4, S5 at 0 steps in both
+    languages and S1, S3 with no hand-over step, as the C5 cells in eval/results.json print them."""
+    text = " ".join(ANNEX_MD.read_text(encoding="utf-8").split())
+    assert ("In the three scored scenarios that contain a hand-over (S2, S4, S5) the hand-over latency row in "
+            "`eval/results.md` is 0 steps in both languages: the run hands over at the key's step, not later; S1 and "
+            "S3 have no hand-over step.") in text
+    cells = json.loads((kb.REPO / "eval" / "results.json").read_text(encoding="utf-8"))["c5"]["C5"]["by_scenario"]
+    for sid, value in {"S1": None, "S2": 0, "S3": None, "S4": 0, "S5": 0}.items():
+        assert [cells[sid][lang]["handover_latency_steps"] for lang in ("en", "ar")] == [value, value], sid
+    assert "## Key clauses shown and hand-over latency (C5)" in (kb.REPO / "eval" / "results.md").read_text(
+        encoding="utf-8")
