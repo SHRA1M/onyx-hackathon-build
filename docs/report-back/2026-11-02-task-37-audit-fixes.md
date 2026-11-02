@@ -52,7 +52,7 @@ words: 2346
 3. `grep -n "sections 3 and 4" README.md`: no output (exit 1).
 4. `docs/build_report.py` passes its count and value checks. Selftest ends "figures match a fresh eval of runs/", same
    rows as at Task 36 (C5 recall 0.96 / 1.00, citation 0.99 / 1.00 in `eval/results.md`, unchanged).
-5. Full suite: `644 passed in 144.87s (0:02:24)` (643 plus the new test). CI: see PR #13.
+5. Full suite: `644 passed in 144.87s (0:02:24)` (643 plus the new test). CI: `reproduce` green on the push (run 41418780306) and on PR #13 (run 41418788802).
 6. Files changed against the Task 36 head (`15df647`): see the commit; README.md, CHANGELOG.md, docs/report.md,
    docs/report.docx, docs/site/gaps.html, tests/test_report.py and this file.
 7. sha256: `docs/report.md` and hq's `report-draft-2026-10-23.md` are both
