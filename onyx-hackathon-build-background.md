@@ -1,10 +1,10 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-01 (fifty-third wrap, Opus: Task 36 in progress on branch `task-36`, stopped twice on the 5-page limit).
+Updated 2026-11-02 (fifty-sixth wrap, Opus: Task 39 A to D built on `task-36`; B's annex sentence and E stopped).
 
 ## What this is
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (chain to Task 16: archive, 2026-10-22). main holds Task 35b (PR #12, tag `task-35b`); `task-36` (pushed, no PR) holds Task 36 so far; each task since 29 is one PR and one tag. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom T1). Agents propose JSON actions; plain-code gates decide from clauses of binding UAE text; every step goes to a hash-chained log. Orders: `docs/work-orders/` in date order, each with its report-back in `docs/report-back/` (chain to Task 16: archive, 2026-10-22). main holds Task 35b (PR #12, tag `task-35b`); `task-36` (PR #13) holds Tasks 36 to 39; each task since 29 is one PR and one tag. hq's report-back rulings on Tasks 14 and 16 are filed at the end of those orders. Thinking and business facts: `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
 
 ## Stack and how it runs
 
@@ -37,6 +37,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
+- 2026-11-02 (hq ruling `task-39-stops-ruling-2026-11-02.md`): "key clauses shown" leaves out steps with no model call (S1-1, S2-1) and counts each must_cite entry once (234 per language, test-pinned); `eval` prints the C5 hand-over latency, and the annex points at it, never at the C3 column; E's model is `qwen2.5:14b-instruct` (70B cannot load on 16 GB RAM and a 12 GB RTX 3060), fallback `qwen2.5:7b-instruct`.
 - 2026-11-02 (hq audit, Task 37): the README names report sections by heading, never by number (test); the report's gap table runs 1 to 6, 8 to 12; the site follows the report's order and puts gap 7 last.
 - 2026-11-01 (hq rulings on Task 36 stops 2 and 3): `docs/report.md` is hq's text (ten listed changes); figures 11 cm; the paragraph after each table is a 4 pt spacer; the Results test pins "2 missed (both S1), 3 unexpected ids flagged". Word: 5 pages, 2,346 words.
 - 2026-11-01 (hq ruling on Task 36 stop 1): cut 1 (Description's duplicate model sentence; the Introduction's "holds 88 documents" opener, now "The sources are") and cut 2 (figures 12 cm); no gap cell is reworded by the build: hq writes cell text on Fable. Any stop's questions go in a file, Iyas gets the path.
@@ -45,7 +46,6 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Traps
 
-- An order string with straight double quotes goes into JSON through `json.dumps`, never a raw text replace (Task 19b broke the file once that way).
 - Every Y.3172 chunk carries page 1 (chunker quirk); a gap row gives its own `page`. `kb/sources/global/` is gitignored, so the verbatim global-quote test skips in CI.
 
 - Recorded spend USD 21.85 against the USD 30 stop; the API organisation holds USD 100 promotional credit (granted 2026-10-27, expires 2026-11-25). `record`'s estimate counts both languages even when one is skipped.
@@ -56,10 +56,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - Never run `kb chunk` over the whole kb (hq, 2026-10-26): chunk one document at a time and `git diff --stat kb/chunks/` before committing. Y.3173 chunks, like Y.3172, all carry page 1.
 - Report pages: `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1 [-Path x.docx]` from Bash worked on 2026-10-30 (denied earlier; then use the PowerShell tool). Word measures the gap table's narrow last column: a longer cell can add a page.
 - A `kb chunk` rebuild undoes hand fixes in committed chunks: licence 3.4.1 'pur suant' and 9.1 'billin g' (pypdf errors; the committed file has them right), and the CPR 4.7.3 'opt-out' and 24.7 'anti-competitive' (the extraction keeps 'opt- out', 'anti- competitive'), and licence 16.3.3 'non-compliance' (extraction 'non -compliance'). Adding a clause: copy its line from `kb/chunks-full/`, apply these fixes, keep every committed line, then `kb ingest` (138 in kb_main after Task 23; not rerun for Task 24's 144 chunks: run it before any live run). Licence 9.3 now matches the rebuild. Never commit a rebuilt licence or CPR file unchanged.
-- `kb fetch` rewrites `url_accessed` and `http_status` in the manifest to the run's date: do not commit a manifest changed only by a fetch.
-- The UAE legislation portal answers 403 to scripts (a 5,495-byte HTML page; hq copies of that size are the page, not the PDF); Y.3172 and EUR-Lex URLs are pages, so their bytes never match. Since 2026-10-30 EUR-Lex answers every script with HTTP 202 and an AWS WAF JavaScript challenge; read it in Iyas's Chrome only (hq ruling), never a workaround.
-- PyMuPDF and pdfium reverse the lam-alef on TDRA and portal Arabic text layers; pypdf and pdftotext keep it. The hq .txt files are PyMuPDF output (except the licence, re-extracted with pypdf 2026-10-21): re-extract with pypdf before chunking any other Arabic source. pdftotext adds bidi control marks.
 - Pushing a feature branch, `gh pr create` and, on Iyas's word, `gh pr merge N --merge` work from the session (merge was refused once before Task 33); a push to main waits for his go. A branch and its tag share each task's name: push the tag as `refs/tags/task-NN`. Logs under `runs/_failed/` and `runs/bakeoff/_failed/` do not replay (crashed runs); `tests/test_replay_unchanged.py` covers C3, C4 and C5 only.
+- A `sed -i` or `cp` that overwrites a file in hq is refused by the auto-mode check; use the Edit tool there. A README change breaks tests in several files: run the full suite before pushing.
+- Ollama 0.40.13 is installed (`%LOCALAPPDATA%\Programs\Ollama\ollama.exe`, server on 11434). Claude Code may stop a long background download on low memory: restart only on Iyas's go.
 - Stop a background server with its own task, never `taskkill` by image name (2026-10-22: that closes every Python process on Iyas's PC).
 - `gaps.json` is hand-formatted and its lists close at different indents (gap-2 `searched` closes with two spaces): insert by parsing the block, then check each entry landed in the right list. A quote's start words can occur twice in a file (DSA 20(3) and 20(6)): assert the quote occurs once.
 - The copied `docs/sources/` text files carry non-UTF-8 bytes: read them with `errors="replace"`. Python heredocs in Git Bash mangle quotes and turn a written \n into a real newline: write the script to the scratchpad, or use the Edit tool.
@@ -68,8 +67,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Open
 
 - Open for hq (Tasks 35, 35b; detail in the archive, 2026-11-01): in-force dates of Maine, India TCCRR and Korea Art 31; the Saudi Arabic eye-check; Qatar CCPR §7 to §9 unread; the datasheet language table skips the six Gulf rows.
-- PR #13 (`task-36`) carries Tasks 36, 37 and 38; open, CI green at `bc36ef8`; Task 38 commits not pushed (Iyas's go); no merge or tag until Iyas says.
-- Task 38 (annex) built at stop 2 (`docs/report-back/2026-11-02-task-38-annex.md`): hq's v3 text says "17 verbs", the code has 16 (the 17 came from the stop-1 file's miscount). Word: main 5 pages, 2,366 words, annex from page 6, 10 pages; PDF 10 pages; 661 tests.
+- PR #13 (`task-36`) carries Tasks 36 to 39; open, CI green at `100ecd3`; pushed to `31b0c42`; no merge or tag until Iyas says.
+- Task 39 (`docs/report-back/2026-11-02-task-39-pre-freeze.md`): A (16 verbs), C (README check table), D (Annex C hand-over sentences) built; B's eval row built (en 186 of 234 shown, ar 166 of 234, 160 by mandate in both). Stop 3: the gate's verdict carries 63% en / 65% ar of the not-shown key clauses (under the ruling's 90%), so the Annex A retrieval sentence waits for hq (question 5). Word: main 5 pages, 2,366 words, annex from page 6, 10 pages, 5,094 words; PDF 10 pages; 667 tests.
+- Task 39 E (`docs/report-back/2026-11-02-task-39-e-local-model.md`): stopped. Care's S2 prompt is about 29,000 tokens, over the ruled 8,192 or 16,384; hq: 32,768 or drop. Model pull stopped half done (low memory). Due 2026-11-04.
+- Reviewer email (hq ruling): send by 2026-11-03 once Iyas has opened `docs/report.pdf` (10 pages, page 5 ends with Limits, page 6 starts with "Annex").
 - 2026-11-01 (hq): the filed Task 36 order may keep the template's example team name; the report, README and site never carry it (a test in `tests/test_report.py` checks).
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
 - The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq updated its report copy after Task 35b (2026-10-30).
@@ -78,4 +79,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Task 38 stop 2 on branch `task-36`: apply hq's answer on "17 verbs" in `docs/annex.md`, copy it to hq's `report-annex-2026-11-02.md`, rebuild (`docs/build_report.py`, `report_pages.ps1`, `report_pdf.ps1`), update the report-back, then with Iyas's go push `task-36` and record CI on PR #13.
+Read hq's answers to Task 39 question 5 (Annex A sentence) and E question 1 (context length). Add the sentence with its test, rebuild the report and PDF, push, CI. For E, with Iyas's go, re-pull `qwen2.5:14b-instruct` and run S2 English as ruled.

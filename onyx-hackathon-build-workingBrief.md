@@ -1,31 +1,35 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-02 (fifty-fifth wrap, Opus). Handover for the next session.
+Updated 2026-11-02 (fifty-sixth wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Finish Task 38, the annex (`D:\Projects\hq\uni\ai-for-good-hackathon\task-38-annex-order-2026-11-02.md`, ruling
-`task-38-stop-1-ruling-2026-11-02.md`, text v3), on branch `task-36` so PR #13 carries Tasks 36, 37 and 38. Freeze
-2026-11-06; submission 2026-11-09.
+Finish Task 39 (`docs/work-orders/2026-11-02-task-39-pre-freeze.md`, ruling
+`D:\Projects\hq\uni\ai-for-good-hackathon\task-39-stops-ruling-2026-11-02.md`) on branch `task-36`, so PR #13
+carries Tasks 36 to 39. Freeze 2026-11-06; E due 2026-11-04 end of day; submission 2026-11-09.
 
 ## State
 
-- Built and committed (`02d4328`, not pushed): `docs/annex.md`, builder annex, `report_pages.ps1` annex line,
-  `docs/report.pdf` (`report_pdf.ps1`, `check_pdf.py`), README line, hq copy, `tests/test_annex.py`. 661 tests.
-  Word: main 5 pages, 2,366 words; annex from page 6; 10 pages. PDF 10 pages.
-- Stopped at stop 2: `docs/report-back/2026-11-02-task-38-annex.md`, section "Stop 2". v3 says "17 verbs"; the code
-  has 16.
+- Built, pushed, CI green at `100ecd3` (head `31b0c42`): A, C, D, and B's eval row and C5 hand-over cells. 667
+  tests. Word main 5 pages, annex from page 6, 10 pages; PDF 10 pages.
+- Waiting on hq: question 5 in `docs/report-back/2026-11-02-task-39-pre-freeze.md` (the Annex A retrieval sentence,
+  stop 3: the gate carries 63% en / 65% ar of the not-shown clauses, under 90%); question 1 in
+  `docs/report-back/2026-11-02-task-39-e-local-model.md` (context 32,768 with flash attention and q8_0 cache, or
+  drop E).
+- Ollama 0.40.13 installed; `qwen2.5:14b-instruct` pull stopped half done (low memory); restart only on Iyas's go.
 
 ## Open questions
 
-- hq: "17 verbs" to "16"? (stop 2)
-- Iyas: go to push `task-36` (CI on PR #13); his own look at `docs/report.pdf` (Done means 7).
-- Carried: Arabic PDPL chunk text for `why --lang ar`; in-force dates (Maine, India TCCRR, Korea Art 31); Saudi
-  Arabic eye-check; GitHub Pages on submission day.
+- hq: Task 39 question 5; E question 1. Also whether D's three sentences should sit after "puts the decision in
+  code." (the old "That is the number..." now follows them).
+- Iyas: open `docs/report.pdf` (10 pages, page 5 ends with Limits, page 6 starts "Annex"), then send the reviewer
+  email (target 2026-11-03); go to re-pull the model.
 
 ## Next moves
 
 1. `git status`, `git pull` on `task-36`.
-2. Read hq's answer; edit the one word in `docs/annex.md`; copy it to hq's `report-annex-2026-11-02.md`.
-3. `uv run python docs/build_report.py`; `report_pages.ps1`; `report_pdf.ps1`; `uv run pytest`.
-4. Update the report-back (stop 2 answered, outputs); commit; with Iyas's go, push and record CI on PR #13.
+2. Read hq's answers. Add the Annex A sentence with a test that its numbers equal the printed row; copy the annex to
+   hq's `report-annex-2026-11-02.md` with the Edit tool; `build_report.py`, `report_pages.ps1`, `report_pdf.ps1`;
+   full `uv run pytest`; push; CI.
+3. E as ruled: pull, `curl http://localhost:11434/v1/models`, S2 English to `runs/demo-local/S2/en/`, `verify-log`,
+   the eval-ignores test, `docs/site/localmodel.html`, README and annex lines; or record "tried, not shown".
