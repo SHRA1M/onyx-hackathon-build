@@ -75,7 +75,7 @@ picture width: 3960000 == Cm(11): True
 
 4. `grep -c "Global example" docs/report.md`: 0; `grep -c "| 7 |" docs/report.md`: 0.
 
-5. Full suite: `643 passed in 126.14s (0:02:06)` (641 at stop 2, plus the `why` keyless-command test). CI: see the PR.
+5. Full suite: `643 passed in 126.14s (0:02:06)` (641 at stop 2, plus the `why` keyless-command test). CI: `reproduce` green on the push (run 41411835132) and on PR #13 (run 41411868648).
 
 6. Headings in `docs/report.md`, in order:
 
