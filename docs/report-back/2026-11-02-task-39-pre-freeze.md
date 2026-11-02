@@ -85,6 +85,85 @@ Questions for hq:
    (same values), or have B's eval change also print the C5 hand-over latency per scenario and language in
    `eval/results.md`, so the pointer names C5?
 
+## After the ruling (`task-39-stops-ruling-2026-11-02.md`)
+
+| Item | State | Commit |
+|---|---|---|
+| B | Row, C5 hand-over cells, definitions, tests built. Annex A sentence held: stop 3 below | `100ecd3` |
+| D | Built: the ruling's three sentences in Annex C (and hq's copy) | `100ecd3` |
+| C fix | `tests/test_whatif.py` still pinned the old README line 2; CI failed on the C push (run 41432193053). Fixed; CI green on `100ecd3` (runs 41435843854, 41435849711) | `100ecd3` |
+
+### Stop 3 (ruling B1): the gate does not carry every not-shown clause
+
+Field used: `clause_ids` of every `gate` event of the step (rule ids, the same kind as `must_cite`). The adviser's
+`abstain` event's `clause_ids` is counted apart: it is the abstention record, not the gate's verdict.
+
+| Lang | Carried by the gate | Not in the gate's verdict | of which in the abstention record | In neither prompt, verdict nor abstention | Total |
+|---|---|---|---|---|---|
+| en | 27 (63%) | 16 | 10 | 6 | 43 |
+| ar | 44 (65%) | 24 | 14 | 10 | 68 |
+
+Under 90% with or without the abstention record (en 37 of 43, 86%; ar 58 of 68, 85%), so "most of the rest" is not
+written and the Annex A sentence is not added. Every uncarried instance, the same in run 1 and run 2 (so each line is
+2 instances). "Hit" is the key's agent proposing the key's verb to the right addressee:
+
+| Lang | Step | Clause (rule id) | In the abstention record | What hit |
+|---|---|---|---|---|
+| en, ar | S2-5 | `cpr-26-7-1` | yes | adviser `flag_gap` (abstention step) |
+| en, ar | S2-5 | `licence-9-1` | yes | adviser `flag_gap` |
+| ar | S2-5 | `cpr-26-7-2` | yes | adviser `flag_gap` |
+| en, ar | S2-5 | `qos-v3-0-t1-2a` | no | adviser `flag_gap` |
+| en, ar | S2-5 | `cpr-26-4-5` | no | adviser `flag_gap` |
+| en, ar | S4-5 | `pdpl-18-1` | yes | adviser `flag_gap` |
+| en, ar | S4-5 | `cabinet-66-2023-34-1` | yes | adviser `flag_gap` |
+| en, ar | S4-5 | `cpr-22-2` | yes | adviser `flag_gap` |
+| ar | S4-5 | `pdpl-18-2` | yes | adviser `flag_gap` |
+| en, ar | S5-4 | `et-33` | no | adviser `flag_gap` |
+| ar | S3-1 | `cpr-28-26` | no | data_office `receive_objection` |
+| ar | S3-1 | `consumer-law-4-5` | no | data_office `receive_objection` |
+
+Reading (not a fix): every uncarried instance but S3-1 Arabic is on an abstention step, where the adviser's act is
+`flag_gap` and the gate's verdict on the pending proposal cites nothing. The key's `must_cite` there names the clauses
+the gap is about. Action recall scores the verb, so these steps hit with the clauses neither shown nor carried.
+
+Question for hq: 5. The Annex A sentence without the last clause (as the original order wrote it), a different last
+clause, or none?
+
+### Outputs
+
+- `uv run python -m onyx eval` -> `60 runs read from runs; results in eval/results.md and results.json
+  (claude-sonnet-5-5).` `git diff eval/results.md`: 24 lines added, 0 removed. The new section:
+
+```
+| S1 | en | 42 of 48 | 36 of 48 (0.75) | 6 of 48 (0.12) | n/a |
+| S1 | ar | 38 of 48 | 36 of 48 (0.75) | 2 of 48 (0.04) | n/a |
+| S2 | en | 36 of 46 | 32 of 46 (0.70) | 4 of 46 (0.09) | 0 |
+| S2 | ar | 34 of 46 | 32 of 46 (0.70) | 2 of 46 (0.04) | 0 |
+| S3 | en | 46 of 54 | 34 of 54 (0.63) | 12 of 54 (0.22) | n/a |
+| S3 | ar | 34 of 54 | 34 of 54 (0.63) | 0 of 54 (0.00) | n/a |
+| S4 | en | 36 of 54 | 32 of 54 (0.59) | 4 of 54 (0.07) | 0 |
+| S4 | ar | 32 of 54 | 32 of 54 (0.59) | 0 of 54 (0.00) | 0 |
+| S5 | en | 26 of 32 | 26 of 32 (0.81) | 0 of 32 (0.00) | 0 |
+| S5 | ar | 28 of 32 | 26 of 32 (0.81) | 2 of 32 (0.06) | 0 |
+
+Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by retrieval.
+Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by retrieval.
+```
+
+- D, the C5 cells the sentences come from (`results.json`, `c5.C5.by_scenario.*.handover_latency_steps`): S1 None /
+  None, S2 0.0 / 0.0, S3 None / None, S4 0.0 / 0.0, S5 0.0 / 0.0 (en / ar). As placed after "and it does so in both
+  languages.", the old next sentence "That is the number a regulator should want to know..." now follows the
+  hand-over sentences; it reads as pointing at the hand-over rather than at the two steps let through. hq may want
+  the three sentences after "puts the decision in code." instead.
+- `report_pages.ps1` -> `pages: 5` / `words: 2366` / `annex starts on page: 6` / `total pages: 10` /
+  `total words: 5094`. `report_pdf.ps1` -> `word pages: 10` / `pdf pages: 10` / `pdf finds 'Annex A': True` /
+  `pdf finds 'Limits and next steps': True` / `pdf bytes: 358043`.
+- `uv run pytest` -> `667 passed` (661 + 1 for C + 5 for B and D). hq copy of the annex equals `docs/annex.md`
+  (sha256 `f1b8af538b781496...`).
+- New tests: `test_key_clauses_shown_counts_mandate_and_retrieval_apart`, `test_key_clauses_shown_c5_totals_are_pinned`
+  (234 per language), `test_key_clauses_row_is_recomputed_from_the_committed_logs`,
+  `test_c5_handover_latency_cells_equal_the_json_values`, `test_annex_c_handover_sentences_match_the_c5_cells`.
+
 ## Limits kept so far
 
 No run, no model call, no fetch, no spend. No figure, gap, rule, key, prompt, gate, mandate or scenario changed.
