@@ -48,3 +48,21 @@ since none of them changes the adapter, the prompt or a gate. The deadline stays
 
 0 USD spent. No run recorded, no file in `runs/demo-local/`, no adapter, prompt, gate or key change. The model and
 Ollama are on this PC only; nothing has reached anyone outside the team.
+
+## After ruling 2 (`task-39-stops-ruling-2-2026-11-02.md`, 2026-11-02, fifty-seventh session)
+
+Question 1 answered: (a) with the two cache settings. Not run yet.
+
+- `ollama --version` -> `ollama version is 0.40.13`. `ollama list` -> no models.
+- The re-pull was stopped by Claude Code on low memory again (3.7 GB free of 15.9 GB after; no single large
+  process). A foreground pull from the session ran at about 500 KB/s (estimate about 4 hours, restarted at 1.1 GB of
+  9.0 GB) and was stopped on Iyas's word: he downloads in his own PowerShell window.
+- `scripts/demo_local.py` written: it drives the same `Coordinator` that `record` uses, through the unchanged
+  `OpenAICompatibleModel`, to `runs/demo-local/S2/<lang>/run1.jsonl`, and prints seconds per call. `record` is not
+  used because its spend guard refuses a model with no price row (`cost.guard`), and adding one would be a data
+  change. Not run; no file in `runs/demo-local/`.
+- The adapter's request timeout is 600 s with four attempts, so a stalled call can take up to 40 minutes before
+  it raises. That is above ruling 2's 30-minute step limit; the wall time per call is printed, so a call over 30
+  minutes is seen and the 7B fallback taken.
+
+Limits kept: USD 0, no hosted model, no sign-in to ollama.com, no adapter, prompt, gate or key change.

@@ -583,3 +583,24 @@ Moved from background:
   - `kb fetch` rewrites `url_accessed` and `http_status` in the manifest to the run's date: do not commit a manifest changed only by a fetch.
   - The UAE legislation portal answers 403 to scripts (a 5,495-byte HTML page; hq copies of that size are the page, not the PDF); Y.3172 and EUR-Lex URLs are pages, so their bytes never match. Since 2026-10-30 EUR-Lex answers every script with HTTP 202 and an AWS WAF JavaScript challenge; read it in Iyas's Chrome only (hq ruling), never a workaround.
   - PyMuPDF and pdfium reverse the lam-alef on TDRA and portal Arabic text layers; pypdf and pdftotext keep it. The hq .txt files are PyMuPDF output (except the licence, re-extracted with pypdf 2026-10-21): re-extract with pypdf before chunking any other Arabic source. pdftotext adds bidi control marks.
+
+## 2026-11-02: Task 39 B5 built, E waiting on the download (fifty-seventh wrap, Opus)
+
+- hq's ruling 2 (`task-39-stops-ruling-2-2026-11-02.md`) answered Task 39 question 5 and E question 1. Built: `eval`
+  counts per run the must-cite entries not shown at a step whose action hit (`key_clauses_absent`) and those the
+  gate carries; pooled lines print en 23 of 43, ar 36 of 68; two definition lines (unit, "carried"). Annex A's
+  Retrieval paragraph gains ruling 2's sentence; hq's copy matches (sha256 9429cfb4). Three new tests; 670 pass.
+  Word main 5 pages, annex from page 6, 10 pages, 5,214 words; PDF 10 pages. Commits `61460dd` (CI green, runs
+  41448439695 and 41448448759) and `42fcc67` (report-back).
+- Departed from the ruling: stop 3's 27 and 44 could not be reproduced (its probe script was not kept). Tried: rule
+  ids in `old_value.clause_ids` (0 carried: those are chunk ids), chunk-level matching (23 / 36), rule ids in
+  `reasons[].clause` (23 / 36). The four entries that differ (S3-3 en and ar, S1-6 ar) sit on abstention steps, so
+  the sentence's structure holds. Asked hq to confirm the reading.
+- E: `scripts/demo_local.py` written (drives Coordinator directly: `record` refuses an unpriced model). The pull of
+  `qwen2.5:14b-instruct` was stopped again by Claude Code on low memory (3.7 GB free of 15.9); a foreground `!` pull
+  ran at about 500 KB/s (about 4 hours) and was stopped on Iyas's word; he downloads in his own PowerShell window.
+Moved from background:
+  - 2026-11-01 (hq rulings on Task 36 stops 2 and 3): `docs/report.md` is hq's text (ten listed changes); figures 11 cm; the paragraph after each table is a 4 pt spacer; the Results test pins "2 missed (both S1), 3 unexpected ids flagged". Word: 5 pages, 2,346 words.
+  - 2026-11-01 (hq ruling on Task 36 stop 1): cut 1 (Description's duplicate model sentence; the Introduction's "holds 88 documents" opener, now "The sources are") and cut 2 (figures 12 cm); no gap cell is reworded by the build: hq writes cell text on Fable. Any stop's questions go in a file, Iyas gets the path.
+  - `gaps.json` is hand-formatted and its lists close at different indents (gap-2 `searched` closes with two spaces): insert by parsing the block, then check each entry landed in the right list. A quote's start words can occur twice in a file (DSA 20(3) and 20(6)): assert the quote occurs once.
+  - 2026-11-01 (hq): the filed Task 36 order may keep the template's example team name; the report, README and site never carry it (a test in `tests/test_report.py` checks).
