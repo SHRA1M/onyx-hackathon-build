@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-02
+
+- Fixed (order 2026-11-01-task-36-template-items; hq rulings on stop 2 and stop 3, 2026-11-01): the report was 6 pages, 2,424 words, against ITU's 5-page limit. Broke: the empty paragraph after each table took a full 12 pt body line plus its space after, the gap table's "Global example" header wrapped to two lines, and filler words cost whole lines on pages 3 to 5. Changed: `docs/report.md` replaced by hq's file (sha256 `2693ee5f`, ten listed text changes, no gap row, scenario, figure, clause or addressee cut); `docs/build_report.py` makes the paragraph after each table a 4 pt spacer (run and mark 4 pt, line exactly 4 pt, 0 before and after) and both figures 11 cm (were 12); the figure-width test and the Results-sentence test follow (`Cm(11)`; "2 missed (both S1), 3 unexpected ids flagged"). Word: 5 pages, 2,346 words. README gains the four demo steps and the `why` line in the keyless commands; the site's `verify.html` names `onyx why`. hq's `report-draft-2026-10-23.md` replaced with the new text. 643 tests.
+
 ## 2026-11-01
 
 - Changed (order 2026-11-01-task-36-template-items, in progress on `task-36`): a subscriber's "why?" had no answer but the replay page, and the what-if tested only TDRA's gap 1. Changed: `python -m onyx why <log> --step <n> [--lang ar]` prints a recorded step's verdict, clauses with title, page and words from `kb/chunks/`, the hand-over and the event hash, from the log alone; `onyx/data/proposed/gap-4.json` (UAE Data Office, 30 days, Arabic by the team, not eye-checked) and `docs/replay/whatif-S4-gap-4.md` (only S4-5-care gains the clock; every verdict unchanged); `whatif` rules may set `clock_on`. Report: template headings (role of AI, Requirements in three groups, Demo scenarios, method paragraph), order cuts 1 to 4, hq ruling cuts 1 and 2, figures 12 cm, "N UAE instruments" count-checked; still 6 pages (stop 2). 641 tests.

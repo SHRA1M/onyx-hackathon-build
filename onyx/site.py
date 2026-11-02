@@ -333,6 +333,9 @@ def verify_page() -> str:
             f'<p><label>Run <select id="log">{"".join(groups)}</select></label> '
             '<button id="go">Verify</button></p>'
             '<p>In a terminal: <code id="cmd"></code></p>'
+            "<p>Explain one step from the same log, no model call: <code>python -m onyx why &lt;log&gt; --step &lt;n&gt;"
+            " [--lang ar]</code> prints the verdict, each clause with its title, page and words, the hand-over and the "
+            "event hash.</p>"
             '<p id="summary" class="lead"></p><div class="tablewrap"><table class="grid chain"><thead><tr><th>seq</th>'
             "<th>action</th><th>stored hash</th><th>recomputed</th><th></th></tr></thead><tbody id=\"rows\"></tbody>"
             f'</table></div><script type="application/json" id="logs">{inline_json(logs)}</script>')

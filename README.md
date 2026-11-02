@@ -89,14 +89,22 @@ uv sync
 uv run python -m onyx selftest
 uv run python -m onyx replay runs/c5/S1/run1.jsonl
 uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl
+uv run python -m onyx why runs/c5/S3/run1.jsonl --step 3
 uv run pytest -q
 ```
 
 `selftest` runs scenario S1 through the agents and the gate on a scripted model, checks the log's hash chain, replays
 it, prints the headline figures and recomputes them from the committed logs. `replay` re-decides a recorded live run
-offline and prints the complaint hand-over in S2 with CPR 26.7.2 and licence 9.1 in English and Arabic.
+offline and prints the complaint hand-over in S2 with CPR 26.7.2 and licence 9.1 in English and Arabic. `why` explains one recorded step from its log: verdict, clauses with their words, hand-over, event hash.
 
 Replay viewer: open `docs/replay/index.html` in a browser (no server, no key).
+
+Demo, four steps (the report's Demo scenarios; every one a replay or plain code over the committed logs, no key):
+
+1. Online: the five recorded scenarios, every step with clause, page and words: `docs/replay/index.html`.
+2. The subscriber asks why: `uv run python -m onyx why runs/c5/S3/run1.jsonl --step 3` (add `--lang ar` for Arabic) prints the verdict, each clause with its title, page and words, the hand-over and the event hash, from the log alone.
+3. Conflicting advice: S3 step 3, the gate blocks the transfer abroad (PDPL 22, 23(2)) and refuses the override (`override_refused`): `docs/replay/S3.md`, step 3.
+4. Another body, another rule: `uv run python -m onyx whatif runs/c5/S2/run1.jsonl --rule gap-1` (TDRA, `docs/replay/whatif-S2-gap-1.md`) and `--rule gap-4` on `runs/c5/S4/run1.jsonl` (UAE Data Office, `docs/replay/whatif-S4-gap-4.md`); a replay costs USD 0, a live C5 run USD 0.27 (`eval`: USD 5.3767 over 20 runs).
 
 ## Open the site
 

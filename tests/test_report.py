@@ -300,7 +300,7 @@ def test_report_figures_match_eval():
     build = _load()
     sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
     text = REPORT_MD.read_text(encoding="utf-8")
-    b1 = "expected gaps: 5 of 7 found in every run, 2 missed (both in S1), 3 unexpected register ids flagged"
+    b1 = "expected gaps: 5 of 7 found in every run, 2 missed (both S1), 3 unexpected ids flagged"  # Task 36 stop 2 ruling, change 6
     assert b1 in text
     # Task 36 cut 3: the interval left the report's Results; it stays in eval's output and the README
     assert "95% interval" not in text.split("**Results**")[1].split("## ")[0]
