@@ -1,0 +1,172 @@
+"""Task 38 (order D:\\Projects\\hq\\uni\\ai-for-good-hackathon\\task-38-annex-order-2026-11-02.md, ruling
+task-38-stop-1-ruling-2026-11-02.md): docs/annex.md is hq's annex text v3 with every brace filled from the repo; the
+builder appends it to docs/report.docx after a page break and checks its figures; the Limits paragraph points to it."""
+
+import importlib.util
+import json
+import re
+import subprocess
+import sys
+
+import pytest
+
+from onyx import kb
+
+DOCS = kb.REPO / "docs"
+ANNEX_MD = DOCS / "annex.md"
+REPORT_MD = DOCS / "report.md"
+POINTER = " Annex A to E: data and model, clause to code, the governed test, what ITU can reuse, where to look."
+
+
+def _load():
+    spec = importlib.util.spec_from_file_location("build_report", DOCS / "build_report.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _annex() -> str:
+    return ANNEX_MD.read_text(encoding="utf-8")
+
+
+def _code_blocks(md: str) -> list[str]:
+    return re.findall(r"^```\n(.*?)\n```$", md, re.S | re.M)
+
+
+def test_annex_headings_are_a_to_e_in_order():
+    headings = re.findall(r"^## (Annex [A-Z])\. ", _annex(), re.M)
+    assert headings == ["Annex A", "Annex B", "Annex C", "Annex D", "Annex E"]
+
+
+def test_no_brace_is_left_in_the_annex():
+    assert "{build:" not in _annex()
+
+
+def _c3_rows(results: str) -> dict[str, list[str]]:
+    """Scenario -> [ungoverned claims en, ar, governed gate rejection en, ar], as printed in eval/results.md."""
+    rows: dict[str, dict[str, str]] = {}
+    for heading, column in (("## Governed", "Gate rejection"), ("## Ungoverned", "Ungoverned claims allowed")):
+        section = results[results.index(heading + "\n"):]
+        lines = [l for l in section.splitlines() if l.startswith("|")]
+        head = [c.strip() for c in lines[0].strip("|").split("|")]
+        for line in lines[2:12]:
+            cells = dict(zip(head, (c.strip() for c in line.strip("|").split("|"))))
+            rows.setdefault(cells["Scenario"], {})[f"{column} {cells['Lang']}"] = cells[column]
+    return {s: [r["Ungoverned claims allowed en"], r["Ungoverned claims allowed ar"], r["Gate rejection en"],
+                r["Gate rejection ar"]] for s, r in rows.items()}
+
+
+def test_the_c3_rows_in_the_annex_table_equal_eval_results():
+    expected = _c3_rows((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
+    table = [l for l in _annex().splitlines() if re.match(r"\| S[1-5] \|", l)]
+    got = {c[0]: c[1:] for c in ([x.strip() for x in l.strip("|").split("|")] for l in table)}
+    assert list(got) == ["S1", "S2", "S3", "S4", "S5"]
+    assert got == expected
+
+
+def test_the_rule_record_pasted_equals_the_one_in_rules_json():
+    rules = json.loads((kb.REPO / "onyx" / "data" / "rules.json").read_text(encoding="utf-8"))["rules"]
+    stored = next(r for r in rules if r["id"] == "cpr-26-7-2")
+    assert json.loads(_code_blocks(_annex())[0]) == stored
+
+
+def test_the_gate_sketch_is_complaint_gate_lines_unedited():
+    gate = (kb.REPO / "onyx" / "gate.py").read_text(encoding="utf-8").splitlines()
+    sketch = _code_blocks(_annex())[1].splitlines()
+    assert sketch[0] == "def complaint_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:"
+    assert len(sketch) <= 40
+    body = gate[gate.index(sketch[0]):]
+    body = body[:next(i for i, l in enumerate(body[1:], 1) if l and not l.startswith(" "))]
+    kept = [l for l in sketch if l.strip() != "..."]
+    at = 0
+    for line in kept:  # each kept line is a line of the function, in the function's order
+        at = body.index(line, at) + 1
+    assert any("_finding(BLOCK" in l for l in kept) and any("grievance_expressed" in l for l in kept)
+
+
+def test_the_pointer_sentence_closes_the_limits_paragraph():
+    md = REPORT_MD.read_text(encoding="utf-8")
+    limits = md[md.index("## Limits and next steps"):]
+    para = " ".join(limits.split("\n\n")[1].split())
+    assert para.endswith("of the gates' law." + POINTER)
+
+
+def test_the_example_team_is_absent_from_the_annex():
+    name = bytes([86, 105, 115, 104, 110, 117]).decode()  # as in test_report.py
+    assert name not in _annex()
+
+
+def test_the_result_paragraph_carries_a_c3_tag_and_passes_the_value_check():
+    build = _load()
+    paras = build.annex_paragraphs(_annex())
+    result = next(p for p in paras if p.startswith("**Result.**"))
+    assert build.tags(result) == ["C3"]
+    results = (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    assert build.check_values("", results, paras) == []
+    assert build.check_values("", results, [result.replace("2.33", "2.34")]) != []
+
+
+def test_the_precision_paragraph_figures_are_the_pooled_and_misses_lines():
+    results = (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    pooled = re.search(r"^Pooled over both languages \(C5\): action recall (\d+ of \d+) key steps, 95% interval "
+                       r"([\d.]+ to [\d.]+); citation validity (\d+ of \d+) citing proposals, 95% interval "
+                       r"([\d.]+ to [\d.]+)\.", results, re.M)
+    para = " ".join(_annex()[_annex().index("**Precision of the headline figures.**"):].split("\n\n")[0].split())
+    assert f"action recall {pooled[1]} key steps, 95% interval {pooled[2]}," in para
+    assert f"citation validity {pooled[3]}, 95% interval {pooled[4]}." in para
+    misses = re.findall(r"^\| (S\d-\d) \| \w+ \| \w+ \| (\d of \d) \| \d of \d \|$", results, re.M)
+    assert misses == [("S3-4", "1 of 2"), ("S4-4", "1 of 2")]
+    assert "S3-4" in para and "S4-4" in para and "each missed in 1 of 2 runs" in para
+
+
+@pytest.mark.parametrize("old, new", [("88 documents in", "87 documents in"), ("83 are VERIFIED", "84 are VERIFIED"),
+                                      ("2 REFERENCED", "3 REFERENCED"), ("3 UNVERIFIED", "4 UNVERIFIED"),
+                                      ("32 UAE instruments", "31 UAE instruments"),
+                                      ("34 foreign texts", "35 foreign texts")])
+def test_annex_a_kb_counts_are_read_from_the_manifest(old, new):
+    build = _load()
+    annex = _annex()
+    assert old in annex
+    assert build.check_kb_counts(annex, build.ANNEX_KB_COUNTS) == []
+    assert build.check_kb_counts(annex.replace(old, new), build.ANNEX_KB_COUNTS) != []
+
+
+def test_the_counts_stated_in_the_annex_are_the_repos():
+    annex = " ".join(_annex().split())
+    rules = json.loads((kb.REPO / "onyx" / "data" / "rules.json").read_text(encoding="utf-8"))["rules"]
+    mandates = json.loads((kb.REPO / "onyx" / "data" / "mandates.json").read_text(encoding="utf-8"))["agents"]
+    chunks = [json.loads(l) for f in sorted((kb.REPO / "kb" / "chunks").glob("*.jsonl"))
+              for l in f.read_text(encoding="utf-8").splitlines() if l.strip()]
+    files = list((kb.REPO / "kb" / "chunks").glob("*.jsonl"))
+    assert f"{len(chunks)} committed chunks across {len(files)} documents" in annex
+    assert f"`rules.json` ({len(rules)} rules)" in annex
+    docs = {a: len(m["documents"]) for a, m in mandates.items()}
+    assert (f"(care {docs['care']} documents, adviser {docs['adviser']}, TDRA {docs['tdra']}, Data Office "
+            f"{docs['data_office']}, coordinator {docs['coordinator']})") in annex
+    uae_docs = {r["document_id"] for r in rules if r["jurisdiction"] == "UAE"}
+    assert f"({len(rules)} rules over {len(uae_docs)} UAE documents)" in annex
+    arabic = sum(1 for c in chunks if c.get("text_ar", "").strip())
+    assert f"({arabic} chunks with `text_ar`)" in annex
+    assert f"and {len(list((kb.REPO / 'runs' / 'c5').glob('*/ar/*.jsonl')))} recorded Arabic runs" in annex
+    collected = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q", "tests/test_gate.py"],
+                               capture_output=True, text=True, cwd=kb.REPO).stdout
+    assert f"({re.search(r'(\d+) tests? collected', collected)[1]} gate tests" in annex
+
+
+def test_the_built_report_has_the_annex_after_a_page_break(tmp_path):
+    out = tmp_path / "report.docx"
+    result = subprocess.run([sys.executable, str(DOCS / "build_report.py"), "--out", str(out)],
+                            capture_output=True, text=True, encoding="utf-8", cwd=kb.REPO)
+    assert result.returncode == 0, result.stdout + result.stderr
+    from docx import Document
+    doc = Document(str(out))
+    texts = [p.text for p in doc.paragraphs]
+    annex = texts.index("Annex")
+    assert texts[annex - 1].startswith("Limits and next steps.") and texts[annex - 1].endswith(POINTER.strip())
+    assert doc.paragraphs[annex]._p.pPr.find(
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}pageBreakBefore") is not None
+    leads = [t for t in texts[annex:] if re.match(r"Annex [A-E]\. ", t)]
+    assert [t[:8] for t in leads] == ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E."]
+    assert len(doc.tables) == 4  # mapping, gaps, the C3 table, where to look
+    code = next(p for p in doc.paragraphs[annex:] if p.text.startswith("def complaint_gate"))
+    assert all(r.font.size.pt == 8 and r.font.name == "Courier New" for r in code.runs)

@@ -61,7 +61,7 @@ def test_eight_list_paragraph_headings_in_template_order(built):
     from docx import Document
     doc = Document(str(built))
     headings = [p.text for p in doc.paragraphs if p.style.name == "List Paragraph"]
-    assert headings == HEADINGS
+    assert headings == HEADINGS + ["Annex"]  # Task 38: the annex heading, unnumbered, after the eight
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
     assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
                                                                   "GitHub link (code)", "Knowledge base"]  # Task 34 (Iyas)
@@ -91,8 +91,8 @@ def test_limits_and_next_steps_close_section_6_without_a_heading(built):
 def test_the_mapping_table_replaces_the_template_table_and_tables_keep_its_style(built):
     from docx import Document
     doc = Document(str(built))
-    assert len(doc.tables) == 2
-    mapping, gaps = doc.tables
+    assert len(doc.tables) == 4  # Task 38: the annex adds the C3 table and "where to look"
+    mapping, gaps = doc.tables[:2]
     assert mapping.rows[0].cells[0].text == "Node" and mapping.rows[1].cells[0].text == "SRC"
     assert gaps.rows[0].cells[0].text == "#" and gaps.rows[10].cells[0].text == "11"  # Task 37, rows in number order
     assert gaps.rows[11].cells[0].text == "12"  # Task 37, rows in number order
@@ -266,7 +266,7 @@ def test_the_eight_headings_keep_with_next(built):
     from docx import Document
     doc = Document(str(built))
     headings = [p for p in doc.paragraphs if p.style.name == "List Paragraph"]
-    assert len(headings) == 8 and all(p.paragraph_format.keep_with_next for p in headings)
+    assert len(headings) == 9 and all(p.paragraph_format.keep_with_next for p in headings)  # Task 38: + "Annex"
 
 
 def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():

@@ -13,6 +13,8 @@ The four published criteria, each with the one place that shows it:
 3. Auditability: `uv run python -m onyx selftest` recomputes every figure in `docs/report.docx` from the committed hash-chained logs in `runs/`; `uv run python -m onyx replay runs/c5/S2/ar/run1.jsonl` re-decides one run offline.
 4. ITU-T Y.3172 and the Readiness Framework: `docs/report.docx`, the Requirements and Mapping sections, and the Y.3172 mapping table below.
 
+The report's annex (data and model, clause to code, the governed test, what ITU can reuse) is in `docs/report.pdf` after page 5.
+
 Mizan puts a consumer on the line. It is a consumer-care AI for a synthetic UAE operator, Team Onyx's entry to the
 ITU AI for Good Lab Hackathon UAE 2026 (telecom track): agents propose each step of a chat or call, plain-code gates
 written from binding UAE clauses allow or block it, and the same gates run in Arabic and English from the same

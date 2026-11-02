@@ -157,4 +157,4 @@ Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome routin
 
 The answer keys are ours, hashed before the first run, and the humans in the recorded runs are scripted. Next:
 cold runs of the seven unseen scenarios; routing (D-2); team approval of holds; a data-protection practitioner's review
-of the gates' law.
+of the gates' law. Annex A to E: data and model, clause to code, the governed test, what ITU can reuse, where to look.

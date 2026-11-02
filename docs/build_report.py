@@ -28,7 +28,12 @@ Value check (item 3, hq rulings 1 and 2 of 2026-10-23): in each tagged paragraph
 Values come from the Governed and Ungoverned tables and their latency lines (C3), the "C3, C4 and C5" table and the
 per-scenario C3 / C4 / C5 table (C3 and C5 columns), and the Misses, Pooled and gaps-against-keys lines (C5). A paragraph with both tags is checked sentence by sentence, each against its own tag.
 
-    uv run python docs/build_report.py [--md docs/report.md] [--out docs/report.docx]
+Annex (order 2026-11-02 Task 38 item 3): docs/annex.md follows the report after a page break, under "Annex" in the
+template's heading (its numbering removed); the five sections "Annex A." to "Annex E." are bold leads (the template
+has no second-level heading); body and list text 10 pt, code blocks Courier New 8 pt, tables as above. The annex
+passes the same value check and the knowledge-base counts of Annex A (ANNEX_KB_COUNTS).
+
+    uv run python docs/build_report.py [--md docs/report.md] [--annex docs/annex.md] [--out docs/report.docx]
 """
 
 import argparse
@@ -57,6 +62,12 @@ REPO = Path(__file__).resolve().parent.parent
 TEMPLATE = REPO / "docs" / "report-template.docx"
 REPORT_MD = REPO / "docs" / "report.md"
 REPORT_DOCX = REPO / "docs" / "report.docx"
+ANNEX_MD = REPO / "docs" / "annex.md"
+ANNEX = "Annex"
+ANNEX_SECTIONS = ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E."]
+ANNEX_SIZE = Pt(10)
+CODE_SIZE = Pt(8)
+MONO = "Courier New"
 RESULTS = REPO / "eval" / "results.md"
 MAPPING = "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies"
 SECTIONS = ["Introduction", "Description of the use case", "What is the role played by AI?", "Requirements", MAPPING,
@@ -134,6 +145,47 @@ def parse(md: str) -> Report:
     if [s for s in report.sections if s != TAIL] != SECTIONS:
         raise SystemExit(f"docs/report.md: headings {list(report.sections)} not in template order")
     return report
+
+
+def annex_blocks(md: str) -> list[tuple[str, object]]:
+    """docs/annex.md as (kind, content): "section" (an "## Annex X." line, the "## " dropped), "code" (a fenced
+    block, verbatim), "table", "list" (numbered items, each joined to one line) or "para"."""
+    out, lines, i = [], md.replace("\r\n", "\n").split("\n"), 0
+    while i < len(lines):
+        if lines[i].startswith("```"):
+            end = lines.index("```", i + 1)
+            out.append(("code", "\n".join(lines[i + 1:end])))
+            i = end + 1
+            continue
+        block = []
+        while i < len(lines) and lines[i].strip() and not lines[i].startswith("```"):
+            block.append(lines[i])
+            i += 1
+        if not block:
+            i += 1
+            continue
+        text = "\n".join(block)
+        if text.startswith("## "):
+            out.append(("section", text[3:].strip()))
+        elif text.startswith("|"):
+            out.append(("table", text))
+        elif re.match(r"\d+\. ", text):
+            items = re.split(r"\n(?=\d+\. )", text)
+            out.append(("list", [" ".join(line.strip() for line in item.splitlines()) for item in items]))
+        else:
+            out.append(("para", " ".join(line.strip() for line in block)))
+    sections = [c for k, c in out if k == "section"]
+    if [" ".join(c.split(" ", 2)[:2]) for c in sections] != ANNEX_SECTIONS:
+        raise SystemExit(f"docs/annex.md: sections {sections} are not Annex A. to Annex E. in order")
+    if not out or out[0][0] != "section":
+        raise SystemExit("docs/annex.md: text before the first section")
+    return out
+
+
+def annex_paragraphs(md: str) -> list[str]:
+    """The annex's prose paragraphs and list items, for the value check."""
+    blocks = annex_blocks(md)
+    return [c for k, c in blocks if k == "para"] + [i for k, c in blocks if k == "list" for i in c]
 
 
 # --- the value check --------------------------------------------------------------------------------------------
@@ -308,14 +360,25 @@ KB_COUNTS = {"documents": re.compile(r"(?:holds|\*\*SRC-2\*\*)\s+(\d+)\s+documen
 NAMED_UAE = 4
 
 
-def check_kb_counts(md: str) -> list[str]:
+# Annex A's counts (order Task 38 item 3): "88 documents in `kb/manifest.csv`: 32 UAE instruments ... 34 foreign
+# texts ... 83 are VERIFIED ..., 2 REFERENCED ... and 3 UNVERIFIED"
+ANNEX_KB_COUNTS = {"documents": re.compile(r"(\d+)\s+documents\s+in\s+`kb/manifest\.csv`"),
+                   "uae": KB_COUNTS["uae"],
+                   "foreign": re.compile(r"\b(\d+)\s+foreign\s+texts"),
+                   "verified": re.compile(r"\b(\d+)\s+are\s+VERIFIED"),
+                   "referenced": re.compile(r"\b(\d+)\s+REFERENCED"),
+                   "unverified": re.compile(r"\b(\d+)\s+UNVERIFIED")}
+
+
+def check_kb_counts(md: str, patterns: dict[str, re.Pattern] = KB_COUNTS) -> list[str]:
     rows = kb.load_manifest()
     uae = {r["instrument"] for r in rows if r["jurisdiction"] == "UAE" and r["source_type"] != "announcement"}
     actual = {"documents": len(rows), "verified": len(kb.verified_rows(rows)),
               "foreign": sum(r["jurisdiction"] == "foreign" for r in rows), "uae_other": len(uae) - NAMED_UAE,
-              "uae": len(uae)}
+              "uae": len(uae), "referenced": sum(r["status"] == "REFERENCED" for r in rows),
+              "unverified": sum(r["status"] == "UNVERIFIED" for r in rows)}
     problems = []
-    for name, pattern in KB_COUNTS.items():
+    for name, pattern in patterns.items():
         for m in pattern.finditer(md):
             value = _number(m[1])
             if value != actual[name]:
@@ -323,10 +386,10 @@ def check_kb_counts(md: str) -> list[str]:
     return problems
 
 
-def check_values(md: str, results: str) -> list[str]:
+def check_values(md: str, results: str, blocks: list[str] | None = None) -> list[str]:
     sets = run_sets(results)
     failures = []
-    for para in paragraphs(md):
+    for para in paragraphs(md) if blocks is None else blocks:
         if tags(para):
             failures += [f"{problem}\n  in: {para}" for problem in check_paragraph(para, sets)]
     return failures
@@ -412,7 +475,7 @@ class Builder:
         return paragraph
 
     def table(self, after, block: str, reuse=None):
-        rows = [[_plain(c.strip()) for c in line.strip().strip("|").split("|")]
+        rows = [[_plain(c.strip()) for c in _cells(line)]
                 for line in block.splitlines() if not set(line.strip()) <= set("|- ")]
         tbl = reuse if reuse is not None else OxmlElement("w:tbl")
         if reuse is None:
@@ -465,6 +528,56 @@ class Builder:
         Paragraph(element, self.doc._body).paragraph_format.keep_with_next = True  # Task 18 item 2d
 
 
+def _cells(line: str) -> list[str]:
+    """A table row's cells, split at the pipes outside backticks (Annex E: `--rule gap-1|gap-4`)."""
+    return re.findall(r"(?:`[^`]*`|[^|`])+|(?<=\|)(?=\|)", line.strip().strip("|"))
+
+
+def _mono(paragraph: Paragraph, text: str) -> None:
+    """A code block in one paragraph: each line a Courier New 8 pt run, lines joined by breaks, nothing edited."""
+    for n, line in enumerate(text.split("\n")):
+        run = _run(paragraph, line, size=CODE_SIZE)
+        fonts = run._r.rPr.find(qn("w:rFonts"))
+        for attr in ("w:ascii", "w:eastAsia", "w:hAnsi"):
+            fonts.set(qn(attr), MONO)
+        if n:
+            run._r.insert(1, OxmlElement("w:br"))
+
+
+def render_annex(b: "Builder", heading_proto, md: str) -> None:
+    """Order Task 38 item 3: a page break, "Annex" in the template's heading, then the sections."""
+    last = [e for e in b.body if e.tag != qn("w:sectPr")][-1]
+    heading = copy.deepcopy(heading_proto)
+    _strip_ids(heading)
+    p_pr = heading.find(qn("w:pPr"))
+    p_pr.remove(p_pr.find(qn("w:numPr")))
+    p_pr.insert(1, OxmlElement("w:pageBreakBefore"))
+    last.addnext(heading)
+    b.heading(heading, ANNEX)
+    after = heading
+    for kind, content in annex_blocks(md):
+        if kind == "table":
+            after = b.spacer(b.table(after, content))._p
+            continue
+        if kind == "list":
+            for item in content:
+                p = b.paragraph(after)
+                p.paragraph_format.left_indent, p.paragraph_format.first_line_indent = Cm(0.6), Cm(-0.6)
+                _runs(p, item, size=ANNEX_SIZE)
+                after = p._p
+            continue
+        p = b.paragraph(after, align=WD_ALIGN_PARAGRAPH.LEFT if kind == "code" else WD_ALIGN_PARAGRAPH.JUSTIFY)
+        if kind == "section":
+            _run(p, content, bold=True, size=Pt(11))
+            p.paragraph_format.keep_with_next = True
+            p.paragraph_format.space_before = Pt(6)
+        elif kind == "code":
+            _mono(p, content)
+        else:
+            _runs(p, content, size=ANNEX_SIZE)
+        after = p._p
+
+
 def _widths(rows: list[list[str]]) -> list[int]:
     """Column widths in dxa over the template table's width, by each column's mean text length, at least 600."""
     cols = len(rows[0])
@@ -474,7 +587,7 @@ def _widths(rows: list[list[str]]) -> list[int]:
     return raw
 
 
-def render(report: Report) -> Builder:
+def render(report: Report, annex: str | None = None) -> Builder:
     b = Builder(TEMPLATE)
     elements = list(b.body)
     paras = [e for e in elements if e.tag == qn("w:p")]
@@ -542,6 +655,8 @@ def render(report: Report) -> Builder:
                 after = b.spacer(after)._p
     if mapping_tbl.getparent() is None:
         raise SystemExit("docs/report.md: section 4 has no table to replace the template's mapping table")
+    if annex is not None:
+        render_annex(b, placed[0], annex)
     core = b.doc.core_properties
     core.created = FIXED_DATE
     core.modified = FIXED_DATE
@@ -566,18 +681,23 @@ def write(builder: Builder, out: Path) -> None:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--md", default=str(REPORT_MD))
+    parser.add_argument("--annex", default=str(ANNEX_MD), help="an empty value leaves the annex out")
     parser.add_argument("--out", default=str(REPORT_DOCX))
     args = parser.parse_args(argv)
     md = Path(args.md).read_text(encoding="utf-8")
-    failures = check_values(md, RESULTS.read_text(encoding="utf-8"))
+    annex = Path(args.annex).read_text(encoding="utf-8") if args.annex else None
+    results = RESULTS.read_text(encoding="utf-8")
+    failures = check_values(md, results)
+    if annex is not None:
+        failures += check_values("", results, annex_paragraphs(annex))
     if failures:
         print("value check failed (eval/results.md):", *failures, sep="\n", file=sys.stderr)
         return 1
-    failures = check_kb_counts(md)
+    failures = check_kb_counts(md) + (check_kb_counts(annex, ANNEX_KB_COUNTS) if annex is not None else [])
     if failures:
         print("knowledge-base count check failed (kb/manifest.csv):", *failures, sep="\n", file=sys.stderr)
         return 1
-    write(render(parse(md)), Path(args.out))
+    write(render(parse(md), annex), Path(args.out))
     print(Path(args.out).resolve().relative_to(REPO).as_posix() if Path(args.out).resolve().is_relative_to(REPO)
           else args.out)
     return 0
