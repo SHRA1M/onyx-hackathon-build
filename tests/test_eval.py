@@ -251,11 +251,13 @@ def test_key_clauses_shown_c5_totals_are_pinned():
     """234 must-cite entries per language over the C5 runs (S1-1 and S2-1 send no prompt and are outside); a key
     change shows up here. The figures equal the probe of 2026-11-02 (report-back, stop 1)."""
     c5 = json.loads(C5_RESULTS.read_text(encoding="utf-8"))["c5"]["key_clauses"]
-    assert c5["pooled"] == {"en": {"shown": 186, "total": 234, "mandate": 160, "retrieval": 26},
-                            "ar": {"shown": 166, "total": 234, "mandate": 160, "retrieval": 6}}
+    assert c5["pooled"] == {"en": {"shown": 186, "total": 234, "mandate": 160, "retrieval": 26, "absent": 43,
+                                   "carried": 23},
+                            "ar": {"shown": 166, "total": 234, "mandate": 160, "retrieval": 6, "absent": 68,
+                                   "carried": 36}}
     for lang in ("en", "ar"):
         cells = [c5["by_scenario"][sid][lang] for sid in onyx_eval.SCENARIOS]
-        assert {k: sum(c[k] for c in cells) for k in ("shown", "total", "mandate", "retrieval")} == c5["pooled"][lang]
+        assert {k: sum(c[k] for c in cells) for k in onyx_eval.KEY_CLAUSES} == c5["pooled"][lang]
         assert all(c["shown"] == c["mandate"] + c["retrieval"] for c in cells)
 
 
@@ -269,8 +271,8 @@ def test_key_clauses_row_is_recomputed_from_the_committed_logs():
         for lang in ("en", "ar"):
             paths = [p for n in range(1, runs.RUNS + 1)
                      if (p := runs.run_path(ROOT / "runs" / "c5", sid, n, lang)).exists()]
-            per_run = [onyx_eval.key_clauses_shown(_events(p), key) for p in paths]
-            cell = {k: sum(r[k] for r in per_run) for k in ("shown", "total", "mandate", "retrieval")}
+            per_run = [onyx_eval.key_clauses_cell(_events(p), key, data.load_scenario(sid)) for p in paths]
+            cell = {k: sum(r[k] for r in per_run) for k in onyx_eval.KEY_CLAUSES}
             assert cell == committed["by_scenario"][sid][lang]
             assert onyx_eval.key_clauses_cells(cell) in md
     for lang in ("en", "ar"):
@@ -291,3 +293,48 @@ def test_c5_handover_latency_cells_equal_the_json_values():
         for lang in ("en", "ar"):
             value = c5[sid][lang]["handover_latency_steps"]
             assert rows[(sid, lang)] == onyx_eval._steps(value) == expected[sid]
+
+
+def test_key_clauses_absent_and_carried_by_the_gate():
+    """Ruling 2 (task-39-stops-ruling-2-2026-11-02, B5): a must_cite entry not shown at a step whose action hit is
+    absent; it is carried when the step's gate record holds it: a rule id in a gate event's reasons (clause), or its
+    chunk among the clause_ids of the proposal the gate judged (old_value)."""
+    rules = {r["id"]: f"{r['document_id']}:{r['chunk']}" for r in data.load_rules()}
+    key = {"scenario": "SX", "steps": [{"n": 2, "agent": "care", "must_cite": ["cpr-26-7-2", "licence-9-1", "cpr-4-6"]},
+                                       {"n": 3, "agent": "care", "must_cite": ["cpr-22-2"]}]}
+    events = [{"action": "propose", "entity_id": "SX-2-care", "new_value": {"sources_mandate": [], "sources_used": []}},
+              {"action": "propose", "entity_id": "SX-3-care", "new_value": {"sources_mandate": [], "sources_used": []}},
+              {"action": "gate", "entity_id": "SX-2-care", "old_value": {"clause_ids": [rules["licence-9-1"]]},
+               "new_value": {"reasons": [{"clause": "cpr-26-7-2"}, {"source": "imda", "clause": "2.2.2"}]}}]
+    absent = onyx_eval.key_clauses_absent(events, key, {2: True, 3: False})
+    assert absent == [(2, "cpr-26-7-2", True), (2, "licence-9-1", True), (2, "cpr-4-6", False)]
+
+
+def test_uncarried_key_clauses_sit_on_abstention_steps_but_two_at_s3_1_arabic():
+    """Ruling 2, B5: over the committed C5 logs every absent entry the gate does not carry is on a step with an
+    abstain event, except cpr-28-26 and consumer-law-4-5 at S3-1 in Arabic, which the English runs retrieved
+    (sources_used, not the mandate list). The Annex A sentence says this."""
+    exceptions, english = set(), {}
+    for sid in onyx_eval.SCENARIOS:
+        key, scenario = data.load_key(sid), data.load_scenario(sid)
+        for lang in ("en", "ar"):
+            for n in range(1, runs.RUNS + 1):
+                path = runs.run_path(ROOT / "runs" / "c5", sid, n, lang)
+                if not path.exists():
+                    continue
+                events = _events(path)
+                abstained = {int(e["entity_id"].split("-")[1]) for e in events if e["action"] == "abstain"}
+                hits = onyx_eval.action_hits(events, key, scenario)
+                exceptions |= {(sid, step, rule, lang) for step, rule, carried in
+                               onyx_eval.key_clauses_absent(events, key, hits)
+                               if not carried and step not in abstained}
+                if (sid, lang) == ("S3", "en"):
+                    english[n] = [e["new_value"] for e in events
+                                  if e["action"] == "propose" and e["entity_id"].startswith("S3-1-")]
+    assert exceptions == {("S3", 1, "cpr-28-26", "ar"), ("S3", 1, "consumer-law-4-5", "ar")}
+    rules = {r["id"]: f"{r['document_id']}:{r['chunk']}" for r in data.load_rules()}
+    assert english
+    for proposes in english.values():
+        for rule in ("cpr-28-26", "consumer-law-4-5"):
+            assert any(rules[rule] in p["sources_used"] for p in proposes)
+            assert not any(rules[rule] in p.get("sources_mandate", []) for p in proposes)

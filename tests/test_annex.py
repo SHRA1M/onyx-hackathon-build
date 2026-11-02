@@ -184,3 +184,24 @@ def test_annex_c_handover_sentences_match_the_c5_cells():
         assert [cells[sid][lang]["handover_latency_steps"] for lang in ("en", "ar")] == [value, value], sid
     assert "## Key clauses shown and hand-over latency (C5)" in (kb.REPO / "eval" / "results.md").read_text(
         encoding="utf-8")
+
+
+def test_annex_a_retrieval_sentence_carries_the_printed_key_clause_figures():
+    """Ruling 2 (task-39-stops-ruling-2-2026-11-02, B5): the Annex A sentence after "exactly what the model was
+    shown." carries the pooled key-clause figures eval/results.json holds and results.md prints."""
+    text = " ".join(_annex().split())
+    pooled = json.loads((kb.REPO / "eval" / "results.json").read_text(encoding="utf-8"))["c5"]["key_clauses"]["pooled"]
+    en, ar = pooled["en"], pooled["ar"]
+    assert en["mandate"] == ar["mandate"] and en["total"] == ar["total"]
+    sentence = (
+        f"was shown. Over the scored runs, {en['shown']} of {en['total']} key clauses were in what the model was "
+        f"shown in English and {ar['shown']} of {ar['total']} in Arabic; {en['mandate']} of {en['total']} came from "
+        "the mandate list alone, which is the English-centred retriever at work, and why the mandate list comes "
+        f"first. Of the clauses absent at a step that still scored, {en['carried']} in English and {ar['carried']} "
+        "in Arabic were carried by the gate's verdict in code; the rest sit on abstention steps, where the key names "
+        "the clauses the gap is about and the adviser's act is to flag the gap, not to cite them, except two clauses "
+        "at one Arabic step (S3-1) that the English run retrieved and the Arabic run did not.")
+    assert sentence in text
+    md = " ".join((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8").split())
+    for lang, cell in pooled.items():
+        assert f"of the {cell['absent']} not shown at a step that scored, {cell['carried']} carried by the gate's verdict" in md

@@ -57,7 +57,12 @@ scoring, not learning.
 with the subscriber's words and the step, restricted (`where` filter) to the documents its mandate lists, and takes
 the top 8. The clauses named in the agent's mandate are put first, then the retrieved chunks, deduplicated;
 both lists are written to the log (`sources_mandate`, `sources_used`), so a reviewer can see exactly what the model
-was shown. The model never sees the keys, the rules file or another agent's inbox.
+was shown. Over the scored runs, 186 of 234 key clauses were in what the model was shown in English and 166 of 234
+in Arabic; 160 of 234 came from the mandate list alone, which is the English-centred retriever at work, and why the
+mandate list comes first. Of the clauses absent at a step that still scored, 23 in English and 36 in Arabic were
+carried by the gate's verdict in code; the rest sit on abstention steps, where the key names the clauses the gap is
+about and the adviser's act is to flag the gap, not to cite them, except two clauses at one Arabic step (S3-1) that
+the English run retrieved and the Arabic run did not. The model never sees the keys, the rules file or another agent's inbox.
 
 **One call, one proposal.** The agent sends one request (temperature at the endpoint's default, max 16,000 output
 tokens, retried on transport errors, never on content) and receives JSON: a verb from its mandate, arguments, the

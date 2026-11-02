@@ -147,7 +147,7 @@ def must_cite_given(events: list[dict[str, Any]], key: dict[str, Any]) -> dict[i
     return {n: None if c is None else _ratio(*c) for n, c in _must_cite_counts(events, key).items()}
 
 
-KEY_CLAUSES = ("shown", "total", "mandate", "retrieval")
+KEY_CLAUSES = ("shown", "total", "mandate", "retrieval", "absent", "carried")
 
 
 def key_clauses_shown(events: list[dict[str, Any]], key: dict[str, Any]) -> dict[str, int]:
@@ -162,7 +162,7 @@ def key_clauses_shown(events: list[dict[str, Any]], key: dict[str, Any]) -> dict
             mandate, used = prompts.setdefault(_step(e["entity_id"]), (set(), set()))
             mandate |= set(e["new_value"].get("sources_mandate", []))
             used |= set(e["new_value"]["sources_used"])
-    counts = dict.fromkeys(KEY_CLAUSES, 0)
+    counts = dict.fromkeys(("shown", "total", "mandate", "retrieval"), 0)
     for step in key["steps"]:
         if step["n"] not in prompts:
             continue
@@ -174,6 +174,41 @@ def key_clauses_shown(events: list[dict[str, Any]], key: dict[str, Any]) -> dict
             counts["retrieval"] += chunk in used and chunk not in mandate
     counts["shown"] = counts["mandate"] + counts["retrieval"]
     return counts
+
+
+def key_clauses_absent(events: list[dict[str, Any]], key: dict[str, Any],
+                       hits: dict[int, bool]) -> list[tuple[int, str, bool]]:
+    """Ruling 2 of Task 39 (B5): at each key step that sent a prompt and whose action hit, every must_cite entry
+    not shown (key_clauses_shown's sense), as (step, rule id, carried). Carried when the step's gate record holds
+    it: the rule id in a gate event's reasons (clause), or its chunk among the clause_ids of the proposal the gate
+    judged (old_value)."""
+    chunks = {r["id"]: f"{r['document_id']}:{r['chunk']}" for r in data.load_rules()}
+    shown: dict[int, set[str]] = {}
+    for e in events:
+        if e["action"] == "propose":
+            shown.setdefault(_step(e["entity_id"]), set()).update(
+                e["new_value"].get("sources_mandate", []), e["new_value"]["sources_used"])
+    record: dict[int, set[str]] = {}
+    for e in _gates(events):
+        held = record.setdefault(_step(e["entity_id"]), set())
+        held |= {r.get("clause") for r in e["new_value"].get("reasons", []) if r.get("clause")}
+        held |= {f"chunk:{c}" for c in (e.get("old_value") or {}).get("clause_ids") or []}
+    absent = []
+    for step in key["steps"]:
+        n = step["n"]
+        if n not in shown or not hits.get(n):
+            continue
+        held = record.get(n, set())
+        absent += [(n, rule, rule in held or f"chunk:{chunks[rule]}" in held)
+                   for rule in step["must_cite"] if chunks[rule] not in shown[n]]
+    return absent
+
+
+def key_clauses_cell(events: list[dict[str, Any]], key: dict[str, Any], scenario: dict[str, Any]) -> dict[str, int]:
+    """One run's key-clause counts: key_clauses_shown, plus the entries absent at a step that hit and of those the
+    ones the gate carries (key_clauses_absent)."""
+    absent = key_clauses_absent(events, key, action_hits(events, key, scenario))
+    return {**key_clauses_shown(events, key), "absent": len(absent), "carried": sum(c for _, _, c in absent)}
 
 
 def _citation_valid(proposal: dict[str, Any], kb: gate.Knowledge, given: list[str] | None = None) -> bool:
@@ -507,7 +542,7 @@ def _rerun(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> di
                           for p, r in zip(paths, rows)]
                 if not governed or not paths:
                     continue
-                shown = [key_clauses_shown(_events(p), key) for p in paths]
+                shown = [key_clauses_cell(_events(p), key, scenario) for p in paths]
                 key_clauses.setdefault(sid, {})[lang] = {k: sum(c[k] for c in shown) for k in KEY_CLAUSES}
                 hits = [action_hits(_events(p), key, scenario) for p in paths]
                 for step in key["steps"]:
@@ -628,7 +663,8 @@ def key_clauses_cells(cell: dict[str, int]) -> str:
 
 def key_clauses_pooled(lang: str, cell: dict[str, int]) -> str:
     return (f"Pooled {lang}: {cell['shown']} of {cell['total']} key clauses shown; {_of(cell['mandate'], cell['total'])} "
-            f"by the mandate list; {_of(cell['retrieval'], cell['total'])} only by retrieval.")
+            f"by the mandate list; {_of(cell['retrieval'], cell['total'])} only by retrieval; of the {cell['absent']} "
+            f"not shown at a step that scored, {cell['carried']} carried by the gate's verdict.")
 
 
 def _interval(row: dict[str, Any], counts: bool = True) -> str:
@@ -658,6 +694,10 @@ C5_DEFINITIONS = [
     "- key clauses shown, steps: steps with no model call (S1-1, S2-1) are outside the total, as must-cite given does.",
     "- key clauses shown, entries: each must_cite entry counts once, mapped to its chunk, so two rules on one chunk "
     "count twice.",
+    "- key clauses shown, unit: clause entries per language over the committed runs (each run's entries added).",
+    "- key clauses not shown at a step that scored: entries not shown at a key step whose action hit (action "
+    "recall's sense); carried by the gate's verdict when the step's gate record holds them: the rule id in a gate "
+    "event's reasons, or its chunk among the clause_ids of the proposal the gate judged.",
     "- hand-over latency (C5): the hand-over latency in steps above, over the C5 runs, the mean of each scenario and "
     "language; n/a where the key has no hand-over step.",
 ]

@@ -823,12 +823,16 @@
    "by_scenario": {
     "S1": {
      "ar": {
+      "absent": 10,
+      "carried": 8,
       "mandate": 36,
       "retrieval": 2,
       "shown": 38,
       "total": 48
      },
      "en": {
+      "absent": 6,
+      "carried": 6,
       "mandate": 36,
       "retrieval": 6,
       "shown": 42,
@@ -837,12 +841,16 @@
     },
     "S2": {
      "ar": {
+      "absent": 12,
+      "carried": 2,
       "mandate": 32,
       "retrieval": 2,
       "shown": 34,
       "total": 46
      },
      "en": {
+      "absent": 10,
+      "carried": 2,
       "mandate": 32,
       "retrieval": 4,
       "shown": 36,
@@ -851,12 +859,16 @@
     },
     "S3": {
      "ar": {
+      "absent": 20,
+      "carried": 10,
       "mandate": 34,
       "retrieval": 0,
       "shown": 34,
       "total": 54
      },
      "en": {
+      "absent": 8,
+      "carried": 4,
       "mandate": 34,
       "retrieval": 12,
       "shown": 46,
@@ -865,12 +877,16 @@
     },
     "S4": {
      "ar": {
+      "absent": 22,
+      "carried": 14,
       "mandate": 32,
       "retrieval": 0,
       "shown": 32,
       "total": 54
      },
      "en": {
+      "absent": 13,
+      "carried": 7,
       "mandate": 32,
       "retrieval": 4,
       "shown": 36,
@@ -879,12 +895,16 @@
     },
     "S5": {
      "ar": {
+      "absent": 4,
+      "carried": 2,
       "mandate": 26,
       "retrieval": 2,
       "shown": 28,
       "total": 32
      },
      "en": {
+      "absent": 6,
+      "carried": 4,
       "mandate": 26,
       "retrieval": 0,
       "shown": 26,
@@ -894,12 +914,16 @@
    },
    "pooled": {
     "ar": {
+     "absent": 68,
+     "carried": 36,
      "mandate": 160,
      "retrieval": 6,
      "shown": 166,
      "total": 234
     },
     "en": {
+     "absent": 43,
+     "carried": 23,
      "mandate": 160,
      "retrieval": 26,
      "shown": 186,

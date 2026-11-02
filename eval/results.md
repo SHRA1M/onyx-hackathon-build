@@ -186,8 +186,8 @@ Shown only, never compared. Over the C5 runs of each scenario and language: the 
 | S5 | en | 26 of 32 | 26 of 32 (0.81) | 0 of 32 (0.00) | 0 |
 | S5 | ar | 28 of 32 | 26 of 32 (0.81) | 2 of 32 (0.06) | 0 |
 
-Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by retrieval.
-Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by retrieval.
+Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by retrieval; of the 43 not shown at a step that scored, 23 carried by the gate's verdict.
+Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by retrieval; of the 68 not shown at a step that scored, 36 carried by the gate's verdict.
 
 ## Tokens and cost
 
@@ -356,4 +356,6 @@ onyx/data/model_prices.json; "price unknown" where the model has no price row or
 - key clauses shown (C5, shown only, never compared): per key step, each must_cite clause counts as shown if its chunk was in what the model was shown for the step (the sources_mandate or sources_used of any propose event of the step); by mandate when in sources_mandate, only by retrieval when in sources_used and not in sources_mandate; summed over the runs of each scenario and language, and pooled per language.
 - key clauses shown, steps: steps with no model call (S1-1, S2-1) are outside the total, as must-cite given does.
 - key clauses shown, entries: each must_cite entry counts once, mapped to its chunk, so two rules on one chunk count twice.
+- key clauses shown, unit: clause entries per language over the committed runs (each run's entries added).
+- key clauses not shown at a step that scored: entries not shown at a key step whose action hit (action recall's sense); carried by the gate's verdict when the step's gate record holds them: the rule id in a gate event's reasons, or its chunk among the clause_ids of the proposal the gate judged.
 - hand-over latency (C5): the hand-over latency in steps above, over the C5 runs, the mean of each scenario and language; n/a where the key has no hand-over step.
