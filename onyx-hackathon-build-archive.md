@@ -560,3 +560,15 @@ Moved from background:
   - hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet.
   - hq strips the two entry names from the filed Task 16 order before 2026-11-09 (clean-history public repo).
   - 2026-11-01 (Task 36 order): report headings in ITU's template order; Requirements in three groups (critical, expected, added value); order cuts 1 to 4 applied (Limits two sentences, Recommendations tightened, 95% interval out of Results, Readiness cells shortened).
+
+## 2026-11-02: Task 38 built, stopped at stop 2 (fifty-fifth wrap)
+
+- hq's ruling on stop 1 (`task-38-stop-1-ruling-2026-11-02.md`) and annex text v3: no pooled rate, the "ungoverned baseline" definition pasted, no "zero", no eye-check claim, 13 deciding functions, one sentence read from `decide`.
+- Built: `docs/annex.md` from v3 below its `---` line by a scratchpad fill script (18 replacements, each found exactly once): 18 of 26 (bake-off), 156 chunks / 19 documents, 109 rules, mandates 27/40/18/22/8, k 8, the `decide` sentence (`_decide` 765 to 771 and `_base_checks` 713 to 750), the cpr-26-7-2 record, `complaint_gate` trimmed to 21 lines, 54 gate tests, 109 rules over 13 UAE documents, five C3 rows, 0.94 to 1.00, 130 of 131, 0.96 to 1.00, "each missed in 1 of 2 runs", 74 Arabic chunks, 10 Arabic runs. One `[C3, ...]` tag on the Result paragraph; Precision left untagged (its 1.00 bound with misses fails the builder's three-decimal rule), held by a test instead.
+- Pointer sentence in Limits; builder annex (unnumbered "Annex" heading copied from the template's, page break before); `_cells` for `gap-1|gap-4`; page script main/annex/total; PDF via Word COM; README line; hq copy (sha256 bb19cb6f); three report tests now expect "Annex" and four tables. 661 tests. Word: 5 pages main (2,366 words), annex page 6, 10 pages; PDF 10 pages, 357,115 bytes. Commit 02d4328, not pushed.
+- Stop 2: v3's "17 verbs" is 16 in the code (mandates and GATES); the 17 was the stop-1 file's miscount.
+- Tried: PowerShell 5.1 stripped quotes from inline Python passed to `uv run python -c`; moved to `scripts/check_pdf.py`. No poppler or PyMuPDF for page images: `uv run --with pypdfium2` rendered them to the scratchpad.
+Moved from background:
+  - Every global text sits twice: `kb/sources/<id>.<ext>` (what `kb verify` hashes) and `kb/sources/global/<id>.txt` (what the register cites); change both alike (Task 30b). For a PDF row (3GPP, Qatar CCPR, Saudi en) the global file is derived text with a `Source:` line and `=== PAGE N ===` markers; Task 35's three were written from hq's .txt files and are local only.
+  - A `searched` entry with `url` is skipped wherever `file` is (`data.cited_chunks`, the register chunk tests, Task 32's file-entry tests); a new kind of entry needs all of them (Task 35b).
+  - To add rows without rewriting every `url_accessed`, run `kb._download` and the hash check on the new rows only (Task 35), not `kb fetch`.
