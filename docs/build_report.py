@@ -356,11 +356,14 @@ KB_COUNTS = {"documents": re.compile(r"(?:holds|\*\*SRC-2\*\*)\s+(\d+)\s+documen
              "uae_other": re.compile(r"\b([a-z]+(?:-[a-z]+)?)\s+other\s+UAE\s+(?:laws|texts)"),
              "uae": re.compile(r"\b(\d+)\s+UAE\s+instruments")}  # Task 36 item 1: the method paragraph
 # "the Telecommunications Law 3/2003, the CPR v2.0, Licence 2/2026, the PDPL and N other UAE laws": the UAE
-# instruments (an announcement is none) less the four the sentence names (order Task 33, Part D)
+# instruments less the four the sentence names (order Task 33, Part D)
 NAMED_UAE = 4
+# Task 40 (hq answer to stop 1, option a): a web page and an announcement are not instruments, as their manifest
+# notes say ("Service page, not an instrument"; "Announcement, not a law"); Annex A names the two rows
+NOT_INSTRUMENTS = ("announcement", "web_page")
 
 
-# Annex A's counts (order Task 38 item 3): "88 documents in `kb/manifest.csv`: 32 UAE instruments ... 34 foreign
+# Annex A's counts (order Task 38 item 3): "88 documents in `kb/manifest.csv`: 31 UAE instruments ... 34 foreign
 # texts ... 83 are VERIFIED ..., 2 REFERENCED ... and 3 UNVERIFIED"
 ANNEX_KB_COUNTS = {"documents": re.compile(r"(\d+)\s+documents\s+in\s+`kb/manifest\.csv`"),
                    "uae": KB_COUNTS["uae"],
@@ -372,7 +375,7 @@ ANNEX_KB_COUNTS = {"documents": re.compile(r"(\d+)\s+documents\s+in\s+`kb/manife
 
 def check_kb_counts(md: str, patterns: dict[str, re.Pattern] = KB_COUNTS) -> list[str]:
     rows = kb.load_manifest()
-    uae = {r["instrument"] for r in rows if r["jurisdiction"] == "UAE" and r["source_type"] != "announcement"}
+    uae = {r["instrument"] for r in rows if r["jurisdiction"] == "UAE" and r["source_type"] not in NOT_INSTRUMENTS}
     actual = {"documents": len(rows), "verified": len(kb.verified_rows(rows)),
               "foreign": sum(r["jurisdiction"] == "foreign" for r in rows), "uae_other": len(uae) - NAMED_UAE,
               "uae": len(uae), "referenced": sum(r["status"] == "REFERENCED" for r in rows),

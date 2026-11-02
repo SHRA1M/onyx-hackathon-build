@@ -19,7 +19,7 @@ to "preclude the use of non-human agents by Licensees in conversations with Cons
 Complaints".
 
 The sources are the Telecommunications Law 3/2003, the
-CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-eight other UAE texts;
+CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-seven other UAE texts;
 ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
 thirty-four foreign texts used only as global examples. 83 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
@@ -128,7 +128,7 @@ takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
 ## Policy gaps and standards gaps derived from the mapping exercise
 
 Method. Every scenario step was put to the gate; a step no clause answers returns insufficient evidence and logs a
-candidate. Each candidate was then searched across the 32 UAE instruments in both languages, then the GCC
+candidate. Each candidate was then searched across the 31 UAE instruments in both languages, then the GCC
 regulations, then foreign law for a global example. A gap is claimed only when the register lists what was searched
 and found absent. The recorded runs re-find 5 of the 7 expected gaps on every run.
 
@@ -144,7 +144,7 @@ and found absent. The recorded runs re-find 5 of the 7 expected gaps on every ru
 | 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions and Art 16 penalties are unpublished; nothing says how a telecom channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
 | 10 | Arabic on an automated channel: the language is set, its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); nothing requires the Arabic answer to match the English, and the QoS Policy has no indicator per language | standards | TDRA | Wales WLS Regs 2015 Sch 1 Std 15, 22 |
 | 11 | A misheard order: the CPR defaults an on-screen answer to "no" against an accidental "yes" (4.22.3, 4.23.3) and an OTP per purchase (4.23.2); nothing says what a voice or chat channel must do when it interprets the words itself | standards | TDRA | US TSR 16 CFR 310.3(a)(3)(ii) |
-| 12 | Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1) and its hand-over is Readiness D9's inference-to-action latency in the other direction; mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes. Left open at ITU's request (2026-10-30). | standards | ITU | EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from 2027) |
+| 12 | Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1) and its hand-over is Readiness D9's inference-to-action latency in the other direction; mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes. Left open with ITU's agreement (2026-10-30). | standards | ITU | EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from 2027) |
 
 Recommendations. TDRA: a time and action when a chat becomes a Consumer Complaint, measured like T1(2a) (1); the
 AI agent among the Art 4 sales media (2); the Art 33 trust level for 24.10 (3); a read-back of the understood order

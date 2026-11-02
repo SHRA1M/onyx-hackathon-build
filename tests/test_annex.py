@@ -121,7 +121,7 @@ def test_the_precision_paragraph_figures_are_the_pooled_and_misses_lines():
 
 @pytest.mark.parametrize("old, new", [("88 documents in", "87 documents in"), ("83 are VERIFIED", "84 are VERIFIED"),
                                       ("2 REFERENCED", "3 REFERENCED"), ("3 UNVERIFIED", "4 UNVERIFIED"),
-                                      ("32 UAE instruments", "31 UAE instruments"),
+                                      ("31 UAE instruments", "32 UAE instruments"),
                                       ("34 foreign texts", "35 foreign texts")])
 def test_annex_a_kb_counts_are_read_from_the_manifest(old, new):
     build = _load()
@@ -129,6 +129,22 @@ def test_annex_a_kb_counts_are_read_from_the_manifest(old, new):
     assert old in annex
     assert build.check_kb_counts(annex, build.ANNEX_KB_COUNTS) == []
     assert build.check_kb_counts(annex.replace(old, new), build.ANNEX_KB_COUNTS) != []
+
+
+def test_uae_instruments_leave_out_web_pages_and_announcements():
+    """Task 40 (hq answer to stop 1, option a): a UAE instrument is a distinct `instrument` of a UAE manifest row that
+    is neither a web page nor an announcement, as those rows' own notes say. Annex A names the two rows left out."""
+    build = _load()
+    rows = [r for r in kb.load_manifest() if r["jurisdiction"] == "UAE"]
+    left_out = sorted(r["document_id"] for r in rows if r["source_type"] in build.NOT_INSTRUMENTS)
+    assert left_out == ["fed-ai-data-authority-2026-06-14", "tdra-dispute-service-page"]
+    assert all("not an instrument" in r["notes"] or "not a law" in r["notes"] for r in rows
+               if r["source_type"] in build.NOT_INSTRUMENTS)
+    count = len({r["instrument"] for r in rows if r["source_type"] not in build.NOT_INSTRUMENTS})
+    assert count == 31 == len({r["instrument"] for r in rows}) - len(left_out)
+    annex = " ".join(_annex().split())
+    assert f"{count} UAE instruments" in annex
+    assert "plus a TDRA service page and an announcement, which are not instruments" in annex
 
 
 def test_the_counts_stated_in_the_annex_are_the_repos():

@@ -24,9 +24,10 @@ before anything retrieval adds (see Retrieval below). That is why the Arabic run
 citation validity (C5) with an English embedder. A bilingual embedder is the obvious upgrade and is listed under
 next steps; it was not swapped in before the freeze because it would have meant re-recording the scored runs.
 
-**The documents.** 88 documents in `kb/manifest.csv`: 32 UAE instruments (laws, Cabinet resolutions, TDRA
-regulations, the two 2026 public licences, in English and Arabic where both are published), 3 ITU texts and the
-Readiness report, and 34 foreign texts used only as global examples. Each row records the issuer, the URL, the date
+**The documents.** 88 documents in `kb/manifest.csv`: 31 UAE instruments (laws, Cabinet resolutions, TDRA
+regulations, the two 2026 public licences, in English and Arabic where both are published) plus a TDRA service page
+and an announcement, which are not instruments; 3 ITU texts and the Readiness report; and 34 foreign texts used only
+as global examples. Each row records the issuer, the URL, the date
 fetched, the HTTP status, the SHA-256 of the file as fetched, the page count, the language and whether the English is
 an official translation. 83 are VERIFIED (the issuer's file is on disk and its hash matches), 2 REFERENCED (opened,
 text not held) and 3 UNVERIFIED (unpublished or unreachable; they back no claim). `python -m onyx kb verify` recomputes

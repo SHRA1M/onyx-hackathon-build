@@ -316,7 +316,7 @@ def _gap_cell(md: str, n: str) -> str:
 def test_report_gap12_maps_before_claiming():
     cell = _gap_cell(REPORT_MD.read_text(encoding="utf-8"), "12")
     assert cell.index("Y.3173") < cell.index("neither") and cell.index("D9") < cell.index("neither")
-    assert cell.strip().endswith("Left open at ITU's request (2026-10-30).")
+    assert cell.strip().endswith("Left open with ITU's agreement (2026-10-30).")
     gap = data.load_gaps()["gaps"]
     row = next(g for g in gap if g["id"] == "gap-12")["gap"]
     assert row.index("Y.3173") < row.index("neither") and row.index("D9") < row.index("neither")
@@ -385,7 +385,8 @@ def test_report_kb_counts_are_read_from_the_manifest():
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
     assert "holds 88 documents" in text and "83 are verified" in text and "thirty-four foreign texts" in text  # Task 35b
-    assert "twenty-eight other UAE texts" in text  # 32 UAE instruments minus the four the sentence names (Task 34)
+    assert "twenty-seven other UAE texts" in text  # 31 UAE instruments minus the four named (Task 40)
+    assert "the 31 UAE instruments" in text
 
 
 @pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
@@ -396,7 +397,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     right = {"holds 51 documents": "holds 88 documents", "47 are verified": "83 are verified",
              "nine foreign texts": "thirty-four foreign texts", "twenty-two foreign texts": "thirty-four foreign texts",
              "**SRC-2** 51 documents": "**SRC-2** 88 documents",
-             "fifteen other UAE texts": "twenty-eight other UAE texts"}[wrong]
+             "fifteen other UAE texts": "twenty-seven other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
