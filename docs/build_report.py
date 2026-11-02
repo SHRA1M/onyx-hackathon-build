@@ -9,7 +9,8 @@ paragraphs are Normal with the template's body run (Times New Roman, justified);
 backticks are dropped, nothing else is interpreted but tables, images and headings. The mapping table reuses the
 template's table in place; the gap table is new, with the same table properties. "Limits and next steps" closes
 section 6 under a bold lead, with no heading. Run-set tags are stripped. Task 18 item 2: table cells 10 pt with no
-space before or after, both figures 12 cm wide (Task 36), picture paragraphs and the six headings keep with next. Fixed core dates and zip times make two
+space before or after, both figures 11 cm wide (Task 36 stop 2 ruling), picture paragraphs and the six headings keep with next. The paragraph after each table is a 4 pt spacer (run 4 pt,
+line exactly 4 pt, no space before or after; Task 36 stop 2 ruling). Fixed core dates and zip times make two
 builds byte-identical.
 
 Value check (item 3, hq rulings 1 and 2 of 2026-10-23): in each tagged paragraph every token holding a digit is
@@ -42,7 +43,7 @@ from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 from docx import Document
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt
@@ -64,7 +65,8 @@ SECTIONS = ["Introduction", "Description of the use case", "What is the role pla
 # lists as plain lines ("What is the role played by AI?", "Demo scenarios") get a copy of a numbered heading
 ADDED = {"What is the role played by AI?", "Demo scenarios"}
 TAIL = "Limits and next steps"
-FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(12), "docs/fig/fig2-results.png": Cm(12)}  # Task 36 stop ruling (was 16 cm, Task 18 item 2b)
+FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(11), "docs/fig/fig2-results.png": Cm(11)}  # Task 36 stop 2 ruling (was 12 cm, Task 36; 16 cm, Task 18 item 2b)
+SPACER = Pt(4)  # Task 36 stop 2 ruling: the paragraph after each table, was a full 12 pt body line
 FIXED_DATE = dt.datetime(2026, 10, 23, tzinfo=dt.timezone.utc)
 ZIP_TIME = (2026, 10, 23, 0, 0, 0)
 TABLE_WIDTH = 9359  # the template table's width, dxa
@@ -381,6 +383,22 @@ class Builder:
             _runs(paragraph, text)
         return paragraph
 
+    def spacer(self, after) -> Paragraph:
+        """An empty 4 pt paragraph: one empty run and the paragraph mark at 4 pt, line exactly 4 pt, 0 before and after."""
+        paragraph = self.paragraph(after)
+        fmt = paragraph.paragraph_format
+        fmt.space_before = fmt.space_after = Pt(0)
+        fmt.line_spacing_rule = WD_LINE_SPACING.EXACTLY
+        fmt.line_spacing = SPACER
+        paragraph.add_run("").font.size = SPACER
+        mark = OxmlElement("w:rPr")
+        for tag in ("w:sz", "w:szCs"):
+            el = OxmlElement(tag)
+            el.set(qn("w:val"), str(int(SPACER.pt * 2)))
+            mark.append(el)
+        paragraph._p.get_or_add_pPr().append(mark)
+        return paragraph
+
     def image(self, after, marker: str) -> Paragraph:
         m = re.fullmatch(r"!\[[^\]]*\]\(([^)]+)\)", marker)
         path = m.group(1) if m else ""
@@ -521,7 +539,7 @@ def render(report: Report) -> Builder:
                 after = b.paragraph(after, block)._p
             if after.tag == qn("w:tbl"):
                 # a paragraph after each table keeps two tables from merging and spaces it from the text
-                after = b.paragraph(after)._p
+                after = b.spacer(after)._p
     if mapping_tbl.getparent() is None:
         raise SystemExit("docs/report.md: section 4 has no table to replace the template's mapping table")
     core = b.doc.core_properties

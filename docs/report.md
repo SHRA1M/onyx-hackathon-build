@@ -9,12 +9,12 @@
 ## Introduction
 
 Mizan is a consumer-care AI for a synthetic UAE operator. The case is a subscriber in a
-chat or on a call, not an institution in a drill. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay again under a proposed rule: a what-if question for the policymaker.
+chat or on a call, not an institution in a drill. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay under a proposed rule: a what-if for the policymaker.
 
 The first contact at a UAE operator is already an AI, and e& reported 371,476 customer complaints in its UAE
-operations for 2025 (e&, Sustainability Report Appendices 2025, Appendix 1). The binding texts already bar such an
+operations for 2025 (e&, Sustainability Report Appendices 2025, Appendix 1). The binding texts bar such an
 AI from charging without an express order (Consumer Protection Regulations v2.0, CPR 4.3), sharing subscriber data
-without consent (24.6), disconnecting without warning (22.1) and handling a complaint: CPR 26.7.2 requires licensees
+without consent (24.6), disconnecting without warning (22.1) and handling a complaint; 26.7.2 requires licensees
 to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer
 Complaints".
 
@@ -75,8 +75,7 @@ scenario did not name.
 | MLFO | staged release; model, prompt, gate version and key hashes per run (MLFO-1) | Standards factor: configuration recorded and replayable | Y.3172 |
 | ML sandbox | selftest and suite in CI; the governed-against-ungoverned pair (SB-1) | Sandbox factor: same scenarios with and without gates, same model | Y.3172; Readiness 2.0 |
 
-Five dimensions are claimed with running-system evidence (6, 7, 8, 10, 11); 1 and 13 by documents only; the other
-six are not claimed.
+Claimed on running evidence: 6, 7, 8, 10, 11; on documents only: 1, 13; not claimed: six.
 
 ![Figure 1](docs/fig/fig1-architecture.png)
 
@@ -84,21 +83,19 @@ six are not claimed.
 
 ## Demo scenarios
 
-1. Online: the five recorded scenarios on the replay site, each step with its clause, page and words
+1. Online: the five recorded scenarios on the replay site, every step with clause, page and words
 (`docs/replay/index.html`).
 2. The subscriber asks why: `python -m onyx why <log> --step <n>` prints the verdict, the clause with its quote and the
 event hash, in English or Arabic; the explanation is the log, not a second opinion.
 3. Conflicting advice: in S3 step 3 care proposes sending identifiers to the model provider abroad; the gate blocks
-under PDPL 22 and 23(2) and the override is refused (`override_refused`); only de-identified data goes. Privacy wins
-by rule, not by the model's mood.
+(PDPL 22, 23(2)) and refuses the override (`override_refused`): privacy wins by rule, not by the model's mood.
 4. Another body, another rule set: `onyx whatif` replays a run under a proposed rule, TDRA's gap 1 on S2 and the Data
-Office's gap 4 on S4. A replay costs USD 0 and the gate decides in a median of 0.46 ms; a live C5 run costs USD 0.27
-(`eval`: USD 5.3767 over 20 runs).
+Office's gap 4 on S4; a replay costs USD 0, a live C5 run USD 0.27 (`eval`: USD 5.3767 over 20 runs).
 
 ## Error scenarios
 
 **S1, roaming before a flight.** App chat classified (CPR 4.22, 4.10, 4.11). Roaming costs after verification
-(24.10): allow. A bundle offered: hold until the OTP and the consent form, then allow (P-1).
+(24.10): allow. A bundle offered: hold until OTP and consent form, then allow (P-1).
 
 **S2, a billing question becomes a complaint.** Care removes a charge with no consent record (4.3): allow. "I never
 ordered this, I am fed up": a Consumer Complaint (2.1.7). Care drafts a reply; the gate blocks it under 26.7.2 and
@@ -120,14 +117,13 @@ proceeds: allow; TDRA requests the report.
 
 **Results**, two runs per scenario per language, means over S1 to S5, English / Arabic `[C5, governed, two runs per
 scenario per language, mean over S1 to S5, en / ar]`: citation validity 0.99 / 1.00 (one id, S2 English); action recall
-against the frozen keys 0.96 / 1.00 (110 of 112 key steps; both misses English, S3-4 and S4-4); abstention on the one
-unanswerable step per scenario 1.00; expected gaps: 5 of 7 found in every run, 2 missed (both in S1), 3 unexpected register ids flagged. The gate decides in a median of 0.46 ms; the model's proposal
+against the frozen keys 0.96 / 1.00 (110 of 112 key steps; both misses English: S3-4, S4-4); abstention on the one
+unanswerable step per scenario 1.00; expected gaps: 5 of 7 found in every run, 2 missed (both S1), 3 unexpected ids flagged. The gate decides in a median of 0.46 ms; the model's proposal
 takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
 
 ![Figure 2](docs/fig/fig2-results.png)
 
-*Figure 2. (a) C5, two runs per scenario per language: action recall and citation validity. (b) C3, three runs per
-scenario per language: gate rejection governed, and claims allowed ungoverned.*
+*Figure 2. (a) C5: action recall and citation validity. (b) C3: governed rejections, ungoverned claims.*
 
 ## Policy gaps and standards gaps derived from the mapping exercise
 
@@ -136,26 +132,26 @@ candidate. Each candidate was then searched across the 32 UAE instruments in bot
 regulations, then foreign law for a global example. A gap is claimed only when the register lists what was searched
 and found absent. The recorded runs re-find 5 of the 7 expected gaps on every run.
 
-| # | Gap | Kind | Addressee | Global example |
+| # | Gap | Kind | Addressee | Example |
 |---|---|---|---|---|
-| 1 | Complaint hand-over: the bar and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (26.13.3, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it | standards | TDRA | Spain Ley 10/2025 Art 8(2), 8(3) |
+| 1 | Complaint hand-over: the bar and the human exist (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (26.13.3, 26.14.2); the transfer has none: what the agent does when the talk turns, when the human is in it | standards | TDRA | Spain Ley 10/2025 Art 8(2), 8(3) |
 | 2 | Consent elicited by an AI: the CPR accepts stored spoken consent (4.7.2) and sets the OTP need by sales medium (4.10, 4.17, 4.22), naming no AI channel; the PDPL exempts what the contract needs (4(9)) and wants any further data use consented in writing or electronically (6(1)(b)), so a spoken "yes" buys the service | coordination | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15 |
 | 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; Electronic Transactions Art 33 trust levels never mapped to it | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
 | 4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline, and the complaint route to the Data Office (Art 24) has no clock either | responsibilities | UAE Data Office | GDPR Art 22(3), 12(3) |
 | 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)) has not been issued | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |
 | 6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person "knows, or is supposed to know" the system contracts automatically | legislative | Cabinet | Maine §1500-DD; EU AI Act Art 50(1) |
-| 11 | A misheard order: the CPR defaults an on-screen answer to "no" to avoid an accidental "yes" (4.22.3, 4.23.3) and wants an OTP per purchase (4.23.2); nothing says what a voice or chat channel must do when it interprets the words itself | standards | TDRA | US TSR 16 CFR 310.3(a)(3)(ii) |
+| 11 | A misheard order: the CPR defaults an on-screen answer to "no" against an accidental "yes" (4.22.3, 4.23.3) and an OTP per purchase (4.23.2); nothing says what a voice or chat channel must do when it interprets the words itself | standards | TDRA | US TSR 16 CFR 310.3(a)(3)(ii) |
 | 12 | Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1) and its hand-over is Readiness D9's inference-to-action latency in the other direction; mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes. Left open at ITU's request (2026-10-30). | standards | ITU | EU Roaming Reg 2022/612 Art 14(4); EU AI Act Art 14(4)(e) (high-risk, from 2027) |
 | 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | 3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4 |
 | 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions and Art 16 penalties are unpublished; nothing says how a telecom channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
-| 10 | Arabic on an automated channel: the language is set and its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); no text requires the Arabic answer to be as good as the English one, and the QoS Policy has no indicator per language | standards | TDRA | Wales WLS Regs 2015 Sch 1 Std 15, 22 |
+| 10 | Arabic on an automated channel: the language is set, its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); nothing requires the Arabic answer to match the English, and the QoS Policy has no indicator per language | standards | TDRA | Wales WLS Regs 2015 Sch 1 Std 15, 22 |
 
-Recommendations. TDRA: a stated time and action when a chat becomes a Consumer Complaint, measured like T1(2a) (1);
-the AI agent among the Article 4 sales media (2); the Article 33 trust level for 24.10 (3); a read-back of the
-understood order before the OTP on voice and chat (11); the Art 11 instructions with a caregiver check (9); QoS indicators per language with a parity band (10). The UAE Data
-Office: the 18(4) procedure (4); the processor terms, transfer controls and country list (5); whether spoken consent
-meets 6(1)(b) (2). The Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome that routes the
-case to a named human (8). Gap 10 is measurable: action recall 0.96 English, 1.00 Arabic (C5) is the indicator the QoS Policy lacks.
+Recommendations. TDRA: a time and action when a chat becomes a Consumer Complaint, measured like T1(2a) (1); the
+AI agent among the Art 4 sales media (2); the Art 33 trust level for 24.10 (3); a read-back of the understood order
+before the OTP (11); the Art 11 instructions with a caregiver check (9); QoS indicators per language with a parity
+band (10): action recall 0.96 English, 1.00 Arabic (C5) is the missing indicator. Data Office: the 18(4)
+procedure (4); processor terms, transfer controls, country list (5); whether spoken consent meets 6(1)(b) (2).
+Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome routing the case to a named human (8).
 
 ## Limits and next steps
 

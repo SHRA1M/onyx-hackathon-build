@@ -258,7 +258,7 @@ def test_both_pictures_are_12_cm_wide_and_keep_with_next(built):
     assert len(pictures) == 2
     for p in pictures:
         assert p.paragraph_format.keep_with_next is True
-        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(12)  # Task 36 stop ruling
+        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(11)  # Task 36 stop 2 ruling
 
 
 def test_the_eight_headings_keep_with_next(built):
