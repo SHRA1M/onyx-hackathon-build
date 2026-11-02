@@ -101,3 +101,7 @@ reads them rather than typing them, and the site stays byte-identical on any mac
 
 Open: after E, the Ollama models move to D (ruling 2, "After E"): a script with a backup, Iyas runs one line. The
 `ollama serve` this session started is still running with the three settings; the tray app is closed.
+
+## After E: models moved to D (2026-11-02)
+
+`ollama list` lists `qwen2.5:14b-instruct` from `D:\ollama\models`; user `OLLAMA_MODELS` set; `C:\Users\SUPER\.ollama\models` removed after the check. Script in the session scratchpad, not the repo (machine setup, not Mizan).
