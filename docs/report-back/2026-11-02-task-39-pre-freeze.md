@@ -168,3 +168,61 @@ Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 
 
 No run, no model call, no fetch, no spend. No figure, gap, rule, key, prompt, gate, mandate or scenario changed.
 Failure mode: closed; only `task-36` pushed (A), nothing merged, no tag.
+
+## After ruling 2 (`task-39-stops-ruling-2-2026-11-02.md`): B5 built
+
+| Item | State | Commit |
+|---|---|---|
+| B, Annex A sentence | Built, pushed, CI on PR #13 green (runs 41448439695, 41448448759) | `61460dd` |
+
+### What differs from the ruling: the carried counts are 23 and 36, not 27 and 44
+
+Stop 3's probe script was not kept, and its 27 (en) and 44 (ar) could not be reproduced. The code now counts and
+prints them itself (`onyx/eval.py`, `key_clauses_absent`), with this definition, printed in `eval/results.md`:
+an entry is carried when the step's gate record holds it, either as a rule id in a gate event's `reasons[].clause`
+or as its chunk among the `clause_ids` of the proposal the gate judged (`old_value`). Gate events have no
+`clause_ids` of their own in `new_value`. Under this reading:
+
+| Lang | Absent at a step that scored | Carried by the gate | Not carried |
+|---|---|---|---|
+| en | 43 | 23 | 20 |
+| ar | 68 | 36 | 32 |
+
+The four uncarried entries that stop 3 counted as carried (en S3-3 `pdpl-13-2-d` and `pdpl-13-2-g`; ar adds S1-6
+`cpr-4-4` and S3-3 `pdpl-22-1`) all sit on abstention steps. So the sentence's structure is unchanged: a test over
+the committed logs proves every uncarried entry is on a step with an `abstain` event, except `cpr-28-26` and
+`consumer-law-4-5` at S3-1 in Arabic. The English runs had both in `sources_used` and not in `sources_mandate`.
+Every flag_gap key step (S1-6, S2-5, S3-3, S4-5, S5-4) has an abstain event in every C5 run.
+
+Unit, stated in `eval/results.md`: clause entries per language over the committed runs (each run's entries added).
+
+### Outputs
+
+- Pooled lines in `eval/results.md`:
+  `Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by
+  retrieval; of the 43 not shown at a step that scored, 23 carried by the gate's verdict.`
+  `Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by
+  retrieval; of the 68 not shown at a step that scored, 36 carried by the gate's verdict.`
+- The Annex A sentence, as written: "Over the scored runs, 186 of 234 key clauses were in what the model was shown
+  in English and 166 of 234 in Arabic; 160 of 234 came from the mandate list alone, which is the English-centred
+  retriever at work, and why the mandate list comes first. Of the clauses absent at a step that still scored, 23 in
+  English and 36 in Arabic were carried by the gate's verdict in code; the rest sit on abstention steps, where the
+  key names the clauses the gap is about and the adviser's act is to flag the gap, not to cite them, except two
+  clauses at one Arabic step (S3-1) that the English run retrieved and the Arabic run did not."
+- `uv run python -m onyx eval` -> `60 runs read from runs; results in eval/results.md and results.json
+  (claude-sonnet-5-5).` `git diff --stat eval/`: results.json +24, results.md +4 -2. No existing figure changed.
+- `report_pages.ps1` -> `pages: 5` / `words: 2366` / `annex starts on page: 6` / `total pages: 10` /
+  `total words: 5214`. `report_pdf.ps1` -> `word pages: 10` / `pdf pages: 10` / `pdf finds 'Annex A': True` /
+  `pdf finds 'Limits and next steps': True` / `pdf bytes: 358737`.
+- `uv run pytest` -> `670 passed` (667 + 3). New: `test_key_clauses_absent_and_carried_by_the_gate`,
+  `test_uncarried_key_clauses_sit_on_abstention_steps_but_two_at_s3_1_arabic`,
+  `test_annex_a_retrieval_sentence_carries_the_printed_key_clause_figures`. The pinned-totals and recompute tests
+  now include `absent` and `carried`. All five new B tests failed before the code, then passed.
+- hq copy `report-annex-2026-11-02.md` equals `docs/annex.md` (sha256 `9429cfb4509ceb37a6c8...` both).
+
+### Open for hq
+
+1. Is the strict reading of "carried" the one hq meant? If hq wants stop 3's looser one, it needs a rule that
+   reproduces 27 and 44, and the sentence's numbers change.
+2. Ruling 2 clears the reviewer email now: the B sentence is in and the PDF is rebuilt (10 pages, page 6 starts
+   "Annex"). Iyas sends.
