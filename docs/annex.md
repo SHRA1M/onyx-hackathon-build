@@ -24,12 +24,12 @@ before anything retrieval adds (see Retrieval below). That is why the Arabic run
 citation validity (C5) with an English embedder. A bilingual embedder is the obvious upgrade and is listed under
 next steps; it was not swapped in before the freeze because it would have meant re-recording the scored runs.
 
-**The documents.** 88 documents in `kb/manifest.csv`: 31 UAE instruments (laws, Cabinet resolutions, TDRA
+**The documents.** 89 documents in `kb/manifest.csv`: 31 UAE instruments (laws, Cabinet resolutions, TDRA
 regulations, the two 2026 public licences, in English and Arabic where both are published) plus a TDRA service page
-and an announcement, which are not instruments; 3 ITU texts and the Readiness report; and 34 foreign texts used only
+and an announcement, which are not instruments; 3 ITU texts and the Readiness report; and 35 foreign texts used only
 as global examples. Each row records the issuer, the URL, the date
 fetched, the HTTP status, the SHA-256 of the file as fetched, the page count, the language and whether the English is
-an official translation. 83 are VERIFIED (the issuer's file is on disk and its hash matches), 2 REFERENCED (opened,
+an official translation. 84 are VERIFIED (the issuer's file is on disk and its hash matches), 2 REFERENCED (opened,
 text not held) and 3 UNVERIFIED (unpublished or unreachable; they back no claim). `python -m onyx kb verify` recomputes
 the counts on every push.
 
@@ -216,7 +216,7 @@ Capacity Building Week (page on file, read 2026-10-18):
    runs with their logs, so an Arabic agent can be scored against binding Arabic law without new annotation.
 2. **For the call for domain-specific open knowledge bases:** `kb/manifest.csv` with its 23-column schema (issuer, URL,
    fetch date, HTTP status, SHA-256, pages, language, official-translation flag, binding status, Y.3172 node and
-   Readiness dimensions per document), the 88 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's
+   Readiness dimensions per document), the 89 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's
    layout. Sources are fetched from the issuer and verified by hash, not redistributed where rights are unconfirmed.
 3. **For the global open repository of AI agents and metadata:** the five agent manifests in `mandates.json` (verbs,
    documents, clauses), the gate interface (`decide(proposal, state, knowledge) -> verdict`) and the log schema, which
@@ -234,3 +234,94 @@ Capacity Building Week (page on file, read 2026-10-18):
 | Every figure in this report, recomputed | `python -m onyx eval`; `eval/results.md`; `python -m onyx selftest` |
 | One step explained from the log | `python -m onyx why <log> --step <n> [--lang ar]` |
 | A proposed rule tested on a recorded run | `python -m onyx whatif <log> --rule gap-1|gap-4` |
+
+## Annex F. Further gaps and candidates
+
+The register, `docs/gaps.md`, holds every row with the clauses searched and their quotes; the rows below continue the
+numbering of the report's table and were not in the 5 pages for room. Each row gives the statement, the clauses
+searched, what was searched and found absent, one example from elsewhere in its own words, the addressee, the
+recommendation and what exposed it. The register quotes the Arabic of each UAE clause beside the English.
+
+**F.1 Gap 7: five mentions, no standard.** No binding UAE text sets conduct standards specific to an AI agent dealing
+with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its
+definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over
+for an automated agent. Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's words
+(CAD 812.02). The UAE has the general duty (CPR 3.3) and no AI-specific one. Kind: absence, a standards gap.
+Addressee: TDRA. Exposed by: every scenario.
+
+Clauses searched: CPR 3.3, 25.14.1 and 26.7.2; Spam Calls Regulation v4 3.3; Cabinet Resolution 56/2024 5(6); Child
+Digital Safety Law 26/2025 10(1); PDPL 18(4); Electronic Transactions Law 46/2021 11(2) and 12(2); Cabinet Resolution
+57/2024 Table No. (1) row 16; Trade Law 14/2023 Art 1 and 5(7); the two operators' codes of practice, which name a
+chatbot and are not contracts. They name AI or an automated agent to set a charge waiver, a bar, a definition, a
+permission and a tool; none sets how an AI agent must behave with a consumer.
+
+Elsewhere: Utah Code 13-77-102: "It is not a defense to the violation of any statute administered and enforced by
+the division under Section 13-2-102 that generative artificial intelligence: (1) made the violative statement; (2)
+undertook the violative act; or (3) was used in furtherance of the violation." Moffatt v. Air Canada, 2024 BCCRT 149
+(a tribunal decision), para 27: "It makes no difference whether the information comes from a static page or a
+chatbot." India, TRAI Telecom Consumers Complaint Redressal Regulations 2012, reg 3(9), proviso: "Provided that the
+sub-menu in the third level shall also contain an option enabling the consumer to speak to a consumer care agent."
+California Health and Safety Code §1339.75(a)(2), clinical communications only: "Clear instructions describing how a
+patient may contact a human health care provider".
+
+Recommendation: TDRA to set conduct standards for AI agents in consumer care (limits, oversight, logs), as IMDA's
+framework does as a whole; Mizan's gates are one worked form of them.
+
+**F.2 Gap 13: breach notice has no period.** PDPL 9(1) and 9(2) make the Controller notify the Data Office and the
+data subject of a breach "within the period and in accordance with the measures and requirements set by the
+Executive Regulations of this Decree by Law". Art 28: "The Council of Ministers, based upon a suggestion from the
+General Director of the Bureau, shall issue the Executive Regulations of this Decree by Law within six (6) months as
+of the date on which the Decree by Law is promulgated." The Decree-Law was issued on 2021-09-20, so the Regulations
+were due by 2022-03-20 (computed). Searched and absent on 2026-11-02, official portal, both languages: the Regulation
+Table of Decree-Law 45/2021 shows no records; the keyword searches "personal data" and its Arabic list no executive
+regulation of this Decree-Law; the Telecommunication, Technology and Space sector list has none. The Regulations are
+not on the official portal on 2026-11-02, so no published UAE text sets a period: an operator's AI that detects a
+breach has no clock to run. Elsewhere: GDPR Art 33(1), "without undue delay and, where feasible, not later than 72
+hours after having become aware of it". Addressee: the Council of Ministers; the UAE Data Office proposes (Art 28).
+Recommendation: the Council of Ministers to issue the PDPL Executive Regulations with the 9(1) and 9(2) periods;
+until then the Data Office to publish an interim period. Exposed by: the mapping (P).
+
+**F.2 Gap 14: a processor may bring in another without the controller's say.** The Controller appoints "the
+Processor which has sufficient guarantees" (7(5)) and the Processor works "in accordance with the instructions of
+the Controller" (8(1)); where several Processors take part, 8(10) asks only that "the processing shall be carried
+out in accordance with a written contract or agreement" among them. No clause asks for the Controller's
+authorisation before a Processor brings in another. 8(11) leaves the standards to the Executive Regulations: "The
+Executive Regulations of this Decree by Law shall specify the procedures, controls, conditions, and technical
+standards related to such obligations." Searched and absent on 2026-11-02: the portal searches of gap 13 found no
+Executive Regulations and no Data Office or Cabinet instrument on sub-processors. Gap 5 is the transfer abroad; this
+row is who may bring in a further processor. Elsewhere: GDPR Art 28(2), "The processor shall not engage another
+processor without prior specific or general written authorisation of the controller." Addressee: the Council of
+Ministers, through the Executive Regulations (8(11), 28); the UAE Data Office proposes. Recommendation: the Executive
+Regulations to require the Controller's prior written authorisation, specific or general, before a Processor engages
+another, with a right to object to changes. Exposed by: S3-4, the step where the question goes to the model
+provider under the processor contract.
+
+**F.2 Gap 15: no schedule of licensee fines under 79 bis (2).** Telecom Law 79 bis (2): "The Cabinet shall issue a
+resolution on the schedule of violations and fines imposed on licensees", up to AED 10,000,000 a violation. The
+schedule is not published. Until it is, a CPR breach by an automated channel sits in the 79 bis (1) and licence
+16.3.2 band, "not less than Dirhams 50,000 and not more than Dirhams 200,000", doubled under licence 16.3.3 for
+repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under neighbouring laws
+(57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade) and one for the space sector, Cabinet
+Resolution 206/2025 ("Regulations of Violations and Administrative Penalties... Space Activities"); none for
+telecommunications. Searched and absent on 2026-11-02, official portal, both languages: the Telecommunication,
+Technology and Space sector lists no schedule of telecom licensee fines, and the Regulation Table of Decree-Law
+3/2003 shows no records. Elsewhere: Ofcom, Penalty guidelines (section 392 Communications Act 2003, 14 September
+2017), 1.11: "Ofcom will consider all the circumstances of the case in the round in order to determine the
+appropriate and proportionate amount of any penalty. The central objective of imposing a penalty is deterrence."
+1.2: "Ofcom must have regard to the statement for the time being in force when setting the amount of any penalty". A
+published method, not a tariff; the UK regulates providers through General Conditions, not individual licences.
+Addressee: the Cabinet. Recommendation: the Cabinet to issue the schedule of licensee violations and fines that
+Telecom Law 79 bis (2) promises, or, until then, publish the method the Board will apply under 79 bis (2), as Ofcom
+publishes under s. 392. Exposed by: the mapping (P).
+
+**F.3 Candidates, work in progress.** Each waits on one reading.
+
+1. Expired bundle (CPR 4.4, S1-6): whether a fixed-term bundle that has expired is an "existing Service... extended
+   or renewed" under 4.4, or needs fresh consent under 4.3. Settled by a TDRA reading of 4.4.
+2. Arabic records: invoices must be in Arabic (Consumer Law 8(4); AED 100,000 under Cabinet Resolution 66/2023
+   Annex 2); whether an English-only chat transcript is such an invoice is inferred, not read. Settled by a TDRA or
+   Ministry of Economy reading of "invoice" for a chat transcript.
+
+**F.4 Searched, nothing found.** The Executive Order to the Telecommunications Law, read in full (75 articles,
+English; the Arabic prevails): Art 30 directives, Art 32 complaint reporting, Art 42 apparatus fines, Art 47
+quality-of-service reporting. Nothing on an automated channel, consent, a hand-over or a licensee fine amount.

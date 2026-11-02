@@ -384,7 +384,7 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 88 documents" in text and "83 are verified" in text and "thirty-four foreign texts" in text  # Task 35b
+    assert "holds 89 documents" in text and "84 are verified" in text and "thirty-five foreign texts" in text  # Task 41: Ofcom
     assert "twenty-seven other UAE texts" in text  # 31 UAE instruments minus the four named (Task 40)
     assert "the 31 UAE instruments" in text
 
@@ -394,9 +394,9 @@ def test_report_kb_counts_are_read_from_the_manifest():
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 88 documents", "47 are verified": "83 are verified",
-             "nine foreign texts": "thirty-four foreign texts", "twenty-two foreign texts": "thirty-four foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 88 documents",
+    right = {"holds 51 documents": "holds 89 documents", "47 are verified": "84 are verified",
+             "nine foreign texts": "thirty-five foreign texts", "twenty-two foreign texts": "thirty-five foreign texts",
+             "**SRC-2** 51 documents": "**SRC-2** 89 documents",
              "fifteen other UAE texts": "twenty-seven other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
@@ -405,7 +405,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("83 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("84 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 

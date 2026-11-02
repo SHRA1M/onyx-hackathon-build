@@ -50,7 +50,7 @@ def test_parse_output_finds_a_register_id_in_an_abstaining_replys_notes():
 
 
 def test_an_id_not_in_the_register_is_ignored():
-    reply = {"proposals": [], "notes": ["<INSUFFICIENT_EVIDENCE>", "gap-99 and gap-13 and gap-3x and Gap-3 are not ids"]}  # gap-12 joined the register (Task 27)
+    reply = {"proposals": [], "notes": ["<INSUFFICIENT_EVIDENCE>", "gap-99 and gap-16 and gap-3x and Gap-3 are not ids"]}  # gap-13 to gap-15 joined the register (Task 41)
     assert base.parse_output("adviser", json.dumps(reply)).gaps_in_notes == []
 
 

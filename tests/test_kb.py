@@ -259,7 +259,8 @@ def test_task_31_five_extracts_are_verified_foreign_from_the_official_sites():
     assert ai["notes"].startswith("High-risk systems only. Chapter III Sections 1 to 3 apply from 2027-12-02 (Annex "
                                   "III) and 2028-08-02 (Annex I), Regulation (EU) 2026/1744 Art 1(40)(b).")
     schema = json.loads((kb.KB_DIR / "manifest.schema.json").read_text(encoding="utf-8"))
-    assert schema["properties"]["binding_status"]["enum"] == ["binding", "advisory", "method", "decision"]
+    assert schema["properties"]["binding_status"]["enum"] == ["binding", "advisory", "method", "decision", "guideline"], \
+        "Task 41: guideline added for a statutory guideline the regulator must have regard to (Ofcom, s. 392(6))"
     # the counts moved to Task 32's test below (64, 59, 17)
 
 
@@ -398,8 +399,9 @@ def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
     status = lambda s: sum(r["status"] == s for r in manifest)
     # Task 34 Part C adds eIDAS, COPPA and Licence 3/2026 (Iyas, 2026-10-30: the pin follows the counts);
     # Task 35 adds six Gulf rows, all foreign (test_task_35_counts); Task 35b five more (test_task_35b_counts)
-    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (88, 83, 3, 2)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 34
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (89, 84, 3, 2), \
+        "Task 41: the Ofcom row makes 89 rows, 84 VERIFIED"
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
     # the announcement is not an instrument (order Part A)
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32
@@ -529,8 +531,9 @@ def test_task_35_counts():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
     # Task 35b adds five foreign rows (test_task_35b_counts)
-    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (88, 83, 2, 3)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 34
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (89, 84, 2, 3), \
+        "Task 41: the Ofcom row makes 89 rows, 84 VERIFIED"
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32  # UAE unchanged
 
@@ -601,7 +604,8 @@ def test_task_35b_california_extracts_carry_exactly_the_read_files_quotes():
 def test_task_35b_counts():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
-    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (88, 83, 2, 3)
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 34
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (89, 84, 2, 3), \
+        "Task 41: the Ofcom row makes 89 rows, 84 VERIFIED"
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32  # UAE unchanged

@@ -29,7 +29,7 @@ Values come from the Governed and Ungoverned tables and their latency lines (C3)
 per-scenario C3 / C4 / C5 table (C3 and C5 columns), and the Misses, Pooled and gaps-against-keys lines (C5). A paragraph with both tags is checked sentence by sentence, each against its own tag.
 
 Annex (order 2026-11-02 Task 38 item 3): docs/annex.md follows the report after a page break, under "Annex" in the
-template's heading (its numbering removed); the five sections "Annex A." to "Annex E." are bold leads (the template
+template's heading (its numbering removed); the sections "Annex A." to "Annex F." (F: Task 41) are bold leads (the template
 has no second-level heading); body and list text 10 pt, code blocks Courier New 8 pt, tables as above. The annex
 passes the same value check and the knowledge-base counts of Annex A (ANNEX_KB_COUNTS).
 
@@ -64,7 +64,7 @@ REPORT_MD = REPO / "docs" / "report.md"
 REPORT_DOCX = REPO / "docs" / "report.docx"
 ANNEX_MD = REPO / "docs" / "annex.md"
 ANNEX = "Annex"
-ANNEX_SECTIONS = ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E."]
+ANNEX_SECTIONS = ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E.", "Annex F."]  # F: Task 41
 ANNEX_SIZE = Pt(10)
 CODE_SIZE = Pt(8)
 MONO = "Courier New"
@@ -176,7 +176,7 @@ def annex_blocks(md: str) -> list[tuple[str, object]]:
             out.append(("para", " ".join(line.strip() for line in block)))
     sections = [c for k, c in out if k == "section"]
     if [" ".join(c.split(" ", 2)[:2]) for c in sections] != ANNEX_SECTIONS:
-        raise SystemExit(f"docs/annex.md: sections {sections} are not Annex A. to Annex E. in order")
+        raise SystemExit(f"docs/annex.md: sections {sections} are not Annex A. to Annex F. in order")
     if not out or out[0][0] != "section":
         raise SystemExit("docs/annex.md: text before the first section")
     return out

@@ -15,7 +15,8 @@ from onyx import kb
 DOCS = kb.REPO / "docs"
 ANNEX_MD = DOCS / "annex.md"
 REPORT_MD = DOCS / "report.md"
-POINTER = " Annex A to E: data and model, clause to code, the governed test, what ITU can reuse, where to look."
+POINTER = (" Annex A to F: data and model, clause to code, the governed test, what ITU can reuse, where to look, "
+           "further gaps and candidates.")  # Task 41: Annex F added
 
 
 def _load():
@@ -33,9 +34,9 @@ def _code_blocks(md: str) -> list[str]:
     return re.findall(r"^```\n(.*?)\n```$", md, re.S | re.M)
 
 
-def test_annex_headings_are_a_to_e_in_order():
+def test_annex_headings_are_a_to_f_in_order():
     headings = re.findall(r"^## (Annex [A-Z])\. ", _annex(), re.M)
-    assert headings == ["Annex A", "Annex B", "Annex C", "Annex D", "Annex E"]
+    assert headings == ["Annex A", "Annex B", "Annex C", "Annex D", "Annex E", "Annex F"], "Task 41 adds Annex F"
 
 
 def test_no_brace_is_left_in_the_annex():
@@ -119,10 +120,10 @@ def test_the_precision_paragraph_figures_are_the_pooled_and_misses_lines():
     assert "S3-4" in para and "S4-4" in para and "each missed in 1 of 2 runs" in para
 
 
-@pytest.mark.parametrize("old, new", [("88 documents in", "87 documents in"), ("83 are VERIFIED", "84 are VERIFIED"),
+@pytest.mark.parametrize("old, new", [("89 documents in", "88 documents in"), ("84 are VERIFIED", "85 are VERIFIED"),  # Task 41: Ofcom
                                       ("2 REFERENCED", "3 REFERENCED"), ("3 UNVERIFIED", "4 UNVERIFIED"),
                                       ("31 UAE instruments", "32 UAE instruments"),
-                                      ("34 foreign texts", "35 foreign texts")])
+                                      ("35 foreign texts", "36 foreign texts")])
 def test_annex_a_kb_counts_are_read_from_the_manifest(old, new):
     build = _load()
     annex = _annex()
@@ -181,8 +182,8 @@ def test_the_built_report_has_the_annex_after_a_page_break(tmp_path):
     assert texts[annex - 1].startswith("Limits and next steps.") and texts[annex - 1].endswith(POINTER.strip())
     assert doc.paragraphs[annex]._p.pPr.find(
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}pageBreakBefore") is not None
-    leads = [t for t in texts[annex:] if re.match(r"Annex [A-E]\. ", t)]
-    assert [t[:8] for t in leads] == ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E."]
+    leads = [t for t in texts[annex:] if re.match(r"Annex [A-F]\. ", t)]
+    assert [t[:8] for t in leads] == ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E.", "Annex F."]
     assert len(doc.tables) == 4  # mapping, gaps, the C3 table, where to look
     code = next(p for p in doc.paragraphs[annex:] if p.text.startswith("def complaint_gate"))
     assert all(r.font.size.pt == 8 and r.font.name == "Courier New" for r in code.runs)
@@ -221,3 +222,20 @@ def test_annex_a_retrieval_sentence_carries_the_printed_key_clause_figures():
     md = " ".join((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8").split())
     for lang, cell in pooled.items():
         assert f"of the {cell['absent']} not shown at a step that scored, {cell['carried']} carried by the gate's verdict" in md
+
+
+def test_annex_f_quotes_are_the_registers_and_its_dates_are_iso():
+    """Task 41: every quoted phrase in Annex F is in docs/gaps.md (generated from gaps.json, whose quotes the gap tests
+    check against the held texts); absence is the portal's, never a fact about the world."""
+    annex = _annex()
+    f = " ".join(annex[annex.index("## Annex F."):].split())
+    register = " ".join((kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8").split())
+    quotes = [q for q in re.findall(r'"([^"]+)"', f) if len(q) > 30]
+    assert len(quotes) >= 15
+    for q in quotes:
+        assert q.rstrip(".") in register, q
+    assert not re.search(r"never issued|never-issued|does not exist", f)
+    assert "not on the official portal on 2026-11-02" in f
+    for lead in ("**F.1 Gap 7:", "**F.2 Gap 13:", "**F.2 Gap 14:", "**F.2 Gap 15:", "**F.3 Candidates",
+                 "**F.4 Searched, nothing found.**"):
+        assert lead in f, lead

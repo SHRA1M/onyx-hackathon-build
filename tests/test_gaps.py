@@ -13,7 +13,8 @@ import pytest
 from onyx import data, gaps, kb
 
 ROWS = data.load_gaps()["gaps"]
-ORDER_IDS = [f"gap-{n}" for n in range(1, 13)] + ["candidate-4-4-fixed-term-bundle", "candidate-79bis-2-fine-schedule"]
+# Task 41: gap-13 and gap-14 promoted from the prose candidates, the 79 bis (2) candidate promoted to gap-15
+ORDER_IDS = [f"gap-{n}" for n in range(1, 16)] + ["candidate-4-4-fixed-term-bundle"]
 GLOBAL_DIR = kb.KB_DIR / "sources" / "global"
 REGISTER_ID = re.compile(r"^(gap-\d+|candidate-[\w-]+)$")
 
@@ -23,14 +24,14 @@ def _norm(text: str) -> str:
 
 
 def test_register_holds_the_order_ids_in_order():
-    assert [r["id"] for r in ROWS] == ORDER_IDS
+    assert [r["id"] for r in ROWS] == ORDER_IDS, "Task 41: 15 gaps and the 4.4 candidate row (16 rows)"
 
 
 def test_every_row_has_kind_addressee_category():
     for row in ROWS:
         assert row["kind"] in gaps.KINDS, row["id"]
         assert row["category"] in gaps.CATEGORIES, row["id"]
-        assert row["addressee"] and all(a in gaps.ADDRESSEES for a in row["addressee"]), row["id"]
+        assert row["addressee"] and all(gaps.addressee_ok(a) for a in row["addressee"]), row["id"]
         assert row["competitor"] in gaps.COMPETITOR, row["id"]
         for field in ("gap", "uae_position", "recommendation", "exposed_by"):
             assert row[field], f"{row['id']}: {field} empty"
@@ -207,29 +208,34 @@ def test_coppa_quotes_are_verbatim_in_the_fetched_file():
         assert _norm(quote) in _norm(text)
 
 
-def test_candidate_79bis_2_row():
-    row = _row("candidate-79bis-2-fine-schedule")
+def test_gap_15_is_the_79bis_2_row():
+    row = _row("gap-15")  # the 79 bis (2) candidate, promoted by Task 41
     # gap text: hq's rewrite, order 2026-10-22 Task 16 item 4 (tests/test_pages_grounding_readme.py)
-    assert (row["kind"], row["addressee"], row["global_examples"]) == ("absence", ["Cabinet"], [])
+    assert (row["kind"], row["addressee"]) == ("absence", ["Cabinet"])
+    assert [(e["clause"], e["file"]) for e in row["global_examples"]] == [
+        ("1.11", "kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt"),
+        ("1.2", "kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt")] and row["global_none"] == ""
     assert row["exposed_by"] == "mapping (P)"
     # 79 bis (1) and (2) are one chunk, 79 bis
     assert [s["clause"] for s in row["searched"]][:3] == ["telecom-law-3-2003-en:79 bis", "telecom-law-3-2003-en:79 bis",
                                                           "licence-2-2026:16.3.2"]
 
 
-def test_readme_register_has_twelve_rows_and_the_child_left_the_candidates():
+def test_readme_register_has_fifteen_gaps_and_the_child_left_the_candidates():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     table = readme.split(gaps.START, 1)[1].split(gaps.END, 1)[0]
-    assert table.count("\n| ") == 14 + 2  # gap-1 to gap-12 (Task 27) and two candidate rows, plus header and separator
+    assert table.count("\n| ") == 16 + 2, "Task 41: gap-1 to gap-15 and the 4.4 candidate row, plus header and separator"
     names = [c["name"] for c in data.load_gaps()["candidates"]]
-    assert "A child on the line" not in names and len(names) == 4  # Task 23 B3: sub-processor authorisation added
+    assert "A child on the line" not in names
+    assert names == ["Arabic records"], "Task 41: breach notice and sub-processor promoted, the Executive Order moved"
     assert "### A child on the line" not in (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
 
 
 def test_adviser_register_lists_gap_9_and_the_candidate():
     from onyx.agents.adviser import Adviser
     text = "\n".join(Adviser.extra_lines(None))  # the register lines read no instance state
-    assert "9. gap-9: " in text and "14. candidate-79bis-2-fine-schedule: " in text  # gap-10, 11, 12 at lines 10 to 12 (Tasks 20, 23, 27)
+    assert "9. gap-9: " in text and "15. gap-15: " in text  # Task 41: gap-13 to gap-15 at lines 13 to 15
+    assert "16. candidate-4-4-fixed-term-bundle: " in text, "Task 41: the 4.4 candidate moves to line 16"
 
 
 # --- order 2026-10-24-task-20-gap-10-arabic-parity ----------------------------------------------------------------
@@ -494,7 +500,10 @@ def test_task_30_quotes_are_verbatim_in_their_files():
 def test_gap_5_records_the_portal_check():
     assert _row("gap-5")["uae_position"].endswith(GAP_5_PORTAL)
     note = kb.manifest_by_id()["pdpl-executive-regulations"]["notes"]
-    assert note == "Not issued as of 2026-10-30 (portal related-legislations checked)"
+    assert note == ("Not issued as of 2026-10-30 (portal related-legislations checked). Portal checked 2026-11-02, both "
+                    "languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal "
+                    "data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; "
+                    "sector list (12 / 14 instruments) has none."), "Task 41 item 1c appends the 2026-11-02 portal check"
 
 
 # --- order 2026-10-30-task-31-binding-examples ----------------------------------------------------------------
@@ -712,7 +721,7 @@ def test_task_32_searched_entries_are_the_orders_appended_last():
         assert _row(gap_id)["searched"][-len(filed):] == filed, gap_id  # appended after the chunked ones
     assert not [r["id"] for r in ROWS + data.load_gaps()["candidates"] if any(s.get("file") for s in r["searched"])
                 and r.get("id") not in {**TASK_32_SEARCHED, **TASK_33_SEARCHED, **TASK_35_SEARCHED,
-                                        **TASK_35B_SEARCHED}]
+                                        **TASK_35B_SEARCHED, **TASK_41_FILED}]
 
 
 def test_task_32_files_are_verified_manifest_sources_with_a_page():
@@ -789,7 +798,7 @@ TASK_33_SEARCHED = {  # gap id: [(clause, file, says starts with, quote)], after
          "is fined (AED 2,000 up to 100,000 and closure); what verifies a spoken 'yes' through an AI channel is unsaid.",
          "failure to verify the offer and acceptance required for the validity of the contract."),
     ],
-    "candidate-79bis-2-fine-schedule": [
+    "gap-15": [  # the 79 bis (2) candidate until Task 41
         ("cabres-52-2024-ar:2(2)", R52, "TDRA may double a fine when the same violation is repeated within a year",
          "يجوز للهيئة مضاعفةقيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات "
          "المخالفة الإدارية قبل مض ي سنة من تاريخ ارتكابها لأول مرة"),
@@ -878,7 +887,7 @@ def test_task_33_gap_8_note_prints_after_the_examples_on_the_register_and_the_si
 
 def test_task_33_arabic_file_quote_is_labelled_ar():
     from onyx import site
-    [s] = [s for s in _row("candidate-79bis-2-fine-schedule")["searched"] if s["clause"] == "cabres-52-2024-ar:2(2)"]
+    [s] = [s for s in _row("gap-15")["searched"] if s["clause"] == "cabres-52-2024-ar:2(2)"]
     assert gaps._searched(s)[1] == f'  - AR: "{s["quote"]}"'
     assert "<br>AR: " in site._searched(s) and 'dir="rtl"' in site._searched(s)
     [en] = [s for s in _row("gap-1")["searched"] if s["clause"] == "executive-order-3-2004:32"]
@@ -886,7 +895,7 @@ def test_task_33_arabic_file_quote_is_labelled_ar():
 
 
 def test_task_33_executive_order_is_read_not_unpublished():
-    [eo] = [c for c in data.load_gaps()["candidates"] if c["name"].startswith("The Executive Order")]
+    [eo] = [c for c in data.load_gaps()["nothing_found"] if c["name"].startswith("The Executive Order")]  # Task 41
     assert eo["name"] == "The Executive Order, read in full"
     assert eo["line"] == ("The Executive Order, read in full (75 articles, English; the Arabic prevails): Art 30 "
                           "directives, Art 32 complaint reporting, Art 42 apparatus fines, Art 47 quality-of-service "
@@ -1177,3 +1186,104 @@ def test_task_35b_entries_render_on_the_register_and_the_site():
             assert escape(ex["quote"]) in page, (gap_id, ex["clause"])
     assert (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8") == md
     assert (kb.REPO / "docs" / "site" / "gaps.html").read_text(encoding="utf-8") == html
+
+
+# --- order 2026-11-02 Task 41, Annex F: gaps 13 to 15 ---------------------------------------------------------------
+
+PDPL_AR = "kb/sources/pdpl-45-2021-ar.pdf"
+TASK_41_FILED = {"gap-13": [("pdpl-45-2021-en:28", "kb/sources/pdpl-45-2021-en.pdf", 28),
+                            ("pdpl-45-2021-ar:28", PDPL_AR, 20)]}
+TASK_41_SEARCHED = {"gap-13": ["pdpl-45-2021-en:9(1)", "pdpl-45-2021-en:9(2)", "pdpl-45-2021-en:28", "pdpl-45-2021-ar:28"],
+                    "gap-14": ["pdpl-45-2021-en:7(5)", "pdpl-45-2021-en:8(1)", "pdpl-45-2021-en:8(10)",
+                               "pdpl-45-2021-en:8(11)"]}
+
+
+def _manifest_ids(path: str) -> list[str]:
+    """The manifest rows a global example's file extracts: by document id, else by the local-sources file, else by
+    instrument (gaps.INSTRUMENT)."""
+    manifest, stem, name = kb.manifest_by_id(), Path(path).stem, Path(path).name
+    if stem in manifest:
+        return [stem]
+    local = [d for d, s in kb.LOCAL.items() if any((s.get(k) or "").endswith("/" + name) for k in ("file", "text"))]
+    if local:
+        return local
+    instrument = next((i for prefix, i in gaps.INSTRUMENT.items() if stem.startswith(prefix)), None)
+    return [r["document_id"] for r in kb.load_manifest() if r["instrument"] == instrument]
+
+
+def test_every_global_example_points_at_a_verified_manifest_row():
+    manifest = kb.manifest_by_id()
+    for row in ROWS:
+        for ex in row["global_examples"]:
+            ids = _manifest_ids(ex["file"])
+            assert any(manifest[i]["status"] == "VERIFIED" and manifest[i]["sha256"] for i in ids), (row["id"], ex["file"])
+
+
+def test_task_41_rows_are_the_orders():
+    g13, g14, g15 = _row("gap-13"), _row("gap-14"), _row("gap-15")
+    assert (g13["line"], g13["kind"], g13["category"], g13["exposed_by"]) == (
+        "breach notice has no period", "absence", "legislative gap", "mapping (P)")
+    assert g13["addressee"] == ["Council of Ministers", "UAE Data Office (proposer, Art 28)"]
+    assert g13["note"] == "Promoted from candidate 2026-11-02 (hq read, Perplexity Q1)."
+    assert [(e["clause"], e["quote"]) for e in g13["global_examples"]] == [
+        ("Art 33(1)", "without undue delay and, where feasible, not later than 72 hours after having become aware of it")]
+    assert (g14["line"], g14["exposed_by"]) == ("a processor may bring in another without the controller's say", "S3-4")
+    assert g14["addressee"] == ["Council of Ministers (Executive Regulations, 8(11), 28)", "UAE Data Office (proposer)"]
+    assert [e["clause"] for e in g14["global_examples"]] == ["Art 28(2)"]
+    assert g15["line"] == "the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished"
+    assert "Cabinet Resolution 206/2025" in g15["gap"] and g15["note"].startswith("A published method, not a tariff.")
+    for gap_id, clauses in TASK_41_SEARCHED.items():
+        assert [s["clause"] for s in _row(gap_id)["searched"]] == clauses, gap_id
+    for row in (g13, g14, g15):  # phrase absence as the portal's, never as a fact about the world (order limits)
+        text = " ".join(str(row[k]) for k in ("gap", "uae_position", "recommendation", "note") if row.get(k))
+        assert not re.search(r"never issued|never-issued|does not exist", text), row["id"]
+
+
+def test_task_41_s3_step_4_is_the_processor_contract_step():
+    step = next(s for s in data.load_key("S3")["steps"] if s["n"] == 4)
+    assert {"pdpl-8-1", "pdpl-7-5"} <= set(step["must_cite"])
+
+
+def test_task_41_pdpl_quotes_are_verbatim_in_the_held_texts_on_their_pages():
+    files = [kb.REPO / PDPL_AR, kb.REPO / "kb/sources/pdpl-45-2021-en.pdf"]
+    if not all(f.exists() for f in files):
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
+    import pypdf
+    squash = lambda t: re.sub(r"\s+", "", t)  # pypdf breaks lines mid-sentence; compare without whitespace
+    pages = {f: [squash(p.extract_text() or "") for p in pypdf.PdfReader(f).pages] for f in files}
+    checked = 0
+    for gap_id in TASK_41_SEARCHED:
+        for s in _row(gap_id)["searched"]:
+            if s.get("quote_ar"):
+                assert s["file_ar"] == PDPL_AR
+                assert squash(s["quote_ar"]) in pages[kb.REPO / PDPL_AR][s["page_ar"] - 1], s["clause"]
+                checked += 1
+            if s.get("file"):
+                assert squash(s["quote"]) in pages[kb.REPO / s["file"]][s["page"] - 1], s["clause"]
+                checked += 1
+    assert checked == 6 + 2
+
+
+def test_task_41_filed_entries_are_verified_manifest_sources():
+    manifest = kb.manifest_by_id()
+    for gap_id, filed in TASK_41_FILED.items():
+        got = [(s["clause"], s["file"], s["page"]) for s in _filed(gap_id)]
+        assert got == filed, gap_id
+        for clause, file, _ in filed:
+            document_id = clause.split(":", 1)[0]
+            assert manifest[document_id]["status"] == "VERIFIED" and file == f"kb/sources/{document_id}{kb._suffix(document_id)}"
+
+
+def test_task_41_register_and_site_show_the_new_sections():
+    md = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
+    html = (kb.REPO / "docs" / "site" / "gaps.html").read_text(encoding="utf-8")
+    for heading in ("## gap-13: breach notice has no period", "## gap-15: the Cabinet schedule",
+                    "### Arabic records", "## Searched, nothing found", "### The Executive Order, read in full"):
+        assert heading in md, heading
+    assert md.index("## Candidates") < md.index("### Arabic records") < md.index("## Searched, nothing found") \
+        < md.index("### The Executive Order, read in full")
+    assert "### Breach notification without a period" not in md and "### Sub-processor authorisation" not in md
+    assert "<h2>Searched, nothing found</h2>" in html and 'id="gap-14"' in html
+    assert '  - AR (p. 10, `kb/sources/pdpl-45-2021-ar.pdf`): "' in md  # the Arabic PDF's page, 9(2)
+    assert gaps.ids() == ([f"gap-{n}" for n in range(1, 16)],
+                          ["candidate-4-4-fixed-term-bundle", "candidate-arabic-records"]), "Task 41: 15 gaps, 2 candidates"

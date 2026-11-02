@@ -216,7 +216,8 @@ def _searched(s: dict[str, Any]) -> str:
     if chunk["text_ar"]:
         parts.append(f"AR (the whole chunk): {quote(chunk['text_ar'], 'ar')}")
     if s.get("quote_ar"):
-        parts.append(f"AR (<code>{escape(s['file_ar'])}</code>): {quote(s['quote_ar'], 'ar')}")
+        page = f"p. {s['page_ar']}, " if s.get("page_ar") else ""  # the Arabic PDF's page, as docs/gaps.md (Task 41)
+        parts.append(f"AR ({page}<code>{escape(s['file_ar'])}</code>): {quote(s['quote_ar'], 'ar')}")
     return "<li>" + "<br>".join(parts) + "</li>"
 
 
@@ -259,10 +260,12 @@ def gaps_page() -> str:
     by_id = {r["id"]: r for r in register["gaps"]}
     order = gap_order()
     toc = "".join(f'<li><a href="#{i}">{escape(i)}</a>: {escape(by_id[i]["line"])}</li>' for i in order)
-    candidates = "".join(
-        f'<section class="candidate" data-name="{escape(c["name"])}"><h3>{escape(c["name"])}</h3>'
-        f'<p>{escape(c["line"])}</p><ul class="clauses">{"".join(_searched(s) for s in c["searched"])}</ul></section>'
-        for c in register["candidates"])
+    def prose(c: dict[str, Any], css: str) -> str:
+        return (f'<section class="{css}" data-name="{escape(c["name"])}"><h3>{escape(c["name"])}</h3>'
+                f'<p>{escape(c["line"])}</p><ul class="clauses">{"".join(_searched(s) for s in c["searched"])}</ul>'
+                '</section>')
+    candidates = "".join(prose(c, "candidate") for c in register["candidates"])
+    nothing = "".join(prose(c, "nothing-found") for c in register["nothing_found"])  # as docs/gaps.md (Task 41)
     body = (f'<h1>Gap register</h1><p class="notice">{escape(NOTICE)}</p>'
             "<p>A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern. "
             "Every row lists the clauses searched and what each says, English and, where the chunk holds it, Arabic. "
@@ -270,6 +273,7 @@ def gaps_page() -> str:
             f"<p>{escape(gaps.GULF_LINE)}</p><p>{escape(gaps.COMPANION_LINE)}</p>"
             f'<ol class="toc">{toc}</ol>' + "".join(_gap(by_id[i]) for i in order) +
             f"<h2>Candidates</h2><p>Flagged as candidates; no global example required.</p>{candidates}"
+            f"<h2>Searched, nothing found</h2>{nothing}"
             f'<p class="meta">Sources: {escape(register["source"])}.</p>')
     return _frame("gaps.html", "Mizan: gap register", body)
 

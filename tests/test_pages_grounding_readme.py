@@ -1,5 +1,5 @@
 """Task 16 (order 2026-10-22-task-16-pages-grounding-readme): the page of every citation (kb.page_of, from the
-committed chunks), one grounding line per scenario, the README in our own words, and the candidate-79bis-2 row in
+committed chunks), one grounding line per scenario, the README in our own words, and the 79 bis (2) row (gap-15 since Task 41) in
 hq's wording. The README figures and quoted phrases are checked against the source copies in docs/sources/."""
 
 import hashlib
@@ -243,7 +243,7 @@ def test_no_other_entry_is_named_in_a_tracked_file():
             assert not {hashlib.sha256(w.encode()).hexdigest()[:16] for w in words} & names, name
 
 
-# --- item 4: the candidate-79bis-2 row --------------------------------------------------------------------------
+# --- item 4: the 79 bis (2) row, gap-15 since Task 41 ------------------------------------------------------------
 
 GAP_79 = ("The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED "
           "10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers "
@@ -257,14 +257,16 @@ UAE_79 = ("Searched 2026-10-16 on the legislation portal and the web, both langu
 
 
 def _row():
-    return next(r for r in data.load_gaps()["gaps"] if r["id"] == "candidate-79bis-2-fine-schedule")
+    return next(r for r in data.load_gaps()["gaps"] if r["id"] == "gap-15")  # promoted, Task 41
 
 
 def test_candidate_79bis_2_is_hqs_wording():
     row = _row()
-    assert row["gap"] == GAP_79 and row["uae_position"] == UAE_79
+    # Task 41: the Task 33 text stays the base of gap-15; the 2026-11-02 portal check is added after it
+    assert row["gap"].startswith(GAP_79 + " On 2026-11-02 the portal's") and row["uae_position"] == UAE_79
     assert row["recommendation"] == ("Cabinet to issue the schedule of licensee violations and fines that Telecom Law "
-                                     "79 bis (2) promises.")
+                                     "79 bis (2) promises, or, until then, publish the method the Board will apply "
+                                     "under 79 bis (2), as Ofcom publishes under s. 392.")
     assert (row["category"], row["competitor"]) == ("legislative gap", "not read")
     assert [s["clause"] for s in row["searched"]] == ["telecom-law-3-2003-en:79 bis", "telecom-law-3-2003-en:79 bis",
                                                       "licence-2-2026:16.3.2", "licence-2-2026:16.3.3",
@@ -282,8 +284,8 @@ def test_candidate_79bis_arabic_is_verbatim_in_the_law_file():
 
 
 def test_readme_register_row_is_hqs_wording():
-    row = next(l for l in README.splitlines() if l.startswith("| candidate-79bis-2-fine-schedule |"))
-    assert row.split(" | ")[1] == GAP_79
+    row = next(l for l in README.splitlines() if l.startswith("| gap-15 |"))  # Task 41: promoted from the candidate
+    assert row.split(" | ")[1].startswith(GAP_79)
 
 
 LAW_PROVENANCE = (

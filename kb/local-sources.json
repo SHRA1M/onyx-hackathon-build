@@ -703,5 +703,13 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "uk-ofcom-penalty-guidelines-2017": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }

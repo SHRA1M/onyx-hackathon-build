@@ -461,6 +461,81 @@
    "competitor_basis": "the 10-25 sweep found no rival register row on ITU's own metrics"
   },
   {
+   "id": "gap-13",
+   "line": "breach notice has no period",
+   "gap": "PDPL 9(1) and 9(2) make the Controller notify the Data Office and the data subject of a breach 'within the period and in accordance with the measures and requirements set by the Executive Regulations'. Art 28 gave the Council of Ministers six months from 20 Sep 2021 to issue them, on the Bureau's proposal. On 2026-11-02 the official portal lists no Executive Regulations of this Decree-Law, in either language, so no period exists in any published UAE text; an operator's AI that detects a breach has no clock to run.",
+   "kind": "absence",
+   "category": "legislative gap",
+   "addressee": ["Council of Ministers", "UAE Data Office (proposer, Art 28)"],
+   "searched": [
+    {"clause": "pdpl-45-2021-en:9(1)", "says": "The Controller notifies the Bureau of a breach; the period is left to the Executive Regulations. The Arabic quote ends with p. 9; on p. 10 the sentence goes on to the Executive Regulations, as 9(2) does.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law", "quote_ar": "يلتزم المتحكم بمجرد علمه بوجود أي اختراق أو انتهاك للبيانات الشخصية لصاحب البيانات الذي من شأنه المساس بخصوصية وسرية وأمن بياناته، بإبلاغ المكتب عن هذا الاختراق أو الانتهاك ونتائج التحقيق خلال المدة ووفقًا للإجراءات والشروط", "file_ar": "kb/sources/pdpl-45-2021-ar.pdf", "page_ar": 9},
+    {"clause": "pdpl-45-2021-en:9(2)", "says": "The notice to the data subject: the period is left to the Executive Regulations too.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law", "quote_ar": "خلال المدة ووفقًا للإجراءات والشروط التي تحددها اللائحة التنفيذية لهذا المرسوم بقانون", "file_ar": "kb/sources/pdpl-45-2021-ar.pdf", "page_ar": 10},
+    {"clause": "pdpl-45-2021-en:28", "file": "kb/sources/pdpl-45-2021-en.pdf", "page": 28, "says": "The Council of Ministers issues the Executive Regulations on the proposal of the Bureau's Director General, within six months of promulgation: issued 20 Sep 2021, so due by 20 Mar 2022 (computed).", "quote": "The Council of Ministers, based upon a suggestion from the General Director of the Bureau, shall issue the Executive Regulations of this Decree by Law within six (6) months as of the date on which the Decree by Law is promulgated."},
+    {"clause": "pdpl-45-2021-ar:28", "file": "kb/sources/pdpl-45-2021-ar.pdf", "page": 20, "says": "The Arabic of Art 28, as the PDF text layer gives it.", "quote": "يصدر مجلس الوزراء –بناءً على اقتراح مدير عام المكتب - اللائحة التنفيذية لهذا المرسوم بقانون"}
+   ],
+   "uae_position": "Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. The register's 2026-10-30 related-legislations check stands (30/2024, 26/2025 only). Not on the official portal on 2026-11-02.",
+   "global_examples": [
+    {"document": "GDPR, Regulation (EU) 2016/679", "clause": "Art 33(1)", "file": "kb/sources/global/gdpr-art12-28-33.txt", "status": "VERIFIED", "quote": "without undue delay and, where feasible, not later than 72 hours after having become aware of it"}
+   ],
+   "global_none": "",
+   "note": "Promoted from candidate 2026-11-02 (hq read, Perplexity Q1).",
+   "recommendation": "Council of Ministers to issue the PDPL Executive Regulations with the 9(1) and 9(2) periods; until then the Data Office to publish an interim period.",
+   "exposed_by": "mapping (P)",
+   "competitor": "not read",
+   "competitor_basis": "order 2026-11-02 Task 41 gives no competitor reading"
+  },
+  {
+   "id": "gap-14",
+   "line": "a processor may bring in another without the controller's say",
+   "gap": "The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. 8(11) leaves processor standards to the Executive Regulations, which the portal does not list on 2026-11-02. No Data Office, Cabinet or Executive-Regulation instrument on sub-processors was found (portal, both languages; Perplexity 2026-11-02 found none).",
+   "kind": "absence",
+   "category": "legislative gap",
+   "addressee": ["Council of Ministers (Executive Regulations, 8(11), 28)", "UAE Data Office (proposer)"],
+   "searched": [
+    {"clause": "pdpl-45-2021-en:7(5)", "says": "The Controller appoints only a Processor with sufficient guarantees.", "quote": "Appoint the Processor which has sufficient guarantees", "quote_ar": "تعيين المعالج الذي يتوفر لديه ضمانات كافية لتطبيق التدابير التقنية والتنظيمية على نحو يضمن استيفاء المعالجة لمتطلبات وقواعد وضوابط المعالجة المنصوص عليها", "file_ar": "kb/sources/pdpl-45-2021-ar.pdf", "page_ar": 8},
+    {"clause": "pdpl-45-2021-en:8(1)", "says": "The Processor acts on the Controller's instructions and contract.", "quote": "Carry out the processing in accordance with the instructions of the Controller", "quote_ar": "إجراء المعالجة وتنفيذها وفقًا لتعليمات المتحكم، والعقود والاتفاقات المبرمة بينهما", "file_ar": "kb/sources/pdpl-45-2021-ar.pdf", "page_ar": 8},
+    {"clause": "pdpl-45-2021-en:8(10)", "says": "Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.", "quote": "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement", "quote_ar": "في حال اشترك أكثر من معالج في عملية المعالجة، يجب أن تنفذ المعالجة وفقًا لعقد أو اتفاق مكتوب يحدد بموجبه بشكل واضح التزاماتهم ومسؤولياتهم وأدوارهم حول عملية المعالجة", "file_ar": "kb/sources/pdpl-45-2021-ar.pdf", "page_ar": 9},
+    {"clause": "pdpl-45-2021-en:8(11)", "says": "The procedures, controls, conditions and technical standards for the Processor's obligations are left to the Executive Regulations.", "quote": "The Executive Regulations of this Decree by Law shall specify the procedures, controls, conditions, and technical standards related to such obligations.", "quote_ar": "تحدد اللائحة التنفيذية لهذا المرسوم بقانون الإجراءات والضوابط والشروط والمعايير الفنية والقياسية المتعلقة بهذه الالتزامات", "file_ar": "kb/sources/pdpl-45-2021-ar.pdf", "page_ar": 9}
+   ],
+   "uae_position": "Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. No Data Office or Cabinet instrument on sub-processors either. Gap 5 is the transfer abroad; this row is who may bring in a further processor.",
+   "global_examples": [
+    {"document": "GDPR, Regulation (EU) 2016/679", "clause": "Art 28(2)", "file": "kb/sources/global/gdpr-art12-28-33.txt", "status": "VERIFIED", "quote": "The processor shall not engage another processor without prior specific or general written authorisation of the controller."}
+   ],
+   "global_none": "",
+   "recommendation": "Executive Regulations to require the Controller's prior written authorisation, specific or general, before a Processor engages another, with a right to object to changes.",
+   "exposed_by": "S3-4",
+   "competitor": "not read",
+   "competitor_basis": "order 2026-11-02 Task 41 gives no competitor reading"
+  },
+  {
+   "id": "gap-15",
+   "line": "the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished",
+   "gap": "The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). On 2026-11-02 the portal's Telecommunication, Technology and Space sector lists 12 instruments (14 in Arabic), none a schedule of telecom licensee fines; the Regulation Table of Decree-Law 3/2003 shows no records. The Cabinet has issued such a schedule for the space sector (Cabinet Resolution 206/2025, 'Regulations of Violations and Administrative Penalties... Space Activities'), not for telecommunications.",
+   "kind": "absence",
+   "category": "legislative gap",
+   "addressee": ["Cabinet"],
+   "searched": [
+    {"clause": "telecom-law-3-2003-en:79 bis", "says": "Paragraph (1): a breach of the Law or anything issued under it is fined AED 50,000 to 200,000.", "quote": "shall be punished with a fine that is not less than AED (50,000) Fifty Thousand Dirhams and does not exceed AED (200,000) Two Hundred Thousand Dirhams", "quote_ar": "يعاقب بالغرامة التي لا تقل عن (50.000) خمسون ألف درهم ولا تجاوز (200.000) مائتي ألف درهم كل من خالف أي حكم آخر من أحكام القانون أو لائحته التنفيذية أو الأنظمة أو القرارات أو التعليمات أو القواعد الصادرة بموجبهما.", "file_ar": "docs/sources/telecom-law-and-licences-2026-10-17.md"},
+    {"clause": "telecom-law-3-2003-en:79 bis", "says": "Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.", "quote": "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees", "quote_ar": "لمجلس الإدارة توقيع غرامات إدارية بحق المرخص لهم في حال مخالفتهم أحكام القانون أو لائحته التنفيذية أو القرارات أو الأنظمة أو السياسات أو التعليمات الصادرة عن مجلس الإدارة أو الهيئة.", "file_ar": "docs/sources/telecom-law-and-licences-2026-10-17.md"},
+    {"clause": "licence-2-2026:16.3.2", "says": "A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.", "quote": "The penalty shall be not less than Dirhams 50,000 and not more than Dirhams 200,000"},
+    {"clause": "licence-2-2026:16.3.3", "says": "The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material."},
+    {"clause": "cabres-52-2024-ar:2(2)", "file": "kb/sources/cabres-52-2024-ar.pdf", "page": 2, "says": "TDRA may double a fine when the same violation is repeated within a year; an itemised schedule TDRA administers under the neighbouring trust-services law, binding trust service providers, not telecom licensees. Portal English: 'The Authority may double the value of the administrative fine specified in the Table attached to this resolution in the event of the repetition of the same Administrative Violation before one year has passed from the date of its first time.' Arabic quoted as the PDF text layer gives it (two spacing faults: مضاعفةقيمة, مض ي).", "quote": "يجوز للهيئة مضاعفةقيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات المخالفة الإدارية قبل مض ي سنة من تاريخ ارتكابها لأول مرة"},
+    {"clause": "cabres-200-2025-en:3(3)", "file": "kb/sources/cabres-200-2025-en.pdf", "page": 2, "says": "The Ministry of Economy may skip the gradation for a serious violation and impose the more severe penalty.", "quote": "the Ministry may, in cases of serious violations, impose the more severe administrative penalty without adhering to the gradation"},
+    {"clause": "executive-order-3-2004:42", "file": "kb/sources/executive-order-3-2004.pdf", "page": 16, "says": "A fine power for apparatus authorisations, no amount; not the licensee schedule.", "quote": "The Authority may perform any of the following in case any of the Authorised or concerned persons in the Telecommunication Apparatus breaches the terms and restrictions that the Authorisations were granted upon,: (a) impose a financial fine against the violator ; (b) abolish the issued Authorization."}
+   ],
+   "uae_position": "Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Whether the Board may fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq 2026-10-22).",
+   "global_examples": [
+    {"document": "Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017", "clause": "1.11", "file": "kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt", "status": "VERIFIED", "quote": "Ofcom will consider all the circumstances of the case in the round in order to determine the appropriate and proportionate amount of any penalty. The central objective of imposing a penalty is deterrence."},
+    {"document": "Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017", "clause": "1.2", "file": "kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt", "status": "VERIFIED", "quote": "Ofcom must have regard to the statement for the time being in force when setting the amount of any penalty"}
+   ],
+   "global_none": "",
+   "note": "A published method, not a tariff. The UK regulates providers through General Conditions, not individual licences.",
+   "recommendation": "Cabinet to issue the schedule of licensee violations and fines that Telecom Law 79 bis (2) promises, or, until then, publish the method the Board will apply under 79 bis (2), as Ofcom publishes under s. 392.",
+   "exposed_by": "mapping (P)",
+   "competitor": "not read",
+   "competitor_basis": "order 2026-10-22 Task 15 gives no competitor reading"
+  },
+  {
    "id": "candidate-4-4-fixed-term-bundle",
    "line": "whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4",
    "gap": "Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.",
@@ -481,50 +556,16 @@
    "competitor": "no",
    "competitor_basis": "README and its gap table list no such gap"
   }
-,
-  {
-   "id": "candidate-79bis-2-fine-schedule",
-   "line": "the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished",
-   "gap": "The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2).",
-   "kind": "absence",
-   "category": "legislative gap",
-   "addressee": ["Cabinet"],
-   "searched": [
-    {"clause": "telecom-law-3-2003-en:79 bis", "says": "Paragraph (1): a breach of the Law or anything issued under it is fined AED 50,000 to 200,000.", "quote": "shall be punished with a fine that is not less than AED (50,000) Fifty Thousand Dirhams and does not exceed AED (200,000) Two Hundred Thousand Dirhams", "quote_ar": "يعاقب بالغرامة التي لا تقل عن (50.000) خمسون ألف درهم ولا تجاوز (200.000) مائتي ألف درهم كل من خالف أي حكم آخر من أحكام القانون أو لائحته التنفيذية أو الأنظمة أو القرارات أو التعليمات أو القواعد الصادرة بموجبهما.", "file_ar": "docs/sources/telecom-law-and-licences-2026-10-17.md"},
-    {"clause": "telecom-law-3-2003-en:79 bis", "says": "Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.", "quote": "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees", "quote_ar": "لمجلس الإدارة توقيع غرامات إدارية بحق المرخص لهم في حال مخالفتهم أحكام القانون أو لائحته التنفيذية أو القرارات أو الأنظمة أو السياسات أو التعليمات الصادرة عن مجلس الإدارة أو الهيئة.", "file_ar": "docs/sources/telecom-law-and-licences-2026-10-17.md"},
-    {"clause": "licence-2-2026:16.3.2", "says": "A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.", "quote": "The penalty shall be not less than Dirhams 50,000 and not more than Dirhams 200,000"},
-    {"clause": "licence-2-2026:16.3.3", "says": "The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material."},
-    {"clause": "cabres-52-2024-ar:2(2)", "file": "kb/sources/cabres-52-2024-ar.pdf", "page": 2, "says": "TDRA may double a fine when the same violation is repeated within a year; an itemised schedule TDRA administers under the neighbouring trust-services law, binding trust service providers, not telecom licensees. Portal English: 'The Authority may double the value of the administrative fine specified in the Table attached to this resolution in the event of the repetition of the same Administrative Violation before one year has passed from the date of its first time.' Arabic quoted as the PDF text layer gives it (two spacing faults: مضاعفةقيمة, مض ي).", "quote": "يجوز للهيئة مضاعفةقيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات المخالفة الإدارية قبل مض ي سنة من تاريخ ارتكابها لأول مرة"},
-    {"clause": "cabres-200-2025-en:3(3)", "file": "kb/sources/cabres-200-2025-en.pdf", "page": 2, "says": "The Ministry of Economy may skip the gradation for a serious violation and impose the more severe penalty.", "quote": "the Ministry may, in cases of serious violations, impose the more severe administrative penalty without adhering to the gradation"},
-    {"clause": "executive-order-3-2004:42", "file": "kb/sources/executive-order-3-2004.pdf", "page": 16, "says": "A fine power for apparatus authorisations, no amount; not the licensee schedule.", "quote": "The Authority may perform any of the following in case any of the Authorised or concerned persons in the Telecommunication Apparatus breaches the terms and restrictions that the Authorisations were granted upon,: (a) impose a financial fine against the violator ; (b) abolish the issued Authorization."}
-   ],
-   "uae_position": "Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Whether the Board may fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq 2026-10-22).",
-   "global_examples": [],
-   "global_none": "none (order Task 15: no global example)",
-   "recommendation": "Cabinet to issue the schedule of licensee violations and fines that Telecom Law 79 bis (2) promises.",
-   "exposed_by": "mapping (P)",
-   "competitor": "not read",
-   "competitor_basis": "order 2026-10-22 Task 15 gives no competitor reading"
-  }
  ],
  "candidates": [
-  {"name": "Arabic records", "line": "Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only chat transcript may not satisfy it (inferred). Consumer Law 4(5), named in the hq note, is about data privacy, not language.",
+  {"id": "candidate-arabic-records", "name": "Arabic records", "line": "Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only chat transcript may not satisfy it (inferred). Consumer Law 4(5), named in the hq note, is about data privacy, not language.",
    "searched": [
     {"clause": "consumer-law-15-2020-en:8(4)", "says": "The invoice in Arabic.", "quote": "The Invoice shall be in Arabic"},
     {"clause": "cabinet-66-2023-en:43(5)", "says": "Annex 2: AED 100,000 for an invoice not in Arabic.", "quote": "The provider fails to issue the invoice in Arabic."},
     {"clause": "consumer-law-15-2020-en:4(5)", "says": "Privacy and security of the consumer's data; says nothing on language.", "quote": "Protecting the privacy and security of his data"}
-   ]},
-  {"name": "Breach notification without a period", "line": "The Controller notifies the Bureau (9(1)) and the data subject (9(2)) of a breach within a period the never-issued Executive Regulations were to set. Example: GDPR Art 33(1), 'not later than 72 hours after having become aware of it'.",
-   "searched": [
-    {"clause": "pdpl-45-2021-en:9(1)", "says": "The period is left to the Executive Regulations.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"},
-    {"clause": "pdpl-45-2021-en:9(2)", "says": "The notice to the data subject: the period is left to the Executive Regulations too.", "quote": "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"}
-   ]},
-  {"name": "Sub-processor authorisation", "line": "The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. Example: GDPR Art 28(2), 'The processor shall not engage another processor without prior specific or general written authorisation of the controller.'",
-   "searched": [
-    {"clause": "pdpl-45-2021-en:7(5)", "says": "The Controller appoints only a Processor with sufficient guarantees.", "quote": "Appoint the Processor which has sufficient guarantees"},
-    {"clause": "pdpl-45-2021-en:8(1)", "says": "The Processor acts on the Controller's instructions and contract.", "quote": "Carry out the processing in accordance with the instructions of the Controller"},
-    {"clause": "pdpl-45-2021-en:8(10)", "says": "Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.", "quote": "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"}
-   ]},
+   ]}
+ ],
+ "nothing_found": [
   {"name": "The Executive Order, read in full", "line": "The Executive Order, read in full (75 articles, English; the Arabic prevails): Art 30 directives, Art 32 complaint reporting, Art 42 apparatus fines, Art 47 quality-of-service reporting. Nothing on an automated channel, consent, a hand-over or a licensee fine amount.",
    "searched": [
     {"clause": "licence-2-2026:16.2", "says": "Point (b): the Executive Order is second in precedence.", "quote": "its Executive Order to the Federal Law by Decree No. 3 of 2003"}

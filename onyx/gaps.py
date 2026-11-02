@@ -17,7 +17,15 @@ START, END = "<!-- gap-register:start -->", "<!-- gap-register:end -->"
 KINDS = ("method", "scope", "absence", "currency")  # addendum item 19 (Sabeeh)
 CATEGORIES = ("unclear responsibilities", "standards gap", "technology gap", "legislative gap",
               "coordination problem", "conflict between objectives")  # addendum item 10, the UAE page's list
-ADDRESSEES = ("TDRA", "UAE Data Office", "the consumer-protection authority", "Cabinet", "ITU")
+ADDRESSEES = ("TDRA", "UAE Data Office", "the consumer-protection authority", "Cabinet", "ITU",
+              "Council of Ministers")  # Task 41: PDPL Art 28's own name for the body that issues its Regulations
+
+
+def addressee_ok(name: str) -> bool:
+    """An addressee is one of ADDRESSEES, optionally with a parenthesised role (Task 41: 'UAE Data Office (proposer)')."""
+    return name.split(" (", 1)[0] in ADDRESSEES
+
+
 COMPETITOR = ("yes", "no", "not read")
 # short names for the table, by the file a global example quotes
 SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172",
@@ -32,7 +40,8 @@ SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": 
          "qatar-decree-law-16-": "Qatar 16/2010",  # Task 35
          "maine-": "Maine", "california-bpc-": "California BPC", "california-hsc-": "California HSC",
          "india-trai-": "India TRAI TCCRR 2012",  # Task 35b
-         "itu-t-y3173":"SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
+         "itu-t-y3173":"SAE J3016 (Y.3173 Table I.1)",  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
+         "uk-ofcom-": "Ofcom Penalty Guidelines 2017"}  # Task 41, gap-15
 # the Gulf telecom consumer regulations read (order 2026-10-30 Task 35, Addendum A): the register's preamble and the README
 GULF_LINE = ("The three GCC telecom consumer regulations read (Saudi 2024, Qatar 2024, Kuwait 2022) name no AI channel, "
              "hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, "
@@ -130,7 +139,8 @@ def _searched(s: dict[str, Any]) -> list[str]:
         out.append(f"  - AR (the whole chunk): \"{chunk['text_ar']}\"")
     # the chunk has no Arabic: the phrase from the Arabic source text (order 2026-10-22 Task 15, gap-9 11(1))
     if s.get("quote_ar"):
-        out.append(f"  - AR (`{s['file_ar']}`): \"{s['quote_ar']}\"")
+        page = f"p. {s['page_ar']}, " if s.get("page_ar") else ""  # the Arabic PDF's page (Task 41, PDPL)
+        out.append(f"  - AR ({page}`{s['file_ar']}`): \"{s['quote_ar']}\"")
     return out
 
 
@@ -185,6 +195,13 @@ def render() -> str:
         for s in cand["searched"]:
             lines += _searched(s)
         lines.append("")
+    # a text read in full where nothing was found: not a candidate (hq ruling 2026-11-02, Task 41)
+    lines += ["## Searched, nothing found", ""]
+    for item in register["nothing_found"]:
+        lines += [f"### {item['name']}", "", item["line"], ""]
+        for s in item["searched"]:
+            lines += _searched(s)
+        lines.append("")
     lines += ["## Sources", "", f"{register['source']}.", ""]
     return "\n".join(lines)
 
@@ -199,11 +216,20 @@ def write(out: str | Path = GAPS_MD, readme: str | Path | None = README) -> None
     Path(readme).write_text(f"{head}{START}\n{table()}{END}{tail}", encoding="utf-8", newline="\n")
 
 
+def ids() -> tuple[list[str], list[str]]:
+    """The register's gap ids and candidate ids: the candidate rows the adviser lists, then the prose candidates."""
+    register = data.load_gaps()
+    rows = [r["id"] for r in register["gaps"]]
+    return ([i for i in rows if i.startswith("gap-")],
+            [i for i in rows if i.startswith("candidate-")] + [c["id"] for c in register["candidates"]])
+
+
 def _cli(args) -> int:
     write()
-    register = data.load_gaps()
-    print(f"{len(register['gaps'])} rows and {len(register['candidates'])} candidates: {GAPS_MD.relative_to(kb.REPO)} "
-          f"and the README register table")
+    gap_ids, candidate_ids = ids()
+    print(f"{len(gap_ids)} gaps: {', '.join(gap_ids)}")
+    print(f"{len(candidate_ids)} candidates: {', '.join(candidate_ids)}")
+    print(f"written: {GAPS_MD.relative_to(kb.REPO).as_posix()} and the README register table")
     return 0
 
 

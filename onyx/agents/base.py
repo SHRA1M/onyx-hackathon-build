@@ -28,6 +28,8 @@ v5, register grown (Task 15, unscored): the adviser's register adds gap-9 and ca
 v5, register grown again (Task 20, unscored): the adviser's register adds gap-10 at line 10, so the candidates move to lines 11 and 12; label stays v5; recorded runs replay as recorded.
 
 v5, register grown a third time (Task 23, unscored): the adviser's register adds gap-11 at line 11, so the candidates move to lines 12 and 13; label stays v5; recorded runs replay as recorded.
+
+v5, register grown (Task 41, unscored): the adviser's register lists gap-13 to gap-15 at lines 13 to 15 (gap-15 was candidate-79bis-2-fine-schedule, which no key or run names) and the 4.4 candidate at line 16; label stays v5; recorded runs replay as recorded.
 """
 
 from __future__ import annotations

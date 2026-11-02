@@ -73,7 +73,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 6 | `3gpp-ts-28-535-v19.pdf` | `standard` | ETSI TS 128 535 V19.0.0 (2025-10), 3GPP TS 28.535, Management services for communication service assurance; Requirements | VERIFIED | `f43be1bda69e…` | 24 | [link](https://www.etsi.org/deliver/etsi_ts/128500_128599/128535/19.00.00_60/ts_128535v190000p.pdf) |
 | 7 | `etsi-gs-zsm-009-1-v1-1-1.pdf` | `standard` | ETSI GS ZSM 009-1 V1.1.1 (2021-06), Zero-touch network and Service Management (ZSM); Closed-Loop Automation; Part 1: Enablers | VERIFIED | `492bac221401…` | 40 | [link](https://www.etsi.org/deliver/etsi_gs/ZSM/001_099/00901/01.01.01_60/gs_ZSM00901v010101p.pdf) |
 
-## Global_Examples/ (31 files)
+## Global_Examples/ (32 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -108,6 +108,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 29 | `texas-bcc-552.html` | `law` | Texas Business and Commerce Code, Chapter 552 (Acts 2025, 89th Leg., R.S., ch. 1174, HB 149, §4) | VERIFIED | `dbfba8a96dc3…` |  | [link](https://statutes.capitol.texas.gov/GetStatute.aspx?Code=BC&Value=552) |
 | 30 | `california-bpc-17940-17943.txt` | `extract` | California Business and Professions Code §17940 to 17943, Bots (Stats. 2018 c. 892, SB 1001) (extract) | VERIFIED | `cfa4c3ccba6c…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17941) |
 | 31 | `california-hsc-1339-75.txt` | `extract` | California Health and Safety Code §1339.75, generative AI in patient communications (Stats. 2024 c. 848, AB 3030) (extract) | VERIFIED | `86d9eda28fb0…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75) |
+| 32 | `uk-ofcom-penalty-guidelines-2017.txt` | `pdf` | Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017 | VERIFIED | `689f935edd6c…` | 7 | [link](https://www.ofcom.org.uk/siteassets/resources/documents/about-ofcom/policies/penalty-guidelines/penalty-guidelines-september-2017.pdf?v=322695) |
 
 ## Unverified/ (3 files)
 

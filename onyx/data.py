@@ -39,7 +39,8 @@ def cited_chunks() -> set[tuple[str, str]]:
         for verb in spec["verbs"]:
             cited |= {(ref["document_id"], ref["chunk"]) for ref in verb["clause_ids"]}
     register = load_gaps()
-    for row in register["gaps"] + register.get("candidates", []):
+    # "nothing_found": texts read in full where nothing was found (Task 41, the Executive Order line)
+    for row in register["gaps"] + register.get("candidates", []) + register.get("nothing_found", []):
         # an entry naming its stored file (Task 32) or a URL (Task 35b) is quoted from it, not a chunk
         cited |= {tuple(s["clause"].split(":", 1)) for s in row.get("searched", []) if not (s.get("file") or s.get("url"))}
     for path in sorted(SCENARIOS_DIR.glob("S*.json")):  # each scenario's grounding clauses (order Task 16 item 2)

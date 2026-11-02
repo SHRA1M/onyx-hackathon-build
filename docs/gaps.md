@@ -22,8 +22,10 @@ The 2025 to 2026 US statutes on chatbots regulate companions and carve out custo
 | gap-10 | Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language. | method | standards gap | TDRA | Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27; Wales WLS Standard 15; Wales WLS Standard 22; Wales WLS Standard 60 | C5 per-language scoring (M, D nodes); mapping (SRC) |
 | gap-11 | A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back. | method | standards gap | TDRA | E-Commerce Dir. 2000/31 Art 11(2); CRD 2011/83 Art 8(2); US TSR 16 CFR 310.3(a)(3)(ii); Qatar 16/2010 Art 56(1); Qatar 16/2010 Art 19 | mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run. |
 | gap-12 | Standards gap, addressed to ITU. Mapped first: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (7.2, Table 7-1, p. 6: "a) Human; b) Human and System; c) System."), and its hand-over is Readiness 2.0 D9's inference-to-action latency in the other direction (p. 27: "inference-to-action latency: average time from first inference to human action"; there the AI alerts and the human acts). Readiness 2.0 also measures the human shaping the inference (D8, p. 25) and states that accountability of final decisions remains with humans (D10, p. 29). Mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes: the stop point, the hand-over rate, the hand-over latency. Y.3173 Table 7-2 NOTE 1 (p. 7) gives a human's order the highest authority ("decisions and execution instructions provided by a human being have the highest authority"); it never requires the system to ask. Y.3173 cites SAE J3016 and drops its fallback column, the request to intervene (Appendix I.1, Table I.1, p. 12 to 13). | absence | standards gap | ITU | SAE J3016 (Y.3173 Table I.1) level 3; SAE J3016 (Y.3173 Table I.1) level 4; EU Roaming Reg 2022/612 Art 14(4); EU Roaming Reg 2022/612 Art 14(4), last subparagraph; EU AI Act Art 14(4)(e) | S1 |
+| gap-13 | PDPL 9(1) and 9(2) make the Controller notify the Data Office and the data subject of a breach 'within the period and in accordance with the measures and requirements set by the Executive Regulations'. Art 28 gave the Council of Ministers six months from 20 Sep 2021 to issue them, on the Bureau's proposal. On 2026-11-02 the official portal lists no Executive Regulations of this Decree-Law, in either language, so no period exists in any published UAE text; an operator's AI that detects a breach has no clock to run. | absence | legislative gap | Council of Ministers, UAE Data Office (proposer, Art 28) | GDPR Art 33(1) | mapping (P) |
+| gap-14 | The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. 8(11) leaves processor standards to the Executive Regulations, which the portal does not list on 2026-11-02. No Data Office, Cabinet or Executive-Regulation instrument on sub-processors was found (portal, both languages; Perplexity 2026-11-02 found none). | absence | legislative gap | Council of Ministers (Executive Regulations, 8(11), 28), UAE Data Office (proposer) | GDPR Art 28(2) | S3-4 |
+| gap-15 | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). On 2026-11-02 the portal's Telecommunication, Technology and Space sector lists 12 instruments (14 in Arabic), none a schedule of telecom licensee fines; the Regulation Table of Decree-Law 3/2003 shows no records. The Cabinet has issued such a schedule for the space sector (Cabinet Resolution 206/2025, 'Regulations of Violations and Administrative Penalties... Space Activities'), not for telecommunications. | absence | legislative gap | Cabinet | Ofcom Penalty Guidelines 2017 1.11; Ofcom Penalty Guidelines 2017 1.2 | mapping (P) |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | EECC 2018/1972 Art 105(3); TKG 2021 § 56(3) | S1-6 |
-| candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 
 ## gap-1: complaint hand-over
 
@@ -666,32 +668,71 @@ Found after the scored runs; S1's expected gaps and the keys are unchanged, so C
 
 **Recommendation.** ITU-T to add to Y.3173 a fallback dimension in the SAE sense (does the system request intervention, under what condition, and what happens if no human answers), and to Readiness D9 two metrics beside inference-to-action latency: hand-over rate and hand-over latency (agent stop to human pick-up) for agents that act toward a person, plus the existence of defined stop points. What-if question for the policymaker: if TDRA required the hand-over moment to be logged (gap-1's rule), both metrics become measurable from the log.
 
-## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
+## gap-13: breach notice has no period
 
-Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.
+PDPL 9(1) and 9(2) make the Controller notify the Data Office and the data subject of a breach 'within the period and in accordance with the measures and requirements set by the Executive Regulations'. Art 28 gave the Council of Ministers six months from 20 Sep 2021 to issue them, on the Bureau's proposal. On 2026-11-02 the official portal lists no Executive Regulations of this Decree-Law, in either language, so no period exists in any published UAE text; an operator's AI that detects a breach has no clock to run.
 
-Kind: scope. Category: legislative gap. Addressee: TDRA. Exposed by: S1-6.
+Kind: absence. Category: legislative gap. Addressee: Council of Ministers, UAE Data Office (proposer, Art 28). Exposed by: mapping (P).
+
+Promoted from candidate 2026-11-02 (hq read, Perplexity Q1).
 
 **Clauses searched**
 
-- `tdra-cpr-v2-en:4.4` (p. 14): The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.
-  - EN: "where an existing Service, that is to say a service that a Subscriber has expressly ordered, is extended or renewed on terms which are:"
-  - AR (the whole chunk): "لا تنطبق أحكام المادة الفرعية4.3 على الحالات التي يتم فيها تمديد أو تجديد خدمة حالية، أي الخدمة التي طلبها المشترك خصيصاً، وتم تمديدها أو تجدديها حسب الشروط:"
+- `pdpl-45-2021-en:9(1)` (p. 13): The Controller notifies the Bureau of a breach; the period is left to the Executive Regulations. The Arabic quote ends with p. 9; on p. 10 the sentence goes on to the Executive Regulations, as 9(2) does.
+  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
+  - AR (p. 9, `kb/sources/pdpl-45-2021-ar.pdf`): "يلتزم المتحكم بمجرد علمه بوجود أي اختراق أو انتهاك للبيانات الشخصية لصاحب البيانات الذي من شأنه المساس بخصوصية وسرية وأمن بياناته، بإبلاغ المكتب عن هذا الاختراق أو الانتهاك ونتائج التحقيق خلال المدة ووفقًا للإجراءات والشروط"
+- `pdpl-45-2021-en:9(2)` (p. 14): The notice to the data subject: the period is left to the Executive Regulations too.
+  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
+  - AR (p. 10, `kb/sources/pdpl-45-2021-ar.pdf`): "خلال المدة ووفقًا للإجراءات والشروط التي تحددها اللائحة التنفيذية لهذا المرسوم بقانون"
+- `pdpl-45-2021-en:28` (p. 28, `kb/sources/pdpl-45-2021-en.pdf`): The Council of Ministers issues the Executive Regulations on the proposal of the Bureau's Director General, within six months of promulgation: issued 20 Sep 2021, so due by 20 Mar 2022 (computed).
+  - EN: "The Council of Ministers, based upon a suggestion from the General Director of the Bureau, shall issue the Executive Regulations of this Decree by Law within six (6) months as of the date on which the Decree by Law is promulgated."
+- `pdpl-45-2021-ar:28` (p. 20, `kb/sources/pdpl-45-2021-ar.pdf`): The Arabic of Art 28, as the PDF text layer gives it.
+  - AR: "يصدر مجلس الوزراء –بناءً على اقتراح مدير عام المكتب - اللائحة التنفيذية لهذا المرسوم بقانون"
 
-**UAE position.** Candidate from the keys session (S1 step 6): the text does not say whether a lapsed fixed-term bundle is still an existing Service.
+**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. The register's 2026-10-30 related-legislations check stands (30/2024, 26/2025 only). Not on the official portal on 2026-11-02.
 
 **Global example**
 
-- Directive (EU) 2018/1972, European Electronic Communications Code (legislation.gov.uk copy of the adopted text), Art 105(3) (VERIFIED, `kb/sources/global/eu-eecc-2018-1972-art105.txt`): "Before the contract is automatically prolonged, providers shall inform end-users, in a prominent and timely manner and on a durable medium, of the end of the contractual commitment and of the means by which to terminate the contract."
-- Germany, Telekommunikationsgesetz (TKG) 2021, § 56(3) (VERIFIED, `kb/sources/global/de-tkg-2021-para-56.txt`): Our English, not an official translation: after the initial term, a tacitly renewed contract may be ended at any time on one month's notice; before the renewal the provider must tell the end-user, on a durable medium, of the renewal, how to prevent it, and the right to end the renewed contract. "kann der Endnutzer einen solchen Vertrag nach Ablauf der anfänglichen Vertragslaufzeit jederzeit unter Einhaltung einer Kündigungsfrist von einem Monat kündigen. Der Anbieter muss den Endnutzer rechtzeitig vor einer Verlängerung des Vertrages auf einem dauerhaften Datenträger hinweisen auf 1. die stillschweigende Verlängerung des Vertrages, 2. die Möglichkeit, die Verlängerung des Vertrages durch seine rechtzeitige Kündigung zu verhindern, und 3. das Recht, einen verlängerten Vertrag nach Satz 1 zu kündigen."
+- GDPR, Regulation (EU) 2016/679, Art 33(1) (VERIFIED, `kb/sources/global/gdpr-art12-28-33.txt`): "without undue delay and, where feasible, not later than 72 hours after having become aware of it"
 
-**Recommendation.** TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3, and, if 4.4, require the warning before and the one-month exit after.
+**Recommendation.** Council of Ministers to issue the PDPL Executive Regulations with the 9(1) and 9(2) periods; until then the Data Office to publish an interim period.
 
-## candidate-79bis-2-fine-schedule: the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished
+## gap-14: a processor may bring in another without the controller's say
 
-The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2).
+The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. 8(11) leaves processor standards to the Executive Regulations, which the portal does not list on 2026-11-02. No Data Office, Cabinet or Executive-Regulation instrument on sub-processors was found (portal, both languages; Perplexity 2026-11-02 found none).
+
+Kind: absence. Category: legislative gap. Addressee: Council of Ministers (Executive Regulations, 8(11), 28), UAE Data Office (proposer). Exposed by: S3-4.
+
+**Clauses searched**
+
+- `pdpl-45-2021-en:7(5)` (p. 11): The Controller appoints only a Processor with sufficient guarantees.
+  - EN: "Appoint the Processor which has sufficient guarantees"
+  - AR (p. 8, `kb/sources/pdpl-45-2021-ar.pdf`): "تعيين المعالج الذي يتوفر لديه ضمانات كافية لتطبيق التدابير التقنية والتنظيمية على نحو يضمن استيفاء المعالجة لمتطلبات وقواعد وضوابط المعالجة المنصوص عليها"
+- `pdpl-45-2021-en:8(1)` (p. 11): The Processor acts on the Controller's instructions and contract.
+  - EN: "Carry out the processing in accordance with the instructions of the Controller"
+  - AR (p. 8, `kb/sources/pdpl-45-2021-ar.pdf`): "إجراء المعالجة وتنفيذها وفقًا لتعليمات المتحكم، والعقود والاتفاقات المبرمة بينهما"
+- `pdpl-45-2021-en:8(10)` (p. 13): Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.
+  - EN: "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"
+  - AR (p. 9, `kb/sources/pdpl-45-2021-ar.pdf`): "في حال اشترك أكثر من معالج في عملية المعالجة، يجب أن تنفذ المعالجة وفقًا لعقد أو اتفاق مكتوب يحدد بموجبه بشكل واضح التزاماتهم ومسؤولياتهم وأدوارهم حول عملية المعالجة"
+- `pdpl-45-2021-en:8(11)` (p. 13): The procedures, controls, conditions and technical standards for the Processor's obligations are left to the Executive Regulations.
+  - EN: "The Executive Regulations of this Decree by Law shall specify the procedures, controls, conditions, and technical standards related to such obligations."
+  - AR (p. 9, `kb/sources/pdpl-45-2021-ar.pdf`): "تحدد اللائحة التنفيذية لهذا المرسوم بقانون الإجراءات والضوابط والشروط والمعايير الفنية والقياسية المتعلقة بهذه الالتزامات"
+
+**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. No Data Office or Cabinet instrument on sub-processors either. Gap 5 is the transfer abroad; this row is who may bring in a further processor.
+
+**Global example**
+
+- GDPR, Regulation (EU) 2016/679, Art 28(2) (VERIFIED, `kb/sources/global/gdpr-art12-28-33.txt`): "The processor shall not engage another processor without prior specific or general written authorisation of the controller."
+
+**Recommendation.** Executive Regulations to require the Controller's prior written authorisation, specific or general, before a Processor engages another, with a right to object to changes.
+
+## gap-15: the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished
+
+The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). On 2026-11-02 the portal's Telecommunication, Technology and Space sector lists 12 instruments (14 in Arabic), none a schedule of telecom licensee fines; the Regulation Table of Decree-Law 3/2003 shows no records. The Cabinet has issued such a schedule for the space sector (Cabinet Resolution 206/2025, 'Regulations of Violations and Administrative Penalties... Space Activities'), not for telecommunications.
 
 Kind: absence. Category: legislative gap. Addressee: Cabinet. Exposed by: mapping (P).
+
+A published method, not a tariff. The UK regulates providers through General Conditions, not individual licences.
 
 **Clauses searched**
 
@@ -714,9 +755,33 @@ Kind: absence. Category: legislative gap. Addressee: Cabinet. Exposed by: mappin
 
 **UAE position.** Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Whether the Board may fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq 2026-10-22).
 
-**Global example.** none (order Task 15: no global example)
+**Global example**
 
-**Recommendation.** Cabinet to issue the schedule of licensee violations and fines that Telecom Law 79 bis (2) promises.
+- Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017, 1.11 (VERIFIED, `kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt`): "Ofcom will consider all the circumstances of the case in the round in order to determine the appropriate and proportionate amount of any penalty. The central objective of imposing a penalty is deterrence."
+- Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017, 1.2 (VERIFIED, `kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt`): "Ofcom must have regard to the statement for the time being in force when setting the amount of any penalty"
+
+**Recommendation.** Cabinet to issue the schedule of licensee violations and fines that Telecom Law 79 bis (2) promises, or, until then, publish the method the Board will apply under 79 bis (2), as Ofcom publishes under s. 392.
+
+## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
+
+Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.
+
+Kind: scope. Category: legislative gap. Addressee: TDRA. Exposed by: S1-6.
+
+**Clauses searched**
+
+- `tdra-cpr-v2-en:4.4` (p. 14): The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.
+  - EN: "where an existing Service, that is to say a service that a Subscriber has expressly ordered, is extended or renewed on terms which are:"
+  - AR (the whole chunk): "لا تنطبق أحكام المادة الفرعية4.3 على الحالات التي يتم فيها تمديد أو تجديد خدمة حالية، أي الخدمة التي طلبها المشترك خصيصاً، وتم تمديدها أو تجدديها حسب الشروط:"
+
+**UAE position.** Candidate from the keys session (S1 step 6): the text does not say whether a lapsed fixed-term bundle is still an existing Service.
+
+**Global example**
+
+- Directive (EU) 2018/1972, European Electronic Communications Code (legislation.gov.uk copy of the adopted text), Art 105(3) (VERIFIED, `kb/sources/global/eu-eecc-2018-1972-art105.txt`): "Before the contract is automatically prolonged, providers shall inform end-users, in a prominent and timely manner and on a durable medium, of the end of the contractual commitment and of the means by which to terminate the contract."
+- Germany, Telekommunikationsgesetz (TKG) 2021, § 56(3) (VERIFIED, `kb/sources/global/de-tkg-2021-para-56.txt`): Our English, not an official translation: after the initial term, a tacitly renewed contract may be ended at any time on one month's notice; before the renewal the provider must tell the end-user, on a durable medium, of the renewal, how to prevent it, and the right to end the renewed contract. "kann der Endnutzer einen solchen Vertrag nach Ablauf der anfänglichen Vertragslaufzeit jederzeit unter Einhaltung einer Kündigungsfrist von einem Monat kündigen. Der Anbieter muss den Endnutzer rechtzeitig vor einer Verlängerung des Vertrages auf einem dauerhaften Datenträger hinweisen auf 1. die stillschweigende Verlängerung des Vertrages, 2. die Möglichkeit, die Verlängerung des Vertrages durch seine rechtzeitige Kündigung zu verhindern, und 3. das Recht, einen verlängerten Vertrag nach Satz 1 zu kündigen."
+
+**Recommendation.** TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3, and, if 4.4, require the warning before and the one-month exit after.
 
 ## Candidates
 
@@ -733,25 +798,7 @@ Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only 
 - `consumer-law-15-2020-en:4(5)` (p. 5): Privacy and security of the consumer's data; says nothing on language.
   - EN: "Protecting the privacy and security of his data"
 
-### Breach notification without a period
-
-The Controller notifies the Bureau (9(1)) and the data subject (9(2)) of a breach within a period the never-issued Executive Regulations were to set. Example: GDPR Art 33(1), 'not later than 72 hours after having become aware of it'.
-
-- `pdpl-45-2021-en:9(1)` (p. 13): The period is left to the Executive Regulations.
-  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
-- `pdpl-45-2021-en:9(2)` (p. 14): The notice to the data subject: the period is left to the Executive Regulations too.
-  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
-
-### Sub-processor authorisation
-
-The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. Example: GDPR Art 28(2), 'The processor shall not engage another processor without prior specific or general written authorisation of the controller.'
-
-- `pdpl-45-2021-en:7(5)` (p. 11): The Controller appoints only a Processor with sufficient guarantees.
-  - EN: "Appoint the Processor which has sufficient guarantees"
-- `pdpl-45-2021-en:8(1)` (p. 11): The Processor acts on the Controller's instructions and contract.
-  - EN: "Carry out the processing in accordance with the instructions of the Controller"
-- `pdpl-45-2021-en:8(10)` (p. 13): Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.
-  - EN: "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"
+## Searched, nothing found
 
 ### The Executive Order, read in full
 

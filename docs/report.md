@@ -21,7 +21,7 @@ Complaints".
 The sources are the Telecommunications Law 3/2003, the
 CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-seven other UAE texts;
 ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-thirty-four foreign texts used only as global examples. 83 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+thirty-five foreign texts used only as global examples. 84 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
@@ -40,7 +40,7 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 ## What is the role played by AI?
 
 The model reads the subscriber's words in Arabic or English, classifies the step, proposes one verb with clause ids and
-a verbatim quote, and drafts the reply in both languages. The knowledge base holds 88 documents chunked by clause,
+a verbatim quote, and drafts the reply in both languages. The knowledge base holds 89 documents chunked by clause,
 and retrieval is scoped to the agent's mandate, so the model sees only the policy text its role may use. The model
 proposes and plain code written from the binding UAE texts decides: every allow, hold, block or insufficient
 evidence names the clause it relied on, its page and its words, in English and Arabic; the model never decides.
@@ -49,7 +49,7 @@ evidence names the clause it relied on, its page and its words, in English and A
 
 It is critical that **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one
 block without override; **D-1** hand-over to a named human and the gates' deadlines; **PP-1** retrieval is scoped to
-the agent's mandate, a cited id outside the clauses given is invalid; **SRC-2** 88 documents with URL, SHA-256 and
+the agent's mandate, a cited id outside the clauses given is invalid; **SRC-2** 89 documents with URL, SHA-256 and
 status, chunked by clause.
 
 It is expected that **SRC-1** injects carry facts, never answers; **C-1** each agent sees only the steps released to
@@ -157,4 +157,4 @@ Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome routin
 
 The answer keys are ours, hashed before the first run, and the humans in the recorded runs are scripted. Next:
 cold runs of the seven unseen scenarios; routing (D-2); team approval of holds; a data-protection practitioner's review
-of the gates' law. Annex A to E: data and model, clause to code, the governed test, what ITU can reuse, where to look.
+of the gates' law. Annex A to F: data and model, clause to code, the governed test, what ITU can reuse, where to look, further gaps and candidates.
