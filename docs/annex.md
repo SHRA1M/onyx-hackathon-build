@@ -13,7 +13,9 @@ both languages. The model runs on the provider's servers outside the UAE. That i
 for a real licensee, subscriber identifiers may not go to a hosted provider abroad until the PDPL Art 22 list and
 Art 23(2) controls are issued, and S3 step 3 shows the gate blocking exactly that. The recorded runs carry only
 synthetic subscribers, so no personal data left the country. In production the same adapter points at an
-in-country deployment; nothing else in Mizan changes, because the gates, not the model, hold the law.
+in-country deployment; nothing else in Mizan changes, because the gates, not the model, hold the law. A recorded
+run of S2 on qwen2.5:14b-instruct through Ollama on a desktop GPU is in `runs/demo-local/`, shown in
+`docs/site/localmodel.html` and not scored.
 
 **Retrieval is English-centred, and the design allows for it.** `all-MiniLM-L6-v2` is an English sentence
 embedder; its Arabic retrieval is weak. Mizan does not rely on it for the clauses that matter: every agent's

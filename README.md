@@ -173,6 +173,8 @@ Y.3172 clause 9, security of the pipeline: no provider key is in the source tree
   governed (English / Arabic): action recall 0.96 / 1.00, citation validity 0.99 / 1.00, obligation proxy
   0.57 / 0.58; 2 of 112 key steps missed (pooled action recall 110 of 112 key steps, 95% interval 0.94 to 1.00).
 - Ungoverned baseline: C3, Sonnet on prompt v3, three runs per scenario per mode per language.
+- Local model: S2 recorded once on `qwen2.5:14b-instruct` through Ollama on a desktop GPU, same adapter, in
+  `runs/demo-local/` and shown in [`docs/site/localmodel.html`](docs/site/localmodel.html); a demo of the adapter, not scored.
 
 Clause-id resolution (2026-10-21, hq): a cited id missing its language ending (`-en`, `-ar`) resolves to the one
 clause given to that agent for that step that it names, never to the whole knowledge base and never when two match;
