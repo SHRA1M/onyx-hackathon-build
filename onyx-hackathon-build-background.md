@@ -37,8 +37,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
+- 2026-11-02 (hq audit, Task 37): the README names report sections by heading, never by number (test); the report's gap table runs 1 to 6, 8 to 12; the site follows the report's order and puts gap 7 last.
+- 2026-11-01 (hq rulings on Task 36 stops 2 and 3): `docs/report.md` is hq's text (ten listed changes); figures 11 cm; the paragraph after each table is a 4 pt spacer; the Results test pins "2 missed (both S1), 3 unexpected ids flagged". Word: 5 pages, 2,346 words.
 - 2026-11-01 (hq ruling on Task 36 stop 1): cut 1 (Description's duplicate model sentence; the Introduction's "holds 88 documents" opener, now "The sources are") and cut 2 (figures 12 cm); no gap cell is reworded by the build: hq writes cell text on Fable. Any stop's questions go in a file, Iyas gets the path.
-- 2026-11-01 (Task 36 order): report headings in ITU's template order; Requirements in three groups (critical, expected, added value); order cuts 1 to 4 applied (Limits two sentences, Recommendations tightened, 95% interval out of Results, Readiness cells shortened).
 - 2026-10-29 (Iyas, `_reference/how-we-build.md`): from Part B on, every report-back pastes the full `uv run pytest` output and repeats the Limits line: touches only the named files, never `runs/` or the keys; fails closed (USD 0, nothing recorded, nothing pushed outward, stop and ask); owner of any failure is Iyas.
 - 2026-10-27 (C5 as it stands, after Task 28): governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps (2 English misses, disclosed, no v6); the README and selftest headline is C5; C3 is the ungoverned baseline. Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
 
@@ -70,15 +71,14 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Open
 
 - Open for hq (Tasks 35, 35b; detail in the archive, 2026-11-01): in-force dates of Maine, India TCCRR and Korea Art 31; the Saudi Arabic eye-check; Qatar CCPR §7 to §9 unread; the datasheet language table skips the six Gulf rows.
-- Task 36 waits on hq (stop 2, `docs/report-back/2026-11-01-task-36-stop-2.md`): 6 pages, 12 lines over (gap 10's last line, Recommendations, Limits). Still to do after 5 pages: README demo list and `why` line, `why` on `verify.html` (`python -m onyx site`), hq copy `report-draft-2026-10-23.md`, CHANGELOG line for the report, selftest check, PR (no merge or tag until Iyas says), final report-back `docs/report-back/2026-11-01-task-36-template-items.md` with the `why` and `whatif` outputs pasted.
+- PR #13 (`task-36`) carries Tasks 36, 37 and 38; open, CI green at `bc36ef8`; no merge or tag until Iyas says.
+- Task 38 (annex, `D:\Projects\hq\uni\ai-for-good-hackathon\task-38-annex-order-2026-11-02.md`) stopped before any build: `docs/report-back/2026-11-02-task-38-stop-1.md` (braces A and B not in the repo, sentences C and D unbacked, questions 1 to 6). hq's annex text file changed on disk after the stop: re-read it before filling braces.
 - 2026-11-01 (hq): the filed Task 36 order may keep the template's example team name; the report, README and site never carry it (a test in `tests/test_report.py` checks).
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
 - The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq updated its report copy after Task 35b (2026-10-30).
-- hq (Task 29 D report-back): the report's 371,476 (e& source read) and the design counts have no line in `eval/results.md` or the datasheet.
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
 - ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
-- hq strips the two entry names from the filed Task 16 order before 2026-11-09 (clean-history public repo).
 
 ## Next action
 
-Resume Task 36 on branch `task-36` (`git checkout task-36`, `git pull`) with hq's answer to stop 2. Apply hq's text word for word, `uv run python docs/build_report.py`, `scripts/report_pages.ps1` (limit 5); at 5, finish the order's item 4 list (Open, first item).
+Task 38 on branch `task-36`: read hq's answer to stop 1 and the current annex text, fill the braces (values in the stop file's table), then build items 2 to 7 (pointer sentence, builder annex, `annex starts on page`, PDF export, README line, tests) and the report-back.

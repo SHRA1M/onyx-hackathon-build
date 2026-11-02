@@ -1,27 +1,29 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-01 (fifty-third wrap, Opus). Handover for the next session.
+Updated 2026-11-02 (fifty-fourth wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Finish Task 36 (`docs/work-orders/2026-11-01-task-36-template-items.md`) on branch `task-36` (pushed 2026-11-01,
-no PR yet). Items 2 (`onyx why`) and 3 (gap-4 rule and page) are built and tested; item 1 (report headings and new
-sections) is in `docs/report.md`, but Word says 6 pages. Every change before 2026-11-06; submission 2026-11-09.
+Task 38, the annex ITU's reviewer asked for (`D:\Projects\hq\uni\ai-for-good-hackathon\task-38-annex-order-2026-11-02.md`),
+on branch `task-36` so PR #13 carries Tasks 36, 37 and 38. Freeze 2026-11-06; submission 2026-11-09.
 
 ## State
 
-- Report on `task-36`: 6 pages, 2,424 words, 12 lines on page 6 after order cuts 1 to 4 and hq's ruling cuts 1 and 2.
-- Stop 2 filed: `docs/report-back/2026-11-01-task-36-stop-2.md` (count, every line on page 6, questions for hq).
-- Full suite 641 passed. Not pushed, no PR.
+- Tasks 36 and 37 done: report 5 pages, 2,346 words; 644 tests; CI green on PR #13 (not merged, no tag).
+- Task 38 stopped before any build: `docs/report-back/2026-11-02-task-38-stop-1.md`. Twelve brace values are in its
+  table; braces A (pooled C3 gate rejection en/ar) and B (definition line) are not in the repo; sentences C ("zero"
+  in governed runs) and D (eye-check of page images) are unbacked.
+- hq's annex text `task-38-annex-text-2026-11-02.md` changed on disk after the stop: read it again first.
 
 ## Open questions (with hq)
 
-- Which cut takes the last 12 lines: hq-written gap cells, a shorter Recommendations, narrower figures, other.
-- Carried: in-force dates (Maine, India TCCRR, Korea Art 31); Saudi Arabic eye-check; GitHub Pages on submission day.
+- Stop 1 questions 1 to 6 (A to D, gate-function count 14 or 13, go ahead with the text-independent parts).
+- Carried: Arabic PDPL chunk text for `why --lang ar`; in-force dates (Maine, India TCCRR, Korea Art 31); Saudi
+  Arabic eye-check; GitHub Pages on submission day.
 
 ## Next moves
 
-1. `git status`; `git checkout task-36`.
-2. Apply hq's stop-2 answer word for word; build the report; `scripts/report_pages.ps1` must say 5.
-3. Then the order's item 4: README demo list and `why` line, `verify.html` line (`python -m onyx site`), hq report
-   copy, CHANGELOG, selftest figures (C5 0.96 / 1.00, citation 0.99 / 1.00), PR, report-back with outputs pasted.
+1. `git status`, `git pull` on `task-36`.
+2. Read hq's answer to stop 1 and the current annex text; diff the text against the stop file's assumptions.
+3. Build items 1 to 7 of the order; `report_pages.ps1` must say 5 for the main text, annex on page 6; PDF export.
+4. Report-back `docs/report-back/2026-11-02-task-38-annex.md` with the brace table and outputs.
