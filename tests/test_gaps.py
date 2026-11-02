@@ -500,7 +500,7 @@ def test_task_30_quotes_are_verbatim_in_their_files():
 def test_gap_5_records_the_portal_check():
     assert _row("gap-5")["uae_position"].endswith(GAP_5_PORTAL)
     note = kb.manifest_by_id()["pdpl-executive-regulations"]["notes"]
-    assert note == ("Not issued as of 2026-10-30 (portal related-legislations checked). Portal checked 2026-11-02, both "
+    assert note == ("Not on the official portal as of 2026-10-30 (portal related-legislations checked). Portal checked 2026-11-02, both "
                     "languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal "
                     "data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; "
                     "sector list (12 / 14 instruments) has none."), "Task 41 item 1c appends the 2026-11-02 portal check"
@@ -1237,6 +1237,19 @@ def test_task_41_rows_are_the_orders():
     for row in (g13, g14, g15):  # phrase absence as the portal's, never as a fact about the world (order limits)
         text = " ".join(str(row[k]) for k in ("gap", "uae_position", "recommendation", "note") if row.get(k))
         assert not re.search(r"never issued|never-issued|does not exist", text), row["id"]
+
+
+def test_no_live_output_says_never_issued():
+    """Task 42: absence is the portal's on the day checked, never 'never issued'. The frozen answer keys keep their
+    committed bytes (hq, 2026-11-02, answer 1a), so onyx/data/keys/ is left out."""
+    root = kb.REPO
+    paths = [p for p in (root / "onyx" / "data").rglob("*") if p.is_file() and "keys" not in p.relative_to(root).parts]
+    paths += [p for p in (root / "docs" / "site").rglob("*") if p.is_file() and p.suffix in {".html", ".css", ".js", ".json", ".md", ".txt"}]
+    paths += [root / f for f in ("docs/gaps.md", "kb/manifest.csv", "kb/DATASHEET.md", "README.md", "docs/report.md",
+                                 "docs/annex.md")]
+    hits = [str(p.relative_to(root)) for p in paths
+            if re.search(r"never issued|never-issued|not issued", p.read_text(encoding="utf-8", errors="ignore"), re.I)]
+    assert not hits, hits
 
 
 def test_task_41_s3_step_4_is_the_processor_contract_step():

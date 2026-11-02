@@ -253,7 +253,7 @@ Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Ex
 - `pdpl-45-2021-en:25` (p. 27): The 30 days run for a grievance against the Bureau's own decisions, not for a complaint under 24.
   - EN: "within (30) thirty days as of the date on which a notice of such administrative decision or penalty is given"
 
-**UAE position.** The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations were never issued.
+**UAE position.** The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations are not on the official portal (checked 2026-11-02).
 
 **Global example**
 
@@ -296,7 +296,7 @@ Kind: method. Category: legislative gap. Addressee: UAE Data Office. Exposed by:
   - EN: "before sharing any Subscriber Information with its affiliates and/or other third parties not directly involved"
   - AR (the whole chunk): "يجب على المرخص لهم الحصول على موافقة مسبقة من المشترك35 قبل تبادلأي معلومات للمشترك مع فروعهم و/أو الأطراف الأخرى غير المعنية مباشرة بتزويد خدمات الاتصالات التي يطلبها المشترك. 35 يجوز تقديم هذه الموافقة تعاقدياً خلال الفترة الزمنية التي يتم فيها صياغة العقد، شريطة وجود آلية دائماً يستطيع المشترك من خلالها أن يسحب تلك الموافقة واختيارها في مرحلة لاحقة إن رغب بذلك. صفحة47 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
 
-**UAE position.** The provider is a Processor and the duties exist; the adequacy list, the transfer controls and the processor standards all wait on Executive Regulations never issued. Mizan blocks the export and logs what left. Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.
+**UAE position.** The provider is a Processor and the duties exist; the adequacy list, the transfer controls and the processor standards all wait on Executive Regulations that are not on the official portal (checked 2026-11-02). Mizan blocks the export and logs what left. Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.
 
 **Global example**
 

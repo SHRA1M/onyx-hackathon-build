@@ -27,7 +27,7 @@ Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, Mohammed Rawashdeh and Yanal
 Knowledge base: 84 VERIFIED (text on disk, sha256 matches), 2 REFERENCED (opened, text not held), 3 UNVERIFIED
 (asserted, not published or not reached; they back no claim) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
 [The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
-18 rows link a landing page because the document link could not be verified. The Telecommunications Law 3/2003 is
+22 rows link a landing page because the document link could not be verified. The Telecommunications Law 3/2003 is
 read from the federal legislation portal's consolidated texts, English and Arabic; Arabic prevails, Arabic Articles 13,
 14 and 72 to 79 bis were read from page images, and Art 14(3) is quoted from the Arabic because the portal's English
 mistranslates it (manifest notes).
