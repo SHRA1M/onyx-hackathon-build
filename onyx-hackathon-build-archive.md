@@ -647,3 +647,21 @@ Moved from background:
   on the official portal" alone still 6).
 - Moved from the background: 2026-11-02 (hq audit, Task 37): the README names report sections by heading, never by number (test); the report's gap table runs 1 to 6, 8 to 12; the site follows the report's order and puts gap 7 last.
 - Moved from the background: 2026-11-02 (hq ruling `task-39-stops-ruling-2026-11-02.md`): "key clauses shown" leaves out steps with no model call (S1-1, S2-1) and counts each must_cite entry once (234 per language, test-pinned); `eval` prints the C5 hand-over latency, and the annex points at it, never at the C3 column; E's model is `qwen2.5:14b-instruct` (70B cannot load on 16 GB RAM and a 12 GB RTX 3060), fallback `qwen2.5:7b-instruct`.
+
+## 2026-11-03: Task 43 done, Task 44 built to stop 1 (sixty-first wrap)
+
+- Task 43 stop 3 answer applied (row 5 keeps its 5-page wording); committed `0ac34f7` and `a4fc1db`, CI green on PR #13.
+- Task 44 and its addendum built (uncommitted): rows `maine-pl-2025-c294`, `kr-ai-framework-act-20676`,
+  `tra-violation-decision-1-2009`, `dha-ai-policy-2021` (VERIFIED); `itu-t-f-aiap-work-item`, `uaepass-docs-account-levels`,
+  `tdra-faqs`, `albayan-arabic-law-2026-04-29` (REFERENCED); B1 upgraded `tdra-dispute-service-page` and the Authority
+  announcement to VERIFIED. TRAI 2012 relabelled "as amended 2014". Gaps 3, 5, 6, 7, 8, 9, 10, 12, 15 and both
+  candidates edited; Gazette line and Authority line on every surface; datasheet GCC line and B2 wording.
+- Tried: TRAI download (TLS reset, curl and Python; used hq's copy, sha256 matches); pypdf splits words in Maine and
+  VD 1/2009 (pdftotext `-enc UTF-8` instead); Korea's page is script-built (fetched the lawViewContent frame); UAE AI
+  Charter not found (u.ae 404, ai.gov.ae 403); scrapling stealthy_fetch refused by permissions.
+- F4: only S2-3 exposes gap 12 (S1 has no hand-over step). A2: CPR 3.2.2 allows Arabic or English bills, Consumer Law
+  8(4) says Arabic; both recorded, the row stays a candidate. E1: scenarios fixed by `93a7d40` (2026-10-21), before
+  the first scored run, not in HASHES.txt.
+- Stop 1: five TRAI quotes typed from the scan's page images for Iyas's eye-check, plus C1, D2, B2 and gap 7 draft questions.
+- Moved from the background: 2026-11-02 (Task 41 order, Iyas at stop 1): Annex F holds gap 7 and gaps 13 to 15 (the report's table keeps 1 to 6, 8 to 12); new rows say an instrument is "not on the official portal on 2026-11-02", never "never issued"; `binding_status` gains `guideline`; "Council of Ministers" added to the addressees.
+- Moved from the background: 2026-11-02 (hq answer to Task 40 stop 1, option a): a UAE instrument is a distinct `instrument` of a UAE manifest row that is neither `web_page` nor `announcement` (`docs/build_report.py` `NOT_INSTRUMENTS`): 31; Annex A names the TDRA service page and the AI authority announcement as not instruments. Gap 12 reads "Left open with ITU's agreement (2026-10-30)."
