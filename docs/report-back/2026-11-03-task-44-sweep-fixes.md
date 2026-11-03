@@ -60,7 +60,7 @@ Stop file: `docs/report-back/2026-11-03-task-44-stop-1.md` (what was built befor
 7. `check_kb_counts`: report [] and annex []. Report: holds 105 documents, **SRC-2** 105, 98 are verified,
    thirty-eight foreign texts, thirty other UAE texts, the 34 UAE instruments. Annex A: 105 documents, 34 UAE
    instruments, 38 foreign texts, 98 VERIFIED, 4 REFERENCED, 3 UNVERIFIED. README: 105 rows; 98 / 4 / 3.
-8. CI on PR #13: see the commit message's follow-up (run after push).
+8. CI on PR #13: `reproduce` pass on `48e0ae1` (runs 41721369344 and 41721378385).
 
 ## Differs from the order
 
