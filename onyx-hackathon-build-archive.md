@@ -626,3 +626,24 @@ Moved from background:
   - Tasks 36 to 40 built on `task-36` (PR #13), CI green at `c95b438`. Task 39 E: S2 English on `qwen2.5:14b-instruct` through Ollama, 4 of 5 steps parseable, in `runs/demo-local/`, page `docs/site/localmodel.html` (eighth page), README line and Annex A sentence; Arabic not run (S2-2 reached no gate). Task 40: gap 12 wording and 31 UAE instruments. Word main 5 pages, annex from page 6, 10 pages; PDF 10 pages, 359,047 bytes; 678 tests. hq still to confirm the strict "carried" reading (23 / 36).
   - Ollama 0.40.13 (`%LOCALAPPDATA%\Programs\Ollama\ollama.exe`, not on Git Bash's PATH; server on 11434). Models at `D:\ollama\models` (user `OLLAMA_MODELS`, moved 2026-11-02; old value saved in `D:\ollama\OLLAMA_MODELS-before.txt`). The tray app started from a script does not start its server: start `ollama.exe serve` directly. Claude Code stops long background commands on low memory (16 GB RAM, often under 5 GB free); Iyas pulls models in his own window. `record --source live` refuses a model with no price row, so a local run goes through `scripts/demo_local.py`.
   - Open for hq (Tasks 35, 35b; detail in the archive, 2026-11-01): in-force dates of Maine, India TCCRR and Korea Art 31; the Saudi Arabic eye-check; Qatar CCPR §7 to §9 unread; the datasheet language table skips the six Gulf rows.
+
+## 2026-11-02: Task 42 built, Task 43 to stop 3 (sixtieth wrap)
+
+- Task 42 (`a7b923b`, CI green): "not on the official portal" replaces "never issued" in gaps 4 and 5, the PDPL 23(2)
+  rule value and two manifest notes (stop 2 added the `pdpl-45-2021-en` note); README 22 landing rows; S4 key left
+  frozen (stop 1, 1a: its hash is in 228 runs; eval would exit 1). New test `test_no_live_output_says_never_issued`.
+  686 tests; scores byte-identical.
+- Task 43 stop 1: the main text's counts are enforced by `build_report.py` (89, 89, 84 became 95, 95, 90, hq 1a);
+  the Authority was already a row (`fed-ai-data-authority-2026-06-14`) and README line 85 (hq 2a: add WAM row, drop
+  line 85); WAM says the Prime Minister approved, not the Cabinet (hq 3); ITU `international` (hq 4).
+- Task 43 built (uncommitted): rows `difc-dp-law-5-2020`, `difc-dp-regulations-v2-2023`, `adgm-dpr-2021` (four
+  rulebook sections), `itu-t-f746-16`, `itu-t-f748-67` (cookie-jar download, sizes as the order said), WAM page
+  (browser fetch; plain curl gets an empty shell). Every order quote found in the build's own extracts; DIFC Reg 5 and
+  Appendix 3 found and added to gap 5. `_row` in `tests/test_gaps.py` now sets Task 43 entries aside so earlier task
+  pins hold; `_row_all` reads whole rows.
+- Task 43 stop 2: six wording points (row 3 "never mapped", gap 3 grammar, gap 12 tail, gap 6 "only UAE text", gap 7
+  note and Annex F.1, row 5); hq approved all, with gap 12's tail deleted outright.
+- Task 43 stop 3: row 5's new words push the main text to 6 pages (scratch builds: old row 5 gives 5 pages; "is not
+  on the official portal" alone still 6).
+- Moved from the background: 2026-11-02 (hq audit, Task 37): the README names report sections by heading, never by number (test); the report's gap table runs 1 to 6, 8 to 12; the site follows the report's order and puts gap 7 last.
+- Moved from the background: 2026-11-02 (hq ruling `task-39-stops-ruling-2026-11-02.md`): "key clauses shown" leaves out steps with no model call (S1-1, S2-1) and counts each must_cite entry once (234 per language, test-pinned); `eval` prints the C5 hand-over latency, and the annex points at it, never at the C3 column; E's model is `qwen2.5:14b-instruct` (70B cannot load on 16 GB RAM and a 12 GB RTX 3060), fallback `qwen2.5:7b-instruct`.

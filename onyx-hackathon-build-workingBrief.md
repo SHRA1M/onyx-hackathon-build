@@ -1,25 +1,30 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-02 (fifty-ninth wrap, Opus). Handover for the next session.
+Updated 2026-11-02 (sixtieth wrap, Opus). Handover for the next session.
 
 ## Objective
 
-No order open. Tasks 36 to 41 are on branch `task-36` (PR #13), CI green at `a778151`. Freeze 2026-11-06;
-submission 2026-11-09.
+Finish Task 43 (`D:\Projects\hq\uni\ai-for-good-hackathon\task-43-free-zones-itu-order-2026-11-02.md`) on
+`task-36`. It is built and UNCOMMITTED in the working tree, held at stop 3. Deadline: pushed with CI green by
+2026-11-05; freeze 2026-11-06; submission 2026-11-09.
 
 ## State
 
-- Task 41 built: Annex F (gap 7, gaps 13 to 15, candidates), register 15 gaps and 2 candidates, Ofcom row.
-  685 tests. Word main 5 pages, annex from page 6, 12 pages; PDF 12 pages. hq copies updated.
+- Task 42 committed and pushed (`a7b923b`), CI green.
+- Task 43: answers to stops 1 and 2 applied (hq files `task-43-stop-1-answers-2026-11-02.md`,
+  `task-43-stop-2-answers-2026-11-02.md`). Stop 3: row 5's new words make the main text 6 pages
+  (`docs/report-back/2026-11-02-task-43-stop-3.md`). The report and PDF on disk are that 6-page build.
 
 ## Open questions
 
-- hq: the Task 41 report-back's open questions (`docs/report-back/2026-11-02-task-41-annex-f.md`): "never issued"
-  wording in gaps 4 and 5 and elsewhere; README "18" landing rows against the datasheet's 22.
-- hq: confirm the strict "carried" reading (23 en / 36 ar).
-- Iyas: open `docs/report.pdf` (now 12 pages), then send the reviewer email (target 2026-11-03).
+- hq: Task 43 stop 3, row 5 (recommended a: keep "has not been issued"; drop it from the test pattern in
+  `tests/test_gaps.py` `test_no_live_output_says_never_issued`).
+- Iyas: send the reviewer email (target 2026-11-03).
 
 ## Next moves
 
-1. `git status`, `git pull` on `task-36`.
-2. Take hq's next order, or the freeze steps on 2026-11-06. Merge PR #13 only on Iyas's word.
+1. `git status` (expect Task 43's files modified), `git pull` on `task-36`.
+2. Apply the stop 3 answer, `uv run python docs/build_report.py`, `scripts/report_pages.ps1` (main 5, annex page 6),
+   `scripts/report_pdf.ps1`, `scripts/check_pdf.py docs/report.pdf`.
+3. Run the 8 done checks with output; hq copies with backups; CHANGELOG; commit by name; push; `gh pr checks 13`;
+   done report `docs/report-back/2026-11-0X-task-43-free-zones-itu.md`.
