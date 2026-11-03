@@ -120,7 +120,7 @@ def test_readme_leads_with_the_register():
 # --- order 2026-10-21-task-9-fixes-tasks-10-11, Part A ------------------------------------------------------------
 
 # reworded by order 2026-10-24 Task 23, B2
-GAP_7 = ("No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of "
+GAP_7 = ("No binding federal text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of "
          "fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars "
          "misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated "
          "agent.")
@@ -160,8 +160,28 @@ COPPA = {"312.5(a)(1)": "obtain verifiable parental consent before any collectio
 CDS = "child-digital-safety-26-2025-en"
 
 
-def _row(rid):
+# Task 43 appends free-zone and ITU F-series entries after every earlier task's; the earlier tests read the rows as
+# they stood before it (_row), the Task 43 tests read them whole (_row_all)
+TASK_43_FILES = {"kb/sources/global/difc-dp-law-5-2020.txt", "kb/sources/global/difc-dp-regulations-v2-2023.txt",
+                 "kb/sources/global/adgm-dpr-2021.txt", "kb/sources/global/itu-t-f748-67.txt",
+                 "kb/sources/itu-t-f746-16.txt", "kb/sources/itu-t-f748-67.txt"}
+TASK_43_CLAUSES = {"pdpl-45-2021-en:9(3)", "pdpl-45-2021-ar:9(3)"}
+
+
+def _is_43(entry: dict) -> bool:
+    return entry.get("file") in TASK_43_FILES or entry.get("clause") in TASK_43_CLAUSES
+
+
+def _row_all(rid):
     [row] = [r for r in ROWS if r["id"] == rid]
+    return row
+
+
+def _row(rid):
+    row = dict(_row_all(rid))
+    for key in ("searched", "global_examples"):
+        if key in row:
+            row[key] = [e for e in row[key] if not _is_43(e)]
     return row
 
 
@@ -570,7 +590,7 @@ def test_gap_7_binding_examples_replace_imda_which_stays_in_the_recommendation()
     assert [ex["file"] for ex in row["global_examples"]][:3] == [UTAH, MOFFATT, MOFFATT]  # Task 35b appends
     assert row["recommendation"] == GAP_7_RECOMMENDATION and "IMDA" in row["recommendation"]
     assert row["note"] == ("Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's "
-                           "words (CAD 812.02). The UAE has the general duty (CPR 3.3) and no AI-specific one.")
+                           "words (CAD 812.02). The federal texts have the general duty (CPR 3.3) and no AI-specific one.")
     assert "Utah Code 13-77-102; Moffatt v. Air Canada 2024 BCCRT 149 para 27" in gaps.table()
 
 
@@ -721,7 +741,7 @@ def test_task_32_searched_entries_are_the_orders_appended_last():
         assert _row(gap_id)["searched"][-len(filed):] == filed, gap_id  # appended after the chunked ones
     assert not [r["id"] for r in ROWS + data.load_gaps()["candidates"] if any(s.get("file") for s in r["searched"])
                 and r.get("id") not in {**TASK_32_SEARCHED, **TASK_33_SEARCHED, **TASK_35_SEARCHED,
-                                        **TASK_35B_SEARCHED, **TASK_41_FILED}]
+                                        **TASK_35B_SEARCHED, **TASK_41_FILED, **TASK_43_FILED}]
 
 
 def test_task_32_files_are_verified_manifest_sources_with_a_page():
@@ -862,7 +882,7 @@ def test_task_33_global_examples_replace_the_none_cells():
     assert _row("candidate-4-4-fixed-term-bundle")["recommendation"].endswith(
         "falls under 4.4 or needs fresh consent under 4.3, and, if 4.4, require the warning before and the one-month "
         "exit after.")
-    assert _row("gap-8")["examples_note"] == GAP_8_NOTE
+    assert _row("gap-8")["examples_note"] == GAP_8_NOTE + " " + TASK_43_GAP_8_LINE  # Task 43 adds one sentence
     assert "3GPP TS 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4" in gaps.table()
     assert "EECC 2018/1972 Art 105(3); TKG 2021 § 56(3)" in gaps.table()
 
@@ -1248,7 +1268,8 @@ def test_no_live_output_says_never_issued():
     paths += [root / f for f in ("docs/gaps.md", "kb/manifest.csv", "kb/DATASHEET.md", "README.md", "docs/report.md",
                                  "docs/annex.md")]
     hits = [str(p.relative_to(root)) for p in paths
-            if re.search(r"never issued|never-issued|not issued", p.read_text(encoding="utf-8", errors="ignore"), re.I)]
+            if re.search(r"never issued|never-issued|not issued|has not been issued|never mapped|any published UAE text|No binding UAE text",  # Tasks 42, 43
+                         p.read_text(encoding="utf-8", errors="ignore"), re.I)]
     assert not hits, hits
 
 
@@ -1300,3 +1321,153 @@ def test_task_41_register_and_site_show_the_new_sections():
     assert '  - AR (p. 10, `kb/sources/pdpl-45-2021-ar.pdf`): "' in md  # the Arabic PDF's page, 9(2)
     assert gaps.ids() == ([f"gap-{n}" for n in range(1, 16)],
                           ["candidate-4-4-fixed-term-bundle", "candidate-arabic-records"]), "Task 41: 15 gaps, 2 candidates"
+
+
+# --- order 2026-11-02 Task 43: free zones, ITU F-series, the Authority, three "never" phrases ---------------------
+
+TASK_43_GAP_8_LINE = ("F.748.67 makes the transfer a routing function of the care system; it is not an outcome of the "
+                      "Y.3172 policy node, and the two Recommendations are not joined.")
+F746, F748 = "kb/sources/itu-t-f746-16.txt", "kb/sources/itu-t-f748-67.txt"
+REGS_TXT, LAW_TXT, ADGM_TXT = (f"kb/sources/global/{d}.txt" for d in
+                               ("difc-dp-regulations-v2-2023", "difc-dp-law-5-2020", "adgm-dpr-2021"))
+TASK_43_FILED = {"gap-8": [("itu-t-f748-67:RQR-001", F748, 14), ("itu-t-f748-67:OMR-010", F748, 16)],
+                 "gap-12": [("itu-t-f746-16:8.7", F746, 13), ("itu-t-f746-16:11.2", F746, 21),
+                            ("itu-t-f746-16:10 level 2", F746, 20), ("itu-t-f746-16:10 levels 3, 4", F746, 20),
+                            ("itu-t-f748-67:CRR-003", F748, 15)],
+                 "gap-13": [("pdpl-45-2021-en:9(3)", "kb/sources/pdpl-45-2021-en.pdf", 14),
+                            ("pdpl-45-2021-ar:9(3)", PDPL_AR, 10)]}
+TASK_43_EXAMPLES = {  # gap id: (file, clause, page), appended after every earlier example
+    "gap-5": [(REGS_TXT, "Regulation 5", 5), (REGS_TXT, "Appendix 3", 20)],
+    "gap-6": [(REGS_TXT, "Regulation 10.2.2(a)", 12)],
+    "gap-7": [(REGS_TXT, "Regulation 10.2.2(a)", 12), (REGS_TXT, "Regulation 10.2.2(b)(ii)", 12),
+              (REGS_TXT, "Regulation 10.2.2(d)", 13)],
+    "gap-8": [("kb/sources/global/itu-t-f748-67.txt", "RQR-001", 14),
+              ("kb/sources/global/itu-t-f748-67.txt", "OMR-010", 16)],
+    "gap-13": [(ADGM_TXT, "s. 32(1)", None), (LAW_TXT, "Art 41(1)", 33)],
+    "gap-14": [(ADGM_TXT, "s. 26(2)", None), (LAW_TXT, "Art 24(2)", 17)]}
+
+
+def test_task_43_rows_say_federal_where_they_mean_federal():
+    phrase = "no published text maps the Electronic Transactions Art 33 trust levels to it"  # hq stop 2, answers 1, 2
+    assert _row_all("gap-3")["gap"].endswith(f"for a remote channel; {phrase} (portal and TDRA site checked 2026-11-02).")
+    assert f"| 3 | \"Adequate verification process\" (CPR 24.10) undefined for a remote channel; {phrase} |" in         (kb.REPO / "docs" / "report.md").read_text(encoding="utf-8")
+    assert _row_all("gap-12")["gap"].count("such as CPR 26.7.2. ") == 1 and "the hand-over rate, the hand-over"         not in _row_all("gap-12")["gap"]  # answer 3: the tail is gone
+    assert _row_all("gap-6")["uae_position"].endswith(
+        "no binding federal text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only federal text that "
+        "says it; DIFC Regulation 10.2.2(a) does, for DIFC establishments only (UAE free zone, not federal).")
+    assert _row_all("gap-7")["note"].endswith("The federal texts have the general duty (CPR 3.3) and no AI-specific one.")
+    assert "AI disclosure: no federal duty to tell a consumer" in _row_all("gap-6")["gap"]
+    assert _row_all("gap-7")["gap"].startswith("No binding federal text sets conduct standards")
+    assert _row_all("gap-7")["uae_position"].endswith(
+        "The DIFC Data Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) are the only UAE text of "
+        "any level that names notice, limits and intervention for an automated system, and they bind DIFC "
+        "establishments only.")
+    g12 = _row_all("gap-12")
+    assert ("neither text measures when an acting agent must stop or how long the hand-over takes; ITU-T F.746.16 11.2 "
+            "measures how often (a manual intervention rate, graded so that less intervention scores a higher level, no "
+            "threshold), the opposite direction to a regulator's floor such as CPR 26.7.2") in g12["gap"]
+    assert ("plus the existence of defined stop points, and a floor-direction measure beside F.746.16's rate: the "
+            "hand-over required by rule, whether it happened, and its latency.") in g12["recommendation"]
+    assert "so no period exists in any published federal text;" in _row_all("gap-13")["gap"]
+    assert _row_all("gap-8")["examples_note"].endswith(TASK_43_GAP_8_LINE)
+
+
+def test_task_43_entries_are_appended_last_and_leave_the_lead_example():
+    before = {"gap-5": "GDPR Art 28(3)(a)", "gap-6": "Maine §1500-DD(2)", "gap-7": "Utah Code 13-77-102",
+              "gap-8": "3GPP TS 28.535 §4.2.3", "gap-13": "GDPR Art 33(1)", "gap-14": "GDPR Art 28(2)"}
+    for gap_id, expected in TASK_43_EXAMPLES.items():
+        row = _row_all(gap_id)
+        added = row["global_examples"][-len(expected):]
+        assert [(e["file"], e["clause"], e.get("page")) for e in added] == expected, gap_id
+        assert all(_is_43(e) for e in added) and not any(_is_43(e) for e in row["global_examples"][:-len(expected)])
+        assert all(e["status"] == "VERIFIED" and not e.get("elsewhere") for e in added), gap_id
+        assert gaps.elsewhere(gap_id)["label"] == before[gap_id], gap_id  # the replay pages' example is unchanged
+    for gap_id, expected in TASK_43_FILED.items():
+        added = _row_all(gap_id)["searched"][-len(expected):]
+        assert [(s["clause"], s["file"], s["page"]) for s in added] == expected, gap_id
+
+
+def test_task_43_filed_entries_are_verified_manifest_sources():
+    manifest = kb.manifest_by_id()
+    for filed in TASK_43_FILED.values():
+        for clause, file, _ in filed:
+            document_id = clause.split(":", 1)[0]
+            assert manifest[document_id]["status"] == "VERIFIED", clause
+            assert file == f"kb/sources/{document_id}{kb._suffix(document_id)}", clause
+
+
+def test_every_free_zone_example_says_free_zone_and_not_federal():
+    """Order limits: every free-zone mention carries "UAE free zone (DIFC or ADGM), not federal"."""
+    found = 0
+    for row in ROWS:
+        for ex in row["global_examples"]:
+            if Path(ex["file"]).name.startswith(("difc-", "adgm-")):
+                label = f"{gaps._short(ex['file'])} {ex['clause']}"
+                for text in (ex["document"], label):
+                    assert "free zone" in text and "not federal" in text, (row["id"], text)
+                assert "out of scope" in ex["says"], (row["id"], ex["clause"])
+                found += 1
+    assert found == 10
+    rows = kb.manifest_by_id()
+    for document_id in ("difc-dp-law-5-2020", "difc-dp-regulations-v2-2023", "adgm-dpr-2021"):
+        assert rows[document_id]["jurisdiction"] == "UAE-free-zone", document_id
+        assert "UAE free zone" in rows[document_id]["notes"] and "not federal" in rows[document_id]["notes"]
+
+
+def test_no_live_text_gives_the_uae_a_free_zone_rule():
+    """The ruling's one refusal: never 'the UAE has a 72-hour breach rule' (nor a sub-processor or disclosure one)."""
+    for path in ("docs/gaps.md", "docs/report.md", "docs/annex.md", "README.md", "docs/site/gaps.html"):
+        text = (kb.REPO / path).read_text(encoding="utf-8")
+        assert not re.search(r"UAE (has|sets|requires) (a|an) (72-hour|sub-processor|AI[- ]disclosure)", text, re.I), path
+
+
+def _page_text(path: Path, page: int | None) -> str:
+    """The text of one page, whitespace removed (pypdf and the extracts break lines mid-sentence)."""
+    if path.suffix == ".pdf":
+        import pypdf
+        return re.sub(r"\s+", "", pypdf.PdfReader(path).pages[page - 1].extract_text() or "")
+    text = kb.read_text(path)
+    if page is not None:
+        text = re.split(r"=== PAGE \d+ ===", text)[page]
+    return re.sub(r"\s+", "", text)
+
+
+def test_task_43_quotes_are_verbatim_on_their_pages():
+    entries = [e for g in TASK_43_EXAMPLES for e in _row_all(g)["global_examples"] if _is_43(e)]
+    entries += [s for g in TASK_43_FILED for s in _row_all(g)["searched"] if _is_43(s)]
+    files = {kb.REPO / e["file"] for e in entries}
+    if not all(f.exists() for f in files):
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15)")
+    for e in entries:
+        assert re.sub(r"\s+", "", e["quote"]) in _page_text(kb.REPO / e["file"], e.get("page")), (e["file"], e["clause"])
+    assert len(entries) == 12 + 9
+
+
+def test_f746_16_quotes_are_the_recommendations_own_words():
+    """ITU-T F.746.16: 8.7 transfer to manual service (p. 13), 11.2 the manual intervention rate (p. 21), clause 10's
+    levels (p. 20), voluntary (p. 4); the extract is NFKC-normalised (the formula is in Unicode maths italics)."""
+    path = kb.REPO / "kb" / "sources" / "global" / "itu-t-f746-16.txt"
+    if not path.exists():
+        pytest.skip("kb/sources/ is local only (gitignored, addendum item 15)")
+    page = lambda n: _page_text(path, n)
+    assert re.sub(r"\s+", "", "When encountered problems cannot be solved by the customer service system of the "
+                  "machine, it supports transfer to manual service.") in page(13)
+    assert "Manualinterventionrate=TmanualTtotal" in page(21) and "11.2Humaninterventionability" in page(21)
+    assert "themanualinterventionrateishigh." in page(20)
+    assert page(20).count("themanualinterventionrateisacceptable.") == 2
+    assert "CompliancewiththisRecommendationisvoluntary" in page(4)
+    assert (kb.REPO / F746).read_bytes() == path.read_bytes()
+
+
+def test_free_zone_and_authority_paragraphs_follow_the_gcc_one():
+    md = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
+    html = (kb.REPO / "docs" / "site" / "gaps.html").read_text(encoding="utf-8")
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    assert md.index(GULF_LINE) < md.index(gaps.FREE_ZONE_LINE) < md.index(gaps.AUTHORITY_LINE) < md.index(COMPANION_LINE)
+    assert readme.count(gaps.FREE_ZONE_LINE) == 1 and readme.count(gaps.AUTHORITY_LINE) == 1
+    assert html.count("Two UAE free zones have their own data protection law") == 1
+    assert "<code>wam-2026-06-14-ai-data-authority</code>" in html
+    assert "the Prime Minister approved" in gaps.AUTHORITY_LINE and "the Cabinet approved" not in gaps.AUTHORITY_LINE
+    for row_id in ("wam-2026-06-14-ai-data-authority", "fed-ai-data-authority-2026-06-14"):
+        assert f"`{row_id}`" in gaps.AUTHORITY_LINE and row_id in kb.manifest_by_id()
+    assert "its competences move to the Federal Authority" not in readme  # the old line 85 (hq answer 2a)

@@ -384,7 +384,7 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 89 documents" in text and "84 are verified" in text and "thirty-five foreign texts" in text  # Task 41: Ofcom
+    assert "holds 95 documents" in text and "90 are verified" in text and "thirty-five foreign texts" in text  # Task 43
     assert "twenty-seven other UAE texts" in text  # 31 UAE instruments minus the four named (Task 40)
     assert "the 31 UAE instruments" in text
 
@@ -394,9 +394,9 @@ def test_report_kb_counts_are_read_from_the_manifest():
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 89 documents", "47 are verified": "84 are verified",
+    right = {"holds 51 documents": "holds 95 documents", "47 are verified": "90 are verified",
              "nine foreign texts": "thirty-five foreign texts", "twenty-two foreign texts": "thirty-five foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 89 documents",
+             "**SRC-2** 51 documents": "**SRC-2** 95 documents",
              "fifteen other UAE texts": "twenty-seven other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
@@ -405,7 +405,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("84 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("90 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
@@ -446,12 +446,12 @@ def test_task_33_line_26_names_two_unpublished_texts_and_one_unreachable_one():
 
 def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
     # order Task 33 Part D: in the report only if 5 pages hold; they do not, so README only
-    sentence = ("The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial "
-                "Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps "
-                "the statutory name.")
+    # Task 43 (hq answer 2a): the register's Authority paragraph replaces the README line; still not in the report
+    from onyx import gaps
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
-    assert readme.count(sentence) == 1 and readme.index(sentence) > readme.index("<!-- gap-register:end -->")
-    assert "Federal Authority for Artificial Intelligence" not in REPORT_MD.read_text(encoding="utf-8")
+    assert readme.count(gaps.AUTHORITY_LINE) == 1 and readme.index(gaps.AUTHORITY_LINE) < readme.index("<!-- gap-register:start -->")
+    report = REPORT_MD.read_text(encoding="utf-8")
+    assert "Federal Authority for Artificial Intelligence" not in report and "Intelligence and Data Authority" not in report
 
 
 # --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------

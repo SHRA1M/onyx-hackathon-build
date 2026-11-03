@@ -41,13 +41,31 @@ SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": 
          "maine-": "Maine", "california-bpc-": "California BPC", "california-hsc-": "California HSC",
          "india-trai-": "India TRAI TCCRR 2012",  # Task 35b
          "itu-t-y3173":"SAE J3016 (Y.3173 Table I.1)",  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
-         "uk-ofcom-": "Ofcom Penalty Guidelines 2017"}  # Task 41, gap-15
+         "uk-ofcom-": "Ofcom Penalty Guidelines 2017",  # Task 41, gap-15
+         # Task 43: a free-zone text is a UAE free-zone example, never a federal rule (order limits)
+         "difc-dp-regulations-": "DIFC DP Regulations (UAE free zone, not federal)",
+         "difc-dp-law-": "DIFC DP Law 5/2020 (UAE free zone, not federal)",
+         "adgm-dpr-": "ADGM DPR 2021 (UAE free zone, not federal)", "itu-t-f748-67": "ITU-T F.748.67"}
 # the Gulf telecom consumer regulations read (order 2026-10-30 Task 35, Addendum A): the register's preamble and the README
 GULF_LINE = ("The three GCC telecom consumer regulations read (Saudi 2024, Qatar 2024, Kuwait 2022) name no AI channel, "
              "hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, "
              "requiring a route to an employee and a qualified employee on every complaint.")
 # the bot-disclosure statutes read (order 2026-10-30 Task 35b, Addendum B item 2): the register's preamble
 COMPANION_LINE = "The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service."
+# the free zones and the AI and Data Authority (order 2026-11-02 Task 43 item 2; hq answers to stop 1, 2 and 3): the
+# register's preamble, the site and the README, after the GCC paragraph
+FREE_ZONE_LINE = ("Two UAE free zones have their own data protection law: DIFC Law 5/2020 binds Controllers and Processors "
+                  "'incorporated in the DIFC, regardless of whether the Processing takes place in the DIFC or not' "
+                  "(Art 6(3)(a)), and the ADGM Data Protection Regulations 2021 apply 'in the context of the activities of "
+                  "an Establishment of a Controller or a Processor in ADGM' (s. 3(1)). A federal telecom licensee outside "
+                  "the zones is not within either. Where a free-zone text fills a federal gap, the row names it as a UAE "
+                  "free-zone example, never as a federal rule.")
+AUTHORITY_LINE = ("The PDPL names the UAE Data Office (Art 24). On 2026-06-14 the Prime Minister approved an Artificial "
+                  "Intelligence and Data Authority, reporting to the Cabinet, that 'will bring together under one mandate "
+                  "the functions previously held by three separate entities', the Data Office among them (WAM, 14 June "
+                  "2026, `https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing`; manifest rows "
+                  "`wam-2026-06-14-ai-data-authority` and, in Arabic, `fed-ai-data-authority-2026-06-14`). No establishing "
+                  "instrument was found on the official portal on 2026-11-02. The register keeps the PDPL's name.")
 
 
 def _short(path: str) -> str:
@@ -164,7 +182,7 @@ def render() -> str:
              "A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern; a "
              "clause that exists but gives no method is a method gap (addendum item 19). Every row lists the clauses "
              "searched and what each says, English and, where the chunk holds it, Arabic.", "", GULF_LINE, "",
-             COMPANION_LINE, "", table()]
+             FREE_ZONE_LINE, "", AUTHORITY_LINE, "", COMPANION_LINE, "", table()]
     for row in register["gaps"]:
         lines += [f"## {row['id']}: {row['line']}", "",
                   f"{row['gap']}", "",

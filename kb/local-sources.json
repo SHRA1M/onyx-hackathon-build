@@ -711,5 +711,53 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "difc-dp-law-5-2020": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/difc-dp-law-5-2020.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "difc-dp-regulations-v2-2023": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/difc-dp-regulations-v2-2023.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "adgm-dpr-2021": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/adgm-dpr-2021.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "itu-t-f746-16": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/itu-t-f746-16.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "itu-t-f748-67": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/itu-t-f748-67.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "wam-2026-06-14-ai-data-authority": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/wam-2026-06-14-ai-data-authority.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }

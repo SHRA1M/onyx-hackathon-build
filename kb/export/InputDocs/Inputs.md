@@ -50,7 +50,7 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 40 | `cabres-52-2024-en.txt` | `regulation` | Cabinet Resolution No. 52 of 2024 Concerning the Administrative Penalties for Violating Federal Decree-Law No. 46 of 2021 (Electronic Transactions and Trust Services) and its Executive Regulations | VERIFIED | `85f6e4cb46a4…` |  | [landing page](https://uaelegislation.gov.ae/en/legislations/2585) (document link not verified) |
 | 41 | `licence-3-2026.pdf` | `licence` | Public Telecommunications Licence No. 3/2026 (du), term 2026-08-09 to 2046-08-08, bilingual | VERIFIED | `ccafd4ed2d5a…` | 47 | [link](https://tdra.gov.ae/-/media/About/LICENSING/EN/Licence-32026-EITC-Public.ashx) |
 
-## UAE_Advisory/ (6 files)
+## UAE_Advisory/ (7 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -60,8 +60,9 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 4 | `eand-code-of-practice-en.pdf` | `operator code` | e& Code of Practice regarding customer affairs | VERIFIED | `4b6383a7523a…` | 13 | [link](https://eand.com/en/system/com/assets/docs/general/code-of-practice-for-customer-affairs.pdf) |
 | 5 | `du-code-of-practice-en.pdf` | `operator code` | du (EITC) Code of Practice | VERIFIED | `8f8014d981c1…` | 5 | [link](https://www.du.ae/files/1430740188355) |
 | 6 | `fed-ai-data-authority-2026-06-14` | `announcement` | Mohammed bin Rashid approves establishing the Federal Authority for Artificial Intelligence and Data | REFERENCED |  |  | [link](https://dgov.tdra.gov.ae/ar/media-hub/news/mohammed-bin-rashid-approves-establishing-artificial-intelligence-and-data-authority) |
+| 7 | `wam-2026-06-14-ai-data-authority.txt` | `announcement` | Mohammed bin Rashid approves establishing Artificial Intelligence and Data Authority (WAM, 14 June 2026) | VERIFIED | `c10f13619aa0…` |  | [link](https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing) |
 
-## Framework/ (7 files)
+## Framework/ (9 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -72,8 +73,10 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 5 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
 | 6 | `3gpp-ts-28-535-v19.pdf` | `standard` | ETSI TS 128 535 V19.0.0 (2025-10), 3GPP TS 28.535, Management services for communication service assurance; Requirements | VERIFIED | `f43be1bda69e…` | 24 | [link](https://www.etsi.org/deliver/etsi_ts/128500_128599/128535/19.00.00_60/ts_128535v190000p.pdf) |
 | 7 | `etsi-gs-zsm-009-1-v1-1-1.pdf` | `standard` | ETSI GS ZSM 009-1 V1.1.1 (2021-06), Zero-touch network and Service Management (ZSM); Closed-Loop Automation; Part 1: Enablers | VERIFIED | `492bac221401…` | 40 | [link](https://www.etsi.org/deliver/etsi_gs/ZSM/001_099/00901/01.01.01_60/gs_ZSM00901v010101p.pdf) |
+| 8 | `itu-t-f746-16.txt` | `standard` | ITU-T F.746.16 (12/2022), Technical requirements and evaluation methods of intelligence levels of intelligent customer service systems | VERIFIED | `efd3821ce460…` | 24 | [link](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-F.746.16-202212-I!!PDF-E&type=items) |
+| 9 | `itu-t-f748-67.txt` | `standard` | ITU-T F.748.67 (12/2025), Requirements and framework for advanced intelligent customer service system | VERIFIED | `c05e362fd940…` | 30 | [link](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-F.748.67-202512-I!!PDF-E&type=items) |
 
-## Global_Examples/ (32 files)
+## Global_Examples/ (35 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -109,6 +112,9 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 30 | `california-bpc-17940-17943.txt` | `extract` | California Business and Professions Code §17940 to 17943, Bots (Stats. 2018 c. 892, SB 1001) (extract) | VERIFIED | `cfa4c3ccba6c…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17941) |
 | 31 | `california-hsc-1339-75.txt` | `extract` | California Health and Safety Code §1339.75, generative AI in patient communications (Stats. 2024 c. 848, AB 3030) (extract) | VERIFIED | `86d9eda28fb0…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75) |
 | 32 | `uk-ofcom-penalty-guidelines-2017.txt` | `pdf` | Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017 | VERIFIED | `689f935edd6c…` | 7 | [link](https://www.ofcom.org.uk/siteassets/resources/documents/about-ofcom/policies/penalty-guidelines/penalty-guidelines-september-2017.pdf?v=322695) |
+| 33 | `difc-dp-law-5-2020.txt` | `law` | Data Protection Law, DIFC Law No. 5 of 2020, Consolidated Version (July 2025) | VERIFIED | `0f1345a99a10…` | 54 | [link](https://assets.difc.com/v1/media/edge/images/dubaiintern0078-difcexperie96c5-production-3253/media/project/difcexperiences/difc/difcwebsite/documents/laws--regulations/data-protection-law.pdf) |
+| 34 | `difc-dp-regulations-v2-2023.txt` | `regulation` | DIFC Data Protection Regulations, Consolidated Version No. 2, in force 1 September 2023 | VERIFIED | `59dadfe2f05d…` | 20 | [link](https://assets.difc.com/v1/media/edge/images/dubaiintern0078-difcexperie96c5-production-3253/media/project/difcexperiences/difc/difcwebsite/documents/laws--regulations/data-protection-regulation.pdf) |
+| 35 | `adgm-dpr-2021.txt` | `extract` | ADGM Data Protection Regulations 2021 (as amended to 2025) | VERIFIED | `13b6c0cec2ac…` |  | [link](https://en.adgm.thomsonreuters.com/rulebook/data-protection-regulations-2021) |
 
 ## Unverified/ (3 files)
 

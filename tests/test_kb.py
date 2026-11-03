@@ -399,8 +399,8 @@ def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
     status = lambda s: sum(r["status"] == s for r in manifest)
     # Task 34 Part C adds eIDAS, COPPA and Licence 3/2026 (Iyas, 2026-10-30: the pin follows the counts);
     # Task 35 adds six Gulf rows, all foreign (test_task_35_counts); Task 35b five more (test_task_35b_counts)
-    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (89, 84, 3, 2), \
-        "Task 41: the Ofcom row makes 89 rows, 84 VERIFIED"
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (95, 90, 3, 2), \
+        "Task 43: five texts and the WAM page make 95 rows, 90 VERIFIED"
     assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
     # the announcement is not an instrument (order Part A)
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
@@ -531,8 +531,8 @@ def test_task_35_counts():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
     # Task 35b adds five foreign rows (test_task_35b_counts)
-    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (89, 84, 2, 3), \
-        "Task 41: the Ofcom row makes 89 rows, 84 VERIFIED"
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (95, 90, 2, 3), \
+        "Task 43: five texts and the WAM page make 95 rows, 90 VERIFIED"
     assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32  # UAE unchanged
@@ -604,8 +604,64 @@ def test_task_35b_california_extracts_carry_exactly_the_read_files_quotes():
 def test_task_35b_counts():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
-    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (89, 84, 2, 3), \
-        "Task 41: the Ofcom row makes 89 rows, 84 VERIFIED"
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (95, 90, 2, 3), \
+        "Task 43: five texts and the WAM page make 95 rows, 90 VERIFIED"
     assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
                 and r["source_type"] != "announcement"}) == 32  # UAE unchanged
+
+
+# --- order 2026-11-02 Task 43: five texts (DIFC, ADGM, ITU F-series) and the WAM page --------------------------------
+
+TASK_43 = {  # document_id: (jurisdiction, binding, source_type, country, sha256 of the extract, page_count)
+    "difc-dp-law-5-2020": ("UAE-free-zone", "binding", "law", "UAE",
+                           "0f1345a99a100ac5bfddbedd599b87620d43015094f754d0c54e2d0e74eb64b2", "54"),
+    "difc-dp-regulations-v2-2023": ("UAE-free-zone", "binding", "regulation", "UAE",
+                                    "59dadfe2f05de8db1fbfd08a5468016be9aedcd3d10c5385353236d9eabcd025", "20"),
+    "adgm-dpr-2021": ("UAE-free-zone", "binding", "extract", "UAE",
+                      "13b6c0cec2acdc390682ac05bceff6c65fe522913b378714928bc1f29078909d", ""),
+    "itu-t-f746-16": ("international", "method", "standard", "international",
+                      "efd3821ce46046b5b0000eda5ebd74cdc2298e4e232cff354ad131c849537b37", "24"),
+    "itu-t-f748-67": ("international", "method", "standard", "international",
+                      "c05e362fd940ecfce82ef159d21a71b36d09e89088881d37e91651ce541234a8", "30"),
+    "wam-2026-06-14-ai-data-authority": ("UAE", "advisory", "announcement", "UAE",
+                                         "c10f13619aa0cfb40f2b6c0de577cae6ead870c0eb4c188c3d41dec0f4751430", ""),
+}
+
+
+def test_task_43_rows_are_the_orders():
+    rows = kb.manifest_by_id()
+    for document_id, (jurisdiction, binding, source_type, country, sha, pages) in TASK_43.items():
+        r = rows[document_id]
+        assert (r["status"], r["jurisdiction"], r["binding_status"], r["source_type"], r["country"], r["sha256"],
+                r["page_count"], r["language"], r["fetched_at"]) == \
+            ("VERIFIED", jurisdiction, binding, source_type, country, sha, pages, "en", "2026-11-02"), document_id
+        assert not kb.has_chunks(document_id), document_id  # no chunks (order item 1)
+        assert kb.LOCAL[document_id]["file"].endswith(f"kb/sources/global/{document_id}.txt"), document_id
+    assert rows["itu-t-y3172"]["jurisdiction"] == "international"  # the ITU rows follow Y.3172's row (hq answer 4)
+    assert "Compliance voluntary (p. 4)" in rows["itu-t-f746-16"]["notes"] + rows["itu-t-f748-67"]["notes"]
+    assert "452,759 bytes, 24 pages" in rows["itu-t-f746-16"]["notes"]
+    assert "1,851,338 bytes, 30 pages" in rows["itu-t-f748-67"]["notes"]
+    assert "Prime Minister approved" in rows["wam-2026-06-14-ai-data-authority"]["notes"]
+
+
+def test_task_43_free_zone_jurisdiction_is_one_schema_value():
+    schema = json.loads((kb.KB_DIR / "manifest.schema.json").read_text(encoding="utf-8"))
+    assert schema["properties"]["jurisdiction"]["enum"] == ["UAE", "UAE-free-zone", "foreign", "international"]
+    manifest = kb.load_manifest()
+    assert sorted(r["document_id"] for r in manifest if r["jurisdiction"] == "UAE-free-zone") == \
+        ["adgm-dpr-2021", "difc-dp-law-5-2020", "difc-dp-regulations-v2-2023"]
+    # the free-zone rows are not UAE instruments, and the WAM page is an announcement, so the report's 31 holds
+    assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
+                and r["source_type"] not in ("announcement", "web_page")}) == 31
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35
+
+
+def test_task_43_extracts_match_their_hashes():
+    for document_id, (*_, sha, _) in TASK_43.items():
+        held = kb.REPO / "kb" / "sources" / "global" / f"{document_id}.txt"
+        if not held.exists():
+            pytest.skip("kb/sources/ is local only (gitignored)")
+        assert kb.sha256_file(held) == sha, document_id
+        assert (kb.REPO / "kb" / "sources" / f"{document_id}.txt").read_bytes() == held.read_bytes(), document_id
+        assert kb.read_text(held).startswith("Source: https://"), document_id

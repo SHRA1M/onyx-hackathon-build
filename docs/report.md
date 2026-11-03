@@ -21,7 +21,7 @@ Complaints".
 The sources are the Telecommunications Law 3/2003, the
 CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-seven other UAE texts;
 ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-thirty-five foreign texts used only as global examples. 84 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+thirty-five foreign texts used only as global examples. 90 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
@@ -40,7 +40,7 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 ## What is the role played by AI?
 
 The model reads the subscriber's words in Arabic or English, classifies the step, proposes one verb with clause ids and
-a verbatim quote, and drafts the reply in both languages. The knowledge base holds 89 documents chunked by clause,
+a verbatim quote, and drafts the reply in both languages. The knowledge base holds 95 documents chunked by clause,
 and retrieval is scoped to the agent's mandate, so the model sees only the policy text its role may use. The model
 proposes and plain code written from the binding UAE texts decides: every allow, hold, block or insufficient
 evidence names the clause it relied on, its page and its words, in English and Arabic; the model never decides.
@@ -49,7 +49,7 @@ evidence names the clause it relied on, its page and its words, in English and A
 
 It is critical that **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one
 block without override; **D-1** hand-over to a named human and the gates' deadlines; **PP-1** retrieval is scoped to
-the agent's mandate, a cited id outside the clauses given is invalid; **SRC-2** 89 documents with URL, SHA-256 and
+the agent's mandate, a cited id outside the clauses given is invalid; **SRC-2** 95 documents with URL, SHA-256 and
 status, chunked by clause.
 
 It is expected that **SRC-1** injects carry facts, never answers; **C-1** each agent sees only the steps released to
@@ -136,10 +136,10 @@ and found absent. The recorded runs re-find 5 of the 7 expected gaps on every ru
 |---|---|---|---|---|
 | 1 | Complaint hand-over: the bar and the human exist (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (26.13.3, 26.14.2); the transfer has none: what the agent does when the talk turns, when the human is in it | standards | TDRA | Spain Ley 10/2025 Art 8(2), 8(3) |
 | 2 | Consent elicited by an AI: the CPR accepts stored spoken consent (4.7.2) and sets the OTP need by sales medium (4.10, 4.17, 4.22), naming no AI channel; the PDPL exempts what the contract needs (4(9)) and wants any further data use consented in writing or electronically (6(1)(b)), so a spoken "yes" buys the service | coordination | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15 |
-| 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; Electronic Transactions Art 33 trust levels never mapped to it | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
+| 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
 | 4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline, and the complaint route to the Data Office (Art 24) has no clock either | responsibilities | UAE Data Office | GDPR Art 22(3), 12(3) |
-| 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)) has not been issued | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |
-| 6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person "knows, or is supposed to know" the system contracts automatically | legislative | Cabinet | Maine §1500-DD; EU AI Act Art 50(1) |
+| 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)): not on the portal | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |
+| 6 | AI disclosure: no federal duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person "knows, or is supposed to know" the system contracts automatically | legislative | Cabinet | Maine §1500-DD; EU AI Act Art 50(1) |
 | 8 | Y.3172 has no node outcome for a hand-over to a human: every node outcome is the output moving on to a sink that acts | standards | ITU-T | 3GPP 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4 |
 | 9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions and Art 16 penalties are unpublished; nothing says how a telecom channel learns the person is a child | legislative | TDRA, Cabinet | US COPPA Rule, 16 CFR 312.5(a)(1), (b)(1) |
 | 10 | Arabic on an automated channel: the language is set, its omission fined (CPR 3.2.2, Consumer Law 26, Cabinet 66/2023 Annex 2); nothing requires the Arabic answer to match the English, and the QoS Policy has no indicator per language | standards | TDRA | Wales WLS Regs 2015 Sch 1 Std 15, 22 |

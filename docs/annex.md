@@ -24,12 +24,12 @@ before anything retrieval adds (see Retrieval below). That is why the Arabic run
 citation validity (C5) with an English embedder. A bilingual embedder is the obvious upgrade and is listed under
 next steps; it was not swapped in before the freeze because it would have meant re-recording the scored runs.
 
-**The documents.** 89 documents in `kb/manifest.csv`: 31 UAE instruments (laws, Cabinet resolutions, TDRA
+**The documents.** 95 documents in `kb/manifest.csv`: 31 UAE instruments (laws, Cabinet resolutions, TDRA
 regulations, the two 2026 public licences, in English and Arabic where both are published) plus a TDRA service page
-and an announcement, which are not instruments; 3 ITU texts and the Readiness report; and 35 foreign texts used only
+and two announcements, which are not instruments; 3 texts of the DIFC and ADGM free zones; 5 ITU texts and the Readiness report; and 35 foreign texts used only
 as global examples. Each row records the issuer, the URL, the date
 fetched, the HTTP status, the SHA-256 of the file as fetched, the page count, the language and whether the English is
-an official translation. 84 are VERIFIED (the issuer's file is on disk and its hash matches), 2 REFERENCED (opened,
+an official translation. 90 are VERIFIED (the issuer's file is on disk and its hash matches), 2 REFERENCED (opened,
 text not held) and 3 UNVERIFIED (unpublished or unreachable; they back no claim). `python -m onyx kb verify` recomputes
 the counts on every push.
 
@@ -242,11 +242,18 @@ numbering of the report's table and were not in the 5 pages for room. Each row g
 searched, what was searched and found absent, one example from elsewhere in its own words, the addressee, the
 recommendation and what exposed it. The register quotes the Arabic of each UAE clause beside the English.
 
-**F.1 Gap 7: five mentions, no standard.** No binding UAE text sets conduct standards specific to an AI agent dealing
+Two UAE free zones have their own data protection law, DIFC Law 5/2020 and the ADGM Data Protection Regulations
+2021; each binds only establishments in its zone (DIFC Art 6(3), ADGM s. 3(1)), so a federal telecom licensee outside
+them is not within either, and the register names a free-zone text only as a UAE free-zone example, never as a
+federal rule. On 2026-06-14 the Prime Minister approved an Artificial Intelligence and Data Authority, reporting to
+the Cabinet, that "will bring together under one mandate" the functions of three entities, the UAE Data Office among
+them; no establishing instrument was found on the official portal on 2026-11-02, so the register keeps the PDPL's name.
+
+**F.1 Gap 7: five mentions, no standard.** No binding federal text sets conduct standards specific to an AI agent dealing
 with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its
 definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over
 for an automated agent. Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's words
-(CAD 812.02). The UAE has the general duty (CPR 3.3) and no AI-specific one. Kind: absence, a standards gap.
+(CAD 812.02). The federal texts have the general duty (CPR 3.3) and no AI-specific one. Kind: absence, a standards gap.
 Addressee: TDRA. Exposed by: every scenario.
 
 Clauses searched: CPR 3.3, 25.14.1 and 26.7.2; Spam Calls Regulation v4 3.3; Cabinet Resolution 56/2024 5(6); Child
@@ -275,7 +282,7 @@ of the date on which the Decree by Law is promulgated." The Decree-Law was issue
 were due by 2022-03-20 (computed). Searched and absent on 2026-11-02, official portal, both languages: the Regulation
 Table of Decree-Law 45/2021 shows no records; the keyword searches "personal data" and its Arabic list no executive
 regulation of this Decree-Law; the Telecommunication, Technology and Space sector list has none. The Regulations are
-not on the official portal on 2026-11-02, so no published UAE text sets a period: an operator's AI that detects a
+not on the official portal on 2026-11-02, so no published federal text sets a period: an operator's AI that detects a
 breach has no clock to run. Elsewhere: GDPR Art 33(1), "without undue delay and, where feasible, not later than 72
 hours after having become aware of it". Addressee: the Council of Ministers; the UAE Data Office proposes (Art 28).
 Recommendation: the Council of Ministers to issue the PDPL Executive Regulations with the 9(1) and 9(2) periods;
