@@ -29,7 +29,7 @@ stops 1, 2 and 3. Branch `task-36`, PR #13.
 6. `eval` live and scripted: `eval/` byte-identical to committed; "Every run_start carries the current key hashes: yes".
 7. Word: main 5 pages, annex starts on page 6, 12 pages. `check_pdf`: 12 pages, "Annex A", "Limits and next steps",
    "Annex F" found.
-8. CI on PR #13: see the result below.
+8. CI on PR #13: `reproduce` pass on `0ac34f7` (runs 41652561166 and 41652569559).
 
 ## Differs from the order
 
