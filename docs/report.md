@@ -19,9 +19,9 @@ to "preclude the use of non-human agents by Licensees in conversations with Cons
 Complaints".
 
 The sources are the Telecommunications Law 3/2003, the
-CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and twenty-seven other UAE texts;
+CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and thirty other UAE texts;
 ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-thirty-five foreign texts used only as global examples. 90 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+thirty-eight foreign texts used only as global examples. 98 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
@@ -40,7 +40,7 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 ## What is the role played by AI?
 
 The model reads the subscriber's words in Arabic or English, classifies the step, proposes one verb with clause ids and
-a verbatim quote, and drafts the reply in both languages. The knowledge base holds 95 documents chunked by clause,
+a verbatim quote, and drafts the reply in both languages. The knowledge base holds 105 documents chunked by clause,
 and retrieval is scoped to the agent's mandate, so the model sees only the policy text its role may use. The model
 proposes and plain code written from the binding UAE texts decides: every allow, hold, block or insufficient
 evidence names the clause it relied on, its page and its words, in English and Arabic; the model never decides.
@@ -49,7 +49,7 @@ evidence names the clause it relied on, its page and its words, in English and A
 
 It is critical that **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one
 block without override; **D-1** hand-over to a named human and the gates' deadlines; **PP-1** retrieval is scoped to
-the agent's mandate, a cited id outside the clauses given is invalid; **SRC-2** 95 documents with URL, SHA-256 and
+the agent's mandate, a cited id outside the clauses given is invalid; **SRC-2** 105 documents with URL, SHA-256 and
 status, chunked by clause.
 
 It is expected that **SRC-1** injects carry facts, never answers; **C-1** each agent sees only the steps released to
@@ -128,7 +128,7 @@ takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
 ## Policy gaps and standards gaps derived from the mapping exercise
 
 Method. Every scenario step was put to the gate; a step no clause answers returns insufficient evidence and logs a
-candidate. Each candidate was then searched across the 31 UAE instruments in both languages, then the GCC
+candidate. Each candidate was then searched across the 34 UAE instruments in both languages, then the GCC
 regulations, then foreign law for a global example. A gap is claimed only when the register lists what was searched
 and found absent. The recorded runs re-find 5 of the 7 expected gaps on every run.
 

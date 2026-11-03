@@ -354,7 +354,7 @@ TASK_33 = {  # document_id: (status, binding, jurisdiction, language, source_typ
                           "32c667ed631031cb33a25d3ed746904b62ba2d0e4bd2097c3990202404e46693",
                           STD + "etransactions-penalties-cabinet-52-2024-ar.pdf"),
     "cabres-52-2024-en": ("VERIFIED", "binding", "UAE", "en", None, None, None),
-    "fed-ai-data-authority-2026-06-14": ("REFERENCED", "advisory", "UAE", "ar", "announcement", "", None),
+    "fed-ai-data-authority-2026-06-14": ("VERIFIED", "advisory", "UAE", "ar", "announcement", None, None),  # Task 44 B1
 }
 
 
@@ -399,12 +399,12 @@ def test_task_33_rows_have_no_chunks_and_the_counts_are_the_orders():
     status = lambda s: sum(r["status"] == s for r in manifest)
     # Task 34 Part C adds eIDAS, COPPA and Licence 3/2026 (Iyas, 2026-10-30: the pin follows the counts);
     # Task 35 adds six Gulf rows, all foreign (test_task_35_counts); Task 35b five more (test_task_35b_counts)
-    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (95, 90, 3, 2), \
-        "Task 43: five texts and the WAM page make 95 rows, 90 VERIFIED"
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
+    assert (len(manifest), status("VERIFIED"), status("UNVERIFIED"), status("REFERENCED")) == (105, 98, 3, 4), \
+        "Task 44: ten rows (TRAI 2026 and the UAE AI Charter last) make 105 rows, 98 VERIFIED"
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 38, "Task 44: Maine PL c. 294, Korea and TRAI 2026 make 38 foreign texts"
     # the announcement is not an instrument (order Part A)
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
-                and r["source_type"] != "announcement"}) == 32
+                and r["source_type"] != "announcement"}) == 38  # Task 44
 
 
 # --- order 2026-10-30-task-33-three-searches Part B ---------------------------------------------------------------
@@ -531,11 +531,11 @@ def test_task_35_counts():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
     # Task 35b adds five foreign rows (test_task_35b_counts)
-    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (95, 90, 2, 3), \
-        "Task 43: five texts and the WAM page make 95 rows, 90 VERIFIED"
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (105, 98, 4, 3), \
+        "Task 44: ten rows (TRAI 2026 and the UAE AI Charter last) make 105 rows, 98 VERIFIED"
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 38, "Task 44: Maine PL c. 294, Korea and TRAI 2026 make 38 foreign texts"
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
-                and r["source_type"] != "announcement"}) == 32  # UAE unchanged
+                and r["source_type"] != "announcement"}) == 38  # Task 44: web pages and the news report counted here
 
 
 # --- order 2026-10-30-task-35b-bot-disclosure (Addendum B): five bot-disclosure rows, binding in their state ---------
@@ -604,11 +604,11 @@ def test_task_35b_california_extracts_carry_exactly_the_read_files_quotes():
 def test_task_35b_counts():
     manifest = kb.load_manifest()
     status = lambda s: sum(r["status"] == s for r in manifest)
-    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (95, 90, 2, 3), \
-        "Task 43: five texts and the WAM page make 95 rows, 90 VERIFIED"
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35, "Task 41: Ofcom is the 35th foreign text"
+    assert (len(manifest), status("VERIFIED"), status("REFERENCED"), status("UNVERIFIED")) == (105, 98, 4, 3), \
+        "Task 44: ten rows (TRAI 2026 and the UAE AI Charter last) make 105 rows, 98 VERIFIED"
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 38, "Task 44: Maine PL c. 294, Korea and TRAI 2026 make 38 foreign texts"
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
-                and r["source_type"] != "announcement"}) == 32  # UAE unchanged
+                and r["source_type"] != "announcement"}) == 38  # Task 44: web pages and the news report counted here
 
 
 # --- order 2026-11-02 Task 43: five texts (DIFC, ADGM, ITU F-series) and the WAM page --------------------------------
@@ -653,8 +653,8 @@ def test_task_43_free_zone_jurisdiction_is_one_schema_value():
         ["adgm-dpr-2021", "difc-dp-law-5-2020", "difc-dp-regulations-v2-2023"]
     # the free-zone rows are not UAE instruments, and the WAM page is an announcement, so the report's 31 holds
     assert len({r["instrument"] for r in manifest if r["jurisdiction"] == "UAE"
-                and r["source_type"] not in ("announcement", "web_page")}) == 31
-    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 35
+                and r["source_type"] not in ("announcement", "web_page", "news")}) == 34  # Task 44: VD 1/2009, DHA, the AI Charter
+    assert sum(r["jurisdiction"] == "foreign" for r in manifest) == 38
 
 
 def test_task_43_extracts_match_their_hashes():

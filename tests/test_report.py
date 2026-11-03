@@ -384,9 +384,9 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 95 documents" in text and "90 are verified" in text and "thirty-five foreign texts" in text  # Task 43
-    assert "twenty-seven other UAE texts" in text  # 31 UAE instruments minus the four named (Task 40)
-    assert "the 31 UAE instruments" in text
+    assert "holds 105 documents" in text and "98 are verified" in text and "thirty-eight foreign texts" in text  # Task 44
+    assert "thirty other UAE texts" in text  # 34 UAE instruments minus the four named (Task 40, counts Task 44)
+    assert "the 34 UAE instruments" in text
 
 
 @pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
@@ -394,10 +394,10 @@ def test_report_kb_counts_are_read_from_the_manifest():
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 95 documents", "47 are verified": "90 are verified",
-             "nine foreign texts": "thirty-five foreign texts", "twenty-two foreign texts": "thirty-five foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 95 documents",
-             "fifteen other UAE texts": "twenty-seven other UAE texts"}[wrong]
+    right = {"holds 51 documents": "holds 105 documents", "47 are verified": "98 are verified",
+             "nine foreign texts": "thirty-eight foreign texts", "twenty-two foreign texts": "thirty-eight foreign texts",
+             "**SRC-2** 51 documents": "**SRC-2** 105 documents",
+             "fifteen other UAE texts": "thirty other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
@@ -405,7 +405,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("90 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("98 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
@@ -490,3 +490,9 @@ def test_no_numbered_section_pointer_into_the_report():
     pointer = re.compile(r"report(\.docx|\.md)?[^.;\n<]{0,40}?\bsections?\s+\d", re.IGNORECASE)
     hits = [f"{f.name}: {m.group(0)}" for f in files for m in pointer.finditer(f.read_text(encoding="utf-8"))]
     assert hits == []
+
+
+# Task 44: the knowledge base reached thirty other UAE texts; a round tens word must read as its number
+@pytest.mark.parametrize("word,value", [("thirty", 30), ("twenty", 20), ("thirty-eight", 38), ("nine", 9)])
+def test_a_round_tens_word_reads_as_its_number(word, value):
+    assert _load()._number(word) == value

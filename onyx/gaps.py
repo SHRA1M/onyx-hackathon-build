@@ -65,7 +65,12 @@ AUTHORITY_LINE = ("The PDPL names the UAE Data Office (Art 24). On 2026-06-14 th
                   "the functions previously held by three separate entities', the Data Office among them (WAM, 14 June "
                   "2026, `https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing`; manifest rows "
                   "`wam-2026-06-14-ai-data-authority` and, in Arabic, `fed-ai-data-authority-2026-06-14`). No establishing "
-                  "instrument was found on the official portal on 2026-11-02. The register keeps the PDPL's name.")
+                  "instrument was found on the official portal on 2026-11-02, and dataoffice.gov.ae did not resolve on 2026-11-02. "
+                  "The register keeps the PDPL's name.")
+# the Gazette (order 2026-11-02 Task 44 method note; addendum 2026-11-03 D2, "unreachable" outcome): preamble, site, README
+GAZETTE_LINE = ("The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02 and "
+                "2026-11-03 (curl, and Chrome from hq); the legislation portal, which lists each law's Gazette number and "
+                "its regulations, is the official check, and it publishes no issue archive.")
 
 
 def _short(path: str) -> str:
@@ -182,7 +187,7 @@ def render() -> str:
              "A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern; a "
              "clause that exists but gives no method is a method gap (addendum item 19). Every row lists the clauses "
              "searched and what each says, English and, where the chunk holds it, Arabic.", "", GULF_LINE, "",
-             FREE_ZONE_LINE, "", AUTHORITY_LINE, "", COMPANION_LINE, "", table()]
+             FREE_ZONE_LINE, "", AUTHORITY_LINE, "", GAZETTE_LINE, "", COMPANION_LINE, "", table()]
     for row in register["gaps"]:
         lines += [f"## {row['id']}: {row['line']}", "",
                   f"{row['gap']}", "",

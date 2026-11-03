@@ -24,13 +24,13 @@ before anything retrieval adds (see Retrieval below). That is why the Arabic run
 citation validity (C5) with an English embedder. A bilingual embedder is the obvious upgrade and is listed under
 next steps; it was not swapped in before the freeze because it would have meant re-recording the scored runs.
 
-**The documents.** 95 documents in `kb/manifest.csv`: 31 UAE instruments (laws, Cabinet resolutions, TDRA
-regulations, the two 2026 public licences, in English and Arabic where both are published) plus a TDRA service page
-and two announcements, which are not instruments; 3 texts of the DIFC and ADGM free zones; 5 ITU texts and the Readiness report; and 35 foreign texts used only
+**The documents.** 105 documents in `kb/manifest.csv`: 34 UAE instruments (laws, Cabinet resolutions, TDRA
+regulations and an enforcement decision, the two 2026 public licences, the DHA AI policy and the UAE AI Charter, in English and Arabic where both are published) plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation),
+two announcements and a news report, which are not instruments; 3 texts of the DIFC and ADGM free zones; 6 ITU texts (one a work-programme page) and the Readiness report; and 38 foreign texts used only
 as global examples. Each row records the issuer, the URL, the date
 fetched, the HTTP status, the SHA-256 of the file as fetched, the page count, the language and whether the English is
-an official translation. 90 are VERIFIED (the issuer's file is on disk and its hash matches), 2 REFERENCED (opened,
-text not held) and 3 UNVERIFIED (unpublished or unreachable; they back no claim). `python -m onyx kb verify` recomputes
+an official translation. 98 are VERIFIED (the issuer's file is on disk and its hash matches), 4 REFERENCED (opened,
+text not held) and 3 UNVERIFIED (unpublished or unreachable; they back no quoted clause; two of them record an absence (the PDPL Executive Regulations, the agentic framework text) that the register claims from the portal check written in the row, dated). `python -m onyx kb verify` recomputes
 the counts on every push.
 
 **Cleaning.** Text comes out of the PDFs with `pypdf`; PyMuPDF and pdfium were rejected because they reverse the
@@ -158,7 +158,7 @@ a well-written prompt never proposes a barred act, the gate is paperwork.
 **Design.** Two modes, everything else held constant: the same five scenarios in both languages, the same model,
 the same prompt (v3), the same retrieval, the same keys. In governed mode the gate decides (`decide`); in ungoverned
 mode it is replaced by `allow_all`, which returns allow for every proposal and still logs it. Three runs per scenario
-per language per mode: 60 recorded runs (`runs/S1..S5/`, `runs/ungoverned/`), all on `claude-sonnet-5-5`.
+per language per mode: 60 recorded runs (`runs/S1..S5/`, `runs/ungoverned/`), all on `claude-sonnet-5-5`. The seven unseen scenarios (`onyx/data/scenarios/unseen/`, U1 to U7) were written before the first scored run, their bytes fixed by commit 93a7d40 (2026-10-21) and unchanged since; none has been sent to a model. Their cold runs are a next step.
 
 **Metric.** Each scenario's key states, step by step, where the gate must hold or block (a charge without an express
 order, a disclosure without consent, a disconnection without warning, a complaint answered by the machine, subscriber
@@ -267,7 +267,9 @@ the division under Section 13-2-102 that generative artificial intelligence: (1)
 undertook the violative act; or (3) was used in furtherance of the violation." Moffatt v. Air Canada, 2024 BCCRT 149
 (a tribunal decision), para 27: "It makes no difference whether the information comes from a static page or a
 chatbot." India, TRAI Telecom Consumers Complaint Redressal Regulations 2012, reg 3(9), proviso: "Provided that the
-sub-menu in the third level shall also contain an option enabling the consumer to speak to a consumer care agent."
+sub-menu in the third level shall also contain an option enabling the consumer to speak to a consumer care agent." Its Fourth Amendment Regulations 2026 (07 of 2026), notified 2026-11-02, not in force (ninety days after Gazette
+publication), add that AI agents at the complaint centre "shall operate with appropriate human oversight" (new reg
+3(3), third proviso).
 California Health and Safety Code §1339.75(a)(2), clinical communications only: "Clear instructions describing how a
 patient may contact a human health care provider".
 

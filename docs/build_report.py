@@ -346,6 +346,8 @@ def _number(word: str) -> int | None:
     if word in NUMBER_WORDS:
         return NUMBER_WORDS.index(word)
     tens, _, unit = word.partition("-")
+    if tens in TENS and not unit:  # "thirty" alone (Task 44)
+        return TENS[tens]
     return TENS[tens] + NUMBER_WORDS.index(unit) if tens in TENS and unit in NUMBER_WORDS[1:10] else None
 
 
@@ -360,7 +362,7 @@ KB_COUNTS = {"documents": re.compile(r"(?:holds|\*\*SRC-2\*\*)\s+(\d+)\s+documen
 NAMED_UAE = 4
 # Task 40 (hq answer to stop 1, option a): a web page and an announcement are not instruments, as their manifest
 # notes say ("Service page, not an instrument"; "Announcement, not a law"); Annex A names the two rows
-NOT_INSTRUMENTS = ("announcement", "web_page")
+NOT_INSTRUMENTS = ("announcement", "web_page", "news")  # Task 44: a news report (Al Bayan) is not an instrument either
 
 
 # Annex A's counts (order Task 38 item 3): "88 documents in `kb/manifest.csv`: 31 UAE instruments ... 34 foreign

@@ -251,9 +251,12 @@ GAP_79 = ("The Cabinet schedule of licensee violations and fines that Telecom La
           "and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date "
           "or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 "
           "telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2).")  # Task 33
-UAE_79 = ("Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Whether the Board may "
+UAE_79 = ("Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Portal advanced search "
+          "'المخالفات والجزاءات الاتصالات' on 2026-11-02: ten results, none a telecom-licensee schedule. Fines in the 79 "
+          "bis (1) range have been imposed through licence terms with no Cabinet schedule: TRA Violation Decision 1/2009, "
+          "AED 200,000; licence 2/2026 16.3.2, AED 50,000 to 200,000. Whether the Board may "
           "fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq "
-          "2026-10-22).")
+          "2026-10-22).")  # Task 44: the fines search and the fines imposed through licence terms
 
 
 def _row():
@@ -271,7 +274,8 @@ def test_candidate_79bis_2_is_hqs_wording():
     assert [s["clause"] for s in row["searched"]] == ["telecom-law-3-2003-en:79 bis", "telecom-law-3-2003-en:79 bis",
                                                       "licence-2-2026:16.3.2", "licence-2-2026:16.3.3",
                                                       "cabres-52-2024-ar:2(2)", "cabres-200-2025-en:3(3)",
-                                                      "executive-order-3-2004:42"]  # Task 33
+                                                      "executive-order-3-2004:42",  # Task 33
+                                                      "tra-violation-decision-1-2009:4"]  # Task 44
     assert kb.page_of("licence-2-2026", "16.3.3") == 45
 
 

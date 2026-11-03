@@ -271,7 +271,7 @@ def gaps_page() -> str:
             "Every row lists the clauses searched and what each says, English and, where the chunk holds it, Arabic. "
             "Rows in the report's order; read from <code>onyx/data/gaps.json</code>.</p>"
             f"<p>{escape(gaps.GULF_LINE)}</p><p>{escape(gaps.FREE_ZONE_LINE)}</p>"
-            f"<p>{_code(gaps.AUTHORITY_LINE)}</p><p>{escape(gaps.COMPANION_LINE)}</p>"
+            f"<p>{_code(gaps.AUTHORITY_LINE)}</p><p>{escape(gaps.GAZETTE_LINE)}</p><p>{escape(gaps.COMPANION_LINE)}</p>"
             f'<ol class="toc">{toc}</ol>' + "".join(_gap(by_id[i]) for i in order) +
             f"<h2>Candidates</h2><p>Flagged as candidates; no global example required.</p>{candidates}"
             f"<h2>Searched, nothing found</h2>{nothing}"

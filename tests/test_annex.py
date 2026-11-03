@@ -120,10 +120,10 @@ def test_the_precision_paragraph_figures_are_the_pooled_and_misses_lines():
     assert "S3-4" in para and "S4-4" in para and "each missed in 1 of 2 runs" in para
 
 
-@pytest.mark.parametrize("old, new", [("95 documents in", "94 documents in"), ("90 are VERIFIED", "91 are VERIFIED"),  # Task 43: 95, 90
-                                      ("2 REFERENCED", "3 REFERENCED"), ("3 UNVERIFIED", "4 UNVERIFIED"),
-                                      ("31 UAE instruments", "32 UAE instruments"),
-                                      ("35 foreign texts", "36 foreign texts")])
+@pytest.mark.parametrize("old, new", [("105 documents in", "104 documents in"), ("98 are VERIFIED", "99 are VERIFIED"),  # Task 44: 105, 98
+                                      ("4 REFERENCED", "5 REFERENCED"), ("3 UNVERIFIED", "4 UNVERIFIED"),
+                                      ("34 UAE instruments", "35 UAE instruments"),
+                                      ("38 foreign texts", "39 foreign texts")])
 def test_annex_a_kb_counts_are_read_from_the_manifest(old, new):
     build = _load()
     annex = _annex()
@@ -138,15 +138,17 @@ def test_uae_instruments_leave_out_web_pages_and_announcements():
     build = _load()
     rows = [r for r in kb.load_manifest() if r["jurisdiction"] == "UAE"]
     left_out = sorted(r["document_id"] for r in rows if r["source_type"] in build.NOT_INSTRUMENTS)
-    assert left_out == ["fed-ai-data-authority-2026-06-14", "tdra-dispute-service-page",
-                        "wam-2026-06-14-ai-data-authority"]  # Task 43: the WAM page, an announcement
+    assert left_out == ["albayan-arabic-law-2026-04-29", "fed-ai-data-authority-2026-06-14", "tdra-dispute-service-page",
+                        "tdra-faqs", "uaepass-docs-account-levels",
+                        "wam-2026-06-14-ai-data-authority"]  # Task 44: two web pages and a news report join
     assert all("not an instrument" in r["notes"] or "not a law" in r["notes"] for r in rows
                if r["source_type"] in build.NOT_INSTRUMENTS)
     count = len({r["instrument"] for r in rows if r["source_type"] not in build.NOT_INSTRUMENTS})
-    assert count == 31 == len({r["instrument"] for r in rows}) - len(left_out)
+    assert count == 34 == len({r["instrument"] for r in rows}) - len(left_out)
     annex = " ".join(_annex().split())
     assert f"{count} UAE instruments" in annex
-    assert "plus a TDRA service page and two announcements, which are not instruments" in annex
+    assert ("plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation), two announcements and "
+            "a news report, which are not instruments") in annex
 
 
 def test_the_counts_stated_in_the_annex_are_the_repos():
