@@ -6,7 +6,9 @@ data in onyx/data/proposed/, never loaded by the gate: its id appears in reasons
 never in clause_ids.
 
 - `decide_under`: on a `block` whose reasons hold an obligation on the rule's clause while the trigger fact is yes, one
-  obligation reason is added with the rule's deadline. The verdict and clause_ids are unchanged.
+  obligation reason is added with the rule's deadline. The verdict and clause_ids are unchanged. A rule may name
+  another verdict and reason kind in `clock_on` (gap-4: a `hold` with a check on PDPL 18(4), order 2026-11-01 Task 36
+  item 3); with no time on file the clock runs from the record the rule requires, and a second-order finding says so.
 - `decide_pending_under`: a deny-by-default hold on the question the rule answers is released to allow, with a check
   reason and, when the log records no time at the hand-over step, a second-order finding. Any other hold, and every
   block, is returned as the gate gave it.
@@ -40,17 +42,27 @@ def _added(rule: dict[str, Any], kind: str, text: str, **extra: Any) -> dict[str
     return {"gate": rule["id"], "kind": kind, "proposed": True, "text": text, **extra}
 
 
+def _with_clock(rule: dict[str, Any], verdict: gate.Verdict, state: gate.State) -> gate.Verdict:
+    on = rule.get("clock_on", {"verdict": gate.BLOCK, "kind": "obligation"})
+    duty = any(r["kind"] == on["kind"] and r.get("clause") == rule["adds_deadline_to"] for r in verdict.reasons)
+    if verdict.verdict != on["verdict"] or not duty or not gate._yes(state.facts.get(rule["trigger_fact"])):
+        return verdict
+    start = state.facts.get("time")
+    since = start if start else f"the {rule['requires_record']} (no time on file)"
+    clock = _added(rule, "obligation", f"{rule.get('clock_verb', 'hand over')} within {rule['value']} "
+                                       f"{rule['unit']} of {since} ({rule['id']}, not law)",
+                   deadline={"rule": rule["id"], "value": rule["value"], "unit": rule["unit"], "from": start})
+    reasons = [*verdict.reasons, clock]
+    if not start:
+        reasons.append(_added(rule, "finding", f"second-order: the rule needs the {rule['requires_record']} "
+                                               "recorded; this run records no time at the step, so the "
+                                               f"{rule['value']}-{rule['unit'].rstrip('s')} clock cannot start"))
+    return dataclasses.replace(verdict, reasons=reasons)
+
+
 def decide_under(rule: dict[str, Any]) -> Decide:
     def decide(proposal: Any, state: gate.State, kb_: gate.Knowledge | None = None) -> gate.Verdict:
-        verdict = gate.decide(proposal, state, kb_)
-        duty = any(r["kind"] == "obligation" and r.get("clause") == rule["adds_deadline_to"] for r in verdict.reasons)
-        if verdict.verdict != gate.BLOCK or not duty or not gate._yes(state.facts.get(rule["trigger_fact"])):
-            return verdict
-        start = state.facts.get("time")
-        clock = _added(rule, "obligation", f"hand over within {rule['value']} {rule['unit']} of {start} "
-                                           f"({rule['id']}, not law)",
-                       deadline={"rule": rule["id"], "value": rule["value"], "unit": rule["unit"], "from": start})
-        return dataclasses.replace(verdict, reasons=[*verdict.reasons, clock])
+        return _with_clock(rule, gate.decide(proposal, state, kb_), state)
     return decide
 
 
@@ -63,6 +75,8 @@ def decide_pending_under(rule: dict[str, Any], events: list[dict[str, Any]]) -> 
     """`events` is the recorded log, read for the time fact at the hand-over step."""
     def decide_pending(proposal: Any, state: gate.State, kb_: gate.Knowledge | None = None) -> gate.Verdict:
         verdict = gate.decide_pending(proposal, state, kb_)
+        if "answers" not in rule:  # a rule that answers no held question (gap-4): only its clock, if it names one
+            return _with_clock(rule, verdict, state) if "clock_on" in rule else verdict
         checks = [r for r in verdict.reasons if r["kind"] == "check"]
         if (verdict.verdict != gate.HOLD or any(r["gate"] != "deny_by_default" for r in checks)
                 or proposal.verb != rule["answers"]["verb"] or proposal.args.get("mark") != rule["answers"]["mark"]):
@@ -155,13 +169,14 @@ def render(path: str | Path, rule_id: str) -> str:
     sid = runs._events(path)[0]["entity_id"]
     recorded, under, changes = replay_under(path, rule_id)
     findings = [r["text"] for row in changes for r in row[4] if r["kind"] == "finding"]
+    note = f" ({rule['text_ar_note']})" if "text_ar_note" in rule else ""
     lines = [f"# What-if: {sid} under the rule {rule['gap'].replace('-', ' ')} recommends", "",
              f"Run `{_rel(path)}`; hash chain: {'ok' if audit.verify(path) else 'BROKEN'}. Replayed offline from the "
              "logged model responses; no model call. The operator, subscriber and numbers are synthetic.", "",
              "## Proposed rule, not law", "",
              f"`{rule['id']}`, {rule['status']}, for {rule['addressee']}.", "",
              f"EN: {rule['text_en']}", "",
-             f"AR: {rule['text_ar']}", "",
+             f"AR{note}: {rule['text_ar']}", "",
              f"Value: {rule['value']} {rule['unit']}. Basis: {rule['value_basis']}.", "",
              "## What changes", "",
              "| decision | verb | recorded | what-if | added (proposed, not law) |",

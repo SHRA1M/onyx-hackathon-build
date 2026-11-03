@@ -16,7 +16,8 @@ import pytest
 from onyx import audit, data, kb, site, whatif
 from onyx.__main__ import build_parser
 
-PAGES = ("index.html", "runs.html", "gaps.html", "kb.html", "verify.html", "whatif.html", "modeldown.html")
+PAGES = ("index.html", "runs.html", "gaps.html", "kb.html", "verify.html", "whatif.html", "modeldown.html",
+         "localmodel.html")
 
 
 class Page(HTMLParser):
@@ -62,7 +63,7 @@ def _results():
     return json.loads((kb.REPO / "eval" / "results.json").read_text(encoding="utf-8"))
 
 
-def test_seven_pages_linked_from_one_bar(pages):
+def test_eight_pages_linked_from_one_bar(pages):
     assert tuple(pages) == PAGES
     for name, html in pages.items():
         links = [e["attrs"]["href"] for e in _parse(html) if e["tag"] == "a" and "site-link" in
@@ -162,7 +163,7 @@ def test_gaps_rows_and_texts(pages):
     rows = [e for e in elements if e["tag"] == "section" and "gap-row" in e["attrs"].get("class", "")]
     ids = [r["attrs"]["data-id"] for r in rows]
     assert sorted(ids) == sorted(r["id"] for r in register["gaps"])
-    assert len([i for i in ids if i.startswith("gap-")]) == 12  # gap-12, order 2026-10-26 Task 27
+    assert len([i for i in ids if i.startswith("gap-")]) == 15, "Task 41: gap-13 to gap-15 join gap-1 to gap-12"
     assert ids == site.gap_order()
     by_id = {r["id"]: r for r in register["gaps"]}
     for row in rows:
@@ -328,7 +329,8 @@ def test_a_rows_note_shows_on_the_site_as_on_the_register_page(pages):
     rows = {r["attrs"]["data-id"]: r for r in elements if r["tag"] == "section" and "gap-row" in r["attrs"].get("class", "")}
     gaps_md = (kb.REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
     noted = [g for g in data.load_gaps()["gaps"] if g.get("note")]
-    assert [g["id"] for g in noted] == ["gap-1", "gap-2", "gap-7", "gap-10", "gap-12"]  # Task 30 scope lines; gap-2, gap-7 (Task 31)
+    assert [g["id"] for g in noted] == ["gap-1", "gap-2", "gap-5", "gap-7", "gap-10", "gap-12", "gap-13", "gap-15"], \
+        "Task 41: gap-13 (promoted from candidate) and gap-15 (a method, not a tariff) carry notes"
     for g in noted:
         assert g["note"] in rows[g["id"]]["text"] and g["note"] in gaps_md
 
@@ -349,5 +351,5 @@ def test_kb_page_links_the_datasheet(pages):  # order 2026-10-29-task-29 Part C2
 
 def test_readme_first_screen_links_the_datasheet():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
-    line = next(l for l in readme.splitlines() if l.startswith("1. Knowledge base:"))
+    line = next(l for l in readme.splitlines() if l.startswith("| Knowledge base |"))  # Task 39 C: a table row
     assert "`kb/export/InputDocs/Inputs.md`" in line and "`kb/DATASHEET.md`" in line

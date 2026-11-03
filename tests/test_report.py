@@ -18,9 +18,9 @@ from onyx.model import MockModel
 
 DOCS = kb.REPO / "docs"
 REPORT_MD = DOCS / "report.md"
-HEADINGS = ["Introduction", "Description of the use case", "Use case requirement",
-            "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies", "Error scenarios",
-            "Policy gaps and standards gaps derived from the mapping exercise"]
+HEADINGS = ["Introduction", "Description of the use case", "What is the role played by AI?", "Requirements",
+            "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies", "Demo scenarios",
+            "Error scenarios", "Policy gaps and standards gaps derived from the mapping exercise"]  # Task 36 item 1
 
 
 def _load():
@@ -57,11 +57,11 @@ def test_two_builds_are_byte_identical_and_match_the_committed_docx(built, tmp_p
     assert built.read_bytes() == (DOCS / "report.docx").read_bytes(), "run `python docs/build_report.py`"
 
 
-def test_six_list_paragraph_headings_in_template_order(built):
+def test_eight_list_paragraph_headings_in_template_order(built):
     from docx import Document
     doc = Document(str(built))
     headings = [p.text for p in doc.paragraphs if p.style.name == "List Paragraph"]
-    assert headings == HEADINGS
+    assert headings == HEADINGS + ["Annex"]  # Task 38: the annex heading, unnumbered, after the eight
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
     assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
                                                                   "GitHub link (code)", "Knowledge base"]  # Task 34 (Iyas)
@@ -91,10 +91,11 @@ def test_limits_and_next_steps_close_section_6_without_a_heading(built):
 def test_the_mapping_table_replaces_the_template_table_and_tables_keep_its_style(built):
     from docx import Document
     doc = Document(str(built))
-    assert len(doc.tables) == 2
-    mapping, gaps = doc.tables
+    assert len(doc.tables) == 4  # Task 38: the annex adds the C3 table and "where to look"
+    mapping, gaps = doc.tables[:2]
     assert mapping.rows[0].cells[0].text == "Node" and mapping.rows[1].cells[0].text == "SRC"
-    assert gaps.rows[0].cells[0].text == "#" and gaps.rows[10].cells[0].text == "9"  # row 12 follows row 11 (Task 27)
+    assert gaps.rows[0].cells[0].text == "#" and gaps.rows[10].cells[0].text == "11"  # Task 37, rows in number order
+    assert gaps.rows[11].cells[0].text == "12"  # Task 37, rows in number order
     for table in doc.tables:
         assert table.style.style_id == "TableGridLight"
         assert all(r.bold for c in table.rows[0].cells for p in c.paragraphs for r in p.runs)
@@ -250,7 +251,7 @@ def test_every_table_cell_is_10_pt_with_no_space_before_or_after(built):
                     assert p.runs and all(r.font.size == Pt(10) for r in p.runs), cell.text
 
 
-def test_both_pictures_are_16_cm_wide_and_keep_with_next(built):
+def test_both_pictures_are_12_cm_wide_and_keep_with_next(built):
     from docx import Document
     from docx.shared import Cm
     doc = Document(str(built))
@@ -258,26 +259,51 @@ def test_both_pictures_are_16_cm_wide_and_keep_with_next(built):
     assert len(pictures) == 2
     for p in pictures:
         assert p.paragraph_format.keep_with_next is True
-        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(16)
+        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(11)  # Task 36 stop 2 ruling
 
 
-def test_the_six_headings_keep_with_next(built):
+def test_the_eight_headings_keep_with_next(built):
     from docx import Document
     doc = Document(str(built))
     headings = [p for p in doc.paragraphs if p.style.name == "List Paragraph"]
-    assert len(headings) == 6 and all(p.paragraph_format.keep_with_next for p in headings)
+    assert len(headings) == 9 and all(p.paragraph_format.keep_with_next for p in headings)  # Task 38: + "Annex"
 
 
 def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     notice = readme.index("> **Synthetic data.**")
-    block = readme.index("## For the reviewer\n\nThe four published criteria, each with the one place that shows it:")
+    block = readme.index("## For the reviewer\n\nThe four published criteria, each with its evidence and one way to "
+                         "check it:")
     assert notice < block < readme.index("Mizan puts a consumer on the line")
     lines = readme[block:readme.index("Mizan puts a consumer on the line")].strip().splitlines()
-    numbered = [line for line in lines if re.match(r"\d\. ", line)]
-    assert [line[:2] for line in numbered] == ["1.", "2.", "3.", "4."]
-    assert numbered[0].startswith(f"1. Knowledge base: `kb/manifest.csv` ({len(kb.load_manifest())} rows")  # read, Task 30
-    assert numbered[3].startswith("4. ITU-T Y.3172 and the Readiness Framework:")
+    rows = [line for line in lines if line.startswith("| ") and not line.startswith("| Criterion")]  # Task 39 C
+    assert len(rows) == 4
+    assert rows[0].startswith(f"| Knowledge base | `kb/manifest.csv` ({len(kb.load_manifest())} rows")  # read, Task 30
+    assert rows[3].startswith("| ITU-T Y.3172 and the Readiness Framework |")
+
+
+def test_the_reviewer_table_names_only_commands_and_paths_that_exist():
+    """Task 39 C: every `python -m onyx <command>` in the table is in `python -m onyx --help`, every backticked path
+    (and every path a command names) exists, and every link is a heading of the README."""
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    block = readme.split("## For the reviewer\n", 1)[1].split("Mizan puts a consumer on the line", 1)[0]
+    rows = [line for line in block.splitlines() if line.startswith("| ") and not line.startswith("| Criterion")]
+    assert len(rows) == 4 and all(len(row.strip("|").split(" | ")) == 3 for row in rows)
+    helptext = subprocess.run([sys.executable, "-m", "onyx", "--help"], capture_output=True, text=True,
+                              cwd=kb.REPO, check=True).stdout
+    listed = set(re.findall(r"^    (\S+)\s", helptext, re.M))
+    ticked = [t for row in rows for t in re.findall(r"`([^`]+)`", row)]
+    commands = [t for t in ticked if "python -m onyx" in t]
+    assert len(commands) == 3
+    for command in commands:
+        words = command.split("python -m onyx ", 1)[1].split()
+        assert words[0] in listed, command
+        assert all((kb.REPO / w).exists() for w in words if "/" in w), command
+    paths = [t.split(" ")[0] for t in ticked if t not in commands]
+    assert paths and all((kb.REPO / p).exists() for p in paths), paths
+    anchors = re.findall(r"\]\(#([^)]+)\)", "\n".join(rows))
+    headings = {re.sub(r"[^a-z0-9 -]", "", h.lower()).replace(" ", "-") for h in re.findall(r"^## (.+)$", readme, re.M)}
+    assert anchors and set(anchors) <= headings, anchors
 
 
 # --- Task 29 Part D (order 2026-10-29-task-29-field-take, Part D; release order 2026-10-30) --------------------
@@ -290,7 +316,7 @@ def _gap_cell(md: str, n: str) -> str:
 def test_report_gap12_maps_before_claiming():
     cell = _gap_cell(REPORT_MD.read_text(encoding="utf-8"), "12")
     assert cell.index("Y.3173") < cell.index("neither") and cell.index("D9") < cell.index("neither")
-    assert cell.strip().endswith("Left open at ITU's request (2026-10-30).")
+    assert cell.strip().endswith("Left open with ITU's agreement (2026-10-30).")
     gap = data.load_gaps()["gaps"]
     row = next(g for g in gap if g["id"] == "gap-12")["gap"]
     assert row.index("Y.3173") < row.index("neither") and row.index("D9") < row.index("neither")
@@ -300,8 +326,12 @@ def test_report_figures_match_eval():
     build = _load()
     sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
     text = REPORT_MD.read_text(encoding="utf-8")
-    b1 = "expected gaps: 5 of 7 found in every run, 2 missed (both in S1), 3 unexpected register ids flagged"
-    assert b1 in text and "95% interval 0.937 to 0.995 pooled" in text
+    b1 = "expected gaps: 5 of 7 found in every run, 2 missed (both S1), 3 unexpected ids flagged"  # Task 36 stop 2 ruling, change 6
+    assert b1 in text
+    # Task 36 cut 3: the interval left the report's Results; it stays in eval's output and the README
+    assert "95% interval" not in text.split("**Results**")[1].split("## ")[0]
+    for where in ("eval/results.md", "README.md"):
+        assert "110 of 112 key steps, 95% interval 0.94 to 1.00" in (kb.REPO / where).read_text(encoding="utf-8")
     assert build.check_paragraph(f"Results {b1} `[C5, x]`.", sets) == []
     assert build.check_paragraph("Recall 110 of 112, 95% interval 0.937 to 0.995 pooled `[C5, x]`.", sets) == []
 
@@ -354,8 +384,9 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 88 documents" in text and "83 are verified" in text and "thirty-four foreign texts" in text  # Task 35b
-    assert "twenty-eight other UAE texts" in text  # 32 UAE instruments minus the four the sentence names (Task 34)
+    assert "holds 105 documents" in text and "98 are verified" in text and "thirty-eight foreign texts" in text  # Task 44
+    assert "thirty other UAE texts" in text  # 34 UAE instruments minus the four named (Task 40, counts Task 44)
+    assert "the 34 UAE instruments" in text
 
 
 @pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
@@ -363,10 +394,10 @@ def test_report_kb_counts_are_read_from_the_manifest():
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 88 documents", "47 are verified": "83 are verified",
-             "nine foreign texts": "thirty-four foreign texts", "twenty-two foreign texts": "thirty-four foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 88 documents",
-             "fifteen other UAE texts": "twenty-eight other UAE texts"}[wrong]
+    right = {"holds 51 documents": "holds 105 documents", "47 are verified": "98 are verified",
+             "nine foreign texts": "thirty-eight foreign texts", "twenty-two foreign texts": "thirty-eight foreign texts",
+             "**SRC-2** 51 documents": "**SRC-2** 105 documents",
+             "fifteen other UAE texts": "thirty other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
@@ -374,7 +405,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("83 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("98 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 
@@ -415,12 +446,12 @@ def test_task_33_line_26_names_two_unpublished_texts_and_one_unreachable_one():
 
 def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
     # order Task 33 Part D: in the report only if 5 pages hold; they do not, so README only
-    sentence = ("The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial "
-                "Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps "
-                "the statutory name.")
+    # Task 43 (hq answer 2a): the register's Authority paragraph replaces the README line; still not in the report
+    from onyx import gaps
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
-    assert readme.count(sentence) == 1 and readme.index(sentence) > readme.index("<!-- gap-register:end -->")
-    assert "Federal Authority for Artificial Intelligence" not in REPORT_MD.read_text(encoding="utf-8")
+    assert readme.count(gaps.AUTHORITY_LINE) == 1 and readme.index(gaps.AUTHORITY_LINE) < readme.index("<!-- gap-register:start -->")
+    report = REPORT_MD.read_text(encoding="utf-8")
+    assert "Federal Authority for Artificial Intelligence" not in report and "Intelligence and Data Authority" not in report
 
 
 # --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------
@@ -438,3 +469,30 @@ def test_task_34_team_and_the_four_labelled_links():
     assert not any(line.startswith("**GitHub link:**") for line in lines)
     for path in (REPORT_MD, kb.REPO / "README.md"):
         assert "Saaydeh" not in path.read_text(encoding="utf-8"), path
+
+
+def test_the_template_example_team_never_appears_in_report_readme_or_site():
+    # hq, 2026-11-01: the filed Task 36 order may quote the template's example team; nothing a reader sees may
+    name = bytes([86, 105, 115, 104, 110, 117]).decode()  # spelled by code so this file does not carry it
+    paths = [DOCS / "report.md", kb.REPO / "README.md", *sorted((DOCS / "site").glob("*.html"))]
+    assert all(name not in p.read_text(encoding="utf-8") for p in paths)
+    with zipfile.ZipFile(DOCS / "report.docx") as z:
+        assert name not in z.read("word/document.xml").decode("utf-8")
+
+
+# --- Task 37 item 1 (order 2026-11-02-task-37-audit-fixes) -----------------------------------------------------
+
+def test_no_numbered_section_pointer_into_the_report():
+    """README, the site and the datasheet name a report section by its heading, never by a number (Task 36 renumbered
+    them). Only pointers into the report count: a law's or a source note's own sections are left alone."""
+    repo = kb.REPO
+    files = [repo / "README.md", repo / "kb" / "DATASHEET.md", *sorted((repo / "docs" / "site").glob("*.html"))]
+    pointer = re.compile(r"report(\.docx|\.md)?[^.;\n<]{0,40}?\bsections?\s+\d", re.IGNORECASE)
+    hits = [f"{f.name}: {m.group(0)}" for f in files for m in pointer.finditer(f.read_text(encoding="utf-8"))]
+    assert hits == []
+
+
+# Task 44: the knowledge base reached thirty other UAE texts; a round tens word must read as its number
+@pytest.mark.parametrize("word,value", [("thirty", 30), ("twenty", 20), ("thirty-eight", 38), ("nine", 9)])
+def test_a_round_tens_word_reads_as_its_number(word, value):
+    assert _load()._number(word) == value

@@ -147,6 +147,70 @@ def must_cite_given(events: list[dict[str, Any]], key: dict[str, Any]) -> dict[i
     return {n: None if c is None else _ratio(*c) for n, c in _must_cite_counts(events, key).items()}
 
 
+KEY_CLAUSES = ("shown", "total", "mandate", "retrieval", "absent", "carried")
+
+
+def key_clauses_shown(events: list[dict[str, Any]], key: dict[str, Any]) -> dict[str, int]:
+    """Order Task 39 B, shown only: over the key steps where an agent sent a prompt (a propose event), each must_cite
+    entry mapped to its chunk; shown when the chunk is in a propose event of the step (any agent): in its
+    sources_mandate ("mandate"), or only in its sources_used ("retrieval"). Each entry counts once, so two rules on
+    one chunk count twice."""
+    chunks = {r["id"]: f"{r['document_id']}:{r['chunk']}" for r in data.load_rules()}
+    prompts: dict[int, tuple[set[str], set[str]]] = {}
+    for e in events:
+        if e["action"] == "propose":
+            mandate, used = prompts.setdefault(_step(e["entity_id"]), (set(), set()))
+            mandate |= set(e["new_value"].get("sources_mandate", []))
+            used |= set(e["new_value"]["sources_used"])
+    counts = dict.fromkeys(("shown", "total", "mandate", "retrieval"), 0)
+    for step in key["steps"]:
+        if step["n"] not in prompts:
+            continue
+        mandate, used = prompts[step["n"]]
+        for rule in step["must_cite"]:
+            chunk = chunks[rule]
+            counts["total"] += 1
+            counts["mandate"] += chunk in mandate
+            counts["retrieval"] += chunk in used and chunk not in mandate
+    counts["shown"] = counts["mandate"] + counts["retrieval"]
+    return counts
+
+
+def key_clauses_absent(events: list[dict[str, Any]], key: dict[str, Any],
+                       hits: dict[int, bool]) -> list[tuple[int, str, bool]]:
+    """Ruling 2 of Task 39 (B5): at each key step that sent a prompt and whose action hit, every must_cite entry
+    not shown (key_clauses_shown's sense), as (step, rule id, carried). Carried when the step's gate record holds
+    it: the rule id in a gate event's reasons (clause), or its chunk among the clause_ids of the proposal the gate
+    judged (old_value)."""
+    chunks = {r["id"]: f"{r['document_id']}:{r['chunk']}" for r in data.load_rules()}
+    shown: dict[int, set[str]] = {}
+    for e in events:
+        if e["action"] == "propose":
+            shown.setdefault(_step(e["entity_id"]), set()).update(
+                e["new_value"].get("sources_mandate", []), e["new_value"]["sources_used"])
+    record: dict[int, set[str]] = {}
+    for e in _gates(events):
+        held = record.setdefault(_step(e["entity_id"]), set())
+        held |= {r.get("clause") for r in e["new_value"].get("reasons", []) if r.get("clause")}
+        held |= {f"chunk:{c}" for c in (e.get("old_value") or {}).get("clause_ids") or []}
+    absent = []
+    for step in key["steps"]:
+        n = step["n"]
+        if n not in shown or not hits.get(n):
+            continue
+        held = record.get(n, set())
+        absent += [(n, rule, rule in held or f"chunk:{chunks[rule]}" in held)
+                   for rule in step["must_cite"] if chunks[rule] not in shown[n]]
+    return absent
+
+
+def key_clauses_cell(events: list[dict[str, Any]], key: dict[str, Any], scenario: dict[str, Any]) -> dict[str, int]:
+    """One run's key-clause counts: key_clauses_shown, plus the entries absent at a step that hit and of those the
+    ones the gate carries (key_clauses_absent)."""
+    absent = key_clauses_absent(events, key, action_hits(events, key, scenario))
+    return {**key_clauses_shown(events, key), "absent": len(absent), "carried": sum(c for _, _, c in absent)}
+
+
 def _citation_valid(proposal: dict[str, Any], kb: gate.Knowledge, given: list[str] | None = None) -> bool:
     """given: the clauses the agent's prompt gave for the step; the cited ids resolve against them (gate.resolve_ids).
     None scores the ids as cited (the bake-off)."""
@@ -465,6 +529,7 @@ def _rerun(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> di
     names, per mode, the runs' tokens and cost, and the governed misses per key step and language."""
     scored, usage, prompts = _empty(), [], {mode: set() for mode in MODES}
     misses: dict[str, dict[str, Any]] = {}
+    key_clauses: dict[str, dict[str, dict[str, int]]] = {}
     for sid in SCENARIOS:
         key, scenario = data.load_key(sid), data.load_scenario(sid)
         for mode, governed in MODES.items():
@@ -477,13 +542,15 @@ def _rerun(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> di
                           for p, r in zip(paths, rows)]
                 if not governed or not paths:
                     continue
+                shown = [key_clauses_cell(_events(p), key, scenario) for p in paths]
+                key_clauses.setdefault(sid, {})[lang] = {k: sum(c[k] for c in shown) for k in KEY_CLAUSES}
                 hits = [action_hits(_events(p), key, scenario) for p in paths]
                 for step in key["steps"]:
                     row = misses.setdefault(f"{sid}-{step['n']}", {"agent": step["agent"], "verb": step["verb"],
                                                                     **{lg: [0, 0] for lg in LANGS}})
                     row[lang] = [sum(not h[step["n"]] for h in hits), len(paths)]
     return {"scored": scored, "prompts": {mode: sorted(v) for mode, v in prompts.items()}, "runs": usage,
-            "misses": misses}
+            "misses": misses, "key_clauses": key_clauses}
 
 
 def _c4(root: Path, c3: Scored, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[str, Any]:
@@ -504,7 +571,10 @@ def _c5(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[
                      sum(m[lang][1] for m in c5["misses"].values())] for lang in LANGS}
     return {"C5": _summary(c5["scored"]), "prompts": c5["prompts"], "runs": c5["runs"], "misses": missed,
             "key_steps": scored, "gaps_vs_keys": gaps_against_keys(root / C5), "citation_failures": failures,
-            "intervals": {"action_recall": _intervals(recall), "citation_validity": _intervals(failures["by_lang"])}}
+            "intervals": {"action_recall": _intervals(recall), "citation_validity": _intervals(failures["by_lang"])},
+            "key_clauses": {"by_scenario": c5["key_clauses"],
+                            "pooled": {lang: {k: sum(c5["key_clauses"][sid][lang][k] for sid in c5["key_clauses"])
+                                              for k in KEY_CLAUSES} for lang in LANGS}}}
 
 
 def _intervals(counts: dict[str, list[int]]) -> dict[str, Any]:
@@ -575,6 +645,28 @@ def _fig(value: float | None) -> str:
     return "n/a" if value is None else f"{value:.2f}"
 
 
+def _steps(value: float | None) -> str:
+    """A hand-over latency in steps: n/a where the key has no hand-over step, whole steps without decimals."""
+    if value is None:
+        return "n/a"
+    return str(int(value)) if float(value).is_integer() else f"{value:.2f}"
+
+
+def _of(n: int, total: int) -> str:
+    return f"{n} of {total} ({n / total:.2f})" if total else "n/a"
+
+
+def key_clauses_cells(cell: dict[str, int]) -> str:
+    """Task 39 B: the three numbers of a cell: shown of total, by mandate, only by retrieval (with their shares)."""
+    return f"{cell['shown']} of {cell['total']} | {_of(cell['mandate'], cell['total'])} | "            f"{_of(cell['retrieval'], cell['total'])}"
+
+
+def key_clauses_pooled(lang: str, cell: dict[str, int]) -> str:
+    return (f"Pooled {lang}: {cell['shown']} of {cell['total']} key clauses shown; {_of(cell['mandate'], cell['total'])} "
+            f"by the mandate list; {_of(cell['retrieval'], cell['total'])} only by retrieval; of the {cell['absent']} "
+            f"not shown at a step that scored, {cell['carried']} carried by the gate's verdict.")
+
+
 def _interval(row: dict[str, Any], counts: bool = True) -> str:
     if row["ci95"] is None:
         return "n/a"
@@ -595,6 +687,19 @@ C5_DEFINITIONS = [
     "in some runs, or in none, and the register ids flagged that the key does not name.",
     "- citation failures by kind (C5, shown only, never compared): each invalid citation as id unknown, id in another "
     "document, quote not verbatim or chunk not VERIFIED, the first that applies. " + FAILURES_LINE,
+    "- key clauses shown (C5, shown only, never compared): per key step, each must_cite clause counts as shown if "
+    "its chunk was in what the model was shown for the step (the sources_mandate or sources_used of any propose "
+    "event of the step); by mandate when in sources_mandate, only by retrieval when in sources_used and not in "
+    "sources_mandate; summed over the runs of each scenario and language, and pooled per language.",
+    "- key clauses shown, steps: steps with no model call (S1-1, S2-1) are outside the total, as must-cite given does.",
+    "- key clauses shown, entries: each must_cite entry counts once, mapped to its chunk, so two rules on one chunk "
+    "count twice.",
+    "- key clauses shown, unit: clause entries per language over the committed runs (each run's entries added).",
+    "- key clauses not shown at a step that scored: entries not shown at a key step whose action hit (action "
+    "recall's sense); carried by the gate's verdict when the step's gate record holds them: the rule id in a gate "
+    "event's reasons, or its chunk among the clause_ids of the proposal the gate judged.",
+    "- hand-over latency (C5): the hand-over latency in steps above, over the C5 runs, the mean of each scenario and "
+    "language; n/a where the key has no hand-over step.",
 ]
 
 
@@ -620,6 +725,17 @@ def _c5_sections(results: dict[str, Any]) -> list[str]:
               "| Run | Step | Cited id | Kind |", "|---|---|---|---|"]
     lines += [f"| {f['run']} | {f['step']} | {', '.join(f['cited'])} | {f['kind']} |" for f in failures["failures"]]
     lines += ["", "Per kind: " + ", ".join(f"{k} {n}" for k, n in failures["by_kind"].items()) + ".", ""]
+    clauses, by_scenario = results["c5"]["key_clauses"], results["c5"]["C5"]["by_scenario"]
+    lines += ["## Key clauses shown and hand-over latency (C5)", "",
+              "Shown only, never compared. Over the C5 runs of each scenario and language: the key's must-cite "
+              "clauses in what the model was shown, by the mandate list and only by retrieval; and the hand-over "
+              "latency in steps.", "",
+              "| Scenario | Lang | Key clauses shown | By mandate | Only by retrieval | Hand-over latency (steps) |",
+              "|---|---|---|---|---|---|"]
+    lines += [f"| {sid} | {lang} | {key_clauses_cells(clauses['by_scenario'][sid][lang])} | "
+              f"{_steps(by_scenario[sid][lang]['handover_latency_steps'])} |"
+              for sid in clauses["by_scenario"] for lang in LANGS]
+    lines += ["", *[key_clauses_pooled(lang, clauses["pooled"][lang]) for lang in LANGS], ""]
     return lines
 
 

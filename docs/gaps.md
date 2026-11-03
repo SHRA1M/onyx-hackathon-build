@@ -6,24 +6,32 @@ A gap is claimed only where no clause in any VERIFIED or REFERENCED document rea
 
 The three GCC telecom consumer regulations read (Saudi 2024, Qatar 2024, Kuwait 2022) name no AI channel, hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, requiring a route to an employee and a qualified employee on every complaint.
 
+Two UAE free zones have their own data protection law: DIFC Law 5/2020 binds Controllers and Processors 'incorporated in the DIFC, regardless of whether the Processing takes place in the DIFC or not' (Art 6(3)(a)), and the ADGM Data Protection Regulations 2021 apply 'in the context of the activities of an Establishment of a Controller or a Processor in ADGM' (s. 3(1)). A federal telecom licensee outside the zones is not within either. Where a free-zone text fills a federal gap, the row names it as a UAE free-zone example, never as a federal rule.
+
+The PDPL names the UAE Data Office (Art 24). On 2026-06-14 the Prime Minister approved an Artificial Intelligence and Data Authority, reporting to the Cabinet, that 'will bring together under one mandate the functions previously held by three separate entities', the Data Office among them (WAM, 14 June 2026, `https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing`; manifest rows `wam-2026-06-14-ai-data-authority` and, in Arabic, `fed-ai-data-authority-2026-06-14`). No establishing instrument was found on the official portal on 2026-11-02, and dataoffice.gov.ae did not resolve on 2026-11-02. The register keeps the PDPL's name.
+
+The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02 and 2026-11-03 (curl, and Chrome from hq); the legislation portal, which lists each law's Gazette number and its regulations, is the official check, and it publishes no issue archive.
+
 The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service.
 
 | id | gap | kind | category | addressee | global example | exposed by |
 | --- | --- | --- | --- | --- | --- | --- |
-| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (acknowledge at once by telephone, 26.13.3; conclude in twenty business days, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it, whether the time is recorded. QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1); Spain Ley 10/2025 Art 8(2); Spain Ley 10/2025 Art 8(3); Saudi CST 552/1445 §13.1.1; Saudi CST 552/1445 §13.1.2; Saudi CST 552/1445 §26.5.2; India TRAI TCCRR 2012 reg 3(9); India TRAI TCCRR 2012 reg 3(9), proviso | S2-3 |
+| gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (acknowledge at once by telephone, 26.13.3; conclude in twenty business days, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it, whether the time is recorded. QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1); Spain Ley 10/2025 Art 8(2); Spain Ley 10/2025 Art 8(3); Saudi CST 552/1445 §13.1.1; Saudi CST 552/1445 §13.1.2; Saudi CST 552/1445 §26.5.2; India TRAI TCCRR 2012 reg 3(9); India TRAI TCCRR 2012 reg 3(9), proviso; India TRAI TCCRR 2012 new reg 3(9)(d); India TRAI TCCRR 2012 new reg 3(9)(e); India TRAI TCCRR 2012 new reg 3(3), first proviso | S2-3 |
 | gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL permits the processing the contract needs without consent (4(9)) and wants any further processing consented 'in writing or electronically' (6(1)(b)); one spoken 'yes' buys the service and consents to nothing beyond it, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15; Saudi CST 552/1445 §5.1.2; Saudi CST 552/1445 §5.1.3 | S1-4 |
-| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it. | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b); Qatar CCPR 2024 §1.2 (Customer Consent); Saudi CST 552/1445 §10.7 | S5 (verification step) |
+| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02). | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b); Qatar CCPR 2024 §1.2 (Customer Consent); Saudi CST 552/1445 §10.7 | S5 (verification step) |
 | gap-4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3); GDPR Art 12(3); DSA 2022/2065 Art 20(6) | S4-4, S4-5 |
-| gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1) | S3-3 |
-| gap-6 | AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'. | scope | legislative gap | Cabinet | Maine §1500-DD(2); California BPC §17941(a); California BPC §17941(b); EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113 | S1-3 |
-| gap-7 | No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent. | absence | standards gap | TDRA | Utah Code 13-77-102; Moffatt v. Air Canada 2024 BCCRT 149 para 27; Moffatt v. Air Canada 2024 BCCRT 149 para 28; India TRAI TCCRR 2012 reg 3(9); India TRAI TCCRR 2012 reg 3(9), proviso; California HSC §1339.75(a)(1)(C); California HSC §1339.75(a)(2) | all |
-| gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | 3GPP TS 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4 | S2-3 |
+| gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1); DIFC DP Regulations (UAE free zone, not federal) Regulation 5; DIFC DP Regulations (UAE free zone, not federal) Appendix 3 | S3-3 |
+| gap-6 | AI disclosure: no federal duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'. | scope | legislative gap | Cabinet | Maine §1500-DD(2); California BPC §17941(a); California BPC §17941(b); EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113; DIFC DP Regulations (UAE free zone, not federal) Regulation 10.2.2(a); Maine title page; India TRAI TCCRR 2012 new reg 3(3), second proviso | S1-3 |
+| gap-7 | No binding federal text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent. | absence | standards gap | TDRA | Utah Code 13-77-102; Moffatt v. Air Canada 2024 BCCRT 149 para 27; Moffatt v. Air Canada 2024 BCCRT 149 para 28; India TRAI TCCRR 2012 reg 3(9); India TRAI TCCRR 2012 reg 3(9), proviso; California HSC §1339.75(a)(1)(C); California HSC §1339.75(a)(2); DIFC DP Regulations (UAE free zone, not federal) Regulation 10.2.2(a); DIFC DP Regulations (UAE free zone, not federal) Regulation 10.2.2(b)(ii); DIFC DP Regulations (UAE free zone, not federal) Regulation 10.2.2(d); India TRAI TCCRR 2012 new reg 3(3), third proviso; India TRAI TCCRR 2012 new reg 3(9)(d) | all |
+| gap-8 | Standards gap, addressed to ITU: Y.3172 has no node outcome for a hand-over to a human. The policy node applies policies to the model's output and the distributor sends it on to a sink that acts; no node routes it to a person. | absence | standards gap | ITU | 3GPP TS 28.535 §4.2.3; ETSI ZSM 009-1 §7.2.2.4; ITU-T F.748.67 RQR-001; ITU-T F.748.67 OMR-010 | S2-3 |
 | gap-9 | A child on the line: the caregiver signs the terms (Child Digital Safety Law 26/2025, 11(1)(b)) and under-13 data needs verified caregiver consent (7(1)); the Art 11 instructions to providers and the Art 16 penalties are unpublished, and Cabinet Resolution 106/2026's age checks reach social media platforms only (Art 2); nothing says how a telecom channel learns the person is a child. | method | legislative gap | TDRA, Cabinet | 16 CFR 312.5(a)(1); 16 CFR 312.5(b)(1) | mapping (SRC, P); U2 (drill bank, not run) |
 | gap-10 | Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language. | method | standards gap | TDRA | Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27; Wales WLS Standard 15; Wales WLS Standard 22; Wales WLS Standard 60 | C5 per-language scoring (M, D nodes); mapping (SRC) |
 | gap-11 | A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back. | method | standards gap | TDRA | E-Commerce Dir. 2000/31 Art 11(2); CRD 2011/83 Art 8(2); US TSR 16 CFR 310.3(a)(3)(ii); Qatar 16/2010 Art 56(1); Qatar 16/2010 Art 19 | mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run. |
-| gap-12 | Standards gap, addressed to ITU. Mapped first: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (7.2, Table 7-1, p. 6: "a) Human; b) Human and System; c) System."), and its hand-over is Readiness 2.0 D9's inference-to-action latency in the other direction (p. 27: "inference-to-action latency: average time from first inference to human action"; there the AI alerts and the human acts). Readiness 2.0 also measures the human shaping the inference (D8, p. 25) and states that accountability of final decisions remains with humans (D10, p. 29). Mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes: the stop point, the hand-over rate, the hand-over latency. Y.3173 Table 7-2 NOTE 1 (p. 7) gives a human's order the highest authority ("decisions and execution instructions provided by a human being have the highest authority"); it never requires the system to ask. Y.3173 cites SAE J3016 and drops its fallback column, the request to intervene (Appendix I.1, Table I.1, p. 12 to 13). | absence | standards gap | ITU | SAE J3016 (Y.3173 Table I.1) level 3; SAE J3016 (Y.3173 Table I.1) level 4; EU Roaming Reg 2022/612 Art 14(4); EU Roaming Reg 2022/612 Art 14(4), last subparagraph; EU AI Act Art 14(4)(e) | S1 |
+| gap-12 | Standards gap, addressed to ITU. Mapped first: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (7.2, Table 7-1, p. 6: "a) Human; b) Human and System; c) System."), and its hand-over is Readiness 2.0 D9's inference-to-action latency in the other direction (p. 27: "inference-to-action latency: average time from first inference to human action"; there the AI alerts and the human acts). Readiness 2.0 also measures the human shaping the inference (D8, p. 25) and states that accountability of final decisions remains with humans (D10, p. 29). Mapped there, neither text measures when an acting agent must stop or how long the hand-over takes; ITU-T F.746.16 11.2 measures how often (a manual intervention rate, graded so that less intervention scores a higher level, no threshold), the opposite direction to a regulator's floor such as CPR 26.7.2; ITU-T F.748.67 CRR-003 measures the queue after the transfer, not the time to it. Y.3173 Table 7-2 NOTE 1 (p. 7) gives a human's order the highest authority ("decisions and execution instructions provided by a human being have the highest authority"); it never requires the system to ask. Y.3173 reproduces SAE J3016's levels in Appendix I (Table I.1), the request to intervene included, and carries no fallback dimension into its own Table 7-1. | absence | standards gap | ITU | SAE J3016 (Y.3173 Table I.1) level 3; SAE J3016 (Y.3173 Table I.1) level 4; EU Roaming Reg 2022/612 Art 14(4); EU Roaming Reg 2022/612 Art 14(4), last subparagraph; EU AI Act Art 14(4)(e) | S2-3 (the complaint hand-over, CPR 26.7.2) |
+| gap-13 | PDPL 9(1) and 9(2) make the Controller notify the Data Office and the data subject of a breach 'within the period and in accordance with the measures and requirements set by the Executive Regulations'. Art 28 gave the Council of Ministers six months from 20 Sep 2021 to issue them, on the Bureau's proposal. On 2026-11-02 the official portal lists no Executive Regulations of this Decree-Law, in either language, so no period exists in any published federal text; an operator's AI that detects a breach has no clock to run. | absence | legislative gap | Council of Ministers, UAE Data Office (proposer, Art 28) | GDPR Art 33(1); ADGM DPR 2021 (UAE free zone, not federal) s. 32(1); DIFC DP Law 5/2020 (UAE free zone, not federal) Art 41(1) | mapping (P) |
+| gap-14 | The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. 8(11) leaves processor standards to the Executive Regulations, which the portal does not list on 2026-11-02. No Data Office, Cabinet or Executive-Regulation instrument on sub-processors was found (portal, both languages; Perplexity 2026-11-02 found none). | absence | legislative gap | Council of Ministers (Executive Regulations, 8(11), 28), UAE Data Office (proposer) | GDPR Art 28(2); ADGM DPR 2021 (UAE free zone, not federal) s. 26(2); DIFC DP Law 5/2020 (UAE free zone, not federal) Art 24(2) | S3-4 |
+| gap-15 | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). On 2026-11-02 the portal's Telecommunication, Technology and Space sector lists 12 instruments (14 in Arabic), none a schedule of telecom licensee fines; the Regulation Table of Decree-Law 3/2003 shows no records. The Cabinet has issued such a schedule for the space sector (Cabinet Resolution 206/2025, 'Regulations of Violations and Administrative Penalties... Space Activities'), not for telecommunications. | absence | legislative gap | Cabinet | Ofcom Penalty Guidelines 2017 1.11; Ofcom Penalty Guidelines 2017 1.2 | mapping (P) |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | EECC 2018/1972 Art 105(3); TKG 2021 § 56(3) | S1-6 |
-| candidate-79bis-2-fine-schedule | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). | absence | legislative gap | Cabinet | none (order Task 15: no global example) | mapping (P) |
 
 ## gap-1: complaint hand-over
 
@@ -114,8 +122,11 @@ Spain's Ley 10/2025 reaches electronic communications services, telephone servic
   - AR (p. 14, `kb/sources/saudi-cst-user-protection-552-1445-ar.pdf`): "وسائل تواصل إلكترونية، تمكّن المستخدم من الوصول لموظف مقدم الخدمة."
 - Saudi CST, Regulations of User Rights Protection Rules (Decision 552/1445), 2024, §26.5.2 (VERIFIED, p. 29, `kb/sources/global/saudi-cst-user-protection-552-1445-en.txt`): "Submission of the complaint should be made available through all possible means, such as by calling, through personal attendance or other electronic means, ensuring that the complaint is handled by a qualified employee. Service Provider cannot oblige the user to be limited to a single mean for filing its complaint."
   - AR (p. 28, `kb/sources/saudi-cst-user-protection-552-1445-ar.pdf`): "أن يتاح تقديم الشكوى عبر كافة الوسائل ومن ذلك الاتصال الهاتفي، والحضور الشخصي، والوسائل الإلكترونية الأخرى بما يضمن معالجة الشكوى من قبل موظف مختص، ولا يحق لمقدم الخدمة إلزام المستخدم بوسيلة واحدة لتقديم شكواه."
-- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2013, reg 3(9) (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-2012.txt`): A regulator orders the automated channel to offer a person; no clock. "Every service provider shall ensure that an Interactive Voice Response System or IVRS, if installed on a “Consumer Care Number”, is operated in the following manner:-"
-- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2013, reg 3(9), proviso (VERIFIED, p. 5, `kb/sources/global/india-trai-tccrr-2012.txt`): "Provided that the sub-menu in the third level shall also contain an option enabling the consumer to speak to a consumer care agent."
+- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2014, reg 3(9) (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-2012.txt`): A regulator orders the automated channel to offer a person; no clock. "Every service provider shall ensure that an Interactive Voice Response System or IVRS, if installed on a “Consumer Care Number”, is operated in the following manner:-"
+- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2014, reg 3(9), proviso (VERIFIED, p. 5, `kb/sources/global/india-trai-tccrr-2012.txt`): "Provided that the sub-menu in the third level shall also contain an option enabling the consumer to speak to a consumer care agent."
+- India, TRAI Telecom Consumers Complaint Redressal (Fourth Amendment) Regulations 2026 (07 of 2026), notified 2026-11-02, not in force, new reg 3(9)(d) (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-4th-amendment-2026.txt`): A telecom regulator's notified rule: a human route inside every category, a call-back from the queue, a human available sixteen hours a day; still no transfer clock. Notified 2026-11-02, in force ninety days after Gazette publication. "(d) connecting with a human consumer care representative from within each category referred to in clause (b); and"
+- India, TRAI Telecom Consumers Complaint Redressal (Fourth Amendment) Regulations 2026 (07 of 2026), notified 2026-11-02, not in force, new reg 3(9)(e) (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-4th-amendment-2026.txt`): "(e) availing a call-back facility where the consumer is waiting in a queue to connect with a human consumer care representative."
+- India, TRAI Telecom Consumers Complaint Redressal (Fourth Amendment) Regulations 2026 (07 of 2026), notified 2026-11-02, not in force, new reg 3(3), first proviso (VERIFIED, p. 3, `kb/sources/global/india-trai-tccrr-4th-amendment-2026.txt`): "Provided that consumer assistance through a human representative shall be made available for a minimum of sixteen hours daily, on all days of the week"
 
 **Recommendation.** TDRA to state, for every automated channel, what happens when a conversation becomes a Consumer Complaint: the agent stops, the named human takes over, within a stated time, measured like T1(2a) for chat and app; the TDRA time can take Spain's shape (a human on request at any moment; 95% of requests within three minutes).
 
@@ -177,7 +188,7 @@ Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the aut
 
 ## gap-3: adequate verification
 
-'Adequate verification process' (CPR 24.10) is undefined for a remote channel; the Electronic Transactions Art 33 trust levels were never mapped to it.
+'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02).
 
 Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verification step).
 
@@ -207,6 +218,10 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verifica
   - EN: "Service Provider shall not be entitled to request any payment from the user before the successful completion of the number verification process, in accordance with the regulations issued by CST."
 - `saudi-cst-user-protection-552-1445-en:23.1` (p. 23, `kb/sources/saudi-cst-user-protection-552-1445-en.pdf`): Suspension, cancellation or transfer may be asked by telephone, electronic means, automated response or in person; no verification level named for any of them.
   - EN: "telephone contact, electronic means, automated response or by attending in person"
+- `uaepass-docs-account-levels:Account Levels` (https://docs.uaepass.ae/overview): The national identity documents its own levels and TDRA's FAQ names UAE PASS for data updates; neither maps a level to CPR 24.10.
+  - EN: "SOP 1: Mobile and Email are verified. Emirates ID not verified. SOP 2: Mobile, Email, and Emirates ID are verified. SOP 3: Mobile, Email, and Emirates ID are verified."
+- `tdra-faqs:data updates` (https://tdra.gov.ae/en/FAQs): The national identity documents its own levels and TDRA's FAQ names UAE PASS for data updates; neither maps a level to CPR 24.10.
+  - EN: "Data updates or renewals can be carried out through the service provider's mobile apps, websites, smart platforms, or by using the UAE Pass digital identity."
 
 **UAE position.** A voice or chat agent that discloses account data after security questions is within the letter of the CPR; the national trust levels exist but no text says which level 24.10 needs on a remote channel.
 
@@ -251,7 +266,7 @@ Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Ex
 - `pdpl-45-2021-en:25` (p. 27): The 30 days run for a grievance against the Bureau's own decisions, not for a complaint under 24.
   - EN: "within (30) thirty days as of the date on which a notice of such administrative decision or penalty is given"
 
-**UAE position.** The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations were never issued.
+**UAE position.** The right to a human review exists (18(4)); a contract term that lets the operator alone decide a disconnection is a prohibited term under 66/2023 34 (inferred interaction of the two texts); nothing says how the review runs, by when, or who enforces it, because the PDPL Executive Regulations are not on the official portal (checked 2026-11-02).
 
 **Global example**
 
@@ -266,6 +281,8 @@ Kind: method. Category: unclear responsibilities. Addressee: UAE Data Office. Ex
 Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)).
 
 Kind: method. Category: legislative gap. Addressee: UAE Data Office. Exposed by: S3-3.
+
+Vendor-cited 'Cabinet Decision 33/2024' and '83/2022': 0 results on the portal's advanced search, 2026-11-02.
 
 **Clauses searched**
 
@@ -294,18 +311,20 @@ Kind: method. Category: legislative gap. Addressee: UAE Data Office. Exposed by:
   - EN: "before sharing any Subscriber Information with its affiliates and/or other third parties not directly involved"
   - AR (the whole chunk): "يجب على المرخص لهم الحصول على موافقة مسبقة من المشترك35 قبل تبادلأي معلومات للمشترك مع فروعهم و/أو الأطراف الأخرى غير المعنية مباشرة بتزويد خدمات الاتصالات التي يطلبها المشترك. 35 يجوز تقديم هذه الموافقة تعاقدياً خلال الفترة الزمنية التي يتم فيها صياغة العقد، شريطة وجود آلية دائماً يستطيع المشترك من خلالها أن يسحب تلك الموافقة واختيارها في مرحلة لاحقة إن رغب بذلك. صفحة47 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
 
-**UAE position.** The provider is a Processor and the duties exist; the adequacy list, the transfer controls and the processor standards all wait on Executive Regulations never issued. Mizan blocks the export and logs what left. Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.
+**UAE position.** The provider is a Processor and the duties exist; the adequacy list, the transfer controls and the processor standards all wait on Executive Regulations that are not on the official portal (checked 2026-11-02). Mizan blocks the export and logs what left. Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.
 
 **Global example**
 
 - GDPR, Regulation (EU) 2016/679, Art 28(3)(a) (VERIFIED, `kb/sources/global/gdpr-art28-3-art45.txt`): "processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation"
 - GDPR, Regulation (EU) 2016/679, Art 45(1) (VERIFIED, `kb/sources/global/gdpr-art28-3-art45.txt`): "may take place where the Commission has decided that the third country, a territory or one or more specified sectors within that third country, or the international organisation in question ensures an adequate level of protection."
+- DIFC Data Protection Regulations, Consolidated Version No. 2 (in force 2023-09-01); UAE free zone (DIFC), not federal, Regulation 5 (VERIFIED, p. 5, `kb/sources/global/difc-dp-regulations-v2-2023.txt`): Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. The clauses themselves are on difc.ae, not in the Regulations. "the Commissioner has approved and published two (2) sets of standard contractual clauses that may be used for transfers outside the DIFC"
+- DIFC Data Protection Regulations, Consolidated Version No. 2 (in force 2023-09-01); UAE free zone (DIFC), not federal, Appendix 3 (VERIFIED, p. 20, `kb/sources/global/difc-dp-regulations-v2-2023.txt`): Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. "List of adequate jurisdictions under Article 26(2) of the Law"
 
 **Recommendation.** UAE Data Office to issue the processor contract terms (8(11)), the transfer controls (23(2)) and the approved-country list (22), as GDPR 28(3) and 45 do.
 
 ## gap-6: AI disclosure
 
-AI disclosure: no general duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'.
+AI disclosure: no federal duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'.
 
 Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
 
@@ -334,29 +353,38 @@ Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
   - EN: "A governmental agency that makes available an artificial intelligence system intended to interact with consumers shall disclose to each consumer, before or at the time of interaction, that the consumer is interacting with an artificial intelligence system."
 - `texas-bcc-552:552.051(c)` (`kb/sources/texas-bcc-552.html`): No obviousness exception to the disclosure.
   - EN: "regardless of whether it would be obvious to a reasonable consumer"
-- `kr-ai-framework-act-20676:31(1)` (https://elaw.klri.re.kr/eng_service/lawView.do?hseq=73499&lang=ENG): Korea, Framework Act on AI (Act No. 20676): advance notice that a product or service runs on high-impact or generative AI; not that this conversation is with a machine; methods and exceptions by Presidential Decree (31(4)). English is a reference translation; in-force date unverified.
+- `kr-ai-framework-act-20676:31(1)` (https://elaw.klri.re.kr/eng_service/lawView.do?hseq=73499&lang=ENG): Korea, Framework Act on AI (Act No. 20676): advance notice that a product or service runs on high-impact or generative AI; not that this conversation is with a machine; methods and exceptions by Presidential Decree (31(4)). English is KLRI's reference translation. Act No. 20676 of 2025-01-21, amended by Act No. 21311 of 2026-01-20; in force one year after promulgation (Addenda Art 1; the digital medical devices part on 2026-01-24).
   - EN: "An AI business operator that intends to provide a product or service using high-impact AI or generative AI shall notify the user in advance that the product or service is operated based on that AI."
+- `kr-ai-framework-act-20676:Addenda Art 1` (https://elaw.klri.re.kr/eng_service/lawView.do?hseq=73499&lang=ENG): The in-force rule of Act No. 20676 (2025-01-21), text as amended by Act No. 21311 (2026-01-20).
+  - EN: "This Act shall enter into force 1 year after the date of its promulgation"
+- `dha-ai-policy-2021:4.3.2` (p. 7, `kb/sources/dha-ai-policy-2021.txt`): Sector line: DHA policy 4.3.2 binds DHA-licensed healthcare entities in Dubai (scope 2.1); DIFC Regulation 10.2.2(a) binds DIFC establishments (UAE free zone (DIFC), not federal); no federal or emirate-wide commercial text reaches a telecom licensee.
+  - EN: "All AI solutions for healthcare must contain disclosure including: a. Which functions and features are AI-enabled."
+- `uae-ai-charter-2024-en:5` (p. 4, `kb/sources/global/uae-ai-charter-2024-en.txt`): Searched, non-binding: the UAE AI Charter (AI Office, July 2024) names transparency as a principle; it does not require a care channel to say it is an AI.
+  - EN: "The UAE seeks to create a clear understanding of AI and how systems operate and make decisions"
 
-**UAE position.** Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only UAE text that says it.
+**UAE position.** Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding federal text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only federal text that says it; DIFC Regulation 10.2.2(a) does, for DIFC establishments only (UAE free zone, not federal).
 
 **Global example**
 
-- Maine, 10 M.R.S. §1500-DD (PL 2025 c. 294), Required disclosure of use of artificial intelligence chatbot to engage in trade and commerce, §1500-DD(2) (VERIFIED, `kb/sources/global/maine-1500-dd.txt`): Plainest binding text: trade and commerce, text or voice, disclose or it is an unfair practice (§1500-DD(3)). In-force date not on the statute page. "A person may not use an artificial intelligence chatbot or any other computer technology to engage in trade and commerce with a consumer in a manner that may mislead or deceive a reasonable consumer into believing that the consumer is engaging with a human being unless the consumer is notified in a clear and conspicuous manner that the consumer is not engaging with a human being."
+- Maine, 10 M.R.S. §1500-DD (PL 2025 c. 294), Required disclosure of use of artificial intelligence chatbot to engage in trade and commerce, §1500-DD(2) (VERIFIED, `kb/sources/global/maine-1500-dd.txt`): Plainest binding text: trade and commerce, text or voice, disclose or it is an unfair practice (§1500-DD(3)). In force 2025-09-24 (PL 2025 c. 294 title page; BCCP notice). "A person may not use an artificial intelligence chatbot or any other computer technology to engage in trade and commerce with a consumer in a manner that may mislead or deceive a reasonable consumer into believing that the consumer is engaging with a human being unless the consumer is notified in a clear and conspicuous manner that the consumer is not engaging with a human being."
 - California Bus. & Prof. Code §17940 to 17943, Bots (Stats. 2018 c. 892, SB 1001), §17941(a) (VERIFIED, `kb/sources/global/california-bpc-17940-17943.txt`): Online only (§17940(b)): a duty only when the bot is used to deceive; disclosure is the defence. Quoted from the sentence's middle, as hq's read file quotes it. "with the intent to mislead the other person about its artificial identity for the purpose of knowingly deceiving the person about the content of the communication in order to incentivize a purchase or sale of goods or services in a commercial transaction or to influence a vote in an election. A person using a bot shall not be liable under this section if the person discloses that it is a bot."
 - California Bus. & Prof. Code §17940 to 17943, Bots (Stats. 2018 c. 892, SB 1001), §17941(b) (VERIFIED, `kb/sources/global/california-bpc-17940-17943.txt`): "clear, conspicuous, and reasonably designed to inform"
 - EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27, Art 50(1) (VERIFIED, `kb/sources/global/eu-ai-act-art50-art113-20260727.txt`): "Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system"
 - EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27, Art 50(5) (VERIFIED, `kb/sources/global/eu-ai-act-art50-art113-20260727.txt`): "in a clear and distinguishable manner at the latest at the time of the first interaction or exposure"
 - EU AI Act, Regulation (EU) 2024/1689, consolidated 2026-07-27, Art 113 (VERIFIED, `kb/sources/global/eu-ai-act-art50-art113-20260727.txt`): "It shall apply from 2 August 2026."
+- DIFC Data Protection Regulations, Consolidated Version No. 2 (in force 2023-09-01); UAE free zone (DIFC), not federal, Regulation 10.2.2(a) (VERIFIED, p. 12, `kb/sources/global/difc-dp-regulations-v2-2023.txt`): Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. "notice must be provided in clear and explicit terms upon the initial use of, or access to, the System, alerting users to any underlying technology and processes comprising the System that may undertake any Processing of Personal Data by the System that is not human-initiated, controlled or directed"
+- Maine, Public Law 2025, Chapter 294 (H.P. 1154, L.D. 1727), the session law that enacted §1500-DD, title page (VERIFIED, p. 2, `kb/sources/global/maine-pl-2025-c294.txt`): The general effective date of the session's nonemergency laws, §1500-DD among them; the Maine Bureau of Consumer Credit Protection's notice of 2025-09-24 says the same. "THE GENERAL EFFECTIVE DATE FOR FIRST SPECIAL SESSION NONEMERGENCY LAWS IS SEPTEMBER 24, 2025"
+- India, TRAI Telecom Consumers Complaint Redressal (Fourth Amendment) Regulations 2026 (07 of 2026), notified 2026-11-02, not in force, new reg 3(3), second proviso (VERIFIED, p. 3, `kb/sources/global/india-trai-tccrr-4th-amendment-2026.txt`): The first telecom-regulator text requiring a care channel to tell the consumer it is an AI agent; notified 2026-11-02, not in force. "Provided further that consumer shall get a notification that he is communicating with an AI Agent as and when such a situation occurs."
 
 **Recommendation.** Cabinet to set a general duty to tell a consumer, at the first interaction, that they are talking to an AI, beyond the sales case of 11(2).
 
 ## gap-7: five mentions no standard
 
-No binding UAE text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent.
+No binding federal text sets conduct standards specific to an AI agent dealing with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over for an automated agent.
 
 Kind: absence. Category: standards gap. Addressee: TDRA. Exposed by: all.
 
-Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's words (CAD 812.02). The UAE has the general duty (CPR 3.3) and no AI-specific one.
+Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's words (CAD 812.02). The federal texts have the general duty (CPR 3.3) and no AI-specific one.
 
 **Clauses searched**
 
@@ -391,20 +419,29 @@ Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its c
   - EN: "Chatbot WhatsApp 058-2428268 (058Chatbot)"
 - `eand-code-of-practice-en:1` (p. 3, `kb/sources/eand-code-of-practice-en.pdf`): The only UAE texts naming an operator chatbot are the operators' own non-contractual codes; neither sets a conduct standard.
   - EN: "Nothing in this Code of Practice forms a contract or part of any contract between Etisalat and its customers."
-- `trai-tccrr-fourth-amendment-2026-draft:3(11)` (p. 10, https://trai.gov.in/sites/default/files/2026-05/Regulation_07052026.pdf): Draft, not law: TRAI's draft Fourth Amendment for comments (2026-05-07) would let a provider take complaints through chatbots and AI agents under the same provisions as its other channels; it also substitutes reg 3(9).
+- `trai-tccrr-fourth-amendment-2026-draft:3(11)` (p. 10, https://trai.gov.in/sites/default/files/2026-05/Regulation_07052026.pdf): Draft, not law, superseded by the notified text of 2026-11-02: TRAI's draft Fourth Amendment for comments (2026-05-07) would let a provider take complaints through chatbots and AI agents under the same provisions as its other channels; it also substitutes reg 3(9).
   - EN: "new-age customer-centric solutions (Chatbots, AI Agents, etc.)"
+- `dha-ai-policy-2021:4.3.2` (p. 7, `kb/sources/dha-ai-policy-2021.txt`): Sector line: DHA policy 4.3.2 binds DHA-licensed healthcare entities in Dubai (scope 2.1); DIFC Regulation 10.2.2(a) binds DIFC establishments (UAE free zone (DIFC), not federal); no federal or emirate-wide commercial text reaches a telecom licensee.
+  - EN: "All AI solutions for healthcare must contain disclosure including: a. Which functions and features are AI-enabled."
+- `uae-ai-charter-2024-en:6` (p. 4, `kb/sources/global/uae-ai-charter-2024-en.txt`): Searched, non-binding: the UAE AI Charter (AI Office, July 2024) names human oversight as a principle; no duty, method or penalty for a licensee.
+  - EN: "The Charter emphasizes the irreplaceable value of human judgment and human oversight over AI"
 
-**UAE position.** The binding texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct.
+**UAE position.** The binding texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct. The DIFC Data Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) are the only UAE text of any level that names notice, limits and intervention for an automated system, and they bind DIFC establishments only.
 
 **Global example**
 
 - Utah Code 13-77-102, effective 2026-05-06, 13-77-102 (VERIFIED, `kb/sources/global/us-utah-13-77-102.txt`): "It is not a defense to the violation of any statute administered and enforced by the division under Section 13-2-102 that generative artificial intelligence: (1) made the violative statement; (2) undertook the violative act; or (3) was used in furtherance of the violation."
 - Moffatt v. Air Canada, 2024 BCCRT 149 (Civil Resolution Tribunal, British Columbia; a tribunal decision), para 27 (VERIFIED, `kb/sources/global/ca-bccrt-2024-149-moffatt.txt`): "While a chatbot has an interactive component, it is still just a part of Air Canada’s website. It should be obvious to Air Canada that it is responsible for all the information on its website. It makes no difference whether the information comes from a static page or a chatbot."
 - Moffatt v. Air Canada, 2024 BCCRT 149 (Civil Resolution Tribunal, British Columbia; a tribunal decision), para 28 (VERIFIED, `kb/sources/global/ca-bccrt-2024-149-moffatt.txt`): "I find Air Canada did not take reasonable care to ensure its chatbot was accurate."
-- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2013, reg 3(9) (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-2012.txt`): A telecom regulator's conduct rule for an automated care channel: a route to a person by the third menu level; nothing on AI identity, no transfer clock. "Every service provider shall ensure that an Interactive Voice Response System or IVRS, if installed on a “Consumer Care Number”, is operated in the following manner:-"
-- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2013, reg 3(9), proviso (VERIFIED, p. 5, `kb/sources/global/india-trai-tccrr-2012.txt`): "Provided that the sub-menu in the third level shall also contain an option enabling the consumer to speak to a consumer care agent."
+- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2014, reg 3(9) (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-2012.txt`): A telecom regulator's conduct rule for an automated care channel, the text in force on 2026-11-02: a route to a person by the third menu level, no transfer clock. Its AI-identity silence ends when the Fourth Amendment 2026 (notified 2026-11-02, not in force) comes into force. "Every service provider shall ensure that an Interactive Voice Response System or IVRS, if installed on a “Consumer Care Number”, is operated in the following manner:-"
+- India, TRAI Telecom Consumers Complaint Redressal Regulations 2012 (1 of 2012), as amended 2014, reg 3(9), proviso (VERIFIED, p. 5, `kb/sources/global/india-trai-tccrr-2012.txt`): "Provided that the sub-menu in the third level shall also contain an option enabling the consumer to speak to a consumer care agent."
 - California Health & Safety Code §1339.75 (Stats. 2024 c. 848, AB 3030), §1339.75(a)(1)(C) (VERIFIED, `kb/sources/global/california-hsc-1339-75.txt`): Clinical communications only: a generative-AI disclaimer timed per modality, and how to reach a human; not applicable where a licensed human reviewed the communication ((b)). "For audio communications, the disclaimer shall be provided verbally at the start and the end of the interaction."
 - California Health & Safety Code §1339.75 (Stats. 2024 c. 848, AB 3030), §1339.75(a)(2) (VERIFIED, `kb/sources/global/california-hsc-1339-75.txt`): "Clear instructions describing how a patient may contact a human health care provider, employee of the health facility, clinic, physician's office, or office of a group provider, or other appropriate person."
+- DIFC Data Protection Regulations, Consolidated Version No. 2 (in force 2023-09-01); UAE free zone (DIFC), not federal, Regulation 10.2.2(a) (VERIFIED, p. 12, `kb/sources/global/difc-dp-regulations-v2-2023.txt`): Notice. Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. "notice must be provided in clear and explicit terms upon the initial use of, or access to, the System, alerting users to any underlying technology and processes comprising the System that may undertake any Processing of Personal Data by the System that is not human-initiated, controlled or directed"
+- DIFC Data Protection Regulations, Consolidated Version No. 2 (in force 2023-09-01); UAE free zone (DIFC), not federal, Regulation 10.2.2(b)(ii) (VERIFIED, p. 12, `kb/sources/global/difc-dp-regulations-v2-2023.txt`): Limits: the notice describes the human-defined principles and limits within which the System may define further purposes. Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. "the System is capable of itself defining further purposes for Processing of Personal Data"
+- DIFC Data Protection Regulations, Consolidated Version No. 2 (in force 2023-09-01); UAE free zone (DIFC), not federal, Regulation 10.2.2(d) (VERIFIED, p. 13, `kb/sources/global/difc-dp-regulations-v2-2023.txt`): Intervention. Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. "evidence, to be provided upon request by any affected party, of any algorithm(s) that causes the System to seek human intervention"
+- India, TRAI Telecom Consumers Complaint Redressal (Fourth Amendment) Regulations 2026 (07 of 2026), notified 2026-11-02, not in force, new reg 3(3), third proviso (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-4th-amendment-2026.txt`): A telecom regulator's notified rule: AI agents at the complaint centre operate with appropriate human oversight, and a human route inside every category; notified 2026-11-02, not in force (ninety days after Gazette publication). "Provided also that automated systems or AI agents or other consumer-centric technological solutions deployed at Complaint Centre shall operate with appropriate human oversight"
+- India, TRAI Telecom Consumers Complaint Redressal (Fourth Amendment) Regulations 2026 (07 of 2026), notified 2026-11-02, not in force, new reg 3(9)(d) (VERIFIED, p. 4, `kb/sources/global/india-trai-tccrr-4th-amendment-2026.txt`): "(d) connecting with a human consumer care representative from within each category referred to in clause (b); and"
 
 **Recommendation.** TDRA to set conduct standards for AI agents in consumer care (limits, oversight, logs), as IMDA's framework does as a whole; Mizan's gates are one worked form of them.
 
@@ -420,6 +457,12 @@ Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S2-3.
   - EN: "P (policy): This node enables the application of policies to the output of the model node."
 - `itu-t-y3172:7.1` (p. 4): The only mention of a human in the Recommendation's text (page 4): a SON example acting 'without human intervention'. The back-page list of ITU-T series names 'human factors' as a series title only.
   - EN: "without human intervention"
+- `itu-t-f748-67:RQR-001` (p. 14, `kb/sources/itu-t-f748-67.txt`): The care system routes the customer to an idle human agent: a routing function of the care system; compliance voluntary.
+  - EN: "AICSS is required to support transferring the customer to matching idle human agents"
+- `itu-t-f748-67:OMR-010` (p. 16, `kb/sources/itu-t-f748-67.txt`): Hand-over from a video IVVR to a human agent call: again inside the care system, not a Y.3172 node outcome.
+  - EN: "AICSS is required to support handover from video IVVR to human agent calls."
+- `itu-t-f-aiap-work-item:summary` (https://www.itu.int/ITU-T/workprog/wp_item.aspx?isn=22129): ITU-T SG21 Q5/21 has F.AIAP under study (2027); its summary names no hand-over outcome or metric
+  - EN: "This draft Recommendation provides a standardized framework and specifies requirements for the AI agents platform."
 
 **UAE position.** CPR 26.7.2 and licence 9.1 require a human in a complaint conversation; Mizan's P node gate returns a hand-over that Y.3172 has no outcome for, so it is mapped outside the standard's node set.
 
@@ -434,10 +477,12 @@ Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S2-3.
 
 - 3GPP TS 28.535 V19.0.0 (ETSI TS 128 535, 2025-10), communication service assurance, §4.2.3 (VERIFIED, `kb/sources/global/3gpp-ts-28-535-v19.txt`): "The management system collects, analyses and presents the data to the human operator or other management entity, but the human operator or other management entity decides which action to take."
 - ETSI GS ZSM 009-1 V1.1.1 (2021-06), Closed-Loop Automation; Enablers, §7.2.2.4 (VERIFIED, `kb/sources/global/etsi-gs-zsm-009-1-v1-1-1.txt`): "The customization flow may be used to configure the CL, monitor its continuous operations, approve/reject recommendations, explain the CL operation and decisions"
+- ITU-T F.748.67 (12/2025), advanced intelligent customer service system (compliance voluntary, p. 4), RQR-001 (VERIFIED, p. 14, `kb/sources/global/itu-t-f748-67.txt`): "AICSS is required to support transferring the customer to matching idle human agents"
+- ITU-T F.748.67 (12/2025), advanced intelligent customer service system (compliance voluntary, p. 4), OMR-010 (VERIFIED, p. 16, `kb/sources/global/itu-t-f748-67.txt`): "AICSS is required to support handover from video IVVR to human agent calls."
 
-Both are method texts, like Y.3172: 3GPP defines the open control loop, where the system presents and the human decides; ETSI ZSM defines a flow for a human operator to approve or reject a recommendation. Neither names a withheld output routed to a named person with its own reference point; the recommendation stands as the fuller version.
+Both are method texts, like Y.3172: 3GPP defines the open control loop, where the system presents and the human decides; ETSI ZSM defines a flow for a human operator to approve or reject a recommendation. Neither names a withheld output routed to a named person with its own reference point; the recommendation stands as the fuller version. F.748.67 makes the transfer a routing function of the care system; it is not an outcome of the Y.3172 policy node, and the two Recommendations are not joined.
 
-**Recommendation.** ITU-T to add a policy-node outcome that withholds the model's output and routes the case to a named human (hand-over), with its own reference point, so a regulator's human-in-the-loop rule maps into the pipeline.
+**Recommendation.** ITU-T to add a policy-node outcome that withholds the model's output and routes the case to a named human (hand-over), with its own reference point, so a regulator's human-in-the-loop rule maps into the pipeline. ITU-T F.AIAP (SG21 Q5/21, under study, 2027) is the draft where this outcome could be placed.
 
 ## gap-9: a child on the line
 
@@ -469,7 +514,7 @@ Kind: method. Category: legislative gap. Addressee: TDRA, Cabinet. Exposed by: m
 - `cabres-106-2026-en:4(3)` (`kb/sources/cabres-106-2026-en.txt`): Self-declared age is not recognised, on social media platforms (Art 2). Portal: the Arabic text prevails (cabres-106-2026-ar); Arabic not quote-checked, PDF text extraction scrambled.
   - EN: "Self-declaration of age, or any other Age Verification mechanism not approved in accordance with the provisions of this Resolution, shall not be recognized."
 
-**UAE position.** The duty is the law's own words; the operator's licence 3.2 makes it a licence condition; the instruments that would set the age signal, the caregiver check and the penalties do not exist yet (searched 2026-10-16 and 2026-10-22, both languages). Two published texts come near and neither reaches a telecom channel. Cabinet Resolution 106/2026 (issued 2026-06-17, in force 2026-06-30) 'shall apply to all Social Media Platforms whose services are made available within the State or directed at users therein' (Art 2); it lists age-verification mechanisms for those platforms (Art 4(2)) and says 'Self-declaration of age ... shall not be recognized' (Art 4(3)), but its standards are still to be 'approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority' (Arts 3(4)(c), 4(1)(h), 4(2)(d)) and its penalties are those 'prescribed under the list of administrative penalties issued pursuant to the provisions of the Decree by Law' (Art 7(1), 7(2)), the Art 16 list that is not published. TDRA's 'Telecom for Minors' page (consumer hub, updated 2026-10-01) describes an initiative launched 'in collaboration with licensed telecommunications service providers' that 'Supports the goals of the UAE child digital safety law'; its terms 'are determined by each service provider', the links 'are provided for consumer information only', and it is not on the TDRA Regulations and Ruling register.
+**UAE position.** The duty is the law's own words; the operator's licence 3.2 makes it a licence condition; the instruments that would set the age signal, the caregiver check and the penalties do not exist yet (searched 2026-10-16, 2026-10-22 and 2026-11-02, both languages; the portal's regulations tab of Decree-Law 26/2025 reads 'لم يتم العثور على أية بيانات' on 2026-11-02; Gazette 809 supplement 1, 2025-10-14; in force 2026-01-01). Two published texts come near and neither reaches a telecom channel. Cabinet Resolution 106/2026 (issued 2026-06-17, in force 2026-06-30) 'shall apply to all Social Media Platforms whose services are made available within the State or directed at users therein' (Art 2); it lists age-verification mechanisms for those platforms (Art 4(2)) and says 'Self-declaration of age ... shall not be recognized' (Art 4(3)), but its standards are still to be 'approved by the Child Digital Safety Council upon the proposal of the Telecommunications and Digital Government Regulatory Authority' (Arts 3(4)(c), 4(1)(h), 4(2)(d)) and its penalties are those 'prescribed under the list of administrative penalties issued pursuant to the provisions of the Decree by Law' (Art 7(1), 7(2)), the Art 16 list that is not published. TDRA's 'Telecom for Minors' page (consumer hub, updated 2026-10-01) describes an initiative launched 'in collaboration with licensed telecommunications service providers' that 'Supports the goals of the UAE child digital safety law'; its terms 'are determined by each service provider', the links 'are provided for consumer information only', and it is not on the TDRA Regulations and Ruling register.
 
 **Global example**
 
@@ -526,7 +571,7 @@ Wales's Standards bind public bodies under a compliance notice (reg 3(1)), not o
 - ITU AI Readiness 2.0 (2026-01), dimension 6 Human Interface, d6_m02 (p. 23; framework, non-binding): A readiness metric: whether AI models exist in the local language of the interface. No duty, no quality measure.
   - EN (`kb/sources/itu-readiness-dimensions.json`): "Availability of AI models in the local language used in the human interface"
 
-**UAE position.** The language duty is binding and fined; Mizan meets it by answering in the subscriber's language with the clause quoted in that language. Nothing says the Arabic answer must be as good as the English one, and nothing measures it: the QoS Policy counts waits and faults, not languages. Mizan's own figures show the gap can be measured: action recall 0.96 English and 1.00 Arabic, citation validity 0.99 and 1.00 (C5, two runs per scenario per language); the Arabic S2 run cites the Arabic chunk ids. Searched 2026-10-24 in both languages.
+**UAE position.** The language duty is binding and fined; Mizan meets it by answering in the subscriber's language with the clause quoted in that language. Nothing says the Arabic answer must be as good as the English one, and nothing measures it: the QoS Policy counts waits and faults, not languages. Mizan's own figures show the gap can be measured: action recall 0.96 English and 1.00 Arabic, citation validity 0.99 and 1.00 (C5, two runs per scenario per language); the Arabic S2 run cites the Arabic chunk ids. Searched 2026-10-24 in both languages. The Ministry of Culture announced an Arabic Language Law and its executive regulations for 2026 (Al Bayan, 2026-04-29); none on the portal 2026-11-02.
 
 **Global example**
 
@@ -601,11 +646,11 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
 
 ## gap-12: No metric for where an agent's authority ends
 
-Standards gap, addressed to ITU. Mapped first: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (7.2, Table 7-1, p. 6: "a) Human; b) Human and System; c) System."), and its hand-over is Readiness 2.0 D9's inference-to-action latency in the other direction (p. 27: "inference-to-action latency: average time from first inference to human action"; there the AI alerts and the human acts). Readiness 2.0 also measures the human shaping the inference (D8, p. 25) and states that accountability of final decisions remains with humans (D10, p. 29). Mapped there, neither text measures when an acting agent must stop, how often it hands over or how long that takes: the stop point, the hand-over rate, the hand-over latency. Y.3173 Table 7-2 NOTE 1 (p. 7) gives a human's order the highest authority ("decisions and execution instructions provided by a human being have the highest authority"); it never requires the system to ask. Y.3173 cites SAE J3016 and drops its fallback column, the request to intervene (Appendix I.1, Table I.1, p. 12 to 13).
+Standards gap, addressed to ITU. Mapped first: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (7.2, Table 7-1, p. 6: "a) Human; b) Human and System; c) System."), and its hand-over is Readiness 2.0 D9's inference-to-action latency in the other direction (p. 27: "inference-to-action latency: average time from first inference to human action"; there the AI alerts and the human acts). Readiness 2.0 also measures the human shaping the inference (D8, p. 25) and states that accountability of final decisions remains with humans (D10, p. 29). Mapped there, neither text measures when an acting agent must stop or how long the hand-over takes; ITU-T F.746.16 11.2 measures how often (a manual intervention rate, graded so that less intervention scores a higher level, no threshold), the opposite direction to a regulator's floor such as CPR 26.7.2; ITU-T F.748.67 CRR-003 measures the queue after the transfer, not the time to it. Y.3173 Table 7-2 NOTE 1 (p. 7) gives a human's order the highest authority ("decisions and execution instructions provided by a human being have the highest authority"); it never requires the system to ask. Y.3173 reproduces SAE J3016's levels in Appendix I (Table I.1), the request to intervene included, and carries no fallback dimension into its own Table 7-1.
 
-Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S1.
+Kind: absence. Category: standards gap. Addressee: ITU. Exposed by: S2-3 (the complaint hand-over, CPR 26.7.2).
 
-Found after the scored runs; S1's expected gaps and the keys are unchanged, so C5 gap recall does not count it.
+Found after the scored runs; S2's expected gaps and the keys are unchanged, so C5 gap recall does not count it.
 
 **Clauses searched**
 
@@ -629,6 +674,18 @@ Found after the scored runs; S1's expected gaps and the keys are unchanged, so C
   - AR: "نظام الرسائل الآلي: نظام حاسوبي، أو أي وسيلة اتصال الكترونية، أو وسيلة آلية أخرى، تُستخدم لبدء أو للاستجابة كلياً أو جزئياً، للاتصالات الالكترونية، أو لإجراءات ذات صلة، دون مراجعة أو تدخل من قبل شخص طبيعي."
 - `qatar-decree-law-16-2010-ar:27` (`kb/sources/qatar-decree-law-16-2010-ar.md`): The law recognises the automated system acting without review; it never asks when it must stop.
   - AR: "لا يجوز إنكار صحة أو قابلية تنفيذ العقد الذي أبرم بالتفاعل بين نظام رسائل آلي وشخص طبيعي، أو بالتفاعل بين نظم رسالة آلية، وذلك لمجرد عدم مراجعة أو عدم تدخل شخص طبيعي، في كل من الأفعال التي قامت بها نظم الرسائل الآلية أو في العقد الناتج عن تلك الأفعال."
+- `itu-t-f746-16:8.7` (p. 13, `kb/sources/itu-t-f746-16.txt`): Human-machine collaboration: the system supports transfer to manual service when it cannot solve the problem; compliance voluntary.
+  - EN: "When encountered problems cannot be solved by the customer service system of the machine, it supports transfer to manual service."
+- `itu-t-f746-16:11.2` (p. 21, `kb/sources/itu-t-f746-16.txt`): Human intervention ability: manual interventions over all, a measure of how often, with no threshold.
+  - EN: "Manual intervention rate = Tmanual Ttotal"
+- `itu-t-f746-16:10 level 2` (p. 20, `kb/sources/itu-t-f746-16.txt`): Level 2 accepts a high rate.
+  - EN: "Supports the manual intervention of the single-round dialogue, and the manual intervention rate is high."
+- `itu-t-f746-16:10 levels 3, 4` (p. 20, `kb/sources/itu-t-f746-16.txt`): Levels 3 and 4 want it 'acceptable': less intervention scores a higher level, no number given.
+  - EN: "the manual intervention rate is acceptable."
+- `itu-t-f748-67:CRR-003` (p. 15, `kb/sources/itu-t-f748-67.txt`): Average queue duration: the wait after the hand-over, not the time to it; compliance voluntary.
+  - EN: "average queue duration"
+- `itu-t-f-aiap-work-item:summary` (https://www.itu.int/ITU-T/workprog/wp_item.aspx?isn=22129): ITU-T SG21 Q5/21 has F.AIAP under study (2027); its summary names no hand-over outcome or metric
+  - EN: "This draft Recommendation provides a standardized framework and specifies requirements for the AI agents platform."
 - ITU AI Readiness 2.0 (2026-01), Basic Framework, Digital Infrastructure, Basic Framework (p. 12; framework, non-binding): The report hands its automation scale to Y.3173.
   - EN (`kb/sources/global/itu-ai-readiness-report-2-0-2026-01.txt`): "Levels of automation [Y.3173]"
 - ITU AI Readiness 2.0 (2026-01), dimension 5, D5 (p. 23; framework, non-binding): A metric for how much is automated; none for where automation must stop.
@@ -664,34 +721,81 @@ Found after the scored runs; S1's expected gaps and the keys are unchanged, so C
 - Regulation (EU) 2022/612 (roaming), in force 2022-07-01, expires 2032-06-30, Art 14(4), last subparagraph (VERIFIED, `kb/sources/global/eu-roaming-2022-612-art14.txt`): "Whenever a roaming customer requests the removal or reinstatement of a financial or volume limit facility, the change shall be made within one working day of receipt of the request"
 - Regulation (EU) 2024/1689 (AI Act), consolidated 2026-07-27, Art 14(4)(e) (VERIFIED, `kb/sources/global/eu-ai-act-2026-07-27-art14-26.txt`): High-risk systems only. Chapter III Sections 1 to 3 apply from 2027-12-02 (Annex III) and 2028-08-02 (Annex I), Regulation (EU) 2026/1744 Art 1(40)(b). "to intervene in the operation of the high-risk AI system or interrupt the system through a ‘stop’ button or a similar procedure that allows the system to come to a halt in a safe state."
 
-**Recommendation.** ITU-T to add to Y.3173 a fallback dimension in the SAE sense (does the system request intervention, under what condition, and what happens if no human answers), and to Readiness D9 two metrics beside inference-to-action latency: hand-over rate and hand-over latency (agent stop to human pick-up) for agents that act toward a person, plus the existence of defined stop points. What-if question for the policymaker: if TDRA required the hand-over moment to be logged (gap-1's rule), both metrics become measurable from the log.
+**Recommendation.** ITU-T to add to Y.3173 a fallback dimension in the SAE sense (does the system request intervention, under what condition, and what happens if no human answers), and, beside Readiness D9's inference-to-action latency and F.746.16's intervention rate, one floor-direction measure for agents that act toward a person: the hand-over required by rule, whether it happened, and its latency from agent stop to human pick-up, with the stop points defined. ITU-T F.AIAP (SG21 Q5/21, under study, 2027) is the draft where this measure could be placed. What-if question for the policymaker: if TDRA required the hand-over moment to be logged (gap-1's rule), both metrics become measurable from the log.
 
-## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
+## gap-13: breach notice has no period
 
-Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.
+PDPL 9(1) and 9(2) make the Controller notify the Data Office and the data subject of a breach 'within the period and in accordance with the measures and requirements set by the Executive Regulations'. Art 28 gave the Council of Ministers six months from 20 Sep 2021 to issue them, on the Bureau's proposal. On 2026-11-02 the official portal lists no Executive Regulations of this Decree-Law, in either language, so no period exists in any published federal text; an operator's AI that detects a breach has no clock to run.
 
-Kind: scope. Category: legislative gap. Addressee: TDRA. Exposed by: S1-6.
+Kind: absence. Category: legislative gap. Addressee: Council of Ministers, UAE Data Office (proposer, Art 28). Exposed by: mapping (P).
+
+Promoted from candidate 2026-11-02 (hq read, Perplexity Q1).
 
 **Clauses searched**
 
-- `tdra-cpr-v2-en:4.4` (p. 14): The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.
-  - EN: "where an existing Service, that is to say a service that a Subscriber has expressly ordered, is extended or renewed on terms which are:"
-  - AR (the whole chunk): "لا تنطبق أحكام المادة الفرعية4.3 على الحالات التي يتم فيها تمديد أو تجديد خدمة حالية، أي الخدمة التي طلبها المشترك خصيصاً، وتم تمديدها أو تجدديها حسب الشروط:"
+- `pdpl-45-2021-en:9(1)` (p. 13): The Controller notifies the Bureau of a breach; the period is left to the Executive Regulations. The Arabic quote ends with p. 9; on p. 10 the sentence goes on to the Executive Regulations, as 9(2) does.
+  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
+  - AR (p. 9, `kb/sources/pdpl-45-2021-ar.pdf`): "يلتزم المتحكم بمجرد علمه بوجود أي اختراق أو انتهاك للبيانات الشخصية لصاحب البيانات الذي من شأنه المساس بخصوصية وسرية وأمن بياناته، بإبلاغ المكتب عن هذا الاختراق أو الانتهاك ونتائج التحقيق خلال المدة ووفقًا للإجراءات والشروط"
+- `pdpl-45-2021-en:9(2)` (p. 14): The notice to the data subject: the period is left to the Executive Regulations too.
+  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
+  - AR (p. 10, `kb/sources/pdpl-45-2021-ar.pdf`): "خلال المدة ووفقًا للإجراءات والشروط التي تحددها اللائحة التنفيذية لهذا المرسوم بقانون"
+- `pdpl-45-2021-en:28` (p. 28, `kb/sources/pdpl-45-2021-en.pdf`): The Council of Ministers issues the Executive Regulations on the proposal of the Bureau's Director General, within six months of promulgation: issued 20 Sep 2021, so due by 20 Mar 2022 (computed).
+  - EN: "The Council of Ministers, based upon a suggestion from the General Director of the Bureau, shall issue the Executive Regulations of this Decree by Law within six (6) months as of the date on which the Decree by Law is promulgated."
+- `pdpl-45-2021-ar:28` (p. 20, `kb/sources/pdpl-45-2021-ar.pdf`): The Arabic of Art 28, as the PDF text layer gives it.
+  - AR: "يصدر مجلس الوزراء –بناءً على اقتراح مدير عام المكتب - اللائحة التنفيذية لهذا المرسوم بقانون"
+- `pdpl-45-2021-en:9(3)` (p. 14, `kb/sources/pdpl-45-2021-en.pdf`): The only clock in Art 9: the Processor tells the Controller immediately on learning of the breach; processor to controller, not to the Data Office or the data subject.
+  - EN: "it shall notify the Controller of such breach as soon as it becomes aware of the same"
+- `pdpl-45-2021-ar:9(3)` (p. 10, `kb/sources/pdpl-45-2021-ar.pdf`): The Arabic of 9(3), as the PDF text layer gives it.
+  - AR: "يجب عليه إخطار المتحكم بهذا الاختراق أو الانتهاك فور علمه بذلك"
 
-**UAE position.** Candidate from the keys session (S1 step 6): the text does not say whether a lapsed fixed-term bundle is still an existing Service.
+**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. The register's 2026-10-30 related-legislations check stands (30/2024, 26/2025 only). Not on the official portal on 2026-11-02.
 
 **Global example**
 
-- Directive (EU) 2018/1972, European Electronic Communications Code (legislation.gov.uk copy of the adopted text), Art 105(3) (VERIFIED, `kb/sources/global/eu-eecc-2018-1972-art105.txt`): "Before the contract is automatically prolonged, providers shall inform end-users, in a prominent and timely manner and on a durable medium, of the end of the contractual commitment and of the means by which to terminate the contract."
-- Germany, Telekommunikationsgesetz (TKG) 2021, § 56(3) (VERIFIED, `kb/sources/global/de-tkg-2021-para-56.txt`): Our English, not an official translation: after the initial term, a tacitly renewed contract may be ended at any time on one month's notice; before the renewal the provider must tell the end-user, on a durable medium, of the renewal, how to prevent it, and the right to end the renewed contract. "kann der Endnutzer einen solchen Vertrag nach Ablauf der anfänglichen Vertragslaufzeit jederzeit unter Einhaltung einer Kündigungsfrist von einem Monat kündigen. Der Anbieter muss den Endnutzer rechtzeitig vor einer Verlängerung des Vertrages auf einem dauerhaften Datenträger hinweisen auf 1. die stillschweigende Verlängerung des Vertrages, 2. die Möglichkeit, die Verlängerung des Vertrages durch seine rechtzeitige Kündigung zu verhindern, und 3. das Recht, einen verlängerten Vertrag nach Satz 1 zu kündigen."
+- GDPR, Regulation (EU) 2016/679, Art 33(1) (VERIFIED, `kb/sources/global/gdpr-art12-28-33.txt`): "without undue delay and, where feasible, not later than 72 hours after having become aware of it"
+- ADGM Data Protection Regulations 2021 (as amended to 2025); UAE free zone (ADGM), not federal, s. 32(1) (VERIFIED, `kb/sources/global/adgm-dpr-2021.txt`): Applies to an Establishment in ADGM only (s. 3(1)); a federal licensee outside ADGM is out of scope. "without undue delay and, where feasible, not later than 72 hours after having become aware of it"
+- DIFC Data Protection Law, DIFC Law No. 5 of 2020 (consolidated July 2025); UAE free zone (DIFC), not federal, Art 41(1) (VERIFIED, p. 33, `kb/sources/global/difc-dp-law-5-2020.txt`): Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. "as soon as practicable in the circumstances"
 
-**Recommendation.** TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3, and, if 4.4, require the warning before and the one-month exit after.
+**Recommendation.** Council of Ministers to issue the PDPL Executive Regulations with the 9(1) and 9(2) periods; until then the Data Office to publish an interim period.
 
-## candidate-79bis-2-fine-schedule: the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished
+## gap-14: a processor may bring in another without the controller's say
 
-The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2).
+The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. 8(11) leaves processor standards to the Executive Regulations, which the portal does not list on 2026-11-02. No Data Office, Cabinet or Executive-Regulation instrument on sub-processors was found (portal, both languages; Perplexity 2026-11-02 found none).
+
+Kind: absence. Category: legislative gap. Addressee: Council of Ministers (Executive Regulations, 8(11), 28), UAE Data Office (proposer). Exposed by: S3-4.
+
+**Clauses searched**
+
+- `pdpl-45-2021-en:7(5)` (p. 11): The Controller appoints only a Processor with sufficient guarantees.
+  - EN: "Appoint the Processor which has sufficient guarantees"
+  - AR (p. 8, `kb/sources/pdpl-45-2021-ar.pdf`): "تعيين المعالج الذي يتوفر لديه ضمانات كافية لتطبيق التدابير التقنية والتنظيمية على نحو يضمن استيفاء المعالجة لمتطلبات وقواعد وضوابط المعالجة المنصوص عليها"
+- `pdpl-45-2021-en:8(1)` (p. 11): The Processor acts on the Controller's instructions and contract.
+  - EN: "Carry out the processing in accordance with the instructions of the Controller"
+  - AR (p. 8, `kb/sources/pdpl-45-2021-ar.pdf`): "إجراء المعالجة وتنفيذها وفقًا لتعليمات المتحكم، والعقود والاتفاقات المبرمة بينهما"
+- `pdpl-45-2021-en:8(10)` (p. 13): Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.
+  - EN: "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"
+  - AR (p. 9, `kb/sources/pdpl-45-2021-ar.pdf`): "في حال اشترك أكثر من معالج في عملية المعالجة، يجب أن تنفذ المعالجة وفقًا لعقد أو اتفاق مكتوب يحدد بموجبه بشكل واضح التزاماتهم ومسؤولياتهم وأدوارهم حول عملية المعالجة"
+- `pdpl-45-2021-en:8(11)` (p. 13): The procedures, controls, conditions and technical standards for the Processor's obligations are left to the Executive Regulations.
+  - EN: "The Executive Regulations of this Decree by Law shall specify the procedures, controls, conditions, and technical standards related to such obligations."
+  - AR (p. 9, `kb/sources/pdpl-45-2021-ar.pdf`): "تحدد اللائحة التنفيذية لهذا المرسوم بقانون الإجراءات والضوابط والشروط والمعايير الفنية والقياسية المتعلقة بهذه الالتزامات"
+
+**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. No Data Office or Cabinet instrument on sub-processors either. Gap 5 is the transfer abroad; this row is who may bring in a further processor.
+
+**Global example**
+
+- GDPR, Regulation (EU) 2016/679, Art 28(2) (VERIFIED, `kb/sources/global/gdpr-art12-28-33.txt`): "The processor shall not engage another processor without prior specific or general written authorisation of the controller."
+- ADGM Data Protection Regulations 2021 (as amended to 2025); UAE free zone (ADGM), not federal, s. 26(2) (VERIFIED, `kb/sources/global/adgm-dpr-2021.txt`): Applies to an Establishment in ADGM only (s. 3(1)); a federal licensee outside ADGM is out of scope. "The Processor must not engage another Processor without prior specific or general written authorisation of the Controller"
+- DIFC Data Protection Law, DIFC Law No. 5 of 2020 (consolidated July 2025); UAE free zone (DIFC), not federal, Art 24(2) (VERIFIED, p. 17, `kb/sources/global/difc-dp-law-5-2020.txt`): Binds DIFC establishments only (DIFC Law Art 6(3)); a federal licensee outside the DIFC is out of scope. "A Processor may not engage another Processor to act as a Sub-processor without the prior written authorisation of a Controller"
+
+**Recommendation.** Executive Regulations to require the Controller's prior written authorisation, specific or general, before a Processor engages another, with a right to object to changes.
+
+## gap-15: the Cabinet schedule of licensee fines under Telecom Law 79 bis (2) is unpublished
+
+The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). On 2026-11-02 the portal's Telecommunication, Technology and Space sector lists 12 instruments (14 in Arabic), none a schedule of telecom licensee fines; the Regulation Table of Decree-Law 3/2003 shows no records. The Cabinet has issued such a schedule for the space sector (Cabinet Resolution 206/2025, 'Regulations of Violations and Administrative Penalties... Space Activities'), not for telecommunications.
 
 Kind: absence. Category: legislative gap. Addressee: Cabinet. Exposed by: mapping (P).
+
+A published method, not a tariff. The UK regulates providers through General Conditions, not individual licences.
 
 **Clauses searched**
 
@@ -711,12 +815,40 @@ Kind: absence. Category: legislative gap. Addressee: Cabinet. Exposed by: mappin
   - EN: "the Ministry may, in cases of serious violations, impose the more severe administrative penalty without adhering to the gradation"
 - `executive-order-3-2004:42` (p. 16, `kb/sources/executive-order-3-2004.pdf`): A fine power for apparatus authorisations, no amount; not the licensee schedule.
   - EN: "The Authority may perform any of the following in case any of the Authorised or concerned persons in the Telecommunication Apparatus breaches the terms and restrictions that the Authorisations were granted upon,: (a) impose a financial fine against the violator ; (b) abolish the issued Authorization."
+- `tra-violation-decision-1-2009:4` (p. 4, `kb/sources/tra-violation-decision-1-2009.txt`): An enforcement decision (16 March 2009, Etisalat, Carrier Pre-Selection): a fine imposed on licence terms, no Cabinet schedule.
+  - EN: "the TRA has assessed a financial penalty in the amount of Dirhams 200,000."
 
-**UAE position.** Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Whether the Board may fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq 2026-10-22).
+**UAE position.** Searched 2026-10-16 on the legislation portal and the web, both languages: not found. Portal advanced search 'المخالفات والجزاءات الاتصالات' on 2026-11-02: ten results, none a telecom-licensee schedule. Fines in the 79 bis (1) range have been imposed through licence terms with no Cabinet schedule: TRA Violation Decision 1/2009, AED 200,000; licence 2/2026 16.3.2, AED 50,000 to 200,000. Whether the Board may fine a licensee under 79 bis (2) before the schedule exists is not stated in the text (inferred gap, hq 2026-10-22).
 
-**Global example.** none (order Task 15: no global example)
+**Global example**
 
-**Recommendation.** Cabinet to issue the schedule of licensee violations and fines that Telecom Law 79 bis (2) promises.
+- Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017, 1.11 (VERIFIED, `kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt`): "Ofcom will consider all the circumstances of the case in the round in order to determine the appropriate and proportionate amount of any penalty. The central objective of imposing a penalty is deterrence."
+- Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017, 1.2 (VERIFIED, `kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt`): "Ofcom must have regard to the statement for the time being in force when setting the amount of any penalty"
+
+**Recommendation.** Cabinet to issue the schedule of licensee violations and fines that Telecom Law 79 bis (2) promises, or, until then, publish the method the Board will apply under 79 bis (2), as Ofcom publishes under s. 392.
+
+## candidate-4-4-fixed-term-bundle: whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under 4.4
+
+Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4.
+
+Kind: scope. Category: legislative gap. Addressee: TDRA. Exposed by: S1-6.
+
+**Clauses searched**
+
+- `tdra-cpr-v2-en:4.4` (p. 14): The 4.3 consent rule does not apply to an existing Service extended or renewed on the stated terms; an expired bundle is not addressed.
+  - EN: "where an existing Service, that is to say a service that a Subscriber has expressly ordered, is extended or renewed on terms which are:"
+  - AR (the whole chunk): "لا تنطبق أحكام المادة الفرعية4.3 على الحالات التي يتم فيها تمديد أو تجديد خدمة حالية، أي الخدمة التي طلبها المشترك خصيصاً، وتم تمديدها أو تجدديها حسب الشروط:"
+- `tdra-cpr-v2-en:2.1.16` (p. 7, `kb/sources/tdra-cpr-v2-en.pdf`): The CPR knows an auto-renewing data bundle; nothing on an expired fixed-term bundle. It defines the period after a bundle's allowance, not whether a lapsed bundle is an existing Service.
+  - EN: "when a consumer has used all of the data in a given data allowance and ending at the time when the data bundle automatically renews"
+
+**UAE position.** Candidate from the keys session (S1 step 6): the text does not say whether a lapsed fixed-term bundle is still an existing Service.
+
+**Global example**
+
+- Directive (EU) 2018/1972, European Electronic Communications Code (legislation.gov.uk copy of the adopted text), Art 105(3) (VERIFIED, `kb/sources/global/eu-eecc-2018-1972-art105.txt`): "Before the contract is automatically prolonged, providers shall inform end-users, in a prominent and timely manner and on a durable medium, of the end of the contractual commitment and of the means by which to terminate the contract."
+- Germany, Telekommunikationsgesetz (TKG) 2021, § 56(3) (VERIFIED, `kb/sources/global/de-tkg-2021-para-56.txt`): Our English, not an official translation: after the initial term, a tacitly renewed contract may be ended at any time on one month's notice; before the renewal the provider must tell the end-user, on a durable medium, of the renewal, how to prevent it, and the right to end the renewed contract. "kann der Endnutzer einen solchen Vertrag nach Ablauf der anfänglichen Vertragslaufzeit jederzeit unter Einhaltung einer Kündigungsfrist von einem Monat kündigen. Der Anbieter muss den Endnutzer rechtzeitig vor einer Verlängerung des Vertrages auf einem dauerhaften Datenträger hinweisen auf 1. die stillschweigende Verlängerung des Vertrages, 2. die Möglichkeit, die Verlängerung des Vertrages durch seine rechtzeitige Kündigung zu verhindern, und 3. das Recht, einen verlängerten Vertrag nach Satz 1 zu kündigen."
+
+**Recommendation.** TDRA to say whether a renewal after a fixed-term bundle has expired falls under 4.4 or needs fresh consent under 4.3, and, if 4.4, require the warning before and the one-month exit after.
 
 ## Candidates
 
@@ -724,7 +856,7 @@ Flagged as candidates; no global example required.
 
 ### Arabic records
 
-Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only chat transcript may not satisfy it (inferred). Consumer Law 4(5), named in the hq note, is about data privacy, not language.
+the CPR sets the bill's language; no text says whether a chat transcript that states a charge is a bill
 
 - `consumer-law-15-2020-en:8(4)` (p. 6): The invoice in Arabic.
   - EN: "The Invoice shall be in Arabic"
@@ -732,26 +864,13 @@ Invoices must be in Arabic (AED 100,000 under 66/2023 Annex 2); an English-only 
   - EN: "The provider fails to issue the invoice in Arabic."
 - `consumer-law-15-2020-en:4(5)` (p. 5): Privacy and security of the consumer's data; says nothing on language.
   - EN: "Protecting the privacy and security of his data"
+- `tdra-cpr-v2-en:3.2.2` (p. 10): Written information the CPR obligates: Arabic or English as the consumer prefers, both where the preference is unknown (3.2). Consumer Law 8(4) says the invoice in Arabic.
+  - EN: "shall be written in the Arabic language or in the English Language as preferred by the Consumer"
+  - AR (the whole chunk): "تُكتب باللغة العربية أو باللغة الإنجليزية على حسب تفضيل المستهلك، أما في الحالات التي يكون فيها التفضيل غير محدد فيجب كتابة المعلومات بكلتا اللغتين."
+- `tdra-cpr-v2-en:18.4.2` (p. 52, `kb/sources/tdra-cpr-v2-en.pdf`): Invoices are written information: 'be in writing' (18.4.2), with the content 18.7 lists; CPR billing clauses searched 2026-11-03.
+  - EN: "be in writing"
 
-### Breach notification without a period
-
-The Controller notifies the Bureau (9(1)) and the data subject (9(2)) of a breach within a period the never-issued Executive Regulations were to set. Example: GDPR Art 33(1), 'not later than 72 hours after having become aware of it'.
-
-- `pdpl-45-2021-en:9(1)` (p. 13): The period is left to the Executive Regulations.
-  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
-- `pdpl-45-2021-en:9(2)` (p. 14): The notice to the data subject: the period is left to the Executive Regulations too.
-  - EN: "within the period and in accordance with the measures and requirements set by the Executive Regulations of this Decree by Law"
-
-### Sub-processor authorisation
-
-The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. Example: GDPR Art 28(2), 'The processor shall not engage another processor without prior specific or general written authorisation of the controller.'
-
-- `pdpl-45-2021-en:7(5)` (p. 11): The Controller appoints only a Processor with sufficient guarantees.
-  - EN: "Appoint the Processor which has sufficient guarantees"
-- `pdpl-45-2021-en:8(1)` (p. 11): The Processor acts on the Controller's instructions and contract.
-  - EN: "Carry out the processing in accordance with the instructions of the Controller"
-- `pdpl-45-2021-en:8(10)` (p. 13): Several Processors: a written contract among them, or joint responsibility; the Controller's consent is not named.
-  - EN: "In the event that more than one Processor participates in processing data, the processing shall be carried out in accordance with a written contract or agreement"
+## Searched, nothing found
 
 ### The Executive Order, read in full
 

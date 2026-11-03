@@ -649,7 +649,9 @@ def datasheet() -> str:
         f"{len(rows)} manifest rows, one per document, {len(instruments)} instruments.", "",
         *_counts(rows, "status"), "",
         "VERIFIED: text on disk, sha256 matches. REFERENCED: opened, text not held. UNVERIFIED: asserted, not "
-        "published; backs no claim. HISTORICAL: superseded.", "",
+        "published; they back no quoted clause; two of them record an absence (the PDPL Executive Regulations, the "
+        "agentic framework text) that the register claims from the portal check written in the row, dated. "
+        "HISTORICAL: superseded.", "",
         *_counts(rows, "binding_status"), "", *_counts(rows, "jurisdiction"), "", *_counts(rows, "language"), "",
         f"English and Arabic pairs: {len(pairs)} instruments hold both languages: "
         f"{', '.join(f'`{i}`' for i in pairs)}.", "",
@@ -681,6 +683,7 @@ def datasheet() -> str:
         f"(`{LANDING_MARK}`): {', '.join(f'`{d}`' for d in landing)}.",
         *[f"- `{r['document_id']}` is {r['status']}: {r['notes']}" for r in rows if r["status"] != "VERIFIED"],
         *_noted(rows, "lam-alef", "page images", "14(3)"),
+        "- GCC: Qatar, Kuwait and Saudi Arabia searched; Oman and Bahrain not searched.",  # Task 44 addendum C2
     ]
     return "\n".join(lines) + "\n"
 

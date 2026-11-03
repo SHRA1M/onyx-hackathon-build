@@ -116,8 +116,9 @@ def test_readme_carries_the_two_sentences_and_the_reviewer_line():
             "replays the recorded S2 run under the rule the register recommends (proposed, not law): the held step "
             "S2-5 is released, the hand-over duty gains a two-minute clock, and one new finding appears: the rule needs "
             "the hand-over time recorded, which this log does not carry. Page: `docs/replay/whatif-S2-gap-1.md`.") in flat
-    line2 = next(l for l in README.splitlines() if l.startswith("2. Agent capability in error scenarios"))
-    assert line2.endswith("; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay")
+    row = next(l for l in README.splitlines() if l.startswith("| Agent capability in error scenarios"))  # Task 39 C
+    evidence = row.strip("|").split(" | ")[1]
+    assert evidence.endswith("; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay")
 
 
 def test_index_links_the_page_and_opens_its_text():
@@ -145,3 +146,50 @@ def test_cli_with_the_rule_prints_the_changes_and_writes_the_page(tmp_path, caps
 def test_the_rule_file_is_lf_json():
     raw = (data.DATA_DIR / "proposed" / "gap-1.json").read_bytes()
     assert b"\r\n" not in raw and json.loads(raw)["gap"] == "gap-1"
+
+
+# --- Task 36 item 3 (order 2026-11-01-task-36-template-items): a second addressee, the Data Office's gap-4 clock ---
+
+S4 = kb.REPO / "runs" / "c5" / "S4" / "run1.jsonl"
+PAGE_4 = kb.REPO / "docs" / "replay" / "whatif-S4-gap-4.md"
+
+
+def test_gap_4_rule_is_for_the_data_office_and_labels_its_arabic():
+    rule = whatif.load_rule("gap-4")
+    assert rule["id"] == "proposed-gap-4" and rule["status"] == "proposed, not law"
+    assert rule["addressee"] == "UAE Data Office" and rule["adds_deadline_to"] == "pdpl-18-4"
+    assert rule["clock_on"] == {"verdict": "hold", "kind": "check"} and "answers" not in rule
+    assert rule["text_ar_note"] == "translation by the team, not eye-checked"
+    assert "the number is the Data Office's to set" in rule["value_basis"]
+    raw = (data.DATA_DIR / "proposed" / "gap-4.json").read_bytes()
+    assert b"\r\n" not in raw
+
+
+def test_gap_4_gives_the_held_s4_5_step_the_clock_and_changes_no_verdict():
+    recorded, replayed, changes = whatif.replay_under(S4, "gap-4")
+    assert [c[:4] for c in changes] == [("S4-5-care", "propose_change", "hold", "hold")]
+    added = changes[0][4]
+    assert [r["kind"] for r in added] == ["obligation", "finding"] and all(r["proposed"] for r in added)
+    assert added[0]["deadline"] == {"rule": "proposed-gap-4", "value": "30", "unit": "days", "from": None}
+    assert "second-order: the rule needs the request moment recorded" in added[1]["text"]
+    assert [d[2] for d in recorded] == [d[2] for d in replayed]
+    assert all("proposed-gap-4" not in d[3] for d in replayed)
+
+
+def test_gap_1_still_adds_its_clock_on_block_only_and_gap_4_on_hold_only(monkeypatch):
+    duty = {"gate": "disconnection_gate", "kind": "check", "text": "review open", "clause": "pdpl-18-4"}
+    rule = whatif.load_rule("gap-4")
+    state = gate.State(agent="care", inject="S4-5", facts={"human_review_open": True})
+    for verdict, added in ((gate.BLOCK, 0), (gate.HOLD, 2), (gate.ALLOW, 0)):
+        given = gate.Verdict(verdict, ["pdpl-18-4"], [duty])
+        monkeypatch.setattr(gate, "decide", lambda p, s, kb=None, v=given: v)
+        out = whatif.decide_under(rule)(_route(), state, None)
+        assert len(out.reasons) - 1 == added and out.verdict == verdict
+
+
+def test_gap_4_page_is_current():
+    assert PAGE_4.read_text(encoding="utf-8") == whatif.render(S4, "gap-4"), "run `python -m onyx whatif ... --rule gap-4`"
+    text = PAGE_4.read_text(encoding="utf-8")
+    for part in ("for UAE Data Office", "translation by the team, not eye-checked", "## What changes",
+                 "| S4-5-care | `propose_change` | hold | hold |", "## Second-order finding"):
+        assert part in text, part

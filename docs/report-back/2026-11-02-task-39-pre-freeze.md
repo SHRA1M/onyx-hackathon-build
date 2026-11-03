@@ -1,0 +1,228 @@
+# Report-back: Task 39, pre-freeze changes (2026-11-02, Opus, in progress)
+
+Order: `docs/work-orders/2026-11-02-task-39-pre-freeze.md` (hq's `task-39-pre-freeze-order-2026-11-02.md`). Iyas
+confirmed A, B, C and D; E is skipped until he says (not built, Iyas's call).
+
+## State
+
+| Item | State | Commit |
+|---|---|---|
+| A | Built, pushed, CI on PR #13 green | `67e6792` |
+| B | Stopped (stop 1 below). No code written yet | |
+| C | Built, committed, not pushed | `19278f9` |
+| D | Stopped (stop 2 below). Nothing written | |
+| E | Not built, Iyas's call | |
+
+## Done means so far
+
+1. A: `grep -c "17 verbs" docs/annex.md` -> `0`. `report_pages.ps1` -> `pages: 5` / `words: 2366` /
+   `annex starts on page: 6` / `total pages: 10` / `total words: 5011`. `report_pdf.ps1` -> `word pages: 10` /
+   `pdf pages: 10` / `pdf finds 'Annex A': True`. `uv run pytest` -> `661 passed`. PR #13 checks: `reproduce pass`
+   (runs 41431622886 and 41431629562). hq copy `report-annex-2026-11-02.md` equals `docs/annex.md` (sha256
+   `956a102b1d38a141...` both); text v3 reads "the 16 verbs (16: repo count, Task 39)".
+3. C: the table is in `README.md` under "For the reviewer"; each command run once, first line:
+   - `uv run python -m onyx kb verify` -> `VERIFIED 83  REFERENCED 2  UNVERIFIED 3  HISTORICAL 0`
+   - `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` -> `S2 step 3 (S2-3), runs/c5/S2/run1.jsonl`
+   - `uv run python -m onyx selftest` -> `Selftest: S1 Roaming before a flight (en, governed). SYNTHETIC operator and subscriber.`
+   - row 4 is a link to `#y3172-mapping` (the README's "Y.3172 mapping" heading).
+   New test `test_the_reviewer_table_names_only_commands_and_paths_that_exist`; two tests that pinned the numbered
+   lines now read the table rows (`tests/test_report.py`, `tests/test_site.py`). Both fail on the old README, pass
+   on the new. README, report, site and gaps tests: `191 passed`.
+
+## Stop 1 (item B): must-cite clauses never shown, at steps that scored a hit
+
+The order: stop when "the key-clause row shows a step whose must-cite clause was never shown to the model in a run
+that still scored a hit (name it: that is a finding, not a bug to hide)". A probe over the C5 logs (the order's
+counting, before any code) shows this in every scenario:
+
+| Lang | Shown of total | By mandate | Only by retrieval | Clause-instances not shown at a step that hit | Steps |
+|---|---|---|---|---|---|
+| en | 186 of 234 | 160 | 26 | 43 | S1-6, S2-5, S2-6, S3-3, S4-4, S4-5, S5-4 |
+| ar | 166 of 234 | 160 | 6 | 68 | S1-6, S2-5, S2-6, S3-1, S3-3, S4-4, S4-5, S5-4 |
+
+"Hit" is action recall: the key's agent proposed the key's verb to the right addressee. Examples, the same in both
+runs: S2-5 (adviser, the abstention step) was never shown `cpr-26-7-1`, `qos-v3-0-t1-2a`, `licence-9-1`,
+`cpr-26-4-5`; S5-4 never `cpr-24-10`, `et-33`; S4-5 never `pdpl-18-1`, `pdpl-21-2-a`, `cabinet-66-2023-34-1`,
+`cpr-22-2`. What it likely means (not checked further): a key's `must_cite` lists the clauses the step's record must
+carry, many of which the gate adds to its verdict; an action hit needs the right verb, not those clauses in the
+prompt. So "shown" is low where the gate, not the model, carries the law.
+
+Two counting choices the order leaves open, taken in the probe:
+- Steps where no agent sent a prompt (S1-1 and S2-1, plain-code steps, 3 must-cite each) are left out of the total,
+  as `must-cite given` does. Counting them adds 12 per language, all not shown.
+- Each `must_cite` entry counts once, mapped to its chunk; two rules on one chunk count twice (S3-3:
+  `pdpl-13-2-d` and `pdpl-13-2-g` are both `pdpl-45-2021-en:13(1)`).
+
+Questions for hq:
+1. Build the row and the annex sentence as ordered, with the finding named in the report-back only? Or add words
+   to the annex sentence (for example "the rest are carried by the gate's verdict")? The sentence as ordered would
+   read, from the probe: "186 of 234 ... in English and 166 of 234 in Arabic; 160 of 234 came from the mandate list
+   alone, which is the English-centred retriever at work, and why the mandate list comes first." (Arabic
+   retrieval-only 6 is below English 26, so the clause applies.) Note "160 of 234 from the mandate alone" is the
+   same in both languages: the mandate list does not depend on the language.
+2. Keep the two counting choices above?
+
+## Stop 2 (item D): the C5 hand-over latency cells
+
+The order: stop when "a C5 hand-over latency cell is not a number". From `eval/results.json`,
+`c5.C5.by_scenario.*.handover_latency_steps`:
+
+```
+S1 en None  ar None
+S2 en 0.0   ar 0.0
+S3 en None  ar None
+S4 en 0.0   ar 0.0
+S5 en 0.0   ar 0.0
+```
+
+S1 and S3 have no `handover_step` in their keys, so they have no latency. Second point: `eval/results.md` does not
+print a C5 hand-over latency at all. The only "Hand-over latency (steps)" column is in the Governed table, which is
+C3 (prompt v3, `runs/S*`): `n/a` for S1 and S3, `0` for S2, S4, S5.
+
+Questions for hq:
+3. Write "is 0 steps in every scored run of the three scenarios with a hand-over (S2, S4, S5)"? Or another wording?
+4. The sentence points at "the hand-over latency row in `eval/results.md`". Point it at the C3 Governed column
+   (same values), or have B's eval change also print the C5 hand-over latency per scenario and language in
+   `eval/results.md`, so the pointer names C5?
+
+## After the ruling (`task-39-stops-ruling-2026-11-02.md`)
+
+| Item | State | Commit |
+|---|---|---|
+| B | Row, C5 hand-over cells, definitions, tests built. Annex A sentence held: stop 3 below | `100ecd3` |
+| D | Built: the ruling's three sentences in Annex C (and hq's copy) | `100ecd3` |
+| C fix | `tests/test_whatif.py` still pinned the old README line 2; CI failed on the C push (run 41432193053). Fixed; CI green on `100ecd3` (runs 41435843854, 41435849711) | `100ecd3` |
+
+### Stop 3 (ruling B1): the gate does not carry every not-shown clause
+
+Field used: `clause_ids` of every `gate` event of the step (rule ids, the same kind as `must_cite`). The adviser's
+`abstain` event's `clause_ids` is counted apart: it is the abstention record, not the gate's verdict.
+
+| Lang | Carried by the gate | Not in the gate's verdict | of which in the abstention record | In neither prompt, verdict nor abstention | Total |
+|---|---|---|---|---|---|
+| en | 27 (63%) | 16 | 10 | 6 | 43 |
+| ar | 44 (65%) | 24 | 14 | 10 | 68 |
+
+Under 90% with or without the abstention record (en 37 of 43, 86%; ar 58 of 68, 85%), so "most of the rest" is not
+written and the Annex A sentence is not added. Every uncarried instance, the same in run 1 and run 2 (so each line is
+2 instances). "Hit" is the key's agent proposing the key's verb to the right addressee:
+
+| Lang | Step | Clause (rule id) | In the abstention record | What hit |
+|---|---|---|---|---|
+| en, ar | S2-5 | `cpr-26-7-1` | yes | adviser `flag_gap` (abstention step) |
+| en, ar | S2-5 | `licence-9-1` | yes | adviser `flag_gap` |
+| ar | S2-5 | `cpr-26-7-2` | yes | adviser `flag_gap` |
+| en, ar | S2-5 | `qos-v3-0-t1-2a` | no | adviser `flag_gap` |
+| en, ar | S2-5 | `cpr-26-4-5` | no | adviser `flag_gap` |
+| en, ar | S4-5 | `pdpl-18-1` | yes | adviser `flag_gap` |
+| en, ar | S4-5 | `cabinet-66-2023-34-1` | yes | adviser `flag_gap` |
+| en, ar | S4-5 | `cpr-22-2` | yes | adviser `flag_gap` |
+| ar | S4-5 | `pdpl-18-2` | yes | adviser `flag_gap` |
+| en, ar | S5-4 | `et-33` | no | adviser `flag_gap` |
+| ar | S3-1 | `cpr-28-26` | no | data_office `receive_objection` |
+| ar | S3-1 | `consumer-law-4-5` | no | data_office `receive_objection` |
+
+Reading (not a fix): every uncarried instance but S3-1 Arabic is on an abstention step, where the adviser's act is
+`flag_gap` and the gate's verdict on the pending proposal cites nothing. The key's `must_cite` there names the clauses
+the gap is about. Action recall scores the verb, so these steps hit with the clauses neither shown nor carried.
+
+Question for hq: 5. The Annex A sentence without the last clause (as the original order wrote it), a different last
+clause, or none?
+
+### Outputs
+
+- `uv run python -m onyx eval` -> `60 runs read from runs; results in eval/results.md and results.json
+  (claude-sonnet-5-5).` `git diff eval/results.md`: 24 lines added, 0 removed. The new section:
+
+```
+| S1 | en | 42 of 48 | 36 of 48 (0.75) | 6 of 48 (0.12) | n/a |
+| S1 | ar | 38 of 48 | 36 of 48 (0.75) | 2 of 48 (0.04) | n/a |
+| S2 | en | 36 of 46 | 32 of 46 (0.70) | 4 of 46 (0.09) | 0 |
+| S2 | ar | 34 of 46 | 32 of 46 (0.70) | 2 of 46 (0.04) | 0 |
+| S3 | en | 46 of 54 | 34 of 54 (0.63) | 12 of 54 (0.22) | n/a |
+| S3 | ar | 34 of 54 | 34 of 54 (0.63) | 0 of 54 (0.00) | n/a |
+| S4 | en | 36 of 54 | 32 of 54 (0.59) | 4 of 54 (0.07) | 0 |
+| S4 | ar | 32 of 54 | 32 of 54 (0.59) | 0 of 54 (0.00) | 0 |
+| S5 | en | 26 of 32 | 26 of 32 (0.81) | 0 of 32 (0.00) | 0 |
+| S5 | ar | 28 of 32 | 26 of 32 (0.81) | 2 of 32 (0.06) | 0 |
+
+Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by retrieval.
+Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by retrieval.
+```
+
+- D, the C5 cells the sentences come from (`results.json`, `c5.C5.by_scenario.*.handover_latency_steps`): S1 None /
+  None, S2 0.0 / 0.0, S3 None / None, S4 0.0 / 0.0, S5 0.0 / 0.0 (en / ar). As placed after "and it does so in both
+  languages.", the old next sentence "That is the number a regulator should want to know..." now follows the
+  hand-over sentences; it reads as pointing at the hand-over rather than at the two steps let through. hq may want
+  the three sentences after "puts the decision in code." instead.
+- `report_pages.ps1` -> `pages: 5` / `words: 2366` / `annex starts on page: 6` / `total pages: 10` /
+  `total words: 5094`. `report_pdf.ps1` -> `word pages: 10` / `pdf pages: 10` / `pdf finds 'Annex A': True` /
+  `pdf finds 'Limits and next steps': True` / `pdf bytes: 358043`.
+- `uv run pytest` -> `667 passed` (661 + 1 for C + 5 for B and D). hq copy of the annex equals `docs/annex.md`
+  (sha256 `f1b8af538b781496...`).
+- New tests: `test_key_clauses_shown_counts_mandate_and_retrieval_apart`, `test_key_clauses_shown_c5_totals_are_pinned`
+  (234 per language), `test_key_clauses_row_is_recomputed_from_the_committed_logs`,
+  `test_c5_handover_latency_cells_equal_the_json_values`, `test_annex_c_handover_sentences_match_the_c5_cells`.
+
+## Limits kept so far
+
+No run, no model call, no fetch, no spend. No figure, gap, rule, key, prompt, gate, mandate or scenario changed.
+Failure mode: closed; only `task-36` pushed (A), nothing merged, no tag.
+
+## After ruling 2 (`task-39-stops-ruling-2-2026-11-02.md`): B5 built
+
+| Item | State | Commit |
+|---|---|---|
+| B, Annex A sentence | Built, pushed, CI on PR #13 green (runs 41448439695, 41448448759) | `61460dd` |
+
+### What differs from the ruling: the carried counts are 23 and 36, not 27 and 44
+
+Stop 3's probe script was not kept, and its 27 (en) and 44 (ar) could not be reproduced. The code now counts and
+prints them itself (`onyx/eval.py`, `key_clauses_absent`), with this definition, printed in `eval/results.md`:
+an entry is carried when the step's gate record holds it, either as a rule id in a gate event's `reasons[].clause`
+or as its chunk among the `clause_ids` of the proposal the gate judged (`old_value`). Gate events have no
+`clause_ids` of their own in `new_value`. Under this reading:
+
+| Lang | Absent at a step that scored | Carried by the gate | Not carried |
+|---|---|---|---|
+| en | 43 | 23 | 20 |
+| ar | 68 | 36 | 32 |
+
+The four uncarried entries that stop 3 counted as carried (en S3-3 `pdpl-13-2-d` and `pdpl-13-2-g`; ar adds S1-6
+`cpr-4-4` and S3-3 `pdpl-22-1`) all sit on abstention steps. So the sentence's structure is unchanged: a test over
+the committed logs proves every uncarried entry is on a step with an `abstain` event, except `cpr-28-26` and
+`consumer-law-4-5` at S3-1 in Arabic. The English runs had both in `sources_used` and not in `sources_mandate`.
+Every flag_gap key step (S1-6, S2-5, S3-3, S4-5, S5-4) has an abstain event in every C5 run.
+
+Unit, stated in `eval/results.md`: clause entries per language over the committed runs (each run's entries added).
+
+### Outputs
+
+- Pooled lines in `eval/results.md`:
+  `Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by
+  retrieval; of the 43 not shown at a step that scored, 23 carried by the gate's verdict.`
+  `Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by
+  retrieval; of the 68 not shown at a step that scored, 36 carried by the gate's verdict.`
+- The Annex A sentence, as written: "Over the scored runs, 186 of 234 key clauses were in what the model was shown
+  in English and 166 of 234 in Arabic; 160 of 234 came from the mandate list alone, which is the English-centred
+  retriever at work, and why the mandate list comes first. Of the clauses absent at a step that still scored, 23 in
+  English and 36 in Arabic were carried by the gate's verdict in code; the rest sit on abstention steps, where the
+  key names the clauses the gap is about and the adviser's act is to flag the gap, not to cite them, except two
+  clauses at one Arabic step (S3-1) that the English run retrieved and the Arabic run did not."
+- `uv run python -m onyx eval` -> `60 runs read from runs; results in eval/results.md and results.json
+  (claude-sonnet-5-5).` `git diff --stat eval/`: results.json +24, results.md +4 -2. No existing figure changed.
+- `report_pages.ps1` -> `pages: 5` / `words: 2366` / `annex starts on page: 6` / `total pages: 10` /
+  `total words: 5214`. `report_pdf.ps1` -> `word pages: 10` / `pdf pages: 10` / `pdf finds 'Annex A': True` /
+  `pdf finds 'Limits and next steps': True` / `pdf bytes: 358737`.
+- `uv run pytest` -> `670 passed` (667 + 3). New: `test_key_clauses_absent_and_carried_by_the_gate`,
+  `test_uncarried_key_clauses_sit_on_abstention_steps_but_two_at_s3_1_arabic`,
+  `test_annex_a_retrieval_sentence_carries_the_printed_key_clause_figures`. The pinned-totals and recompute tests
+  now include `absent` and `carried`. All five new B tests failed before the code, then passed.
+- hq copy `report-annex-2026-11-02.md` equals `docs/annex.md` (sha256 `9429cfb4509ceb37a6c8...` both).
+
+### Open for hq
+
+1. Is the strict reading of "carried" the one hq meant? If hq wants stop 3's looser one, it needs a rule that
+   reproduces 27 and 44, and the sentence's numbers change.
+2. Ruling 2 clears the reviewer email now: the B sentence is in and the PDF is rebuilt (10 pages, page 6 starts
+   "Annex"). Iyas sends.

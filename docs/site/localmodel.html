@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mizan: local model</title>
+<style>
+:root { --ink: #1c1f24; --muted: #5b6270; --line: #d8dbe0; --bg: #ffffff; --panel: #f5f6f8;
+  --allow: #1a7f37; --hold: #9a6700; --block: #c62828; --insufficient: #5f6773; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0 16px 48px; background: var(--bg); color: var(--ink);
+  font: 16px/1.5 "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif; }
+[lang="ar"] { font-family: "Segoe UI", "Geeza Pro", "Noto Naskh Arabic", "Arabic Typesetting", Tahoma, Arial,
+  sans-serif; }
+header { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 0; z-index: 1; }
+h1 { margin: 4px 0; font-size: 1.4em; }
+h2 { font-size: 1.2em; margin: 16px 0 4px; }
+h3 { font-size: 1.05em; margin: 12px 0 6px; }
+h4 { font-size: .95em; margin: 12px 0 4px; color: var(--muted); }
+button { font: inherit; padding: 4px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 4px;
+  cursor: pointer; }
+button.on { background: var(--ink); color: var(--bg); }
+.bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 6px 0; }
+.picker { display: flex; flex-wrap: wrap; gap: 6px; }
+.picker button { text-align: start; }
+.headline, .meta { margin: 2px 0; color: var(--muted); font-size: .9em; }
+.notice { margin: 8px 0; padding: 6px 10px; background: var(--panel); border-left: 4px solid var(--hold); }
+.message { padding: 10px 12px; background: var(--panel); border-radius: 4px; font-size: 1.05em; }
+ul { padding-inline-start: 20px; margin: 4px 0; }
+li { margin: 4px 0; }
+.clauses { font-size: .92em; }
+q.quote { display: inline-block; margin: 2px 0; }
+.verdict { display: inline-block; padding: 0 8px; border-radius: 10px; color: #fff; font-weight: 600; }
+.v-allow { background: var(--allow); }
+.v-hold { background: var(--hold); }
+.v-block { background: var(--block); }
+.v-insufficient { background: var(--insufficient); }
+.handover { margin: 10px 0; padding: 8px 12px; border: 2px solid var(--block); border-radius: 4px; }
+.handover h4 { margin-top: 0; color: var(--block); }
+.abstain { margin: 10px 0; padding: 8px 12px; border: 2px solid var(--insufficient); border-radius: 4px; }
+.ungoverned { margin-top: 12px; padding: 6px 10px; border: 1px dashed var(--line); }
+.ungoverned summary { cursor: pointer; color: var(--muted); }
+code { font-size: .9em; overflow-wrap: anywhere; }
+.tag { display: inline-block; padding: 0 6px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted);
+  font-size: .8em; white-space: nowrap; }
+.scenario, .whatif, .run, .step, .headline { display: none; }
+.scenario.on, .whatif.on, .run.on, .step.on, .headline.on { display: block; }
+pre.text { white-space: pre-wrap; font: inherit; font-size: .92em; }
+body.present { font-size: 22.4px; }
+body.present .picker { display: none; }
+
+nav.site { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 10px 0;
+  border-bottom: 1px solid var(--line); }
+nav.site .brand { font-weight: 700; margin-inline-end: 8px; }
+a.site-link { color: var(--ink); text-decoration: none; border-bottom: 2px solid transparent; }
+a.site-link.on { border-bottom-color: var(--ink); font-weight: 600; }
+a.button { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: 4px;
+  background: var(--panel); color: var(--ink); text-decoration: none; font-size: .9em; }
+main.site { max-width: 1200px; }
+.lead { font-size: 1.15em; font-weight: 600; }
+table.grid { border-collapse: collapse; margin: 8px 0; }
+table.grid th, table.grid td { border: 1px solid var(--line); padding: 4px 8px; text-align: start; vertical-align: top; }
+td.num { font-variant-numeric: tabular-nums; text-align: end; }
+.tablewrap { overflow-x: auto; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
+.card { display: block; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; color: var(--ink); }
+a.card { text-decoration: none; }
+a.card:hover { border-color: var(--ink); }
+.big { font-size: 1.8em; font-weight: 700; }
+.defs li { font-size: .92em; }
+code.sha, td.sha { font-family: Consolas, "Courier New", monospace; font-size: .8em; overflow-wrap: anywhere; }
+table.chain { width: 100%; table-layout: fixed; }
+table.chain th:nth-child(1) { width: 4em; }
+table.chain th:nth-child(2) { width: 10em; }
+table.chain th:nth-child(5) { width: 6em; }
+table.kb td { font-size: .88em; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 6px 0; }
+.gap-row, .candidate { border-top: 1px solid var(--line); margin-top: 16px; }
+.rule { padding: 6px 12px; border: 2px dashed var(--hold); border-radius: 4px; }
+tr.changed { background: #fff5d6; }
+table.whatif-table td:first-child code { white-space: nowrap; }
+.ok { color: var(--allow); font-weight: 600; }
+.bad { color: var(--block); font-weight: 600; }
+select { font: inherit; max-width: 100%; }
+</style>
+</head>
+<body>
+<nav class="site"><span class="brand">Mizan</span><a class="site-link" href="index.html">Overview</a><a class="site-link" href="runs.html">Runs</a><a class="site-link" href="gaps.html">Gap register</a><a class="site-link" href="kb.html">Knowledge base</a><a class="site-link" href="verify.html">Verify a log</a><a class="site-link" href="whatif.html">What-if</a><a class="site-link" href="modeldown.html">Model down</a><a class="site-link on" href="localmodel.html">Local model</a><a class="site-link" href="https://github.com/SHRA1M/onyx-hackathon-build">Repository</a></nav>
+<main class="site">
+<h1>Local model: S2 on qwen2.5:14b-instruct</h1><p class="notice">The operator, subscribers and numbers are synthetic; the law texts are real, linked and hashed.</p><p class="lead">A demo of the adapter, not of quality: this run is not scored and is not compared with the report&#x27;s figures.</p><p>Model <code>qwen2.5:14b-instruct</code> through Ollama 0.40.13, on this machine: GPU NVIDIA GeForce RTX 3060, 12288 MiB, RAM 15.9 GB; Ollama settings <code>OLLAMA_CONTEXT_LENGTH=32768</code>, <code>OLLAMA_FLASH_ATTENTION=1</code>, <code>OLLAMA_KV_CACHE_TYPE=q8_0</code>. The same adapter, prompt, gates and answer keys as every other run; only the endpoint and the model name differ, and nothing left the PC. Run <code>runs/demo-local/S2/en/run1.jsonl</code>, hash chain ok; check it with <code>python -m onyx verify-log runs/demo-local/S2/en/run1.jsonl</code>.</p><h2>Steps, verdicts and clauses, as logged</h2><div class="tablewrap"><table class="grid"><thead><tr><th>step</th><th>actor</th><th>event</th><th>verdict</th><th>clauses</th><th>proposed, or why not</th></tr></thead><tbody><tr data-step="S2-1-adviser"><td><code>S2-1-adviser</code></td><td>adviser</td><td>classify_channel</td><td></td><td><code>tdra-cpr-v2-en:4.22</code><br><code>tdra-cpr-v2-en:4.10</code><br><code>tdra-cpr-v2-en:4.11</code></td><td>app_chat: CPR 4.22, 4.10, 4.11 apply</td></tr><tr data-step="S2-1-adviser"><td><code>S2-1-adviser</code></td><td>gate</td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td></td><td>classify_channel</td></tr><tr data-step="S2-2-care"><td><code>S2-2-care</code></td><td>care</td><td>propose</td><td></td><td></td><td>unparseable model response: no JSON in the agreed schema</td></tr><tr data-step="S2-3-care"><td><code>S2-3-care</code></td><td>care</td><td>propose</td><td></td><td><code>tdra-cpr-v2-en:26.13.2</code></td><td>propose_change</td></tr><tr data-step="S2-3-care"><td><code>S2-3-care</code></td><td>gate</td><td>gate</td><td><span class="verdict v-hold">hold</span></td><td><code>cpr-22-1-1</code><br><code>cpr-22-2</code><br><code>cpr-3-9-notices</code><br><code>consumer-law-8-4</code></td><td>propose_change</td></tr><tr data-step="S2-4-care"><td><code>S2-4-care</code></td><td>care</td><td>propose</td><td></td><td><code>18</code><br><code>23</code><br><code>26</code><br><code>33</code><br><code>4</code></td><td>draft_reply</td></tr><tr data-step="S2-4-care"><td><code>S2-4-care</code></td><td>gate</td><td>gate</td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td></td><td>draft_reply</td></tr><tr data-step="S2-5-adviser"><td><code>S2-5-adviser</code></td><td>adviser</td><td>propose</td><td></td><td></td><td>flag_gap</td></tr><tr data-step="S2-5-adviser"><td><code>S2-5-adviser</code></td><td>gate</td><td>gate</td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td></td><td>flag_gap</td></tr><tr data-step="S2-5"><td><code>S2-5</code></td><td>adviser</td><td>abstain</td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td><code>cpr-22-1-1</code><br><code>cpr-26-7-2</code><br><code>cpr-4-7-2</code><br><code>pdpl-17</code><br><code>cpr-13-8</code><br><code>spam-calls-v4-15-4</code><br><code>cpr-26-13-3-phone</code><br><code>cpr-26-13-3-written</code><br><code>cpr-22-2</code><br><code>cpr-3-9-notices</code><br><code>consumer-law-8-4</code></td><td>no VERIFIED clause retrieved answers the step; clauses searched listed with what each says</td></tr><tr data-step="S2-5-coordinator"><td><code>S2-5-coordinator</code></td><td>gate</td><td>gate</td><td><span class="verdict v-hold">hold</span></td><td></td><td>route</td></tr><tr data-step="S2-6-tdra"><td><code>S2-6-tdra</code></td><td>tdra</td><td>propose</td><td></td><td><code>24.11</code><br><code>26.11</code><br><code>3.9</code></td><td>request_report</td></tr><tr data-step="S2-6-tdra"><td><code>S2-6-tdra</code></td><td>gate</td><td>gate</td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td></td><td>request_report</td></tr></tbody></table></div>
+</main>
+</body>
+</html>

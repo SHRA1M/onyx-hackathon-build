@@ -1,28 +1,28 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-10-30 (fifty-second wrap, Opus). Handover for the next session.
+Updated 2026-11-03 (sixty-first wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Tasks 35 and 35b are merged and tagged on main (PRs #11, #12; tags `task-35`, `task-35b`). Nothing waits on hq from
-them. Iyas brings the next order next session (hq's post-sweep order is due 2026-10-31). Every change before
-2026-11-06; submission 2026-11-09.
+Finish Task 44 (`D:\Projects\hq\uni\ai-for-good-hackathon\task-44-sweep-fixes-order-2026-11-02.md` with
+`task-44-addendum-2026-11-03.md`) on `task-36`. It is built and UNCOMMITTED in the working tree, held at stop 1.
+Deadline: pushed with CI green by 2026-11-05; freeze 2026-11-06; submission 2026-11-09.
 
 ## State
 
-- main: KB 88 documents (83 VERIFIED, 2 REFERENCED, 3 UNVERIFIED), 34 foreign, 32 UAE instruments.
-- Report 5 pages, 2,193 words, no slack: gap 6 cell "Maine §1500-DD; EU AI Act Art 50(1)"; gap 1, gap 7 row and gap 3
-  additions each made 6. hq's report copy is current.
-- Full suite 630 passed; CI green on PR #12.
+- Task 43 committed and pushed (`0ac34f7`, `a4fc1db`), CI green on PR #13.
+- Task 44: everything but the TRAI items is in (`docs/report-back/2026-11-03-task-44-stop-1.md` lists it).
+  Manifest 103 rows; register 15 gaps, 2 candidates. Count tests fail until the TRAI row lands.
 
-## Open questions (with hq)
+## Open questions
 
-- In-force dates unverified: Maine §1500-DD, India TCCRR (Gazette), Korea Art 31.
-- The Saudi Arabic quotes are image-read twice, not eye-checked; Qatar CCPR §7 to §9 unread.
-- Carried: eIDAS 2024/1183 and Art 8 unchecked; the 52/2024 Art 2(2) Arabic eye-check; GitHub Pages from `/docs` on
-  submission day; the demo video lands 2026-11-08.
+- hq: answers file `task-44-stop-1-answers-2026-11-03.md` (TRAI eye-check, C1 Charter, D2, B2, gap 7 draft).
+- Iyas: send the reviewer email.
 
 ## Next moves
 
-1. `git status`, `git pull` on main.
-2. Take the order Iyas gives; file it under `docs/work-orders/`, branch `task-NN` from main.
+1. `git status` (expect Task 44's files modified plus the stop file), `git pull` on `task-36`.
+2. Apply the answers: TRAI row and register lines, SHORT key, counts (104 / 97 / 4 / 3, 38 foreign, 33 UAE
+   instruments), Annex F TRAI sentence, E1 sentence.
+3. Regenerate, rebuild the report (5 pages, annex page 6), run the 8 done checks and the addendum's lines with output;
+   hq copies with backups; CHANGELOG; done report; commit by name; push; `gh pr checks 13`.

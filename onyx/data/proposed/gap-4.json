@@ -1,0 +1,17 @@
+{
+  "id": "proposed-gap-4",
+  "gap": "gap-4",
+  "status": "proposed, not law",
+  "addressee": "UAE Data Office",
+  "text_en": "When a data subject asks for the human review of an automated decision (PDPL 18(4)), the Controller records the moment of the request, a named human reviews the decision and hears the subscriber's point of view, and the subscriber has the reviewed decision within 30 days of the request; every further step on that decision waits for it.",
+  "text_ar": "عندما يطلب صاحب البيانات مراجعة بشرية لقرار آلي (البند 18(4) من المرسوم بقانون اتحادي رقم 45 لسنة 2021 بشأن حماية البيانات الشخصية)، يُسجِّل المتحكم لحظة تقديم الطلب، ويراجع موظف بشري محدَّد الهوية القرار ويستمع إلى وجهة نظر المشترك، ويتسلّم المشترك القرار بعد المراجعة في غضون 30 يوماً من تاريخ الطلب؛ وتنتظر كل خطوة لاحقة بشأن ذلك القرار نتيجة المراجعة.",
+  "text_ar_note": "translation by the team, not eye-checked",
+  "value": "30",
+  "unit": "days",
+  "value_basis": "pdpl-45-2021-en:25: the only period the PDPL sets (30 days, for a grievance against the Bureau's own decisions, register gap 4); GDPR Art 12(3)'s one month on the register is the same length; the number is the Data Office's to set",
+  "trigger_fact": "human_review_open",
+  "adds_deadline_to": "pdpl-18-4",
+  "clock_on": {"verdict": "hold", "kind": "check"},
+  "clock_verb": "answer the 18(4) review",
+  "requires_record": "request moment"
+}

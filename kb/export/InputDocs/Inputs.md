@@ -4,7 +4,7 @@ Mizan knowledge base, exported from `kb/manifest.csv` by `python -m onyx kb expo
 Each document sits in the subfolder of its category; full texts are copied only where `kb fetch` holds them.
 
 
-## UAE_Binding/ (41 files)
+## UAE_Binding/ (43 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -49,19 +49,26 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 39 | `cabres-52-2024-ar.pdf` | `regulation` | Cabinet Resolution No. 52 of 2024 Concerning the Administrative Penalties for Violating Federal Decree-Law No. 46 of 2021 (Electronic Transactions and Trust Services) and its Executive Regulations, Arabic | VERIFIED | `32c667ed6310…` | 6 | [landing page](https://uaelegislation.gov.ae/ar/legislations/2585) (document link not verified) |
 | 40 | `cabres-52-2024-en.txt` | `regulation` | Cabinet Resolution No. 52 of 2024 Concerning the Administrative Penalties for Violating Federal Decree-Law No. 46 of 2021 (Electronic Transactions and Trust Services) and its Executive Regulations | VERIFIED | `85f6e4cb46a4…` |  | [landing page](https://uaelegislation.gov.ae/en/legislations/2585) (document link not verified) |
 | 41 | `licence-3-2026.pdf` | `licence` | Public Telecommunications Licence No. 3/2026 (du), term 2026-08-09 to 2046-08-08, bilingual | VERIFIED | `ccafd4ed2d5a…` | 47 | [link](https://tdra.gov.ae/-/media/About/LICENSING/EN/Licence-32026-EITC-Public.ashx) |
+| 42 | `tra-violation-decision-1-2009.txt` | `decision` | Violation Decision No. (1) of 2009, Non-Compliance with Directive No. (3) of 2008 (redacted version) | VERIFIED | `2b74429e6547…` | 5 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/REDACTED--VD--1--OF-2009--Non-Compliance-with-Directive-No---3--of-2008-pdf.ashx) |
+| 43 | `dha-ai-policy-2021.txt` | `policy` | Artificial Intelligence in the Healthcare Sector Policy, DHA/HISHD/PP-09, version 1 | VERIFIED | `a628aa7abca2…` | 17 | [link](https://www.dha.gov.ae/uploads/082022/Artificial%20Intelligence%20Policy20228457.pdf) |
 
-## UAE_Advisory/ (6 files)
+## UAE_Advisory/ (11 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
-| 1 | `tdra-dispute-service-page` | `web_page` | TDRA service page: dispute resolution with service providers | REFERENCED |  |  | [link](https://tdra.gov.ae/en/Services/dispute-resolution-with-service-providers) |
+| 1 | `tdra-dispute-service-page.txt` | `web_page` | TDRA service page: dispute resolution with service providers | VERIFIED | `bb3747ab7cde…` |  | [link](https://tdra.gov.ae/en/Services/dispute-resolution-with-service-providers) |
 | 2 | `mocai-ai-ethics-2022.pdf` | `guideline` | AI Ethics Principles and Guidelines (December 2022) | VERIFIED | `f761ec3b1891…` | 25 | [link](https://u.ae/-/media/AI-publications/MOCAI-AI-Ethics-EN-1.pdf) |
 | 3 | `ai-deepfake-guide-2021.txt` | `guideline` | Deepfake Guide 2021 | VERIFIED | `2d4911da01e7…` |  | [link](https://u.ae/-/media/AI-publications/AI-DeepFake-Guide-EN-2021.pdf) |
 | 4 | `eand-code-of-practice-en.pdf` | `operator code` | e& Code of Practice regarding customer affairs | VERIFIED | `4b6383a7523a…` | 13 | [link](https://eand.com/en/system/com/assets/docs/general/code-of-practice-for-customer-affairs.pdf) |
 | 5 | `du-code-of-practice-en.pdf` | `operator code` | du (EITC) Code of Practice | VERIFIED | `8f8014d981c1…` | 5 | [link](https://www.du.ae/files/1430740188355) |
-| 6 | `fed-ai-data-authority-2026-06-14` | `announcement` | Mohammed bin Rashid approves establishing the Federal Authority for Artificial Intelligence and Data | REFERENCED |  |  | [link](https://dgov.tdra.gov.ae/ar/media-hub/news/mohammed-bin-rashid-approves-establishing-artificial-intelligence-and-data-authority) |
+| 6 | `fed-ai-data-authority-2026-06-14.txt` | `announcement` | Mohammed bin Rashid approves establishing the Federal Authority for Artificial Intelligence and Data | VERIFIED | `90fece26eafb…` |  | [link](https://dgov.tdra.gov.ae/ar/media-hub/news/mohammed-bin-rashid-approves-establishing-artificial-intelligence-and-data-authority) |
+| 7 | `wam-2026-06-14-ai-data-authority.txt` | `announcement` | Mohammed bin Rashid approves establishing Artificial Intelligence and Data Authority (WAM, 14 June 2026) | VERIFIED | `c10f13619aa0…` |  | [link](https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing) |
+| 8 | `uaepass-docs-account-levels` | `web_page` | UAE PASS developer documentation, Overview: Account Levels | REFERENCED |  |  | [link](https://docs.uaepass.ae/overview) |
+| 9 | `tdra-faqs` | `web_page` | TDRA Frequently Asked Questions | REFERENCED |  |  | [link](https://tdra.gov.ae/en/FAQs) |
+| 10 | `albayan-arabic-law-2026-04-29` | `news` | Al Bayan: the Ministry of Culture says the Arabic Language Law will be issued this year (2026-04-29) | REFERENCED |  |  | [link](https://www.albayan.ae/news/uae/1233520) |
+| 11 | `uae-ai-charter-2024-en.pdf` | `policy` | The UAE Charter for the Development & Use of Artificial Intelligence, July 2024 | VERIFIED | `77a3c54976de…` | 6 | [link](https://ai.gov.ae/wp-content/uploads/2024/07/UAEAI-Methaq-Jul-EN.pdf) |
 
-## Framework/ (7 files)
+## Framework/ (10 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -72,8 +79,11 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 5 | `imda-mgf-agentic-v1-5.pdf` | `framework` | IMDA Model AI Governance Framework for Agentic AI, Version 1.5 (published 20 May 2026, updated 5 June 2026) | VERIFIED | `2636e19ff1c8…` | 53 | [link](https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf) |
 | 6 | `3gpp-ts-28-535-v19.pdf` | `standard` | ETSI TS 128 535 V19.0.0 (2025-10), 3GPP TS 28.535, Management services for communication service assurance; Requirements | VERIFIED | `f43be1bda69e…` | 24 | [link](https://www.etsi.org/deliver/etsi_ts/128500_128599/128535/19.00.00_60/ts_128535v190000p.pdf) |
 | 7 | `etsi-gs-zsm-009-1-v1-1-1.pdf` | `standard` | ETSI GS ZSM 009-1 V1.1.1 (2021-06), Zero-touch network and Service Management (ZSM); Closed-Loop Automation; Part 1: Enablers | VERIFIED | `492bac221401…` | 40 | [link](https://www.etsi.org/deliver/etsi_gs/ZSM/001_099/00901/01.01.01_60/gs_ZSM00901v010101p.pdf) |
+| 8 | `itu-t-f746-16.txt` | `standard` | ITU-T F.746.16 (12/2022), Technical requirements and evaluation methods of intelligence levels of intelligent customer service systems | VERIFIED | `efd3821ce460…` | 24 | [link](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-F.746.16-202212-I!!PDF-E&type=items) |
+| 9 | `itu-t-f748-67.txt` | `standard` | ITU-T F.748.67 (12/2025), Requirements and framework for advanced intelligent customer service system | VERIFIED | `c05e362fd940…` | 30 | [link](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-F.748.67-202512-I!!PDF-E&type=items) |
+| 10 | `itu-t-f-aiap-work-item` | `work item` | ITU-T work item F.AIAP, Framework and requirements for AI agents platform | REFERENCED |  |  | [link](https://www.itu.int/ITU-T/workprog/wp_item.aspx?isn=22129) |
 
-## Global_Examples/ (31 files)
+## Global_Examples/ (38 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -104,10 +114,17 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 25 | `saudi-cst-user-protection-552-1445-ar.pdf` | `regulation` | CST, Regulations of User Rights Protection Rules, RC05, 2024 (Saudi Arabia), Arabic | VERIFIED | `eaa4035d46b5…` | 32 | [link](https://www.cst.gov.sa/-/media/44F95AD6EA7D4781A57976B9DCAA5B91.pdf) |
 | 26 | `qatar-decree-law-16-2010-ar.md` | `extract` | Decree-Law No. 16 of 2010, Electronic Transactions and Commerce Law (Qatar), Arabic, Articles 1 (one definition), 2, 19, 27 and 53 to 57 (extract) | VERIFIED | `505cb4cdae5f…` |  | [link](https://almeezan.qa/legislations/decree-law/2010/16/general) |
 | 27 | `maine-1500-dd.html` | `law` | Maine Revised Statutes, Title 10, §1500-DD, Required disclosure of use of artificial intelligence chatbot to engage in trade and commerce | VERIFIED | `85e41c95d590…` |  | [link](https://legislature.maine.gov/statutes/10/title10sec1500-DD-1.html) |
-| 28 | `india-trai-tccrr-2012.pdf` | `regulation` | Telecom Consumers Complaint Redressal Regulations, 2012 (1 of 2012), No. 305-20/2009-QoS, 2012-01-05, as amended 2013 (India) | VERIFIED | `5d0b0da12fc5…` | 13 | [link](https://trai.gov.in/sites/default/files/2024-09/CA_05012012.pdf) |
+| 28 | `india-trai-tccrr-2012.pdf` | `regulation` | Telecom Consumers Complaint Redressal Regulations, 2012 (1 of 2012), No. 305-20/2009-QoS, 2012-01-05, as amended 2014 (India) | VERIFIED | `5d0b0da12fc5…` | 13 | [link](https://trai.gov.in/sites/default/files/2024-09/CA_05012012.pdf) |
 | 29 | `texas-bcc-552.html` | `law` | Texas Business and Commerce Code, Chapter 552 (Acts 2025, 89th Leg., R.S., ch. 1174, HB 149, §4) | VERIFIED | `dbfba8a96dc3…` |  | [link](https://statutes.capitol.texas.gov/GetStatute.aspx?Code=BC&Value=552) |
 | 30 | `california-bpc-17940-17943.txt` | `extract` | California Business and Professions Code §17940 to 17943, Bots (Stats. 2018 c. 892, SB 1001) (extract) | VERIFIED | `cfa4c3ccba6c…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17941) |
 | 31 | `california-hsc-1339-75.txt` | `extract` | California Health and Safety Code §1339.75, generative AI in patient communications (Stats. 2024 c. 848, AB 3030) (extract) | VERIFIED | `86d9eda28fb0…` |  | [link](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75) |
+| 32 | `uk-ofcom-penalty-guidelines-2017.txt` | `pdf` | Ofcom, Penalty guidelines (section 392 Communications Act 2003), 14 September 2017 | VERIFIED | `689f935edd6c…` | 7 | [link](https://www.ofcom.org.uk/siteassets/resources/documents/about-ofcom/policies/penalty-guidelines/penalty-guidelines-september-2017.pdf?v=322695) |
+| 33 | `difc-dp-law-5-2020.txt` | `law` | Data Protection Law, DIFC Law No. 5 of 2020, Consolidated Version (July 2025) | VERIFIED | `0f1345a99a10…` | 54 | [link](https://assets.difc.com/v1/media/edge/images/dubaiintern0078-difcexperie96c5-production-3253/media/project/difcexperiences/difc/difcwebsite/documents/laws--regulations/data-protection-law.pdf) |
+| 34 | `difc-dp-regulations-v2-2023.txt` | `regulation` | DIFC Data Protection Regulations, Consolidated Version No. 2, in force 1 September 2023 | VERIFIED | `59dadfe2f05d…` | 20 | [link](https://assets.difc.com/v1/media/edge/images/dubaiintern0078-difcexperie96c5-production-3253/media/project/difcexperiences/difc/difcwebsite/documents/laws--regulations/data-protection-regulation.pdf) |
+| 35 | `adgm-dpr-2021.txt` | `extract` | ADGM Data Protection Regulations 2021 (as amended to 2025) | VERIFIED | `13b6c0cec2ac…` |  | [link](https://en.adgm.thomsonreuters.com/rulebook/data-protection-regulations-2021) |
+| 36 | `maine-pl-2025-c294.txt` | `law` | Public Law 2025, Chapter 294 (H.P. 1154, L.D. 1727) (Maine) | VERIFIED | `878037e1bacf…` | 3 | [link](https://lldc.mainelegislature.org/Open/Laws/2025/2025_PL_c294.pdf) |
+| 37 | `kr-ai-framework-act-20676.txt` | `law` | Framework Act on the Development of Artificial Intelligence and the Creation of a Foundation for Trust (Korea), Act No. 20676, as amended by Act No. 21311, KLRI English | VERIFIED | `730b99bad480…` |  | [link](https://elaw.klri.re.kr/eng_service/lawView.do?hseq=73499&lang=ENG) |
+| 38 | `india-trai-tccrr-4th-amendment-2026.pdf` | `regulation` | Telecom Consumers Complaint Redressal (Fourth Amendment) Regulations, 2026 (07 of 2026), No. C-23/1/(1)/2026-CA, 2026-11-02 (India) | VERIFIED | `be1b743dc5cd…` | 46 | [link](https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf) |
 
 ## Unverified/ (3 files)
 

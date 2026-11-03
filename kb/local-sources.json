@@ -225,7 +225,7 @@
   "strip": ""
  },
  "tdra-dispute-service-page": {
-  "file": "",
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/tdra-dispute-service-page.txt",
   "text": "",
   "splitter": "",
   "pair_of": "",
@@ -585,7 +585,7 @@
   "strip": ""
  },
  "fed-ai-data-authority-2026-06-14": {
-  "file": "",
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/fed-ai-data-authority-2026-06-14.txt",
   "text": "",
   "splitter": "",
   "pair_of": "",
@@ -698,6 +698,142 @@
  },
  "california-hsc-1339-75": {
   "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/california-hsc-1339-75.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "uk-ofcom-penalty-guidelines-2017": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/uk-ofcom-penalty-guidelines-2017.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "difc-dp-law-5-2020": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/difc-dp-law-5-2020.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "difc-dp-regulations-v2-2023": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/difc-dp-regulations-v2-2023.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "adgm-dpr-2021": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/adgm-dpr-2021.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "itu-t-f746-16": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/itu-t-f746-16.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "itu-t-f748-67": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/itu-t-f748-67.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "wam-2026-06-14-ai-data-authority": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/wam-2026-06-14-ai-data-authority.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "maine-pl-2025-c294": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/maine-pl-2025-c294.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "kr-ai-framework-act-20676": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/kr-ai-framework-act-20676.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "tra-violation-decision-1-2009": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/tra-violation-decision-1-2009.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "dha-ai-policy-2021": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/dha-ai-policy-2021.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "itu-t-f-aiap-work-item": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/itu-t-f-aiap-work-item.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "uaepass-docs-account-levels": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/uaepass-docs-account-levels.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "tdra-faqs": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/tdra-faqs.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "albayan-arabic-law-2026-04-29": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/albayan-arabic-law-2026-04-29.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "india-trai-tccrr-4th-amendment-2026": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/india-trai-tccrr-4th-amendment-2026.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "uae-ai-charter-2024-en": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/uae-ai-charter-2024-en.pdf",
   "text": "",
   "splitter": "",
   "pair_of": "",

@@ -17,7 +17,15 @@ START, END = "<!-- gap-register:start -->", "<!-- gap-register:end -->"
 KINDS = ("method", "scope", "absence", "currency")  # addendum item 19 (Sabeeh)
 CATEGORIES = ("unclear responsibilities", "standards gap", "technology gap", "legislative gap",
               "coordination problem", "conflict between objectives")  # addendum item 10, the UAE page's list
-ADDRESSEES = ("TDRA", "UAE Data Office", "the consumer-protection authority", "Cabinet", "ITU")
+ADDRESSEES = ("TDRA", "UAE Data Office", "the consumer-protection authority", "Cabinet", "ITU",
+              "Council of Ministers")  # Task 41: PDPL Art 28's own name for the body that issues its Regulations
+
+
+def addressee_ok(name: str) -> bool:
+    """An addressee is one of ADDRESSEES, optionally with a parenthesised role (Task 41: 'UAE Data Office (proposer)')."""
+    return name.split(" (", 1)[0] in ADDRESSEES
+
+
 COMPETITOR = ("yes", "no", "not read")
 # short names for the table, by the file a global example quotes
 SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": "eIDAS", "itu-t-y3172": "Y.3172",
@@ -32,13 +40,37 @@ SHORT = {"imda-": "IMDA", "eu-ai-act-": "EU AI Act", "gdpr-": "GDPR", "eidas-": 
          "qatar-decree-law-16-": "Qatar 16/2010",  # Task 35
          "maine-": "Maine", "california-bpc-": "California BPC", "california-hsc-": "California HSC",
          "india-trai-": "India TRAI TCCRR 2012",  # Task 35b
-         "itu-t-y3173":"SAE J3016 (Y.3173 Table I.1)"}  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
+         "itu-t-y3173":"SAE J3016 (Y.3173 Table I.1)",  # gap-12 quotes SAE as Y.3173 reproduces it (Task 27)
+         "uk-ofcom-": "Ofcom Penalty Guidelines 2017",  # Task 41, gap-15
+         # Task 43: a free-zone text is a UAE free-zone example, never a federal rule (order limits)
+         "difc-dp-regulations-": "DIFC DP Regulations (UAE free zone, not federal)",
+         "difc-dp-law-": "DIFC DP Law 5/2020 (UAE free zone, not federal)",
+         "adgm-dpr-": "ADGM DPR 2021 (UAE free zone, not federal)", "itu-t-f748-67": "ITU-T F.748.67"}
 # the Gulf telecom consumer regulations read (order 2026-10-30 Task 35, Addendum A): the register's preamble and the README
 GULF_LINE = ("The three GCC telecom consumer regulations read (Saudi 2024, Qatar 2024, Kuwait 2022) name no AI channel, "
              "hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, "
              "requiring a route to an employee and a qualified employee on every complaint.")
 # the bot-disclosure statutes read (order 2026-10-30 Task 35b, Addendum B item 2): the register's preamble
 COMPANION_LINE = "The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service."
+# the free zones and the AI and Data Authority (order 2026-11-02 Task 43 item 2; hq answers to stop 1, 2 and 3): the
+# register's preamble, the site and the README, after the GCC paragraph
+FREE_ZONE_LINE = ("Two UAE free zones have their own data protection law: DIFC Law 5/2020 binds Controllers and Processors "
+                  "'incorporated in the DIFC, regardless of whether the Processing takes place in the DIFC or not' "
+                  "(Art 6(3)(a)), and the ADGM Data Protection Regulations 2021 apply 'in the context of the activities of "
+                  "an Establishment of a Controller or a Processor in ADGM' (s. 3(1)). A federal telecom licensee outside "
+                  "the zones is not within either. Where a free-zone text fills a federal gap, the row names it as a UAE "
+                  "free-zone example, never as a federal rule.")
+AUTHORITY_LINE = ("The PDPL names the UAE Data Office (Art 24). On 2026-06-14 the Prime Minister approved an Artificial "
+                  "Intelligence and Data Authority, reporting to the Cabinet, that 'will bring together under one mandate "
+                  "the functions previously held by three separate entities', the Data Office among them (WAM, 14 June "
+                  "2026, `https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing`; manifest rows "
+                  "`wam-2026-06-14-ai-data-authority` and, in Arabic, `fed-ai-data-authority-2026-06-14`). No establishing "
+                  "instrument was found on the official portal on 2026-11-02, and dataoffice.gov.ae did not resolve on 2026-11-02. "
+                  "The register keeps the PDPL's name.")
+# the Gazette (order 2026-11-02 Task 44 method note; addendum 2026-11-03 D2, "unreachable" outcome): preamble, site, README
+GAZETTE_LINE = ("The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02 and "
+                "2026-11-03 (curl, and Chrome from hq); the legislation portal, which lists each law's Gazette number and "
+                "its regulations, is the official check, and it publishes no issue archive.")
 
 
 def _short(path: str) -> str:
@@ -130,7 +162,8 @@ def _searched(s: dict[str, Any]) -> list[str]:
         out.append(f"  - AR (the whole chunk): \"{chunk['text_ar']}\"")
     # the chunk has no Arabic: the phrase from the Arabic source text (order 2026-10-22 Task 15, gap-9 11(1))
     if s.get("quote_ar"):
-        out.append(f"  - AR (`{s['file_ar']}`): \"{s['quote_ar']}\"")
+        page = f"p. {s['page_ar']}, " if s.get("page_ar") else ""  # the Arabic PDF's page (Task 41, PDPL)
+        out.append(f"  - AR ({page}`{s['file_ar']}`): \"{s['quote_ar']}\"")
     return out
 
 
@@ -154,7 +187,7 @@ def render() -> str:
              "A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern; a "
              "clause that exists but gives no method is a method gap (addendum item 19). Every row lists the clauses "
              "searched and what each says, English and, where the chunk holds it, Arabic.", "", GULF_LINE, "",
-             COMPANION_LINE, "", table()]
+             FREE_ZONE_LINE, "", AUTHORITY_LINE, "", GAZETTE_LINE, "", COMPANION_LINE, "", table()]
     for row in register["gaps"]:
         lines += [f"## {row['id']}: {row['line']}", "",
                   f"{row['gap']}", "",
@@ -185,6 +218,13 @@ def render() -> str:
         for s in cand["searched"]:
             lines += _searched(s)
         lines.append("")
+    # a text read in full where nothing was found: not a candidate (hq ruling 2026-11-02, Task 41)
+    lines += ["## Searched, nothing found", ""]
+    for item in register["nothing_found"]:
+        lines += [f"### {item['name']}", "", item["line"], ""]
+        for s in item["searched"]:
+            lines += _searched(s)
+        lines.append("")
     lines += ["## Sources", "", f"{register['source']}.", ""]
     return "\n".join(lines)
 
@@ -199,11 +239,20 @@ def write(out: str | Path = GAPS_MD, readme: str | Path | None = README) -> None
     Path(readme).write_text(f"{head}{START}\n{table()}{END}{tail}", encoding="utf-8", newline="\n")
 
 
+def ids() -> tuple[list[str], list[str]]:
+    """The register's gap ids and candidate ids: the candidate rows the adviser lists, then the prose candidates."""
+    register = data.load_gaps()
+    rows = [r["id"] for r in register["gaps"]]
+    return ([i for i in rows if i.startswith("gap-")],
+            [i for i in rows if i.startswith("candidate-")] + [c["id"] for c in register["candidates"]])
+
+
 def _cli(args) -> int:
     write()
-    register = data.load_gaps()
-    print(f"{len(register['gaps'])} rows and {len(register['candidates'])} candidates: {GAPS_MD.relative_to(kb.REPO)} "
-          f"and the README register table")
+    gap_ids, candidate_ids = ids()
+    print(f"{len(gap_ids)} gaps: {', '.join(gap_ids)}")
+    print(f"{len(candidate_ids)} candidates: {', '.join(candidate_ids)}")
+    print(f"written: {GAPS_MD.relative_to(kb.REPO).as_posix()} and the README register table")
     return 0
 
 

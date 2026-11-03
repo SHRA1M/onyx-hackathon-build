@@ -1,0 +1,12 @@
+{
+  "gpu": "NVIDIA GeForce RTX 3060, 12288 MiB",
+  "model": "qwen2.5:14b-instruct",
+  "ollama": "0.40.13",
+  "ram_gb": "15.9",
+  "recorded": "2026-11-02",
+  "settings": {
+    "OLLAMA_CONTEXT_LENGTH": "32768",
+    "OLLAMA_FLASH_ATTENTION": "1",
+    "OLLAMA_KV_CACHE_TYPE": "q8_0"
+  }
+}

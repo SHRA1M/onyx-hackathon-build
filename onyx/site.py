@@ -1,7 +1,8 @@
 """The Mizan site (order 2026-10-25-task-25-site): `python -m onyx site` writes docs/site/, seven static pages that open
 from file:// with no server and no network call: index (the figures and counts), runs (the replay viewer), gaps (the
 register), kb (the manifest), verify (the hash chain recomputed in the browser), whatif (S2 under gap 1's rule) and
-modeldown (S2 with the model call at step 3 made to fail, Task 29 Part A).
+modeldown (S2 with the model call at step 3 made to fail, Task 29 Part A) and localmodel (S2 recorded once on a
+local model through Ollama, Task 39 E; shown, never scored).
 Every figure, row and quote is read from eval/results.json, eval/results.md, the run logs, kb/manifest.csv and
 onyx/data/gaps.json by plain code; none is typed here. Byte-identical on every run.
 
@@ -19,7 +20,7 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
-from onyx import audit, data, eval as eval_mod, gaps, kb, modeldown, replay_page, replay_viewer, runs, whatif
+from onyx import audit, data, eval as eval_mod, gaps, kb, localmodel, modeldown, replay_page, replay_viewer, runs, whatif
 from onyx.html_kit import CSS, NOTICE, inline_json, quote, text, verdict
 
 OUT = kb.REPO / "docs" / "site"
@@ -31,7 +32,7 @@ WHATIF_RUN, WHATIF_RULE = replay_viewer.WHATIF_RUN, "gap-1"
 SENTENCE = "A quote that is not word for word in a verified clause is rejected before it reaches the subscriber."
 PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("gaps.html", "Gap register"),
          ("kb.html", "Knowledge base"), ("verify.html", "Verify a log"), ("whatif.html", "What-if"),
-         ("modeldown.html", "Model down"))
+         ("modeldown.html", "Model down"), ("localmodel.html", "Local model"))
 C5_HEADLINE = ("citation_validity", "action_recall", "abstention", "gap_recall")
 # the labels the report uses, and the name of each metric's definition in eval/results.md
 LABELS = {"citation_validity": "Citation validity", "action_recall": "Action recall", "abstention": "Abstention",
@@ -157,6 +158,7 @@ every step goes to a hash-chained log you can verify on this site.</p>
 <a class="card link" href="verify.html"><b>Verify a log</b><br>Recompute any run's hash chain in this browser.</a>
 <a class="card link" href="whatif.html"><b>What-if</b><br>S2 replayed under the rule gap 1 recommends.</a>
 <a class="card link" href="modeldown.html"><b>Model down</b><br>S2 with the model call at step 3 made to fail.</a>
+<a class="card link" href="localmodel.html"><b>Local model</b><br>S2 recorded once on an open model on a desktop GPU.</a>
 </div>
 <h2>Governed, C5 ({runs_c5} runs per language)</h2>
 <table class="grid figs"><thead><tr><th>Figure</th><th>English</th><th>Arabic</th></tr></thead>
@@ -214,7 +216,8 @@ def _searched(s: dict[str, Any]) -> str:
     if chunk["text_ar"]:
         parts.append(f"AR (the whole chunk): {quote(chunk['text_ar'], 'ar')}")
     if s.get("quote_ar"):
-        parts.append(f"AR (<code>{escape(s['file_ar'])}</code>): {quote(s['quote_ar'], 'ar')}")
+        page = f"p. {s['page_ar']}, " if s.get("page_ar") else ""  # the Arabic PDF's page, as docs/gaps.md (Task 41)
+        parts.append(f"AR ({page}<code>{escape(s['file_ar'])}</code>): {quote(s['quote_ar'], 'ar')}")
     return "<li>" + "<br>".join(parts) + "</li>"
 
 
@@ -257,17 +260,21 @@ def gaps_page() -> str:
     by_id = {r["id"]: r for r in register["gaps"]}
     order = gap_order()
     toc = "".join(f'<li><a href="#{i}">{escape(i)}</a>: {escape(by_id[i]["line"])}</li>' for i in order)
-    candidates = "".join(
-        f'<section class="candidate" data-name="{escape(c["name"])}"><h3>{escape(c["name"])}</h3>'
-        f'<p>{escape(c["line"])}</p><ul class="clauses">{"".join(_searched(s) for s in c["searched"])}</ul></section>'
-        for c in register["candidates"])
+    def prose(c: dict[str, Any], css: str) -> str:
+        return (f'<section class="{css}" data-name="{escape(c["name"])}"><h3>{escape(c["name"])}</h3>'
+                f'<p>{escape(c["line"])}</p><ul class="clauses">{"".join(_searched(s) for s in c["searched"])}</ul>'
+                '</section>')
+    candidates = "".join(prose(c, "candidate") for c in register["candidates"])
+    nothing = "".join(prose(c, "nothing-found") for c in register["nothing_found"])  # as docs/gaps.md (Task 41)
     body = (f'<h1>Gap register</h1><p class="notice">{escape(NOTICE)}</p>'
             "<p>A gap is claimed only where no clause in any VERIFIED or REFERENCED document reaches the concern. "
             "Every row lists the clauses searched and what each says, English and, where the chunk holds it, Arabic. "
             "Rows in the report's order; read from <code>onyx/data/gaps.json</code>.</p>"
-            f"<p>{escape(gaps.GULF_LINE)}</p><p>{escape(gaps.COMPANION_LINE)}</p>"
+            f"<p>{escape(gaps.GULF_LINE)}</p><p>{escape(gaps.FREE_ZONE_LINE)}</p>"
+            f"<p>{_code(gaps.AUTHORITY_LINE)}</p><p>{escape(gaps.GAZETTE_LINE)}</p><p>{escape(gaps.COMPANION_LINE)}</p>"
             f'<ol class="toc">{toc}</ol>' + "".join(_gap(by_id[i]) for i in order) +
             f"<h2>Candidates</h2><p>Flagged as candidates; no global example required.</p>{candidates}"
+            f"<h2>Searched, nothing found</h2>{nothing}"
             f'<p class="meta">Sources: {escape(register["source"])}.</p>')
     return _frame("gaps.html", "Mizan: gap register", body)
 
@@ -333,6 +340,9 @@ def verify_page() -> str:
             f'<p><label>Run <select id="log">{"".join(groups)}</select></label> '
             '<button id="go">Verify</button></p>'
             '<p>In a terminal: <code id="cmd"></code></p>'
+            "<p>Explain one step from the same log, no model call: <code>python -m onyx why &lt;log&gt; --step &lt;n&gt;"
+            " [--lang ar]</code> prints the verdict, each clause with its title, page and words, the hand-over and the "
+            "event hash.</p>"
             '<p id="summary" class="lead"></p><div class="tablewrap"><table class="grid chain"><thead><tr><th>seq</th>'
             "<th>action</th><th>stored hash</th><th>recomputed</th><th></th></tr></thead><tbody id=\"rows\"></tbody>"
             f'</table></div><script type="application/json" id="logs">{inline_json(logs)}</script>')
@@ -414,11 +424,37 @@ def modeldown_page() -> str:
     return _frame("modeldown.html", "Mizan: model down", body)
 
 
+# --- localmodel.html -------------------------------------------------------------------------------------------
+
+def localmodel_page() -> str:
+    m, path = localmodel.machine(), replay_viewer._rel(localmodel.RUN)
+    settings = ", ".join(f"<code>{escape(k)}={escape(v)}</code>" for k, v in sorted(m["settings"].items()))
+    body_rows = "".join(
+        f'<tr data-step="{escape(r["step"])}"><td><code>{escape(r["step"])}</code></td><td>{escape(r["actor"])}</td>'
+        f'<td>{escape(r["event"])}</td><td>{verdict(r["verdict"]) if r["verdict"] else ""}</td>'
+        f'<td>{"<br>".join(f"<code>{escape(c)}</code>" for c in r["clauses"])}</td><td>{escape(r["note"])}</td></tr>'
+        for r in localmodel.rows())
+    body = (f"<h1>Local model: S2 on {escape(m['model'])}</h1>"
+            f'<p class="notice">{escape(NOTICE)}</p>'
+            f'<p class="lead">{escape(localmodel.LABEL)}</p>'
+            f"<p>Model <code>{escape(m['model'])}</code> through Ollama {escape(m['ollama'])}, on this machine: GPU "
+            f"{escape(m['gpu'])}, RAM {escape(m['ram_gb'])} GB; Ollama settings {settings}. The same adapter, prompt, "
+            "gates and answer keys as every other run; only the endpoint and the model name differ, and nothing "
+            f"left the PC. Run <code>{path}</code>, hash chain {'ok' if audit.verify(localmodel.RUN) else 'BROKEN'}; "
+            f"check it with <code>python -m onyx verify-log {path}</code>.</p>"
+            "<h2>Steps, verdicts and clauses, as logged</h2>"
+            '<div class="tablewrap"><table class="grid"><thead><tr><th>step</th><th>actor</th><th>event</th>'
+            "<th>verdict</th><th>clauses</th><th>proposed, or why not</th></tr></thead><tbody>"
+            + body_rows + "</tbody></table></div>")
+    return _frame("localmodel.html", "Mizan: local model", body)
+
+
 # --- write -----------------------------------------------------------------------------------------------------
 
 def render() -> dict[str, str]:
     return {"index.html": index(), "runs.html": runs_page(), "gaps.html": gaps_page(), "kb.html": kb_page(),
-            "verify.html": verify_page(), "whatif.html": whatif_page(), "modeldown.html": modeldown_page()}
+            "verify.html": verify_page(), "whatif.html": whatif_page(), "modeldown.html": modeldown_page(),
+            "localmodel.html": localmodel_page()}
 
 
 def write(out: str | Path = OUT) -> list[Path]:
