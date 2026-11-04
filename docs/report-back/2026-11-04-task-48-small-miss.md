@@ -101,3 +101,7 @@ Not run or not covered: competitor names (item 9). The Task 46 and 47 orders' `k
 ## Limits
 
 No prompt, gate, mandate, retrieval or model change; no KB row; manifest, keys and runs untouched; no eval rerun owed. Fails closed: nothing merged, nothing sent outward.
+
+## CI on the draft PR
+
+PR #17, https://github.com/SHRA1M/onyx-hackathon-build/pull/17, draft, not merged. CI "reproduce" on `023e27a`: success on the pull request (run 41900332291); log "725 passed, 24 skipped". This entry adds only these lines. CI on main after a merge: not run.
