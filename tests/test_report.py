@@ -518,3 +518,19 @@ def test_task_48_gap_2_cell_is_the_rulings_and_the_claim_matches_what_ci_checks(
                 "<code>kb verify</code> checks each stored source against the issuer's file by SHA-256 where the file "
                 'is on disk; to check a run\'s log chain yourself: <a href="../site/verify.html">verify</a>.') in page, html
         assert "against the issuer's file on every push" not in page, html
+
+
+# --- hq, task-48-addendum-2-claims-2026-11-04, items 1 and 3 -------------------------------------------------------
+
+
+def test_task_48_addendum_2_clause_4_10_keeps_both_exceptions():
+    row = next(r for r in data.load_gaps()["gaps"] if r["id"] == "gap-2")
+    assert "and 2FA in all digital applications unless objectively justified or expressly specified otherwise (4.10)" in row["gap"]
+    [line] = [s for s in row["searched"] if s["clause"] == "tdra-cpr-v2-en:4.10"]
+    assert line["says"] == "Digital applications: multi-step, 2FA unless objectively justified or expressly specified otherwise."
+
+
+def test_task_48_addendum_2_check_data_says_what_it_reads(capsys):
+    assert data.check_data() == 0
+    assert "check-data ok: every rule and mandate quote verbatim, every rule cites a clause" in capsys.readouterr().out
+
