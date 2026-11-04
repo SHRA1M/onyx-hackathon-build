@@ -14,7 +14,7 @@ The five published criteria, each with its evidence and one way to check it:
 | Agent capability in error scenarios | `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key) | `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` explains one step from its log |
 | Policy, strategy and standards gaps | the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay | open `docs/gaps.md` |
 | Auditability | the committed hash-chained logs in `runs/`; `docs/report.pdf` | `uv run python -m onyx selftest` recomputes the report's figures from `runs/` |
-| ITU-T Y.3172 and the Readiness Framework | `docs/report.pdf`, the Requirements and Mapping sections | [the Y.3172 mapping table below](#y3172-mapping) |
+| ITU-T Y.3172 and the Readiness Framework | `docs/report.pdf`, the Requirements and Mapping sections | [the Y.3172 diagram and mapping table below](#y3172-mapping) |
 
 The report's annex (data and model, clause to code, the governed test, what ITU can reuse) is in `docs/report.pdf` after page 5.
 
@@ -148,6 +148,68 @@ The seven unseen scenarios (`onyx/data/scenarios/unseen/`, U1 to U7) were writte
 
 ## Y.3172 mapping
 
+```mermaid
+flowchart TD
+    %% Convention: solid edge, used on every recorded run; dotted edge, used only by an optional step.
+    %% An arrow means the file at its tail calls or imports the file at its head.
+    subgraph n_src["SRC"]
+        scenarios["Scenarios<br/>onyx/data/scenarios/"]
+    end
+    subgraph n_mlfo["MLFO"]
+        mlfo["Staged release of steps<br/>onyx/coordinator.py"]
+    end
+    subgraph n_c["C"]
+        collector["Each agent's inbox<br/>onyx/coordinator.py"]
+    end
+    subgraph n_pp["PP"]
+        base["Mandate-scoped retrieval<br/>onyx/agents/base.py"]
+        kb["Clause chunks<br/>onyx/kb.py"]
+    end
+    subgraph n_m["M"]
+        model["Model adapter<br/>onyx/model.py"]
+    end
+    subgraph n_p["P"]
+        gate["Gates<br/>onyx/gate.py"]
+    end
+    subgraph n_d["D"]
+        dist["Routing and hand-over<br/>onyx/coordinator.py"]
+    end
+    subgraph n_sink["SINK"]
+        audit["Hash-chained log<br/>onyx/audit.py"]
+    end
+    subgraph n_sandbox["ML sandbox"]
+        runs["Recorded runs<br/>onyx/runs.py"]
+        eval["Scoring<br/>onyx/eval.py"]
+        whatif["What-if replay<br/>onyx/whatif.py"]
+        modeldown["Model-down replay<br/>onyx/modeldown.py"]
+        localmodel["Local-model page<br/>onyx/localmodel.py"]
+    end
+    %% The one edge that is a read, not a call or an import: scenario files, read through onyx/data.py.
+    scenarios --> mlfo
+    mlfo --> collector
+    collector --> base
+    collector --> dist
+    base --> kb
+    base --> model
+    base --> audit
+    dist --> gate
+    dist --> audit
+    gate --> kb
+    runs --> mlfo
+    runs --> model
+    eval --> audit
+    kb -. "kb fetch" .-> kb
+    whatif -.-> mlfo
+    whatif -.-> gate
+    whatif -.-> model
+    modeldown -.-> mlfo
+    modeldown -.-> whatif
+    modeldown -.-> model
+    localmodel -.-> runs
+```
+
+Solid edge: used on every recorded run. Dotted edge: used only by an optional step: `whatif`, `model-down`, `kb fetch`, and `localmodel` (a page, recorded by `scripts/demo_local.py`).
+
 The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox, as Mizan implements them.
 
 | node | in Y.3172 | in Mizan | where |
@@ -161,7 +223,7 @@ The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox
 | D, hand-over outcome | none found: gap-8 | Y.3172 gives no node outcome that sends an output to a human; Mizan adds it at D | `docs/gaps.md` (gap-8) |
 | SINK | sink | the hash-chained audit log, the gap register, the replay pages | `onyx/audit.py`, `docs/gaps.md`, `docs/replay/` |
 | MLFO | ML function orchestrator | the coordinator's staged release of steps | `onyx/coordinator.py`; ML Intent: `docs/intent.json` |
-| ML sandbox | ML sandbox | the governed-versus-ungoverned run on the same scenarios | `runs/ungoverned/`, `eval/results.md` |
+| ML sandbox | ML sandbox | the governed-versus-ungoverned run on the same scenarios; optional replays under a proposed rule or a failed model call, and a local-model run, none scored | `onyx/runs.py`, `onyx/eval.py`, `onyx/whatif.py`, `onyx/modeldown.py`, `onyx/localmodel.py`; `runs/ungoverned/`, `eval/results.md` |
 
 Y.3172 clause 9, security of the pipeline: no provider key is in the source tree (a test greps every tracked file for the key pattern and fails on a hit); a run reads the KB and keys and writes its log only by appending chained events; the model adapter is the only outward call a run makes (`kb fetch` downloads sources outside a run). Tests: `tests/test_pipeline_security.py`.
 
