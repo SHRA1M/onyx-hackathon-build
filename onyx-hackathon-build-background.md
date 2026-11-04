@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-04 (sixty-fifth wrap, Opus: Task 47 merged, PR #15; Task 46 built, PR open).
+Updated 2026-11-04 (sixty-sixth wrap, Opus: Task 46 merged, PR #16; Task 48 built except gap 2, draft PR #17).
 
 ## What this is
 
@@ -71,7 +71,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - Task 47: merged (PR #15, `49bb40a`, CI passed). Recall@8, shipped en 0.24, ar 0.09; bilingual `multilingual-e5-small` en 0.24, ar 0.15. Why both are low is not diagnosed and e5-base and bge-m3 are not measured: open until after the shortlist.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 12 total; 749 tests. Sources and extracts under `kb/sources/` are gitignored, this PC only.
-- Task 46 (README diagram): built on `task-46` from its order and hq's ruling, PR open, merge is Iyas's. Report-back: `docs/report-back/2026-11-04-task-46-readme-diagram.md`, with three decisions for hq to see. `tests/test_readme_diagram.py` holds the figure to the mapping table.
+- Task 46: merged (PR #16, `43d1e67`, CI passed). Three decisions in its report-back are for hq to see.
+- Task 48: on `task-48`, draft PR #17, not merged. Items 1, 3 to 7 and the rebuild are in; gap 2 is held. Three questions for hq: `docs/report-back/2026-11-04-task-48-stop-1.md`. Once gap 2 lands, item 8 reruns, and the README and `tests/test_gaps.py` line 416 change too.
 - hq's copy of the annex text lacks the three Task 47 edits.
 - Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (12 pages, page 5 ends with Limits, page 6 starts with "Annex").
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
@@ -81,4 +82,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Iyas merges the Task 46 PR; then take the next order from hq before the freeze on 2026-11-06.
+Iyas takes the Task 48 stop file to hq; build hq's answer on `task-48`, rebuild, Iyas reads gap 2's row, then merge, before the freeze on 2026-11-06.

@@ -692,3 +692,11 @@ Superseded at this wrap: Task 47's stop-1 open item and next action; Task 46's o
 ## 2026-11-04: Task 46 built from hq's ruling
 
 PR #15 merged by Iyas; CI passed on `49bb40a`. `task-46` merged up to date with main, no conflict. Test first (17 failed, then passed), Mermaid figure with hq's caption, the ML sandbox row and the reviewer phrase. The first Chrome load showed "Unable to render rich display"; two later loads rendered with no push between, cause not established. A local Mermaid parse was tried and failed on its own setup, so GitHub's rendering is the evidence. The stop-1 entry above is superseded: the stop file stayed on `task-46` alone once PR #15 had merged.
+
+## 2026-11-04: Task 48 built except gap 2; Tasks 46 and 47 audited
+
+PR #16 had merged (`43d1e67`). Filed the Task 48 order and built items 1 and 3 to 7 on `task-48`, then item 8 without gap 2; 749 tests; draft PR #17, CI passed (run 41900332291). Read CPR 4.7 to 4.23 whole: 4.17, 4.19, 4.22 and the 4.23 catch-all contradict "a conversational agent fits none of them", as do gap 2's own `searched` lines, so the order's stop applies. Iyas said to keep working and not stop; only that wording was held. Dry runs outside the repo: ordered cell 6 main pages, shortened cell 6, a 379-character candidate 5. The order's shortening string is found 0 times in its own cell. Also found: the GitHub line still wraps at the URL; the replay line says "against the issuer's file on every push", while CI checks committed chunks and verify.html checks hash chains. Departures from check 5's list: `tests/test_report.py`, `tests/test_task_45.py`, `CHANGELOG.md`.
+
+Audit of 43d1e67, read-only, in a temporary worktree since removed: 749 passed (727 and 22 skipped with no local sources; CI 725 and 24, gap of 2 not diagnosed); selftest passed; retrieval figures equal in `eval/results.md` and Annex A; the diagram rendered on GitHub on two loads. Competitor names not checked. The worktree's `uv sync` timed out on a download, so the tests ran on this repo's `.venv` with `PYTHONPATH` set to the worktree.
+
+Superseded at this wrap: "Iyas merges the Task 46 PR" as next action; the Task 46 open line ("PR open").
