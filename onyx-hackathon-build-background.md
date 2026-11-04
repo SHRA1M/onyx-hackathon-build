@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-04 (sixty-fourth wrap, Opus: Task 47 stopped before its PR, both retrieval figures low, waiting on hq).
+Updated 2026-11-04 (sixty-fifth wrap, Opus: Task 47 merged, PR #15; Task 46 built, PR open).
 
 ## What this is
 
@@ -38,6 +38,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
+- 2026-11-04 (hq ruling on Task 47 stop 1): retrieval figures live in `eval/results.md` and Annex A, as found and with their frame; the README names the measurement with no number. The scored figures stay Sonnet's; the bilingual row is shown, in no scored run. No retrieval redesign, larger embedder or Sonnet-driven retrieval before the freeze.
 - 2026-11-04 (hq ruling on Task 45 stop 1): a file-quoted register line that also has a chunk carries `"chunked": true`, and `data.cited_chunks()` counts it; `_row_all` in `tests/test_gaps.py` hides those lines from older tests, `tests/test_task_45.py` reads them whole. The WAM article and the guide share the instrument `agentic-ai-gov-guide` (86 instruments). Gap 6 and gap 7 positions are hq's words: the DIFC, DHA and DoH texts each bind within their own scope only; the DHA policy sets disclosure, not oversight.
 - 2026-11-03 (Task 44 build): a UAE instrument excludes `web_page`, `announcement` and `news` rows (`NOT_INSTRUMENTS`); a text the build extracts is VERIFIED with the extract's sha256 in the manifest and the source file's sha256 in its notes; Task 44 register entries are appended last and older tests read rows through `_row` / `_row_43` filters in `tests/test_gaps.py`.
 - 2026-11-02 (Tasks 42, 43; hq answers): absence is "not on the official portal (checked date)", never "never issued"; frozen keys keep their bytes (S4 still says "were never issued"; the grader reads gap ids, not text). Free-zone texts are jurisdiction `UAE-free-zone`, country `UAE`, and every mention says "UAE free zone (DIFC|ADGM), not federal"; ITU rows are `international` as Y.3172. The AI and Data Authority: "the Prime Minister approved" (WAM); the register keeps the PDPL's name.
@@ -68,9 +69,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 47 stopped on hq's instruction: recall@8, shipped `all-MiniLM-L6-v2` en 29 of 123 (0.24), ar 11 of 123 (0.09); bilingual `intfloat/multilingual-e5-small` en 30 of 123 (0.24), ar 18 of 123 (0.15). Why both are low is not diagnosed; e5-base and bge-m3 not measured. Four questions for hq: `docs/report-back/2026-11-04-task-47-stop-1.md`. Not done: annex sentences, PDF and page counts, README clause, kept annex test, CHANGELOG, final report-back, PR.
-- hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 12 total; 722 tests. Sources and extracts under `kb/sources/` are gitignored, this PC only.
-- Task 46's order (README diagram) stays untracked in `docs/work-orders/`, deliberately out of Task 47's PR; it starts after Task 47, before 2026-11-06.
+- Task 47: merged (PR #15, `49bb40a`, CI passed). Recall@8, shipped en 0.24, ar 0.09; bilingual `multilingual-e5-small` en 0.24, ar 0.15. Why both are low is not diagnosed and e5-base and bge-m3 are not measured: open until after the shortlist.
+- hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 12 total; 749 tests. Sources and extracts under `kb/sources/` are gitignored, this PC only.
+- Task 46 (README diagram): built on `task-46` from its order and hq's ruling, PR open, merge is Iyas's. Report-back: `docs/report-back/2026-11-04-task-46-readme-diagram.md`, with three decisions for hq to see. `tests/test_readme_diagram.py` holds the figure to the mapping table.
+- hq's copy of the annex text lacks the three Task 47 edits.
 - Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (12 pages, page 5 ends with Limits, page 6 starts with "Annex").
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
 - The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq updated its report copy after Task 35b (2026-10-30).
@@ -79,4 +81,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Get hq's answers to the four questions in `docs/report-back/2026-11-04-task-47-stop-1.md`, then finish Task 47 on branch `task-47`. Do not write the README clause or open the PR before them.
+Iyas merges the Task 46 PR; then take the next order from hq before the freeze on 2026-11-06.
