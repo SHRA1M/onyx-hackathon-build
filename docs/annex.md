@@ -256,7 +256,7 @@ them; no establishing instrument was found on the official portal on 2026-11-02,
 with a consumer: CPR 3.3's duty of fairness and accurate information is general; Trade Law 14/2023 names AI in its
 definition (Art 1) and bars misleading dealing (Art 5(7)); nothing names disclosure, limits, escalation or a hand-over
 for an automated agent. Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's words
-(CAD 812.02). The federal texts have the general duty (CPR 3.3) and no AI-specific one. Kind: absence, a standards gap.
+(ordered to pay CAD 812.02 in all, CAD 650.88 of it damages). The federal texts have the general duty (CPR 3.3) and no AI-specific one. Kind: absence, a standards gap.
 Addressee: TDRA. Exposed by: every scenario.
 
 Clauses searched: CPR 3.3, 25.14.1 and 26.7.2; Spam Calls Regulation v4 3.3; Cabinet Resolution 56/2024 5(6); Child

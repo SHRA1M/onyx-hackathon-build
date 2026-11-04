@@ -6,6 +6,16 @@ Allowed sources: the repo and this file. No web reads, no new knowledge-base row
 
 `docs/gaps.md`, the README gap table and `docs/site/gaps.html` are generated: edit `onyx/data/gaps.json`, then regenerate (`python -m onyx gaps`, the site, the report build).
 
+## Rulings on stop 1 (hq, 2026-11-05)
+
+Answers `docs/report-back/2026-11-05-task-49-stop-1.md`. Build everything below with no further question from that stop.
+
+1. Item 1 passes: eight pages plus one link out to the repository. `six pages` becomes `eight pages`.
+2. The filed order stays under `docs/work-orders/`, named in the report-back as the one extra file. Refile this revised version.
+3. The three test pins you listed (`tests/test_gaps.py` lines 630, 716, 718) are updated to the new strings.
+4. Item 8's `page` is 15, as you confirmed.
+5. **New item 9, the same form and the same condition as item 8.** Add one `searched` line to gap-11: `clause` `tdra-cpr-v2-en:4.19.3`, `file` `kb/sources/tdra-cpr-v2-en.pdf`, `page` the PDF page where it stands, `says` `SMS or USSD purchase: agreement by a separate step on the same channel; nothing on a channel that interprets free words.`, `quote` copied from the stored text, starting "the purchase procedure shall necessitate" and ending "(e.g. SMS or USSD)". If the tests cannot take it without changing how other lines are checked, leave it out and say so.
+
 ## Task
 
 **1. `README.md` line 122.** `six pages` becomes `eight pages`. First count the links in the site's nav, and stop if it is not eight.
