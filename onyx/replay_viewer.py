@@ -283,7 +283,7 @@ TEMPLATE = """<!doctype html>
 {picker}
 </nav>
 </header>
-<p class="meta">Every quote on this page is checked word for word against the issuer's file on every push; to check one yourself: <a href="../site/verify.html">verify</a>.</p>
+<p class="meta">Every quote on this page is checked word for word against its stored clause on every push; <code>kb verify</code> checks each stored source against the issuer's file by SHA-256 where the file is on disk; to check a run's log chain yourself: <a href="../site/verify.html">verify</a>.</p>
 <main>
 {sections}
 </main>

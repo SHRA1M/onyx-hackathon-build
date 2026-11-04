@@ -145,7 +145,7 @@ def complaint_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
 Why this split. The model is good at reading a subscriber's words and proposing what the step calls for in two
 languages; it is not where a regulator wants the law decided. A rule in code is readable by a lawyer, testable by a
 developer (54 gate tests in `tests/test_gate.py`), stable across model versions, and auditable: a verdict names
-the rule, the rule names the clause, the clause's quote is checked against the issuer's file on every push. The
+the rule, the rule names the clause, the clause's quote is checked against the stored clause text on every push, and the stored text against the issuer's file by hash where it is on disk. The
 governed and ungoverned runs in Annex C measure what that split buys.
 
 Limits of the method. The rules cover the clauses the five scenarios reach (109 rules over 13 UAE

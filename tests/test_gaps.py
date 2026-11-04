@@ -1672,3 +1672,47 @@ def test_task_44_back_no_claim_is_reworded_in_the_three_places():
         text = " ".join((kb.REPO / f).read_text(encoding="utf-8").split())
         assert new in text, f
     assert "Oman and Bahrain not searched" in (kb.REPO / "kb" / "DATASHEET.md").read_text(encoding="utf-8")
+
+
+# --- order 2026-11-04 Task 48, ruling task-48-stop-1 question 1: the safeguard follows the channel, not the agent ----
+
+
+TASK_48_SEARCHED = {
+    "tdra-cpr-v2-en:4.7.1": "Consent rests on a positive affirmative action taken freely by the Subscriber; who elicits it is not said.",
+    "tdra-cpr-v2-en:4.17.3": "Call-centre sale: a voice recording of the Subscriber giving verbal consent.",
+    "tdra-cpr-v2-en:4.22.3": "Licensee App: 'no' is the default on yes/no screens; it binds only where a screen is offered.",
+    "tdra-cpr-v2-en:4.23.2": "Online or other device: 2FA for each purchase.",
+}
+
+
+def test_task_48_gap_2_says_the_safeguard_follows_the_channel():
+    row = _row("gap-2")
+    assert "fits none" not in row["gap"] and "nobody has said" not in row["gap"]
+    assert row["gap"].startswith("Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) "
+                                 "and sets the consent safeguard by sales medium:")
+    assert ("so the safeguard an agent must meet follows the channel the operator embeds it in (a voice agent on the "
+            "call-centre line reads as 4.17, a chat agent in the app as 4.22 or 4.10, a web chat as 4.23), not what the "
+            "agent does") in row["gap"]
+    assert row["gap"].endswith("whether a 'yes' the agent itself heard and interpreted is the Subscriber's positive "
+                               "affirmative action taken freely (4.7.1), or consent in writing or electronically under "
+                               "6(1)(b), is unsaid.")
+    assert row["uae_position"].startswith(
+        "No CPR sales medium names a conversational agent; Mizan reads the agent as inheriting the medium it is embedded "
+        "in, so whether an AI-elicited purchase needs an OTP depends on where the operator puts it. ")
+
+
+def test_task_48_four_searched_lines_follow_4_22_in_order_with_quotes_from_the_chunks():
+    searched = _row("gap-2")["searched"]
+    clauses = [s["clause"] for s in searched]
+    i = clauses.index("tdra-cpr-v2-en:4.22")
+    assert clauses[i + 1:i + 5] == list(TASK_48_SEARCHED)
+    chunks = {json.loads(l)["clause"]: json.loads(l)["text_en"]
+              for l in (kb.REPO / "kb" / "chunks" / "tdra-cpr-v2-en.jsonl").read_text(encoding="utf-8").splitlines()}
+    bounds = [("grounded on an", "taken freely by the Subscriber"),
+              ("the Licensee shall make a voice recording", "for the service"),
+              ("where Consumers are offered on-screen", "accidental ‘yes’ answers"),
+              ("for each purchase", "purchase of the Service")]
+    for s, (first, last) in zip(searched[i + 1:i + 5], bounds):
+        assert s["says"] == TASK_48_SEARCHED[s["clause"]]
+        assert s["quote"].startswith(first) and s["quote"].endswith(last)
+        assert s["quote"] in chunks[s["clause"].split(":")[1]]

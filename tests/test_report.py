@@ -64,7 +64,7 @@ def test_eight_list_paragraph_headings_in_template_order(built):
     assert headings == HEADINGS + ["Annex"]  # Task 38: the annex heading, unnumbered, after the eight
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
     assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
-                                                                  "GitHub link (code, public from 2026-11-09)", "Knowledge base"]  # Task 34 (Iyas)
+                                                                  "GitHub (public from 2026-11-09)", "Knowledge base"]  # Task 34 (Iyas)
     assert "Demo video: docs/video/mizan-demo.mp4" in doc.paragraphs[5].text
 
 
@@ -456,7 +456,7 @@ def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
 
 # --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------
 
-LINKS = ["**GitHub link (code, public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build",
+LINKS = ["**GitHub (public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build",
          "**Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** "
          "`docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** "
          "https://shra1m.github.io/onyx-hackathon-build/site/"]  # Iyas's A4 answer (1): five header lines
@@ -496,3 +496,25 @@ def test_no_numbered_section_pointer_into_the_report():
 @pytest.mark.parametrize("word,value", [("thirty", 30), ("twenty", 20), ("thirty-eight", 38), ("nine", 9)])
 def test_a_round_tens_word_reads_as_its_number(word, value):
     assert _load()._number(word) == value
+
+
+# --- order 2026-11-04 Task 48, ruling task-48-stop-1: the report states the check that runs ---------------------------
+
+
+def test_task_48_gap_2_cell_is_the_rulings_and_the_claim_matches_what_ci_checks():
+    report = REPORT_MD.read_text(encoding="utf-8")
+    assert ('| 2 | Consent elicited by an AI: the CPR sets the consent safeguard by sales medium (4.17.3, 4.22.3, 4.23.2) '
+            'and names no AI channel, so an agent\'s safeguard follows where it is embedded; whether a "yes" the agent '
+            'itself heard and interpreted is a positive affirmative action (4.7.1), or consent "in writing or '
+            'electronically" under the PDPL (6(1)(b)), is unsaid | coordination |') in report
+    flat = " ".join(report.split())
+    assert "clause the gates cite word for word against the text stored from it" in flat
+    annex = " ".join((kb.REPO / "docs" / "annex.md").read_text(encoding="utf-8").split())
+    assert ("the clause's quote is checked against the stored clause text on every push, and the stored text against "
+            "the issuer's file by hash where it is on disk") in annex
+    for html in ("docs/replay/index.html", "docs/site/runs.html"):
+        page = (kb.REPO / html).read_text(encoding="utf-8")
+        assert ("Every quote on this page is checked word for word against its stored clause on every push; "
+                "<code>kb verify</code> checks each stored source against the issuer's file by SHA-256 where the file "
+                'is on disk; to check a run\'s log chain yourself: <a href="../site/verify.html">verify</a>.') in page, html
+        assert "against the issuer's file on every push" not in page, html

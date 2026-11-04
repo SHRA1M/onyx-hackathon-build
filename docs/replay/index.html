@@ -80,7 +80,7 @@ body.present .picker { display: none; }
 <button data-sid="model-down-S2">Model down: S2, the call at step 3 fails</button>
 </nav>
 </header>
-<p class="meta">Every quote on this page is checked word for word against the issuer's file on every push; to check one yourself: <a href="../site/verify.html">verify</a>.</p>
+<p class="meta">Every quote on this page is checked word for word against its stored clause on every push; <code>kb verify</code> checks each stored source against the issuer's file by SHA-256 where the file is on disk; to check a run's log chain yourself: <a href="../site/verify.html">verify</a>.</p>
 <main>
 <section class="scenario" data-sid="S1"><h2>S1: Roaming before a flight <span lang="ar" dir="rtl">تجوال قبل رحلة طيران</span></h2>
 <div class="run" data-sid="S1" data-lang="en" data-run="runs/S1/run1.jsonl">
