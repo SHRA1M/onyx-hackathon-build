@@ -665,3 +665,13 @@ Moved from background:
 - Stop 1: five TRAI quotes typed from the scan's page images for Iyas's eye-check, plus C1, D2, B2 and gap 7 draft questions.
 - Moved from the background: 2026-11-02 (Task 41 order, Iyas at stop 1): Annex F holds gap 7 and gaps 13 to 15 (the report's table keeps 1 to 6, 8 to 12); new rows say an instrument is "not on the official portal on 2026-11-02", never "never issued"; `binding_status` gains `guideline`; "Council of Ministers" added to the addressees.
 - Moved from the background: 2026-11-02 (hq answer to Task 40 stop 1, option a): a UAE instrument is a distinct `instrument` of a UAE manifest row that is neither `web_page` nor `announcement` (`docs/build_report.py` `NOT_INSTRUMENTS`): 31; Annex A names the TDRA service page and the AI authority announcement as not instruments. Gap 12 reads "Left open with ITU's agreement (2026-10-30)."
+
+## 2026-11-04: Task 45, 11-04 sweep fixes (PR #14)
+
+- Built the order and hq's answers to stop 1: five criteria on the README; Gazette, csc and PDPL tab lines dated 2026-11-04; rows `wam-2026-08-21-agentic-ai-guide`, `agentic-ai-gov-guide-2026-08-21`, `doh-responsible-ai-standard-v1-2025`; five chunks, six searched lines; the TRAI PIB mirror; every count. Iyas eye-checked the three WAM sentences 2026-11-04.
+- Stop 1 raised: a line naming both a file and a chunk; 86 against 87 instruments; item 8's sentence with no target and gap 7 reading against its own row; two tests outside the order's list. hq answered all four.
+- hq revised its ruling during the build (74 to 93 lines): two gap-7 `says` lines were wrong, because the DHA policy has no oversight duty on licensees. Caught by comparing the file with the strings already applied, before the commit. The version built has sha256 `42aa5807f688...`.
+- Tried: WAM by plain request (empty body), `scrapling fetch` with `network_idle` (failed), `stealthy_fetch` (refused by the permission check as bot-check circumvention, not worked around), `scrapling fetch` with a wait (worked). DoH fetched twice, the same sha256.
+- A first run of the edit script stopped midway on a line-wrapped phrase; its partial edits were restored from git and it was rerun whole. A long Python heredoc failed to parse in Git Bash; scripts went to the scratchpad instead.
+- Left alone: `docs/annex.md:263` (true of the clauses it lists); gap 4's "checked 2026-11-02".
+- Moved from the background: the Task 44 stop-1 open item and its next action, both superseded by Task 44's merge in PR #13.
