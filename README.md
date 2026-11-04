@@ -6,12 +6,13 @@
 
 ## For the reviewer
 
-The four published criteria, each with its evidence and one way to check it:
+The five published criteria, each with its evidence and one way to check it:
 
 | Criterion | Evidence | How to check it |
 |---|---|---|
-| Knowledge base | `kb/manifest.csv` (105 rows, status, sha256, both languages); the downloadable copy `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md` | `uv run python -m onyx kb verify` prints the counts |
-| Agent capability in error scenarios, and the gaps | `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key); the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay | `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` explains one step from its log |
+| Knowledge base | `kb/manifest.csv` (108 rows, status, sha256, both languages); the downloadable copy `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md` | `uv run python -m onyx kb verify` prints the counts |
+| Agent capability in error scenarios | `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key) | `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` explains one step from its log |
+| Policy, strategy and standards gaps | the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay | open `docs/gaps.md` |
 | Auditability | the committed hash-chained logs in `runs/`; `docs/report.pdf` | `uv run python -m onyx selftest` recomputes the report's figures from `runs/` |
 | ITU-T Y.3172 and the Readiness Framework | `docs/report.pdf`, the Requirements and Mapping sections | [the Y.3172 mapping table below](#y3172-mapping) |
 
@@ -24,7 +25,7 @@ clauses. Every step is written to a hash-chained log that replays offline, with 
 
 Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, Mohammed Rawashdeh and Yanal Faouri.
 
-Knowledge base: 98 VERIFIED (text on disk, sha256 matches), 4 REFERENCED (opened, text not held), 3 UNVERIFIED
+Knowledge base: 100 VERIFIED (text on disk, sha256 matches), 5 REFERENCED (opened, text not held), 3 UNVERIFIED
 (asserted, not published or not reached; they back no quoted clause; two of them record an absence (the PDPL Executive Regulations, the agentic framework text) that the register claims from the portal check written in the row, dated) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
 [The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
 22 rows link a landing page because the document link could not be verified. The Telecommunications Law 3/2003 is
@@ -62,14 +63,14 @@ Two UAE free zones have their own data protection law: DIFC Law 5/2020 binds Con
 
 The PDPL names the UAE Data Office (Art 24). On 2026-06-14 the Prime Minister approved an Artificial Intelligence and Data Authority, reporting to the Cabinet, that 'will bring together under one mandate the functions previously held by three separate entities', the Data Office among them (WAM, 14 June 2026, `https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing`; manifest rows `wam-2026-06-14-ai-data-authority` and, in Arabic, `fed-ai-data-authority-2026-06-14`). No establishing instrument was found on the official portal on 2026-11-02, and dataoffice.gov.ae did not resolve on 2026-11-02. The register keeps the PDPL's name.
 
-The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02 and 2026-11-03 (curl, and Chrome from hq); the legislation portal, which lists each law's Gazette number and its regulations, is the official check, and it publishes no issue archive.
+The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02, 2026-11-03 and 2026-11-04 (curl and Chrome from hq, GitHub answering as the control), so its issues were not swept; the legislation portal, which lists each law's Gazette number and its regulations, is the official check, and it publishes no issue archive; the newest issue the portal names is No. 833 of 14 October 2026 (entry 4660, read 2026-11-04).
 
 <!-- gap-register:start -->
 | id | gap | kind | category | addressee | global example | exposed by |
 | --- | --- | --- | --- | --- | --- | --- |
 | gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (acknowledge at once by telephone, 26.13.3; conclude in twenty business days, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it, whether the time is recorded. QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1); Spain Ley 10/2025 Art 8(2); Spain Ley 10/2025 Art 8(3); Saudi CST 552/1445 §13.1.1; Saudi CST 552/1445 §13.1.2; Saudi CST 552/1445 §26.5.2; India TRAI TCCRR 2012 reg 3(9); India TRAI TCCRR 2012 reg 3(9), proviso; India TRAI TCCRR 2012 new reg 3(9)(d); India TRAI TCCRR 2012 new reg 3(9)(e); India TRAI TCCRR 2012 new reg 3(3), first proviso | S2-3 |
 | gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL permits the processing the contract needs without consent (4(9)) and wants any further processing consented 'in writing or electronically' (6(1)(b)); one spoken 'yes' buys the service and consents to nothing beyond it, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15; Saudi CST 552/1445 §5.1.2; Saudi CST 552/1445 §5.1.3 | S1-4 |
-| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02). | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b); Qatar CCPR 2024 §1.2 (Customer Consent); Saudi CST 552/1445 §10.7 | S5 (verification step) |
+| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02 and 2026-11-04). | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b); Qatar CCPR 2024 §1.2 (Customer Consent); Saudi CST 552/1445 §10.7 | S5 (verification step) |
 | gap-4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3); GDPR Art 12(3); DSA 2022/2065 Art 20(6) | S4-4, S4-5 |
 | gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1); DIFC DP Regulations (UAE free zone, not federal) Regulation 5; DIFC DP Regulations (UAE free zone, not federal) Appendix 3 | S3-3 |
 | gap-6 | AI disclosure: no federal duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'. | scope | legislative gap | Cabinet | Maine §1500-DD(2); California BPC §17941(a); California BPC §17941(b); EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113; DIFC DP Regulations (UAE free zone, not federal) Regulation 10.2.2(a); Maine title page; India TRAI TCCRR 2012 new reg 3(3), second proviso | S1-3 |

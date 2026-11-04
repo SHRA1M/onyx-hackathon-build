@@ -10,7 +10,7 @@ Two UAE free zones have their own data protection law: DIFC Law 5/2020 binds Con
 
 The PDPL names the UAE Data Office (Art 24). On 2026-06-14 the Prime Minister approved an Artificial Intelligence and Data Authority, reporting to the Cabinet, that 'will bring together under one mandate the functions previously held by three separate entities', the Data Office among them (WAM, 14 June 2026, `https://www.wam.ae/en/article/c0pz7ku-mohammed-bin-rashid-approves-establishing`; manifest rows `wam-2026-06-14-ai-data-authority` and, in Arabic, `fed-ai-data-authority-2026-06-14`). No establishing instrument was found on the official portal on 2026-11-02, and dataoffice.gov.ae did not resolve on 2026-11-02. The register keeps the PDPL's name.
 
-The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02 and 2026-11-03 (curl, and Chrome from hq); the legislation portal, which lists each law's Gazette number and its regulations, is the official check, and it publishes no issue archive.
+The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02, 2026-11-03 and 2026-11-04 (curl and Chrome from hq, GitHub answering as the control), so its issues were not swept; the legislation portal, which lists each law's Gazette number and its regulations, is the official check, and it publishes no issue archive; the newest issue the portal names is No. 833 of 14 October 2026 (entry 4660, read 2026-11-04).
 
 The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service.
 
@@ -18,7 +18,7 @@ The 2025 to 2026 US statutes on chatbots regulate companions and carve out custo
 | --- | --- | --- | --- | --- | --- | --- |
 | gap-1 | Complaint hand-over: the trigger and the human are sourced (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (acknowledge at once by telephone, 26.13.3; conclude in twenty business days, 26.14.2); the transfer has none: what the agent does when the conversation turns, when the human is in it, whether the time is recorded. QoS T1(2a) measures only the wait after the IVR choice. | method | standards gap | TDRA | IMDA 2.2.2; IMDA 2.4.2; DSA 2022/2065 Art 12(1); Spain Ley 10/2025 Art 8(2); Spain Ley 10/2025 Art 8(3); Saudi CST 552/1445 §13.1.1; Saudi CST 552/1445 §13.1.2; Saudi CST 552/1445 §26.5.2; India TRAI TCCRR 2012 reg 3(9); India TRAI TCCRR 2012 reg 3(9), proviso; India TRAI TCCRR 2012 new reg 3(9)(d); India TRAI TCCRR 2012 new reg 3(9)(e); India TRAI TCCRR 2012 new reg 3(3), first proviso | S2-3 |
 | gap-2 | Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) and decides by sales medium (4.10, 4.17, 4.22) whether an OTP is needed, naming no AI channel; the PDPL permits the processing the contract needs without consent (4(9)) and wants any further processing consented 'in writing or electronically' (6(1)(b)); one spoken 'yes' buys the service and consents to nothing beyond it, and nobody has said which medium an AI chat or voice agent is. | method | coordination problem | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15; Saudi CST 552/1445 §5.1.2; Saudi CST 552/1445 §5.1.3 | S1-4 |
-| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02). | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b); Qatar CCPR 2024 §1.2 (Customer Consent); Saudi CST 552/1445 §10.7 | S5 (verification step) |
+| gap-3 | 'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02 and 2026-11-04). | method | standards gap | TDRA | eIDAS Art 8(1); eIDAS Art 8(3)(c); 47 CFR 64.2010(b); Qatar CCPR 2024 §1.2 (Customer Consent); Saudi CST 552/1445 §10.7 | S5 (verification step) |
 | gap-4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline; the only route is a complaint to the Data Office (Art 24), which has no clock either (Art 25's 30 days apply to grievances against the Office's own decisions). | method | unclear responsibilities | UAE Data Office | GDPR Art 22(3); GDPR Art 12(3); DSA 2022/2065 Art 20(6) | S4-4, S4-5 |
 | gap-5 | Subscriber data to a hosted model provider: the rule is present (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery absent (the Art 22 list, 23(2), 8(11)). | method | legislative gap | UAE Data Office | GDPR Art 28(3)(a); GDPR Art 45(1); DIFC DP Regulations (UAE free zone, not federal) Regulation 5; DIFC DP Regulations (UAE free zone, not federal) Appendix 3 | S3-3 |
 | gap-6 | AI disclosure: no federal duty to tell a consumer they are talking to an AI; Electronic Transactions 11(2) asks only that the person 'knows, or is supposed to know, that such system will make or execute the contract automatically'. | scope | legislative gap | Cabinet | Maine §1500-DD(2); California BPC §17941(a); California BPC §17941(b); EU AI Act Art 50(1); EU AI Act Art 50(5); EU AI Act Art 113; DIFC DP Regulations (UAE free zone, not federal) Regulation 10.2.2(a); Maine title page; India TRAI TCCRR 2012 new reg 3(3), second proviso | S1-3 |
@@ -103,6 +103,8 @@ Spain's Ley 10/2025 reaches electronic communications services, telephone servic
   - EN: "Set KPIs to measure the performance of communication centers with users"
 - `california-hsc-1339-75:1339.75(a)(2)` (`kb/sources/california-hsc-1339-75.txt`): Clinical communications only: a route to a human named; no clock.
   - EN: "Clear instructions describing how a patient may contact a human health care provider, employee of the health facility, clinic, physician's office, or office of a group provider, or other appropriate person."
+- `wam-2026-08-21-agentic-ai-guide:handover` (`kb/sources/wam-2026-08-21-agentic-ai-guide.txt`): Searched, non-binding, government services only: the National Committee for Agentic AI's guide (WAM, 21 Aug 2026) wants a smooth transfer to a competent employee with the full request and the steps done; guidance for federal entities, no TDRA counterpart for a licensee's agent.
+  - AR: "ضمان الانتقال السلس إلى موظف مختص عند الحاجة، مع نقل كامل تفاصيل الطلب والخطوات المنجزة، حتى لا يضطر المتعامل لإعادة شرح طلبه من جديد"
 
 **UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it. The CPR wants first-contact resolution (26.14.1) and bars the machine from the conversation (26.7.2); nothing joins the two: no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over. The acknowledgement clock (26.13.3) names telephone, visit and written complaints, not chat or app, and a reference number is not a conversation.
 
@@ -173,6 +175,8 @@ Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the aut
   - AR: "ويجوز ان تكون الموافقة خطية على عقد الاشتراك او شفهية او رسالة الكترونية"
 - `saudi-cst-user-protection-552-1445-en:9.5` (p. 12, `kb/sources/saudi-cst-user-protection-552-1445-en.pdf`): The burden of proving the user's consent is on the provider; no AI channel named.
   - EN: "In the event of any dispute, the service provider shall bear the burden of proof of the user's consent to the terms and conditions of a service contract relating to the dispute."
+- `wam-2026-08-21-agentic-ai-guide:consent` (`kb/sources/wam-2026-08-21-agentic-ai-guide.txt`): Searched, non-binding, government services only: the guide wants the customer's approval before any action; nothing on which sales medium an AI channel is.
+  - AR: "والحصول على موافقته قبل اتخاذ أي إجراء"
 
 **UAE position.** No CPR sales medium names a conversational agent, so whether an AI-elicited purchase needs an OTP depends on a classification no text makes. The processing the contract needs is lawful without consent (4(9)); a spoken consent through the agent covers the purchase (4.7.2) but not a processing purpose beyond the contract, which 6(1)(b) wants in writing or electronically. Mizan takes the strict reading (4.10 plus OTP, 4.11).
 
@@ -188,7 +192,7 @@ Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the aut
 
 ## gap-3: adequate verification
 
-'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02).
+'Adequate verification process' (CPR 24.10) is undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it (portal and TDRA site checked 2026-11-02 and 2026-11-04).
 
 Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S5 (verification step).
 
@@ -311,7 +315,7 @@ Vendor-cited 'Cabinet Decision 33/2024' and '83/2022': 0 results on the portal's
   - EN: "before sharing any Subscriber Information with its affiliates and/or other third parties not directly involved"
   - AR (the whole chunk): "يجب على المرخص لهم الحصول على موافقة مسبقة من المشترك35 قبل تبادلأي معلومات للمشترك مع فروعهم و/أو الأطراف الأخرى غير المعنية مباشرة بتزويد خدمات الاتصالات التي يطلبها المشترك. 35 يجوز تقديم هذه الموافقة تعاقدياً خلال الفترة الزمنية التي يتم فيها صياغة العقد، شريطة وجود آلية دائماً يستطيع المشترك من خلالها أن يسحب تلك الموافقة واختيارها في مرحلة لاحقة إن رغب بذلك. صفحة47 أنظمة حماية المستهلك– نسخة رقم 2.0 – :تاريخ الإصدار25 يوليو2023م"
 
-**UAE position.** The provider is a Processor and the duties exist; the adequacy list, the transfer controls and the processor standards all wait on Executive Regulations that are not on the official portal (checked 2026-11-02). Mizan blocks the export and logs what left. Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.
+**UAE position.** The provider is a Processor and the duties exist; the adequacy list, the transfer controls and the processor standards all wait on Executive Regulations that are not on the official portal (checked 2026-11-02 and 2026-11-04 (Arabic regulations tab, Chrome from hq: «لم يتم العثور على أية بيانات»)). Mizan blocks the export and logs what left. Checked 2026-10-30 on uaelegislation.gov.ae: the related-legislations page of Decree-Law 45/2021 lists only Decree-Law 30/2024 and Decree-Law 26/2025; no executive regulation and no Cabinet resolution. A vendor blog's 'Cabinet Decision No. 111/2023' has no instrument on the portal.
 
 **Global example**
 
@@ -361,8 +365,10 @@ Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
   - EN: "All AI solutions for healthcare must contain disclosure including: a. Which functions and features are AI-enabled."
 - `uae-ai-charter-2024-en:5` (p. 4, `kb/sources/global/uae-ai-charter-2024-en.txt`): Searched, non-binding: the UAE AI Charter (AI Office, July 2024) names transparency as a principle; it does not require a care channel to say it is an AI.
   - EN: "The UAE seeks to create a clear understanding of AI and how systems operate and make decisions"
+- `doh-responsible-ai-standard-v1-2025:3.1.6.1.1` (p. 8, `kb/sources/doh-responsible-ai-standard-v1-2025.pdf`): Sector line, with the DHA row: the Abu Dhabi Department of Health binds its licensed entities to tell patients when AI contributes to a decision (Oct 2025); one emirate, health sector; no TDRA text does the same for a licensee.
+  - EN: "All healthcare AI systems must include mechanisms to inform patients, clinicians, and relevant stakeholders when AI contributes to clinical or operational decisions, specifying its function, limitations, and intended outcomes."
 
-**UAE position.** Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding federal text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only federal text that says it; DIFC Regulation 10.2.2(a) does, for DIFC establishments only (UAE free zone, not federal).
+**UAE position.** Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding federal text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only federal text that says it; DIFC Regulation 10.2.2(a) does, for DIFC establishments only (UAE free zone, not federal); the DHA policy 4.3.2 (Dubai, 2021) requires disclosure of AI-enabled functions and the DoH standard 3.1.6.1.1 (Abu Dhabi, 2025) requires telling patients when AI contributes to a decision, each within its own health regulator's scope only. None reaches a telecom licensee.
 
 **Global example**
 
@@ -425,8 +431,12 @@ Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its c
   - EN: "All AI solutions for healthcare must contain disclosure including: a. Which functions and features are AI-enabled."
 - `uae-ai-charter-2024-en:6` (p. 4, `kb/sources/global/uae-ai-charter-2024-en.txt`): Searched, non-binding: the UAE AI Charter (AI Office, July 2024) names human oversight as a principle; no duty, method or penalty for a licensee.
   - EN: "The Charter emphasizes the irreplaceable value of human judgment and human oversight over AI"
+- `wam-2026-08-21-agentic-ai-guide:handover` (`kb/sources/wam-2026-08-21-agentic-ai-guide.txt`): Searched, non-binding, government services only: the one UAE text read that is written for agentic AI dealing with the public (approval before any action, hand-over with the full request, a route to ask, correct or object) is guidance for federal government services; it binds no licensee.
+  - AR: "ضمان الانتقال السلس إلى موظف مختص عند الحاجة، مع نقل كامل تفاصيل الطلب والخطوات المنجزة، حتى لا يضطر المتعامل لإعادة شرح طلبه من جديد"
+- `doh-responsible-ai-standard-v1-2025:3.1.1.2.2` (p. 5, `kb/sources/doh-responsible-ai-standard-v1-2025.pdf`): Sector line, with the DHA row: the Abu Dhabi Department of Health binds its licensed entities to human oversight and escalation for AI systems, 'agents' named in scope (DoH 1.2); the DHA row sets disclosure, not oversight; TDRA sets no such rule for its licensees.
+  - EN: "AI systems must always function under human oversight. Clear escalation protocols shall be established within AI systems, outlining specific actions and decision points based on varying risk levels to involve human oversight effectively."
 
-**UAE position.** The binding texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct. The DIFC Data Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) are the only UAE text of any level that names notice, limits and intervention for an automated system, and they bind DIFC establishments only.
+**UAE position.** The binding federal texts read name AI or an automated agent to set a charge waiver, a bar, a definition, a permission and a tool; none sets how an AI agent must behave with a consumer. PDPL 18(4), Electronic Transactions 11(2) and 12(2) and Cabinet 57/2024 Table No. (1) row 16 govern automated decisions, contracts, documents and calls as outcomes, not the agent's conduct. Below the federal level, three UAE texts set such standards, each within its own scope only: the DIFC Data Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) name notice, limits and intervention for an automated system; the DHA policy 4.3.2 (Dubai, 2021) requires disclosure of AI-enabled functions; the DoH standard 3.1.1.2.2 (Abu Dhabi, 2025) requires human oversight and escalation, with agents in scope. None reaches a telecom licensee, and TDRA has no counterpart.
 
 **Global example**
 
@@ -631,6 +641,8 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
   - EN: "Service providers shall provide the user with a document detailing the type of request, the information specified in paragraph (10-3) of this document, as well as the time and date of the service provider's execution of the request."
 - `saudi-cst-user-protection-552-1445-en:23.6` (p. 24, `kb/sources/saudi-cst-user-protection-552-1445-en.pdf`): Consent before a suspension or cancellation is executed; no read-back of what the channel understood.
   - EN: "take the user's consent before executing the request"
+- `wam-2026-08-21-agentic-ai-guide:objection` (`kb/sources/wam-2026-08-21-agentic-ai-guide.txt`): Searched, non-binding, government services only: the guide gives the customer a route to ask, correct or object after the result; no read-back rule for a licensee's agent.
+  - AR: "وتمكينه من السؤال أو التصحيح أو الاعتراض"
 
 **UAE position.** The CPR already knows the problem on a screen: the safe default is 'no' (4.22.3, 4.23.3) and a purchase needs a second factor (4.23.2). On a voice or chat channel the system, not the subscriber, decides what was said; the OTP then confirms that the subscriber wants something, not that the channel understood the right thing. ET 12(7) reaches transmission errors only. No published TDRA text requires the channel to state the service, price and term it understood and take a correction before the second factor.
 
@@ -748,7 +760,7 @@ Promoted from candidate 2026-11-02 (hq read, Perplexity Q1).
 - `pdpl-45-2021-ar:9(3)` (p. 10, `kb/sources/pdpl-45-2021-ar.pdf`): The Arabic of 9(3), as the PDF text layer gives it.
   - AR: "يجب عليه إخطار المتحكم بهذا الاختراق أو الانتهاك فور علمه بذلك"
 
-**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. The register's 2026-10-30 related-legislations check stands (30/2024, 26/2025 only). Not on the official portal on 2026-11-02.
+**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages and 2026-11-04 (Arabic regulations tab, Chrome from hq: «لم يتم العثور على أية بيانات»): Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. The register's 2026-10-30 related-legislations check stands (30/2024, 26/2025 only). Not on the official portal on 2026-11-02.
 
 **Global example**
 
@@ -779,7 +791,7 @@ Kind: absence. Category: legislative gap. Addressee: Council of Ministers (Execu
   - EN: "The Executive Regulations of this Decree by Law shall specify the procedures, controls, conditions, and technical standards related to such obligations."
   - AR (p. 9, `kb/sources/pdpl-45-2021-ar.pdf`): "تحدد اللائحة التنفيذية لهذا المرسوم بقانون الإجراءات والضوابط والشروط والمعايير الفنية والقياسية المتعلقة بهذه الالتزامات"
 
-**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. No Data Office or Cabinet instrument on sub-processors either. Gap 5 is the transfer abroad; this row is who may bring in a further processor.
+**UAE position.** Official portal (uaelegislation.gov.ae), checked 2026-11-02 in both languages and 2026-11-04 (Arabic regulations tab, Chrome from hq: «لم يتم العثور على أية بيانات»): Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; sector list (12 / 14 instruments) has none. No Data Office or Cabinet instrument on sub-processors either. Gap 5 is the transfer abroad; this row is who may bring in a further processor.
 
 **Global example**
 

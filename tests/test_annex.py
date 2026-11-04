@@ -120,9 +120,9 @@ def test_the_precision_paragraph_figures_are_the_pooled_and_misses_lines():
     assert "S3-4" in para and "S4-4" in para and "each missed in 1 of 2 runs" in para
 
 
-@pytest.mark.parametrize("old, new", [("105 documents in", "104 documents in"), ("98 are VERIFIED", "99 are VERIFIED"),  # Task 44: 105, 98
-                                      ("4 REFERENCED", "5 REFERENCED"), ("3 UNVERIFIED", "4 UNVERIFIED"),
-                                      ("34 UAE instruments", "35 UAE instruments"),
+@pytest.mark.parametrize("old, new", [("108 documents in", "107 documents in"), ("100 are VERIFIED", "101 are VERIFIED"),  # Task 45: 108, 100
+                                      ("5 REFERENCED", "6 REFERENCED"), ("3 UNVERIFIED", "4 UNVERIFIED"),
+                                      ("36 UAE instruments", "37 UAE instruments"),
                                       ("38 foreign texts", "39 foreign texts")])
 def test_annex_a_kb_counts_are_read_from_the_manifest(old, new):
     build = _load()
@@ -140,14 +140,16 @@ def test_uae_instruments_leave_out_web_pages_and_announcements():
     left_out = sorted(r["document_id"] for r in rows if r["source_type"] in build.NOT_INSTRUMENTS)
     assert left_out == ["albayan-arabic-law-2026-04-29", "fed-ai-data-authority-2026-06-14", "tdra-dispute-service-page",
                         "tdra-faqs", "uaepass-docs-account-levels",
-                        "wam-2026-06-14-ai-data-authority"]  # Task 44: two web pages and a news report join
+                        "wam-2026-06-14-ai-data-authority",
+                        "wam-2026-08-21-agentic-ai-guide"]  # Task 44: two web pages and a news report; Task 45: this article
     assert all("not an instrument" in r["notes"] or "not a law" in r["notes"] for r in rows
                if r["source_type"] in build.NOT_INSTRUMENTS)
     count = len({r["instrument"] for r in rows if r["source_type"] not in build.NOT_INSTRUMENTS})
-    assert count == 34 == len({r["instrument"] for r in rows}) - len(left_out)
+    # Task 45: the WAM article shares its guide's instrument, which stays counted, so it takes nothing off
+    assert count == 36 == len({r["instrument"] for r in rows}) - (len(left_out) - 1)
     annex = " ".join(_annex().split())
     assert f"{count} UAE instruments" in annex
-    assert ("plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation), two announcements and "
+    assert ("plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation), three announcements and "
             "a news report, which are not instruments") in annex
 
 

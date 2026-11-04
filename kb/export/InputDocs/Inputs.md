@@ -4,7 +4,7 @@ Mizan knowledge base, exported from `kb/manifest.csv` by `python -m onyx kb expo
 Each document sits in the subfolder of its category; full texts are copied only where `kb fetch` holds them.
 
 
-## UAE_Binding/ (43 files)
+## UAE_Binding/ (44 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -51,8 +51,9 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 41 | `licence-3-2026.pdf` | `licence` | Public Telecommunications Licence No. 3/2026 (du), term 2026-08-09 to 2046-08-08, bilingual | VERIFIED | `ccafd4ed2d5a…` | 47 | [link](https://tdra.gov.ae/-/media/About/LICENSING/EN/Licence-32026-EITC-Public.ashx) |
 | 42 | `tra-violation-decision-1-2009.txt` | `decision` | Violation Decision No. (1) of 2009, Non-Compliance with Directive No. (3) of 2008 (redacted version) | VERIFIED | `2b74429e6547…` | 5 | [link](https://tdra.gov.ae/-/media/About/regulations-and-ruling/EN/REDACTED--VD--1--OF-2009--Non-Compliance-with-Directive-No---3--of-2008-pdf.ashx) |
 | 43 | `dha-ai-policy-2021.txt` | `policy` | Artificial Intelligence in the Healthcare Sector Policy, DHA/HISHD/PP-09, version 1 | VERIFIED | `a628aa7abca2…` | 17 | [link](https://www.dha.gov.ae/uploads/082022/Artificial%20Intelligence%20Policy20228457.pdf) |
+| 44 | `doh-responsible-ai-standard-v1-2025.pdf` | `policy` | Responsible AI Standard, DoH/ST/DDGO/RAI/V1/2025, version V1 (Department of Health, Abu Dhabi; published and effective October 2025) | VERIFIED | `5e03adb73162…` | 15 | [link](https://www.doh.gov.ae/-/media/Feature/Resources/Standards/2025/Responsible-AI-Standard-V1.ashx) |
 
-## UAE_Advisory/ (11 files)
+## UAE_Advisory/ (13 files)
 
 | # | Filename | Type | Description | Status | sha256 | Pages | Link |
 |---|---|---|---|---|---|---|---|
@@ -67,6 +68,8 @@ Each document sits in the subfolder of its category; full texts are copied only 
 | 9 | `tdra-faqs` | `web_page` | TDRA Frequently Asked Questions | REFERENCED |  |  | [link](https://tdra.gov.ae/en/FAQs) |
 | 10 | `albayan-arabic-law-2026-04-29` | `news` | Al Bayan: the Ministry of Culture says the Arabic Language Law will be issued this year (2026-04-29) | REFERENCED |  |  | [link](https://www.albayan.ae/news/uae/1233520) |
 | 11 | `uae-ai-charter-2024-en.pdf` | `policy` | The UAE Charter for the Development & Use of Artificial Intelligence, July 2024 | VERIFIED | `77a3c54976de…` | 6 | [link](https://ai.gov.ae/wp-content/uploads/2024/07/UAEAI-Methaq-Jul-EN.pdf) |
+| 12 | `wam-2026-08-21-agentic-ai-guide.txt` | `announcement` | National Committee for Agentic AI launches a unified guide for designing government services with agentic AI (WAM, 21 August 2026) | VERIFIED | `c88bdeb0ffa8…` |  | [link](https://www.wam.ae/ar/article/c1uggxh) |
+| 13 | `agentic-ai-gov-guide-2026-08-21` | `guidance` | Practical Guide for Government Entities on Designing Government Services with Agentic AI (National Committee for Agentic AI, launched 21 August 2026) | REFERENCED |  |  | [link](https://uaemodel.egsep.ae/agentic_ai_guide_website.html) |
 
 ## Framework/ (10 files)
 

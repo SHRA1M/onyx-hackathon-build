@@ -1,28 +1,25 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-03 (sixty-first wrap, Opus). Handover for the next session.
+Updated 2026-11-04 (sixty-third wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Finish Task 44 (`D:\Projects\hq\uni\ai-for-good-hackathon\task-44-sweep-fixes-order-2026-11-02.md` with
-`task-44-addendum-2026-11-03.md`) on `task-36`. It is built and UNCOMMITTED in the working tree, held at stop 1.
-Deadline: pushed with CI green by 2026-11-05; freeze 2026-11-06; submission 2026-11-09.
+Merge Task 45, then build Tasks 47 and 46 before the freeze on 2026-11-06. Submission 2026-11-09.
 
 ## State
 
-- Task 43 committed and pushed (`0ac34f7`, `a4fc1db`), CI green on PR #13.
-- Task 44: everything but the TRAI items is in (`docs/report-back/2026-11-03-task-44-stop-1.md` lists it).
-  Manifest 103 rows; register 15 gaps, 2 candidates. Count tests fail until the TRAI row lands.
+- Task 45 done on branch `task-45`, PR #14 open, not merged. CI "reproduce" passed on `0067da5`; check it on the wrap commit.
+- Manifest 108 rows (100 / 5 / 3); register 15 gaps, 2 candidates; report 12 pages, main text 5; 722 tests.
+- Orders for Tasks 46 and 47 are untracked in `docs/work-orders/`, deliberately not in PR #14.
 
 ## Open questions
 
-- hq: answers file `task-44-stop-1-answers-2026-11-03.md` (TRAI eye-check, C1 Charter, D2, B2, gap 7 draft).
-- Iyas: send the reviewer email.
+- Iyas: merge PR #14; send the reviewer email if not yet sent.
+- hq: its one "done means" check on Task 45.
 
 ## Next moves
 
-1. `git status` (expect Task 44's files modified plus the stop file), `git pull` on `task-36`.
-2. Apply the answers: TRAI row and register lines, SHORT key, counts (104 / 97 / 4 / 3, 38 foreign, 33 UAE
-   instruments), Annex F TRAI sentence, E1 sentence.
-3. Regenerate, rebuild the report (5 pages, annex page 6), run the 8 done checks and the addendum's lines with output;
-   hq copies with backups; CHANGELOG; done report; commit by name; push; `gh pr checks 13`.
+1. `git status`; check `gh pr checks 14` on the wrap commit.
+2. On Iyas's word: `gh pr merge 14 --merge`, tag `task-45`, push the tag as `refs/tags/task-45`, check CI on main.
+3. `git pull` on main, then Task 47's order on branch `task-47` (it ranks above Task 46 if only one fits).
+4. Task 46's order on branch `task-46`.

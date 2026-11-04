@@ -68,9 +68,11 @@ AUTHORITY_LINE = ("The PDPL names the UAE Data Office (Art 24). On 2026-06-14 th
                   "instrument was found on the official portal on 2026-11-02, and dataoffice.gov.ae did not resolve on 2026-11-02. "
                   "The register keeps the PDPL's name.")
 # the Gazette (order 2026-11-02 Task 44 method note; addendum 2026-11-03 D2, "unreachable" outcome): preamble, site, README
-GAZETTE_LINE = ("The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02 and "
-                "2026-11-03 (curl, and Chrome from hq); the legislation portal, which lists each law's Gazette number and "
-                "its regulations, is the official check, and it publishes no issue archive.")
+GAZETTE_LINE = ("The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreachable on 2026-11-02, "
+                "2026-11-03 and 2026-11-04 (curl and Chrome from hq, GitHub answering as the control), so its issues were "
+                "not swept; the legislation portal, which lists each law's Gazette number and its regulations, is the "
+                "official check, and it publishes no issue archive; the newest issue the portal names is No. 833 of "
+                "14 October 2026 (entry 4660, read 2026-11-04).")
 
 
 def _short(path: str) -> str:

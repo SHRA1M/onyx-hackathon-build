@@ -24,12 +24,12 @@ before anything retrieval adds (see Retrieval below). That is why the Arabic run
 citation validity (C5) with an English embedder. A bilingual embedder is the obvious upgrade and is listed under
 next steps; it was not swapped in before the freeze because it would have meant re-recording the scored runs.
 
-**The documents.** 105 documents in `kb/manifest.csv`: 34 UAE instruments (laws, Cabinet resolutions, TDRA
-regulations and an enforcement decision, the two 2026 public licences, the DHA AI policy and the UAE AI Charter, in English and Arabic where both are published) plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation),
-two announcements and a news report, which are not instruments; 3 texts of the DIFC and ADGM free zones; 6 ITU texts (one a work-programme page) and the Readiness report; and 38 foreign texts used only
+**The documents.** 108 documents in `kb/manifest.csv`: 36 UAE instruments (laws, Cabinet resolutions, TDRA
+regulations and an enforcement decision, the two 2026 public licences, the DHA AI policy, the DoH standard and the UAE AI Charter, in English and Arabic where both are published) plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation),
+three announcements and a news report, which are not instruments; 3 texts of the DIFC and ADGM free zones; 6 ITU texts (one a work-programme page) and the Readiness report; and 38 foreign texts used only
 as global examples. Each row records the issuer, the URL, the date
 fetched, the HTTP status, the SHA-256 of the file as fetched, the page count, the language and whether the English is
-an official translation. 98 are VERIFIED (the issuer's file is on disk and its hash matches), 4 REFERENCED (opened,
+an official translation. 100 are VERIFIED (the issuer's file is on disk and its hash matches), 5 REFERENCED (opened,
 text not held) and 3 UNVERIFIED (unpublished or unreachable; they back no quoted clause; two of them record an absence (the PDPL Executive Regulations, the agentic framework text) that the register claims from the portal check written in the row, dated). `python -m onyx kb verify` recomputes
 the counts on every push.
 
@@ -42,7 +42,7 @@ Arabic (Art 14(3)), the Arabic is quoted and the note says so. Pre-processing is
 
 **Chunking by clause, not by token.** Each document is split at its own clause numbering (4.22.3, 26.7.2, Art 18(4)),
 so one chunk is one legal unit with its article, clause number, PDF page and text in each language
-(`kb/chunks/*.jsonl`, 156 committed chunks across 19 documents: every clause a gate, a mandate, a gap
+(`kb/chunks/*.jsonl`, 161 committed chunks across 21 documents: every clause a gate, a mandate, a gap
 row or a scenario cites). The chunk id `document:clause` is the only form of citation the system accepts; a proposal
 that cites anything else is invalid.
 
@@ -211,7 +211,7 @@ regulator's reading could move a step either way, and the figures recompute from
 Three things in the repository are built to be lifted out, matching the three vehicles ITU announced for the UAE
 Capacity Building Week (page on file, read 2026-10-18):
 
-1. **For the Sandbox Network for Arabic-AI (SNAI):** the Arabic clause chunks of the UAE texts (74 chunks with
+1. **For the Sandbox Network for Arabic-AI (SNAI):** the Arabic clause chunks of the UAE texts (77 chunks with
    `text_ar`), five scenarios written in Arabic by an Arabic speaker, the frozen keys, and 10 recorded Arabic
    runs with their logs, so an Arabic agent can be scored against binding Arabic law without new annotation.
 2. **For the call for domain-specific open knowledge bases:** `kb/manifest.csv` with its 23-column schema (issuer, URL,
