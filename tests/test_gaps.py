@@ -186,10 +186,15 @@ def _is_44(entry: dict) -> bool:
     return entry.get("file") in TASK_44_FILES or entry.get("clause") in TASK_44_CLAUSES
 
 
+TASK_49_CLAUSES = {"mocai-ai-ethics-2022:3.3.2.2", "tdra-cpr-v2-en:4.19.3"}
+
+
 def _row_all(rid):
     # Task 45 appends the same way: its lines (marked "chunked") are read whole in tests/test_task_45.py
+    # Task 49 too: its two lines are read whole in tests/test_task_49.py
     [row] = [r for r in ROWS if r["id"] == rid]
-    return {**row, "searched": [s for s in row["searched"] if not s.get("chunked")]} if "searched" in row else row
+    return ({**row, "searched": [s for s in row["searched"] if not s.get("chunked") and s["clause"] not in TASK_49_CLAUSES]}
+            if "searched" in row else row)
 
 
 def _row_43(rid):
@@ -627,7 +632,8 @@ def test_gap_7_binding_examples_replace_imda_which_stays_in_the_recommendation()
     assert [ex["file"] for ex in row["global_examples"]][:3] == [UTAH, MOFFATT, MOFFATT]  # Task 35b appends
     assert row["recommendation"] == GAP_7_RECOMMENDATION and "IMDA" in row["recommendation"]
     assert row["note"] == ("Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's "
-                           "words (CAD 812.02). The federal texts have the general duty (CPR 3.3) and no AI-specific one.")
+                           "words (ordered to pay CAD 812.02 in all, CAD 650.88 of it damages). The federal texts have "
+                           "the general duty (CPR 3.3) and no AI-specific one.")
     assert "Utah Code 13-77-102; Moffatt v. Air Canada 2024 BCCRT 149 para 27" in gaps.table()
 
 
@@ -713,10 +719,10 @@ EAND = "kb/sources/eand-code-of-practice-en.pdf"
 R106 = "kb/sources/cabres-106-2026-en.txt"
 DU_10 = "CPR 26.13.3 and 26.14.2 restated as 'will try'; no hand-over clause."
 CHATBOT = "Chatbot WhatsApp 058-2428268 (058Chatbot)"
-GAP_7_SAYS = ("The only UAE texts naming an operator chatbot are the operators' own non-contractual codes; neither sets "
-              "a conduct standard.")
-IVR_SAYS = ("The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no "
-            "read-back, no AI named.")
+GAP_7_SAYS = ("The only UAE texts naming an operator chatbot are the operators' own codes of practice; neither sets a "
+              "conduct standard (e&'s says it forms no contract).")
+IVR_SAYS = ("The operator's own code describes subscription through its IVR as binding with immediate effect; the code "
+            "names no OTP, read-back or AI; what the sale must include is set by the CPR, not by the code.")
 IVR_QUOTE = ("For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID "
              "verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s "
              "web site), and IVR system. In this case the subscription shall be legal and binding to the customer "

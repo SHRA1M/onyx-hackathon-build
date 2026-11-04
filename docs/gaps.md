@@ -177,7 +177,7 @@ Singapore, like UAE Electronic Transactions 46/2021 Art 12(2), validates the aut
   - EN: "whether in writing or electronically"
 - `law-14-2023-en:13(2)` (p. 13): Trade Law 14/2023: a digital contract is valid on offer and acceptance that meet the digital identity and digital signature requirements; no medium is named for spoken consent through an AI channel.
   - EN: "Fulfillment of the offer and acceptance and the contractual relationship executed upon satisfying the requirements of the digital identity and digital signature."
-- `eand-code-of-practice-en:4` (p. 5, `kb/sources/eand-code-of-practice-en.pdf`): The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no read-back, no AI named.
+- `eand-code-of-practice-en:4` (p. 5, `kb/sources/eand-code-of-practice-en.pdf`): The operator's own code describes subscription through its IVR as binding with immediate effect; the code names no OTP, read-back or AI; what the sale must include is set by the CPR, not by the code.
   - EN: "For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s web site), and IVR system. In this case the subscription shall be legal and binding to the customer with immediate effect"
 - `cabres-200-2025-en:Schedule row 1` (p. 5, `kb/sources/cabres-200-2025-en.pdf`): Where 14/2023 applies, failing to verify the offer and acceptance is fined (AED 2,000 up to 100,000 and closure); what verifies a spoken 'yes' through an AI channel is unsaid.
   - EN: "failure to verify the offer and acceptance required for the validity of the contract."
@@ -353,7 +353,7 @@ Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
   - AR (the whole chunk): "يجب على المرخص لهم التصرف بشفافية في جميع التعاملات مع المستهلكين بخصوص الخدمات المعروضة و/أو المقدمة من المرخص لهم إلى المستهلكين ويجب أن تكون جميع المعلومات المقدمة إلى المستهلكين، وقت تقديمها، مستوفاة وتتسم بالشفافية والدقة والصحة."
 - `pdpl-45-2021-en:13(1)` (p. 17): Point (c): automated decisions disclosed only on request.
   - EN: "Decisions made based on automated processing, including profiling."
-- `cabinet-56-2024-en:5(6)` (p. 5): Automated systems may market; no duty to disclose the machine.
+- `cabinet-56-2024-en:5(6)` (p. 5): Automated communication systems may market, in accordance with the resolution; no duty to disclose the machine.
   - EN: "Automated communication systems may be used for marketing"
 - `spam-calls-v4-en:3.3` (p. 7): Synthesised voices contemplated; no duty to disclose the machine.
   - EN: "the audible message contains a natural or a synthesised voice"
@@ -379,6 +379,8 @@ Kind: scope. Category: legislative gap. Addressee: Cabinet. Exposed by: S1-3.
   - EN: "The UAE seeks to create a clear understanding of AI and how systems operate and make decisions"
 - `doh-responsible-ai-standard-v1-2025:3.1.6.1.1` (p. 8, `kb/sources/doh-responsible-ai-standard-v1-2025.pdf`): Sector line, with the DHA row: the Abu Dhabi Department of Health binds its licensed entities to tell patients when AI contributes to a decision (Oct 2025); one emirate, health sector; no TDRA text does the same for a licensee.
   - EN: "All healthcare AI systems must include mechanisms to inform patients, clinicians, and relevant stakeholders when AI contributes to clinical or operational decisions, specifying its function, limitations, and intended outcomes."
+- `mocai-ai-ethics-2022:3.3.2.2` (p. 15, `kb/sources/mocai-ai-ethics-2022.pdf`): Non-binding: an AI that can pass as a human should say it is an AI first. The only federal text that says it.
+  - EN: "If an AI system can convincingly impersonate a human being, it should do so only after notifying the AI subject that it is an AI system"
 
 **UAE position.** Before a purchase through the agent, disclosure is a validity condition of the sale (11(2)); for service, data and complaint conversations no binding federal text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only federal text that says it; DIFC Regulation 10.2.2(a) does, for DIFC establishments only (UAE free zone, not federal); the DHA policy 4.3.2 (Dubai, 2021) requires disclosure of AI-enabled functions and the DoH standard 3.1.6.1.1 (Abu Dhabi, 2025) requires telling patients when AI contributes to a decision, each within its own health regulator's scope only. None reaches a telecom licensee.
 
@@ -402,7 +404,7 @@ No binding federal text sets conduct standards specific to an AI agent dealing w
 
 Kind: absence. Category: standards gap. Addressee: TDRA. Exposed by: all.
 
-Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's words (CAD 812.02). The federal texts have the general duty (CPR 3.3) and no AI-specific one.
+Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its chatbot's words (ordered to pay CAD 812.02 in all, CAD 650.88 of it damages). The federal texts have the general duty (CPR 3.3) and no AI-specific one.
 
 **Clauses searched**
 
@@ -417,7 +419,7 @@ Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its c
   - AR (the whole chunk): "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم."
 - `spam-calls-v4-en:3.3` (p. 7): Point (iii): a synthesised voice can make a Spam Call. A definition.
   - EN: "the audible message contains a natural or a synthesised voice"
-- `cabinet-56-2024-en:5(6)` (p. 5): Automated systems may market. A permission.
+- `cabinet-56-2024-en:5(6)` (p. 5): Automated communication systems may market, in accordance with the resolution. A permission.
   - EN: "Automated communication systems may be used for marketing"
 - `child-digital-safety-26-2025-en:10(1)` (p. 10): Point (g): platforms may use AI to detect harmful content. A tool, not a standard for AI conduct.
   - EN: "including artificial intelligence systems and machine learning algorithms, for proactive detection, removal, or reporting thereof"
@@ -433,9 +435,9 @@ Utah bars the 'the AI said it' defence; the BC tribunal held Air Canada to its c
   - EN: "whether electronic, digital, biometric, artificial intelligence technology, blockchain technology"
 - `law-14-2023-en:5(7)` (p. 8): Trade Law 14/2023: no misleading dealing or incorrect data. A general duty, not one specific to an automated agent.
   - EN: "Refraining from dealing in a misleading manner or provide incorrect data that does not give the true description of the good or service."
-- `du-code-of-practice-en:Annex 1` (p. 5, `kb/sources/du-code-of-practice-en.pdf`): The only UAE texts naming an operator chatbot are the operators' own non-contractual codes; neither sets a conduct standard.
+- `du-code-of-practice-en:Annex 1` (p. 5, `kb/sources/du-code-of-practice-en.pdf`): The only UAE texts naming an operator chatbot are the operators' own codes of practice; neither sets a conduct standard (e&'s says it forms no contract).
   - EN: "Chatbot WhatsApp 058-2428268 (058Chatbot)"
-- `eand-code-of-practice-en:1` (p. 3, `kb/sources/eand-code-of-practice-en.pdf`): The only UAE texts naming an operator chatbot are the operators' own non-contractual codes; neither sets a conduct standard.
+- `eand-code-of-practice-en:1` (p. 3, `kb/sources/eand-code-of-practice-en.pdf`): The only UAE texts naming an operator chatbot are the operators' own codes of practice; neither sets a conduct standard (e&'s says it forms no contract).
   - EN: "Nothing in this Code of Practice forms a contract or part of any contract between Etisalat and its customers."
 - `trai-tccrr-fourth-amendment-2026-draft:3(11)` (p. 10, https://trai.gov.in/sites/default/files/2026-05/Regulation_07052026.pdf): Draft, not law, superseded by the notified text of 2026-11-02: TRAI's draft Fourth Amendment for comments (2026-05-07) would let a provider take complaints through chatbots and AI agents under the same provisions as its other channels; it also substitutes reg 3(9).
   - EN: "new-age customer-centric solutions (Chatbots, AI Agents, etc.)"
@@ -574,7 +576,7 @@ Wales's Standards bind public bodies under a compliance notice (reg 3(1)), not o
   - EN: "AED 100.000 Article 26 The provider fails to write data, advertisements and contracts related to the consumer in Arabic."
 - `licence-2-2026:16.7` (p. 47): The licence's Arabic version binds; the English is for guidance. A document rule, not a service rule.
   - EN: "The Arabic language version of this License is the binding version."
-- `qos-v3-en:9.5` (p. 17): Annex A: every T indicator counts orders, faults, waits and complaints; none is reported per language. All 43 QoS chunks searched for language, Arabic, English and لغة: no hit.
+- `qos-v3-en:9.5` (p. 17): Annex A: every T indicator counts orders, faults, waits and complaints; none is reported per language. The QoS Policy v3.0 was searched for language, Arabic, English and لغة: no hit; one chunk (9.5, Annex A) is held.
   - EN: "Average queue time for calls to the call centre"
 - `tdra-cpr-v2-en:26.2` (p. 64): An unqualified standard, 'properly and promptly', that applies to Arabic as to English; no measure per language.
   - EN: "investigate and resolve Consumer Complaints properly and promptly"
@@ -645,7 +647,7 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
   - EN: "if the latter knows, or is supposed to know, that such system will make or execute the contract automatically."
 - `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: a complaint channel always available with qualified staff; nothing on reading back an order before it is confirmed.
   - EN: "Designate numbers and means of communication regarding complaints, which shall be always available without interruption with qualified staff"
-- `eand-code-of-practice-en:4` (p. 5, `kb/sources/eand-code-of-practice-en.pdf`): The operator's own code sells through an automated IVR with immediate binding effect; no OTP, no read-back, no AI named.
+- `eand-code-of-practice-en:4` (p. 5, `kb/sources/eand-code-of-practice-en.pdf`): The operator's own code describes subscription through its IVR as binding with immediate effect; the code names no OTP, read-back or AI; what the sale must include is set by the CPR, not by the code.
   - EN: "For customer convenience, subscription to Etisalat plans/services which do not require customers’ ID verification or supporting documents can be applied through Customer Care Centre, Online (Etisalat’s web site), and IVR system. In this case the subscription shall be legal and binding to the customer with immediate effect"
 - `saudi-cst-user-protection-552-1445-en:10.3` (p. 12, `kb/sources/saudi-cst-user-protection-552-1445-en.pdf`): Consent before the request, as CST issues; no read-back.
   - EN: "Service providers shall document the user's request for any service and take the user's consent of the service's applicable terms and conditions, including prices, according to what is issued by CST in this regard"
@@ -655,6 +657,8 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: mapping (P);
   - EN: "take the user's consent before executing the request"
 - `wam-2026-08-21-agentic-ai-guide:objection` (`kb/sources/wam-2026-08-21-agentic-ai-guide.txt`): Searched, non-binding, government services only: the guide gives the customer a route to ask, correct or object after the result; no read-back rule for a licensee's agent.
   - AR: "وتمكينه من السؤال أو التصحيح أو الاعتراض"
+- `tdra-cpr-v2-en:4.19.3` (p. 17, `kb/sources/tdra-cpr-v2-en.pdf`): SMS or USSD purchase: agreement by a separate step on the same channel; nothing on a channel that interprets free words.
+  - EN: "the purchase procedure shall necessitate the Consumer to provide agreement to the purchase of the service by a separate step involving the same means of electronic communications (e.g. SMS or USSD)"
 
 **UAE position.** The CPR already knows the problem on a screen: the safe default is 'no' (4.22.3, 4.23.3) and a purchase needs a second factor (4.23.2). On a voice or chat channel the system, not the subscriber, decides what was said; the OTP then confirms that the subscriber wants something, not that the channel understood the right thing. ET 12(7) reaches transmission errors only. No published TDRA text requires the channel to state the service, price and term it understood and take a correction before the second factor.
 

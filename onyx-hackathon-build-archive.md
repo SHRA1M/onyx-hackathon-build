@@ -723,3 +723,16 @@ Stop-list check before editing: all strings found once; on the replay page's 10 
 CI: runs 41915274765 and 41915290212 on `ca4957a`; 41915884997 and 41915893690 on `eac76db`; all success. Iyas read the texts and gave his word. PR #17 marked ready and merged with a merge commit, `89fc335`. CI on main: run 41921071433, success, 732 passed, 24 skipped, 228 logs chain ok. README diagram on GitHub in Chrome: rendered, 14 boxes in 9 groups, spinner for a few seconds, no error. `how-we-build.md` was not read this session: Iyas limited sources to the repo and the addendum.
 
 Superseded at this wrap: "Task 48 on draft PR #17, not merged, replay line held" as the open line; "Iyas takes the stop file to hq" as next action; "749 tests" and "755 tests"; "Every quote on this page is checked" as the replay line; "one spoken 'yes' buys the service" and "covers the purchase" in gap 2.
+
+
+## 2026-11-04: Task 49 built, draft PR #18
+
+Order dated 2026-11-05, so its filed order, report-backs and CHANGELOG heading carry that date; the work was done on 2026-11-04. First pass: every string count and first check matched except item 1, where the nav has nine links (eight pages and the repository link). Stopped before any edit, stop file `docs/report-back/2026-11-05-task-49-stop-1.md`, commit `6e6f0a8`.
+
+hq ruled yes to both questions, added item 9 (CPR 4.19.3 in gap 11) and confirmed page 15 for item 8. Refiled the order. Tests first: three pins updated, `tests/test_task_49.py` added, 8 checks seen failing. Edits by a script asserting each string's count. Regenerated `docs/gaps.md`, the site and the report; re-exported `docs/report.pdf` from Word, which the order did not name separately, so ITU's copy carries the new amount. Build commit `d94f671`.
+
+Adding items 8 and 9 failed 6 older tests in `tests/test_gaps.py` that read gap-6's list by position. Kept both lines: `_row_all` leaves out their two clauses, as Tasks 43 to 45 did for theirs; no assertion changed; a comparison with main showed 190 lines the same, 7 `says` reworded by this order. Decision flagged to hq. A first report-back had wrong pin line numbers and overstated the six failures; corrected in `a14f960`.
+
+CI: 41928579279 and 41928590445 on `d94f671`; 41929281626 and 41929290011 on `a14f960`; all success, 736 passed, 26 skipped (the 2 new skips are the PDF-page cases, `kb/sources/` is not in CI), 228 logs chain ok. Plain `python` does not exist on this PC: use `uv run python`.
+
+Superseded at this wrap: "No order open" as the objective; "hq reads the Task 48 report-back" as next action; the Task 48 open line's CI run and report-back path.

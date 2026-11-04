@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-05
+
+- Fixed (order 2026-11-05-task-49-register-wording, hq's rulings on stop 1): register and README wording said more or less than the sources do. Broke: the README counted the site's pages two short and said no recorded run of any scenario cites CPR 17.4 where only the S1 runs do not; gaps 2 and 11 said e&'s code itself sells through an automated IVR; gap 10 counted QoS chunks that are not held; gaps 6 and 7 cut Cabinet 56/2024 5(6) short of "in accordance with" the resolution; gap 7 and the annex gave the Air Canada total without saying what it is, and gap 7 called both operators' codes non-contractual where only e&'s says so. Changed: `README.md`, `onyx/data/gaps.json`, `docs/annex.md`, and from them `docs/gaps.md`, `docs/site/gaps.html`, `docs/report.docx`, `docs/report.pdf`. Added two searched lines: AI Ethics guideline 3.3.2.2 in gap 6 and CPR 4.19.3 in gap 11. Three pins in `tests/test_gaps.py` updated, its `_row_all` view leaves the two new lines out; `tests/test_task_49.py` added. USD 0.
+
 ## 2026-11-04
 
 - Fixed (hq, task-48-addendum-2-claims-2026-11-04, items 2 and 4; Fable's ruling on item 4): the replay page's line said every quote on the page is checked against its stored clause, which is false for the "Elsewhere" quotes and for the proposals under "Without the gates"; it now says what each check covers. Gap 2 said one spoken 'yes' buys the service, which its own clauses deny on the 2FA channels; it now says a spoken 'yes' buys the service once the channel's own safeguard is met, and its position says a spoken consent is consent to the purchase, not a cover. Regenerated `docs/gaps.md`, the README register, `docs/site/gaps.html`, `docs/replay/index.html`, `docs/site/runs.html`. Report and annex unchanged. No prompt, gate, mandate, retrieval, key, run or manifest change. USD 0.
