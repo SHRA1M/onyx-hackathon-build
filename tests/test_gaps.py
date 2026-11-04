@@ -848,8 +848,8 @@ TASK_33_SEARCHED = {  # gap id: [(clause, file, says starts with, quote)], after
     ],
     "gap-15": [  # the 79 bis (2) candidate until Task 41
         ("cabres-52-2024-ar:2(2)", R52, "TDRA may double a fine when the same violation is repeated within a year",
-         "يجوز للهيئة مضاعفةقيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات "
-         "المخالفة الإدارية قبل مض ي سنة من تاريخ ارتكابها لأول مرة"),
+         "يجوز للهيئة مضاعفة قيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات "
+         "المخالفة الإدارية قبل مضي سنة من تاريخ ارتكابها لأول مرة"),
         ("cabres-200-2025-en:3(3)", R200, "The Ministry of Economy may skip the gradation for a serious violation",
          "the Ministry may, in cases of serious violations, impose the more severe administrative penalty without "
          "adhering to the gradation"),
@@ -915,13 +915,26 @@ def test_task_33_global_examples_replace_the_none_cells():
     assert "EECC 2018/1972 Art 105(3); TKG 2021 § 56(3)" in gaps.table()
 
 
+# hq, task-48-addendum-quote-9-2026-11-04.md: the printed page 2 is the text; the PDF's text layer has two spacing
+# faults there. One named exception, for these two strings only: (as printed, as the text layer gives it).
+PRINTED_NOT_TEXT_LAYER = {"cabres-52-2024-ar:2(2)": (("مضاعفة قيمة", "مضاعفةقيمة"), ("مضي", "مض ي"))}
+
+
+def _as_text_layer(entry: dict) -> str:
+    quote = entry["quote"]
+    for printed, layer in PRINTED_NOT_TEXT_LAYER.get(entry["clause"], ()):
+        assert quote.count(printed) == 1, entry["clause"]
+        quote = quote.replace(printed, layer)
+    return quote
+
+
 def test_task_33_quotes_are_verbatim_in_the_stored_text():
     entries = [s for g in TASK_33_SEARCHED for s in _filed_33(g)]
     entries += [ex for g in TASK_33_EXAMPLES for ex in _row(g)["global_examples"]]
     if not all((kb.REPO / e["file"]).exists() for e in entries):
         pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
     for e in entries:
-        assert _norm(e["quote"]) in _norm(_stored(kb.REPO / e["file"])), e["file"]
+        assert _norm(_as_text_layer(e)) in _norm(_stored(kb.REPO / e["file"])), e["file"]
     assert len(entries) == 10
 
 
@@ -1716,3 +1729,12 @@ def test_task_48_four_searched_lines_follow_4_22_in_order_with_quotes_from_the_c
         assert s["says"] == TASK_48_SEARCHED[s["clause"]]
         assert s["quote"].startswith(first) and s["quote"].endswith(last)
         assert s["quote"] in chunks[s["clause"].split(":")[1]]
+
+
+def test_task_48_addendum_52_2024_quote_is_as_printed_with_one_exception():
+    [s] = [s for s in _row("gap-15")["searched"] if s["clause"] == "cabres-52-2024-ar:2(2)"]
+    for printed, layer in PRINTED_NOT_TEXT_LAYER[s["clause"]]:
+        assert printed in s["quote"] and layer not in s["quote"]
+    assert s["says"].endswith("Arabic as printed on page 2 (eye-checked 2026-11-04); the PDF text layer has two "
+                              "spacing faults there.")
+    assert list(PRINTED_NOT_TEXT_LAYER) == ["cabres-52-2024-ar:2(2)"]  # the exception names this one clause only
