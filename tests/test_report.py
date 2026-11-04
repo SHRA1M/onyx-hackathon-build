@@ -64,7 +64,7 @@ def test_eight_list_paragraph_headings_in_template_order(built):
     assert headings == HEADINGS + ["Annex"]  # Task 38: the annex heading, unnumbered, after the eight
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
     assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
-                                                                  "GitHub link (code)", "Knowledge base"]  # Task 34 (Iyas)
+                                                                  "GitHub (public from 2026-11-09)", "Knowledge base"]  # Task 34 (Iyas)
     assert "Demo video: docs/video/mizan-demo.mp4" in doc.paragraphs[5].text
 
 
@@ -456,7 +456,7 @@ def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
 
 # --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------
 
-LINKS = ["**GitHub link (code):** https://github.com/SHRA1M/onyx-hackathon-build (public from 2026-11-09)",
+LINKS = ["**GitHub (public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build",
          "**Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** "
          "`docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** "
          "https://shra1m.github.io/onyx-hackathon-build/site/"]  # Iyas's A4 answer (1): five header lines
@@ -496,3 +496,45 @@ def test_no_numbered_section_pointer_into_the_report():
 @pytest.mark.parametrize("word,value", [("thirty", 30), ("twenty", 20), ("thirty-eight", 38), ("nine", 9)])
 def test_a_round_tens_word_reads_as_its_number(word, value):
     assert _load()._number(word) == value
+
+
+# --- order 2026-11-04 Task 48, ruling task-48-stop-1: the report states the check that runs ---------------------------
+
+
+def test_task_48_gap_2_cell_is_the_rulings_and_the_claim_matches_what_ci_checks():
+    report = REPORT_MD.read_text(encoding="utf-8")
+    assert ('| 2 | Consent elicited by an AI: the CPR sets the consent safeguard by sales medium (4.17.3, 4.22.3, 4.23.2) '
+            'and names no AI channel, so an agent\'s safeguard follows where it is embedded; whether a "yes" the agent '
+            'itself heard and interpreted is a positive affirmative action (4.7.1), or consent "in writing or '
+            'electronically" under the PDPL (6(1)(b)), is unsaid | coordination |') in report
+    flat = " ".join(report.split())
+    assert "clause the gates cite word for word against the text stored from it" in flat
+    annex = " ".join((kb.REPO / "docs" / "annex.md").read_text(encoding="utf-8").split())
+    assert ("the clause's quote is checked against the stored clause text on every push, and the stored text against "
+            "the issuer's file by hash where it is on disk") in annex
+    for html in ("docs/replay/index.html", "docs/site/runs.html"):
+        page = (kb.REPO / html).read_text(encoding="utf-8")
+        assert ('<p class="meta">Rule quotes on this page are checked word for word against their stored clauses on '
+                "every push; in a governed run the gate must find the agent's quote verbatim in a cited clause before it "
+                'can allow a proposal, and "Without the gates" shows proposals no gate checked; an "Elsewhere" quote is '
+                "checked against its source file where that file is on disk; <code>kb verify</code> checks each stored "
+                "source against the issuer's file by SHA-256 where the file is on disk; to check a run's log chain "
+                'yourself: <a href="../site/verify.html">verify</a>.</p>') in page, html  # hq, addendum 2, item 2
+        assert "Every quote on this page" not in page, html
+        assert "against the issuer's file on every push" not in page, html
+
+
+# --- hq, task-48-addendum-2-claims-2026-11-04, items 1 and 3 -------------------------------------------------------
+
+
+def test_task_48_addendum_2_clause_4_10_keeps_both_exceptions():
+    row = next(r for r in data.load_gaps()["gaps"] if r["id"] == "gap-2")
+    assert "and 2FA in all digital applications unless objectively justified or expressly specified otherwise (4.10)" in row["gap"]
+    [line] = [s for s in row["searched"] if s["clause"] == "tdra-cpr-v2-en:4.10"]
+    assert line["says"] == "Digital applications: multi-step, 2FA unless objectively justified or expressly specified otherwise."
+
+
+def test_task_48_addendum_2_check_data_says_what_it_reads(capsys):
+    assert data.check_data() == 0
+    assert "check-data ok: every rule and mandate quote verbatim, every rule cites a clause" in capsys.readouterr().out
+

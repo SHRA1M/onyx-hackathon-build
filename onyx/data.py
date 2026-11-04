@@ -172,7 +172,7 @@ def check_data() -> int:
     for rule in transcribed_rules():
         t = rule["transcription"]
         print(f"  {rule['id']} ({t['field']}, {t['from']}): {t['checked_file'] or 'PENDING, no hq checked file'}")
-    print("\n".join(failures) if failures else "check-data ok: every quote verbatim, every rule cites a clause")
+    print("\n".join(failures) if failures else "check-data ok: every rule and mandate quote verbatim, every rule cites a clause")
     return 1 if failures else 0
 
 

@@ -145,7 +145,7 @@ def complaint_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
 Why this split. The model is good at reading a subscriber's words and proposing what the step calls for in two
 languages; it is not where a regulator wants the law decided. A rule in code is readable by a lawyer, testable by a
 developer (54 gate tests in `tests/test_gate.py`), stable across model versions, and auditable: a verdict names
-the rule, the rule names the clause, the clause's quote is checked against the issuer's file on every push. The
+the rule, the rule names the clause, the clause's quote is checked against the stored clause text on every push, and the stored text against the issuer's file by hash where it is on disk. The
 governed and ungoverned runs in Annex C measure what that split buys.
 
 Limits of the method. The rules cover the clauses the five scenarios reach (109 rules over 13 UAE
@@ -219,7 +219,7 @@ Capacity Building Week (page on file, read 2026-10-18):
    runs with their logs, so an Arabic agent can be scored against binding Arabic law without new annotation.
 2. **For the call for domain-specific open knowledge bases:** `kb/manifest.csv` with its 23-column schema (issuer, URL,
    fetch date, HTTP status, SHA-256, pages, language, official-translation flag, binding status, Y.3172 node and
-   Readiness dimensions per document), the 89 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's
+   Readiness dimensions per document), the 108 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's
    layout. Sources are fetched from the issuer and verified by hash, not redistributed where rights are unconfirmed.
 3. **For the global open repository of AI agents and metadata:** the five agent manifests in `mandates.json` (verbs,
    documents, clauses), the gate interface (`decide(proposal, state, knowledge) -> verdict`) and the log schema, which

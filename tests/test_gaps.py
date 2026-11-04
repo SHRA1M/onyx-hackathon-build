@@ -413,8 +413,17 @@ def test_task_26_rows_1_and_2_name_the_clocks_and_4_9():
            "26.14.2); the transfer has none" in _row("gap-1")["gap"]
     assert _row("gap-1")["uae_position"].endswith("and a reference number is not a conversation.")
     assert "the PDPL permits the processing the contract needs without consent (4(9))" in _row("gap-2")["gap"]
-    assert "one spoken 'yes' buys the service and consents to nothing beyond it" in _row("gap-2")["gap"]
+    assert ("a spoken 'yes' buys the service once the channel's own safeguard is met (4.17.3, 4.22.3, 4.23.2 or 4.10) "
+            "and consents to nothing beyond it") in _row("gap-2")["gap"]  # hq, task-48-addendum-2, item 4
     assert "The processing the contract needs is lawful without consent (4(9))" in _row("gap-2")["uae_position"]
+
+
+def test_task_48_addendum_2_spoken_consent_is_to_the_purchase_not_a_flat_cover():
+    position = _row("gap-2")["uae_position"]
+    assert ("a spoken consent through the agent is consent to the purchase (4.7.2), not to a processing purpose beyond "
+            "the contract") in position
+    assert "covers the purchase" not in position
+    assert "one spoken 'yes'" not in _row("gap-2")["gap"]
 
 
 # --- order 2026-10-26 Task 27: gap-12, where an agent's authority ends (hq ruling task-27-stop-ruling-2026-10-26) ----
@@ -824,9 +833,9 @@ def test_task_32_entries_print_in_the_register_and_on_the_site():
 
 # --- order 2026-10-30-task-33-three-searches Part C ---------------------------------------------------------------
 
-DATA_OFFICE = ("The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial "
-               "Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps "
-               "the statutory name.")
+DATA_OFFICE = ("The PDPL names the UAE Data Office (Art 24); on 2026-06-14 the Prime Minister approved an Artificial Intelligence and "
+               "Data Authority to take over its functions (rows `wam-2026-06-14-ai-data-authority`, "
+               "`fed-ai-data-authority-2026-06-14`); the register keeps the statutory name.")
 EO = "kb/sources/executive-order-3-2004.pdf"
 R200 = "kb/sources/cabres-200-2025-en.pdf"
 R52 = "kb/sources/cabres-52-2024-ar.pdf"
@@ -848,8 +857,8 @@ TASK_33_SEARCHED = {  # gap id: [(clause, file, says starts with, quote)], after
     ],
     "gap-15": [  # the 79 bis (2) candidate until Task 41
         ("cabres-52-2024-ar:2(2)", R52, "TDRA may double a fine when the same violation is repeated within a year",
-         "يجوز للهيئة مضاعفةقيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات "
-         "المخالفة الإدارية قبل مض ي سنة من تاريخ ارتكابها لأول مرة"),
+         "يجوز للهيئة مضاعفة قيمة الغرامة الإدارية المحددة في الجدول المرفق بهذا القرار في حال تكرار ارتكاب ذات "
+         "المخالفة الإدارية قبل مضي سنة من تاريخ ارتكابها لأول مرة"),
         ("cabres-200-2025-en:3(3)", R200, "The Ministry of Economy may skip the gradation for a serious violation",
          "the Ministry may, in cases of serious violations, impose the more severe administrative penalty without "
          "adhering to the gradation"),
@@ -915,13 +924,26 @@ def test_task_33_global_examples_replace_the_none_cells():
     assert "EECC 2018/1972 Art 105(3); TKG 2021 § 56(3)" in gaps.table()
 
 
+# hq, task-48-addendum-quote-9-2026-11-04.md: the printed page 2 is the text; the PDF's text layer has two spacing
+# faults there. One named exception, for these two strings only: (as printed, as the text layer gives it).
+PRINTED_NOT_TEXT_LAYER = {"cabres-52-2024-ar:2(2)": (("مضاعفة قيمة", "مضاعفةقيمة"), ("مضي", "مض ي"))}
+
+
+def _as_text_layer(entry: dict) -> str:
+    quote = entry["quote"]
+    for printed, layer in PRINTED_NOT_TEXT_LAYER.get(entry["clause"], ()):
+        assert quote.count(printed) == 1, entry["clause"]
+        quote = quote.replace(printed, layer)
+    return quote
+
+
 def test_task_33_quotes_are_verbatim_in_the_stored_text():
     entries = [s for g in TASK_33_SEARCHED for s in _filed_33(g)]
     entries += [ex for g in TASK_33_EXAMPLES for ex in _row(g)["global_examples"]]
     if not all((kb.REPO / e["file"]).exists() for e in entries):
         pytest.skip("kb/sources/ is local only (gitignored, addendum item 15): run kb fetch --local")
     for e in entries:
-        assert _norm(e["quote"]) in _norm(_stored(kb.REPO / e["file"])), e["file"]
+        assert _norm(_as_text_layer(e)) in _norm(_stored(kb.REPO / e["file"])), e["file"]
     assert len(entries) == 10
 
 
@@ -1390,7 +1412,7 @@ def test_task_43_rows_say_federal_where_they_mean_federal():
     assert "AI disclosure: no federal duty to tell a consumer" in _row_43("gap-6")["gap"]
     assert _row_43("gap-7")["gap"].startswith("No binding federal text sets conduct standards")
     assert _row_43("gap-7")["uae_position"].endswith(
-        "Below the federal level, three UAE texts set such standards, each within its own scope only: the DIFC Data "
+        "Below the federal level, three of the UAE texts read set such standards, each within its own scope only: the DIFC Data "
         "Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) name notice, limits and intervention for "
         "an automated system; the DHA policy 4.3.2 (Dubai, 2021) requires disclosure of AI-enabled functions; the DoH "
         "standard 3.1.1.2.2 (Abu Dhabi, 2025) requires human oversight and escalation, with agents in scope. None reaches a "
@@ -1672,3 +1694,56 @@ def test_task_44_back_no_claim_is_reworded_in_the_three_places():
         text = " ".join((kb.REPO / f).read_text(encoding="utf-8").split())
         assert new in text, f
     assert "Oman and Bahrain not searched" in (kb.REPO / "kb" / "DATASHEET.md").read_text(encoding="utf-8")
+
+
+# --- order 2026-11-04 Task 48, ruling task-48-stop-1 question 1: the safeguard follows the channel, not the agent ----
+
+
+TASK_48_SEARCHED = {
+    "tdra-cpr-v2-en:4.7.1": "Consent rests on a positive affirmative action taken freely by the Subscriber; who elicits it is not said.",
+    "tdra-cpr-v2-en:4.17.3": "Call-centre sale: a voice recording of the Subscriber giving verbal consent.",
+    "tdra-cpr-v2-en:4.22.3": "Licensee App: 'no' is the default on yes/no screens; it binds only where a screen is offered.",
+    "tdra-cpr-v2-en:4.23.2": "Online or other device: 2FA for each purchase.",
+}
+
+
+def test_task_48_gap_2_says_the_safeguard_follows_the_channel():
+    row = _row("gap-2")
+    assert "fits none" not in row["gap"] and "nobody has said" not in row["gap"]
+    assert row["gap"].startswith("Consent elicited by an AI: the CPR accepts spoken consent if it can be stored (4.7.2) "
+                                 "and sets the consent safeguard by sales medium:")
+    assert ("so the safeguard an agent must meet follows the channel the operator embeds it in (a voice agent on the "
+            "call-centre line reads as 4.17, a chat agent in the app as 4.22 or 4.10, a web chat as 4.23), not what the "
+            "agent does") in row["gap"]
+    assert row["gap"].endswith("whether a 'yes' the agent itself heard and interpreted is the Subscriber's positive "
+                               "affirmative action taken freely (4.7.1), or consent in writing or electronically under "
+                               "6(1)(b), is unsaid.")
+    assert row["uae_position"].startswith(
+        "No CPR sales medium names a conversational agent; Mizan reads the agent as inheriting the medium it is embedded "
+        "in, so whether an AI-elicited purchase needs an OTP depends on where the operator puts it. ")
+
+
+def test_task_48_four_searched_lines_follow_4_22_in_order_with_quotes_from_the_chunks():
+    searched = _row("gap-2")["searched"]
+    clauses = [s["clause"] for s in searched]
+    i = clauses.index("tdra-cpr-v2-en:4.22")
+    assert clauses[i + 1:i + 5] == list(TASK_48_SEARCHED)
+    chunks = {json.loads(l)["clause"]: json.loads(l)["text_en"]
+              for l in (kb.REPO / "kb" / "chunks" / "tdra-cpr-v2-en.jsonl").read_text(encoding="utf-8").splitlines()}
+    bounds = [("grounded on an", "taken freely by the Subscriber"),
+              ("the Licensee shall make a voice recording", "for the service"),
+              ("where Consumers are offered on-screen", "accidental ‘yes’ answers"),
+              ("for each purchase", "purchase of the Service")]
+    for s, (first, last) in zip(searched[i + 1:i + 5], bounds):
+        assert s["says"] == TASK_48_SEARCHED[s["clause"]]
+        assert s["quote"].startswith(first) and s["quote"].endswith(last)
+        assert s["quote"] in chunks[s["clause"].split(":")[1]]
+
+
+def test_task_48_addendum_52_2024_quote_is_as_printed_with_one_exception():
+    [s] = [s for s in _row("gap-15")["searched"] if s["clause"] == "cabres-52-2024-ar:2(2)"]
+    for printed, layer in PRINTED_NOT_TEXT_LAYER[s["clause"]]:
+        assert printed in s["quote"] and layer not in s["quote"]
+    assert s["says"].endswith("Arabic as printed on page 2 (eye-checked 2026-11-04); the PDF text layer has two "
+                              "spacing faults there.")
+    assert list(PRINTED_NOT_TEXT_LAYER) == ["cabres-52-2024-ar:2(2)"]  # the exception names this one clause only

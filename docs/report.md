@@ -3,7 +3,7 @@
 **Team leader:** Iyas Shraim (BAU Faculty of AI)
 **Team members:** Mohammed Rawashdeh, Yanal Faouri
 **Contact details:** iyas.shraim@gmail.com, +962 790 602 577
-**GitHub link (code):** https://github.com/SHRA1M/onyx-hackathon-build (public from 2026-11-09)
+**GitHub (public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build
 **Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** `docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/
 
 ## Introduction
@@ -22,7 +22,7 @@ The sources are the Telecommunications Law 3/2003, the
 CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and thirty-two other UAE texts;
 ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
 thirty-eight foreign texts used only as global examples. 100 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
-clause the gates cite word for word against it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
+clause the gates cite word for word against the text stored from it; two unpublished texts and one unreachable one back no claim. No consumer data was used.
 
 ## Description of the use case
 
@@ -135,7 +135,7 @@ and found absent. The recorded runs re-find 5 of the 7 expected gaps on every ru
 | # | Gap | Kind | Addressee | Example |
 |---|---|---|---|---|
 | 1 | Complaint hand-over: the bar and the human exist (CPR 2.1.7, 26.7.2, licence 9.1) and the complaint has clocks (26.13.3, 26.14.2); the transfer has none: what the agent does when the talk turns, when the human is in it | standards | TDRA | Spain Ley 10/2025 Art 8(2), 8(3) |
-| 2 | Consent elicited by an AI: the CPR accepts stored spoken consent (4.7.2) and sets the OTP need by sales medium (4.10, 4.17, 4.22), naming no AI channel; the PDPL exempts what the contract needs (4(9)) and wants any further data use consented in writing or electronically (6(1)(b)), so a spoken "yes" buys the service | coordination | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15 |
+| 2 | Consent elicited by an AI: the CPR sets the consent safeguard by sales medium (4.17.3, 4.22.3, 4.23.2) and names no AI channel, so an agent's safeguard follows where it is embedded; whether a "yes" the agent itself heard and interpreted is a positive affirmative action (4.7.1), or consent "in writing or electronically" under the PDPL (6(1)(b)), is unsaid | coordination | TDRA, UAE Data Office | CRD 2011/83 Art 8(2); IMDA 2.2.2; Singapore ETA s. 15 |
 | 3 | "Adequate verification process" (CPR 24.10) undefined for a remote channel; no published text maps the Electronic Transactions Art 33 trust levels to it | standards | TDRA | eIDAS Art 8(1), 8(3)(c) |
 | 4 | Automated disconnection: the PDPL 18(4) human review has no procedure or deadline, and the complaint route to the Data Office (Art 24) has no clock either | responsibilities | UAE Data Office | GDPR Art 22(3), 12(3) |
 | 5 | Subscriber data to a hosted model provider: the duties exist (PDPL 7(5), 8(1), 13(2), 23(1)(a), licence 3.4.1), the machinery (Art 22 list, 23(2), 8(11)): not on the portal | legislative | UAE Data Office | GDPR Art 28(3)(a), 45(1) |

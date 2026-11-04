@@ -283,6 +283,7 @@ TEMPLATE = """<!doctype html>
 {picker}
 </nav>
 </header>
+<p class="meta">Rule quotes on this page are checked word for word against their stored clauses on every push; in a governed run the gate must find the agent's quote verbatim in a cited clause before it can allow a proposal, and "Without the gates" shows proposals no gate checked; an "Elsewhere" quote is checked against its source file where that file is on disk; <code>kb verify</code> checks each stored source against the issuer's file by SHA-256 where the file is on disk; to check a run's log chain yourself: <a href="../site/verify.html">verify</a>.</p>
 <main>
 {sections}
 </main>
