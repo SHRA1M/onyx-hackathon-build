@@ -283,6 +283,7 @@ TEMPLATE = """<!doctype html>
 {picker}
 </nav>
 </header>
+<p class="meta">Every quote on this page is checked word for word against the issuer's file on every push; to check one yourself: <a href="../site/verify.html">verify</a>.</p>
 <main>
 {sections}
 </main>

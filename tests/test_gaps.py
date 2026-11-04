@@ -824,9 +824,9 @@ def test_task_32_entries_print_in_the_register_and_on_the_site():
 
 # --- order 2026-10-30-task-33-three-searches Part C ---------------------------------------------------------------
 
-DATA_OFFICE = ("The PDPL names the UAE Data Office (Art 24); its competences move to the Federal Authority for Artificial "
-               "Intelligence and Data (announced 2026-06-14, `fed-ai-data-authority-2026-06-14`); the register keeps "
-               "the statutory name.")
+DATA_OFFICE = ("The PDPL names the UAE Data Office (Art 24); on 2026-06-14 the Prime Minister approved an Artificial Intelligence and "
+               "Data Authority to take over its functions (rows `wam-2026-06-14-ai-data-authority`, "
+               "`fed-ai-data-authority-2026-06-14`); the register keeps the statutory name.")
 EO = "kb/sources/executive-order-3-2004.pdf"
 R200 = "kb/sources/cabres-200-2025-en.pdf"
 R52 = "kb/sources/cabres-52-2024-ar.pdf"
@@ -1390,7 +1390,7 @@ def test_task_43_rows_say_federal_where_they_mean_federal():
     assert "AI disclosure: no federal duty to tell a consumer" in _row_43("gap-6")["gap"]
     assert _row_43("gap-7")["gap"].startswith("No binding federal text sets conduct standards")
     assert _row_43("gap-7")["uae_position"].endswith(
-        "Below the federal level, three UAE texts set such standards, each within its own scope only: the DIFC Data "
+        "Below the federal level, three of the UAE texts read set such standards, each within its own scope only: the DIFC Data "
         "Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) name notice, limits and intervention for "
         "an automated system; the DHA policy 4.3.2 (Dubai, 2021) requires disclosure of AI-enabled functions; the DoH "
         "standard 3.1.1.2.2 (Abu Dhabi, 2025) requires human oversight and escalation, with agents in scope. None reaches a "

@@ -64,7 +64,7 @@ def test_eight_list_paragraph_headings_in_template_order(built):
     assert headings == HEADINGS + ["Annex"]  # Task 38: the annex heading, unnumbered, after the eight
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
     assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
-                                                                  "GitHub link (code)", "Knowledge base"]  # Task 34 (Iyas)
+                                                                  "GitHub link (code, public from 2026-11-09)", "Knowledge base"]  # Task 34 (Iyas)
     assert "Demo video: docs/video/mizan-demo.mp4" in doc.paragraphs[5].text
 
 
@@ -456,7 +456,7 @@ def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
 
 # --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------
 
-LINKS = ["**GitHub link (code):** https://github.com/SHRA1M/onyx-hackathon-build (public from 2026-11-09)",
+LINKS = ["**GitHub link (code, public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build",
          "**Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** "
          "`docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** "
          "https://shra1m.github.io/onyx-hackathon-build/site/"]  # Iyas's A4 answer (1): five header lines

@@ -219,7 +219,7 @@ Capacity Building Week (page on file, read 2026-10-18):
    runs with their logs, so an Arabic agent can be scored against binding Arabic law without new annotation.
 2. **For the call for domain-specific open knowledge bases:** `kb/manifest.csv` with its 23-column schema (issuer, URL,
    fetch date, HTTP status, SHA-256, pages, language, official-translation flag, binding status, Y.3172 node and
-   Readiness dimensions per document), the 89 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's
+   Readiness dimensions per document), the 108 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's
    layout. Sources are fetched from the issuer and verified by hash, not redistributed where rights are unconfirmed.
 3. **For the global open repository of AI agents and metadata:** the five agent manifests in `mandates.json` (verbs,
    documents, clauses), the gate interface (`decide(proposal, state, knowledge) -> verdict`) and the log schema, which

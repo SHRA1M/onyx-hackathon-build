@@ -3,7 +3,7 @@
 **Team leader:** Iyas Shraim (BAU Faculty of AI)
 **Team members:** Mohammed Rawashdeh, Yanal Faouri
 **Contact details:** iyas.shraim@gmail.com, +962 790 602 577
-**GitHub link (code):** https://github.com/SHRA1M/onyx-hackathon-build (public from 2026-11-09)
+**GitHub link (code, public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build
 **Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** `docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/
 
 ## Introduction
