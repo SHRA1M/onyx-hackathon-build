@@ -1,6 +1,6 @@
 # Task 48, addendum 2: items 2 and 4 built (2026-11-04)
 
-Addendum `task-48-addendum-2-claims-2026-11-04.md`, for hq (`D:\Projects\hq\uni\ai-for-good-hackathon\`) and for Iyas's read. Branch `task-48`, draft PR #17, not merged. USD 0, no model call. Items 1 and 3 were already in (`10165d4`) and were not redone.
+Addendum `task-48-addendum-2-claims-2026-11-04.md`, for hq (`D:\Projects\hq\uni\ai-for-good-hackathon\`) and for Iyas's read. Branch `task-48`, PR #17, merged to main as `89fc335` (see "After the merge"). USD 0, no model call. Items 1 and 3 were already in (`10165d4`) and were not redone.
 
 Plainly: the replay page's line now says what each check covers, and gap 2 no longer says a flat "buys the service". No item on the stop list was met. Nothing differs from the addendum except one added test, named below.
 
@@ -24,7 +24,14 @@ Plainly: the replay page's line now says what each check covers, and gap 2 no lo
 | 5 | The three texts as they stand | Below |
 | 6 | CI "reproduce" on the new head | PASS on `ca4957a`: run 41915274765 (push) and run 41915290212 (pull_request), success; "732 passed, 24 skipped"; "228 logs: chain ok". The commit after it adds only this result to this file |
 
-Not run, not merged: CI on main; the README diagram on GitHub. Both are after-merge checks, as in the ruling.
+CI on the final head `eac76db`, which adds only this result: run 41915884997 (push) and run 41915893690 (pull_request), success.
+
+## After the merge
+
+Iyas read the texts and gave his word on 2026-11-04. PR #17 was marked ready and merged to main with a merge commit, `89fc335`; the branch `task-48` is kept. Both after-merge checks ran, on `89fc335`:
+
+1. CI "reproduce" on main: run 41921071433 (push), success; "732 passed, 24 skipped"; "228 logs: chain ok"; the `check-data` message as above.
+2. README diagram on GitHub, `blob/main/README.md`, opened in Chrome under the repo owner's login and scrolled top to bottom: it rendered, with no "Unable to render rich display" message; a spinner for a few seconds, then the figure. A top-down flowchart, 1,936 px tall in GitHub's frame. 14 boxes in 9 groups: ML sandbox (Local-model page, Model-down replay, Recorded runs, What-if replay, Scoring), SRC (Scenarios), MLFO (Staged release of steps), C (Each agent's inbox), D (Routing and hand-over), P (Gates), PP (Mandate-scoped retrieval, Clause chunks), M (Model adapter), SINK (Hash-chained log). Solid and dotted edges both show; `kb fetch` is a dotted label into Clause chunks; the caption and mapping table sit directly below. Read by eye, since GitHub draws the figure in a separate frame; not every edge was traced. `tests/test_readme_diagram.py` checks boxes and edges against the code. No screenshot kept in the repo.
 
 `docs/report.md` row 2 carries neither phrase, as the addendum says; the file did not change. In `docs/gaps.md`, the lines that changed are 20, 137 and 193; in the README, line 72. In `docs/replay/index.html` and `docs/site/runs.html`, the one line.
 
@@ -60,4 +67,4 @@ It appears once each in `docs/replay/index.html` and `docs/site/runs.html`.
 
 ## Open
 
-Iyas's read of the three texts above, and his word on the merge.
+Nothing from this addendum. The read and the merge are done, as above.

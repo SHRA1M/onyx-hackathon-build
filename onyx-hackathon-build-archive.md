@@ -713,3 +713,13 @@ CI: run 41907213578 on `b519176`, run 41911323863 on `10165d4`, both success. 75
 
 Superseded at this wrap: "Task 48: items 1, 3 to 7 in, gap 2 held, three questions for hq" as the open line; "Iyas takes the Task 48 stop file to hq" as next action; the "every quote verbatim" `check-data` message; "the gap of 2 is not diagnosed".
 
+
+## 2026-11-04: Task 48 finished and merged
+
+Built addendum 2 items 2 and 4 on `task-48`, on hq's revised file: the replay line at `onyx/replay_viewer.py` line 286, hq having ruled in the candidate from the stop file; gap 2's "gap" and "uae_position" strings. Fable's ruling replaced the earlier instruction to keep "one spoken 'yes' buys the service". Commits `ca4957a` and `eac76db`. Test first: two pins changed and one test added for `uae_position`, all seen failing. 756 tests.
+
+Stop-list check before editing: all strings found once; on the replay page's 10 governed runs, 79 gate events, 43 allow, all 43 quotes verbatim in a cited clause, no overrides. A first script paired gate events to proposals by verb and flagged the 4 `classify_channel` gate events as having no proposal; they carry their proposal in `old_value`, quote included, so the check reads `old_value`. Throwaway script; the repo does not run this check.
+
+CI: runs 41915274765 and 41915290212 on `ca4957a`; 41915884997 and 41915893690 on `eac76db`; all success. Iyas read the texts and gave his word. PR #17 marked ready and merged with a merge commit, `89fc335`. CI on main: run 41921071433, success, 732 passed, 24 skipped, 228 logs chain ok. README diagram on GitHub in Chrome: rendered, 14 boxes in 9 groups, spinner for a few seconds, no error. `how-we-build.md` was not read this session: Iyas limited sources to the repo and the addendum.
+
+Superseded at this wrap: "Task 48 on draft PR #17, not merged, replay line held" as the open line; "Iyas takes the stop file to hq" as next action; "749 tests" and "755 tests"; "Every quote on this page is checked" as the replay line; "one spoken 'yes' buys the service" and "covers the purchase" in gap 2.
