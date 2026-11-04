@@ -19,6 +19,8 @@ data/chromadb/
 kb/sources/
 # Iyas, 2026-10-20: only cited clauses are committed; kb chunk writes every clause here
 kb/chunks-full/
+# Order Task 47: the bilingual benchmark index, built by `retrieval-index`, read by no run
+kb/index-bilingual/
 
 # engineering/_reference/new-repo.md list
 node_modules/

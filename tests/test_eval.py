@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from onyx import audit, data, eval as onyx_eval, gate, model, runs
+from onyx import audit, data, eval as onyx_eval, gate, kb, model, retrieval, runs
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTED = ROOT / "runs" / "scripted"
@@ -338,3 +338,96 @@ def test_uncarried_key_clauses_sit_on_abstention_steps_but_two_at_s3_1_arabic():
         for rule in ("cpr-28-26", "consumer-law-4-5"):
             assert any(rules[rule] in p["sources_used"] for p in proposes)
             assert not any(rules[rule] in p.get("sources_mandate", []) for p in proposes)
+
+
+# --- Task 47: retrieval measured on its own, no model, no mandate list ----------------------------------------------
+
+def test_benchmark_chunk_mapping_equals_key_clauses_shown():
+    """The benchmark's targets, handed to key_clauses_shown as what was retrieved, are all shown: the same mapping,
+    each entry once, two rules on one chunk twice. 234 entries over two runs per language are the 117 on the steps
+    with a model call; S1-1 and S2-1 add three each."""
+    targets = retrieval.targets()
+    assert sum(len(chunks) for chunks in targets.values()) == 123
+    prompted = 0
+    for sid in onyx_eval.SCENARIOS:
+        key = data.load_key(sid)
+        events = [{"action": "propose", "entity_id": f"{sid}-{s['n']}-{s['agent']}",
+                   "new_value": {"sources_used": targets[f"{sid}-{s['n']}"]}}
+                  for s in key["steps"] if f"{sid}-{s['n']}" not in {"S1-1", "S2-1"}]
+        counts = onyx_eval.key_clauses_shown(events, key)
+        assert counts["retrieval"] == counts["total"], sid
+        prompted += counts["total"]
+    assert prompted == 117
+    assert len(targets["S1-1"]) == len(targets["S2-1"]) == 3
+
+
+def test_retrieval_queries_are_the_scenario_text_within_the_agents_documents():
+    queries = {(q["step"], q["lang"]): q for q in retrieval.queries()}
+    assert len(queries) == 56  # 28 key steps, two languages
+    scenario = {s["n"]: s for s in data.load_scenario("S2")["steps"]}
+    for lang in ("en", "ar"):
+        assert queries[("S2-3", lang)]["text"] == scenario[3][f"text_{lang}"]
+    assert queries[("S2-6", "en")]["documents"] == data.load_mandates()["tdra"]["documents"]
+
+
+FIXTURE_TARGETS = {"S1-1": ["a", "b", "a"], "S2-1": ["c"]}
+FIXTURE_LISTS = {
+    "S1-1": {"en": ["a", "x", "b"], "ar": ["x", "x", "x", "x", "x", "x", "x", "x", "a"]},  # rank 9 is outside the top 8
+    "S2-1": {"en": ["x"], "ar": ["c"]},
+}
+
+
+def test_retrieval_recall_arithmetic_on_a_fixed_fixture():
+    scores = onyx_eval.retrieval_scores(FIXTURE_LISTS, FIXTURE_TARGETS)
+    assert (scores["by_scenario"]["S1"]["en"]["hits"], scores["by_scenario"]["S1"]["en"]["n"]) == (3, 3)  # a twice
+    assert (scores["by_scenario"]["S1"]["ar"]["hits"], scores["by_scenario"]["S1"]["ar"]["n"]) == (0, 3)
+    assert (scores["by_scenario"]["S2"]["ar"]["hits"], scores["by_scenario"]["S2"]["ar"]["n"]) == (1, 1)
+    assert (scores["recall_at_8"]["en"]["hits"], scores["recall_at_8"]["en"]["n"]) == (3, 4)
+    assert scores["recall_at_8"]["en"]["ci95"] == pytest.approx([0.3006, 0.9544], abs=0.0001)
+    assert (scores["recall_at_8"]["ar"]["hits"], scores["recall_at_8"]["pooled"]["hits"]) == (1, 4)
+    assert scores["recall_at_8"]["pooled"]["n"] == 8
+    assert scores["recall_at_1"]["en"]["hits"] == 2  # S1-1 ranks a first, and a is two entries
+    assert scores["recall_at_1"]["ar"]["hits"] == 1
+    assert scores["recall_at_1"]["pooled"]["hits"] == 3
+    assert scores["rank_1_ceiling"] == {"hits": 3, "n": 4}  # one chunk at rank 1 per step: a's two entries, then c
+
+
+def _measured_record():
+    lists = {step: {"en": list(chunks), "ar": []} for step, chunks in retrieval.targets().items()}
+    return {"inputs_sha256": retrieval.inputs_hash(), "k": 8, "shipped": {"embedder": "all-MiniLM-L6-v2", "lists": lists}}
+
+
+def test_bilingual_table_is_absent_not_wrong_when_the_index_is_missing(tmp_path, capsys):
+    record = tmp_path / "retrieval.json"
+    record.write_text(json.dumps(_measured_record()), encoding="utf-8")
+    before = record.read_bytes()
+    lines = retrieval.refresh(record, chroma_dir=tmp_path / "no-chroma", bilingual_dir=tmp_path / "no-index")
+    assert "bilingual index not built" in lines
+    assert record.read_bytes() == before and not (tmp_path / "no-index").exists() and not (tmp_path / "no-chroma").exists()
+    section = "\n".join(onyx_eval.retrieval_section(json.loads(before)))
+    assert "## Retrieval alone (no model, no mandate list)" in section
+    assert "Recall@8" in section
+    assert "not used in any scored run" not in section
+    assert "Bilingual" not in section
+
+
+def test_a_measurement_of_another_corpus_fails_closed():
+    stale = {**_measured_record(), "inputs_sha256": "0" * 64}
+    with pytest.raises(retrieval.StaleMeasurement):
+        onyx_eval.retrieval_section(stale)
+
+
+def test_a_built_index_is_measured_without_loading_the_encoder(tmp_path):
+    """Index built with a fake encoder; `eval`'s refresh reads vectors and query vectors from disk, so plain `uv run`
+    needs no sentence-transformers."""
+    embed = kb.HashEmbedding()
+    index = tmp_path / "index-bilingual"
+    retrieval.write_index(index, name="fake/encoder", revision="abc123", seconds=1.5,
+                          encode_passages=embed, encode_queries=embed)
+    record = tmp_path / "retrieval.json"
+    lines = retrieval.refresh(record, chroma_dir=tmp_path / "no-chroma", bilingual_dir=index)
+    assert "bilingual index not built" not in lines
+    measured = json.loads(record.read_text(encoding="utf-8"))["bilingual"]
+    assert (measured["embedder"], measured["revision"], measured["build_seconds"]) == ("fake/encoder", "abc123", 1.5)
+    assert set(measured["lists"]) == set(retrieval.targets())
+    assert all(len(ranked) == 8 for step in measured["lists"].values() for ranked in step.values())
