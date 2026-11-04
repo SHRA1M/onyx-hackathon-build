@@ -105,3 +105,7 @@ Every number the report, annex, README, datasheet and site state about the knowl
 | `tests/test_annex.py:123-125,141-150` | pins | 105, 98, 34, two announcements | 108, 100, 36, three |
 
 Not a knowledge-base number, left alone: `docs/report.md:122` "156 calls" (model calls, governed runs).
+
+## CI
+
+PR #14, https://github.com/SHRA1M/onyx-hackathon-build/pull/14. "reproduce" on commit `cc2d718`: passed on the push (run 41852945958, 1m35s) and on the pull request (run 41852958452). The PR is not merged.
