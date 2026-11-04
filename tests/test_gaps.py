@@ -413,8 +413,17 @@ def test_task_26_rows_1_and_2_name_the_clocks_and_4_9():
            "26.14.2); the transfer has none" in _row("gap-1")["gap"]
     assert _row("gap-1")["uae_position"].endswith("and a reference number is not a conversation.")
     assert "the PDPL permits the processing the contract needs without consent (4(9))" in _row("gap-2")["gap"]
-    assert "one spoken 'yes' buys the service and consents to nothing beyond it" in _row("gap-2")["gap"]
+    assert ("a spoken 'yes' buys the service once the channel's own safeguard is met (4.17.3, 4.22.3, 4.23.2 or 4.10) "
+            "and consents to nothing beyond it") in _row("gap-2")["gap"]  # hq, task-48-addendum-2, item 4
     assert "The processing the contract needs is lawful without consent (4(9))" in _row("gap-2")["uae_position"]
+
+
+def test_task_48_addendum_2_spoken_consent_is_to_the_purchase_not_a_flat_cover():
+    position = _row("gap-2")["uae_position"]
+    assert ("a spoken consent through the agent is consent to the purchase (4.7.2), not to a processing purpose beyond "
+            "the contract") in position
+    assert "covers the purchase" not in position
+    assert "one spoken 'yes'" not in _row("gap-2")["gap"]
 
 
 # --- order 2026-10-26 Task 27: gap-12, where an agent's authority ends (hq ruling task-27-stop-ruling-2026-10-26) ----
