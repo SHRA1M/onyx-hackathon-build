@@ -215,18 +215,82 @@ def test_annex_a_retrieval_sentence_carries_the_printed_key_clause_figures():
     pooled = json.loads((kb.REPO / "eval" / "results.json").read_text(encoding="utf-8"))["c5"]["key_clauses"]["pooled"]
     en, ar = pooled["en"], pooled["ar"]
     assert en["mandate"] == ar["mandate"] and en["total"] == ar["total"]
-    sentence = (
+    shown = (
         f"was shown. Over the scored runs, {en['shown']} of {en['total']} key clauses were in what the model was "
         f"shown in English and {ar['shown']} of {ar['total']} in Arabic; {en['mandate']} of {en['total']} came from "
         "the mandate list alone, which is the English-centred retriever at work, and why the mandate list comes "
-        f"first. Of the clauses absent at a step that still scored, {en['carried']} in English and {ar['carried']} "
+        "first.")
+    carried = (  # Task 47, hq ruling item 1 puts the "Retrieval alone" sentence between the two
+        f" Of the clauses absent at a step that still scored, {en['carried']} in English and {ar['carried']} "
         "in Arabic were carried by the gate's verdict in code; the rest sit on abstention steps, where the key names "
         "the clauses the gap is about and the adviser's act is to flag the gap, not to cite them, except two clauses "
         "at one Arabic step (S3-1) that the English run retrieved and the Arabic run did not.")
-    assert sentence in text
+    assert shown in text and carried in text and text.index(shown) < text.index(carried)
     md = " ".join((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8").split())
     for lang, cell in pooled.items():
         assert f"of the {cell['absent']} not shown at a step that scored, {cell['carried']} carried by the gate's verdict" in md
+
+
+def _retrieval_pooled() -> dict[tuple[str, str], str]:
+    """(embedder section, lang) -> the printed recall@8 share of the Pooled row in "Retrieval alone"."""
+    results = (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    section = results[results.index("## Retrieval alone"):results.index("## Tokens and cost")]
+    shipped, bilingual = section.split("### Bilingual embedder")
+    return {(name, lang): re.search(rf"^\| Pooled \| {lang} \| \d+ of \d+ \(([\d.]+)\) \|", text, re.M)[1]
+            for name, text in (("shipped", shipped), ("bilingual", bilingual)) for lang in ("en", "ar")}
+
+
+def test_annex_a_retrieval_alone_sentence_equals_the_printed_figures():
+    """Task 47, hq ruling task-47-stop-1-ruling-2026-11-04 item 1: hq's sentence, after "why the mandate list comes
+    first.", every number a printed value in eval/results.md."""
+    p = _retrieval_pooled()
+    assert (p["shipped", "en"], p["shipped", "ar"], p["bilingual", "en"], p["bilingual", "ar"]) == (
+        "0.24", "0.09", "0.24", "0.15")
+    sentence = (
+        "and why the mandate list comes first. Measured alone on the same key steps, with no model call and no mandate "
+        f"list, the shipped embedder finds {p['shipped', 'en']} of the key clauses in English and {p['shipped', 'ar']} "
+        "in Arabic at top 8; a bilingual embedder (multilingual-e5-small, in no scored run) finds "
+        f"{p['bilingual', 'en']} and {p['bilingual', 'ar']}, with overlapping Arabic intervals (`eval/results.md`, "
+        '"Retrieval alone"). Of the clauses absent')
+    assert sentence in " ".join(_annex().split())
+    results = (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    bilingual = results[results.index("### Bilingual embedder"):]
+    shipped_low, shipped_high = re.search(r"^\| Pooled \| ar \| [^|]+\| ([\d.]+) to ([\d.]+) \|", results[
+        results.index("### Shipped embedder"):], re.M).groups()
+    bilingual_low, bilingual_high = re.search(r"^\| Pooled \| ar \| [^|]+\| ([\d.]+) to ([\d.]+) \|", bilingual,
+                                              re.M).groups()
+    assert float(bilingual_low) <= float(shipped_high) and float(shipped_low) <= float(bilingual_high)
+
+
+def test_annex_a_no_longer_calls_a_bilingual_embedder_the_obvious_upgrade():
+    """Task 47, hq ruling item 2: the measurement does not support those words."""
+    text = " ".join(_annex().split())
+    assert "obvious upgrade" not in text and "its Arabic retrieval is weak" not in text
+    assert ("is an English sentence embedder; measured alone it is weak in both languages, and weaker in Arabic "
+            "(Retrieval below).") in text
+    assert ("A bilingual embedder is listed under next steps; the one measured before the freeze (Retrieval below) is "
+            "not a clear gain, so the upgrade is a larger model or a retrieval redesign, and neither was made before "
+            "the freeze because it would have meant re-recording the scored runs.") in text
+
+
+def test_the_results_method_lines_say_what_stays_open_and_the_annex_does_not():
+    """Task 47, hq ruling, "Accepted as built": one method line each; the annex carries neither."""
+    results = (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    assert "- retrieval alone, not diagnosed: why the figures of both embedders are low.\n" in results
+    assert ("- retrieval alone, not measured: `intfloat/multilingual-e5-base` and `BAAI/bge-m3`; the bilingual table is "
+            "`intfloat/multilingual-e5-small` only.\n") in results
+    assert "not diagnosed" not in _annex().lower() and "bge-m3" not in _annex() and "e5-base" not in _annex()
+
+
+def test_the_readme_names_the_measurement_and_carries_no_retrieval_number():
+    """Task 47, hq ruling item 3: one clause at the end of the Knowledge base evidence cell, no number."""
+    readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
+    row = next(l for l in readme.splitlines() if l.startswith("| Knowledge base |"))
+    evidence = row.split(" | ")[1]
+    assert evidence.endswith('; retrieval measured on its own, no model: `eval/results.md`, section "Retrieval alone"')
+    assert "## Retrieval alone" in (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    first_screen = readme[:readme.index("## Why")]
+    assert not re.search(r"\b0\.(24|09|15)\b", first_screen)
 
 
 def test_annex_f_quotes_are_the_registers_and_its_dates_are_iso():

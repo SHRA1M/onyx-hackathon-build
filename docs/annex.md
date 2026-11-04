@@ -18,11 +18,12 @@ run of S2 on qwen2.5:14b-instruct through Ollama on a desktop GPU is in `runs/de
 `docs/site/localmodel.html` and not scored.
 
 **Retrieval is English-centred, and the design allows for it.** `all-MiniLM-L6-v2` is an English sentence
-embedder; its Arabic retrieval is weak. Mizan does not rely on it for the clauses that matter: every agent's
+embedder; measured alone it is weak in both languages, and weaker in Arabic (Retrieval below). Mizan does not rely on it for the clauses that matter: every agent's
 mandate names the clauses its verbs depend on, and those chunks are placed in the prompt first, in both languages,
 before anything retrieval adds (see Retrieval below). That is why the Arabic runs score 1.00 action recall and 1.00
-citation validity (C5) with an English embedder. A bilingual embedder is the obvious upgrade and is listed under
-next steps; it was not swapped in before the freeze because it would have meant re-recording the scored runs.
+citation validity (C5) with an English embedder. A bilingual embedder is listed under next steps; the one measured before the freeze (Retrieval below) is not a
+clear gain, so the upgrade is a larger model or a retrieval redesign, and neither was made before the freeze
+because it would have meant re-recording the scored runs.
 
 **The documents.** 108 documents in `kb/manifest.csv`: 36 UAE instruments (laws, Cabinet resolutions, TDRA
 regulations and an enforcement decision, the two 2026 public licences, the DHA AI policy, the DoH standard and the UAE AI Charter, in English and Arabic where both are published) plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation),
@@ -62,7 +63,9 @@ the top 8. The clauses named in the agent's mandate are put first, then the retr
 both lists are written to the log (`sources_mandate`, `sources_used`), so a reviewer can see exactly what the model
 was shown. Over the scored runs, 186 of 234 key clauses were in what the model was shown in English and 166 of 234
 in Arabic; 160 of 234 came from the mandate list alone, which is the English-centred retriever at work, and why the
-mandate list comes first. Of the clauses absent at a step that still scored, 23 in English and 36 in Arabic were
+mandate list comes first. Measured alone on the same key steps, with no model call and no mandate list, the shipped embedder finds 0.24 of
+the key clauses in English and 0.09 in Arabic at top 8; a bilingual embedder (multilingual-e5-small, in no scored
+run) finds 0.24 and 0.15, with overlapping Arabic intervals (`eval/results.md`, "Retrieval alone"). Of the clauses absent at a step that still scored, 23 in English and 36 in Arabic were
 carried by the gate's verdict in code; the rest sit on abstention steps, where the key names the clauses the gap is
 about and the adviser's act is to flag the gap, not to cite them, except two clauses at one Arabic step (S3-1) that
 the English run retrieved and the Arabic run did not. The model never sees the keys, the rules file or another agent's inbox.

@@ -10,7 +10,7 @@ The five published criteria, each with its evidence and one way to check it:
 
 | Criterion | Evidence | How to check it |
 |---|---|---|
-| Knowledge base | `kb/manifest.csv` (108 rows, status, sha256, both languages); the downloadable copy `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md` | `uv run python -m onyx kb verify` prints the counts |
+| Knowledge base | `kb/manifest.csv` (108 rows, status, sha256, both languages); the downloadable copy `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md`; retrieval measured on its own, no model: `eval/results.md`, section "Retrieval alone" | `uv run python -m onyx kb verify` prints the counts |
 | Agent capability in error scenarios | `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key) | `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` explains one step from its log |
 | Policy, strategy and standards gaps | the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay | open `docs/gaps.md` |
 | Auditability | the committed hash-chained logs in `runs/`; `docs/report.pdf` | `uv run python -m onyx selftest` recomputes the report's figures from `runs/` |

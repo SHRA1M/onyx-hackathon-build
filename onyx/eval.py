@@ -797,6 +797,9 @@ def _retrieval_definitions(results: dict[str, Any]) -> list[str]:
         "- retrieval alone, record: the top-8 lists are in eval/retrieval.json. `eval` re-measures each index on disk; "
         "with no index (CI) it recomputes these figures from the lists, and fails if the chunks, queries or document "
         "scope changed.",
+        "- retrieval alone, not diagnosed: why the figures of both embedders are low.",
+        "- retrieval alone, not measured: `intfloat/multilingual-e5-base` and `BAAI/bge-m3`; the bilingual table is "
+        "`intfloat/multilingual-e5-small` only.",
     ]
 
 
