@@ -839,5 +839,29 @@
   "pair_of": "",
   "top": false,
   "strip": ""
+ },
+ "wam-2026-08-21-agentic-ai-guide": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/wam-2026-08-21-agentic-ai-guide.txt",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "agentic-ai-gov-guide-2026-08-21": {
+  "file": "",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
+ },
+ "doh-responsible-ai-standard-v1-2025": {
+  "file": "../../../engineering/onyx-hackathon-build/kb/sources/global/doh-responsible-ai-standard-v1-2025.pdf",
+  "text": "",
+  "splitter": "",
+  "pair_of": "",
+  "top": false,
+  "strip": ""
  }
 }

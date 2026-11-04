@@ -272,14 +272,14 @@ def test_the_eight_headings_keep_with_next(built):
 def test_the_readme_has_the_reviewer_block_under_the_synthetic_data_notice():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     notice = readme.index("> **Synthetic data.**")
-    block = readme.index("## For the reviewer\n\nThe four published criteria, each with its evidence and one way to "
+    block = readme.index("## For the reviewer\n\nThe five published criteria, each with its evidence and one way to "
                          "check it:")
     assert notice < block < readme.index("Mizan puts a consumer on the line")
     lines = readme[block:readme.index("Mizan puts a consumer on the line")].strip().splitlines()
     rows = [line for line in lines if line.startswith("| ") and not line.startswith("| Criterion")]  # Task 39 C
-    assert len(rows) == 4
+    assert len(rows) == 5  # Task 45: the gaps row split from the agent row
     assert rows[0].startswith(f"| Knowledge base | `kb/manifest.csv` ({len(kb.load_manifest())} rows")  # read, Task 30
-    assert rows[3].startswith("| ITU-T Y.3172 and the Readiness Framework |")
+    assert rows[4].startswith("| ITU-T Y.3172 and the Readiness Framework |")
 
 
 def test_the_reviewer_table_names_only_commands_and_paths_that_exist():
@@ -288,7 +288,7 @@ def test_the_reviewer_table_names_only_commands_and_paths_that_exist():
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     block = readme.split("## For the reviewer\n", 1)[1].split("Mizan puts a consumer on the line", 1)[0]
     rows = [line for line in block.splitlines() if line.startswith("| ") and not line.startswith("| Criterion")]
-    assert len(rows) == 4 and all(len(row.strip("|").split(" | ")) == 3 for row in rows)
+    assert len(rows) == 5 and all(len(row.strip("|").split(" | ")) == 3 for row in rows)
     helptext = subprocess.run([sys.executable, "-m", "onyx", "--help"], capture_output=True, text=True,
                               cwd=kb.REPO, check=True).stdout
     listed = set(re.findall(r"^    (\S+)\s", helptext, re.M))
@@ -384,9 +384,9 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 105 documents" in text and "98 are verified" in text and "thirty-eight foreign texts" in text  # Task 44
-    assert "thirty other UAE texts" in text  # 34 UAE instruments minus the four named (Task 40, counts Task 44)
-    assert "the 34 UAE instruments" in text
+    assert "holds 108 documents" in text and "100 are verified" in text and "thirty-eight foreign texts" in text  # Task 45
+    assert "thirty-two other UAE texts" in text  # 36 UAE instruments minus the four named (Task 40, counts Task 45)
+    assert "the 36 UAE instruments" in text
 
 
 @pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
@@ -394,10 +394,10 @@ def test_report_kb_counts_are_read_from_the_manifest():
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
-    right = {"holds 51 documents": "holds 105 documents", "47 are verified": "98 are verified",
+    right = {"holds 51 documents": "holds 108 documents", "47 are verified": "100 are verified",
              "nine foreign texts": "thirty-eight foreign texts", "twenty-two foreign texts": "thirty-eight foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 105 documents",
-             "fifteen other UAE texts": "thirty other UAE texts"}[wrong]
+             "**SRC-2** 51 documents": "**SRC-2** 108 documents",
+             "fifteen other UAE texts": "thirty-two other UAE texts"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
@@ -405,7 +405,7 @@ def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("98 are verified", "47 are verified"), encoding="utf-8")
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("100 are verified", "47 are verified"), encoding="utf-8")
     assert _load().main(["--md", str(md), "--out", str(tmp_path / "r.docx")]) == 1
     assert not (tmp_path / "r.docx").exists()
 

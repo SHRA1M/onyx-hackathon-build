@@ -187,8 +187,9 @@ def _is_44(entry: dict) -> bool:
 
 
 def _row_all(rid):
+    # Task 45 appends the same way: its lines (marked "chunked") are read whole in tests/test_task_45.py
     [row] = [r for r in ROWS if r["id"] == rid]
-    return row
+    return {**row, "searched": [s for s in row["searched"] if not s.get("chunked")]} if "searched" in row else row
 
 
 def _row_43(rid):
@@ -548,7 +549,7 @@ def test_gap_5_records_the_portal_check():
     assert _row("gap-5")["uae_position"].endswith(GAP_5_PORTAL)
     note = kb.manifest_by_id()["pdpl-executive-regulations"]["notes"]
     assert note == ("Not on the official portal as of 2026-10-30 (portal related-legislations checked). Portal checked 2026-11-02, both "
-                    "languages: Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal "
+                    "languages, and 2026-11-04 (Arabic regulations tab, Chrome from hq: «لم يتم العثور على أية بيانات»): Regulation Table of Decree-Law 45/2021 'No records found'; keyword search 'personal "
                     "data' / 'البيانات الشخصية' (27 / 29 results) lists no executive regulation of this Decree-Law; "
                     "sector list (12 / 14 instruments) has none."), "Task 41 item 1c appends the 2026-11-02 portal check"
 
@@ -1376,19 +1377,24 @@ TASK_43_EXAMPLES = {  # gap id: (file, clause, page), appended after every earli
 
 def test_task_43_rows_say_federal_where_they_mean_federal():
     phrase = "no published text maps the Electronic Transactions Art 33 trust levels to it"  # hq stop 2, answers 1, 2
-    assert _row_43("gap-3")["gap"].endswith(f"for a remote channel; {phrase} (portal and TDRA site checked 2026-11-02).")
+    assert _row_43("gap-3")["gap"].endswith(f"for a remote channel; {phrase} (portal and TDRA site checked 2026-11-02 and 2026-11-04).")
     assert f"| 3 | \"Adequate verification process\" (CPR 24.10) undefined for a remote channel; {phrase} |" in         (kb.REPO / "docs" / "report.md").read_text(encoding="utf-8")
     assert _row_43("gap-12")["gap"].count("such as CPR 26.7.2; ITU-T F.748.67 CRR-003") == 1  # Task 44 F2 and "the hand-over rate, the hand-over"         not in _row_43("gap-12")["gap"]  # answer 3: the tail is gone
     assert _row_43("gap-6")["uae_position"].endswith(
         "no binding federal text requires it. The non-binding AI Ethics guideline 3.3.2.2 is the only federal text that "
-        "says it; DIFC Regulation 10.2.2(a) does, for DIFC establishments only (UAE free zone, not federal).")
+        "says it; DIFC Regulation 10.2.2(a) does, for DIFC establishments only (UAE free zone, not federal); the DHA policy "
+        "4.3.2 (Dubai, 2021) requires disclosure of AI-enabled functions and the DoH standard 3.1.6.1.1 (Abu Dhabi, 2025) "
+        "requires telling patients when AI contributes to a decision, each within its own health regulator's scope only. "
+        "None reaches a telecom licensee.")  # hq ruling on Task 45 stop 1
     assert _row_43("gap-7")["note"].endswith("The federal texts have the general duty (CPR 3.3) and no AI-specific one.")
     assert "AI disclosure: no federal duty to tell a consumer" in _row_43("gap-6")["gap"]
     assert _row_43("gap-7")["gap"].startswith("No binding federal text sets conduct standards")
     assert _row_43("gap-7")["uae_position"].endswith(
-        "The DIFC Data Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) are the only UAE text of "
-        "any level that names notice, limits and intervention for an automated system, and they bind DIFC "
-        "establishments only.")
+        "Below the federal level, three UAE texts set such standards, each within its own scope only: the DIFC Data "
+        "Protection Regulations (Regulation 10, UAE free zone (DIFC), not federal) name notice, limits and intervention for "
+        "an automated system; the DHA policy 4.3.2 (Dubai, 2021) requires disclosure of AI-enabled functions; the DoH "
+        "standard 3.1.1.2.2 (Abu Dhabi, 2025) requires human oversight and escalation, with agents in scope. None reaches a "
+        "telecom licensee, and TDRA has no counterpart.")  # hq ruling on Task 45 stop 1
     g12 = _row_43("gap-12")
     assert ("neither text measures when an acting agent must stop or how long the hand-over takes; ITU-T F.746.16 11.2 "
             "measures how often (a manual intervention rate, graded so that less intervention scores a higher level, no "
@@ -1516,7 +1522,8 @@ LIVE_OUTPUT = ["onyx/data/gaps.json", "kb/manifest.csv", "kb/DATASHEET.md", "doc
 
 
 def _any_row(rid: str) -> dict:
-    return next(r for r in ROWS + data.load_gaps()["candidates"] if r["id"] == rid)
+    return _row_all(rid) if any(r["id"] == rid for r in ROWS) else next(
+        r for r in data.load_gaps()["candidates"] if r["id"] == rid)
 
 
 def test_task_44_filed_entries_are_appended_last_and_verbatim_on_their_pages():
