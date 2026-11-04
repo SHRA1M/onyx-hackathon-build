@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from onyx import audit, bakeoff, coordinator, data, eval, gaps, intent, kb, modeldown, replay_page, runs, selftest, site, whatif, why
+from onyx import audit, bakeoff, coordinator, data, eval, gaps, intent, kb, modeldown, replay_page, retrieval, runs, selftest, site, whatif, why
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -27,6 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
     modeldown.register(subparsers)
     site.register(subparsers)
     intent.register(subparsers)
+    retrieval.register(subparsers)
     return parser
 
 

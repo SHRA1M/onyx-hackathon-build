@@ -48,7 +48,7 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
-from onyx import audit, cost, data, gate
+from onyx import audit, cost, data, gate, retrieval
 from onyx.coordinator import _rules_by_chunk
 from onyx.runs import LANGS, RUNS, SCENARIOS, run_path
 
@@ -487,6 +487,8 @@ def evaluate(root: str | Path, out: str | Path) -> dict[str, Any]:
         results["c4"] = _c4(root, scored, kb, by_chunk)
     if (root / C5).exists():
         results["c5"] = _c5(root, kb, by_chunk)
+        if (record := retrieval.load_record()) is not None:
+            results["retrieval"] = retrieval_results(record)
     out.mkdir(parents=True, exist_ok=True)
     (out / "results.json").write_text(json.dumps(results, indent=1, sort_keys=True, ensure_ascii=False) + "\n",
                                       encoding="utf-8", newline="\n")
@@ -582,6 +584,81 @@ def _intervals(counts: dict[str, list[int]]) -> dict[str, Any]:
     counts = {**counts, "pooled": [sum(counts[lang][0] for lang in LANGS), sum(counts[lang][1] for lang in LANGS)]}
     return {k: {"hits": hits, "n": n, "ci95": [round(v, 4) for v in wilson(hits, n) or ()] or None}
             for k, (hits, n) in counts.items()}
+
+
+def retrieval_scores(lists: dict[str, dict[str, list[str]]], targets: dict[str, list[str]]) -> dict[str, Any]:
+    """Order Task 47: per scenario and language and pooled, the key clauses whose chunk is in the top 8; recall@1
+    pooled; rank_1_ceiling, the entries one chunk per step could place at rank 1 (a step's entries are many, rank 1 is
+    one chunk), per language."""
+    by_scenario: dict[str, dict[str, list[int]]] = {}
+    counts = {name: {lang: [0, 0] for lang in LANGS} for name in ("recall_at_8", "recall_at_1")}
+    for step, chunks in targets.items():
+        for lang in LANGS:
+            ranked = lists[step][lang]
+            top8 = sum(c in ranked[:8] for c in chunks)
+            cell = by_scenario.setdefault(step.split("-")[0], {lang: [0, 0] for lang in LANGS})[lang]
+            cell[0] += top8
+            cell[1] += len(chunks)
+            counts["recall_at_8"][lang][0] += top8
+            counts["recall_at_8"][lang][1] += len(chunks)
+            counts["recall_at_1"][lang][0] += sum(c in ranked[:1] for c in chunks)
+            counts["recall_at_1"][lang][1] += len(chunks)
+    return {"by_scenario": {sid: _intervals(cells) for sid, cells in by_scenario.items()},
+            **{name: _intervals(cells) for name, cells in counts.items()},
+            "rank_1_ceiling": {"hits": sum(max(chunks.count(c) for c in chunks) for chunks in targets.values()),
+                               "n": sum(len(chunks) for chunks in targets.values())}}
+
+
+def retrieval_results(record: dict[str, Any]) -> dict[str, Any]:
+    """The scored tables of a recorded measurement (eval/retrieval.json). Lists of other chunks, queries or document
+    scope fail here, before a figure is printed."""
+    if record["inputs_sha256"] != retrieval.inputs_hash():
+        raise retrieval.StaleMeasurement("eval/retrieval.json was measured on other chunks, queries or document scope: "
+                                         "run `uv run python -m onyx kb ingest`, then `uv run python -m onyx eval`, with "
+                                         "the bilingual index built")
+    targets = retrieval.targets()
+    return {"k": record["k"], "chunks": sum(1 for _ in retrieval.kb.iter_chunks()),
+            **{name: {**{k: v for k, v in record[name].items() if k != "lists"},
+                      "scores": retrieval_scores(record[name]["lists"], targets)}
+               for name in ("shipped", "bilingual") if name in record}}
+
+
+def _retrieval_table(scored: dict[str, Any]) -> list[str]:
+    scores = scored["scores"]
+    lines = ["| Scenario | Lang | Key clauses in the top 8 | 95% interval |", "|---|---|---|---|"]
+    lines += [f"| {sid} | {lang} | {_of(cells[lang]['hits'], cells[lang]['n'])} | {_interval(cells[lang], counts=False)} |"
+              for sid, cells in scores["by_scenario"].items() for lang in LANGS]
+    pooled = scores["recall_at_8"]
+    lines += [f"| Pooled | {lang} | {_of(pooled[key]['hits'], pooled[key]['n'])} | {_interval(pooled[key], counts=False)} |"
+              for lang, key in (("en", "en"), ("ar", "ar"), ("both", "pooled"))]
+    top1, ceiling = scores["recall_at_1"], scores["rank_1_ceiling"]
+    return lines + ["", "Recall@8 is the share in the third column. Recall@1 pooled: "
+                    f"en {_of(top1['en']['hits'], top1['en']['n'])}; ar {_of(top1['ar']['hits'], top1['ar']['n'])}; both "
+                    f"{_of(top1['pooled']['hits'], top1['pooled']['n'])}, 95% interval "
+                    f"{_interval(top1['pooled'], counts=False)}. One chunk fills rank 1, so at most "
+                    f"{_of(ceiling['hits'], ceiling['n'])} per language can reach it.", ""]
+
+
+def _retrieval_lines(results: dict[str, Any]) -> list[str]:
+    lines = ["## Retrieval alone (no model, no mandate list)", "",
+             "Shown only, never compared. No model call: each key step's text goes to the retriever and a key clause "
+             "counts when its chunk comes back in the top 8. The scored runs do not depend on retrieval alone because "
+             "the mandate list comes first (\"Key clauses shown\" above); these figures measure the retriever, not the "
+             "runs.", ""]
+    if shipped := results.get("shipped"):
+        lines += [f"### Shipped embedder: {shipped['embedder']}, the one in every scored run", "",
+                  *_retrieval_table(shipped)]
+    if bilingual := results.get("bilingual"):
+        build = f" Built by `{bilingual['command']}`." if bilingual.get("command") else ""
+        lines += [f"### Bilingual embedder, not used in any scored run: {bilingual['embedder']}, revision "
+                  f"{bilingual['revision']}", "",
+                  "Never compared with C5. The same chunks, queries and document scope, in a separate git-ignored index "
+                  f"(`kb/index-bilingual/`).{build}", "", *_retrieval_table(bilingual)]
+    return lines
+
+
+def retrieval_section(record: dict[str, Any]) -> list[str]:
+    return _retrieval_lines(retrieval_results(record))
 
 
 def _cell(span: dict[str, Any]) -> str:
@@ -703,6 +780,26 @@ C5_DEFINITIONS = [
 ]
 
 
+def _retrieval_definitions(results: dict[str, Any]) -> list[str]:
+    if "retrieval" not in results:
+        return []
+    return [
+        "- retrieval alone, query (shown only, never compared): for every key step with a must_cite list, S1-1 and S2-1 "
+        "included, the step's text from the scenario file, English and Arabic, within the documents the mandate lists "
+        "for the key's agent, top 8, without the mandate's clauses.",
+        "- retrieval alone, entries: each must_cite entry maps to its chunk as in key clauses shown, so two rules on one "
+        "chunk count twice; one query per step and language, so the unit is the entry, not a run.",
+        "- retrieval alone, against key clauses shown: a clause the mandate list also holds counts here and not under "
+        f"only by retrieval, and these figures read the {results['retrieval']['chunks']} chunks in kb/chunks today, not "
+        "the index each scored run was recorded on; neither is a score of a run.",
+        "- retrieval alone, interval: Wilson score, z = 1.96, as above; entries of one step share a query, so read it as "
+        "a rough width, not a guarantee.",
+        "- retrieval alone, record: the top-8 lists are in eval/retrieval.json. `eval` re-measures each index on disk; "
+        "with no index (CI) it recomputes these figures from the lists, and fails if the chunks, queries or document "
+        "scope changed.",
+    ]
+
+
 def _ids(ids: list[str] | dict[str, int], runs: int = 0) -> str:
     if isinstance(ids, dict):
         return ", ".join(f"{g} ({c} of {runs} runs)" for g, c in ids.items()) or "none"
@@ -736,7 +833,7 @@ def _c5_sections(results: dict[str, Any]) -> list[str]:
               f"{_steps(by_scenario[sid][lang]['handover_latency_steps'])} |"
               for sid in clauses["by_scenario"] for lang in LANGS]
     lines += ["", *[key_clauses_pooled(lang, clauses["pooled"][lang]) for lang in LANGS], ""]
-    return lines
+    return lines + (_retrieval_lines(results["retrieval"]) if "retrieval" in results else [])
 
 
 def _c4_lines(results: dict[str, Any]) -> list[str]:
@@ -859,13 +956,23 @@ def _markdown(results: dict[str, Any]) -> str:
     lines += ["## Definitions", "", *[line.strip() for line in __doc__.split("Metrics,", 1)[1].splitlines()[1:]
                                       if line.strip()]]
     lines += C5_DEFINITIONS if "c5" in results else []
+    lines += _retrieval_definitions(results)
     return "\n".join(lines) + "\n"
 
 
 def _cli(args) -> int:
+    live = (Path(args.runs) / C5).exists()
+    measured = retrieval.refresh() if live else []
     results = evaluate(args.runs, args.out)
     print(f"{results['runs_read']} runs read from {args.runs}; results in {args.out}/results.md and results.json "
           f"({'scripted' if results['scripted'] else ', '.join(results['models'])}).")
+    if live:
+        for name, missing in (("shipped", retrieval.SHIPPED_NOT_BUILT), ("bilingual", retrieval.NOT_BUILT)):
+            if missing in measured:
+                print(missing)
+            elif name in results.get("retrieval", {}):
+                print(f"Retrieval alone, {name}: {results['retrieval'][name]['embedder']}")
+                print("\n".join(_retrieval_table(results["retrieval"][name])))
     return 0 if results["all_chains_ok"] and results["all_keys_match"] else 1
 
 

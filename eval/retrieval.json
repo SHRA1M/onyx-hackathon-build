@@ -1,0 +1,1249 @@
+{
+ "bilingual": {
+  "build_seconds": 775.8,
+  "command": "uv run --with sentence-transformers==6.2.0 python -m onyx retrieval-index --model intfloat/multilingual-e5-small",
+  "embedder": "intfloat/multilingual-e5-small",
+  "lists": {
+   "S1-1": {
+    "ar": [
+     "tdra-cpr-v2-en:4.17",
+     "tdra-cpr-v2-en:4.22",
+     "tdra-cpr-v2-en:26.4.5",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:24.6",
+     "tdra-cpr-v2-en:2.1.7",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:4.22.3"
+    ],
+    "en": [
+     "consumer-law-15-2020-en:8(4)",
+     "tdra-cpr-v2-en:4.17",
+     "tdra-cpr-v2-en:26.7.1",
+     "etransactions-46-2021-en:10(1)",
+     "tdra-cpr-v2-en:26.4.5",
+     "tdra-cpr-v2-en:2.1.7",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:25.14.1"
+    ]
+   },
+   "S1-2": {
+    "ar": [
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:4.25.3",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:17.4.1"
+    ],
+    "en": [
+     "licence-2-2026:16.3.2",
+     "tdra-cpr-v2-en:26.14.1",
+     "spam-calls-v4-en:15.4",
+     "spam-calls-v4-en:9.5",
+     "tdra-cpr-v2-en:4.17",
+     "tdra-cpr-v2-en:13.6",
+     "spam-calls-v4-en:14.3",
+     "consumer-law-15-2020-en:8(4)"
+    ]
+   },
+   "S1-3": {
+    "ar": [
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:16.9.2",
+     "tdra-cpr-v2-en:4.7",
+     "tdra-cpr-v2-en:17.2",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:26.14.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:17.4",
+     "tdra-cpr-v2-en:16.9.2",
+     "tdra-cpr-v2-en:4.22.2",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:26.13.1",
+     "tdra-cpr-v2-en:17.2",
+     "tdra-cpr-v2-en:5.4.1"
+    ]
+   },
+   "S1-4": {
+    "ar": [
+     "tdra-cpr-v2-en:4.22.3",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:26.4.5"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.22.3",
+     "child-digital-safety-26-2025-en:11(1)",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:4.4.1",
+     "child-digital-safety-26-2025-en:7(1)",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.7.3"
+    ]
+   },
+   "S1-5": {
+    "ar": [
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:4.7",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:4.20.1",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:4.17"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:4.22.2",
+     "etransactions-46-2021-en:10(1)",
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:4.23.3",
+     "pdpl-45-2021-en:9(1)",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:4.7"
+    ]
+   },
+   "S1-6": {
+    "ar": [
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:4.4",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:24.6",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:13.8",
+     "tdra-cpr-v2-en:9.4.2"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.4",
+     "tdra-cpr-v2-en:9.4.2",
+     "spam-calls-v4-en:9.5",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:4.7",
+     "tdra-cpr-v2-en:13.8",
+     "child-digital-safety-26-2025-en:11(1)"
+    ]
+   },
+   "S2-1": {
+    "ar": [
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:4.23",
+     "tdra-cpr-v2-en:26.4.5",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:4.22.3",
+     "tdra-cpr-v2-en:4.17"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:2.1.7",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:4.17",
+     "cybercrimes-34-2021-en:48(1)",
+     "pdpl-45-2021-en:24(2)",
+     "consumer-law-15-2020-en:8(4)",
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:17.4.1"
+    ]
+   },
+   "S2-2": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "consumer-law-15-2020-en:29",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.11",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:4.20.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "etransactions-46-2021-en:33(1)",
+     "cabinet-66-2023-en:43(5)",
+     "child-digital-safety-26-2025-en:7(1)",
+     "consumer-law-15-2020-en:4(5)",
+     "etransactions-46-2021-en:12(4)",
+     "tdra-cpr-v2-en:22.5"
+    ]
+   },
+   "S2-3": {
+    "ar": [
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:26.13.1",
+     "tdra-cpr-v2-en:4.3",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:4.22.1"
+    ],
+    "en": [
+     "consumer-law-15-2020-en:4(5)",
+     "tdra-cpr-v2-en:28.11",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:13.6",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:22.1.2"
+    ]
+   },
+   "S2-4": {
+    "ar": [
+     "tdra-cpr-v2-en:4.22.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:24.10",
+     "tdra-cpr-v2-en:26.7.2",
+     "tdra-cpr-v2-en:4.7.3",
+     "decision-16-2026-ar:4.18"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:24.10",
+     "tdra-cpr-v2-en:4.6",
+     "spam-calls-v4-en:10.2",
+     "tdra-cpr-v2-en:4.4.2",
+     "etransactions-46-2021-en:13(5)",
+     "tdra-cpr-v2-en:4.7",
+     "telecom-law-3-2003-en:72(2)",
+     "tdra-cpr-v2-en:22.5"
+    ]
+   },
+   "S2-5": {
+    "ar": [
+     "tdra-cpr-v2-en:24.6",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:17.4.1",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:13.6"
+    ],
+    "en": [
+     "pdpl-45-2021-en:25",
+     "spam-calls-v4-en:14.3",
+     "pdpl-45-2021-en:17",
+     "child-digital-safety-26-2025-en:7(1)",
+     "pdpl-45-2021-en:18(2)",
+     "child-digital-safety-26-2025-en:10(1)",
+     "tdra-cpr-v2-en:24.6",
+     "spam-calls-v4-en:15.4"
+    ]
+   },
+   "S2-6": {
+    "ar": [
+     "tdra-cpr-v2-en:26.16.1",
+     "licence-2-2026:9.2.4",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:26.13.2",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:2.1.7",
+     "tdra-cpr-v2-en:25.14.1",
+     "tdra-cpr-v2-en:26.14.1"
+    ],
+    "en": [
+     "licence-2-2026:9.2.4",
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.13.2",
+     "tdra-cpr-v2-en:26.2",
+     "licence-2-2026:16.3.3",
+     "tdra-cpr-v2-en:26.13.3",
+     "licence-2-2026:9.4.3"
+    ]
+   },
+   "S3-1": {
+    "ar": [
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:24.7",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:28.11",
+     "tdra-cpr-v2-en:28.25",
+     "tdra-cpr-v2-en:26.7.2"
+    ],
+    "en": [
+     "consumer-law-15-2020-en:4(5)",
+     "cybercrimes-34-2021-en:48(1)",
+     "tdra-cpr-v2-en:24.7",
+     "pdpl-45-2021-en:23(1)",
+     "child-digital-safety-26-2025-en:7(1)",
+     "pdpl-45-2021-en:17",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:22.1.2"
+    ]
+   },
+   "S3-2": {
+    "ar": [
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:24.6",
+     "tdra-cpr-v2-en:28.26",
+     "tdra-cpr-v2-en:4.20.1",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:2.1.7"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:22.4",
+     "etransactions-46-2021-en:10(1)",
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:26.14.1",
+     "cabinet-57-2024-en:7",
+     "tdra-cpr-v2-en:28.26",
+     "spam-calls-v4-en:10.2"
+    ]
+   },
+   "S3-3": {
+    "ar": [
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:4.20.1",
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:4.10",
+     "tdra-cpr-v2-en:4.11",
+     "tdra-cpr-v2-en:3.2.2"
+    ],
+    "en": [
+     "pdpl-45-2021-en:23(1)",
+     "pdpl-45-2021-en:22",
+     "etransactions-46-2021-en:33(1)",
+     "tdra-cpr-v2-en:22.5",
+     "child-digital-safety-26-2025-en:10(1)",
+     "pdpl-45-2021-en:22(1)",
+     "etransactions-46-2021-en:10(1)",
+     "child-digital-safety-26-2025-en:7(1)"
+    ]
+   },
+   "S3-4": {
+    "ar": [
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:24.10"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.4.2",
+     "consumer-law-15-2020-en:4(5)",
+     "tdra-cpr-v2-en:26.7.1",
+     "pdpl-45-2021-en:13(1)",
+     "telecom-law-3-2003-en:72(2)",
+     "spam-calls-v4-en:10.2",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:24.10"
+    ]
+   },
+   "S3-5": {
+    "ar": [
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:17.2",
+     "tdra-cpr-v2-en:24.6",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.17",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:22.4"
+    ],
+    "en": [
+     "etransactions-46-2021-en:10(1)",
+     "cabinet-57-2024-en:7",
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:17.4.1",
+     "cabinet-56-2024-en:5(7)",
+     "spam-calls-v4-en:10.2",
+     "tdra-cpr-v2-en:4.22.2",
+     "tdra-cpr-v2-en:4.17"
+    ]
+   },
+   "S4-1": {
+    "ar": [
+     "tdra-cpr-v2-en:17.4.1",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:13.6",
+     "tdra-cpr-v2-en:16.9.2"
+    ],
+    "en": [
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:13.6",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:22.4",
+     "cabinet-66-2023-en:43(5)",
+     "tdra-cpr-v2-en:26.14.2",
+     "cabinet-57-2024-en:7"
+    ]
+   },
+   "S4-2": {
+    "ar": [
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:24.10",
+     "tdra-cpr-v2-en:4.25.3"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:22.1.1",
+     "pdpl-45-2021-en:9(2)",
+     "tdra-cpr-v2-en:26.7.1",
+     "spam-calls-v4-en:9.5",
+     "spam-calls-v4-en:14.3",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:26.13.3",
+     "cabinet-66-2023-en:34(1)"
+    ]
+   },
+   "S4-3": {
+    "ar": [
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:4.17",
+     "tdra-cpr-v2-en:22.3",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:4.3",
+     "tdra-cpr-v2-en:4.10"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:22.3",
+     "tdra-cpr-v2-en:22.4",
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:13.6",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:22.2",
+     "tdra-cpr-v2-en:22.1.2",
+     "spam-calls-v4-en:10.2"
+    ]
+   },
+   "S4-4": {
+    "ar": [
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:4.3",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.14.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.13.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:25.14.1",
+     "cabinet-66-2023-en:34(3)",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:22.1.1",
+     "licence-2-2026:9.2.4",
+     "pdpl-45-2021-en:9(2)"
+    ]
+   },
+   "S4-5": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.4",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:13.8",
+     "tdra-cpr-v2-en:4.3",
+     "tdra-cpr-v2-en:22.1.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.4",
+     "pdpl-45-2021-en:9(1)",
+     "spam-calls-v4-en:9.5",
+     "pdpl-45-2021-en:18(4)",
+     "tdra-cpr-v2-en:4.7",
+     "licence-2-2026:3.4.1",
+     "pdpl-45-2021-en:9(2)",
+     "pdpl-45-2021-en:23(2)"
+    ]
+   },
+   "S5-1": {
+    "ar": [
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:2.1.7",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:4.7.3",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:24.6"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.16.1",
+     "licence-2-2026:9.2.4",
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:26.2",
+     "qos-v3-en:9.5",
+     "tdra-cpr-v2-en:26.13.2"
+    ]
+   },
+   "S5-2": {
+    "ar": [
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:25.14.1",
+     "tdra-cpr-v2-en:2.1.7",
+     "tdra-cpr-v2-en:3.9"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.11",
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:22.5"
+    ]
+   },
+   "S5-3": {
+    "ar": [
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:22.1.1",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.22.4",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:5.4.1",
+     "tdra-cpr-v2-en:4.25.3"
+    ],
+    "en": [
+     "consumer-law-15-2020-en:4(5)",
+     "telecom-law-3-2003-en:72(2)",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:17.4.1",
+     "spam-calls-v4-en:15.4",
+     "spam-calls-v4-en:14.3",
+     "tdra-cpr-v2-en:26.13.3",
+     "spam-calls-v4-en:9.5"
+    ]
+   },
+   "S5-4": {
+    "ar": [
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:24.10",
+     "tdra-cpr-v2-en:24.7",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:24.6",
+     "tdra-cpr-v2-en:13.8"
+    ],
+    "en": [
+     "spam-calls-v4-en:14.3",
+     "spam-calls-v4-en:10.2",
+     "spam-calls-v4-en:9.5",
+     "spam-calls-v4-en:3.3",
+     "etransactions-46-2021-en:33(1)",
+     "tdra-cpr-v2-en:20.11.1",
+     "spam-calls-v4-en:15.4",
+     "etransactions-46-2021-en:12(4)"
+    ]
+   },
+   "S5-5": {
+    "ar": [
+     "tdra-cpr-v2-en:20.11.1",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.17.3"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:4.17.1",
+     "pdpl-45-2021-en:9(2)",
+     "pdpl-45-2021-en:9(1)",
+     "pdpl-45-2021-en:11(1)",
+     "tdra-cpr-v2-en:5.3",
+     "etransactions-46-2021-en:10(1)",
+     "tdra-cpr-v2-en:24.10"
+    ]
+   },
+   "S5-6": {
+    "ar": [
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:26.13.3",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:3.9",
+     "tdra-cpr-v2-en:2.1.7",
+     "licence-2-2026:9.2.4",
+     "tdra-cpr-v2-en:4.17.3"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.16.1",
+     "licence-2-2026:9.2.4",
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:26.13.2",
+     "licence-2-2026:16.3.3"
+    ]
+   }
+  },
+  "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3"
+ },
+ "inputs_sha256": "1586a7c53a0a6d67999ea50dde92dd9784380c107c61eebc3e7d1c607b657987",
+ "k": 8,
+ "shipped": {
+  "embedder": "all-MiniLM-L6-v2",
+  "lists": {
+   "S1-1": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:26.13.3"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:5.4.1",
+     "cabinet-56-2024-en:5(7)",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:4.22.3",
+     "tdra-cpr-v2-en:26.4.5",
+     "tdra-cpr-v2-en:4.22.4",
+     "tdra-cpr-v2-en:4.17.1"
+    ]
+   },
+   "S1-2": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:4.22.2"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.17",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:4.23",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:4.25.3",
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:4.4.1"
+    ]
+   },
+   "S1-3": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.22.2",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:3.2.2"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:17.4",
+     "tdra-cpr-v2-en:5.4.1",
+     "tdra-cpr-v2-en:4.22.4",
+     "tdra-cpr-v2-en:26.13.1",
+     "tdra-cpr-v2-en:4.22.2",
+     "cabinet-56-2024-en:5(7)",
+     "tdra-cpr-v2-en:26.4.5"
+    ]
+   },
+   "S1-4": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "consumer-law-15-2020-en:26",
+     "tdra-cpr-v2-en:3.2.2",
+     "licence-2-2026:16.7",
+     "tdra-cpr-v2-en:4.17.1",
+     "consumer-law-15-2020-en:8(4)"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.22.3",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:25.14.1",
+     "tdra-cpr-v2-en:4.22.2",
+     "pdpl-45-2021-en:18(4)",
+     "tdra-cpr-v2-en:4.17.1",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:17.2"
+    ]
+   },
+   "S1-5": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.17.1",
+     "licence-2-2026:16.7",
+     "tdra-cpr-v2-en:4.4.1",
+     "consumer-law-15-2020-en:8(4)",
+     "tdra-cpr-v2-en:22.1.1"
+    ],
+    "en": [
+     "etransactions-46-2021-en:10(1)",
+     "tdra-cpr-v2-en:4.22.2",
+     "etransactions-46-2021-en:28(1)",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:4.17.3",
+     "etransactions-46-2021-en:33(4)",
+     "tdra-cpr-v2-en:4.17.1",
+     "cabinet-57-2024-en:7"
+    ]
+   },
+   "S1-6": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.7.3",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.6",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:13.4",
+     "tdra-cpr-v2-en:9.4.2"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.3",
+     "tdra-cpr-v2-en:4.4",
+     "tdra-cpr-v2-en:16.9.2",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:13.6",
+     "tdra-cpr-v2-en:4.25.3",
+     "tdra-cpr-v2-en:22.2"
+    ]
+   },
+   "S2-1": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:3.2.2"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.17.1",
+     "cabinet-56-2024-en:5(7)",
+     "tdra-cpr-v2-en:22.1.1",
+     "spam-calls-v4-en:3.3",
+     "tdra-cpr-v2-en:4.22.4",
+     "tdra-cpr-v2-en:26.14.1"
+    ]
+   },
+   "S2-2": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:22.5",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:26.13.3",
+     "consumer-law-15-2020-en:8(4)"
+    ],
+    "en": [
+     "cabinet-66-2023-en:43(5)",
+     "tdra-cpr-v2-en:22.2",
+     "tdra-cpr-v2-en:17.2",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:17.4",
+     "tdra-cpr-v2-en:4.23.2"
+    ]
+   },
+   "S2-3": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:22.1.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:28.26",
+     "tdra-cpr-v2-en:5.4.1",
+     "tdra-cpr-v2-en:16.9.2",
+     "tdra-cpr-v2-en:4.3",
+     "tdra-cpr-v2-en:4.22.3",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:26.13.1"
+    ]
+   },
+   "S2-4": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:22.5"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.7.2",
+     "tdra-cpr-v2-en:16.9.2",
+     "cabinet-66-2023-en:43(5)",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:26.14.1",
+     "pdpl-45-2021-en:24(1)",
+     "tdra-cpr-v2-en:4.3",
+     "tdra-cpr-v2-en:13.6"
+    ]
+   },
+   "S2-5": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.23",
+     "tdra-cpr-v2-en:13.4",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.7.3"
+    ],
+    "en": [
+     "pdpl-45-2021-en:25",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:26.7.2",
+     "tdra-cpr-v2-en:4.7.2",
+     "pdpl-45-2021-en:17",
+     "tdra-cpr-v2-en:13.8",
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:26.13.3"
+    ]
+   },
+   "S2-6": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:4.23.2",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.7.1"
+    ],
+    "en": [
+     "licence-2-2026:9.2.4",
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:26.13.2",
+     "qos-v3-en:9.5",
+     "tdra-cpr-v2-en:26.2"
+    ]
+   },
+   "S3-1": {
+    "ar": [
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:22.1.1"
+    ],
+    "en": [
+     "cybercrimes-34-2021-en:48(1)",
+     "consumer-law-15-2020-en:4(5)",
+     "cabinet-56-2024-en:5(7)",
+     "tdra-cpr-v2-en:4.22.2",
+     "tdra-cpr-v2-en:24.7",
+     "tdra-cpr-v2-en:28.25",
+     "tdra-cpr-v2-en:28.11",
+     "tdra-cpr-v2-en:28.26"
+    ]
+   },
+   "S3-2": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.23.2",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.23",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:26.2",
+     "tdra-cpr-v2-en:4.7.3"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:17.4.1",
+     "cabinet-57-2024-en:7",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:26.14.1",
+     "spam-calls-v4-en:3.3",
+     "tdra-cpr-v2-en:28.11",
+     "tdra-cpr-v2-en:26.13.3"
+    ]
+   },
+   "S3-3": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:13.4",
+     "tdra-cpr-v2-en:4.23.2",
+     "tdra-cpr-v2-en:4.6"
+    ],
+    "en": [
+     "pdpl-45-2021-en:22",
+     "pdpl-45-2021-en:23(1)",
+     "pdpl-45-2021-en:23(2)",
+     "pdpl-45-2021-en:12(2)",
+     "tdra-cpr-v2-en:4.7",
+     "pdpl-45-2021-en:22(1)",
+     "tdra-cpr-v2-en:4.4.1",
+     "tdra-cpr-v2-en:17.4"
+    ]
+   },
+   "S3-4": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:22.1.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.13.3",
+     "pdpl-45-2021-en:18(4)",
+     "pdpl-45-2021-en:8(1)",
+     "pdpl-45-2021-en:24(2)",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:24.11",
+     "pdpl-45-2021-en:13(2)",
+     "pdpl-45-2021-en:4(9)"
+    ]
+   },
+   "S3-5": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.22.2",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:28.11",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:26.14.1"
+    ],
+    "en": [
+     "spam-calls-v4-en:15.4",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:22.2",
+     "tdra-cpr-v2-en:17.2",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:17.4.1",
+     "tdra-cpr-v2-en:9.4.2",
+     "cabinet-56-2024-en:5(7)"
+    ]
+   },
+   "S4-1": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.23"
+    ],
+    "en": [
+     "cabinet-66-2023-en:43(5)",
+     "tdra-cpr-v2-en:13.6",
+     "tdra-cpr-v2-en:22.2",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:13.4"
+    ]
+   },
+   "S4-2": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.22.2",
+     "tdra-cpr-v2-en:26.7.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:24.10",
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:26.13.2",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:4.17.3"
+    ]
+   },
+   "S4-3": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:4.17.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:22.2",
+     "tdra-cpr-v2-en:22.4",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:13.6",
+     "tdra-cpr-v2-en:4.17",
+     "tdra-cpr-v2-en:5.4.1",
+     "tdra-cpr-v2-en:9.4.2"
+    ]
+   },
+   "S4-4": {
+    "ar": [
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:9.4.2",
+     "tdra-cpr-v2-en:4.23"
+    ],
+    "en": [
+     "pdpl-45-2021-en:24(1)",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:26.6",
+     "tdra-cpr-v2-en:26.2",
+     "tdra-cpr-v2-en:26.14.2",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:4.23.2",
+     "tdra-cpr-v2-en:24.10"
+    ]
+   },
+   "S4-5": {
+    "ar": [
+     "decision-16-2026-ar:4.18",
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:4.7.3",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.7.1",
+     "tdra-cpr-v2-en:26.13.3"
+    ],
+    "en": [
+     "pdpl-45-2021-en:18(4)",
+     "pdpl-45-2021-en:8(11)",
+     "pdpl-45-2021-en:24(2)",
+     "pdpl-45-2021-en:7(5)",
+     "pdpl-45-2021-en:4(9)",
+     "pdpl-45-2021-en:23(2)",
+     "pdpl-45-2021-en:24(1)",
+     "pdpl-45-2021-en:8(1)"
+    ]
+   },
+   "S5-1": {
+    "ar": [
+     "tdra-cpr-v2-en:2.1.7",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:4.23.2",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:4.23.3",
+     "tdra-cpr-v2-en:4.22.2"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.16.1",
+     "tdra-cpr-v2-en:26.11",
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.2",
+     "tdra-cpr-v2-en:26.14.1",
+     "tdra-cpr-v2-en:26.13.3",
+     "licence-2-2026:9.2.4",
+     "tdra-cpr-v2-en:26.13.2"
+    ]
+   },
+   "S5-2": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:26.13.3",
+     "tdra-cpr-v2-en:4.17.1"
+    ],
+    "en": [
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:24.11",
+     "tdra-cpr-v2-en:26.16.1",
+     "licence-2-2026:3.4.1",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:22.1.2",
+     "tdra-cpr-v2-en:26.7.1"
+    ]
+   },
+   "S5-3": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:26.13.3"
+    ],
+    "en": [
+     "spam-calls-v4-en:15.4",
+     "cabinet-57-2024-en:7",
+     "cabinet-56-2024-en:4",
+     "telecom-law-3-2003-en:72(2)",
+     "consumer-law-15-2020-en:4(5)",
+     "tdra-cpr-v2-en:17.4",
+     "cabinet-56-2024-en:5(7)",
+     "spam-calls-v4-en:3.3"
+    ]
+   },
+   "S5-4": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:22.1.1",
+     "tdra-cpr-v2-en:3.2.2",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:26.7.1"
+    ],
+    "en": [
+     "spam-calls-v4-en:14.3",
+     "telecom-law-3-2003-en:72(2)",
+     "cabinet-56-2024-en:4",
+     "spam-calls-v4-en:3.3",
+     "spam-calls-v4-en:15.4",
+     "spam-calls-v4-en:10.2",
+     "cabinet-57-2024-en:7",
+     "tdra-cpr-v2-en:4.17"
+    ]
+   },
+   "S5-5": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "tdra-cpr-v2-en:4.4.2",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:22.5",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:22.1.1"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:20.11.1",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:26.7.2",
+     "tdra-cpr-v2-en:24.10",
+     "tdra-cpr-v2-en:4.22.4",
+     "tdra-cpr-v2-en:4.17.3",
+     "tdra-cpr-v2-en:26.13.1",
+     "tdra-cpr-v2-en:26.13.2"
+    ]
+   },
+   "S5-6": {
+    "ar": [
+     "decision-16-2026-ar:4.17",
+     "decision-16-2026-ar:4.18",
+     "tdra-cpr-v2-en:4.4.2",
+     "tdra-cpr-v2-en:4.4.3",
+     "tdra-cpr-v2-en:3.2.2",
+     "tdra-cpr-v2-en:4.17.1",
+     "tdra-cpr-v2-en:26.7.1",
+     "tdra-cpr-v2-en:22.5"
+    ],
+    "en": [
+     "tdra-cpr-v2-en:26.16.1",
+     "licence-2-2026:9.3",
+     "tdra-cpr-v2-en:26.11",
+     "tdra-cpr-v2-en:26.13.3",
+     "licence-2-2026:9.2.4",
+     "tdra-cpr-v2-en:24.11",
+     "tdra-cpr-v2-en:26.2",
+     "tdra-cpr-v2-en:26.13.2"
+    ]
+   }
+  }
+ }
+}
