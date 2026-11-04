@@ -88,3 +88,9 @@ Owner of any failure: Iyas.
 .............................                                            [100%]
 749 passed in 182.67s (0:03:02)
 ```
+
+## PR and CI
+
+PR #16, https://github.com/SHRA1M/onyx-hackathon-build/pull/16, open and mergeable, not merged. CI "reproduce" on `117e084`:
+success on the pull request (run 41878859632). Its log: "725 passed, 24 skipped" and "bilingual index not built". The runs
+queued on GitHub for several minutes first. This entry adds only these lines to this file.
