@@ -22,7 +22,7 @@ Plainly: the replay page's line now says what each check covers, and gap 2 no lo
 | 3 | Page script | PASS: `pages: 5`, `words: 2379`, `annex starts on page: 6`, `total pages: 12`, `total words: 6943`. `docs/report.docx` did not change on rebuild. `docs/report.pdf` as committed: 12 pages; page 5 holds "Limits and next steps" and ends with its paragraph ("...further gaps and candidates."); page 6 opens "Annex" |
 | 4 | `git diff --stat` | Below. Nothing under `kb/`, `onyx/data/keys/`, `runs/` or `onyx/prompts/`; `onyx/gate.py` and the mandates untouched |
 | 5 | The three texts as they stand | Below |
-| 6 | CI "reproduce" on the new head | Not yet run when this commit was written; the run id follows in the next commit to this file |
+| 6 | CI "reproduce" on the new head | PASS on `ca4957a`: run 41915274765 (push) and run 41915290212 (pull_request), success; "732 passed, 24 skipped"; "228 logs: chain ok". The commit after it adds only this result to this file |
 
 Not run, not merged: CI on main; the README diagram on GitHub. Both are after-merge checks, as in the ruling.
 
