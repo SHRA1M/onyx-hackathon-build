@@ -110,3 +110,24 @@ PR #15, https://github.com/SHRA1M/onyx-hackathon-build/pull/15. CI "reproduce" o
 (run 41873930881) and on the push (run 41873916567). The pull request run's log: "708 passed, 24 skipped" and "bilingual
 index not built", so CI recomputed both tables from `eval/retrieval.json` and no byte differed. This entry adds only
 these lines to this file.
+
+## Limits line and full test output
+
+Touched only the files this order and ruling name, plus the tests and report-back they require; never `runs/` or the keys. Fails closed: USD 0, nothing recorded, nothing sent outward, stop and ask. Owner of any failure: Iyas.
+
+`uv run pytest -q`, added at the wrap, on the commit holding the CI entry above:
+
+```
+........................................................................ [  9%]
+........................................................................ [ 19%]
+........................................................................ [ 29%]
+........................................................................ [ 39%]
+........................................................................ [ 49%]
+........................................................................ [ 59%]
+........................................................................ [ 68%]
+........................................................................ [ 78%]
+........................................................................ [ 88%]
+........................................................................ [ 98%]
+............                                                             [100%]
+732 passed in 181.85s (0:03:01)
+```
