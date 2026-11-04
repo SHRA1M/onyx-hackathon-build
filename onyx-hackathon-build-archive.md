@@ -700,3 +700,16 @@ PR #16 had merged (`43d1e67`). Filed the Task 48 order and built items 1 and 3 t
 Audit of 43d1e67, read-only, in a temporary worktree since removed: 749 passed (727 and 22 skipped with no local sources; CI 725 and 24, gap of 2 not diagnosed); selftest passed; retrieval figures equal in `eval/results.md` and Annex A; the diagram rendered on GitHub on two loads. Competitor names not checked. The worktree's `uv sync` timed out on a download, so the tests ran on this repo's `.venv` with `PYTHONPATH` set to the worktree.
 
 Superseded at this wrap: "Iyas merges the Task 46 PR" as next action; the Task 46 open line ("PR open").
+
+## 2026-11-04: Task 48 stop 1 ruling and two addenda built; replay line held
+
+Built hq's stop 1 ruling on `task-48`: gap 2 now says the safeguard follows the channel, four `searched` lines (CPR 4.7.1, 4.17.3, 4.22.3, 4.23.2), the shorter GitHub label (the line no longer wraps), and the claim corrected in the replay line, report and annex. Quote addendum: the 52/2024 Art 2(2) Arabic now reads as printed, with one named test exception (`PRINTED_NOT_TEXT_LAYER`). Addendum 2: both exceptions of CPR 4.10, and the `check-data` message narrowed to what it reads.
+
+Found: `check-data` does not read gap quotes; two tests compare them; hq accepted the departure. CI's 2 extra skips come from `test_extract_body_is_the_hq_checked_file`, which needs the hq folder (read from the skip conditions; fits 22 + 2 = 24; CI prints no names).
+
+Stopped at addendum 2 item 2: the ordered replay line says the gate checks the agent's quotes on each proposal, but the page shows 65 ungoverned proposals, 60 with a quote, that passed through `allow_all`. In the governed runs, 65 proposals all have gate events; of 59 shown quotes, 1 (S4 Arabic `draft_reply`) ended at "not retrieved" before the quote check and was not allowed. Candidate wording in `docs/report-back/2026-11-04-task-48-addendum-2-stop.md`. Report-backs: `2026-11-04-task-48-stop-1-built.md` and that file.
+
+CI: run 41907213578 on `b519176`, run 41911323863 on `10165d4`, both success. 755 tests. Report 5 pages, 12 in all. Not merged; CI on main and the README diagram not run.
+
+Superseded at this wrap: "Task 48: items 1, 3 to 7 in, gap 2 held, three questions for hq" as the open line; "Iyas takes the Task 48 stop file to hq" as next action; the "every quote verbatim" `check-data` message; "the gap of 2 is not diagnosed".
+
