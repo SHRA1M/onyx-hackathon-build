@@ -189,6 +189,52 @@ Shown only, never compared. Over the C5 runs of each scenario and language: the 
 Pooled en: 186 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 26 of 234 (0.11) only by retrieval; of the 43 not shown at a step that scored, 23 carried by the gate's verdict.
 Pooled ar: 166 of 234 key clauses shown; 160 of 234 (0.68) by the mandate list; 6 of 234 (0.03) only by retrieval; of the 68 not shown at a step that scored, 36 carried by the gate's verdict.
 
+## Retrieval alone (no model, no mandate list)
+
+Shown only, never compared. No model call: each key step's text goes to the retriever and a key clause counts when its chunk comes back in the top 8. The scored runs do not depend on retrieval alone because the mandate list comes first ("Key clauses shown" above); these figures measure the retriever, not the runs.
+
+### Shipped embedder: all-MiniLM-L6-v2, the one in every scored run
+
+| Scenario | Lang | Key clauses in the top 8 | 95% interval |
+|---|---|---|---|
+| S1 | en | 4 of 27 (0.15) | 0.06 to 0.32 |
+| S1 | ar | 1 of 27 (0.04) | 0.01 to 0.18 |
+| S2 | en | 4 of 26 (0.15) | 0.06 to 0.34 |
+| S2 | ar | 4 of 26 (0.15) | 0.06 to 0.34 |
+| S3 | en | 8 of 27 (0.30) | 0.16 to 0.48 |
+| S3 | ar | 0 of 27 (0.00) | 0.00 to 0.12 |
+| S4 | en | 6 of 27 (0.22) | 0.11 to 0.41 |
+| S4 | ar | 1 of 27 (0.04) | 0.01 to 0.18 |
+| S5 | en | 7 of 16 (0.44) | 0.23 to 0.67 |
+| S5 | ar | 5 of 16 (0.31) | 0.14 to 0.56 |
+| Pooled | en | 29 of 123 (0.24) | 0.17 to 0.32 |
+| Pooled | ar | 11 of 123 (0.09) | 0.05 to 0.15 |
+| Pooled | both | 40 of 246 (0.16) | 0.12 to 0.21 |
+
+Recall@8 is the share in the third column. Recall@1 pooled: en 11 of 123 (0.09); ar 3 of 123 (0.02); both 14 of 246 (0.06), 95% interval 0.03 to 0.09. One chunk fills rank 1, so at most 30 of 123 (0.24) per language can reach it.
+
+### Bilingual embedder, not used in any scored run: intfloat/multilingual-e5-small, revision 614241f622f53c4eeff9890bdc4f31cfecc418b3
+
+Never compared with C5. The same chunks, queries and document scope, in a separate git-ignored index (`kb/index-bilingual/`). Built by `uv run --with sentence-transformers==6.2.0 python -m onyx retrieval-index --model intfloat/multilingual-e5-small`.
+
+| Scenario | Lang | Key clauses in the top 8 | 95% interval |
+|---|---|---|---|
+| S1 | en | 3 of 27 (0.11) | 0.04 to 0.28 |
+| S1 | ar | 2 of 27 (0.07) | 0.02 to 0.23 |
+| S2 | en | 3 of 26 (0.12) | 0.04 to 0.29 |
+| S2 | ar | 4 of 26 (0.15) | 0.06 to 0.34 |
+| S3 | en | 9 of 27 (0.33) | 0.19 to 0.52 |
+| S3 | ar | 1 of 27 (0.04) | 0.01 to 0.18 |
+| S4 | en | 7 of 27 (0.26) | 0.13 to 0.45 |
+| S4 | ar | 2 of 27 (0.07) | 0.02 to 0.23 |
+| S5 | en | 8 of 16 (0.50) | 0.28 to 0.72 |
+| S5 | ar | 9 of 16 (0.56) | 0.33 to 0.77 |
+| Pooled | en | 30 of 123 (0.24) | 0.18 to 0.33 |
+| Pooled | ar | 18 of 123 (0.15) | 0.09 to 0.22 |
+| Pooled | both | 48 of 246 (0.20) | 0.15 to 0.25 |
+
+Recall@8 is the share in the third column. Recall@1 pooled: en 10 of 123 (0.08); ar 6 of 123 (0.05); both 16 of 246 (0.07), 95% interval 0.04 to 0.10. One chunk fills rank 1, so at most 30 of 123 (0.24) per language can reach it.
+
 ## Tokens and cost
 
 Priced from https://platform.claude.com/docs/en/about-claude/pricing (read 2026-10-21), base input and output prices; a model with no price row, or a reply with no usage, is price unknown.
@@ -359,3 +405,10 @@ onyx/data/model_prices.json; "price unknown" where the model has no price row or
 - key clauses shown, unit: clause entries per language over the committed runs (each run's entries added).
 - key clauses not shown at a step that scored: entries not shown at a key step whose action hit (action recall's sense); carried by the gate's verdict when the step's gate record holds them: the rule id in a gate event's reasons, or its chunk among the clause_ids of the proposal the gate judged.
 - hand-over latency (C5): the hand-over latency in steps above, over the C5 runs, the mean of each scenario and language; n/a where the key has no hand-over step.
+- retrieval alone, query (shown only, never compared): for every key step with a must_cite list, S1-1 and S2-1 included, the step's text from the scenario file, English and Arabic, within the documents the mandate lists for the key's agent, top 8, without the mandate's clauses.
+- retrieval alone, entries: each must_cite entry maps to its chunk as in key clauses shown, so two rules on one chunk count twice; one query per step and language, so the unit is the entry, not a run.
+- retrieval alone, against key clauses shown: a clause the mandate list also holds counts here and not under only by retrieval, and these figures read the 161 chunks in kb/chunks today, not the index each scored run was recorded on; neither is a score of a run.
+- retrieval alone, interval: Wilson score, z = 1.96, as above; entries of one step share a query, so read it as a rough width, not a guarantee.
+- retrieval alone, record: the top-8 lists are in eval/retrieval.json. `eval` re-measures each index on disk; with no index (CI) it recomputes these figures from the lists, and fails if the chunks, queries or document scope changed.
+- retrieval alone, not diagnosed: why the figures of both embedders are low.
+- retrieval alone, not measured: `intfloat/multilingual-e5-base` and `BAAI/bge-m3`; the bilingual table is `intfloat/multilingual-e5-small` only.
