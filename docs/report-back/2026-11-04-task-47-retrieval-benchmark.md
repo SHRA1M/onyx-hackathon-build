@@ -103,3 +103,10 @@ in a recorded run reads the rebuilt index.
 
 1. Why both figures are low: not diagnosed, and stays open until after the shortlist, as ruled.
 2. hq's own copy of the annex text does not have these three edits; this session writes only inside the repo.
+
+## PR and CI
+
+PR #15, https://github.com/SHRA1M/onyx-hackathon-build/pull/15. CI "reproduce" on `2736654`: success on the pull request
+(run 41873930881) and on the push (run 41873916567). The pull request run's log: "708 passed, 24 skipped" and "bilingual
+index not built", so CI recomputed both tables from `eval/retrieval.json` and no byte differed. This entry adds only
+these lines to this file.
