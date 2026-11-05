@@ -761,3 +761,14 @@ Followed section 5 of hq's `raed-review-ruling-2026-11-05-fable.md`, on `task-50
   - 2026-10-27 (C5 as it stands, after Task 28): governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps (2 English misses, disclosed, no v6); the README and selftest headline is C5; C3 is the ungoverned baseline. Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
   - An hq ruling file can change while it is being built (Task 45: 74 to 93 lines, with a correction). Re-read it and compare before committing; name its sha256 in the report-back.
   - The WAM Arabic page is script-built: a plain request returns an empty body, and `scrapling fetch` with `network_idle` fails; `scrapling fetch` with `wait` 8000 works. `stealthy_fetch` is refused by the session's permission check; do not work around it.
+
+## 2026-11-05: Task 50 finished, Task 51 built up to stop 1 (seventy-second wrap)
+
+Applied hq's stop 1 ruling: `record --retriever`, `retrieval.named_retriever`, `EncodingRetriever`, the two method lines, the docstrings. 799 tests; CI run 42089516363; draft PR #19. Real hybrids run with no model call: both answered unseen English and Arabic queries in scope, plan dry pass fine. Run in one process after e5-base, bge-m3 printed nothing inside 500 s; alone it took 21 s; not traced.
+
+hq's fit-check ruling answered the six questions. Built on `task-51` (`eb0f62d`): 51.A, B, C (annex), D, E, G, H.2, H.4, I, J, K.2 to 6 less the tension row. Six screenshots retaken with a driver script in a throwaway copy of each page, headless Chrome from file://, no new dependency.
+
+Page fit tried, last main line: everything in, page 6 y 240.75; Figure 2 at 8 pt and one-sentence Limits, y 208.5; Figure 2 reverted, y 192; S3's words out, y 120. Candidates measured: no strip, or sources sentence cut, both page 5 y 695.25. Other combinations in the stop file.
+
+Found: ruling 6.2's three `quote_ar` strings do not exist (footers print from chunks); two more `.md` links on `whatif.html` and `modeldown.html`; the strip's strings are not word for word in the body; Annex A does not name Y.3173. All put to hq. Block 66's new sentence typed from page 24's image, on a five-block page for Iyas, not yet answered.
+
