@@ -772,3 +772,6 @@ Page fit tried, last main line: everything in, page 6 y 240.75; Figure 2 at 8 pt
 
 Found: ruling 6.2's three `quote_ar` strings do not exist (footers print from chunks); two more `.md` links on `whatif.html` and `modeldown.html`; the strip's strings are not word for word in the body; Annex A does not name Y.3173. All put to hq. Block 66's new sentence typed from page 24's image, on a five-block page for Iyas, not yet answered.
 
+Moved from the background at this wrap, to keep it under its limit:
+
+- 2026-11-03 (Task 44 build): a UAE instrument excludes `web_page`, `announcement` and `news` rows (`NOT_INSTRUMENTS`); a text the build extracts is VERIFIED with the extract's sha256 in the manifest and the source file's sha256 in its notes; Task 44 register entries are appended last and older tests read rows through `_row` / `_row_43` filters in `tests/test_gaps.py`.
