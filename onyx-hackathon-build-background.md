@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-05 (seventy-fourth wrap, Opus: Task 51 merged, PR #20; Task 51b built on draft PR #21).
+Updated 2026-11-06 (seventy-fifth wrap, Opus: Task 51b merged, PR #21; Task 52 stopped before any build, stop 1 with hq).
 
 ## What this is
 
@@ -55,7 +55,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - Every Y.3172 chunk carries page 1 (chunker quirk); a gap row gives its own `page`. `kb/sources/global/` is gitignored, so the verbatim global-quote test skips in CI.
 
 - Rebuilding e5-small replaces `kb/index-bilingual/`, deleting its `e5-base` and `bge-m3` sub-folders.
-- Recorded spend USD 21.85 against the stop (USD 45 on `task-50`, 30 on main); the API organisation holds USD 100 promotional credit (granted 2026-10-27, expires 2026-11-25). `record`'s estimate counts both languages even when one is skipped.
+- Recorded spend USD 21.85 against the USD 45 stop; the API organisation holds USD 100 promotional credit (granted 2026-10-27, expires 2026-11-25). `record`'s estimate counts both languages even when one is skipped. Outside S1 to S5 the guard underestimates about fourfold (USD 1.71 for 96 care calls that cost about USD 7.42): price from C5's care calls, USD 0.0682 en, 0.0864 ar.
+- A U-scenario records through `runs.record` with the path `unseen/<file>` as its scenario, no code; the `record` CLI refuses it, and `onyx replay` cannot load it by id (2026-11-06).
 - Arabic printed to a redirected file from Windows Python comes out in cp1256: run `python -X utf8` (`-I` ignores `PYTHONIOENCODING`). Git Bash has no `iconv`.
 - The ChromaDB index (`data/chromadb`, gitignored) goes stale after any `kb chunk`: live retrieval then returns clause ids not in `kb/chunks` and the run dies (KeyError). Run `python -m onyx kb ingest` after every `kb chunk`.
 
@@ -70,8 +71,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 50: merged, PR #19. Recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met, so no Task 52. `record --retriever` exists, default shipped, never used on a live run.
-- Task 51: merged, PR #20. Task 51b: draft PR #21, branch `task-51b`, `docs/report-back/2026-11-05-task-51b-built.md`, with hq. CI passed on build commit `46ca90c`, run 42104679280. Iyas answered the five blocks, and the four held items are built. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
+- Task 52 (adversarial subscriber, U8): stopped at the order's USD 5 limit, nothing built, branch `task-52`, `docs/report-back/2026-11-06-task-52-stop-1.md`, with hq. Three rulings wanted: spend up to USD 8.50, what counts as a barred act, the annex sentence. Time box 2026-11-06 16:00 Amman. A direct gate probe found `allow` on change words outside the gates' lists (`terminate`, `add_bundle`, `credit`) and on `draft_reply` to a partner; no gate changed.
+- Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered. `record --retriever` exists, default shipped, never used on a live run.
+- Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
 The Arabic rendering check script is not kept: per PDF page, `get_texttrace()` from pymupdf (`uv run --with pymupdf`), glyph id 0 on an Arabic character is the empty box; site pages printed through headless Chrome. Passes on `task-51b`'s PDF; re-run when the annex changes. It counts empty boxes only, so also look at a page image: word order can be wrong while it passes.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 13 total on `task-51b`. Sources and extracts under `kb/sources/` are gitignored, this PC only.
 - hq's copy of the annex text lacks the three Task 47 edits.
@@ -83,4 +85,4 @@ The Arabic rendering check script is not kept: per PDF page, `get_texttrace()` f
 
 ## Next action
 
-Iyas names the next session's work. Waiting: hq's check of Task 51b, draft PR #21. Freeze 2026-11-06, submission 2026-11-09.
+Bring hq's ruling on Task 52 stop 1, then build the order on branch `task-52`: U8 and its key committed first, then the runs. No ruling by 2026-11-06 16:00 Amman: the order says it is dropped. Submission 2026-11-09.
