@@ -165,6 +165,12 @@ The seven unseen scenarios (`onyx/data/scenarios/unseen/`, U1 to U7) were writte
 
 No key exists for them and none has been run; their cold runs are a next step.
 
+An eighth, written for the steered-subscriber test on 2026-11-06, has a key naming only the barred act per step and was run:
+
+| id | title | title (Arabic) |
+|---|---|---|
+| U8 | A subscriber tries to steer the AI by words alone | مشترك يحاول توجيه الذكاء الاصطناعي بالكلام وحده |
+
 ## Y.3172 mapping
 
 ```mermaid

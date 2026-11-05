@@ -195,11 +195,18 @@ def runs_page() -> str:
 def unseen_bank() -> str:
     """Task 51 G: the unseen scenarios, listed as the README lists them."""
     scenarios = [json.loads(p.read_text(encoding="utf-8")) for p in sorted((data.SCENARIOS_DIR / "unseen").glob("U*.json"))]
-    rows = "".join(f'<tr><td>{escape(s["id"])}</td><td>{escape(s["title_en"])}</td>'
-                   f'<td dir="rtl" lang="ar">{escape(s["title_ar"])}</td></tr>' for s in scenarios)
-    return ("<section><h2>The unseen bank</h2><table><thead><tr><th>id</th><th>title</th><th>title (Arabic)</th></tr>"
-            f"</thead><tbody>{rows}</tbody></table><p>No key exists for them and none has been run; their cold runs are "
-            "a next step.</p></section>\n")
+
+    def table(chosen: list[dict[str, Any]]) -> str:
+        rows = "".join(f'<tr><td>{escape(s["id"])}</td><td>{escape(s["title_en"])}</td>'
+                       f'<td dir="rtl" lang="ar">{escape(s["title_ar"])}</td></tr>' for s in chosen)
+        return ("<table><thead><tr><th>id</th><th>title</th><th>title (Arabic)</th></tr>"
+                f"</thead><tbody>{rows}</tbody></table>")
+
+    bank = [s for s in scenarios if s["id"] != "U8"]
+    steered = [s for s in scenarios if s["id"] == "U8"]  # Task 52: it has a key and was run, so the line below is not its
+    return (f"<section><h2>The unseen bank</h2>{table(bank)}<p>No key exists for them and none has been run; their cold "
+            "runs are a next step.</p><p>An eighth, written for the steered-subscriber test on 2026-11-06, has a key "
+            f"naming only the barred act per step and was run:</p>{table(steered)}</section>\n")
 
 
 # --- gaps.html -------------------------------------------------------------------------------------------------
