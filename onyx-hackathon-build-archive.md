@@ -783,3 +783,11 @@ PR #19 read MERGED; `origin/main` merged into `task-51`, `CHANGELOG.md` the only
 Tried: a Git Bash heredoc again turned a written `\n` into a real newline in two Python edits; fixed with the Edit tool. Wrap commit `5837bfd` from `task-50` cherry-picked here; it had not reached main.
 
 Superseded: 2026-11-04 "the README names the measurement with no number" (hq, Task 47 stop 1), replaced by 51.A.6.
+
+## 2026-11-05: Task 51 merged; Task 51b built (seventy-fourth wrap)
+
+Iyas merged PR #20 and answered blocks 34, 65, 66, 89, 90. Built on draft PR #21: the four-clause note (gap 1, Annex B, Annex C), the 9.1 full Arabic from `docs/sources/licence-2-2026-ar-9.1-full-checked.txt`, gap 15's Cabinet sentence (Arabic law PDF, page 24, because it is not in the old law note), the tension in gap 1's `uae_position`. First build put the Arabic inline: the rendering check passed but the page image was scrambled, so Arabic-only annex paragraphs now build right-to-left. Foxit held `docs/report.pdf`: the export failed, the script checked the old file, and a hidden Word process (15524) locked `report.docx` until stopped by its ID. 846 tests; 5 main pages, 13 total; CI run 42104679280 on `46ca90c`.
+
+Moved from the background to stay under its limit:
+- `scripts/fig_architecture.py` and `scripts/fig_results.py` (Task 17): `docs/fig/fig1-architecture` and `fig2-results`, .png and .svg (SVG written with LF). Figure 1 node lines are word-for-word phrases of the README mapping table; Figure 2 reads `eval/results.md` ((a) C5 cells, (b) C3 Governed and Ungoverned tables, ruling 1) and exits naming the missing scenario and language. Task 18: Figure 1 is a landscape strip 16 by 4.5 cm (MLFO above the chain, ML sandbox dashed below, hand-over arrow down from D), Figure 2 has (a) and (b) side by side at 16 by 5 cm; fonts 6.5 pt minimum; no caption drawn inside (the Word caption carries it). Tests `tests/test_figures.py` (10).
+- Report pages: `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1 [-Path x.docx]` from Bash worked on 2026-10-30 (denied earlier; then use the PowerShell tool). Word measures the gap table's narrow last column: a longer cell can add a page.

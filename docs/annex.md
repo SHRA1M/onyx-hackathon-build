@@ -128,6 +128,24 @@ What a rule looks like, as stored (`rules.json`):
 }
 ```
 
+**CPR 26.6 and 26.7 read together.** 26.6: "Licensees shall maintain an adequate number of properly trained personal to receive, process, and respond to Consumer Complaints in a timely and prompt manner."
+
+يجب على المرخص لهم الحفاظ على عدد كافٍ من الموظفين المدربين تدريباً مناسباً لاستقبال ومعالجة والرد على الشكاوى المقدمة من المستهلكين في الوقت المناسب وبالسرعة اللازمة.
+
+26.7, the opening words: "The provisions of sub-article 26.6:"
+
+أحكام المادة الفرعية26.6:
+
+26.7.1: "apply in all cases regardless of which Mandatory Channel is used; and"
+
+تسري في كل الحالات بغض النظر عن القناة الإلزامية المستخدمة؛ و
+
+26.7.2: "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."
+
+يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم.
+
+Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading and cites the chapeau, the clause and licence 9.1 together.
+
 What the gate does with it, as a sketch (the real function is `complaint_gate` in `onyx/gate.py`):
 
 ```
@@ -200,6 +218,24 @@ human. That is the controversy case: governance looks slower, because the ungove
 hand-over step. The subscriber is served by a person at that step instead of charged by a machine. That is the
 number a regulator should want to know about any AI that acts for a licensee, and it is why Mizan puts the decision
 in code.
+
+**CPR 26.6 and 26.7 read together.** 26.6: "Licensees shall maintain an adequate number of properly trained personal to receive, process, and respond to Consumer Complaints in a timely and prompt manner."
+
+يجب على المرخص لهم الحفاظ على عدد كافٍ من الموظفين المدربين تدريباً مناسباً لاستقبال ومعالجة والرد على الشكاوى المقدمة من المستهلكين في الوقت المناسب وبالسرعة اللازمة.
+
+26.7, the opening words: "The provisions of sub-article 26.6:"
+
+أحكام المادة الفرعية26.6:
+
+26.7.1: "apply in all cases regardless of which Mandatory Channel is used; and"
+
+تسري في كل الحالات بغض النظر عن القناة الإلزامية المستخدمة؛ و
+
+26.7.2: "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."
+
+يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم.
+
+Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading and cites the chapeau, the clause and licence 9.1 together.
 
 **Precision of the headline figures.** The scored run (C5, prompt v5, governed, two runs per scenario per language)
 pools to action recall 110 of 112 key steps, 95% interval 0.94 to 1.00,

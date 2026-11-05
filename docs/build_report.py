@@ -581,9 +581,29 @@ def render_annex(b: "Builder", heading_proto, md: str) -> None:
             p.paragraph_format.space_before = Pt(6)
         elif kind == "code":
             _mono(p, content)
+        elif _all_arabic(content):
+            _rtl(p, content, ANNEX_SIZE)
         else:
             _runs(p, content, size=ANNEX_SIZE)
         after = p._p
+
+
+def _all_arabic(text: str) -> bool:
+    """A paragraph with Arabic letters and no Latin ones: a quote that stands alone (Task 51b)."""
+    return bool(re.search(r"[؀-ۿ]", text)) and not re.search(r"[A-Za-z]", text)
+
+
+def _rtl(paragraph: Paragraph, text: str, size: Pt) -> None:
+    """A right-to-left paragraph. Inside an English paragraph, Word scrambled the quote with its clause number."""
+    paragraph._p.get_or_add_pPr().insert_element_before(
+        OxmlElement("w:bidi"), "w:adjustRightInd", "w:snapToGrid", "w:spacing", "w:ind", "w:contextualSpacing",
+        "w:mirrorIndents", "w:suppressOverlap", "w:jc", "w:textDirection", "w:textAlignment", "w:textboxTightWrap",
+        "w:outlineLvl", "w:divId", "w:cnfStyle", "w:rPr", "w:sectPr", "w:pPrChange")
+    rpr = _run(paragraph, text, size=size)._r.get_or_add_rPr()
+    size_cs = OxmlElement("w:szCs")
+    size_cs.set(qn("w:val"), str(int(size.pt * 2)))
+    rpr.append(size_cs)
+    rpr.append(OxmlElement("w:rtl"))
 
 
 def _widths(rows: list[list[str]]) -> list[int]:

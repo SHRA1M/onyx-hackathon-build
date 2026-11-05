@@ -169,6 +169,18 @@ def _searched(s: dict[str, Any]) -> list[str]:
     return out
 
 
+def _clause_note(row: dict[str, Any]) -> list[str]:
+    """Clauses read together in both languages, then our note on them (Task 51b, gap 1's 26.6 and 26.7)."""
+    note = row.get("clause_note")
+    if not note:
+        return []
+    lines = [f"**{note['title']}**", ""]
+    for c in note["clauses"]:
+        lines += [f"- {c['clause']} (p. {c['page']}; Arabic p. {c['page_ar']})", f"  - EN: \"{c['en']}\"",
+                  f"  - AR: \"{c['ar']}\""]
+    return lines + ["", f"Our note: {note['note']}", ""]
+
+
 def _quotes(title: str, examples: list[dict[str, Any]]) -> list[str]:
     out = [f"**{title}**", ""]
     for ex in examples:
@@ -197,6 +209,7 @@ def render() -> str:
                   f"Exposed by: {row['exposed_by']}.", ""]
         if row.get("note"):  # a row's own sentence under its heading (order 2026-10-26 Task 27, B4)
             lines += [row["note"], ""]
+        lines += _clause_note(row)
         lines += ["**Clauses searched**", ""]
         for s in row["searched"]:
             lines += _searched(s)

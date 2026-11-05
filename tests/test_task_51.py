@@ -162,6 +162,8 @@ def test_nothing_offers_a_judge_a_live_step():
 def test_no_claim_that_the_arabic_prevails_over_the_cpr():
     for text in (README, REPORT, ANNEX):
         for line in text.splitlines():
+            # Task 51b: the ruled note's own sentence says the opposite of the claim barred here
+            line = line.replace("The CPR does not say which language prevails.", "")
             if re.search(r"(?i)prevail", line):
                 assert not re.search(r"\bCPR\b|gate table", line), line
 

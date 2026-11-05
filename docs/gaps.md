@@ -41,6 +41,23 @@ Kind: method. Category: standards gap. Addressee: TDRA. Exposed by: S2-3.
 
 Spain's Ley 10/2025 reaches electronic communications services, telephone services included (Art 2(1)(d)); for them the sector rules apply first and this law is supplementary (Art 2(6)). In force 2025-12-28; companies have until 2026-12-28 to adapt (disposición transitoria única).
 
+**CPR 26.6 and 26.7 read together**
+
+- 26.6 (p. 65; Arabic p. 50)
+  - EN: "Licensees shall maintain an adequate number of properly trained personal to receive, process, and respond to Consumer Complaints in a timely and prompt manner."
+  - AR: "يجب على المرخص لهم الحفاظ على عدد كافٍ من الموظفين المدربين تدريباً مناسباً لاستقبال ومعالجة والرد على الشكاوى المقدمة من المستهلكين في الوقت المناسب وبالسرعة اللازمة."
+- 26.7 (p. 65; Arabic p. 51)
+  - EN: "The provisions of sub-article 26.6:"
+  - AR: "أحكام المادة الفرعية26.6:"
+- 26.7.1 (p. 65; Arabic p. 51)
+  - EN: "apply in all cases regardless of which Mandatory Channel is used; and"
+  - AR: "تسري في كل الحالات بغض النظر عن القناة الإلزامية المستخدمة؛ و"
+- 26.7.2 (p. 65; Arabic p. 51)
+  - EN: "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."
+  - AR: "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم."
+
+Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading and cites the chapeau, the clause and licence 9.1 together.
+
 **Clauses searched**
 
 - `tdra-cpr-v2-en:2.1.7` (p. 5): The trigger: a communication becomes a Consumer Complaint the moment a Subscriber expresses dissatisfaction at any authorised place.
@@ -79,6 +96,7 @@ Spain's Ley 10/2025 reaches electronic communications services, telephone servic
 - `licence-2-2026:9.1` (p. 22): Trained personnel for complaints, at licence level, on every channel (Arabic: موظفين مدربين). No hand-over procedure or time.
   - EN: "The Licensee shall maintain adequate trained personnel to receive and respond promptly to complaints and disputes from Customers."
   - AR (the whole chunk): "توفير ما يلزم من موظفين مدربين"
+  - AR (p. 22, `docs/sources/licence-2-2026-ar-9.1-full-checked.txt`): "على المرخص له توفير ما يلزم من موظفين مدربين لتلقي والإجابة دون إبطاء على الشكاوى والمنازعات الخاصة بالمشتركين، كما يتعين عليه إتخاذ جميع الإجراءات المعقولة للمعالجة الآنية ولتجنب تكرارأسباب الشكاوى ونزاعاتهم ذات العلاقة بجودة الخدمة وتوفرها وتسليمها وفوترتها.بالإضافة إلى ذلك، يتعين على المرخص له إتخاذ جميع التدابير الضرورية لضمان أداء المبالغ المستحقة للمشتركين وبشكل كامل."
 - `qos-v3-en:9.5` (p. 17): Annex A, T1(2a): the only time measured is the wait after the IVR choice, under two minutes, indicative. A bot before that choice, and chat or app, are unmeasured.
   - EN: "Average time (seconds) spent waiting from the time the Customer has selected the IVR choice to speak to an agent until the Customer is connected to an agent"
 - `law-14-2023-en:6(7)` (p. 9): Trade Law 14/2023: complaint numbers and means always available with qualified staff; a staffed complaint channel, no stop, hand-over or clock for an AI chat.
@@ -106,7 +124,7 @@ Spain's Ley 10/2025 reaches electronic communications services, telephone servic
 - `wam-2026-08-21-agentic-ai-guide:handover` (`kb/sources/wam-2026-08-21-agentic-ai-guide.txt`): Searched, non-binding, government services only: the National Committee for Agentic AI's guide (WAM, 21 Aug 2026) wants a smooth transfer to a competent employee with the full request and the steps done; guidance for federal entities, no TDRA counterpart for a licensee's agent.
   - AR: "ضمان الانتقال السلس إلى موظف مختص عند الحاجة، مع نقل كامل تفاصيل الطلب والخطوات المنجزة، حتى لا يضطر المتعامل لإعادة شرح طلبه من جديد"
 
-**UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it. The CPR wants first-contact resolution (26.14.1) and bars the machine from the conversation (26.7.2); nothing joins the two: no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over. The acknowledgement clock (26.13.3) names telephone, visit and written complaints, not chat or app, and a reference number is not a conversation.
+**UAE position.** The human requirement is binding (26.7.2, licence 9.1) and Mizan enforces it. The CPR wants first-contact resolution (26.14.1) and bars the machine from the conversation (26.7.2); nothing joins the two: no text says what an automated channel must do at the moment a conversation becomes a complaint, or how fast the human must take over. Two duties meet at that moment: licence 9.1 has complaints answered «دون إبطاء» (without delay; the English text reads "promptly"; the Arabic binds, licence 16.7), and Trade Law 14/2023 Art 6(7) has complaint means "always available without interruption with qualified staff"; neither sets a hand-over or a time. The acknowledgement clock (26.13.3) names telephone, visit and written complaints, not chat or app, and a reference number is not a conversation.
 
 **Global example**
 
@@ -836,7 +854,7 @@ A published method, not a tariff. The UK regulates providers through General Con
   - AR (`docs/sources/telecom-law-and-licences-2026-10-17.md`): "يعاقب بالغرامة التي لا تقل عن (50.000) خمسون ألف درهم ولا تجاوز (200.000) مائتي ألف درهم كل من خالف أي حكم آخر من أحكام القانون أو لائحته التنفيذية أو الأنظمة أو القرارات أو التعليمات أو القواعد الصادرة بموجبهما."
 - `telecom-law-3-2003-en:79 bis` (p. 29): Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.
   - EN: "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees"
-  - AR (`docs/sources/telecom-law-and-licences-2026-10-17.md`): "لمجلس الإدارة توقيع غرامات إدارية بحق المرخص لهم في حال مخالفتهم أحكام القانون أو لائحته التنفيذية أو القرارات أو الأنظمة أو السياسات أو التعليمات الصادرة عن مجلس الإدارة أو الهيئة."
+  - AR (p. 24, `kb/sources/telecom-law-3-2003-ar.pdf`): "ويصدر مجلس الوزراء قراراً بجدول المخالفات والغرامات التي توقع على المرخص لهم وبما لا يزيد على (10.000.000) عشرة ملايين درهم عن كل مخالفة."
 - `licence-2-2026:16.3.2` (p. 45): A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.
   - EN: "The penalty shall be not less than Dirhams 50,000 and not more than Dirhams 200,000"
 - `licence-2-2026:16.3.3` (p. 45): The 16.3.2 penalty may be doubled: for repeated non-compliance, for non-compliance by an ordered date, or for a failure TDRA finds material.
