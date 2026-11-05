@@ -125,6 +125,30 @@ class ChromaRetriever:
         return [kb.get_chunk(*hit.split(":", 1)) for hit in result["ids"][0]]
 
 
+class HybridRetriever:
+    """Task 50: reciprocal rank fusion (k 60) of a sparse and a dense retriever's top 30, top k in the shipped shape.
+    Each is handed the agent's documents, so the mandate scope is the one ChromaRetriever keeps. In no scored run."""
+
+    RRF_K = 60
+    DEPTH = 30
+
+    def __init__(self, sparse: Retriever, dense: Retriever) -> None:
+        self.sparse, self.dense = sparse, dense
+
+    def __call__(self, query: str, documents: list[str], k: int) -> list[dict[str, Any]]:
+        if not documents:
+            return []
+        scores: dict[str, float] = {}
+        chunks: dict[str, dict[str, Any]] = {}
+        for ranked in (self.sparse(query, documents, self.DEPTH), self.dense(query, documents, self.DEPTH)):
+            for rank, hit in enumerate(ranked, 1):
+                scores[chunk_id(hit)] = scores.get(chunk_id(hit), 0.0) + 1 / (self.RRF_K + rank)
+                chunks[chunk_id(hit)] = hit
+        # rounded so that two chunks at mirrored ranks tie whatever order the floats were added in
+        best = sorted(scores, key=lambda c: (-round(scores[c], 12), c))
+        return [chunks[c] for c in best[:k]]
+
+
 class Agent:
     name = ""
     role = ""  # hq hackathon-plan-2026-10-15.docx, Agents table

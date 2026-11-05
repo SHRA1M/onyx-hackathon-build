@@ -620,7 +620,7 @@ def retrieval_results(record: dict[str, Any]) -> dict[str, Any]:
     return {"k": record["k"], "chunks": sum(1 for _ in retrieval.kb.iter_chunks()),
             **{name: {**{k: v for k, v in record[name].items() if k != "lists"},
                       "scores": retrieval_scores(record[name]["lists"], targets)}
-               for name in ("shipped", "bilingual") if name in record}}
+               for name in ("shipped", "bilingual", *retrieval.ADDED) if name in record}}
 
 
 def _retrieval_table(scored: dict[str, Any]) -> list[str]:
@@ -654,7 +654,26 @@ def _retrieval_lines(results: dict[str, Any]) -> list[str]:
                   f"{bilingual['revision']}", "",
                   "Never compared with C5. The same chunks, queries and document scope, in a separate git-ignored index "
                   f"(`kb/index-bilingual/`).{build}", "", *_retrieval_table(bilingual)]
+    for name in retrieval.ADDED:
+        if scored := results.get(name):
+            lines += [f"### {name}, not used in any scored run: {_retriever_named(name, scored)}", "",
+                      _target_line(name, scored), "", *_retrieval_table(scored)]
     return lines
+
+
+def _retriever_named(name: str, scored: dict[str, Any]) -> str:
+    if name == retrieval.BM25:
+        return (f"Okapi BM25 in plain code, k1 {retrieval.BM25_K1}, b {retrieval.BM25_B}, over the English and Arabic "
+                "text of each chunk, normalised as `retrieval.tokenize`.")
+    dense = f"{scored['embedder']}, revision {scored['revision']}, built by `{scored['command']}`."
+    return f"reciprocal rank fusion, k 60, of bm25's top 30 and the top 30 of {dense}" if name.startswith("hybrid-") else dense
+
+
+def _target_line(name: str, scored: dict[str, Any]) -> str:
+    pooled = scored["scores"]["recall_at_8"]
+    met = all(pooled[lang]["hits"] / pooled[lang]["n"] >= retrieval.TARGET[lang] for lang in LANGS)
+    return ("Target set 2026-11-05 before measurement: pooled recall@8 at least 0.40 en and 0.30 ar; "
+            f"{name}: {'met' if met else 'not met'}.")
 
 
 def retrieval_section(record: dict[str, Any]) -> list[str]:
@@ -975,6 +994,10 @@ def _cli(args) -> int:
                 print(missing)
             elif name in results.get("retrieval", {}):
                 print(f"Retrieval alone, {name}: {results['retrieval'][name]['embedder']}")
+                print("\n".join(_retrieval_table(results["retrieval"][name])))
+        for name in retrieval.ADDED:
+            if name in results.get("retrieval", {}):
+                print(f"Retrieval alone, {name}")
                 print("\n".join(_retrieval_table(results["retrieval"][name])))
     return 0 if results["all_chains_ok"] and results["all_keys_match"] else 1
 
