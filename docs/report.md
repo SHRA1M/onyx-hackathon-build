@@ -21,10 +21,7 @@ without consent (24.6), disconnecting without warning (22.1) and handling a comp
 to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer
 Complaints".
 
-The sources are the Telecommunications Law 3/2003, the
-CPR v2.0, Licence 2/2026, the Personal Data Protection Law 45/2021 (PDPL) and thirty-two other UAE texts;
-ITU-T Y.3172, Y.3173 and the AI Readiness Report 2.0; and
-thirty-eight foreign texts used only as global examples. 100 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
+Annex A lists the sources; the PDPL is the Personal Data Protection Law 45/2021. 100 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
 clause the gates cite word for word against the text stored from it. No consumer data was used.
 
 ## Description of the use case

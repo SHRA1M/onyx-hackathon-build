@@ -268,9 +268,10 @@ def test_annex_a_no_longer_calls_a_bilingual_embedder_the_obvious_upgrade():
     assert "obvious upgrade" not in text and "its Arabic retrieval is weak" not in text
     assert ("is an English sentence embedder; measured alone it is weak in both languages, and weaker in Arabic "
             "(Retrieval below).") in text
-    assert ("A bilingual embedder is listed under next steps; the one measured before the freeze (Retrieval below) is "
-            "not a clear gain, so the upgrade is a larger model or a retrieval redesign, and neither was made before "
-            "the freeze because it would have meant re-recording the scored runs.") in text
+    assert ("A bilingual embedder is listed under next steps; the best one measured before the freeze, bge-m3, moved "
+            "pooled recall@8 from 0.24 to 0.34 in English and from 0.09 to 0.32 in Arabic (Retrieval below), short of "
+            "the 0.40 English target set before measuring; it was not adopted, because adopting it would have meant "
+            "re-recording the scored runs.") in text  # Task 51, hq's stop 1 ruling (Task 50's figures)
 
 
 def test_the_results_method_lines_say_what_stays_open_and_the_annex_does_not():
@@ -281,7 +282,8 @@ def test_the_results_method_lines_say_what_stays_open_and_the_annex_does_not():
     assert ("- retrieval alone, what the tables are: the shipped embedder is in every scored run; every other table is "
             "in no scored run.\n") in results
     assert (kb.REPO / pointer).is_file()  # the public repo has no dead pointer
-    assert "not diagnosed" not in _annex().lower() and "bge-m3" not in _annex() and "e5-base" not in _annex()
+    # Task 51, hq's stop 1 ruling: Annex A's retrieval sentence names bge-m3, the best one measured; the rest stay out
+    assert "not diagnosed" not in _annex().lower() and "e5-base" not in _annex() and "hybrid" not in _annex()
 
 
 def test_the_readme_names_the_measurement_and_its_figures():

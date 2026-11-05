@@ -85,6 +85,44 @@ def test_every_strip_figure_is_printed_elsewhere_in_the_main_text():
             assert figure in body, (cell, figure)
 
 
+def test_the_sources_sentence_is_cut_and_annex_a_carries_what_it_named():
+    """hq's stop 1 ruling, question 1: the cut; the strip's 108 documents stays printed in the main text."""
+    body = " ".join(REPORT[REPORT.index("## Introduction"):REPORT.index("## Description of the use case")].split())
+    assert body.endswith("Annex A lists the sources; the PDPL is the Personal Data Protection Law 45/2021. 100 are verified: "
+                         "the issuing body's file is on disk with its SHA-256, and a test on every push checks each clause "
+                         "the gates cite word for word against the text stored from it. No consumer data was used.")
+    assert "other UAE texts" not in REPORT and "foreign texts" not in REPORT
+    main_text = " ".join(REPORT[REPORT.index("## Introduction"):].split())
+    assert "108 documents" in main_text
+    annex_a = " ".join(ANNEX[:ANNEX.index("## Annex B.")].split())
+    assert "6 ITU texts (Y.3172 and Y.3173 among them, one a work-programme page) and the Readiness report" in annex_a
+    for name in ("Telecommunications Law", "CPR", "public licences", "PDPL", "foreign texts"):
+        assert name in annex_a, name
+
+
+def test_figure_2_is_restyled_at_8_pt_with_main_height():
+    """51.F, hq's stop 1 ruling: no hatching, 8 pt, the displayed height held at main's 16 by 5 cm so no line moves."""
+    script = (REPO / "scripts" / "fig_results.py").read_text(encoding="utf-8")
+    assert "FONT = 8 " in script and "hatch" not in script.replace("no hatching", "")
+    assert "<pattern" not in (REPO / "docs" / "fig" / "fig2-results.svg").read_text(encoding="utf-8")
+    header = (REPO / "docs" / "fig" / "fig2-results.png").read_bytes()[16:24]
+    width, height = int.from_bytes(header[:4], "big"), int.from_bytes(header[4:], "big")
+    assert round(width / height, 1) == round(16 / 5, 1)
+
+
+def test_annex_a_prints_the_task_50_figures_and_they_are_the_recorded_ones():
+    """hq's stop 1 ruling: the Annex A sentence, stopped on if eval/results.md disagrees."""
+    annex = " ".join(ANNEX.split())
+    assert ("the best one measured before the freeze, bge-m3, moved pooled recall@8 from 0.24 to 0.34 in English and from "
+            "0.09 to 0.32 in Arabic (Retrieval below), short of the 0.40 English target set before measuring; it was not "
+            "adopted, because adopting it would have meant re-recording the scored runs.") in annex
+    results = (REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    shipped = results[results.index("### Shipped embedder"):]
+    assert "| Pooled | en | 29 of 123 (0.24) |" in shipped and "| Pooled | ar | 11 of 123 (0.09) |" in shipped
+    bge = results[results.index("### bge-m3"):]
+    assert "| Pooled | en | 42 of 123 (0.34) |" in bge and "| Pooled | ar | 39 of 123 (0.32) |" in bge
+
+
 # --- 51.C, 51.D, 51.G, 51.J ------------------------------------------------------------------------------------------
 
 def test_the_controversy_case_is_named_in_annex_c():

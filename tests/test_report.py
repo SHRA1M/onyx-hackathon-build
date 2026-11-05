@@ -385,23 +385,28 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 108 documents" in text and "100 are verified" in text and "thirty-eight foreign texts" in text  # Task 45
-    assert "thirty-two other UAE texts" in text  # 36 UAE instruments minus the four named (Task 40, counts Task 45)
-    assert "the 36 UAE instruments" in text
+    assert "holds 108 documents" in text and "100 are verified" in text  # Task 45
+    assert "the 36 UAE instruments" in text  # Task 51 stop 1 ruling: the foreign and other-UAE counts moved to Annex A
 
 
-@pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
-                                   "**SRC-2** 51 documents", "fifteen other UAE texts"])
+@pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "**SRC-2** 51 documents"])
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     right = {"holds 51 documents": "holds 108 documents", "47 are verified": "100 are verified",
-             "nine foreign texts": "thirty-eight foreign texts", "twenty-two foreign texts": "thirty-eight foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 108 documents",
-             "fifteen other UAE texts": "thirty-two other UAE texts"}[wrong]
+             "**SRC-2** 51 documents": "**SRC-2** 108 documents"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
+
+
+@pytest.mark.parametrize("typed, ok", [("nine foreign texts", False), ("thirty-eight foreign texts", True),
+                                       ("fifteen other UAE texts", False), ("thirty-two other UAE texts", True)])
+def test_the_count_check_still_reads_those_words_if_they_come_back(typed, ok):
+    """Task 51: the report no longer prints these two counts; the build must still refuse a wrong one."""
+    build = _load()
+    text = REPORT_MD.read_text(encoding="utf-8") + f"\n\nThere are {typed}.\n"
+    assert (build.check_kb_counts(text) == []) is ok
 
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):

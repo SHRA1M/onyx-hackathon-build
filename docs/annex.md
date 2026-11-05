@@ -21,13 +21,11 @@ run of S2 on qwen2.5:14b-instruct through Ollama on a desktop GPU is in `runs/de
 embedder; measured alone it is weak in both languages, and weaker in Arabic (Retrieval below). Mizan does not rely on it for the clauses that matter: every agent's
 mandate names the clauses its verbs depend on, and those chunks are placed in the prompt first, in both languages,
 before anything retrieval adds (see Retrieval below). That is why the Arabic runs score 1.00 action recall and 1.00
-citation validity (C5) with an English embedder. A bilingual embedder is listed under next steps; the one measured before the freeze (Retrieval below) is not a
-clear gain, so the upgrade is a larger model or a retrieval redesign, and neither was made before the freeze
-because it would have meant re-recording the scored runs.
+citation validity (C5) with an English embedder. A bilingual embedder is listed under next steps; the best one measured before the freeze, bge-m3, moved pooled recall@8 from 0.24 to 0.34 in English and from 0.09 to 0.32 in Arabic (Retrieval below), short of the 0.40 English target set before measuring; it was not adopted, because adopting it would have meant re-recording the scored runs.
 
 **The documents.** 108 documents in `kb/manifest.csv`: 36 UAE instruments (laws, Cabinet resolutions, TDRA
 regulations and an enforcement decision, the two 2026 public licences, the DHA AI policy, the DoH standard and the UAE AI Charter, in English and Arabic where both are published) plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation),
-three announcements and a news report, which are not instruments; 3 texts of the DIFC and ADGM free zones; 6 ITU texts (one a work-programme page) and the Readiness report; and 38 foreign texts used only
+three announcements and a news report, which are not instruments; 3 texts of the DIFC and ADGM free zones; 6 ITU texts (Y.3172 and Y.3173 among them, one a work-programme page) and the Readiness report; and 38 foreign texts used only
 as global examples. Each row records the issuer, the URL, the date
 fetched, the HTTP status, the SHA-256 of the file as fetched, the page count, the language and whether the English is
 an official translation. 100 are VERIFIED (the issuer's file is on disk and its hash matches), 5 REFERENCED (opened,
