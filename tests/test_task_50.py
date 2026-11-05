@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import json
 import math
+import re
 
 import pytest
 
-from onyx import data, eval as onyx_eval, kb, retrieval
+from onyx import __main__, audit, cost, data, eval as onyx_eval, kb, model, retrieval, runs, scripted
 from onyx.agents import AGENTS
 from onyx.agents.base import ChromaRetriever, HybridRetriever, chunk_id
 
@@ -209,3 +210,138 @@ def test_each_new_index_has_its_own_folder_so_the_e5_small_section_cannot_move()
     assert retrieval.index_dir("intfloat/multilingual-e5-small") == retrieval.BILINGUAL_DIR
     assert retrieval.index_dir("intfloat/multilingual-e5-base") == retrieval.BILINGUAL_DIR / "e5-base"
     assert retrieval.index_dir("BAAI/bge-m3") == retrieval.BILINGUAL_DIR / "bge-m3"
+
+
+# --- `record --retriever`, hq's ruling on stop 1 ---------------------------------------------------------------------
+
+def _live_env(tmp_path, monkeypatch):
+    """No test makes a model call: the live HTTP call is replaced by the scripted reply."""
+    for name in model.ENV_NAMES:
+        monkeypatch.delenv(name, raising=False)
+
+    def complete(self, request_id, messages):
+        sid, lang = request_id.split("-")[0], "ar" if any("(Arabic)" in m["content"] for m in messages) else "en"
+        return scripted.model(sid, lang).complete(request_id, messages)
+    monkeypatch.setattr(model.OpenAICompatibleModel, "complete", complete)
+    env = tmp_path / ".env"
+    env.write_text("ONYX_MODEL_BASE_URL=https://example.invalid/v1/\nONYX_MODEL=claude-haiku-5-5\n"
+                   "ONYX_MODEL_API_KEY=test-key\n", encoding="utf-8")
+    return env
+
+
+def _run_start(root) -> dict:
+    return json.loads((root / "S1" / "run1.jsonl").read_text(encoding="utf-8").splitlines()[0])["new_value"]
+
+
+def _record_live(tmp_path, monkeypatch, retriever, **named):
+    root = tmp_path / "runs"
+    runs.record("live", root, scenarios=("S1",), runs=1, langs=("en",), modes=("governed",),
+                env=_live_env(tmp_path, monkeypatch), retriever=retriever, max_usd=5, spend_root=root,
+                out=lambda s: None, **named)
+    return root
+
+
+def test_a_shipped_run_start_event_stays_exactly_what_it_is_today(tmp_path, monkeypatch):
+    start = _run_start(_record_live(tmp_path, monkeypatch, scripted.retriever("S1")))
+    assert start["retrieval"] == "kb_main" and "retriever" not in start
+
+
+def test_a_hybrid_run_names_its_retriever_on_run_start_beside_kb_main(tmp_path, monkeypatch):
+    root = _record_live(tmp_path, monkeypatch, scripted.retriever("S1"), retriever_name="hybrid-e5-base")
+    start = _run_start(root)
+    assert start["retriever"] == "hybrid-e5-base" and start["retrieval"] == "kb_main"
+    assert audit.verify(root / "S1" / "run1.jsonl")
+    recorded, replayed = runs.replay(root / "S1" / "run1.jsonl")
+    assert recorded == replayed  # the new field replays
+
+
+def test_the_plan_and_the_guard_see_the_retriever_the_run_uses(tmp_path, monkeypatch):
+    seen = []
+    inner = scripted.retriever("S1")
+
+    def counting(query, documents, k):
+        seen.append(query)
+        return inner(query, documents, k)
+    planned = []
+    real_plan = cost.plan
+    monkeypatch.setattr(cost, "plan", lambda *a, **kw: planned.append(a[4]) or real_plan(*a, **kw))
+    _record_live(tmp_path, monkeypatch, counting, retriever_name="hybrid-bge-m3")
+    assert planned == [counting] and seen
+
+
+@pytest.mark.parametrize("name", ["hybrid-e5-base", "hybrid-bge-m3"])
+def test_scripted_with_a_hybrid_is_refused_before_anything_is_written(tmp_path, name):
+    with pytest.raises(runs.RetrieverRefused, match="scripted"):
+        runs.record("scripted", tmp_path / "runs", scenarios=("S1",), runs=1, langs=("en",), modes=("governed",),
+                    retriever_name=name)
+    assert not (tmp_path / "runs").exists()
+
+
+def test_the_command_line_refuses_scripted_with_a_hybrid_and_writes_nothing(tmp_path, capsys):
+    root = tmp_path / "runs"
+    assert __main__.main(["record", "--source", "scripted", "--root", str(root), "--retriever", "hybrid-e5-base"]) == 2
+    assert "scripted" in capsys.readouterr().out and not root.exists()
+
+
+def test_the_command_line_offers_the_three_names_the_ruling_lists(capsys):
+    with pytest.raises(SystemExit):
+        __main__.main(["record", "--source", "scripted", "--retriever", "bm25"])
+    assert "shipped" in capsys.readouterr().err
+    assert runs.RETRIEVERS == ("shipped", "hybrid-e5-base", "hybrid-bge-m3")
+
+
+def _built(tmp_path, short="e5-base"):
+    index = tmp_path / "index-bilingual"
+    embed = kb.HashEmbedding()
+    retrieval.write_index(index / short, name=retrieval.DENSE[short], revision="abc", seconds=1.5,
+                          encode_passages=embed, encode_queries=embed, command="built")
+    return index, embed
+
+
+def test_the_built_hybrid_encodes_a_query_the_index_never_stored(tmp_path):
+    """A live run sends texts the key steps do not hold; the stored vectors cover only those."""
+    index, embed = _built(tmp_path)
+    asked = []
+
+    def encode(model_name, revision, text):
+        asked.append((model_name, revision, text))
+        return embed([text])[0]
+    hybrid = retrieval.named_retriever("hybrid-e5-base", bilingual_dir=index, encode_query=encode)
+    documents = AGENTS["care"].documents_of()
+    stored = retrieval.queries()[0]
+    assert [chunk_id(h) for h in hybrid(stored["text"], stored["documents"], 8)]
+    assert asked == []  # a stored query needs no encoder
+    hits = hybrid("a sentence no key step holds", documents, 8)
+    assert asked == [("intfloat/multilingual-e5-base", "abc", "a sentence no key step holds")]
+    assert 0 < len(hits) <= 8 and all(h["document_id"] in documents for h in hits)
+    hybrid("a sentence no key step holds", documents, 8)
+    assert len(asked) == 1  # encoded once per text
+
+
+def test_a_hybrid_whose_index_is_not_built_is_refused_by_name(tmp_path):
+    with pytest.raises(runs.RetrieverRefused, match="retrieval-index --model BAAI/bge-m3"):
+        retrieval.named_retriever("hybrid-bge-m3", bilingual_dir=tmp_path / "nothing")
+
+
+def test_a_hybrid_on_a_stale_index_is_refused(tmp_path, monkeypatch):
+    index, _ = _built(tmp_path)
+    monkeypatch.setattr(retrieval, "_corpus", lambda: {"a:1": {"text": "other", "document_id": "a"}})
+    with pytest.raises(retrieval.StaleMeasurement):
+        retrieval.named_retriever("hybrid-e5-base", bilingual_dir=index)
+
+
+def test_no_reader_in_the_code_depends_on_the_retrieval_field_of_run_start():
+    """Ruling item 5: the field stays and nothing reads it; a new reader has to answer to the hybrid's name too."""
+    pattern = re.compile(r"""\[["']retrieval["']\]|\.get\(["']retrieval["']\)""")
+    for folder in ("onyx", "scripts"):
+        for path in (kb.REPO / folder).rglob("*.py"):
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if pattern.search(line):
+                    assert "results[" in line or "cell[" in line or "counts[" in line, (path, line)
+
+
+def test_the_docstrings_name_the_cap_and_no_test_only_retriever():
+    for module in (cost, runs):
+        assert "reaches USD 30" not in module.__doc__ and "past USD 30" not in module.__doc__
+    assert "USD 30" not in runs.record.__doc__ and "USD 45" in runs.record.__doc__
+    assert "in tests only" not in runs.record.__doc__

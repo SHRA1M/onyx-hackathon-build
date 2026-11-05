@@ -25,6 +25,7 @@ import shutil
 import sys
 import time
 from collections import Counter
+from functools import lru_cache
 from importlib import metadata
 from pathlib import Path
 from typing import Any, Callable
@@ -32,7 +33,7 @@ from typing import Any, Callable
 from onyx import data, kb
 from onyx.agents import AGENTS
 from onyx.agents.base import ChromaRetriever, HybridRetriever, Retriever, chunk_id
-from onyx.runs import LANGS, SCENARIOS
+from onyx.runs import LANGS, SCENARIOS, RetrieverRefused
 
 K = 8
 RECORD = kb.REPO / "eval" / "retrieval.json"
@@ -155,6 +156,20 @@ class StoredQueryRetriever(ChromaRetriever):
         return [kb.get_chunk(*hit.split(":", 1)) for hit in result["ids"][0]]
 
 
+class EncodingRetriever(StoredQueryRetriever):
+    """For a live run, which sends texts the index never stored: a stored query keeps its vector, any other is encoded
+    once, by the model and revision the index was built with."""
+
+    def __init__(self, collection: Any, vectors: dict[str, list[float]], encode: Callable[[str], list[float]]) -> None:
+        super().__init__(collection, dict(vectors))
+        self.encode = encode
+
+    def __call__(self, query: str, documents: list[str], k: int) -> list[dict[str, Any]]:
+        if query not in self.vectors:
+            self.vectors[query] = self.encode(query)
+        return super().__call__(query, documents, k)
+
+
 def _collection(path: Path) -> Any | None:
     """kb_main in an index folder, or None; a missing folder stays missing."""
     if not path.exists():
@@ -236,14 +251,15 @@ def refresh(record_path: str | Path = RECORD, chroma_dir: str | Path = kb.CHROMA
     return lines
 
 
-def _download(name: str) -> tuple[Path, str]:
+def _download(name: str, revision: str | None = None) -> tuple[Path, str]:
     """Only what sentence-transformers loads, at one exact commit (these repos also hold other weight formats and
     hundreds of benchmark result files). The folder is named by the commit, so the revision printed is the one
     embedded with."""
     from huggingface_hub import list_repo_files, snapshot_download
 
-    weights = "model.safetensors" if "model.safetensors" in list_repo_files(name) else "pytorch_model.bin"
-    path = Path(snapshot_download(name, allow_patterns=[weights, "*.json", "*.model", "*.txt"]))
+    files = list_repo_files(name, revision=revision)
+    weights = "model.safetensors" if "model.safetensors" in files else "pytorch_model.bin"
+    path = Path(snapshot_download(name, revision=revision, allow_patterns=[weights, "*.json", "*.model", "*.txt"]))
     return path, path.name
 
 
@@ -287,6 +303,39 @@ def build_bilingual(out: str | Path | None = None, models: list[str] | None = No
         return 0
     print("no bilingual model loaded", file=sys.stderr)
     return 1
+
+
+@lru_cache(maxsize=None)
+def _query_model(name: str, revision: str) -> Any:
+    try:
+        from sentence_transformers import SentenceTransformer
+    except ImportError as error:
+        raise RetrieverRefused("a hybrid encodes unseen queries: run with "
+                               "`uv run --with sentence-transformers==6.2.0`; nothing written") from error
+    return SentenceTransformer(str(_download(name, revision)[0]))
+
+
+def _encode_query(name: str, revision: str, text: str) -> list[float]:
+    """One query vector, as build_bilingual makes them. The model loads on the first unseen query, so a run without
+    sentence-transformers stops in the cost plan's dry pass, before any model call."""
+    return _query_model(name, revision).encode([MODELS[name][0] + text], normalize_embeddings=True,
+                                               show_progress_bar=False).tolist()[0]
+
+
+def named_retriever(name: str, bilingual_dir: str | Path = BILINGUAL_DIR,
+                    encode_query: Callable[[str, str, str], list[float]] = _encode_query) -> Retriever:
+    """A `record --retriever` name, built: fusion of bm25 and that dense index, refused when the index is missing or
+    holds other chunks. `retrieval="kb_main"` stays true of it: each index folder holds a collection of that name."""
+    short = name.removeprefix("hybrid-")
+    folder = Path(bilingual_dir) / short
+    collection = _collection(folder)
+    if collection is None:
+        raise RetrieverRefused(f"{name}: index not built; run `retrieval-index --model {DENSE[short]}`; nothing written")
+    _require_current(collection, short, f"retrieval-index --model {DENSE[short]}")
+    meta = json.loads((folder / META).read_text(encoding="utf-8"))
+    dense = EncodingRetriever(collection, meta["query_vectors"],
+                              lambda text: encode_query(meta["embedder"], meta["revision"], text))
+    return HybridRetriever(BM25Retriever(), dense)
 
 
 def _cli(args) -> int:

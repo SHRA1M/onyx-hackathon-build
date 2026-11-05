@@ -2,8 +2,8 @@
 
 `record` writes three runs per scenario per mode per language: governed English at runs/S1/run1.jsonl (the order's
 path), governed Arabic at runs/S1/ar/run1.jsonl, ungoverned under runs/ungoverned/ in the same shape. A live run
-uses the model from .env (onyx.model.from_env) and kb_main retrieval, and stops before any call when the key has no
-value; a scripted run uses onyx/scripted.py and goes under runs/scripted/, labelled scripted in its run_start event.
+uses the model from .env (onyx.model.from_env) and kb_main retrieval (`--retriever` picks a measured hybrid; hq's ruling
+on Task 50 stop 1), and stops before any call when the key has no value; a scripted run uses onyx/scripted.py and goes under runs/scripted/, labelled scripted in its run_start event.
 A committed run is never overwritten.
 
 `replay` re-runs a recorded log offline: RecordedModel returns each logged model response, RecordedRetriever returns
@@ -27,7 +27,12 @@ SCENARIOS = ("S1", "S2", "S3", "S4", "S5")  # the demo set; the unseen bank is n
 LANGS = ("en", "ar")
 MODES = ("governed", "ungoverned")
 RUNS = 3
+RETRIEVERS = ("shipped", "hybrid-e5-base", "hybrid-bge-m3")  # shipped is in every scored run; a hybrid is in none
 DECISIONS = {"gate", "abstain", "override_refused", "override_release"}
+
+
+class RetrieverRefused(RuntimeError):
+    """A retriever that cannot serve this record: refused before anything is written."""
 
 
 def run_path(root: str | Path, sid: str, n: int, lang: str = "en", governed: bool = True) -> Path:
@@ -59,14 +64,22 @@ def decisions(path: str | Path) -> list[tuple[Any, ...]]:
 def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS, runs: int = RUNS,
            langs: tuple[str, ...] = LANGS, env: str | Path = ".env", modes: tuple[str, ...] = MODES,
            retriever: Any = None, max_usd: float = cost.DEFAULT_MAX_USD, spend_root: str | Path = cost.RUNS_DIR,
-           out: Callable[[str], Any] = print, skip_existing: bool = False) -> list[Path]:
+           out: Callable[[str], Any] = print, skip_existing: bool = False,
+           retriever_name: str = "shipped") -> list[Path]:
     """A live run stops before any call when the key has no value (MissingModelKey) or when the spend guard
-    refuses (cost.SpendRefused), and between runs once the recorded spend reaches USD 30 or this batch's spend
-    reaches max_usd; it then prints the runs not recorded. `retriever` replaces kb_main in tests only.
+    refuses (cost.SpendRefused), and between runs once the recorded spend reaches USD 45 or this batch's spend
+    reaches max_usd; it then prints the runs not recorded. `retriever` is what the live run, the plan and the guard
+    search: kb_main when not given, a built hybrid from `--retriever`, a stand-in in tests. `retriever_name` other than
+    shipped goes on run_start as `retriever`; a shipped run's start event does not change, and a scripted run has no
+    other retriever, so that pair is refused before anything is written.
     skip_existing keeps a recorded run and records only the missing ones (after a run died; move its partial log
     out first); without it an existing run raises."""
     from onyx import coordinator, scripted
 
+    if retriever_name != "shipped" and source != "live":
+        raise RetrieverRefused(f"--retriever {retriever_name} with --source {source}: a scripted run has its own "
+                               "retrieval; nothing written")
+    named = {} if retriever_name == "shipped" else {"retriever": retriever_name}
     if source == "live":
         live = model_mod.from_env(env)  # raises MissingModelKey before anything is written
         retriever = retriever or coordinator._kb_retriever()
@@ -90,7 +103,7 @@ def record(source: str, root: str | Path, scenarios: tuple[str, ...] = SCENARIOS
         run = coordinator.Coordinator(data.load_scenario(sid), model, retrieve, log_path=path,
                                       gaps_dir=Path(root) / "gaps", lang=lang, governed=governed)
         run.start(source=source, model=model_id, run=n,
-                  retrieval="kb_main" if source == "live" else "scripted", prompt=PROMPT_VERSION)
+                  retrieval="kb_main" if source == "live" else "scripted", prompt=PROMPT_VERSION, **named)
         run.run()
         written.append(path)
         if source == "live":
@@ -156,9 +169,14 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
 def _record_cli(args) -> int:
     root = Path(args.root or ("runs" if args.source == "live" else "runs/scripted"))
     try:
+        built = None
+        if args.retriever != "shipped" and args.source == "live":
+            from onyx import retrieval  # it imports this module
+            built = retrieval.named_retriever(args.retriever)
         written = record(args.source, root, tuple(args.scenarios or SCENARIOS), args.runs,
-                         modes=tuple(args.modes or MODES), max_usd=args.max_usd, skip_existing=args.skip_existing)
-    except (model_mod.MissingModelKey, cost.SpendRefused) as e:
+                         modes=tuple(args.modes or MODES), max_usd=args.max_usd, skip_existing=args.skip_existing,
+                         retriever=built, retriever_name=args.retriever)
+    except (model_mod.MissingModelKey, cost.SpendRefused, RetrieverRefused) as e:
         print(f"stopped: {e}")
         return 2
     print(f"{len(written)} runs written under {root} ({args.source}).")
@@ -197,6 +215,9 @@ def register(subparsers) -> None:
                         help=f"refuse a live run whose estimate is over this (default USD {cost.DEFAULT_MAX_USD})")
     parser.add_argument("--skip-existing", action="store_true",
                         help="keep runs already recorded and record only the missing ones (never overwrites)")
+    parser.add_argument("--retriever", choices=RETRIEVERS, default="shipped",
+                        help="live only; default shipped (kb_main, every scored run). A hybrid is in no scored run and "
+                             "needs its index and `uv run --with sentence-transformers`")
     parser.set_defaults(func=_record_cli)
     parser = subparsers.add_parser("replay", help="re-run a recorded log offline and compare the verdicts")
     parser.add_argument("log")

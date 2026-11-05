@@ -520,5 +520,5 @@ onyx/data/model_prices.json; "price unknown" where the model has no price row or
 - retrieval alone, against key clauses shown: a clause the mandate list also holds counts here and not under only by retrieval, and these figures read the 161 chunks in kb/chunks today, not the index each scored run was recorded on; neither is a score of a run.
 - retrieval alone, interval: Wilson score, z = 1.96, as above; entries of one step share a query, so read it as a rough width, not a guarantee.
 - retrieval alone, record: the top-8 lists are in eval/retrieval.json. `eval` re-measures each index on disk; with no index (CI) it recomputes these figures from the lists, and fails if the chunks, queries or document scope changed.
-- retrieval alone, not diagnosed: why the figures of both embedders are low.
-- retrieval alone, not measured: `intfloat/multilingual-e5-base` and `BAAI/bge-m3`; the bilingual table is `intfloat/multilingual-e5-small` only.
+- retrieval alone, diagnosed: `docs/report-back/2026-11-05-task-50-built.md`, not in this file.
+- retrieval alone, what the tables are: the shipped embedder is in every scored run; every other table is in no scored run.
