@@ -736,3 +736,13 @@ Adding items 8 and 9 failed 6 older tests in `tests/test_gaps.py` that read gap-
 CI: 41928579279 and 41928590445 on `d94f671`; 41929281626 and 41929290011 on `a14f960`; all success, 736 passed, 26 skipped (the 2 new skips are the PDF-page cases, `kb/sources/` is not in CI), 228 logs chain ok. Plain `python` does not exist on this PC: use `uv run python`.
 
 Superseded at this wrap: "No order open" as the objective; "hq reads the Task 48 report-back" as next action; the Task 48 open line's CI run and report-back path.
+
+## 2026-11-05: Task 50 measured, stop 1 open (seventieth wrap)
+
+Order `docs/work-orders/2026-11-05-task-50-51-retrieval-and-freeze.md` filed. Background and brief corrected: Task 49 merged at `7de5b3f`. Built on `task-50`: `scripts/retrieval_diagnose.py`, `normalize_ar`, `tokenize`, `BM25Retriever`, `HybridRetriever`, one index folder per further model, five new sections in "Retrieval alone", cap 45.
+
+Measured recall@8 en / ar: bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met; nothing tuned. Shipped and e5-small sections unchanged, `inputs_sha256` `1586a7c5...` unchanged. 787 tests passed locally; CI run 41942547287 passed on `78b307f`.
+
+Stop 1 filed for hq: `--retriever` is ordered on `run`, but `retrieval="kb_main"` is written by `record` in `onyx/runs.py`, which the order does not allow; two pinned method lines in `results.md` become false. Not built: the option and its `run_start` field, the two lines, the report-back, the PR. Task 51 not started.
+
+Superseded at this wrap: "Task 49 waiting on a draft PR"; "why both are low is not diagnosed, e5-base and bge-m3 not measured"; `TOTAL_CAP_USD` 20 in the cost line (it was already 30); the 756-test count.
