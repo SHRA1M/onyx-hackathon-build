@@ -775,3 +775,11 @@ Found: ruling 6.2's three `quote_ar` strings do not exist (footers print from ch
 Moved from the background at this wrap, to keep it under its limit:
 
 - 2026-11-03 (Task 44 build): a UAE instrument excludes `web_page`, `announcement` and `news` rows (`NOT_INSTRUMENTS`); a text the build extracts is VERIFIED with the extract's sha256 in the manifest and the source file's sha256 in its notes; Task 44 register entries are appended last and older tests read rows through `_row` / `_row_43` filters in `tests/test_gaps.py`.
+
+## 2026-11-05: Task 51, hq's stop 1 ruling applied (seventy-third wrap)
+
+PR #19 read MERGED; `origin/main` merged into `task-51`, `CHANGELOG.md` the only conflict, both sides kept. The sources sentence cut; the ruling's "108 documents" form not needed, because the main text still prints it twice. Y.3172 and Y.3173 added to Annex A's documents paragraph: the stop file said Annex A named Y.3172, and it did not. Annex A's retrieval sentence takes Task 50's figures, checked against `eval/results.md`. Figure 2 restyle kept at 8 pt, 16 by 5 cm: the first render clipped the right axis label, fixed by two lines and lower axes, page unmoved at y 695.25. The saved patch removed. Report 5 main pages, 13 total. 827 passed. Arabic rendering, 0 empty boxes on the PDF, `runs.html`, `gaps.html`. Draft PR #20, CI run 42096308359 on `d97c4ab`. Report-back `docs/report-back/2026-11-05-task-51-built.md`. Not built: four items waiting on Iyas's five blocks.
+
+Tried: a Git Bash heredoc again turned a written `\n` into a real newline in two Python edits; fixed with the Edit tool. Wrap commit `5837bfd` from `task-50` cherry-picked here; it had not reached main.
+
+Superseded: 2026-11-04 "the README names the measurement with no number" (hq, Task 47 stop 1), replaced by 51.A.6.
