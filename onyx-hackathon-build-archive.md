@@ -783,3 +783,7 @@ PR #19 read MERGED; `origin/main` merged into `task-51`, `CHANGELOG.md` the only
 Tried: a Git Bash heredoc again turned a written `\n` into a real newline in two Python edits; fixed with the Edit tool. Wrap commit `5837bfd` from `task-50` cherry-picked here; it had not reached main.
 
 Superseded: 2026-11-04 "the README names the measurement with no number" (hq, Task 47 stop 1), replaced by 51.A.6.
+
+## 2026-11-05: Task 51 merged; Task 51b built (seventy-fourth wrap)
+
+Iyas merged PR #20 and answered blocks 34, 65, 66, 89, 90. Built on draft PR #21: the four-clause note (gap 1, Annex B, Annex C), the 9.1 full Arabic from `docs/sources/licence-2-2026-ar-9.1-full-checked.txt`, gap 15's Cabinet sentence (Arabic law PDF, page 24, because it is not in the old law note), the tension in gap 1's `uae_position`. First build put the Arabic inline: the rendering check passed but the page image was scrambled, so Arabic-only annex paragraphs now build right-to-left. Foxit held `docs/report.pdf`: the export failed, the script checked the old file, and a hidden Word process (15524) locked `report.docx` until stopped by its ID. 846 tests; 5 main pages, 13 total; CI run 42104679280 on `46ca90c`.
