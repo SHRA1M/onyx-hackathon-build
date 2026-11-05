@@ -64,8 +64,8 @@ def test_eight_list_paragraph_headings_in_template_order(built):
     assert headings == HEADINGS + ["Annex"]  # Task 38: the annex heading, unnumbered, after the eight
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
     assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
-                                                                  "GitHub (public from 2026-11-09)", "Knowledge base"]  # Task 34 (Iyas)
-    assert "Demo video: docs/video/mizan-demo.mp4" in doc.paragraphs[5].text
+                                                                  "GitHub (public from 2026-11-09)", "Replay site, no install"]  # Task 51 A.2
+    assert "Demo video: see the repository README." in doc.paragraphs[5].text
 
 
 def test_two_image_parts_no_template_example_and_no_run_set_tag(built):
@@ -91,8 +91,9 @@ def test_limits_and_next_steps_close_section_6_without_a_heading(built):
 def test_the_mapping_table_replaces_the_template_table_and_tables_keep_its_style(built):
     from docx import Document
     doc = Document(str(built))
-    assert len(doc.tables) == 4  # Task 38: the annex adds the C3 table and "where to look"
-    mapping, gaps = doc.tables[:2]
+    assert len(doc.tables) == 5  # Task 38: the annex adds the C3 table and "where to look"; Task 51 B: the strip
+    assert doc.tables[0].rows[0].cells[0].text == "5 scenarios, 2 languages, 20 recorded runs"
+    mapping, gaps = doc.tables[1:3]
     assert mapping.rows[0].cells[0].text == "Node" and mapping.rows[1].cells[0].text == "SRC"
     assert gaps.rows[0].cells[0].text == "#" and gaps.rows[10].cells[0].text == "11"  # Task 37, rows in number order
     assert gaps.rows[11].cells[0].text == "12"  # Task 37, rows in number order
@@ -384,23 +385,28 @@ def test_report_kb_counts_are_read_from_the_manifest():
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     assert build.check_kb_counts(text) == []
-    assert "holds 108 documents" in text and "100 are verified" in text and "thirty-eight foreign texts" in text  # Task 45
-    assert "thirty-two other UAE texts" in text  # 36 UAE instruments minus the four named (Task 40, counts Task 45)
-    assert "the 36 UAE instruments" in text
+    assert "holds 108 documents" in text and "100 are verified" in text  # Task 45
+    assert "the 36 UAE instruments" in text  # Task 51 stop 1 ruling: the foreign and other-UAE counts moved to Annex A
 
 
-@pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "nine foreign texts", "twenty-two foreign texts",
-                                   "**SRC-2** 51 documents", "fifteen other UAE texts"])
+@pytest.mark.parametrize("wrong", ["holds 51 documents", "47 are verified", "**SRC-2** 51 documents"])
 def test_a_typed_kb_count_that_differs_from_the_manifest_fails(wrong):
     build = _load()
     text = REPORT_MD.read_text(encoding="utf-8")
     right = {"holds 51 documents": "holds 108 documents", "47 are verified": "100 are verified",
-             "nine foreign texts": "thirty-eight foreign texts", "twenty-two foreign texts": "thirty-eight foreign texts",
-             "**SRC-2** 51 documents": "**SRC-2** 108 documents",
-             "fifteen other UAE texts": "thirty-two other UAE texts"}[wrong]
+             "**SRC-2** 51 documents": "**SRC-2** 108 documents"}[wrong]
     assert right in text
     problems = build.check_kb_counts(text.replace(right, wrong))
     assert len(problems) == 1 and problems[0].startswith(wrong), problems
+
+
+@pytest.mark.parametrize("typed, ok", [("nine foreign texts", False), ("thirty-eight foreign texts", True),
+                                       ("fifteen other UAE texts", False), ("thirty-two other UAE texts", True)])
+def test_the_count_check_still_reads_those_words_if_they_come_back(typed, ok):
+    """Task 51: the report no longer prints these two counts; the build must still refuse a wrong one."""
+    build = _load()
+    text = REPORT_MD.read_text(encoding="utf-8") + f"\n\nThere are {typed}.\n"
+    assert (build.check_kb_counts(text) == []) is ok
 
 
 def test_report_build_refuses_a_wrong_kb_count(tmp_path):
@@ -437,7 +443,9 @@ def test_report_row_1_names_dus_chatbot_channel_and_no_operator_is_said_to_break
 
 def test_task_33_line_26_names_two_unpublished_texts_and_one_unreachable_one():
     text = REPORT_MD.read_text(encoding="utf-8")
-    assert "two unpublished texts and one unreachable one back no claim" in text
+    # Task 51 B: the clause leaves the Introduction; Annex A and the README keep it
+    assert "3 UNVERIFIED (unpublished or unreachable; they back no quoted clause" in " ".join(
+        (DOCS / "annex.md").read_text(encoding="utf-8").split())
     assert "three unpublished texts" not in text
     rows = kb.load_manifest()
     assert sorted(r["document_id"] for r in rows if r["status"] == "UNVERIFIED") == [
@@ -457,9 +465,8 @@ def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
 # --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------
 
 LINKS = ["**GitHub (public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build",
-         "**Knowledge base:** `kb/manifest.csv` and `kb/DATASHEET.md` in that repository. **Demo video:** "
-         "`docs/video/mizan-demo.mp4` there (file lands 2026-11-08). **Replay site, no install:** "
-         "https://shra1m.github.io/onyx-hackathon-build/site/"]  # Iyas's A4 answer (1): five header lines
+         "**Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/. **Demo video:** see the "
+         "repository README."]  # Iyas's A4 answer (1): five header lines; Task 51 A.2
 
 
 def test_task_34_team_and_the_four_labelled_links():

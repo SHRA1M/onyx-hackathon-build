@@ -4,29 +4,44 @@
 
 > **Synthetic data.** The operator, subscribers and numbers in this repo are synthetic. The law texts are real, public, linked and hashed. No consumer data.
 
+Mizan is a consumer-care AI for a synthetic UAE operator: agents propose each step of a chat or call, plain-code gates written from binding UAE clauses allow or block it, in Arabic and English, and every step is replayable from a hash-chained log.
+
 ## For the reviewer
 
 The five published criteria, each with its evidence and one way to check it:
 
 | Criterion | Evidence | How to check it |
 |---|---|---|
-| Knowledge base | `kb/manifest.csv` (108 rows, status, sha256, both languages); the downloadable copy `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md`; retrieval measured on its own, no model: `eval/results.md`, section "Retrieval alone" | `uv run python -m onyx kb verify` prints the counts |
+| Knowledge base | `kb/manifest.csv` (108 rows, status, sha256, both languages); the downloadable copy `kb/export/InputDocs/Inputs.md`; what it holds and its limits: `kb/DATASHEET.md`; retrieval measured on its own, no model: `eval/results.md`, section "Retrieval alone"; the running system shows the model 186 of 234 key clauses in English and 166 in Arabic (mandate list first); the embedder alone finds 0.24 / 0.09 at top 8 | `uv run python -m onyx kb verify` prints the counts |
 | Agent capability in error scenarios | `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key) | `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` explains one step from its log |
 | Policy, strategy and standards gaps | the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay | open `docs/gaps.md` |
 | Auditability | the committed hash-chained logs in `runs/`; `docs/report.pdf` | `uv run python -m onyx selftest` recomputes the report's figures from `runs/` |
 | ITU-T Y.3172 and the Readiness Framework | `docs/report.pdf`, the Requirements and Mapping sections | [the Y.3172 diagram and mapping table below](#y3172-mapping) |
 
-The report's annex (data and model, clause to code, the governed test, what ITU can reuse) is in `docs/report.pdf` after page 5.
+## Three things to look at first
+
+![S2 step 3: the gate blocks the agent's reply and hands the complaint to a person, citing CPR 26.7.2, p. 65](docs/replay/screenshots/S2-step3-en.png)
+
+- A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.
+- Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in `docs/replay/`.
+- Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 1.00 Arabic on C5 (`eval/results.md`).
+
+## What Mizan is
 
 Mizan puts a consumer on the line. It is a consumer-care AI for a synthetic UAE operator, Team Onyx's entry to the
 ITU AI for Good Lab Hackathon UAE 2026 (telecom track): agents propose each step of a chat or call, plain-code gates
 written from binding UAE clauses allow or block it, and the same gates run in Arabic and English from the same
 clauses. Every step is written to a hash-chained log that replays offline, with the clause, its page and its words.
 
-Team Onyx (BAU Faculty of AI): Iyas Shraim, leader, Mohammed Rawashdeh and Yanal Faouri.
+| Team | Members | Affiliation |
+|---|---|---|
+| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri | Al-Balqa Applied University, Faculty of AI, students |
+| Reviewer | Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan | practitioner review, not legal advice, no UAE standing |
+
+The report's annex (data and model, clause to code, the governed test, what ITU can reuse) is in `docs/report.pdf` after page 5.
 
 Knowledge base: 100 VERIFIED (text on disk, sha256 matches), 5 REFERENCED (opened, text not held), 3 UNVERIFIED
-(asserted, not published or not reached; they back no quoted clause; two of them record an absence (the PDPL Executive Regulations, the agentic framework text) that the register claims from the portal check written in the row, dated) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts.
+(asserted, not published or not reached; they back no quoted clause) in `kb/manifest.csv`; `python -m onyx kb verify` prints the counts. Two of the three record an absence, the PDPL Executive Regulations and the agentic framework text; the register claims it from the portal check written in the row, dated.
 [The knowledge base, downloadable](kb/export/InputDocs/Inputs.md): one record per document with its sha256 and link;
 22 rows link a landing page because the document link could not be verified. The Telecommunications Law 3/2003 is
 read from the federal legislation portal's consolidated texts, English and Arabic; Arabic prevails, Arabic Articles 13,
@@ -42,16 +57,8 @@ Appendix 1, PDF page 7). TDRA dealt with 23,464 complaints about licensees in 20
 p. 34). At the operator the first contact is already an AI:
 [Etisalat's Virtual Assistant](https://www.eand.ae/en/c/etisalat-virtual-assistant.html), "AI (Artificial
 Intelligence) powered", 24/7, English or Arabic, whose listed jobs include "adding or deleting services, changing of
-packages" and "Billing related clarifications". No source on file says what stops such an AI when a chat becomes a
-complaint or a disconnection. The binding texts do, and Mizan's gates are written from them.
-
-## Three things to look at first
-
-![S2 step 3: the gate blocks the agent's reply and hands the complaint to a person, citing CPR 26.7.2, p. 65](docs/replay/screenshots/S2-step3-en.png)
-
-- A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.
-- Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in `docs/replay/`.
-- Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 1.00 Arabic on C5 (`eval/results.md`).
+packages" and "Billing related clarifications". The public page does not say what the assistant does when a chat becomes a
+complaint; the binding texts do, and Mizan's gates are written from them.
 
 ## Gap register
 
@@ -80,7 +87,7 @@ The federal Official Gazette (Ministry of Justice, elaws.moj.gov.ae) was unreach
 | gap-10 | Arabic on an automated channel: the texts set the language (CPR 3.2.2: written information in Arabic or English as the Consumer prefers, both if unknown; Consumer Law 26: data, advertisements and contracts in Arabic; 8(4): the invoice in Arabic; Cabinet 66/2023 Annex 2: AED 100,000 for each) and none sets the quality: no binding text requires an automated channel to answer as well in Arabic as in English, and the QoS Policy v3.0 has no indicator per language. | method | standards gap | TDRA | Canada OLA s. 22; Canada OLA s. 26; Canada OLA s. 27; Wales WLS Standard 15; Wales WLS Standard 22; Wales WLS Standard 60 | C5 per-language scoring (M, D nodes); mapping (SRC) |
 | gap-11 | A misheard or misread order: the CPR defaults an on-screen yes/no to 'no' to avoid an accidental 'yes' (4.22.3, 4.23.3), requires an OTP for each online purchase (4.23.2) and a recording of verbal consent on telephone sales (4.17.3); no text says what a voice or chat channel must do when it interprets the subscriber's words itself, so 'don't add it' heard as 'add it' reaches the OTP step without being read back. | method | standards gap | TDRA | E-Commerce Dir. 2000/31 Art 11(2); CRD 2011/83 Art 8(2); US TSR 16 CFR 310.3(a)(3)(ii); Qatar 16/2010 Art 56(1); Qatar 16/2010 Art 19 | mapping (P); S1 step 3 (bundle offered, hold until the OTP and the consent form) is the step where the rule would apply; not in a recorded run. |
 | gap-12 | Standards gap, addressed to ITU. Mapped first: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (7.2, Table 7-1, p. 6: "a) Human; b) Human and System; c) System."), and its hand-over is Readiness 2.0 D9's inference-to-action latency in the other direction (p. 27: "inference-to-action latency: average time from first inference to human action"; there the AI alerts and the human acts). Readiness 2.0 also measures the human shaping the inference (D8, p. 25) and states that accountability of final decisions remains with humans (D10, p. 29). Mapped there, neither text measures when an acting agent must stop or how long the hand-over takes; ITU-T F.746.16 11.2 measures how often (a manual intervention rate, graded so that less intervention scores a higher level, no threshold), the opposite direction to a regulator's floor such as CPR 26.7.2; ITU-T F.748.67 CRR-003 measures the queue after the transfer, not the time to it. Y.3173 Table 7-2 NOTE 1 (p. 7) gives a human's order the highest authority ("decisions and execution instructions provided by a human being have the highest authority"); it never requires the system to ask. Y.3173 reproduces SAE J3016's levels in Appendix I (Table I.1), the request to intervene included, and carries no fallback dimension into its own Table 7-1. | absence | standards gap | ITU | SAE J3016 (Y.3173 Table I.1) level 3; SAE J3016 (Y.3173 Table I.1) level 4; EU Roaming Reg 2022/612 Art 14(4); EU Roaming Reg 2022/612 Art 14(4), last subparagraph; EU AI Act Art 14(4)(e) | S2-3 (the complaint hand-over, CPR 26.7.2) |
-| gap-13 | PDPL 9(1) and 9(2) make the Controller notify the Data Office and the data subject of a breach 'within the period and in accordance with the measures and requirements set by the Executive Regulations'. Art 28 gave the Council of Ministers six months from 20 Sep 2021 to issue them, on the Bureau's proposal. On 2026-11-02 the official portal lists no Executive Regulations of this Decree-Law, in either language, so no period exists in any published federal text; an operator's AI that detects a breach has no clock to run. | absence | legislative gap | Council of Ministers, UAE Data Office (proposer, Art 28) | GDPR Art 33(1); ADGM DPR 2021 (UAE free zone, not federal) s. 32(1); DIFC DP Law 5/2020 (UAE free zone, not federal) Art 41(1) | mapping (P) |
+| gap-13 | PDPL 9(1) and 9(2) make the Controller notify the Data Office and the data subject of a breach 'within the period and in accordance with the measures and requirements set by the Executive Regulations'. Art 28 gave the Council of Ministers six months from 20 Sep 2021 to issue them, on the Bureau's proposal. On 2026-11-02 the official portal lists no Executive Regulations of this Decree-Law, in either language, so no period is in any federal text on the official portal (checked 2026-11-02 and 2026-11-04); an operator's AI that detects a breach has no clock to run. | absence | legislative gap | Council of Ministers, UAE Data Office (proposer, Art 28) | GDPR Art 33(1); ADGM DPR 2021 (UAE free zone, not federal) s. 32(1); DIFC DP Law 5/2020 (UAE free zone, not federal) Art 41(1) | mapping (P) |
 | gap-14 | The Controller appoints a Processor with sufficient guarantees (7(5)) and the Processor follows its instructions (8(1)); where several Processors take part, 8(10) asks only for a written contract among them, and no clause asks for the Controller's authorisation before a Processor brings in another. 8(11) leaves processor standards to the Executive Regulations, which the portal does not list on 2026-11-02. No Data Office, Cabinet or Executive-Regulation instrument on sub-processors was found (portal, both languages; Perplexity 2026-11-02 found none). | absence | legislative gap | Council of Ministers (Executive Regulations, 8(11), 28), UAE Data Office (proposer) | GDPR Art 28(2); ADGM DPR 2021 (UAE free zone, not federal) s. 26(2); DIFC DP Law 5/2020 (UAE free zone, not federal) Art 24(2) | S3-4 |
 | gap-15 | The Cabinet schedule of licensee violations and fines that Telecom Law 79 bis (2) promises (fines up to AED 10,000,000 a violation) is not published; the only published telecom fine schedule, Cabinet 57/2024, covers the Telemarketing Regulations. Until it exists, a CPR breach by an automated channel sits in the 79 bis (1) and licence 16.3.2 band, AED 50,000 to 200,000, doubled under licence 16.3.3 for repetition, a missed date or a material failure. The Cabinet has issued itemised schedules under three neighbouring laws (57/2024 telemarketing, 52/2024 trust services, 200/2025 digital trade); none under 79 bis (2). On 2026-11-02 the portal's Telecommunication, Technology and Space sector lists 12 instruments (14 in Arabic), none a schedule of telecom licensee fines; the Regulation Table of Decree-Law 3/2003 shows no records. The Cabinet has issued such a schedule for the space sector (Cabinet Resolution 206/2025, 'Regulations of Violations and Administrative Penalties... Space Activities'), not for telecommunications. | absence | legislative gap | Cabinet | Ofcom Penalty Guidelines 2017 1.11; Ofcom Penalty Guidelines 2017 1.2 | mapping (P) |
 | candidate-4-4-fixed-term-bundle | Whether an expired fixed-term bundle is an 'existing Service... extended or renewed' under CPR 4.4. | scope | legislative gap | TDRA | EECC 2018/1972 Art 105(3); TKG 2021 § 56(3) | S1-6 |
@@ -145,6 +152,18 @@ English run allowed step 4). S1 stays on C3's first English run: no recorded S1 
 | S5 | A TDRA dispute and a loss report | 6 | [docs/replay/S5.md](docs/replay/S5.md) | `runs/c5/S5/run1.jsonl` | `decision-16-2026-ar:4.18` (p. 10), `tdra-cpr-v2-en:26.11` (p. 66) |
 
 The seven unseen scenarios (`onyx/data/scenarios/unseen/`, U1 to U7) were written before the first scored run, their bytes fixed by commit 93a7d40 (2026-10-21) and unchanged since; none has been sent to a model. Their cold runs are a next step.
+
+| id | title | title (Arabic) |
+|---|---|---|
+| U1 | A price rise without notice | زيادة في السعر دون إشعار |
+| U2 | An advert aimed at a child | إعلان موجّه إلى طفل |
+| U3 | A charge for a fault repair | رسوم على إصلاح عطل |
+| U4 | A voice request for account data without verification | طلب صوتي لبيانات الحساب دون تحقق |
+| U5 | A retention pitch delaying a cancellation | عرض استبقاء يؤخر الإلغاء |
+| U6 | A security authority asks for a disconnection | جهة أمنية تطلب قطع الخدمة |
+| U7 | A plan upgrade under Cabinet 66/2023 Article 34(5) | ترقية باقة بموجب المادة 34(5) من قرار مجلس الوزراء 66/2023 |
+
+No key exists for them and none has been run; their cold runs are a next step.
 
 ## Y.3172 mapping
 

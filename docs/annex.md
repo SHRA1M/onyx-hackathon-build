@@ -21,13 +21,11 @@ run of S2 on qwen2.5:14b-instruct through Ollama on a desktop GPU is in `runs/de
 embedder; measured alone it is weak in both languages, and weaker in Arabic (Retrieval below). Mizan does not rely on it for the clauses that matter: every agent's
 mandate names the clauses its verbs depend on, and those chunks are placed in the prompt first, in both languages,
 before anything retrieval adds (see Retrieval below). That is why the Arabic runs score 1.00 action recall and 1.00
-citation validity (C5) with an English embedder. A bilingual embedder is listed under next steps; the one measured before the freeze (Retrieval below) is not a
-clear gain, so the upgrade is a larger model or a retrieval redesign, and neither was made before the freeze
-because it would have meant re-recording the scored runs.
+citation validity (C5) with an English embedder. A bilingual embedder is listed under next steps; the best one measured before the freeze, bge-m3, moved pooled recall@8 from 0.24 to 0.34 in English and from 0.09 to 0.32 in Arabic (Retrieval below), short of the 0.40 English target set before measuring; it was not adopted, because adopting it would have meant re-recording the scored runs.
 
 **The documents.** 108 documents in `kb/manifest.csv`: 36 UAE instruments (laws, Cabinet resolutions, TDRA
 regulations and an enforcement decision, the two 2026 public licences, the DHA AI policy, the DoH standard and the UAE AI Charter, in English and Arabic where both are published) plus three web pages (a TDRA service page, TDRA's FAQs, the UAE PASS documentation),
-three announcements and a news report, which are not instruments; 3 texts of the DIFC and ADGM free zones; 6 ITU texts (one a work-programme page) and the Readiness report; and 38 foreign texts used only
+three announcements and a news report, which are not instruments; 3 texts of the DIFC and ADGM free zones; 6 ITU texts (Y.3172 and Y.3173 among them, one a work-programme page) and the Readiness report; and 38 foreign texts used only
 as global examples. Each row records the issuer, the URL, the date
 fetched, the HTTP status, the SHA-256 of the file as fetched, the page count, the language and whether the English is
 an official translation. 100 are VERIFIED (the issuer's file is on disk and its hash matches), 5 REFERENCED (opened,
@@ -86,6 +84,18 @@ human with both quotes attached. Every event, including the model's raw response
 (`runs/`), which `verify-log` checks and `replay` re-decides offline without a key; the replay site and the `why`
 command read only that log.
 
+**Known limits.** Arabic coverage is uneven. Every CPR clause held is chunked in both languages; TDRA Decision 16/2026 is held in Arabic only; of the licence, only a checked fragment of 9.1 is chunked in Arabic. The PDPL Arabic is on file and quoted in gaps 13 and 14 but not chunked, so the replay pages print 'no Arabic text on file' for PDPL clauses, and gaps 2, 4, 5, 6 and 7 rest on the English text for the PDPL clauses they cite. The Arabic scenario lines are written in Modern Standard Arabic; dialect handling is untested.
+
+When the model provider is unavailable the prototype retries, then writes a plain-code hand-over to the named human and the gate decides it; the gates run without the model. This is shown by fault injection on a replay; no live outage was run and no real human queue or subscriber notice exists. Gap 1's recommendation is the mechanism.
+
+The scenarios, the gates and the answer keys were written by the same team; the keys were frozen after a blind review in which 27 of 28 verdicts agreed (archive 2026-10-21); the recall figures measure agreement with keys the team wrote.
+
+An append-only hash-chained log that holds personal data collides with the PDPL right to erasure; the answer, identifiers out of the chain and in a separately erasable store, is not built.
+
+The transfer gate checks field names, not content; the subscriber's question left verbatim under the label 'de-identified'; free text can re-identify; the label is a design rule, not a tested control.
+
+The objection received at step 1 is read by the sharing and marketing gates from the account record; the transfer gate does not read it, and the prototype does not write the step 1 objection into the record.
+
 ## Annex B. From clause to code: what "plain code" means
 
 Two different things are code, and neither of them is the model.
@@ -112,7 +122,7 @@ What a rule looks like, as stored (`rules.json`):
  "unit": "",
  "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints",
  "quote_ar": "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين",
- "language_note": "Binding rule the system enforces, never a gap. Arabic: يستثنى أو يستبعد منها (is excepted or excluded from them).",
+ "language_note": "Binding rule the system enforces, never a gap. The English 'preclude' is an active prohibition; the Arabic يستثنى أو يستبعد منها (is excepted or excluded from them) is passive, its antecedent the 26.7 chapeau. Mizan enforces the stricter reading.",
  "binding_status": "binding",
  "jurisdiction": "UAE"
 }
@@ -185,7 +195,7 @@ gate rejection rate per scenario is in the table, printed as the range over the 
 **Reading it.** The model is not reckless: in most steps it proposes the lawful act. But across a five-step
 conversation it lets about two held-or-blocked steps through per run, and it does so in both languages. The cost of
 the gate is the hand-over: the governed run stops at the step the key marks and passes the conversation to a named
-human. In the three scored scenarios that contain a hand-over (S2, S4, S5) the hand-over latency row in
+human. That is the controversy case: governance looks slower, because the ungoverned run reaches the subscriber's "yes" first and charges on it. In the three scored scenarios that contain a hand-over (S2, S4, S5) the hand-over latency row in
 `eval/results.md` is 0 steps in both languages: the run hands over at the key's step, not later; S1 and S3 have no
 hand-over step. The subscriber is served by a person at that step instead of charged by a machine. That is the
 number a regulator should want to know about any AI that acts for a licensee, and it is why Mizan puts the decision
@@ -287,13 +297,13 @@ of the date on which the Decree by Law is promulgated." The Decree-Law was issue
 were due by 2022-03-20 (computed). Searched and absent on 2026-11-02, official portal, both languages: the Regulation
 Table of Decree-Law 45/2021 shows no records; the keyword searches "personal data" and its Arabic list no executive
 regulation of this Decree-Law; the Telecommunication, Technology and Space sector list has none. The Regulations are
-not on the official portal on 2026-11-02, so no published federal text sets a period: an operator's AI that detects a
+not on the official portal on 2026-11-02, so no period is in any federal text on the official portal (checked 2026-11-02 and 2026-11-04): an operator's AI that detects a
 breach has no clock to run. Elsewhere: GDPR Art 33(1), "without undue delay and, where feasible, not later than 72
 hours after having become aware of it". Addressee: the Council of Ministers; the UAE Data Office proposes (Art 28).
 Recommendation: the Council of Ministers to issue the PDPL Executive Regulations with the 9(1) and 9(2) periods;
 until then the Data Office to publish an interim period. Exposed by: the mapping (P).
 
-**F.2 Gap 14: a processor may bring in another without the controller's say.** The Controller appoints "the
+**F.3 Gap 14: a processor may bring in another without the controller's say.** The Controller appoints "the
 Processor which has sufficient guarantees" (7(5)) and the Processor works "in accordance with the instructions of
 the Controller" (8(1)); where several Processors take part, 8(10) asks only that "the processing shall be carried
 out in accordance with a written contract or agreement" among them. No clause asks for the Controller's
@@ -308,7 +318,7 @@ Regulations to require the Controller's prior written authorisation, specific or
 another, with a right to object to changes. Exposed by: S3-4, the step where the question goes to the model
 provider under the processor contract.
 
-**F.2 Gap 15: no schedule of licensee fines under 79 bis (2).** Telecom Law 79 bis (2): "The Cabinet shall issue a
+**F.4 Gap 15: no schedule of licensee fines under 79 bis (2).** Telecom Law 79 bis (2): "The Cabinet shall issue a
 resolution on the schedule of violations and fines imposed on licensees", up to AED 10,000,000 a violation. The
 schedule is not published. Until it is, a CPR breach by an automated channel sits in the 79 bis (1) and licence
 16.3.2 band, "not less than Dirhams 50,000 and not more than Dirhams 200,000", doubled under licence 16.3.3 for
@@ -326,7 +336,7 @@ Addressee: the Cabinet. Recommendation: the Cabinet to issue the schedule of lic
 Telecom Law 79 bis (2) promises, or, until then, publish the method the Board will apply under 79 bis (2), as Ofcom
 publishes under s. 392. Exposed by: the mapping (P).
 
-**F.3 Candidates, work in progress.** Each waits on one reading.
+**F.5 Candidates, work in progress.** Each waits on one reading.
 
 1. Expired bundle (CPR 4.4, S1-6): whether a fixed-term bundle that has expired is an "existing Service... extended
    or renewed" under 4.4, or needs fresh consent under 4.3. Settled by a TDRA reading of 4.4.
@@ -334,6 +344,6 @@ publishes under s. 392. Exposed by: the mapping (P).
    Annex 2); whether an English-only chat transcript is such an invoice is inferred, not read. Settled by a TDRA or
    Ministry of Economy reading of "invoice" for a chat transcript.
 
-**F.4 Searched, nothing found.** The Executive Order to the Telecommunications Law, read in full (75 articles,
+**F.6 Searched, nothing found.** The Executive Order to the Telecommunications Law, read in full (75 articles,
 English; the Arabic prevails): Art 30 directives, Art 32 complaint reporting, Art 42 apparatus fines, Art 47
 quality-of-service reporting. Nothing on an automated channel, consent, a hand-over or a licensee fine amount.

@@ -165,9 +165,9 @@ WHY = ("e& reported 371,476 customer complaints in its UAE operations for 2025 (
        f"2023]({WHY_URLS['TDRA, Sustainability Report 2023']}), p. 34). At the operator the first contact is already "
        f"an AI: [Etisalat's Virtual Assistant]({WHY_URLS[ETISALAT]}), "
        "\"AI (Artificial Intelligence) powered\", 24/7, English or Arabic, whose listed jobs include \"adding or "
-       "deleting services, changing of packages\" and \"Billing related clarifications\". No source on file says what "
-       "stops such an AI when a chat becomes a complaint or a disconnection. The binding texts do, and Mizan's gates "
-       "are written from them.")
+       "deleting services, changing of packages\" and \"Billing related clarifications\". The public page does not "
+       "say what the assistant does when a chat becomes a complaint; the binding texts do, and Mizan's gates are "
+       "written from them.")
 THREE = [
     "- A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.",
     "- Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in "
@@ -222,8 +222,8 @@ def test_readme_three_things_and_the_c5_figures():
 
 def test_readme_headings_in_the_orders_order():
     headings = re.findall(r"^## (.+)$", README, re.MULTILINE)
-    assert headings[:5] == ["For the reviewer", "Why", "Three things to look at first", "Gap register",
-                            "Run it without a key"]  # Task 18 item 5: the reviewer block leads
+    assert headings[:5] == ["For the reviewer", "Three things to look at first", "What Mizan is", "Why",
+                            "Gap register"]  # Task 51 D
     assert "Two-minute check" not in headings and "Limits" not in headings
     assert [l for l in _section("What we do not claim").splitlines() if l.startswith("- ")][-1] == LAST_LIMIT
 

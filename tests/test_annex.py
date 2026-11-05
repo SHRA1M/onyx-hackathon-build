@@ -89,7 +89,7 @@ def test_the_pointer_sentence_closes_the_limits_paragraph():
     md = REPORT_MD.read_text(encoding="utf-8")
     limits = md[md.index("## Limits and next steps"):]
     para = " ".join(limits.split("\n\n")[1].split())
-    assert para.endswith("of the gates' law." + POINTER)
+    assert para.endswith("(practice, not legal advice)." + POINTER)  # Task 51 I(f)
 
 
 def test_the_example_team_is_absent_from_the_annex():
@@ -189,7 +189,7 @@ def test_the_built_report_has_the_annex_after_a_page_break(tmp_path):
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}pageBreakBefore") is not None
     leads = [t for t in texts[annex:] if re.match(r"Annex [A-F]\. ", t)]
     assert [t[:8] for t in leads] == ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E.", "Annex F."]
-    assert len(doc.tables) == 4  # mapping, gaps, the C3 table, where to look
+    assert len(doc.tables) == 5  # the strip (Task 51 B), mapping, gaps, the C3 table, where to look
     code = next(p for p in doc.paragraphs[annex:] if p.text.startswith("def complaint_gate"))
     assert all(r.font.size.pt == 8 and r.font.name == "Courier New" for r in code.runs)
 
@@ -268,9 +268,10 @@ def test_annex_a_no_longer_calls_a_bilingual_embedder_the_obvious_upgrade():
     assert "obvious upgrade" not in text and "its Arabic retrieval is weak" not in text
     assert ("is an English sentence embedder; measured alone it is weak in both languages, and weaker in Arabic "
             "(Retrieval below).") in text
-    assert ("A bilingual embedder is listed under next steps; the one measured before the freeze (Retrieval below) is "
-            "not a clear gain, so the upgrade is a larger model or a retrieval redesign, and neither was made before "
-            "the freeze because it would have meant re-recording the scored runs.") in text
+    assert ("A bilingual embedder is listed under next steps; the best one measured before the freeze, bge-m3, moved "
+            "pooled recall@8 from 0.24 to 0.34 in English and from 0.09 to 0.32 in Arabic (Retrieval below), short of "
+            "the 0.40 English target set before measuring; it was not adopted, because adopting it would have meant "
+            "re-recording the scored runs.") in text  # Task 51, hq's stop 1 ruling (Task 50's figures)
 
 
 def test_the_results_method_lines_say_what_stays_open_and_the_annex_does_not():
@@ -281,18 +282,22 @@ def test_the_results_method_lines_say_what_stays_open_and_the_annex_does_not():
     assert ("- retrieval alone, what the tables are: the shipped embedder is in every scored run; every other table is "
             "in no scored run.\n") in results
     assert (kb.REPO / pointer).is_file()  # the public repo has no dead pointer
-    assert "not diagnosed" not in _annex().lower() and "bge-m3" not in _annex() and "e5-base" not in _annex()
+    # Task 51, hq's stop 1 ruling: Annex A's retrieval sentence names bge-m3, the best one measured; the rest stay out
+    assert "not diagnosed" not in _annex().lower() and "e5-base" not in _annex() and "hybrid" not in _annex()
 
 
-def test_the_readme_names_the_measurement_and_carries_no_retrieval_number():
-    """Task 47, hq ruling item 3: one clause at the end of the Knowledge base evidence cell, no number."""
+def test_the_readme_names_the_measurement_and_its_figures():
+    """Task 47, hq ruling item 3: the clause in the Knowledge base evidence cell. Task 51 A.6 appends the figures, so
+    the "no number" of that ruling gives way to the order's sentence, copied from eval/results.md."""
     readme = (kb.REPO / "README.md").read_text(encoding="utf-8")
     row = next(l for l in readme.splitlines() if l.startswith("| Knowledge base |"))
     evidence = row.split(" | ")[1]
-    assert evidence.endswith('; retrieval measured on its own, no model: `eval/results.md`, section "Retrieval alone"')
+    assert evidence.endswith('; retrieval measured on its own, no model: `eval/results.md`, section "Retrieval alone"; '
+                             "the running system shows the model 186 of 234 key clauses in English and 166 in Arabic "
+                             "(mandate list first); the embedder alone finds 0.24 / 0.09 at top 8")
     assert "## Retrieval alone" in (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
-    first_screen = readme[:readme.index("## Why")]
-    assert not re.search(r"\b0\.(24|09|15)\b", first_screen)
+    results = (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
+    assert "| Pooled | en | 29 of 123 (0.24) |" in results and "| Pooled | ar | 11 of 123 (0.09) |" in results
 
 
 def test_annex_f_quotes_are_the_registers_and_its_dates_are_iso():
@@ -307,6 +312,6 @@ def test_annex_f_quotes_are_the_registers_and_its_dates_are_iso():
         assert q.rstrip(".") in register, q
     assert not re.search(r"never issued|never-issued|does not exist", f)
     assert "not on the official portal on 2026-11-02" in f
-    for lead in ("**F.1 Gap 7:", "**F.2 Gap 13:", "**F.2 Gap 14:", "**F.2 Gap 15:", "**F.3 Candidates",
-                 "**F.4 Searched, nothing found.**"):
+    for lead in ("**F.1 Gap 7:", "**F.2 Gap 13:", "**F.3 Gap 14:", "**F.4 Gap 15:", "**F.5 Candidates",
+                 "**F.6 Searched, nothing found.**"):
         assert lead in f, lead

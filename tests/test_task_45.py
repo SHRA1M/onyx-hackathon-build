@@ -132,9 +132,9 @@ def test_every_count_follows_the_manifest():
     assert "three announcements and a news report" in annex
     assert "161 committed chunks across 21 documents" in annex
     report = " ".join(_text("docs/report.md").split())
-    assert "holds 108 documents" in report and "100 are verified" in report and "thirty-two other UAE texts" in report
+    assert "holds 108 documents" in report and "100 are verified" in report
     assert "**SRC-2** 108 documents" in report and "the 36 UAE instruments" in report
-    assert "thirty-eight foreign texts" in report
+    assert "38 foreign texts" in annex  # Task 51, hq's stop 1 ruling: the report's sources sentence moved to Annex A
     readme = _text("README.md")
     assert "(108 rows, status, sha256" in readme and "100 VERIFIED" in readme and "5 REFERENCED" in readme
 

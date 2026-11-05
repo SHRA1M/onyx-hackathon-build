@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-05 (seventy-second wrap, Opus: Task 50 done on draft PR #19; Task 51 built up to stop 1).
+Updated 2026-11-05 (seventy-third wrap, Opus: Task 50 merged, PR #19; Task 51 built up to Iyas's five blocks on draft PR #20).
 
 ## What this is
 
@@ -38,9 +38,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Decisions settled
 
-- 2026-11-04 (hq ruling on Task 47 stop 1): retrieval figures live in `eval/results.md` and Annex A, as found and with their frame; the README names the measurement with no number. The scored figures stay Sonnet's; the bilingual row is shown, in no scored run. No retrieval redesign, larger embedder or Sonnet-driven retrieval before the freeze.
+- 2026-11-05 (hq, Task 51 stop 1 ruling): the README Knowledge base row prints the shipped retrieval figures (51.A.6, replaces the 2026-11-04 "no number"). A strip figure must be printed in the main text; the wording may differ.
+- 2026-11-04 (hq ruling on Task 47 stop 1): retrieval figures live in `eval/results.md` and Annex A, as found and with their frame. The scored figures stay Sonnet's; the bilingual row is shown, in no scored run. No retrieval redesign, larger embedder or Sonnet-driven retrieval before the freeze.
 - 2026-11-04 (hq ruling on Task 45 stop 1): a file-quoted register line that also has a chunk carries `"chunked": true`, and `data.cited_chunks()` counts it; `_row_all` in `tests/test_gaps.py` hides those lines from older tests, `tests/test_task_45.py` reads them whole. The WAM article and the guide share the instrument `agentic-ai-gov-guide` (86 instruments). Gap 6 and gap 7 positions are hq's words: the DIFC, DHA and DoH texts each bind within their own scope only; the DHA policy sets disclosure, not oversight.
-- 2026-11-03 (Task 44 build): a UAE instrument excludes `web_page`, `announcement` and `news` rows (`NOT_INSTRUMENTS`); a text the build extracts is VERIFIED with the extract's sha256 in the manifest and the source file's sha256 in its notes; Task 44 register entries are appended last and older tests read rows through `_row` / `_row_43` filters in `tests/test_gaps.py`.
 - 2026-11-02 (Tasks 42, 43; hq answers): absence is "not on the official portal (checked date)", never "never issued"; frozen keys keep their bytes (S4 still says "were never issued"; the grader reads gap ids, not text). Free-zone texts are jurisdiction `UAE-free-zone`, country `UAE`, and every mention says "UAE free zone (DIFC|ADGM), not federal"; ITU rows are `international` as Y.3172. The AI and Data Authority: "the Prime Minister approved" (WAM); the register keeps the PDPL's name.
 - 2026-10-29 (Iyas, `_reference/how-we-build.md`): from Part B on, every report-back pastes the full `uv run pytest` output and repeats the Limits line: touches only the named files, never `runs/` or the keys; fails closed (USD 0, nothing recorded, nothing pushed outward, stop and ask); owner of any failure is Iyas.
 - 2026-10-27: C5 is the scored run, governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps; C3 is the ungoverned baseline. Detail: archive, 2026-11-05.
@@ -69,12 +69,12 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 50: done, draft PR #19, `docs/report-back/2026-11-05-task-50-built.md`. Recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met, so no Task 52. `record --retriever` exists, default shipped, never used on a live run. hq rules on the Annex A sentence after these figures. hq checks and merges.
-- Task 51: `task-51`, stop 1, `docs/report-back/2026-11-05-task-51-stop-1.md`: main text 4 lines over 5 pages, six questions for hq. Five Arabic blocks wait on Iyas (path in the brief). Ruling: `D:\Projects\hq\uni\ai-for-good-hackathon\fit-check-ruling-2026-11-05-fable.md`. Figure 2 restyle reverted, saved as a patch on the branch. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
-The Arabic rendering check script is not kept: per PDF page, `get_texttrace()` from pymupdf (`uv run --with pymupdf`), glyph id 0 on an Arabic character is the empty box; site pages printed through headless Chrome. Passes on main's files; re-run on the rebuilt PDF.
-- hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 12 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
+- Task 50: merged, PR #19. Recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met, so no Task 52. `record --retriever` exists, default shipped, never used on a live run.
+- Task 51: draft PR #20, `docs/report-back/2026-11-05-task-51-built.md`, with hq. CI passed on build commit `d97c4ab`, run 42096308359. Five Arabic blocks wait on Iyas (path in the brief); they release four items. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
+The Arabic rendering check script is not kept: per PDF page, `get_texttrace()` from pymupdf (`uv run --with pymupdf`), glyph id 0 on an Arabic character is the empty box; site pages printed through headless Chrome. Passes on `task-51`'s PDF, `runs.html`, `gaps.html`; re-run when the annex changes.
+- hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 13 total on `task-51`. Sources and extracts under `kb/sources/` are gitignored, this PC only.
 - hq's copy of the annex text lacks the three Task 47 edits.
-- Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (12 pages, page 5 ends with Limits, page 6 starts with "Annex").
+- Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (13 pages once Task 51 merges, page 5 ends with Limits, page 6 starts with "Annex").
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
 - The three ITU call names go to the README reviewer block on submission day (Task 23 F2). hq updated its report copy after Task 35b (2026-10-30).
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
@@ -82,4 +82,4 @@ The Arabic rendering check script is not kept: per PDF page, `get_texttrace()` f
 
 ## Next action
 
-On `task-51`: apply hq's answer on the cut and Iyas's five answers, build the released items, run the page, PDF and Arabic rendering checks, write the report-back, open the draft PR. Rebase on main if PR #19 has merged. Freeze 2026-11-06, submission 2026-11-09.
+Iyas names the next session's work. Waiting: hq's check of Task 51, and his five blocks. Freeze 2026-11-06, submission 2026-11-09.

@@ -112,9 +112,8 @@ def test_readme_leads_with_the_register():
     table = gaps.table()
     assert table in readme, "README register table is stale: run python -m onyx gaps"
     headings = re.findall(r"^## (.+)$", readme, re.MULTILINE)
-    # order Task 16 item 3: Why and Three things lead, then the register (was order 2026-10-21-task-9 item 6)
-    assert headings[:5] == ["For the reviewer", "Why", "Three things to look at first", "Gap register",
-                            "Run it without a key"]  # Task 18 item 5: the reviewer block leads
+    # order Task 51 D (was Task 16 item 3 and Task 18 item 5)
+    assert headings[:5] == ["For the reviewer", "Three things to look at first", "What Mizan is", "Why", "Gap register"]
     assert table.count("\n| ") == len(ROWS) + 1  # the separator row plus one row per gap
 
 
@@ -1150,7 +1149,7 @@ TX = "kb/sources/texas-bcc-552.html"
 HSC_SOURCE = "kb/sources/california-hsc-1339-75.txt"
 KLRI = "https://elaw.klri.re.kr/eng_service/lawView.do?hseq=73499&lang=ENG"
 TRAI_DRAFT = "https://trai.gov.in/sites/default/files/2026-05/Regulation_07052026.pdf"
-COMPANION_LINE = "The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service."
+COMPANION_LINE = "The 2025 to 2026 US companion-chatbot statutes regulate companions and carve out customer service."
 INDIA_3_9 = [(INDIA, "reg 3(9)", 4), (INDIA, "reg 3(9), proviso", 5)]
 TASK_35B_LEAD = [(MAINE, "§1500-DD(2)", None), (CA_BPC, "§17941(a)", None), (CA_BPC, "§17941(b)", None)]  # gap-6
 TASK_35B_APPENDED = {  # gap id: [(file, clause, page)], after every earlier example
@@ -1429,7 +1428,7 @@ def test_task_43_rows_say_federal_where_they_mean_federal():
             "threshold), the opposite direction to a regulator's floor such as CPR 26.7.2") in g12["gap"]
     assert ("one floor-direction measure for agents that act toward a person: the hand-over required by rule, whether "
             "it happened, and its latency from agent stop to human pick-up") in g12["recommendation"]  # Task 44 F3
-    assert "so no period exists in any published federal text;" in _row_43("gap-13")["gap"]
+    assert "so no period is in any federal text on the official portal (checked 2026-11-02 and 2026-11-04);" in _row_43("gap-13")["gap"]
     assert _row_43("gap-8")["examples_note"].endswith(TASK_43_GAP_8_LINE)
 
 

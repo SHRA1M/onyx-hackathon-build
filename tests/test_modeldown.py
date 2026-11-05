@@ -119,7 +119,7 @@ def test_site_reaches_it_in_one_click():
     page = pages["modeldown.html"]
     for name in ("index.html", "runs.html"):
         assert 'href="modeldown.html"' in pages[name], name
-    assert 'href="../replay/model-down-S2.md"' in pages["runs.html"]
+    assert '<a href="modeldown.html">modeldown.html</a>' in pages["runs.html"]  # Task 51 A.1
     assert site_escape(modeldown.LABEL) in page
     assert "No model took part in step 3 of the model-down column." in page
     assert page.count('<tr data-step="S2-') == 4  # steps 3 to 6

@@ -642,7 +642,7 @@
    "unit": "",
    "quote": "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints",
    "quote_ar": "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين",
-   "language_note": "Binding rule the system enforces, never a gap. Arabic: يستثنى أو يستبعد منها (is excepted or excluded from them).",
+   "language_note": "Binding rule the system enforces, never a gap. The English 'preclude' is an active prohibition; the Arabic يستثنى أو يستبعد منها (is excepted or excluded from them) is passive, its antecedent the 26.7 chapeau. Mizan enforces the stricter reading.",
    "binding_status": "binding",
    "jurisdiction": "UAE"
   },
@@ -777,7 +777,7 @@
    "unit": "",
    "quote": "the Licensee shall continue to be fully liable for any obligations set out in this License",
    "quote_ar": "",
-   "language_note": "Arabic is the binding version (licence 16.7); the Arabic is not chunked in the first pass.",
+   "language_note": "Arabic is the binding version (licence 16.7); the Arabic is not chunked in the first pass. Subcontracting also needs TDRA's prior written approval (same clause), the half the gate does not cite.",
    "binding_status": "binding",
    "jurisdiction": "UAE"
   },
