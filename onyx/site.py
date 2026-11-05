@@ -257,6 +257,12 @@ def _gap(row: dict[str, Any]) -> str:
         examples += f"<p>{escape(row['examples_note'])}</p>"
     standard = _examples("The standard's own text", row["standard_text"]) if row.get("standard_text") else ""
     note = f'<p>{escape(row["note"])}</p>' if row.get("note") else ""  # as docs/gaps.md (hq ruling 2026-10-26, Task 27)
+    together = row.get("clause_note")  # as docs/gaps.md (Task 51b)
+    if together:
+        items = "".join(f'<li>{escape(c["clause"])} (p. {c["page"]}; Arabic p. {c["page_ar"]})<br>EN: '
+                        f'{quote(c["en"], "en")}<br>AR: {quote(c["ar"], "ar")}</li>' for c in together["clauses"])
+        note += (f'<h4>{escape(together["title"])}</h4><ul class="clauses">{items}</ul>'
+                 f'<p>Our note: {escape(together["note"])}</p>')
     return (f'<section class="gap-row" data-id="{row["id"]}" id="{row["id"]}">'
             f'<h2>{escape(row["id"])}: {escape(row["line"])}</h2><p>{escape(row["gap"])}</p>'
             f'<p class="meta">Kind: {escape(row["kind"])}. Category: {escape(row["category"])}. Addressee: '

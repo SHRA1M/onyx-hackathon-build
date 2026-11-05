@@ -282,9 +282,9 @@ def test_candidate_79bis_2_is_hqs_wording():
 def test_candidate_79bis_arabic_is_verbatim_in_the_law_file():
     law = (kb.REPO / LAW_FILE).read_text(encoding="utf-8")
     rows = _row()["searched"][:2]
-    for s in rows:
-        assert s["file_ar"] == LAW_FILE and s["quote_ar"] in law
-    assert "(50.000)" in rows[0]["quote_ar"] and "لمجلس الإدارة توقيع غرامات إدارية" in rows[1]["quote_ar"]
+    assert rows[0]["file_ar"] == LAW_FILE and rows[0]["quote_ar"] in law and "(50.000)" in rows[0]["quote_ar"]
+    # Task 51b: paragraph (2) quotes the Cabinet sentence from the law's PDF, page 24, read by Iyas (tests/test_task_51b.py)
+    assert rows[1]["file_ar"] == "kb/sources/telecom-law-3-2003-ar.pdf" and rows[1]["quote_ar"].startswith("ويصدر مجلس الوزراء")
 
 
 def test_readme_register_row_is_hqs_wording():
