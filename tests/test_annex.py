@@ -276,9 +276,11 @@ def test_annex_a_no_longer_calls_a_bilingual_embedder_the_obvious_upgrade():
 def test_the_results_method_lines_say_what_stays_open_and_the_annex_does_not():
     """Task 47, hq ruling, "Accepted as built": one method line each; the annex carries neither."""
     results = (kb.REPO / "eval" / "results.md").read_text(encoding="utf-8")
-    assert "- retrieval alone, not diagnosed: why the figures of both embedders are low.\n" in results
-    assert ("- retrieval alone, not measured: `intfloat/multilingual-e5-base` and `BAAI/bge-m3`; the bilingual table is "
-            "`intfloat/multilingual-e5-small` only.\n") in results
+    pointer = "docs/report-back/2026-11-05-task-50-built.md"
+    assert f"- retrieval alone, diagnosed: `{pointer}`, not in this file.\n" in results
+    assert ("- retrieval alone, what the tables are: the shipped embedder is in every scored run; every other table is "
+            "in no scored run.\n") in results
+    assert (kb.REPO / pointer).is_file()  # the public repo has no dead pointer
     assert "not diagnosed" not in _annex().lower() and "bge-m3" not in _annex() and "e5-base" not in _annex()
 
 

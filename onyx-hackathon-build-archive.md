@@ -736,3 +736,39 @@ Adding items 8 and 9 failed 6 older tests in `tests/test_gaps.py` that read gap-
 CI: 41928579279 and 41928590445 on `d94f671`; 41929281626 and 41929290011 on `a14f960`; all success, 736 passed, 26 skipped (the 2 new skips are the PDF-page cases, `kb/sources/` is not in CI), 228 logs chain ok. Plain `python` does not exist on this PC: use `uv run python`.
 
 Superseded at this wrap: "No order open" as the objective; "hq reads the Task 48 report-back" as next action; the Task 48 open line's CI run and report-back path.
+
+## 2026-11-05: Task 50 measured, stop 1 open (seventieth wrap)
+
+Order `docs/work-orders/2026-11-05-task-50-51-retrieval-and-freeze.md` filed. Background and brief corrected: Task 49 merged at `7de5b3f`. Built on `task-50`: `scripts/retrieval_diagnose.py`, `normalize_ar`, `tokenize`, `BM25Retriever`, `HybridRetriever`, one index folder per further model, five new sections in "Retrieval alone", cap 45.
+
+Measured recall@8 en / ar: bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met; nothing tuned. Shipped and e5-small sections unchanged, `inputs_sha256` `1586a7c5...` unchanged. 787 tests passed locally; CI run 41942547287 passed on `78b307f`.
+
+Stop 1 filed for hq: `--retriever` is ordered on `run`, but `retrieval="kb_main"` is written by `record` in `onyx/runs.py`, which the order does not allow; two pinned method lines in `results.md` become false. Not built: the option and its `run_start` field, the two lines, the report-back, the PR. Task 51 not started.
+
+Superseded at this wrap: "Task 49 waiting on a draft PR"; "why both are low is not diagnosed, e5-base and bge-m3 not measured"; `TOTAL_CAP_USD` 20 in the cost line (it was already 30); the 756-test count.
+
+Moved from the background's Open list at this wrap, for size: Task 46 merged (PR #16, `43d1e67`, CI passed), three decisions in its report-back are for hq to see. Task 48 merged (PR #17, `89fc335`, CI passed), `check-data` reads rule and mandate quotes only. Task 49 merged (PR #18, `7de5b3f`, CI run 41933666672 passed), 762 tests, CI 736 passed, 26 skipped.
+
+## 2026-11-05: Ra'ed's review, ruling section 5, seventy-first wrap
+
+Followed section 5 of hq's `raed-review-ruling-2026-11-05-fable.md`, on `task-50`. No repo code changed; Task 50 was not touched.
+
+- Eye-check page: `D:\Projects\hq\uni\ai-for-good-hackathon\arabic-eye-check-2026-11-05.html` plus its `-pages` folder (45 images), 90 blocks: 3 rules, 65 blocks for the 72 AR lines of gaps.md, 7 S2 lines, 2 annex lines, 11 pieces of Arabic inside English lines (added, Iyas asked for every pair), 2 new texts for Task 51. Scripts stayed in the session scratchpad.
+- Rendering check: per-page glyph ids through pymupdf, site pages printed through headless Chrome. Control: the pack sent to Ra'ed fails on page 13 (103 of 103 Arabic characters are glyph 0). `docs/report.pdf` and every site page pass. Mac, phone and verify.html's check run not tried.
+- Fit check against main 7de5b3f, `docs/report-back/2026-11-05-raed-ruling-fit-check.md`: six questions to hq. The outage sentence contradicts `onyx/coordinator.py` 219 to 233 and report line 104; three facts in the Arabic coverage paragraph are wrong; pages 4 and 5 have no free line for about 240 words; no 26.7 chunk for a chapeau row; licence 9.1's full Arabic cannot enter the rule or chunk; gap 15's English and Arabic are different sentences; page footers sit in the stored Arabic of 26.6, 4.23.2 and 24.6.
+- hq files changed, as the ruling ordered: `task-50-51-order-2026-11-05.md` (section appended, six items HELD; backup `.bak-2026-11-05-raed`), `uni-workingBrief.md` (item 6 closed, after-shortlist list extended; same backup suffix).
+- Moved from the background to keep it under its limit:
+  - 2026-10-27 (C5 as it stands, after Task 28): governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps (2 English misses, disclosed, no v6); the README and selftest headline is C5; C3 is the ungoverned baseline. Iyas's Arabic text on 26 S1 to S5 steps; C5 Arabic re-recorded (old runs in `runs/_superseded/c5-ar-2026-10-27/`). Replay takes each step's text from the log (`runs.recorded_scenario`); spend stop `cost.TOTAL_CAP_USD` 30; C3 ungoverned Arabic (prompt v3) and C3/C4 Arabic runs stay on the old text.
+  - An hq ruling file can change while it is being built (Task 45: 74 to 93 lines, with a correction). Re-read it and compare before committing; name its sha256 in the report-back.
+  - The WAM Arabic page is script-built: a plain request returns an empty body, and `scrapling fetch` with `network_idle` fails; `scrapling fetch` with `wait` 8000 works. `stealthy_fetch` is refused by the session's permission check; do not work around it.
+
+## 2026-11-05: Task 50 finished, Task 51 built up to stop 1 (seventy-second wrap)
+
+Applied hq's stop 1 ruling: `record --retriever`, `retrieval.named_retriever`, `EncodingRetriever`, the two method lines, the docstrings. 799 tests; CI run 42089516363; draft PR #19. Real hybrids run with no model call: both answered unseen English and Arabic queries in scope, plan dry pass fine. Run in one process after e5-base, bge-m3 printed nothing inside 500 s; alone it took 21 s; not traced.
+
+hq's fit-check ruling answered the six questions. Built on `task-51` (`eb0f62d`): 51.A, B, C (annex), D, E, G, H.2, H.4, I, J, K.2 to 6 less the tension row. Six screenshots retaken with a driver script in a throwaway copy of each page, headless Chrome from file://, no new dependency.
+
+Page fit tried, last main line: everything in, page 6 y 240.75; Figure 2 at 8 pt and one-sentence Limits, y 208.5; Figure 2 reverted, y 192; S3's words out, y 120. Candidates measured: no strip, or sources sentence cut, both page 5 y 695.25. Other combinations in the stop file.
+
+Found: ruling 6.2's three `quote_ar` strings do not exist (footers print from chunks); two more `.md` links on `whatif.html` and `modeldown.html`; the strip's strings are not word for word in the body; Annex A does not name Y.3173. All put to hq. Block 66's new sentence typed from page 24's image, on a five-block page for Iyas, not yet answered.
+
