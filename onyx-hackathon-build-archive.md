@@ -799,3 +799,7 @@ Order filed, branch `task-52` from main 45c7316. Fit check before any build: no 
 Moved from the background to stay under its limit: Task 50 recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Task 51b's CI: passed on build commit `46ca90c`, run 42104679280; Iyas answered the five blocks and the four held items were built.
 
 Superseded: "USD 45 on `task-50`, 30 on main" (main holds 45 since Task 50 merged); "no Task 52" in the Task 50 line, which meant the retriever swap, before this number went to the adversarial task.
+
+Also moved from the background, 2026-11-06:
+- A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` and `kb/chunks/tdra-cpr-v2-en.jsonl`, and re-apply the hand fixes.
+- Give a long download a `timeout` and check it against the order's limit. Model repos hold hundreds of result files: name what to fetch (`allow_patterns`). This PC's download is about 1.4 MB/s; `multilingual-e5-small` took 12 min 45 s.
