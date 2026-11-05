@@ -746,3 +746,5 @@ Measured recall@8 en / ar: bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 
 Stop 1 filed for hq: `--retriever` is ordered on `run`, but `retrieval="kb_main"` is written by `record` in `onyx/runs.py`, which the order does not allow; two pinned method lines in `results.md` become false. Not built: the option and its `run_start` field, the two lines, the report-back, the PR. Task 51 not started.
 
 Superseded at this wrap: "Task 49 waiting on a draft PR"; "why both are low is not diagnosed, e5-base and bge-m3 not measured"; `TOTAL_CAP_USD` 20 in the cost line (it was already 30); the 756-test count.
+
+Moved from the background's Open list at this wrap, for size: Task 46 merged (PR #16, `43d1e67`, CI passed), three decisions in its report-back are for hq to see. Task 48 merged (PR #17, `89fc335`, CI passed), `check-data` reads rule and mandate quotes only. Task 49 merged (PR #18, `7de5b3f`, CI run 41933666672 passed), 762 tests, CI 736 passed, 26 skipped.

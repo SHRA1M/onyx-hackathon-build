@@ -72,9 +72,6 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - Task 50: on `task-50` at `78b307f`, no PR. Recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met, so no Task 52. Stop 1 waits on hq: `docs/report-back/2026-11-05-task-50-stop-1.md`.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 12 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
-- Task 46: merged (PR #16, `43d1e67`, CI passed). Three decisions in its report-back are for hq to see.
-- Task 48: merged (PR #17, `89fc335`, CI passed). `check-data` reads rule and mandate quotes only.
-- Task 49: merged (PR #18, `7de5b3f`, CI run 41933666672 passed). 762 tests, CI 736 passed, 26 skipped.
 - hq's copy of the annex text lacks the three Task 47 edits.
 - Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (12 pages, page 5 ends with Limits, page 6 starts with "Annex").
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
