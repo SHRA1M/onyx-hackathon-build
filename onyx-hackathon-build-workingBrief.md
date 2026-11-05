@@ -1,23 +1,27 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-05 (seventieth wrap, Opus). Handover for the next session.
+Updated 2026-11-05 (seventy-first wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Finish Task 50, then build Task 51, from `docs/work-orders/2026-11-05-task-50-51-retrieval-and-freeze.md`. Each has its own branch, draft PR and report-back; hq checks and merges. Freeze for Task 51: 2026-11-06. Submission 2026-11-09.
+Finish Task 50, then build Task 51, from `D:\Projects\hq\uni\ai-for-good-hackathon\task-50-51-order-2026-11-05.md`. Each has its own branch, draft PR and report-back; hq checks and merges. Freeze for Task 51: 2026-11-06. Submission 2026-11-09.
 
 ## State
 
-- `task-50` is pushed at `78b307f` plus this wrap's commit. No PR yet. CI run 41942547287 passed on `78b307f`; this wrap's commit has its own run, not named here.
+- `task-50` holds Task 50's measurements at `78b307f`, plus wrap commits and the fit-check file. No PR yet.
 - Measured, in `eval/retrieval.json` and `eval/results.md`. Pooled recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met by any, so no Task 52. Nothing tuned after the target.
-- Locally 787 tests passed, `check-data` ok, `selftest` "figures match a fresh eval of runs/", repeat `eval` byte-identical. `git diff` of results shows only the retrieval block; `inputs_sha256` unchanged. Spend USD 21.85, cap 45 on the branch.
+- At `78b307f`: 787 tests passed, `check-data` ok, `selftest` "figures match a fresh eval of runs/", repeat `eval` byte-identical, `inputs_sha256` unchanged. Spend USD 21.85, cap 45 on the branch. Not re-run at this wrap; no code changed since.
 - Index builds, with `uv run --with sentence-transformers==6.2.0`, CPU: e5-base 23.7 s, bge-m3 395.1 s. Downloaded first, separately (70 s, 137 s), so the recorded `build_seconds` leave the download out: say so in the report-back.
+- Ra'ed's review: section 5 of `D:\Projects\hq\uni\ai-for-good-hackathon\raed-review-ruling-2026-11-05-fable.md` done up to its stop. Eye-check page built and rendering check run; Task 51 items appended to hq's order, six marked HELD; hq's brief updated. No repo code changed.
 
 ## Not built yet in Task 50
 
-1. `--retriever` and the `run_start` field (question 1). It also needs a retriever that encodes unseen queries: stored vectors hold only the key steps' texts, and a live run sends others.
-2. The two method lines at the foot of `results.md` and their pin in `tests/test_annex.py` 279 to 281 (question 2).
-3. Report-back `docs/report-back/2026-11-05-task-50-built.md`, draft PR, CI run id.
+hq's ruling is on file and not applied: `D:\Projects\hq\uni\ai-for-good-hackathon\task-50-stop-1-ruling-2026-11-05.md`. File it under `docs/work-orders/`.
+
+1. `--retriever` on `record`, and the `run_start` field. It also needs a retriever that encodes unseen queries: stored vectors hold only the key steps' texts, and a live run sends others.
+2. The two method lines at the foot of `results.md`, word for word from the ruling, and their pin in `tests/test_annex.py` 279 to 281.
+3. The USD 30 mentions: `onyx/cost.py` line 15, `onyx/runs.py` 64 and 65.
+4. Report-back `docs/report-back/2026-11-05-task-50-built.md`, draft PR, CI run id.
 
 ## Draft verdicts for the report-back (from `scripts/retrieval_diagnose.py`; re-run it for the tables, about 1 minute)
 
@@ -30,10 +34,14 @@ Misses: en 94, ar 112, of 123 entries each. None out of scope.
 
 ## Open questions
 
-1. hq, Task 50 stop 1, `docs/report-back/2026-11-05-task-50-stop-1.md`: where `--retriever` goes (recommended `record`, allowing `onyx/runs.py`, whose docstring line 64 still says USD 30), and the two method lines.
+1. hq, on Fable: six questions in `docs/report-back/2026-11-05-raed-ruling-fit-check.md`. Iyas was given the paste; not known if it has run. HELD items wait on the answers: outage sentence, Arabic coverage paragraph, Limits length, chapeau rule row, licence 9.1 full Arabic. Question 6 (gap 15 mismatched pair, page footers in stored Arabic) holds no appended item.
+2. Iyas: the eye-check list (`D:\Projects\hq\uni\ai-for-good-hackathon\arabic-eye-check-2026-11-05.html`, 90 blocks; ticks stay in his browser). A wrong quote in a frozen key is a stop.
+3. Iyas asks Ra'ed which pages carried the symbols and which translations he found wrong. Page 13 of the pack is confirmed by the rendering check.
 
 ## Next moves
 
 1. `git status`; `git switch task-50`; `git pull`. Confirm CI.
-2. With hq's answers, finish the three items above. No answers and the freeze is close: branch `task-51` from main, as the order allows, and rebase before CI.
-3. Build Task 51. The context was past 200k at this wrap, so start a fresh session on Opus.
+2. Apply the stop 1 ruling and finish Task 50. If the freeze is close, branch `task-51` from main, as the order allows, and rebase before CI.
+3. Build Task 51 from hq's copy of the order; the filed copy lacks the Ra'ed section, which is filed as its own dated file. Build no HELD item without hq's answer on file.
+4. Re-run the Arabic rendering check on the rebuilt `docs/report.pdf` and paste the output in the report-back.
+5. The context was past 200k at this wrap, so start a fresh session on Opus.

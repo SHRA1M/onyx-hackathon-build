@@ -748,3 +748,12 @@ Stop 1 filed for hq: `--retriever` is ordered on `run`, but `retrieval="kb_main"
 Superseded at this wrap: "Task 49 waiting on a draft PR"; "why both are low is not diagnosed, e5-base and bge-m3 not measured"; `TOTAL_CAP_USD` 20 in the cost line (it was already 30); the 756-test count.
 
 Moved from the background's Open list at this wrap, for size: Task 46 merged (PR #16, `43d1e67`, CI passed), three decisions in its report-back are for hq to see. Task 48 merged (PR #17, `89fc335`, CI passed), `check-data` reads rule and mandate quotes only. Task 49 merged (PR #18, `7de5b3f`, CI run 41933666672 passed), 762 tests, CI 736 passed, 26 skipped.
+
+## 2026-11-05: Ra'ed's review, ruling section 5, seventy-first wrap
+
+Followed section 5 of hq's `raed-review-ruling-2026-11-05-fable.md`, on `task-50`. No repo code changed; Task 50 was not touched.
+
+- Eye-check page: `D:\Projects\hq\uni\ai-for-good-hackathon\arabic-eye-check-2026-11-05.html` plus its `-pages` folder (45 images), 90 blocks: 3 rules, 65 blocks for the 72 AR lines of gaps.md, 7 S2 lines, 2 annex lines, 11 pieces of Arabic inside English lines (added, Iyas asked for every pair), 2 new texts for Task 51. Scripts stayed in the session scratchpad.
+- Rendering check: per-page glyph ids through pymupdf, site pages printed through headless Chrome. Control: the pack sent to Ra'ed fails on page 13 (103 of 103 Arabic characters are glyph 0). `docs/report.pdf` and every site page pass. Mac, phone and verify.html's check run not tried.
+- Fit check against main 7de5b3f, `docs/report-back/2026-11-05-raed-ruling-fit-check.md`: six questions to hq. The outage sentence contradicts `onyx/coordinator.py` 219 to 233 and report line 104; three facts in the Arabic coverage paragraph are wrong; pages 4 and 5 have no free line for about 240 words; no 26.7 chunk for a chapeau row; licence 9.1's full Arabic cannot enter the rule or chunk; gap 15's English and Arabic are different sentences; page footers sit in the stored Arabic of 26.6, 4.23.2 and 24.6.
+- hq files changed, as the ruling ordered: `task-50-51-order-2026-11-05.md` (section appended, six items HELD; backup `.bak-2026-11-05-raed`), `uni-workingBrief.md` (item 6 closed, after-shortlist list extended; same backup suffix).

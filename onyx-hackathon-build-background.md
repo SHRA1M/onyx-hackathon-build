@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-05 (seventieth wrap, Opus: Task 50 measured on `task-50`, stop 1 open with hq).
+Updated 2026-11-05 (seventy-first wrap, Opus: Ra'ed ruling section 5 done up to its stop; Task 50 still unfinished).
 
 ## What this is
 
@@ -70,7 +70,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 50: on `task-50` at `78b307f`, no PR. Recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met, so no Task 52. Stop 1 waits on hq: `docs/report-back/2026-11-05-task-50-stop-1.md`.
+- Task 50: on `task-50` at `78b307f`, no PR. Recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Target 0.40 / 0.30 not met, so no Task 52. hq answered stop 1: `D:\Projects\hq\uni\ai-for-good-hackathon\task-50-stop-1-ruling-2026-11-05.md`; not applied yet.
+- Ra'ed's review, ruling `raed-review-ruling-2026-11-05-fable.md`: Task 51 items appended to hq's order file, six marked HELD. Six questions wait on hq (Fable): `docs/report-back/2026-11-05-raed-ruling-fit-check.md`. Iyas's eye-check, 90 blocks, not started: `D:\Projects\hq\uni\ai-for-good-hackathon\arabic-eye-check-2026-11-05.html`. The Arabic rendering check passes on main's files; re-run it on the rebuilt PDF. The script lived in the session scratchpad and is not kept: per PDF page, `get_texttrace()` from pymupdf (`uv run --with pymupdf`), glyph id 0 on an Arabic character is the empty box; site pages printed through headless Chrome.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 12 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
 - hq's copy of the annex text lacks the three Task 47 edits.
 - Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (12 pages, page 5 ends with Limits, page 6 starts with "Annex").
@@ -81,4 +82,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Bring hq's answers to Task 50 stop 1, finish Task 50, then build Task 51 (`docs/work-orders/2026-11-05-task-50-51-retrieval-and-freeze.md`). Freeze 2026-11-06, submission 2026-11-09.
+Apply hq's stop 1 ruling and finish Task 50, then build Task 51 from hq's copy of the order (`D:\Projects\hq\uni\ai-for-good-hackathon\task-50-51-order-2026-11-05.md`, which holds the Ra'ed section; the filed copy does not), leaving HELD items until hq answers. Freeze 2026-11-06, submission 2026-11-09.
