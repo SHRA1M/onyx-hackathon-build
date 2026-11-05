@@ -116,6 +116,7 @@ def strip_tags(text: str) -> str:
 class Report:
     title: str
     header: list[tuple[str, str]]
+    strip: str = ""
     sections: dict[str, list[str]] = field(default_factory=dict)
 
 
@@ -138,6 +139,8 @@ def parse(md: str) -> Report:
             if current not in SECTIONS + [TAIL]:
                 raise SystemExit(f"docs/report.md: heading {current!r} is not a template section")
             report.sections[current] = []
+        elif current is None and block.startswith("|"):  # Task 51 B: the one-row strip under the header block
+            report.strip = block
         elif current is None:
             raise SystemExit(f"docs/report.md: text before the first heading: {block[:60]!r}")
         else:
@@ -623,6 +626,8 @@ def render(report: Report, annex: str | None = None) -> Builder:
         _run(paragraph, label, bold=True)
         _runs(paragraph, " " + value)
         after = p
+    if report.strip:
+        b.table(after, report.strip)
 
     mapping_tbl.getparent().remove(mapping_tbl)
     template_headings, placed = iter(headings), []

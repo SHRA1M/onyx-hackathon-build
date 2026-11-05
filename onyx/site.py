@@ -182,13 +182,24 @@ every step goes to a hash-chained log you can verify on this site.</p>
 
 def runs_page() -> str:
     html = replay_viewer.Viewer(verify="verify.html", register="gaps.html").render(nav=nav("runs.html"), css=CSS + SITE_CSS)
-    # the viewer's what-if page sits beside the old page, docs/replay/
-    name = whatif.page_name(WHATIF_RUN, WHATIF_RULE)
-    for name in (name, modeldown.page_name(WHATIF_RUN)):
+    # the viewer links the text pages beside the old page; here each has its own site page (Task 51 A.1)
+    for name, target in ((whatif.page_name(WHATIF_RUN, WHATIF_RULE), "whatif.html"),
+                         (modeldown.page_name(WHATIF_RUN), "modeldown.html")):
         old = f'<a href="{name}">{name}</a>'
         assert html.count(old) == 1
-        html = html.replace(old, f'<a href="../replay/{name}">{name}</a>')
-    return html
+        html = html.replace(old, f'<a href="{target}">{target}</a>')
+    assert html.count("</main>") == 1
+    return html.replace("</main>", unseen_bank() + "</main>")
+
+
+def unseen_bank() -> str:
+    """Task 51 G: the unseen scenarios, listed as the README lists them."""
+    scenarios = [json.loads(p.read_text(encoding="utf-8")) for p in sorted((data.SCENARIOS_DIR / "unseen").glob("U*.json"))]
+    rows = "".join(f'<tr><td>{escape(s["id"])}</td><td>{escape(s["title_en"])}</td>'
+                   f'<td dir="rtl" lang="ar">{escape(s["title_ar"])}</td></tr>' for s in scenarios)
+    return ("<section><h2>The unseen bank</h2><table><thead><tr><th>id</th><th>title</th><th>title (Arabic)</th></tr>"
+            f"</thead><tbody>{rows}</tbody></table><p>No key exists for them and none has been run; their cold runs are "
+            "a next step.</p></section>\n")
 
 
 # --- gaps.html -------------------------------------------------------------------------------------------------
@@ -252,7 +263,8 @@ def _gap(row: dict[str, Any]) -> str:
             f'{escape(", ".join(row["addressee"]))}. Exposed by: {escape(row["exposed_by"])}.</p>{note}'
             f'<h4>Clauses searched</h4><ul class="clauses">{searched}</ul>'
             f'<h4>UAE position</h4><p>{escape(row["uae_position"])}</p>{standard}{examples}'
-            f'<h4>Recommendation</h4><p>{escape(row["recommendation"])}</p></section>')
+            f'<h4>Recommendation</h4><p>{escape(row["recommendation"])}</p>'
+            + (f'<p>{escape(row["interim"])}</p>' if row.get("interim") else "") + "</section>")
 
 
 def gaps_page() -> str:

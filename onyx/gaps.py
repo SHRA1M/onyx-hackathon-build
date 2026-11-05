@@ -51,7 +51,7 @@ GULF_LINE = ("The three GCC telecom consumer regulations read (Saudi 2024, Qatar
              "hand-over clock, machine disclosure or Arabic quality measure either; Saudi 552/1445 comes nearest, "
              "requiring a route to an employee and a qualified employee on every complaint.")
 # the bot-disclosure statutes read (order 2026-10-30 Task 35b, Addendum B item 2): the register's preamble
-COMPANION_LINE = "The 2025 to 2026 US statutes on chatbots regulate companions and carve out customer service."
+COMPANION_LINE = "The 2025 to 2026 US companion-chatbot statutes regulate companions and carve out customer service."
 # the free zones and the AI and Data Authority (order 2026-11-02 Task 43 item 2; hq answers to stop 1, 2 and 3): the
 # register's preamble, the site and the README, after the GCC paragraph
 FREE_ZONE_LINE = ("Two UAE free zones have their own data protection law: DIFC Law 5/2020 binds Controllers and Processors "
@@ -214,6 +214,8 @@ def render() -> str:
         else:
             lines += [f"**Global example.** {row['global_none']}", ""]
         lines += [f"**Recommendation.** {row['recommendation']}", ""]
+        if row.get("interim"):  # a reviewer's interim line, attributed (Task 51 K.5)
+            lines += [row["interim"], ""]
     lines += ["## Candidates", "", "Flagged as candidates; no global example required.", ""]
     for cand in register["candidates"]:
         lines += [f"### {cand['name']}", "", cand["line"], ""]
