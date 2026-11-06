@@ -1,27 +1,27 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-06 (seventy-fifth wrap, Opus). Handover for the next session.
+Updated 2026-11-06 (seventy-sixth wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Task 52: an adversarial subscriber, measured. Order `docs/work-orders/2026-11-05-task-52-adversarial-subscriber.md`. Time box 2026-11-06 16:00 Amman, else dropped. Task 53 and the video follow. Submission 2026-11-09.
+Get Task 52 read by hq and merged by 2026-11-06 16:00 Amman, else it is dropped. Task 53 (wording) and the video follow. Submission 2026-11-09.
 
 ## State
 
-- **Task 52: stopped, nothing built.** Branch `task-52`, one commit on main 45c7316 (the filed order and the stop report). `docs/report-back/2026-11-06-task-52-stop-1.md`, path given to Iyas for hq. USD 0 spent, no model call.
-- Tasks 51 and 51b merged, PR #20 and #21. 846 tests at the last full run (Task 51b); not rerun this session.
+- **Task 52: built, not merged.** Branch `task-52`, PR #22, report-back `docs/report-back/2026-11-06-task-52-built.md`. CI passed on `28e41a7`; the later commits add only the report-back and this wrap. 914 tests. USD 7.13 spent, USD 28.98 of 45 in all.
+- **Result:** governed 8 of 48 steps passed a barred act, ungoverned 48 of 48. All eight are one gate fault: `disclose_account` naming the partner in `target` or `recipient_type` with `args.recipient` empty. Not fixed, as ruled.
+- Report: main text 5 pages, annex from page 6, 14 pages in all on this branch.
 
 ## Open questions
 
-1. hq: may Task 52 spend up to USD 8.50? Estimate USD 7.42 against the order's USD 5.
-2. hq: what counts as a barred act? Recommended: by effect, from a fixed list committed with the key.
-3. hq: does the annex sentence add "args and quote"? Otherwise it goes in word for word.
+1. hq: the seven questions in the report-back. The first three matter most: Annex A's ruled sentence names change words, not the fault the runs found; the after-shortlist fix does not close that fault; C5 S3-2 has the same shape, held only because no trust level is set.
+2. Arabic check: Claude Cowork read not run; Iyas's eye-check of steps 3, 4, 6 not done. Page: `docs/report-back/2026-11-06-task-52-arabic-check.html`.
+3. Task 53 item 18's report clause must carry 8 of 48, not 0.
 4. Earlier, still open: the note's "cites the chapeau"; two AI reads of the gap-15 Cabinet sentence; hq's three items in `docs/report-back/2026-11-05-task-51-built.md`; Iyas asks Ra'ed which translations he found wrong.
 
 ## Next moves
 
 1. `git status`; `git switch task-52`; `git pull`.
-2. Read hq's ruling. No ruling: stop and ask for it.
-3. Write U8 and `onyx/data/keys/U8.json`, with the barred-act classifier and its tests, test first; commit before the first run.
-4. Run through `runs.record` with scenario `unseen/U8-steered-subscriber`, root `runs/u8`, `max_usd` as ruled. The guard's USD 1.71 is wrong: do not rely on it. Then eval, annex, README, Arabic check, report-back `docs/report-back/2026-11-06-task-52-built.md`.
-5. Complaint steps are 7 and 8: `grievance_expressed` stays on once set. U8 also needs a row in the README's unseen list and on the runs page.
+2. If hq sends changes to Task 52: a new dated order, one task. The U8 key and `runs/u8/` are not edited.
+3. If hq clears it: Iyas gives the word, then `gh pr merge 22 --merge`. Merge only on his word.
+4. Then the next order from hq, in a fresh session.

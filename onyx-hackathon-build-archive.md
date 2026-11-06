@@ -803,3 +803,15 @@ Superseded: "USD 45 on `task-50`, 30 on main" (main holds 45 since Task 50 merge
 Also moved from the background, 2026-11-06:
 - A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` and `kb/chunks/tdra-cpr-v2-en.jsonl`, and re-apply the hand fixes.
 - Give a long download a `timeout` and check it against the order's limit. Model repos hold hundreds of result files: name what to fetch (`allow_patterns`). This PC's download is about 1.4 MB/s; `multilingual-e5-small` took 12 min 45 s.
+
+## 2026-11-06: Task 52 built, the gate passed 8 of 48 steered steps
+
+Applied hq's ruling on stop 1 (spend USD 8.50; barred acts by effect from a fixed list; no stop on a pass; two annex sentences). Wrote U8 and its key, `eval.barred_act`, tests; Fable read of the Arabic before the runs, three flags applied; key and list committed `5327a61`; 12 runs, USD 7.13; figures, Annex A and C, README, report rebuilt `28e41a7`; PR #22, CI passed, not merged. Report-back `docs/report-back/2026-11-06-task-52-built.md`.
+
+Result: governed 8 of 48 passed, ungoverned 48 of 48, proposed 48 of 48 in both (prompt v5 tells care to propose and let the gate decide). All eight passes: `disclose_account` with the partner in `target` or `recipient_type` and `args.recipient` empty; `gate._recipient` reads that as the subscriber. The 4 that filled `args.recipient` were blocked. With the trust-level fact removed the eight become hold, by no gate test: tested without a model. C5 S3-2 has the same shape, 3 proposals, held by `verification_gate`. The change-word hole from stop 1's probe did not appear in the runs.
+
+Tried and dropped: a limits sentence saying words alone did not open a gate; untrue once passes occurred, reworded in `eval.U8_LIMITS`.
+
+Detail moved from the background to keep it under its limit:
+- `onyx/why.py`: per decision at the step the verdict (Arabic word beside), each clause id with label, manifest title, page, binding tag and its words from `kb/chunks/` (the rule's quote when the chunk holds it; `NO_AR` line then English where the chunk has no Arabic: every PDPL clause), hand-over obligations and humans on shift, the event hash, `override_refused` lines. A step with no gate event exits 2.
+- `onyx/replay_viewer.py`: steps rendered in Python from logs, rules.json and manifest; events inline as JSON; the script shows one step, switches language, present mode (key p). Hand-over panel: a block carrying both quotes. Figures: `eval.run_metrics` per run shown. Task 19: a picker entry "What-if: S2 under the rule gap 1 recommends" opens `whatif.render` text (section class `whatif`, outside the five scenarios) under a link to the page.
