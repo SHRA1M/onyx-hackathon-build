@@ -904,3 +904,6 @@ Moved from the background:
 - hq's copy of the annex text lacks the three Task 47 edits.
 - hq updated its report copy after Task 35b (2026-10-30).
 - Task 53's figures: main text 5 pages, 16 total; 1146 tests.
+- This repo does not know whether hq ran its one "done means" check on Task 53 (also in the brief).
+- Task 50: `record --retriever` exists, default shipped, never used on a live run.
+- Task 54 at the stop: 1167 tests.

@@ -71,10 +71,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 54: stopped at C.3, branch `task-54`, no PR. 9 key steps differ from the keys, not the order's 2; verdict agreement 86 of 112 (0.77; en 43 of 56, ar 43 of 56; `eval/results.md`). Annex C paragraph, README bullet and "(Annex C)" not built; count list and item 25 grep not run; PDF not rebuilt. 1167 tests. Seven questions for Fable: `docs/report-back/2026-11-06-task-54-stop-1.md`. Three main-text lines (two S4, one S5) disagree with the logs, untouched.
-- Task 53: merged by Iyas, PR #24. Report-back: `docs/report-back/2026-11-06-task-53-built.md`, its hq questions open. This repo does not know whether hq ran its one "done means" check.
+- Task 54: stopped at C.3, branch `task-54`, no PR. 9 key steps differ from the keys, not the order's 2; verdict agreement 86 of 112 (0.77; en 43 of 56, ar 43 of 56; `eval/results.md`). Annex C paragraph, README bullet and "(Annex C)" not built; count list and item 25 grep not run; PDF not rebuilt. Seven questions for Fable: `docs/report-back/2026-11-06-task-54-stop-1.md`. Three main-text lines (two S4, one S5) disagree with the logs, untouched.
+- Task 53: merged by Iyas, PR #24. Report-back: `docs/report-back/2026-11-06-task-53-built.md`, its hq questions open.
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
-- Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered. `record --retriever` exists, default shipped, never used on a live run.
+- Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered.
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 16 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
 - Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (16 pages, page 5 ends with Limits, page 6 starts with "Annex").
