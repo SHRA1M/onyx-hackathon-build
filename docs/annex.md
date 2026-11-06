@@ -6,6 +6,10 @@ OpenAI-compatible adapter (`onyx/model.py`); any model behind that interface can
 was labelled for learning. The data in Mizan is the law, and it is used in three ways: read by the model as
 retrieved context, compiled by people into gate code, and used by the scorer as answer keys.
 
+![Figure 1](docs/fig/fig1-architecture.png)
+
+*Figure 1. Mizan on the Y.3172 nodes; the model proposes, the P node decides, D hands a complaint to a person.*
+
 **Why this model, and where it runs.** Sonnet was chosen in a bake-off of three models on the same scenarios
 (`eval/bakeoff.md`): on prompt v1 it returned well-formed JSON on every call where the larger model's replies were
 stopped by the endpoint's content filter in 18 of 26 English calls, and its citation validity was 1.00 in

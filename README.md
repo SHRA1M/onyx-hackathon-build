@@ -16,7 +16,7 @@ The five published criteria, each with its evidence and one way to check it:
 | Agent capability in error scenarios | `docs/replay/index.html` (five recorded runs, every step with its clause, page and words; no install, no key) | `uv run python -m onyx why runs/c5/S2/run1.jsonl --step 3` explains one step from its log |
 | Policy, strategy and standards gaps | the gap register below and `docs/gaps.md`; `docs/replay/whatif-S2-gap-1.md` tests gap 1's recommended rule by replay | open `docs/gaps.md` |
 | Auditability | the committed hash-chained logs in `runs/`; `docs/report.pdf` | `uv run python -m onyx selftest` recomputes the report's figures from `runs/` |
-| ITU-T Y.3172 and the Readiness Framework | `docs/report.pdf`, the Requirements and Mapping sections | [the Y.3172 diagram and mapping table below](#y3172-mapping) |
+| ITU-T Y.3172 and the Readiness Framework | `docs/report.pdf`, the Use case requirement and Mapping sections | [the Y.3172 diagram and mapping table below](#y3172-mapping) |
 
 ## Three things to look at first
 

@@ -36,7 +36,7 @@ The model reads the subscriber's words in Arabic or English, classifies the step
 a verbatim quote, and drafts the reply in both languages. The knowledge base holds 108 documents chunked by clause,
 and each agent searches only the documents its role allows, so the model sees only the policy text that role may use. Plain code written from the binding UAE texts decides; every verdict names the clause it relied on, its page and its words, in English and Arabic; the model never decides.
 
-## Requirements
+## Use case requirement
 
 It is critical that **P-1** gates for the personal data rules and the complaint bar; **P-2** four verdicts, one
 block without override; **D-1** hand-over to a named human and the gates' deadlines; **PP-1** each agent searches only the documents its role allows, a cited id outside the clauses given is invalid; **SRC-2** 108 documents with URL, SHA-256 and
@@ -62,29 +62,22 @@ scenario did not name.
 | P | plain-code gates reading JSON clause rows (`rules.json`: id, document_id, clause, chunk, quote, quote_ar); four verdicts (P-1, P-2) | 8 Collaboration with AI: the governed-against-ungoverned run | CPR 4.3, 4.10, 4.11, 22.1, 24.6, 24.10, 26.7.2; Cabinet 56/2024; PDPL 18(4) |
 | D | hand-over; deadlines; routing not built (D-1, D-2) | 6 Human Interface: hand-over with both quotes; no Y.3172 node outcome for it (gap 8) | CPR 26.13.2, 26.13.3; QoS v3.0 T1(2a) |
 | SINK | log; replay; gap register (SINK-1) | 10 AI & Policies: the gap register is a policy input | Y.3172; Readiness 2.0; IMDA, EU AI Act, GDPR, COPPA |
-| MLFO; ML sandbox | staged release; model, prompt, gate version and key hashes per run (MLFO-1); selftest and suite in CI; the governed-against-ungoverned pair (SB-1) | Standards factor: configuration recorded and replayable; and 13 Digital Infrastructure, on documents only; Sandbox factor: same scenarios with and without gates, same model | Y.3172; Y.3172; Readiness 2.0 |
+| MLFO; ML sandbox | staged release; model, prompt, gate version and key hashes per run (MLFO-1); selftest and suite in CI; the governed-against-ungoverned pair (SB-1) | Standards factor: configuration recorded and replayable; and 13 Digital Infrastructure, on documents only; Sandbox factor: same scenarios with and without gates, same model | Y.3172 (both); Readiness 2.0 |
 
-Of the 13 Readiness 2.0 dimensions, we claim five (6, 7, 8, 10, 11) with evidence from the running system and two (1, 13) from documents only, with no running system behind them; the other six we do not claim.
-
-![Figure 1](docs/fig/fig1-architecture.png)
-
-*Figure 1. Mizan on the Y.3172 nodes; the model proposes, the P node decides, D hands a complaint to a person.*
+Of the 13 Readiness 2.0 dimensions, we claim five (6, 7, 8, 10, 11) with evidence from the running system and two (1, 13) from documents only, with no running system behind them; the other six we do not claim. Figure 1 (Annex A) draws the nodes.
 
 ## Demo scenarios
 
 1. See it online, nothing to install. The replay site shows each recorded conversation step by step, with the
 clause, page and words behind every decision (`docs/replay/index.html`).
-
 2. A customer asks why. One command prints the decision, the clause with its quote and the log entry's fingerprint,
 in English or Arabic: `python -m onyx why <log> --step <n>`. The answer is read from the log, so no AI is asked to explain itself afterwards.
-
 3. Two instructions conflict (the controversy case). In S3, step 3, the care agent proposes sending customer identifiers to the AI provider
 abroad. The gate blocks it under PDPL 22 and 23(2), and refuses even a staff member's override (logged as
 `override_refused`). Privacy wins by rule, not by what the model happens to do.
-
 4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's
 missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4)
-on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).
+on S4. A re-run costs USD 0; a live run on the model USD 0.27.
 
 ## Error scenarios
 
@@ -98,7 +91,7 @@ text: gap 1. Replayed as a what-if under the rule the register recommends, the h
 clock, and a new finding appears: the hand-over time must be recorded (`docs/replay/whatif-S2-gap-1.md`).
 
 **S3, a partner wants the data, and the model provider is abroad.** A partner asks for subscriber data: held, no verification level set (24.10; one Arabic run: block, 24.6); the override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5). A de-identified payload under
-the processor contract: allow. A retention offer to a Do Not Call number: block (Cabinet 56/2024).
+the processor contract: allow. A retention offer at 19:30 to a Do Not Call number: held under the consent rules; the marketing gate (Cabinet 56/2024, Spam Calls 15.4) did not run, because it read a field the model did not fill.
 
 **S4, non-payment and an automated disconnection.** Disconnection with no warning on file: block (22.1). Notice
 given, warning limited to the unpaid service: allow. The subscriber contests the automated decision; the Data Office
@@ -106,10 +99,9 @@ requests a human review (PDPL 18(4)): allow. By when, and who hears a refusal? N
 
 **S5, a TDRA dispute and a loss report.** A lost device reported over voice: hold until identity is verified
 (24.10; Decision 16/2026). What "adequate verification" is on a remote channel: gap 3. The human verifies, the block
-proceeds: allow; TDRA requests the report.
+proceeds: allow; the TDRA's request for the record: blocked by a base check, the deadline written as text, not the rule's value.
 
-**Results**, two runs per scenario per language, means over S1 to S5, English / Arabic `[C5, governed, two runs per
-scenario per language, mean over S1 to S5, en / ar]` (Figure 2, Annex C): citation validity 0.99 / 1.00 (one id, S2 English); action recall
+**Results** `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` (Figure 2, Annex C): citation validity 0.99 / 1.00 (one id, S2 English); action recall
 against the frozen keys 0.96 / 1.00 (110 of 112 key steps; both misses English: S3-4, S4-4); abstention on the one
 unanswerable step per scenario 1.00; expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the adviser, the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged. The gate decides in a median of 0.46 ms; the model's proposal
 takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
@@ -119,7 +111,7 @@ takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
 Method. Every scenario step was put to the gate; a step no clause answers returns insufficient evidence and logs a
 candidate. Each candidate was then searched across the 36 UAE instruments in both languages, then the GCC
 regulations, then foreign law for a global example. A gap is claimed only when the register lists what was searched
-and found absent. The recorded runs re-find, on every run, all 5 expected gaps keyed to a step where the adviser speaks; gaps 2 and 6 are keyed to S1 steps where it has no model turn (Annex C).
+and found absent.
 
 | # | Gap | Kind | Addressee | Example |
 |---|---|---|---|---|

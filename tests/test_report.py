@@ -18,7 +18,7 @@ from onyx.model import MockModel
 
 DOCS = kb.REPO / "docs"
 REPORT_MD = DOCS / "report.md"
-HEADINGS = ["Introduction", "Description of the use case", "What is the role played by AI?", "Requirements",
+HEADINGS = ["Introduction", "Description of the use case", "What is the role played by AI?", "Use case requirement",
             "Mapping with ITU-T Y.3172, Readiness 2.0 Report, and domain-specific policies", "Demo scenarios",
             "Error scenarios", "Policy gaps and standards gaps derived from the mapping exercise"]  # Task 36 item 1
 
@@ -116,10 +116,12 @@ def test_the_creator_is_team_onyx_and_the_template_author_is_gone(built):
 
 
 def test_a_missing_figure_fails_the_build(tmp_path):
-    md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("fig1-architecture.png", "fig9-missing.png"),
-                  encoding="utf-8", newline="\n")
-    result = _build(md, tmp_path / "out.docx")
+    annex = tmp_path / "annex.md"  # Task 53 item 45(b): Figure 1 left the main text for Annex A
+    annex.write_text((DOCS / "annex.md").read_text(encoding="utf-8").replace("fig1-architecture.png", "fig9-missing.png"),
+                     encoding="utf-8", newline="\n")
+    result = subprocess.run([sys.executable, str(DOCS / "build_report.py"), "--annex", str(annex),
+                             "--out", str(tmp_path / "out.docx")],
+                            capture_output=True, text=True, encoding="utf-8", cwd=kb.REPO)
     assert result.returncode != 0 and "fig9-missing.png" in result.stdout + result.stderr
 
 
@@ -252,13 +254,13 @@ def test_every_table_cell_is_10_pt_with_no_space_before_or_after(built):
                     assert p.runs and all(r.font.size == Pt(10) for r in p.runs), cell.text
 
 
-def test_figure_1_is_9_cm_figure_2_is_16_cm_and_both_keep_with_next(built):
+def test_both_figures_are_16_cm_and_keep_with_next(built):
     from docx import Document
     from docx.shared import Cm
     doc = Document(str(built))
     pictures = [p for p in doc.paragraphs if p._p.xpath(".//pic:pic")]
     assert len(pictures) == 2
-    for p, width in zip(pictures, (Cm(9), Cm(16))):  # Task 53 item 38, layers 5 and 7
+    for p, width in zip(pictures, (Cm(16), Cm(16))):  # Task 53 item 45(b), item 38 layer 5
         assert p.paragraph_format.keep_with_next is True
         assert int(p._p.xpath(".//wp:extent/@cx")[0]) == width
 

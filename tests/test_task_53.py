@@ -52,8 +52,6 @@ REPORT_HAS = [
     STRIP_CELL,
     "expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the adviser, "
     "the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged",
-    "The recorded runs re-find, on every run, all 5 expected gaps keyed to a step where the adviser speaks; gaps 2 and 6 "
-    "are keyed to S1 steps where it has no model turn (Annex C).",
     "We ran the same five scenarios twice on the same model, once with the gates on and once with them off. With the "
     "gates off, on average about two acts per run went through that should have been stopped or handed to a person: 2.3 "
     "in English and 2.1 in Arabic `[C3, prompt v3, three runs per scenario per language]`.",
@@ -79,7 +77,7 @@ REPORT_HAS = [
     "override (logged as `override_refused`). Privacy wins by rule, not by what the model happens to do.",
     "4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's "
     "missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4) "
-    "on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).",
+    "on S4. A re-run costs USD 0; a live run on the model USD 0.27.",  # item 45(e): eval/results.md prints USD 5.3767
     "A partner asks for subscriber data: held, no verification level set (24.10; one Arabic run: block, 24.6); the "
     "override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5).",
     "| P | plain-code gates reading JSON clause rows (`rules.json`: id, document_id, clause, chunk, quote, quote_ar); four "
@@ -87,7 +85,8 @@ REPORT_HAS = [
     "Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading of the texts (practice, not "
     "legal advice, no UAE standing); what he found and what changed are in Annex A. Next:",
     "team approval of holds. Annex A to F follow.",
-    "mean over S1 to S5, en / ar]` (Figure 2, Annex C): citation validity 0.99 / 1.00",
+    "**Results** `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` (Figure 2, Annex C): "
+    "citation validity 0.99 / 1.00",  # item 45(c)
     "Plain code written from the binding UAE texts decides; every verdict names the clause it relied on, its page and its "
     "words, in English and Arabic; the model never decides.",
     "One team wrote the keys, gates and scenarios; the humans are scripted; Arabic coverage is uneven; an outage is shown "
@@ -99,6 +98,11 @@ REPORT_HAS = [
     "Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1), and its "
     "hand-over is Readiness D9's inference-to-action latency in the other direction; neither text measures when an acting "
     "agent must stop, how often it hands over or how long that takes. Left open with ITU's agreement (2026-10-30).",
+    "## Use case requirement",  # item 45(a)
+    "A retention offer at 19:30 to a Do Not Call number: held under the consent rules; the marketing gate (Cabinet "
+    "56/2024, Spam Calls 15.4) did not run, because it read a field the model did not fill.",
+    "The human verifies, the block proceeds: allow; the TDRA's request for the record: blocked by a base check, the "
+    "deadline written as text, not the rule's value.",
 ]
 REPORT_GONE = [
     "BAU Faculty of AI", "not an institution in a drill", "bar any AI in that seat",
@@ -110,6 +114,8 @@ REPORT_GONE = [
     "so they have time to act", "On eight steps we wrote",
     "![Figure 2]", "Figure 2. (a)", "With the model call made to fail", "the log meets the right to erasure",
     "Annex A to F: data and model", "The model proposes and plain code",
+    "## Requirements", "A retention offer to a Do Not Call number: block", "TDRA requests the report",  # item 45(a)
+    "The recorded runs re-find",  # item 45(d): the Results paragraph carries the statement
 ]
 ANNEX_HAS = [
     "An agent's mandate is its fixed list of what it may do and read.",
@@ -268,10 +274,9 @@ def test_the_new_annex_sentences_sit_where_the_order_puts_them():
 
 
 def test_figure_2_prints_in_annex_c_after_the_c5_results(tmp_path):
-    """Item 38(a), with its caption; Figure 1 stays in the main text."""
+    """Item 38(a), with its caption; item 45(b) moved Figure 1 to Annex A."""
     from docx import Document
 
-    assert "![Figure 1](docs/fig/fig1-architecture.png)" in REPORT
     figure = ANNEX.index("![Figure 2](docs/fig/fig2-results.png)")
     assert ANNEX.index("the re-recorded set.") < figure < ANNEX.index("**Steered subscriber, U8.**")
     assert ANNEX.index("*Figure 2. (a) C5: action recall and citation validity. (b) C3: governed rejections, ungoverned "
@@ -281,15 +286,34 @@ def test_figure_2_prints_in_annex_c_after_the_c5_results(tmp_path):
     paragraphs = Document(str(out)).paragraphs
     texts = [p.text for p in paragraphs]
     pictures = [i for i, p in enumerate(paragraphs) if p._p.xpath(".//pic:pic")]
-    assert len(pictures) == 2 and pictures[0] < texts.index("Annex") < pictures[1]
+    assert len(pictures) == 2 and texts.index("Annex") < pictures[0] < pictures[1]
     assert texts[pictures[1] + 1].startswith("Figure 2. (a) C5")
     assert all(r.font.size.pt == 10 for r in paragraphs[pictures[1] + 1].runs)
 
 
-def test_the_four_demo_items_are_four_paragraphs():
-    """Item 38(b)."""
+def test_figure_1_prints_in_annex_a_after_its_first_paragraph(tmp_path):
+    """Item 45(b): caption unchanged, the mapping section points to it, nothing drawn in the main text."""
+    from docx import Document
+
+    caption = "Figure 1. Mizan on the Y.3172 nodes; the model proposes, the P node decides, D hands a complaint to a person."
+    assert "![Figure 1]" not in REPORT and caption not in REPORT
+    assert "the other six we do not claim. Figure 1 (Annex A) draws the nodes." in REPORT
+    figure = ANNEX.index("![Figure 1](docs/fig/fig1-architecture.png)")
+    assert ANNEX.index("used by the scorer as answer keys.") < figure < ANNEX.index("**Why this model, and where it runs.**")
+    out = tmp_path / "report.docx"
+    assert _build().main(["--out", str(out)]) == 0
+    paragraphs = Document(str(out)).paragraphs
+    texts = [p.text for p in paragraphs]
+    first = next(i for i, p in enumerate(paragraphs) if p._p.xpath(".//pic:pic"))
+    assert texts[first - 1].startswith("No model was trained.") and texts[first + 1] == caption
+
+
+def test_the_four_demo_items_run_together_in_one_paragraph():
+    """Item 45(f), undoing item 38(b): the numbers stay, inline, in order."""
     section = (REPO / "docs" / "report.md").read_text(encoding="utf-8").split("## Demo scenarios")[1].split("## Error")[0]
-    assert [b.strip()[:2] for b in section.split("\n\n") if b.strip()] == ["1.", "2.", "3.", "4."]
+    blocks = [b.strip() for b in section.split("\n\n") if b.strip()]
+    assert len(blocks) == 1 and blocks[0].startswith("1. See it online")
+    assert blocks[0].index("1. See") < blocks[0].index("2. A customer") < blocks[0].index("3. Two") < blocks[0].index("4. Another")
 
 
 def test_mlfo_and_ml_sandbox_share_one_row_and_nothing_is_dropped():
@@ -297,8 +321,33 @@ def test_mlfo_and_ml_sandbox_share_one_row_and_nothing_is_dropped():
     assert ("| MLFO; ML sandbox | staged release; model, prompt, gate version and key hashes per run (MLFO-1); selftest and "
             "suite in CI; the governed-against-ungoverned pair (SB-1) | Standards factor: configuration recorded and "
             "replayable; and 13 Digital Infrastructure, on documents only; Sandbox factor: same scenarios with and without "
-            "gates, same model | Y.3172; Y.3172; Readiness 2.0 |") in REPORT
+            "gates, same model | Y.3172 (both); Readiness 2.0 |") in REPORT  # item 45(a)
     assert "| MLFO | " not in REPORT and "| ML sandbox | " not in REPORT
+
+
+def _c5_gate_rows(scenario, step):
+    for path in sorted((REPO / "runs" / "c5" / scenario).rglob("*.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            row = json.loads(line)
+            if row["action"] == "gate" and row["entity_id"].startswith(f"{scenario}-{step}-"):
+                yield row
+
+
+def test_the_s3_and_s5_sentences_are_what_the_c5_logs_recorded():
+    """Item 45(a): S3-5 held under the consent rules with no outbound field, so no marketing gate; S5-6 blocked by the
+    base check with no clause, on a deadline written as text."""
+    s3 = list(_c5_gate_rows("S3", 5))
+    assert len(s3) == 4
+    for row in s3:
+        assert row["verdict"] == "hold" and "cpr-4-22-1" in row["clause_ids"]
+        assert "outbound" not in row["old_value"]["args"]
+        assert not [r for r in row["new_value"]["reasons"] if "marketing" in r["gate"]]
+    s5 = list(_c5_gate_rows("S5", 6))
+    assert len(s5) == 4
+    for row in s5:
+        assert row["verdict"] == "block" and row["clause_ids"] == []
+        assert isinstance(row["old_value"]["args"]["deadline"], str)
+        assert [r["gate"] for r in row["new_value"]["reasons"]] == ["base"]
 
 
 def test_figure_1_says_retrieval_limited_by_role():
