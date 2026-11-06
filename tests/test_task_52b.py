@@ -87,3 +87,35 @@ def test_a_log_with_the_flag_replays_under_the_new_reading(tmp_path):
 def test_the_word_lists_live_in_the_gate_and_the_eval_imports_them():
     assert onyx_eval.THIRD_PARTY_WORDS is gate.THIRD_PARTY_WORDS
     assert onyx_eval.SUBSCRIBER_WORDS is gate.SUBSCRIBER_WORDS
+
+
+# --- Order change C5: live runs never start with the flag off ---------------------------------------------------------
+
+class _Spy(coordinator.Coordinator):
+    seen: list[dict] = []
+
+    def __init__(self, *args, **kwargs):
+        type(self).seen.append(kwargs)
+        super().__init__(*args, **kwargs)
+
+
+def test_the_coordinator_defaults_the_flag_on():
+    import inspect
+    assert inspect.signature(coordinator.Coordinator).parameters["recipient_resolution"].default is True
+
+
+def test_record_never_passes_the_flag(tmp_path, monkeypatch):
+    _Spy.seen = []
+    monkeypatch.setattr(coordinator, "Coordinator", _Spy)
+    written = runs.record("scripted", tmp_path, scenarios=("S1",), runs=1, langs=("en",), modes=("governed",))
+    assert _Spy.seen and all("recipient_resolution" not in kwargs for kwargs in _Spy.seen)
+    assert _events(written[0])[0]["new_value"]["recipient_resolution"] is True
+
+
+def test_replay_passes_the_logs_own_value(tmp_path, monkeypatch):
+    new = runs.record("scripted", tmp_path, scenarios=("S1",), runs=1, langs=("en",), modes=("governed",))[0]
+    _Spy.seen = []
+    monkeypatch.setattr(coordinator, "Coordinator", _Spy)
+    runs.replay(U8_LOG)
+    runs.replay(new)
+    assert [kwargs["recipient_resolution"] for kwargs in _Spy.seen] == [False, True]
