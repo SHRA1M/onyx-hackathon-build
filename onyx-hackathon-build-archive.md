@@ -791,3 +791,27 @@ Iyas merged PR #20 and answered blocks 34, 65, 66, 89, 90. Built on draft PR #21
 Moved from the background to stay under its limit:
 - `scripts/fig_architecture.py` and `scripts/fig_results.py` (Task 17): `docs/fig/fig1-architecture` and `fig2-results`, .png and .svg (SVG written with LF). Figure 1 node lines are word-for-word phrases of the README mapping table; Figure 2 reads `eval/results.md` ((a) C5 cells, (b) C3 Governed and Ungoverned tables, ruling 1) and exits naming the missing scenario and language. Task 18: Figure 1 is a landscape strip 16 by 4.5 cm (MLFO above the chain, ML sandbox dashed below, hand-over arrow down from D), Figure 2 has (a) and (b) side by side at 16 by 5 cm; fonts 6.5 pt minimum; no caption drawn inside (the Word caption carries it). Tests `tests/test_figures.py` (10).
 - Report pages: `powershell -ExecutionPolicy Bypass -File scripts/report_pages.ps1 [-Path x.docx]` from Bash worked on 2026-10-30 (denied earlier; then use the PowerShell tool). Word measures the gap table's narrow last column: a longer cell can add a page.
+
+## 2026-11-06: Task 52 stopped at its spend limit (seventy-fifth wrap)
+
+Order filed, branch `task-52` from main 45c7316. Fit check before any build: no gate reads the chat text; a U-scenario records through `runs.record` with the path `unseen/<file>` (tested on U6, scripted), so the ungoverned stop does not apply. The spend stop does: 96 care calls, USD 7.42, input alone USD 5.91, against the order's USD 5. Prompt size checked by a dry pass on U5 and calibrated against C5's billed tokens. The guard printed USD 1.71. A direct probe of `gate.decide` with hand-written proposals found `allow` on change words outside the gates' lists and on `draft_reply` to a partner. Written up in `docs/report-back/2026-11-06-task-52-stop-1.md` with three questions for hq. No model call, no code changed, `pytest` not run.
+
+Moved from the background to stay under its limit: Task 50 recall@8 en / ar: shipped 0.24 / 0.09, e5-small 0.24 / 0.15, bm25 0.20 / 0.15, e5-base 0.27 / 0.19, bge-m3 0.34 / 0.32, hybrid-e5-base 0.27 / 0.18, hybrid-bge-m3 0.27 / 0.23. Task 51b's CI: passed on build commit `46ca90c`, run 42104679280; Iyas answered the five blocks and the four held items were built.
+
+Superseded: "USD 45 on `task-50`, 30 on main" (main holds 45 since Task 50 merged); "no Task 52" in the Task 50 line, which meant the retriever swap, before this number went to the adversarial task.
+
+Also moved from the background, 2026-11-06:
+- A new rule citing an uncited clause: run `kb chunk` with `ONYX_SOURCE_DIR` set, read the clause in `kb/chunks-full/`, add the rule, run `kb chunk` again so `kb/chunks/` picks it up. Then `git checkout -- kb/chunks/licence-2-2026.jsonl` and `kb/chunks/tdra-cpr-v2-en.jsonl`, and re-apply the hand fixes.
+- Give a long download a `timeout` and check it against the order's limit. Model repos hold hundreds of result files: name what to fetch (`allow_patterns`). This PC's download is about 1.4 MB/s; `multilingual-e5-small` took 12 min 45 s.
+
+## 2026-11-06: Task 52 built, the gate passed 8 of 48 steered steps
+
+Applied hq's ruling on stop 1 (spend USD 8.50; barred acts by effect from a fixed list; no stop on a pass; two annex sentences). Wrote U8 and its key, `eval.barred_act`, tests; Fable read of the Arabic before the runs, three flags applied; key and list committed `5327a61`; 12 runs, USD 7.13; figures, Annex A and C, README, report rebuilt `28e41a7`; PR #22, CI passed, not merged. Report-back `docs/report-back/2026-11-06-task-52-built.md`.
+
+Result: governed 8 of 48 passed, ungoverned 48 of 48, proposed 48 of 48 in both (prompt v5 tells care to propose and let the gate decide). All eight passes: `disclose_account` with the partner in `target` or `recipient_type` and `args.recipient` empty; `gate._recipient` reads that as the subscriber. The 4 that filled `args.recipient` were blocked. With the trust-level fact removed the eight become hold, by no gate test: tested without a model. C5 S3-2 has the same shape, 3 proposals, held by `verification_gate`. The change-word hole from stop 1's probe did not appear in the runs.
+
+Tried and dropped: a limits sentence saying words alone did not open a gate; untrue once passes occurred, reworded in `eval.U8_LIMITS`.
+
+Detail moved from the background to keep it under its limit:
+- `onyx/why.py`: per decision at the step the verdict (Arabic word beside), each clause id with label, manifest title, page, binding tag and its words from `kb/chunks/` (the rule's quote when the chunk holds it; `NO_AR` line then English where the chunk has no Arabic: every PDPL clause), hand-over obligations and humans on shift, the event hash, `override_refused` lines. A step with no gate event exits 2.
+- `onyx/replay_viewer.py`: steps rendered in Python from logs, rules.json and manifest; events inline as JSON; the script shows one step, switches language, present mode (key p). Hand-over panel: a block carrying both quotes. Figures: `eval.run_metrics` per run shown. Task 19: a picker entry "What-if: S2 under the rule gap 1 recommends" opens `whatif.render` text (section class `whatif`, outside the five scenarios) under a link to the page.
