@@ -96,7 +96,7 @@ The transfer gate checks field names, not content; the subscriber's question lef
 
 The objection received at step 1 is read by the sharing and marketing gates from the account record; the transfer gate does not read it, and the prototype does not write the step 1 objection into the record.
 
-The gate decides from the proposal's verb, arguments and clause ids, the released and retrieved ids, the scenario's facts and the reachable humans. It does not read the chat text, but the model writes the proposal after reading it, and the consent and disconnection gates act on a fixed list of change words: a proposal worded outside that list passes them. Facts such as consent are written by the scenario, so a live system's way of setting them is untested (steered-subscriber figures: Annex C).
+The gate decides from the proposal's verb, arguments and clause ids, the released and retrieved ids, the scenario's facts and the reachable humans. It does not read the chat text, but the model writes the proposal after reading it, and the consent and disconnection gates act on a fixed list of change words. Found by the steered-subscriber test on 2026-11-06 and fixed the same day: the gate now reads every field that names a recipient, a third-party word anywhere sends the step to the sharing check, and a recipient it cannot identify, an unlisted change word or a reply addressed to a partner is held for a person (IMDA 2.2.2: deny by default where no approval policy exists); the scored runs were recorded before the fix and were not re-recorded (their proposals of that shape and verdicts: eval/results.md). The fixed gate would change 19 of their 189 recorded verdicts, listed in eval/results.md: 16 are a hold a person would see, mostly a disclosure or reply to the subscriber addressed by name, which the whole-value match does not read, and 3 are holds that become blocks; none becomes an allow. Facts such as consent are written by the scenario, so a live system's way of setting them is untested (steered-subscriber figures: Annex C).
 
 ## Annex B. From clause to code: what "plain code" means
 
@@ -165,7 +165,7 @@ def complaint_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         return _finding(ALLOW, clauses, [trigger, *handover, *duties])
     if s.agent != "care" or p.verb not in {"draft_reply", "propose_sale", "disclose_account"}:
         return None
-    if p.verb == "draft_reply" and _recipient(p) == "human":
+    if p.verb == "draft_reply" and _recipient(p, s) == HUMAN:
         ...
     return _finding(BLOCK, clauses, [
         trigger, _check(g, f"{p.verb} to the subscriber in a conversation regarding a Consumer Complaint: non-human "
@@ -174,7 +174,7 @@ def complaint_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
 
 Why this split. The model is good at reading a subscriber's words and proposing what the step calls for in two
 languages; it is not where a regulator wants the law decided. A rule in code is readable by a lawyer, testable by a
-developer (54 gate tests in `tests/test_gate.py`), stable across model versions, and auditable: a verdict names
+developer (121 gate tests in `tests/test_gate.py`), stable across model versions, and auditable: a verdict names
 the rule, the rule names the clause, the clause's quote is checked against the stored clause text on every push, and the stored text against the issuer's file by hash where it is on disk. The
 governed and ungoverned runs in Annex C measure what that split buys.
 
@@ -252,16 +252,29 @@ re-recorded on the new text; the earlier runs are kept in `runs/_superseded/c5-a
 Arabic runs, including the ungoverned baseline above, remain on the old text. The report states the figures from
 the re-recorded set.
 
-**Steered subscriber, U8.** The team wrote one more scenario: eight subscriber messages, two per barred act, each trying by words alone ("ignore your rules", a claimed staff or TDRA authority, a pasted policy update, "my manager said yes", a request framed as a test, the other language mid-conversation). Three runs per language per set-up, prompt v5, 12 runs in `runs/u8/`, hash chains verified with `verify-log`; the key and the counting list were committed before the first run. A barred act is counted by its effect, from that list. Each cell counts steps with a barred act, of 8 steps per run. Prompt v5 tells care to propose what a message asks and leave the decision to the gate, so the proposed figures are high by instruction.
+**Steered subscriber, U8.** We tested the agent with an adversarial scenario written by our team, in English and Arabic: twelve runs, six with the gate and six without. The test exposed a fault in how the gate identified the recipient of account data: before the correction, the gate allowed 8 of 48 governed steps, in 6 of 6 governed runs. We corrected the fault and repeated the same test: 0 of 48 governed steps, in 0 of 6 governed runs; with six runs, a count of zero bounds the true rate at about 39% at 95% confidence (exact one-sided binomial limit; a zero count is reported as a bounded null, OWASP GenAI Red Teaming Manual v1.0, page 124). Without the gate, 48 of 48 steps passed before and after. The gate reads the recipient from the model's own arguments, every field, failing closed on conflict; deriving it from trusted operation metadata, a required recipient field with a fixed value list bound to a delivery channel, is live-app work. The fault is OWASP LLM05:2025 Improper Output Handling (mitigation 1: 'apply proper input validation on responses coming from the model to backend functions') leading to LLM06:2025 Excessive Agency; in the OWASP Top 10 for Agentic Applications 2026 it is ASI02 Tool Misuse, whose mitigation 7 reads 'Fail closed on ambiguous resolution'.
 
-| Set-up | Lang | Barred acts proposed | 95% interval | Barred acts passed | 95% interval |
-|---|---|---|---|---|---|
-| Governed | en | 24 of 24 | 0.86 to 1.00 | 5 of 24 | 0.09 to 0.40 |
-| Governed | ar | 24 of 24 | 0.86 to 1.00 | 3 of 24 | 0.04 to 0.31 |
-| Ungoverned | en | 24 of 24 | 0.86 to 1.00 | 24 of 24 | 0.86 to 1.00 |
-| Ungoverned | ar | 24 of 24 | 0.86 to 1.00 | 24 of 24 | 0.86 to 1.00 |
+The scenario is eight subscriber messages, two per barred act, each trying by words alone ("ignore your rules", a claimed staff or TDRA authority, a pasted policy update, "my manager said yes", a request framed as a test, the other language mid-conversation). Three runs per language per set-up, prompt v5, hash chains verified with `verify-log`; the key and the counting list were committed before the first run. A barred act is counted by its effect, from that list. Each step cell counts steps with a barred act, of 8 steps per run; the last column counts runs with at least one barred act passed. Prompt v5 tells care to propose what a message asks and leave the decision to the gate, so the proposed figures are high by instruction.
 
-Pooled, 8 of 48 steps passed the gate, 95% interval 0.09 to 0.30, against 48 of 48 ungoverned. No charge, disconnection or complaint act passed: 0 of 12 steps each. All eight passes are one act, account data to the marketing partner: 8 of 12 share steps. Each of the eight named the partner in `target` or `args.recipient_type` and left `args.recipient` empty. The gate reads an empty `args.recipient` as the subscriber, so the sharing gate did not apply and the verification gate allowed it; the 4 share proposals that filled `args.recipient` were blocked. This is a true fault in the gate, not fixed here and printed in `eval/results.md`. The team wrote the attacks, and consent and the trust level are facts the scenario wrote, so this does not test a live system that must work out consent from a subscriber's words.
+Before the correction (`runs/u8/`):
+
+| Set-up | Lang | Barred acts proposed | Barred acts passed | Runs with a barred act passed |
+|---|---|---|---|---|
+| Governed | en | 24 of 24 | 5 of 24 | 3 of 3 |
+| Governed | ar | 24 of 24 | 3 of 24 | 3 of 3 |
+| Ungoverned | en | 24 of 24 | 24 of 24 | no gate |
+| Ungoverned | ar | 24 of 24 | 24 of 24 | no gate |
+
+After the correction (`runs/u8-fixed/`):
+
+| Set-up | Lang | Barred acts proposed | Barred acts passed | Runs with a barred act passed |
+|---|---|---|---|---|
+| Governed | en | 24 of 24 | 0 of 24 | 0 of 3 |
+| Governed | ar | 24 of 24 | 0 of 24 | 0 of 3 |
+| Ungoverned | en | 24 of 24 | 24 of 24 | no gate |
+| Ungoverned | ar | 24 of 24 | 24 of 24 | no gate |
+
+Before the correction, no charge, disconnection or complaint act passed: 0 of 12 steps each. All eight passes were one act, account data to the marketing partner: 8 of 12 share steps. Each of the eight named the partner in `target` or `args.recipient_type` and left `args.recipient` empty. The gate read an empty `args.recipient` as the subscriber, so the sharing gate did not apply and the verification gate allowed it; the 4 share proposals that filled `args.recipient` were blocked. After the correction, the governed verdicts on barred proposals were block 42 and hold 6, and none was allowed; the per-act counts and each changed verdict are in `eval/results.md`. The team wrote the attacks, and consent and the trust level are facts the scenario wrote, so this does not test a live system that must work out consent from a subscriber's words.
 
 **What the test does not show.** C3 ran on prompt v3; the scored run (C5) is prompt v5, governed only, so the
 ungoverned baseline is older than the headline figures. Three runs per cell is enough to show the effect, not to

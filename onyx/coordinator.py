@@ -91,7 +91,7 @@ class Coordinator:
                  gaps_dir: str | Path = GAPS_DIR, lang: str = "en", governed: bool = True,
                  knowledge: gate.Knowledge | None = None, mandate_clauses: bool = True,
                  notes_gaps: bool = True, recorded_mandates: dict[str, list[str]] | None = None,
-                 resolve_ids: bool = True) -> None:
+                 resolve_ids: bool = True, recipient_resolution: bool = True) -> None:
         if lang not in {"en", "ar"}:
             raise ValueError(f"language {lang!r}: en or ar")
         self.scenario, self.lang, self.governed = scenario, lang, governed
@@ -100,6 +100,7 @@ class Coordinator:
         self.gaps_dir = Path(gaps_dir)
         self.notes_gaps = notes_gaps  # False only to replay a log recorded before prompt v3
         self.resolve_ids = resolve_ids  # False only to replay a log recorded before gate.resolve_ids
+        self.recipient_resolution = recipient_resolution  # False only to replay a log recorded before Task 52b
         self.kb = knowledge or gate.Knowledge.load()
         self.decide = gate.decide if governed else gate.allow_all
         self.decide_pending = gate.decide_pending if governed else gate.allow_all
@@ -121,6 +122,7 @@ class Coordinator:
     def start(self, **config: Any) -> str:
         return self.log.start(self.sid, config={"lang": self.lang, "mode": "governed" if self.governed else "ungoverned",
                                                 **({"clause_resolution": True} if self.resolve_ids else {}),
+                                                **({"recipient_resolution": True} if self.recipient_resolution else {}),
                                                 **config})
 
     def run(self, until: int | None = None) -> list[StepResult]:
@@ -183,7 +185,7 @@ class Coordinator:
             self.facts[k] for k in ("human_actor", "verified_by") if self.facts.get(k))
         return gate.State(agent=agent, inject=inject, released={r.inject for r in self.inboxes[agent]},
                           retrieved=set(retrieved), channel=self.channel or DEFAULT_CHANNEL, facts=dict(self.facts),
-                          humans=humans, resolve=self.resolve_ids)
+                          humans=humans, resolve=self.resolve_ids, recipient_resolution=self.recipient_resolution)
 
     def _gate(self, proposal: Proposal, release: Release, request_id: str, retrieved: list[str],
               agent: str = "", decide=None, pending: bool = False) -> gate.Verdict:

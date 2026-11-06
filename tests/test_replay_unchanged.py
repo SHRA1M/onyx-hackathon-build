@@ -12,6 +12,8 @@ LOGS = sorted(p for p in RUNS.rglob("*.jsonl") if "gaps" not in p.parts
                    {"S1", "S2", "S3", "S4", "S5"}))
 C5 = [p for p in LOGS if p.relative_to(RUNS).parts[0] == "c5"]
 EARLIER = [p for p in LOGS if p.relative_to(RUNS).parts[0] != "c5"]
+# Task 52b: the U8 logs, under the old reading (runs/u8) and the new (runs/u8-fixed), each by its own start config
+U8 = sorted(p for name in ("u8", "u8-fixed") for p in (RUNS / name).rglob("*.jsonl"))
 
 
 def _id(path):
@@ -20,6 +22,7 @@ def _id(path):
 
 def test_logs_found():
     assert (len(C5), len(EARLIER)) == (20, 80)
+    assert len(U8) == 24
 
 
 @pytest.mark.parametrize("log", C5, ids=_id)
@@ -31,6 +34,13 @@ def test_c5_logs_replay_unchanged(log):
 
 @pytest.mark.parametrize("log", EARLIER, ids=_id)
 def test_c3_c4_logs_replay_unchanged(log):
+    assert audit.verify(log)
+    recorded, replayed = runs.replay(log)
+    assert recorded and replayed == recorded
+
+
+@pytest.mark.parametrize("log", U8, ids=_id)
+def test_u8_logs_replay_unchanged(log):
     assert audit.verify(log)
     recorded, replayed = runs.replay(log)
     assert recorded and replayed == recorded

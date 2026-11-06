@@ -43,8 +43,9 @@ def replay_events(path: str | Path, at: int) -> list[dict[str, Any]]:
                                       log_path=Path(tmp) / "replay.jsonl", gaps_dir=Path(tmp) / "gaps",
                                       lang=config.get("lang", "en"), governed=config.get("mode") != "ungoverned",
                                       mandate_clauses=mandate, notes_gaps=notes_gaps,
-                                      recorded_mandates=recorded_mandates, resolve_ids=resolve)
-        run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode", "clause_resolution"}})
+                                      recorded_mandates=recorded_mandates, resolve_ids=resolve,
+                                      recipient_resolution=bool(config.get("recipient_resolution")))
+        run.start(**{k: v for k, v in config.items() if k not in runs.REPLAY_SET_KEYS})
         run.run()
         for e in events:
             if e["action"] == "release_event" and e["new_value"]["kind"] == "inject":

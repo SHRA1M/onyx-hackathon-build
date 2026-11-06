@@ -34,7 +34,9 @@ SEVERITY = {ALLOW: 0, HOLD: 1, BLOCK: 2}
 # Design basis, never deciding (addendum 16). Quotes verbatim from the hq texts the order's sources table names
 # (standards-text/global-2026-10-17/).
 IMDA_2_2_2 = {"source": "imda-mgf-agentic-v1-5", "clause": "2.2.2",
-              "text": "Denying action by default when approval infrastructures fail"}
+              "text": "Denying action by default when approval infrastructures fail (e.g. when human supervisors are "
+                      "unreachable or agents attempt new actions that do not have any established approval policies in "
+                      "place)"}
 EU_AI_ACT_50 = {"source": "eu-ai-act-2026-07-27", "clause": "50(1), 50(5)",
                 "text": "the natural persons concerned are informed that they are interacting with an AI system"}
 GDPR_22_3 = {"source": "gdpr-art22", "clause": "22(3)",
@@ -65,6 +67,7 @@ class State:
     facts: dict[str, Any] = field(default_factory=dict)
     humans: tuple[str, ...] = ()  # named humans reachable now
     resolve: bool = True  # False only to replay a log recorded before resolve_ids
+    recipient_resolution: bool = False  # run_start's flag (Task 52b): a log without it replays under the old reading
 
 
 class Knowledge:
@@ -139,8 +142,54 @@ def _finding(verdict: str, clauses: list[str], reasons: list[dict[str, Any]]) ->
     return Verdict(verdict, clauses, reasons)
 
 
-def _recipient(p: Any) -> str:
-    return p.args.get("recipient", "subscriber")
+THIRD_PARTY_WORDS = ("partner", "third party", "dunes", "شريك", "طرف ثالث", "ديونز")
+SUBSCRIBER_WORDS = ("subscriber", "customer", "account holder", "المشترك", "العميل")
+SUBSCRIBER, THIRD_PARTY, HUMAN = "subscriber", "third_party", "human"
+
+
+def _heard(value: Any) -> str:
+    return str(value or "").replace("_", " ").replace("-", " ").strip().lower()
+
+
+def _names_third_party(value: Any) -> bool:
+    """A substring match: a third-party word anywhere in the value."""
+    return any(word in _heard(value) for word in THIRD_PARTY_WORDS)
+
+
+def _names_subscriber(value: Any) -> bool:
+    """A whole-value match, a subscriber word or "the " plus one: "Subscriber Services LLC" and "not the subscriber"
+    never resolve to the subscriber."""
+    return _heard(value).removeprefix("the ") in SUBSCRIBER_WORDS
+
+
+def _on_roster(p: Any, s: State) -> bool:
+    return p.target in s.facts.get("human_agents_on_shift", [])
+
+
+def _resolved(p: Any, s: State) -> tuple[str, str]:
+    """(recipient, the reason naming every field read). Reads every populated field together: a third-party word in any
+    of them wins; an args.recipient that does not name the subscriber is a named outside party; the subscriber only
+    when every populated field names the subscriber; a human for a reply whose target is on the roster, or that says
+    human (held unless on the roster); otherwise unresolved, ''."""
+    recipient = p.args.get("recipient")
+    fields = [(name, value) for name, value in (("recipient", recipient), ("recipient_type", p.args.get("recipient_type")),
+                                                ("target", p.target)) if value]
+    read = "; ".join(f"{name}: {value}" for name, value in fields) or "no field names a recipient"
+    says_human = p.verb == "draft_reply" and _heard(recipient) == HUMAN
+    if any(_names_third_party(value) for _, value in fields):
+        return THIRD_PARTY, f"{read} → {THIRD_PARTY} (a third-party word wins)"
+    if recipient and not _names_subscriber(recipient) and not says_human:
+        return THIRD_PARTY, f"{read} → {THIRD_PARTY} (a named outside party)"
+    if fields and all(_names_subscriber(value) for _, value in fields):
+        return SUBSCRIBER, f"{read} → {SUBSCRIBER}"
+    if p.verb == "draft_reply" and (says_human or _on_roster(p, s)):
+        return HUMAN, f"{read} → {HUMAN}"
+    return "", f"{read} → unresolved"
+
+
+def _recipient(p: Any, s: State) -> Any:
+    """Without the flag, the reading every log before Task 52b was recorded on: an absent recipient is the subscriber."""
+    return _resolved(p, s)[0] if s.recipient_resolution else p.args.get("recipient", SUBSCRIBER)
 
 
 def read_items(values: Any, terms: Iterable[str]) -> set[str]:
@@ -362,7 +411,7 @@ def verification_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         return _finding(ALLOW, ["d16-4-17", "d16-4-18"], [
             _check(g, f"identity verified by {f.get('verified_by', 'a named human')} at {f.get('verified_at', '?')}",
                    "d16-4-17"), clock])
-    if p.verb != "disclose_account" or _recipient(p) != "subscriber":
+    if p.verb != "disclose_account" or _recipient(p, s) != SUBSCRIBER:
         return None
     required = str(f.get("verification_level_set_by_adviser", "")).split(" ")[0].lower()
     achieved = str(f.get("trust_level") or f.get("verification_level_set_by_adviser", "")).split(" ")[0].lower()
@@ -388,7 +437,7 @@ DIRECT_IDENTIFIERS = {"name", "msisdn", "number", "emirates_id", "id", "invoice"
 def sharing_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     """CPR 24.6 and fn 35 (recorded consent, contractual or later, no opt-out exercised), 24.7 interconnection data
     never for marketing, 24.9 the third party's contract, PDPL 7(5) the processor's guarantees, PDPL 17 objection."""
-    if p.verb != "disclose_account" or _recipient(p) == "subscriber":
+    if p.verb != "disclose_account" or _recipient(p, s) in {SUBSCRIBER, ""}:  # '' only with the flag: recipient_gate
         return None
     g, f, fields = "sharing_gate", s.facts, read_items(p.args.get("data", []), {"interconnection"})
     bad, clauses = [], ["cpr-24-6", "cpr-24-6-fn-35"]
@@ -548,7 +597,7 @@ def complaint_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         return _finding(ALLOW, clauses, [trigger, *handover, *duties])
     if s.agent != "care" or p.verb not in {"draft_reply", "propose_sale", "disclose_account"}:
         return None
-    if p.verb == "draft_reply" and _recipient(p) == "human":
+    if p.verb == "draft_reply" and _recipient(p, s) == HUMAN:
         if p.target not in s.humans:
             return _finding(HOLD, ["cpr-26-7-2", "licence-9-1"], [
                 trigger, _check(g, f"the draft is for {p.target or 'no one'}, not a named human on shift", "licence-9-1"),
@@ -665,15 +714,64 @@ def records(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     return _finding(ALLOW, [r["clause"] for r in keep], keep)
 
 
+def disclosure_recipient_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
+    """Task 52b, only on a run carrying the flag. A disclosure to a recipient the fields do not identify is held, deny
+    by default (IMDA 2.2.2: no established approval policy), never blocked: it may be the subscriber (24.10), a third
+    party needing consent (24.6) or one directly involved in supplying the service (24.9), and a person confirms which."""
+    if not s.recipient_resolution:
+        return None
+    g = "recipient_gate"
+    recipient, read = _resolved(p, s)
+    if recipient:
+        return _finding(ALLOW, [], [_check(g, read)])
+    return _finding(HOLD, ["cpr-24-6", "cpr-24-10", "cpr-24-9"], [
+        _check(g, read),
+        _check(g, "recipient not identified: the subscriber (24.10, after verification), a third party needing consent "
+                  "(24.6), or one directly involved in supplying the ordered service (24.9); a human agent on shift "
+                  "confirms which", "cpr-24-6"),
+        _basis(g, IMDA_2_2_2)])
+
+
+def reply_recipient_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
+    """Task 52b, only on a run carrying the flag: a reply goes to the subscriber or a human agent on the roster; to
+    anyone else it is held, deny by default. It cites no clause: care's prompt, which gives a verb its gates' clauses,
+    does not change before submission."""
+    if not s.recipient_resolution:
+        return None
+    g = "recipient_gate"
+    recipient, read = _resolved(p, s)
+    if recipient == SUBSCRIBER or (recipient == HUMAN and _on_roster(p, s)):
+        return _finding(ALLOW, [], [_check(g, read)])
+    return _finding(HOLD, [], [
+        _check(g, read),
+        _check(g, f"reply addressed to {p.target or 'no one'}: not the subscriber and not a human agent on shift (roster)"),
+        _basis(g, IMDA_2_2_2)])
+
+
+def change_word_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
+    """Task 52b, only on a run carrying the flag: a change none of the five gates decides (its word missing or
+    unlisted) is held for a human, deny by default. Without this an unlisted word passes every gate by not applying."""
+    if not s.recipient_resolution:
+        return None
+    if any(gate(p, s, kb) is not None for gate in (consent_gate, disconnection_gate, verification_gate,
+                                                   cancellation_gate, price_change_gate)):
+        return None
+    g = "deny_by_default"
+    return _finding(HOLD, [], [
+        _check(g, f"change word {p.args.get('change') or 'none'} is not one the gates decide; held for a human"),
+        _basis(g, IMDA_2_2_2)])
+
+
 # The gates for each mandate verb (onyx/data/mandates.json). A verb listed with no gates passes on the base checks
 # alone; a verb not listed has no gate and is held (deny_by_default).
 GATES: dict[str, tuple[Callable[..., Verdict | None], ...]] = {
     "propose_sale": (child_gate, disclosure_before_sale_gate, price_gate, consent_gate, marketing_gate,
                      complaint_gate, records),
     "propose_change": (child_gate, consent_gate, price_gate, disconnection_gate, verification_gate,
-                       cancellation_gate, price_change_gate, records),
-    "disclose_account": (child_gate, verification_gate, sharing_gate, complaint_gate, records),
-    "draft_reply": (complaint_gate, model_provider_gate, records),
+                       cancellation_gate, price_change_gate, change_word_gate, records),
+    "disclose_account": (child_gate, disclosure_recipient_gate, verification_gate, sharing_gate, complaint_gate,
+                         records),
+    "draft_reply": (reply_recipient_gate, complaint_gate, model_provider_gate, records),
     "classify_channel": (), "cite": (), "flag_gap": (),
     "raise_dispute": (records,), "order_restore": (records,), "request_report": (records,),
     "receive_objection": (), "receive_dpia": (), "request_human_review": (human_gate, complaint_gate, records),
@@ -774,7 +872,10 @@ def _decide(proposal: Any, state: State, kb: Knowledge) -> Verdict:
     deciding = [c for v in findings if SEVERITY[v.verdict] == worst for c in v.clause_ids]
     supporting = [c for v in findings for c in v.clause_ids]
     clause_ids = list(dict.fromkeys(deciding + supporting))
-    return Verdict(verdict, clause_ids, [r for v in findings for r in v.reasons])
+    reasons = [r for v in findings for r in v.reasons]
+    if verdict == ALLOW and proposal.verb == "disclose_account" and state.recipient_resolution:
+        reasons.append(_check("recipient_gate", f"allowed for recipient: {_recipient(proposal, state)}"))
+    return Verdict(verdict, clause_ids, reasons)
 
 
 MODEL_UNAVAILABLE = "model unavailable"  # args.reason of the coordinator's plain-code proposal (Task 29 Part A)
