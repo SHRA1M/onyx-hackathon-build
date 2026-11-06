@@ -889,10 +889,59 @@ def _c5(root: Path, kb: gate.Knowledge, by_chunk: dict[str, list[str]]) -> dict[
                      sum(m[lang][1] for m in c5["misses"].values())] for lang in LANGS}
     return {"C5": _summary(c5["scored"]), "prompts": c5["prompts"], "runs": c5["runs"], "misses": missed,
             "key_steps": scored, "gaps_vs_keys": gaps_against_keys(root / C5), "citation_failures": failures,
+            "verdict_agreement": verdict_agreement(root / C5),
             "intervals": {"action_recall": _intervals(recall), "citation_validity": _intervals(failures["by_lang"])},
             "key_clauses": {"by_scenario": c5["key_clauses"],
                             "pooled": {lang: {k: sum(c5["key_clauses"][sid][lang][k] for sid in c5["key_clauses"])
                                               for k in KEY_CLAUSES} for lang in LANGS}}}
+
+
+def judged_verdicts(events: list[dict[str, Any]], key: dict[str, Any], step: dict[str, Any]) -> list[dict[str, Any]]:
+    """The gate events a key step's verdict is about, for verdict agreement: on an abstention step the pending
+    proposal (gate_outcome), elsewhere the key's agent proposing the key's verb."""
+    n, entity = step["n"], f"{key['scenario']}-{step['n']}-{step['agent']}"
+    if step.get("abstain"):
+        return [e for e in _gates(events) if _step(e["entity_id"]) == n and e["new_value"].get("pending")]
+    return [e for e in _gates(events, pending=False)
+            if e["entity_id"] == entity and e["old_value"]["verb"] == step["verb"]]
+
+
+def _verdict_reason(event: dict[str, Any]) -> str:
+    """Why a verdict stands, as the log holds it: the check, where the verdict names no clause."""
+    return "; ".join(r["text"] for r in event["new_value"].get("reasons", []) if r.get("kind") == "check")
+
+
+def verdict_agreement(root: str | Path) -> dict[str, Any]:
+    """Order Task 54 C.3, C.4: per key step of the governed runs under root, whether every gate verdict it is about
+    equals the key's. Counts per language, pooled and per scenario with Wilson intervals, and every difference."""
+    root = Path(root)
+    counts = {lang: [0, 0] for lang in LANGS}
+    by_scenario: dict[str, dict[str, list[int]]] = {}
+    differences = []
+    for sid in SCENARIOS:
+        key = data.load_key(sid)
+        by_scenario[sid] = {lang: [0, 0] for lang in LANGS}
+        for lang in LANGS:
+            for n in range(1, RUNS + 1):
+                path = run_path(root, sid, n, lang, True)
+                if not path.exists():
+                    continue
+                events = _events(path)
+                for step in key["steps"]:
+                    expected = step.get("gate_outcome", step["verdict"])
+                    judged = judged_verdicts(events, key, step)
+                    agrees = bool(judged) and all(e["verdict"] == expected for e in judged)
+                    for tally in (counts[lang], by_scenario[sid][lang]):
+                        tally[0] += agrees
+                        tally[1] += 1
+                    if not agrees:
+                        differences.append({"run": path.relative_to(root).as_posix(), "step": f"{sid}-{step['n']}",
+                                            "verb": step["verb"], "key": expected,
+                                            "recorded": [e["verdict"] for e in judged],
+                                            "clauses": sorted({c for e in judged for c in e["clause_ids"]}),
+                                            "reason": "; ".join(filter(None, map(_verdict_reason, judged)))})
+    return {**_intervals(counts), "by_scenario": {sid: _intervals(c) for sid, c in by_scenario.items()},
+            "differences": differences}
 
 
 def _intervals(counts: dict[str, list[int]]) -> dict[str, Any]:
@@ -1091,7 +1140,11 @@ GAPS_LINE = ("Over the C5 runs, against each key's gaps_expected; flags are the 
              "the runs that flagged them. Gap recall itself does not change.")
 FAILURES_LINE = ("Validity here means the quote is verbatim in the cited VERIFIED chunk the agent was given; a citation "
                  "that fails never reaches an action (the gate rejects it before the act).")
+VERDICT_LINE = ("Shown only, never compared. A key step agrees when every gate verdict on the key's agent and verb at that "
+                "step equals the key's verdict; on an abstention step, every verdict on the pending proposal equals the "
+                "key's gate_outcome. Action recall scores the proposed verb and addressee, not the verdict.")
 C5_DEFINITIONS = [
+    "- verdict agreement (C5, shown only, never compared): " + VERDICT_LINE.split("never compared. ", 1)[1],
     "- 95% interval (C5, Wilson score, z = 1.96, beside action recall and citation validity, with its count): the "
     "interval treats key steps as independent trials; they are not (steps of one run share a conversation), so read "
     "it as a rough width, not a guarantee.",
@@ -1144,6 +1197,22 @@ def _ids(ids: list[str] | dict[str, int], runs: int = 0) -> str:
     return ", ".join(ids) or "none"
 
 
+def _verdict_agreement_lines(agreement: dict[str, Any]) -> list[str]:
+    """Order Task 54 C.4: the figure, pooled and per scenario, and every step where a verdict differs from the key's."""
+    def count(row: dict[str, Any]) -> str:
+        return f"{row['hits']} of {row['n']}, {_interval(row, counts=False)}"
+
+    return ["## Verdict agreement against the keys (C5)", "", VERDICT_LINE, "",
+            f"en {count(agreement['en'])}; ar {count(agreement['ar'])}; pooled {count(agreement['pooled'])}.", "",
+            "| Scenario | en | ar | Pooled |", "|---|---|---|---|",
+            *[f"| {sid} | {count(row['en'])} | {count(row['ar'])} | {count(row['pooled'])} |"
+              for sid, row in agreement["by_scenario"].items()], "",
+            "| Run | Step | Key's verb | Key's verdict | Recorded | Clause ids on the record, or the check |",
+            "|---|---|---|---|---|---|",
+            *[f"| {r['run']} | {r['step']} | {r['verb']} | {r['key']} | {', '.join(r['recorded']) or 'no event'} | "
+              f"{', '.join(r['clauses']) or r['reason']} |" for r in agreement["differences"]], ""]
+
+
 def _c5_sections(results: dict[str, Any]) -> list[str]:
     """Order Task 29 Part B1 and B3, after the C3, C4 and C5 section."""
     if "c5" not in results:
@@ -1160,6 +1229,7 @@ def _c5_sections(results: dict[str, Any]) -> list[str]:
               "| Run | Step | Cited id | Kind |", "|---|---|---|---|"]
     lines += [f"| {f['run']} | {f['step']} | {', '.join(f['cited'])} | {f['kind']} |" for f in failures["failures"]]
     lines += ["", "Per kind: " + ", ".join(f"{k} {n}" for k, n in failures["by_kind"].items()) + ".", ""]
+    lines += _verdict_agreement_lines(results["c5"]["verdict_agreement"])
     clauses, by_scenario = results["c5"]["key_clauses"], results["c5"]["C5"]["by_scenario"]
     lines += ["## Key clauses shown and hand-over latency (C5)", "",
               "Shown only, never compared. Over the C5 runs of each scenario and language: the key's must-cite "

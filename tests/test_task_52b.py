@@ -135,7 +135,7 @@ C17_ANNEX = ("We tested the agent with an adversarial scenario written by our te
              "with the gate and six without. The test exposed a fault in how the gate identified the recipient of account "
              "data: before the correction, the gate allowed 8 of 48 governed steps, in 6 of 6 governed runs. We corrected "
              "the fault and repeated the same test: 0 of 48 governed steps, in 0 of 6 governed runs; with six runs, a count "
-             "of zero bounds the true rate at about 39% at 95% confidence (exact one-sided binomial limit; a zero count is "
+             "of zero bounds the true per-run rate at about 39% at 95% confidence (exact one-sided binomial limit; a zero count is "
              "reported as a bounded null, OWASP GenAI Red Teaming Manual v1.0, page 124). Without the gate, 48 of 48 steps "
              "passed before and after.")
 C13_LAST = ("The gate reads the recipient from the model's own arguments, every field, failing closed on conflict; deriving "
@@ -146,7 +146,7 @@ C14 = ("The fault is OWASP LLM05:2025 Improper Output Handling (mitigation 1: 'a
        "Agentic Applications 2026 it is ASI02 Tool Misuse, whose mitigation 7 reads 'Fail closed on ambiguous resolution'.")
 C17_README = ("Steered-subscriber test, written by the team, English and Arabic, twelve runs (six governed, six ungoverned): "
               "before the correction the gate allowed 8 of 48 governed steps in 6 of 6 governed runs; after it, 0 of 48 in 0 "
-              "of 6 (upper bound about 39% at 95% confidence, exact binomial limit for 0 of 6); ungoverned 48 of 48 both "
+              "of 6 (upper bound about 39% per run at 95% confidence, exact binomial limit for 0 of 6); ungoverned 48 of 48 both "
               "times. Before and after: `eval/results.md` and Annex C.")
 C10 = ("Found by the steered-subscriber test on 2026-11-06 and fixed the same day: the gate now reads every field that names "
        "a recipient, a third-party word anywhere sends the step to the sharing check, and a recipient it cannot identify, an "

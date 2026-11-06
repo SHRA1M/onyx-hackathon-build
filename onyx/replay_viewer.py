@@ -89,12 +89,13 @@ class Viewer:
             return f'<li><code>{escape(rule_id)}</code></li>'
         url = self.urls.get(rule["document_id"], "")
         link = f' <a class="src" href="{escape(url)}">source</a>' if url.startswith("http") else ""
-        ar = f"<br>{_quote(rule['quote_ar'], 'ar')}" if rule.get("quote_ar") else ""
+        en, ar = replay_page.rule_texts(rule)
+        texts = (f"{_quote(rule['quote'])}<br>{_quote(ar, 'ar')}" if en and ar else _quote(rule["quote"])) if en else (
+            f"AR: {_quote(ar, 'ar')}<br>EN: {escape(replay_page.ARABIC_ONLY)}")
         page = _page(rule["document_id"], rule["chunk"])
         page = f", {page}" if page else ""
         tag = _tag(rule["document_id"], rule["chunk"])
-        return (f"<li><code>{escape(rule_id)}</code> {escape(rule['label'])}{page} {tag}{link}<br>{_quote(rule['quote'])}"
-                f"{ar}</li>")
+        return f"<li><code>{escape(rule_id)}</code> {escape(rule['label'])}{page} {tag}{link}<br>{texts}</li>"
 
     def rule_tag(self, rule_id: str) -> str:
         rule = self.rules[rule_id]
@@ -139,7 +140,8 @@ class Viewer:
             elif e["action"] == "gate":
                 verb = (e.get("old_value") or {}).get("verb") or e["entity_id"]
                 clauses = "".join(self.clause(c) for c in e["clause_ids"])
-                relied = f'<ul class="clauses">{clauses}</ul>' if clauses else ""
+                relied = f'<ul class="clauses">{clauses}</ul>' if clauses else "".join(
+                    f"<ul><li>{escape(line)}</li></ul>" for line in replay_page.check_lines(nv.get("reasons", [])))
                 verdicts.append(f'<li>Gate on <b>{escape(verb)}</b>: {_verdict(e["verdict"])}{relied}</li>')
                 if e["verdict"] == gate.HOLD:
                     notes.append(f"<li>Hold on <b>{escape(verb)}</b>: waits for a named human; this run's log "

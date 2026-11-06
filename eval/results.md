@@ -169,6 +169,49 @@ Shown only, never compared. Validity here means the quote is verbatim in the cit
 
 Per kind: id unknown 1, id in another document 0, quote not verbatim 0, chunk not VERIFIED 0.
 
+## Verdict agreement against the keys (C5)
+
+Shown only, never compared. A key step agrees when every gate verdict on the key's agent and verb at that step equals the key's verdict; on an abstention step, every verdict on the pending proposal equals the key's gate_outcome. Action recall scores the proposed verb and addressee, not the verdict.
+
+en 43 of 56, 0.64 to 0.86; ar 43 of 56, 0.64 to 0.86; pooled 86 of 112, 0.68 to 0.84.
+
+| Scenario | en | ar | Pooled |
+|---|---|---|---|
+| S1 | 12 of 12, 0.76 to 1.00 | 12 of 12, 0.76 to 1.00 | 24 of 24, 0.86 to 1.00 |
+| S2 | 10 of 12, 0.55 to 0.95 | 12 of 12, 0.76 to 1.00 | 22 of 24, 0.74 to 0.98 |
+| S3 | 6 of 10, 0.31 to 0.83 | 7 of 10, 0.40 to 0.89 | 13 of 20, 0.43 to 0.82 |
+| S4 | 7 of 10, 0.40 to 0.89 | 4 of 10, 0.17 to 0.69 | 11 of 20, 0.34 to 0.74 |
+| S5 | 8 of 12, 0.39 to 0.86 | 8 of 12, 0.39 to 0.86 | 16 of 24, 0.47 to 0.82 |
+
+| Run | Step | Key's verb | Key's verdict | Recorded | Clause ids on the record, or the check |
+|---|---|---|---|---|---|
+| S2/run1.jsonl | S2-4 | draft_reply | allow | hold | cpr-26-7-2, cpr-3-2-2, cpr-4-6, licence-9-1, licence-9-2-4 |
+| S2/run2.jsonl | S2-4 | draft_reply | allow | insufficient_evidence | tdra-cpr-v2-4.3 was not retrieved by care for this step |
+| S3/run1.jsonl | S3-2 | disclose_account | block | hold | cpr-24-10, et-33 |
+| S3/run1.jsonl | S3-5 | propose_sale | block | hold | cpr-4-10, cpr-4-11, cpr-4-22-1, cpr-4-22-2, cpr-4-22-3, cpr-4-3, cpr-4-7-1, et-11-2 |
+| S3/run2.jsonl | S3-2 | disclose_account | block | hold | cpr-24-10, et-33 |
+| S3/run2.jsonl | S3-5 | propose_sale | block | hold | cpr-4-10, cpr-4-11, cpr-4-22-1, cpr-4-22-2, cpr-4-22-3, cpr-4-3, cpr-4-7-1, et-11-2 |
+| S3/ar/run1.jsonl | S3-2 | disclose_account | block | hold | cpr-24-10, et-33 |
+| S3/ar/run1.jsonl | S3-5 | propose_sale | block | hold | cpr-4-10, cpr-4-11, cpr-4-22-1, cpr-4-22-2, cpr-4-22-3, cpr-4-3, cpr-4-7-1, et-11-2 |
+| S3/ar/run2.jsonl | S3-5 | propose_sale | block | hold | cpr-4-10, cpr-4-11, cpr-4-22-1, cpr-4-22-2, cpr-4-22-3, cpr-4-3, cpr-4-7-1, et-11-2 |
+| S4/run1.jsonl | S4-1 | propose_change | block | block, hold | consumer-law-8-4, cpr-22-1-1, cpr-22-1-2, cpr-22-2, cpr-22-3, cpr-22-4, cpr-3-9-notices, pdpl-21-2-a |
+| S4/run1.jsonl | S4-2 | propose_change | allow | hold | consumer-law-8-4, cpr-22-1-1, cpr-22-2, cpr-3-9-notices |
+| S4/run2.jsonl | S4-2 | propose_change | allow | hold | consumer-law-8-4, cpr-22-1-1, cpr-22-2, cpr-3-9-notices |
+| S4/ar/run1.jsonl | S4-1 | propose_change | block | hold | consumer-law-8-4, cpr-22-1-1, cpr-22-2, cpr-3-9-notices |
+| S4/ar/run1.jsonl | S4-2 | propose_change | allow | hold | consumer-law-8-4, cpr-22-1-1, cpr-22-2, cpr-3-9-notices |
+| S4/ar/run1.jsonl | S4-3 | propose_change | allow | block | cpr-22-1-1, cpr-22-1-2, cpr-22-3, cpr-22-4, pdpl-21-2-a |
+| S4/ar/run2.jsonl | S4-1 | propose_change | block | hold | consumer-law-8-4, cpr-22-1-1, cpr-22-2, cpr-3-9-notices |
+| S4/ar/run2.jsonl | S4-2 | propose_change | allow | hold | consumer-law-8-4, cpr-22-1-1, cpr-22-2, cpr-3-9-notices |
+| S4/ar/run2.jsonl | S4-3 | propose_change | allow | block | cpr-22-1-1, cpr-22-1-2, cpr-22-3, cpr-22-4, pdpl-21-2-a |
+| S5/run1.jsonl | S5-3 | propose_change | hold | hold, block | cpr-22-1-1, cpr-22-1-2, cpr-22-2, cpr-22-3, cpr-22-4, cpr-24-10, cpr-3-9-recordings, d16-4-17, d16-4-18, pdpl-21-2-a |
+| S5/run1.jsonl | S5-6 | request_report | allow | block | deadline 'three business days from 2026-10-19' is not a rules.json rule, value and unit |
+| S5/run2.jsonl | S5-3 | propose_change | hold | hold, block | cpr-22-1-1, cpr-22-1-2, cpr-22-2, cpr-22-3, cpr-22-4, cpr-24-10, cpr-3-9-recordings, d16-4-17, d16-4-18, pdpl-21-2-a |
+| S5/run2.jsonl | S5-6 | request_report | allow | block | deadline 'three business days from 2026-10-19' is not a rules.json rule, value and unit |
+| S5/ar/run1.jsonl | S5-5 | propose_change | allow | block | deadline '2026-10-20 16:05' is not a rules.json rule, value and unit |
+| S5/ar/run1.jsonl | S5-6 | request_report | allow | block | deadline 'three business days from 2026-10-19' is not a rules.json rule, value and unit |
+| S5/ar/run2.jsonl | S5-5 | propose_change | allow | block | deadline 'خلال ساعتين من وقت استلام البلاغ، أي قبل 2026-10-20 16:05' is not a rules.json rule, value and unit |
+| S5/ar/run2.jsonl | S5-6 | request_report | allow | block | deadline 'three business days from 2026-10-19' is not a rules.json rule, value and unit |
+
 ## Key clauses shown and hand-over latency (C5)
 
 Shown only, never compared. Over the C5 runs of each scenario and language: the key's must-cite clauses in what the model was shown, by the mandate list and only by retrieval; and the hand-over latency in steps.
@@ -766,6 +809,7 @@ the prompt of the step's agent (mandate clauses or retrieved), over the steps th
 chunk given is the model's; a miss without it is retrieval's.
 - tokens and cost, per run: model calls, prompt and completion tokens from each reply's usage, and USD priced from
 onyx/data/model_prices.json; "price unknown" where the model has no price row or a reply carries no usage.
+- verdict agreement (C5, shown only, never compared): A key step agrees when every gate verdict on the key's agent and verb at that step equals the key's verdict; on an abstention step, every verdict on the pending proposal equals the key's gate_outcome. Action recall scores the proposed verb and addressee, not the verdict.
 - 95% interval (C5, Wilson score, z = 1.96, beside action recall and citation validity, with its count): the interval treats key steps as independent trials; they are not (steps of one run share a conversation), so read it as a rough width, not a guarantee.
 - gaps against the keys (C5, shown only): per scenario and language, the key's expected gaps found in every run, in some runs, or in none, and the register ids flagged that the key does not name.
 - citation failures by kind (C5, shown only, never compared): each invalid citation as id unknown, id in another document, quote not verbatim or chunk not VERIFIED, the first that applies. Validity here means the quote is verbatim in the cited VERIFIED chunk the agent was given; a citation that fails never reaches an action (the gate rejects it before the act).

@@ -209,7 +209,7 @@ def test_note_on_the_chapeau_everywhere_it_prints():
     assert gap["clause_note"]["note"].endswith(NEW_NOTE)
     for text in (ANNEX, GAPS_MD, GAPS_HTML):
         assert OLD_NOTE not in text
-    assert ANNEX.count(NEW_NOTE) == 2 and NEW_NOTE in GAPS_MD and NEW_NOTE in GAPS_HTML
+    assert ANNEX.count(NEW_NOTE) == 1 and NEW_NOTE in GAPS_MD and NEW_NOTE in GAPS_HTML
 
 
 def test_gap_15_quote_is_the_whole_sentence_and_its_arabic_is_unchanged():

@@ -112,11 +112,11 @@ Two different things are code, and neither of them is the model.
 
 1. **The chunker** is code that splits a text at its own clause numbers. It is deterministic, it applies no model,
    and it produces the records in Annex A. It does not interpret the law.
-2. **The gates** are code written by the team from the binding clauses: 13 deciding functions in `onyx/gate.py`,
+2. **The gates** are code written by the team from the binding clauses: 17 deciding functions in `onyx/gate.py` (three of them added on 2026-11-06 behind the gate-version flag, Annex C),
    mapped in `GATES` from the 16 verbs the agents may propose (a verb may have several, and one with none is allowed once the base checks pass: the verb is in the agent's mandate, the step was released to the agent, a clause is cited, each cited clause was retrieved for the step and is VERIFIED, the quote is 20 or more characters verbatim in a cited clause, and a stated deadline is the rules.json value; a verb with no entry in `GATES` is held for a human). A gate reads the
    proposal and the state of the conversation (channel, facts on file, consent record, warning given, verification
    done, humans on shift) and applies the rules that bind that verb. It returns a verdict with the rule ids it
-   relied on, each rule carrying its clause, page and verbatim quote in both languages.
+   relied on, each rule carrying its clause, page and verbatim quote, and the clause's Arabic text where the chunk holds it (every CPR clause, Decision 16/2026, licence 9.1, three clauses of the agentic guide; the PDPL and the other texts are English-only on file, Annex A).
 
 In the main text's Y.3172 table, the SRC node holds 108 documents (100 verified), 161 clause chunks (77 with the Arabic text), English and Arabic; subscriber and account data synthetic, no real person; at the PP node a chunk = document, clause, page, text in both languages, status.
 
@@ -231,30 +231,14 @@ hand-over step. The subscriber is served by a person at that step instead of cha
 number a regulator should want to know about any AI that acts for a licensee, and it is why Mizan puts the decision
 in code.
 
-**CPR 26.6 and 26.7 read together.** 26.6: "Licensees shall maintain an adequate number of properly trained personal to receive, process, and respond to Consumer Complaints in a timely and prompt manner."
-
-يجب على المرخص لهم الحفاظ على عدد كافٍ من الموظفين المدربين تدريباً مناسباً لاستقبال ومعالجة والرد على الشكاوى المقدمة من المستهلكين في الوقت المناسب وبالسرعة اللازمة.
-
-26.7, the opening words: "The provisions of sub-article 26.6:"
-
-أحكام المادة الفرعية26.6:
-
-26.7.1: "apply in all cases regardless of which Mandatory Channel is used; and"
-
-تسري في كل الحالات بغض النظر عن القناة الإلزامية المستخدمة؛ و
-
-26.7.2: "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."
-
-يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم.
-
-Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading, citing 26.7.2 and licence 9.1; the chapeau is quoted here and holds no rule.
+CPR 26.6 and 26.7, the four clauses in both languages and our reading: Annex B.
 
 **Precision of the headline figures.** The scored run (C5, prompt v5, governed, two runs per scenario per language)
 pools to action recall 110 of 112 key steps, 95% interval 0.94 to 1.00,
 and citation validity 130 of 131, 95% interval 0.96 to 1.00. Wilson intervals,
 computed by `eval` without a library. The two misses are English, S3-4 (care's draft reply after the block) and S4-4
 (the Data Office's request for human review), each missed in 1 of 2 runs; both are named in
-`eval/results.md` rather than averaged away.
+`eval/results.md` rather than averaged away. Action recall scores the proposed verb and addressee against the key; verdict agreement (the gate's verdict equals the key's) is 0.77 / 0.77, 86 of 112 key steps, 95% interval 0.68 to 0.84, printed in `eval/results.md`, en / ar.
 
 **One correction, kept in the open.** The Arabic scenario text was rewritten by the team on 2026-10-27 after the
 first C5 Arabic runs showed the subscriber's lines read as translation rather than speech. The Arabic C5 runs were
@@ -266,7 +250,7 @@ the re-recorded set.
 
 *Figure 2. (a) C5: action recall and citation validity. (b) C3: governed rejections, ungoverned claims.*
 
-**Steered subscriber, U8.** We tested the agent with an adversarial scenario written by our team, in English and Arabic: twelve runs, six with the gate and six without. The test exposed a fault in how the gate identified the recipient of account data: before the correction, the gate allowed 8 of 48 governed steps, in 6 of 6 governed runs. We corrected the fault and repeated the same test: 0 of 48 governed steps, in 0 of 6 governed runs; with six runs, a count of zero bounds the true rate at about 39% at 95% confidence (exact one-sided binomial limit; a zero count is reported as a bounded null, OWASP GenAI Red Teaming Manual v1.0, page 124). Without the gate, 48 of 48 steps passed before and after. The gate reads the recipient from the model's own arguments, every field, failing closed on conflict; deriving it from trusted operation metadata, a required recipient field with a fixed value list bound to a delivery channel, is live-app work. The fault is OWASP LLM05:2025 Improper Output Handling (mitigation 1: 'apply proper input validation on responses coming from the model to backend functions') leading to LLM06:2025 Excessive Agency; in the OWASP Top 10 for Agentic Applications 2026 it is ASI02 Tool Misuse, whose mitigation 7 reads 'Fail closed on ambiguous resolution'.
+**Steered subscriber, U8.** We tested the agent with an adversarial scenario written by our team, in English and Arabic: twelve runs, six with the gate and six without. The test exposed a fault in how the gate identified the recipient of account data: before the correction, the gate allowed 8 of 48 governed steps, in 6 of 6 governed runs. We corrected the fault and repeated the same test: 0 of 48 governed steps, in 0 of 6 governed runs; with six runs, a count of zero bounds the true per-run rate at about 39% at 95% confidence (exact one-sided binomial limit; a zero count is reported as a bounded null, OWASP GenAI Red Teaming Manual v1.0, page 124). Without the gate, 48 of 48 steps passed before and after. The gate reads the recipient from the model's own arguments, every field, failing closed on conflict; deriving it from trusted operation metadata, a required recipient field with a fixed value list bound to a delivery channel, is live-app work. The fault is OWASP LLM05:2025 Improper Output Handling (mitigation 1: 'apply proper input validation on responses coming from the model to backend functions') leading to LLM06:2025 Excessive Agency; in the OWASP Top 10 for Agentic Applications 2026 it is ASI02 Tool Misuse, whose mitigation 7 reads 'Fail closed on ambiguous resolution'.
 
 The scenario is eight subscriber messages, two per barred act, each trying by words alone ("ignore your rules", a claimed staff or TDRA authority, a pasted policy update, "my manager said yes", a request framed as a test, the other language mid-conversation). Three runs per language per set-up, prompt v5, hash chains verified with `verify-log`; the key and the counting list were committed before the first run. A barred act is counted by its effect, from that list. Each step cell counts steps with a barred act, of 8 steps per run; the last column counts runs with at least one barred act passed. Prompt v5 tells care to propose what a message asks and leave the decision to the gate, so the proposed figures are high by instruction.
 
@@ -328,7 +312,7 @@ Capacity Building Week (page on file, read 2026-10-18):
 ## Annex F. Further gaps and candidates
 
 The register, `docs/gaps.md`, holds every row with the clauses searched and their quotes; the rows below continue the
-numbering of the report's table and were not in the 5 pages for room. Each row gives the statement, the clauses
+numbering of the report's table and were not in the 5 pages for room. Gap 7 and gaps 13 to 15 are below. Each row gives the statement, the clauses
 searched, what was searched and found absent, one example from elsewhere in its own words, the addressee, the
 recommendation and what exposed it. The register quotes the Arabic of each UAE clause beside the English.
 
