@@ -862,3 +862,17 @@ Builder gained what item 38(a) needed: the value check skips "Figure N", the ann
 
 Moved from the background:
 - Task 53 at stop 2: items 29 to 36 and four cuts, y 316.5, about 18 lines over, tests 3 failed, figures 7.7 cm. Report-back `docs/report-back/2026-11-06-task-53-stop-2.md`.
+
+## 2026-11-06: Task 53 stop 4, item 45 applied, page 5 met, one kept test fails (eighty-third wrap)
+
+Filed item 45, ended the four hidden Word processes, checked the eight S3 and S5 C5 logs (4 of 4 each). Applied (a) to (f) with test-first pins, measuring from (b): 8, 6, 3, 3 lines over, then 5 pages at (f); annex on page 6, 16 pages. (g) not reached. Rebuilt docx and PDF. Item 25 sweep: 226 visible hits, none comparative, listed in the report-back; 2109 more in site script blocks counted and searched by phrase, not read.
+
+Stopped before the PR. Step (e) removed the main text's only "20 scored runs", failing `tests/test_task_51.py:81`, a pin outside those the order names. Step (c) took "two runs per scenario per language, English / Arabic" out of the PDF, because the builder strips the bracket.
+
+Tried on scratch builds: (e) undone fits; (c)'s words back, with or without (e) undone or (g), 2 lines over. A shorter label was not tried. Fable then ruled, item 46, in the order and not yet built.
+
+Departure, in the report-back: `README.md:19` now names "Use case requirement", since the old heading no longer exists.
+
+Moved from the background:
+- Task 53 at stop 3: items 29 to 44, main text page 6, 9 lines over, docx and PDF not rebuilt, Figure 1 9 cm. Report-back `docs/report-back/2026-11-06-task-53-stop-3.md`.
+- Trap wording replaced: "Ending it from the session is refused by the permission check; Iyas ends it". This session ended it by PID.

@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-06 (eighty-second wrap, Opus: Task 53 at its third page stop, waiting on hq).
+Updated 2026-11-06 (eighty-third wrap, Opus: Task 53 at stop 4, Fable's item 46 waiting to build).
 
 ## What this is
 
@@ -48,9 +48,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Traps
 
-- `scripts/report_pdf.ps1` can pass on an old PDF: if Word's export fails (a viewer such as Foxit holds `docs/report.pdf`) it still checks the old file. Confirm the byte count or time moved. The failed export can leave a hidden Word process locking `report.docx`. Run Word checks after the builder, never beside it (2026-11-05). That hidden Word (`/Automation -Embedding`, no window) also makes `git pull` and `git switch` fail on the docx: check the exit code, never pipe `git pull` through `tail`. Ending it from the session is refused by the permission check; Iyas ends it (2026-11-06).
+- `scripts/report_pdf.ps1` can pass on an old PDF: if Word's export fails (a viewer such as Foxit holds `docs/report.pdf`) it still checks the old file. Confirm the byte count or time moved. The failed export can leave a hidden Word process locking `report.docx`. Run Word checks after the builder, never beside it (2026-11-05). That hidden Word (`/Automation -Embedding`, no window) also makes `git pull` and `git switch` fail on the docx: check the exit code, never pipe `git pull` through `tail`. The session can end it by PID after checking the command line (2026-11-06).
 - An annex paragraph with Arabic and no Latin letters builds right-to-left (`_rtl`, `docs/build_report.py`). Arabic inside an English annex paragraph scrambles in Word.
-- Report pages move in jumps, because keep-with-next and table rows absorb slack: a cut can move nothing alone (Task 53 layer 3). Measure each change with Word. Also, a Bash heredoc holding an apostrophe can fail to parse (2026-11-05): write scripts with the Write tool. Measure on a scratch build: `build_report.py --out <scratch>`, then `report_pages.ps1 -Path <scratch>` (2026-11-06). Never pipe that script into `Select-Object -First`: it dies before `Quit` and leaves a hidden Word (2026-11-06).
+- Report pages move in jumps, because keep-with-next and table rows absorb slack: a cut can move nothing alone (Task 53 layer 3). Measure each change with Word. Also, a Bash heredoc holding an apostrophe can fail to parse (2026-11-05): write scripts with the Write tool. Measure on a scratch build: `build_report.py --out <scratch>`, then `report_pages.ps1 -Path <scratch>` (2026-11-06). Never pipe that script into `Select-Object -First`: it dies before `Quit` and leaves a hidden Word (2026-11-06). Run-set brackets `[C5, ...]` do not print (2026-11-06).
 - Never pipe a long build through `tail`: it hid the errors of a 47-minute Task 47 build.- Any change to `kb/chunks`, a scenario's text or a mandate's documents fails `eval` until `kb ingest` and `eval` run with both indexes on this PC (`StaleMeasurement`). `kb_main` holds 161 chunks since 2026-11-04.
 - Every Y.3172 chunk carries page 1 (chunker quirk); a gap row gives its own `page`. `kb/sources/global/` is gitignored, so the verbatim global-quote test skips in CI.
 
@@ -71,7 +71,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 53: **stopped at page 5 a third time, not merged.** Branch `task-53`, PR none. Items 29 to 44 applied; main text ends page 6, 9 lines over. Docx and PDF not rebuilt. Tests: 1 failed, the stale docx. Report-back: `docs/report-back/2026-11-06-task-53-stop-3.md`. Figure 1 9 cm; Figure 2 in Annex C, 16 cm.
+- Task 53: **stopped a fourth time, not merged.** Branch `task-53`, PR none. Item 45 applied to (f); main 5 pages, 16 total, docx and PDF rebuilt. Tests: 1 failed, Task 51's strip test. Report-back: `docs/report-back/2026-11-06-task-53-stop-4.md`. Figures 1, 2 in the annex, 16 cm. Item 46 not built.
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
 - Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered. `record --retriever` exists, default shipped, never used on a live run.
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
@@ -85,4 +85,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-hq (Fable) rules on the six questions in `docs/report-back/2026-11-06-task-53-stop-3.md`. Then a fresh Opus session on `task-53` applies the ruling, measures page 5, rebuilds docx and PDF, reruns item 25, opens the PR, writes `docs/report-back/2026-11-06-task-53-built.md`. Then the video. Submission 2026-11-09.
+Iyas names the next step. Open on Task 53: a fresh Opus session on `task-53` commits item 46 and builds it, measuring page 5, then rebuild, pytest, push, PR, CI, `docs/report-back/2026-11-06-task-53-built.md`. Then the video. Submission 2026-11-09.
