@@ -843,3 +843,11 @@ Tried: `git pull` failed on a Word lock and a pipe hid it, so the branch was fir
 Moved from the background:
 - Task 52b: **open, stopped, not merged.** Branch `task-52b`, tip in `git log`. Time box: merged by 2026-11-07 12:00 Amman or dropped, and then main keeps "found, not fixed". Paused once for research (Iyas's rule of 2026-11-06), then built to Fable's changes C1 to C14. After the fix governed 0 of 48 steps passed, 0 of 6 governed runs; before, 8 of 48, 6 of 6; ungoverned 48 of 48 both times. USD 7.13. Stopped because C12 and C13 say "of 12 governed runs" and 3/12: there are 6 governed runs. `docs/report-back/2026-11-06-task-52b-stop-2.md` holds the question and the list of what is left; `docs/report-back/2026-11-06-task-52b-interim.md` holds step 1's table. Tests fail on the branch until the annex follows (Annex B sketch, gate-test count, intent).
 hq (Fable) answers the question in `docs/report-back/2026-11-06-task-52b-stop-2.md`. Then a fresh Opus session on `task-52b` finishes that file's list of what is left and writes `docs/report-back/2026-11-07-task-52b-built.md`. Task 53 and the video follow. Submission 2026-11-09.
+
+## 2026-11-06: Task 53 stop 2, all four cuts applied, still over (eighty-first wrap)
+
+Applied items 29 to 31 and 33 to 36, then item 32's layers, measured after each. Main text ended page 6 at y 490.5 (layer 1), 374.25 (layer 2), 374.25 (layer 3), 316.5 (layer 4). Stopped as the order says; nothing else cut. Docx and PDF not rebuilt. Tests 3 failed, 1118 passed. Departures, all put to Fable: `rules.json` field names in the P cell (the row has no `page`), "108 documents" for "108 instruments", item 29's sentence placed before "What a rule looks like" since Annex B has no table. Found: item 32(d) says CI checks clauses against the issuer's file, against Task 48's pin; two pins left red on purpose.
+
+Moved from the background:
+- Task 52b: merged, PR #23, `b0bcf1d`. 0 of 48 governed after the fix, 8 of 48 before.
+- Trap wording replaced: "the gap table's rows do not split, so one added line can cost 72 pt". Word reports row 12 starting on page 5 and running onto page 6, with AllowBreakAcrossPages on.
