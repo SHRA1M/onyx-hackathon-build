@@ -65,6 +65,7 @@ class State:
     facts: dict[str, Any] = field(default_factory=dict)
     humans: tuple[str, ...] = ()  # named humans reachable now
     resolve: bool = True  # False only to replay a log recorded before resolve_ids
+    recipient_resolution: bool = False  # run_start's flag (Task 52b): a log without it replays under the old reading
 
 
 class Knowledge:
@@ -139,8 +140,34 @@ def _finding(verdict: str, clauses: list[str], reasons: list[dict[str, Any]]) ->
     return Verdict(verdict, clauses, reasons)
 
 
-def _recipient(p: Any) -> str:
-    return p.args.get("recipient", "subscriber")
+THIRD_PARTY_WORDS = ("partner", "third party", "dunes", "شريك", "طرف ثالث", "ديونز")
+SUBSCRIBER_WORDS = ("subscriber", "customer", "account holder", "المشترك", "العميل")
+SUBSCRIBER, THIRD_PARTY, HUMAN = "subscriber", "third_party", "human"
+
+
+def _named_as(value: Any) -> str:
+    """Who a recipient_type or target names, by the word lists. A third-party word wins where both appear."""
+    text = str(value or "").replace("_", " ").replace("-", " ").lower()
+    return (THIRD_PARTY if any(w in text for w in THIRD_PARTY_WORDS)
+            else SUBSCRIBER if any(w in text for w in SUBSCRIBER_WORDS) else "")
+
+
+def _resolved(p: Any, s: State) -> tuple[Any, str]:
+    """(recipient, the field it was read from; none for an args.recipient given or nothing found). Unresolved is ''."""
+    if p.args.get("recipient"):
+        return p.args["recipient"], ""
+    if found := _named_as(p.args.get("recipient_type")):
+        return found, "recipient_type"
+    if p.verb == "draft_reply" and p.target in s.humans:
+        return HUMAN, "target"
+    if found := _named_as(p.target):
+        return found, "target"
+    return "", ""
+
+
+def _recipient(p: Any, s: State) -> Any:
+    """Without the flag, the reading every log before Task 52b was recorded on: an absent recipient is the subscriber."""
+    return _resolved(p, s)[0] if s.recipient_resolution else p.args.get("recipient", SUBSCRIBER)
 
 
 def read_items(values: Any, terms: Iterable[str]) -> set[str]:
@@ -362,7 +389,7 @@ def verification_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         return _finding(ALLOW, ["d16-4-17", "d16-4-18"], [
             _check(g, f"identity verified by {f.get('verified_by', 'a named human')} at {f.get('verified_at', '?')}",
                    "d16-4-17"), clock])
-    if p.verb != "disclose_account" or _recipient(p) != "subscriber":
+    if p.verb != "disclose_account" or _recipient(p, s) != SUBSCRIBER:
         return None
     required = str(f.get("verification_level_set_by_adviser", "")).split(" ")[0].lower()
     achieved = str(f.get("trust_level") or f.get("verification_level_set_by_adviser", "")).split(" ")[0].lower()
@@ -388,7 +415,7 @@ DIRECT_IDENTIFIERS = {"name", "msisdn", "number", "emirates_id", "id", "invoice"
 def sharing_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     """CPR 24.6 and fn 35 (recorded consent, contractual or later, no opt-out exercised), 24.7 interconnection data
     never for marketing, 24.9 the third party's contract, PDPL 7(5) the processor's guarantees, PDPL 17 objection."""
-    if p.verb != "disclose_account" or _recipient(p) == "subscriber":
+    if p.verb != "disclose_account" or _recipient(p, s) in {SUBSCRIBER, ""}:  # '' only with the flag: recipient_gate
         return None
     g, f, fields = "sharing_gate", s.facts, read_items(p.args.get("data", []), {"interconnection"})
     bad, clauses = [], ["cpr-24-6", "cpr-24-6-fn-35"]
@@ -548,7 +575,7 @@ def complaint_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
         return _finding(ALLOW, clauses, [trigger, *handover, *duties])
     if s.agent != "care" or p.verb not in {"draft_reply", "propose_sale", "disclose_account"}:
         return None
-    if p.verb == "draft_reply" and _recipient(p) == "human":
+    if p.verb == "draft_reply" and _recipient(p, s) == HUMAN:
         if p.target not in s.humans:
             return _finding(HOLD, ["cpr-26-7-2", "licence-9-1"], [
                 trigger, _check(g, f"the draft is for {p.target or 'no one'}, not a named human on shift", "licence-9-1"),
@@ -665,15 +692,48 @@ def records(p: Any, s: State, kb: Knowledge) -> Verdict | None:
     return _finding(ALLOW, [r["clause"] for r in keep], keep)
 
 
+def recipient_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
+    """Task 52b, only on a run carrying the flag. A disclosure or reply whose recipient the fields do not identify is
+    held, deny by default: never blocked, since another licensee's notification or a processor under contract may be
+    lawful. A reply goes only to the subscriber or a named human on shift. The verdict names any resolution made."""
+    if not s.recipient_resolution:
+        return None
+    g = "recipient_gate"
+    recipient, field = _resolved(p, s)
+    named = p.target if field == "target" else p.args.get(field)
+    shown = [_check(g, f"recipient resolved from {field}: {named} → {recipient}")] if field else []
+    identified = (bool(recipient) if p.verb == "disclose_account"
+                  else recipient == SUBSCRIBER or (recipient == HUMAN and p.target in s.humans))
+    if identified:
+        return _finding(ALLOW, [], shown) if shown else None
+    return _finding(HOLD, ["cpr-24-6", "cpr-24-10"], [
+        *shown, _check(g, "recipient not identified as the subscriber; a named human decides", "cpr-24-6"),
+        _basis(g, IMDA_2_2_2)])
+
+
+def change_word_gate(p: Any, s: State, kb: Knowledge) -> Verdict | None:
+    """Task 52b, only on a run carrying the flag: a change none of the five gates decides (its word missing or
+    unlisted) is held for a human, deny by default. Without this an unlisted word passes every gate by not applying."""
+    if not s.recipient_resolution:
+        return None
+    if any(gate(p, s, kb) is not None for gate in (consent_gate, disconnection_gate, verification_gate,
+                                                   cancellation_gate, price_change_gate)):
+        return None
+    g = "deny_by_default"
+    return _finding(HOLD, [], [
+        _check(g, f"change word {p.args.get('change') or 'none'} is not one the gates decide; held for a human"),
+        _basis(g, IMDA_2_2_2)])
+
+
 # The gates for each mandate verb (onyx/data/mandates.json). A verb listed with no gates passes on the base checks
 # alone; a verb not listed has no gate and is held (deny_by_default).
 GATES: dict[str, tuple[Callable[..., Verdict | None], ...]] = {
     "propose_sale": (child_gate, disclosure_before_sale_gate, price_gate, consent_gate, marketing_gate,
                      complaint_gate, records),
     "propose_change": (child_gate, consent_gate, price_gate, disconnection_gate, verification_gate,
-                       cancellation_gate, price_change_gate, records),
-    "disclose_account": (child_gate, verification_gate, sharing_gate, complaint_gate, records),
-    "draft_reply": (complaint_gate, model_provider_gate, records),
+                       cancellation_gate, price_change_gate, change_word_gate, records),
+    "disclose_account": (child_gate, recipient_gate, verification_gate, sharing_gate, complaint_gate, records),
+    "draft_reply": (recipient_gate, complaint_gate, model_provider_gate, records),
     "classify_channel": (), "cite": (), "flag_gap": (),
     "raise_dispute": (records,), "order_restore": (records,), "request_report": (records,),
     "receive_objection": (), "receive_dpia": (), "request_human_review": (human_gate, complaint_gate, records),

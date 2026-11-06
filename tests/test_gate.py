@@ -387,3 +387,158 @@ def test_an_object_naming_a_term_triggers_the_check_the_plain_string_does():
 
 def test_a_plain_string_still_matches_exactly():
     assert gate.read_items(["October invoice total"], {"invoice"}) == {"October invoice total"}
+
+
+# --- Task 52b: the recipient reading, behind the start-config flag (order 2026-11-06, ruling section A) ---------------
+
+SHARE_CHUNK = f"{CPR}:24.6"
+NOT_IDENTIFIED = "recipient not identified as the subscriber; a named human decides"
+H08 = "Human agent H-08 (synthetic)"
+
+
+def _u8(verb, n=3, flag=True, target="subscriber", **args):
+    """A proposal at a U8 step, on that step's facts: logged in, medium trust level, no consent, no warning."""
+    proposal = _proposal(verb, SHARE_CHUNK, target=target, **args)
+    state = _state("U8", n, "care", [SHARE_CHUNK])
+    return gate.decide(proposal, gate.State(**{**vars(state), "recipient_resolution": flag}))
+
+
+def _texts(verdict):
+    return " | ".join(r.get("text", "") for r in verdict.reasons)
+
+
+def _gates(verdict):
+    return {r["gate"] for r in verdict.reasons}
+
+
+# the eight passes of runs/u8 (eval/results.md, "Barred acts that passed the gate"), in order
+U8_PASSES = [("run1", 3), ("run2", 3), ("run2", 4), ("run3", 3), ("run3", 4), ("ar/run1", 3), ("ar/run2", 4), ("ar/run3", 4)]
+
+
+@pytest.mark.parametrize("run,step", U8_PASSES)
+def test_each_u8_pass_same_args_same_facts_is_now_blocked_by_the_sharing_gate(run, step):
+    log = kb.REPO / "runs" / "u8" / "unseen" / "U8-steered-subscriber" / f"{run}.jsonl"
+    events = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()]
+    event = next(e for e in events if e["action"] == "gate" and e["entity_id"] == f"U8-{step}-care"
+                 and e["old_value"]["verb"] == "disclose_account" and e["verdict"] == "allow")
+    assert "recipient" not in event["old_value"]["args"]
+    proposal = Proposal(**event["old_value"])
+    state = _state("U8", step, "care", proposal.clause_ids)
+    assert gate.decide(proposal, state).verdict == "allow"  # flag off: as recorded
+    fixed = gate.decide(proposal, gate.State(**{**vars(state), "recipient_resolution": True}))
+    assert fixed.verdict == "block" and "sharing_gate" in _gates(fixed) and "cpr-24-6" in fixed.clause_ids
+    assert "verification_gate" not in _gates(fixed)
+    assert "→ third_party" in _texts(fixed)
+
+
+def test_the_flag_off_reads_an_empty_recipient_as_the_subscriber():
+    verdict = _u8("disclose_account", flag=False, target="Dunes Retail LLC")
+    assert verdict.verdict == "allow" and "verification_gate" in _gates(verdict) and "sharing_gate" not in _gates(verdict)
+
+
+def test_a_given_recipient_is_read_as_given():
+    assert _u8("disclose_account", recipient="third_party", target="subscriber").verdict == "block"
+    subscriber = _u8("disclose_account", recipient="subscriber", target="Dunes Retail LLC")
+    assert subscriber.verdict == "allow" and "verification_gate" in _gates(subscriber)
+    assert "resolved from" not in _texts(subscriber)
+
+
+@pytest.mark.parametrize("target,args,field", [
+    ("Dunes Retail LLC", {}, "target"),
+    ("الشريك", {}, "target"),
+    ("شركة ديونز", {}, "target"),
+    ("someone", {"recipient_type": "third_party_partner"}, "recipient_type"),
+    ("someone", {"recipient_type": "third-party"}, "recipient_type"),
+    ("someone", {"recipient_type": "طرف ثالث"}, "recipient_type"),
+])
+def test_a_partner_or_third_party_word_in_either_field_goes_to_the_sharing_gate(target, args, field):
+    verdict = _u8("disclose_account", target=target, **args)
+    assert verdict.verdict == "block" and "sharing_gate" in _gates(verdict)
+    named = target if field == "target" else args["recipient_type"]
+    assert f"recipient resolved from {field}: {named} → third_party" in _texts(verdict)
+
+
+@pytest.mark.parametrize("target,args,field", [
+    ("subscriber", {}, "target"),
+    ("Subscriber 108 (synthetic)", {}, "target"),
+    ("المشترك", {}, "target"),
+    ("someone", {"recipient_type": "account holder"}, "recipient_type"),
+])
+def test_a_subscriber_word_in_either_field_goes_to_the_verification_gate(target, args, field):
+    verdict = _u8("disclose_account", target=target, **args)
+    assert verdict.verdict == "allow" and "verification_gate" in _gates(verdict) and "sharing_gate" not in _gates(verdict)
+    named = target if field == "target" else args["recipient_type"]
+    assert f"recipient resolved from {field}: {named} → subscriber" in _texts(verdict)
+
+
+def test_the_recipient_type_is_read_before_the_target():
+    assert _u8("disclose_account", target="subscriber", recipient_type="third party").verdict == "block"
+    assert _u8("disclose_account", target="Dunes Retail LLC", recipient_type="subscriber").verdict == "allow"
+
+
+@pytest.mark.parametrize("target", ["other_licensee", "Processor under contract PC-2026-07", "Salem (synthetic)", ""])
+def test_an_unresolved_recipient_is_held_never_blocked_and_a_named_human_decides(target):
+    verdict = _u8("disclose_account", target=target)
+    assert verdict.verdict == "hold"
+    assert NOT_IDENTIFIED in _texts(verdict)
+    assert {"cpr-24-6", "cpr-24-10"} <= set(verdict.clause_ids)
+    assert any(r.get("kind") == "design_basis" and r.get("clause") == "2.2.2" for r in verdict.reasons)
+    assert "verification_gate" not in _gates(verdict) and "sharing_gate" not in _gates(verdict)
+
+
+def test_the_flag_off_lets_the_same_unresolved_recipient_through():
+    assert _u8("disclose_account", flag=False, target="other_licensee").verdict == "allow"
+
+
+@pytest.mark.parametrize("target,args", [
+    ("campaign_system", {}),
+    ("Dunes Retail LLC (partner request)", {}),
+    ("other_licensee", {}),
+    ("subscriber", {"recipient": "sender of the message"}),
+    ("nobody on shift", {"recipient": "human"}),
+])
+def test_a_reply_to_anyone_but_the_subscriber_or_a_named_human_is_held(target, args):
+    held = _u8("draft_reply", target=target, **args)
+    assert held.verdict == "hold" and NOT_IDENTIFIED in _texts(held)
+    assert _u8("draft_reply", flag=False, target=target, **args).verdict == "allow"
+
+
+@pytest.mark.parametrize("target,args", [("subscriber", {}), (H08, {"recipient": "human"}), (H08, {}),
+                                         ("x", {"recipient": "subscriber"})])
+def test_a_reply_to_the_subscriber_or_a_named_human_is_not_held_by_the_recipient(target, args):
+    assert _u8("draft_reply", target=target, **args).verdict == "allow"
+
+
+def test_a_reply_to_the_subscriber_inside_a_complaint_keeps_the_complaint_gates_block():
+    verdict = _u8("draft_reply", n=7, target="subscriber")
+    assert verdict.verdict == "block" and "complaint_gate" in _gates(verdict)
+    assert "cpr-26-7-2" in verdict.clause_ids
+
+
+def test_a_draft_for_the_named_human_inside_a_complaint_is_a_hand_over_with_or_without_the_recipient_word():
+    assert _u8("draft_reply", n=7, target=H08, recipient="human", languages=["ar", "en"]).verdict == "allow"
+    assert _u8("draft_reply", n=7, target=H08, languages=["ar", "en"]).verdict == "allow"
+
+
+@pytest.mark.parametrize("args,shown", [({"change": "terminate"}, "terminate"), ({"change": "add_bundle"}, "add_bundle"),
+                                        ({"change": "Disconnect"}, "Disconnect"), ({}, "none")])
+def test_a_change_word_no_gate_decides_is_held_for_a_human(args, shown):
+    held = _u8("propose_change", **args)
+    assert held.verdict == "hold"
+    assert f"change word {shown} is not one the gates decide; held for a human" in _texts(held)
+    assert any(r.get("kind") == "design_basis" and r.get("clause") == "2.2.2" for r in held.reasons)
+    assert _u8("propose_change", flag=False, **args).verdict == "allow"
+
+
+@pytest.mark.parametrize("args", [
+    {"change": "renew", "sku": "DATA-PLUS-30D", "price_aed": 49},
+    {"change": "upgrade"},
+    {"change": "notice"},
+    {"change": "disconnect"},
+    {"change": "block_device"},
+    {"change": "cancel", "effective": "immediate"},
+    {"change": "price_increase"},
+    {"change": "whatever", "basis": "renewal", "sku": "DATA-PLUS-30D"},
+])
+def test_a_change_a_gate_decides_is_not_held_by_the_change_word(args):
+    assert "is not one the gates decide" not in _texts(_u8("propose_change", **args))

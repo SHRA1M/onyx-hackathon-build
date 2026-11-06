@@ -185,7 +185,12 @@ SCENARIOS_DIR = DATA_DIR / "scenarios"
 
 
 def load_scenario(scenario_id: str) -> dict[str, Any]:
-    return json.loads((SCENARIOS_DIR / f"{scenario_id}.json").read_text(encoding="utf-8"))
+    """A scenario by its id or path under the folder. An id not in the folder is looked for in unseen/, whose files are
+    named <id>-<title>.json (Task 52b: a log's run_start names U8, and replay loads by that id)."""
+    path = SCENARIOS_DIR / f"{scenario_id}.json"
+    if not path.exists():
+        path = next(iter(sorted((SCENARIOS_DIR / "unseen").glob(f"{scenario_id}-*.json"))), path)
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def load_key(scenario_id: str) -> dict[str, Any]:

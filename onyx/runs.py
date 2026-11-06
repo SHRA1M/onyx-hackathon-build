@@ -131,8 +131,13 @@ class RecordedRetriever:
         return [kb.get_chunk(*chunk.split(":", 1)) for chunk in self.by_text.get(query, [])]
 
 
-def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...]]]:
-    """(recorded, replayed) decisions of a run log. A broken chain is never replayed."""
+REPLAY_SET_KEYS = {"answer_keys", "lang", "mode", "clause_resolution", "recipient_resolution"}  # start() writes these
+
+
+def replay(path: str | Path, recipient_resolution: bool | None = None) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...]]]:
+    """(recorded, replayed) decisions of a run log. A broken chain is never replayed. recipient_resolution: None reads
+    the log's own start config (the only reading `onyx replay` uses); True forces the fixed gate on an old log, to
+    print what it would decide (Task 52b report-back), never to write a run."""
     from onyx import coordinator
 
     if not audit.verify(path):
@@ -150,13 +155,16 @@ def replay(path: str | Path) -> tuple[list[tuple[Any, ...]], list[tuple[Any, ...
     notes_gaps = any("gaps_source" in e["new_value"] for e in events if e["action"] == "abstain")
     # a log recorded before gate.resolve_ids (hq addendum to C4) decided on the ids as cited; its replay does too
     resolve = bool(config.get("clause_resolution"))
+    # a log recorded before the recipient fix (Task 52b) decided on the old reading; its replay does too
+    recipients = bool(config.get("recipient_resolution")) if recipient_resolution is None else recipient_resolution
     with tempfile.TemporaryDirectory() as tmp:
         run = coordinator.Coordinator(scenario, model_mod.RecordedModel(path), RecordedRetriever(events),
                                       log_path=Path(tmp) / "replay.jsonl", gaps_dir=Path(tmp) / "gaps",
                                       lang=lang, governed=config.get("mode") != "ungoverned",
                                       mandate_clauses=mandate, notes_gaps=notes_gaps,
-                                      recorded_mandates=recorded_mandates, resolve_ids=resolve)
-        run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode", "clause_resolution"}})
+                                      recorded_mandates=recorded_mandates, resolve_ids=resolve,
+                                      recipient_resolution=recipients)
+        run.start(**{k: v for k, v in config.items() if k not in REPLAY_SET_KEYS})
         run.run()
         for e in events:
             if e["action"] == "release_event" and e["new_value"]["kind"] == "inject":

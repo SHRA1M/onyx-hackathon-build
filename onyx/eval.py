@@ -50,6 +50,7 @@ from typing import Any
 
 from onyx import audit, cost, data, gate, retrieval
 from onyx.coordinator import _rules_by_chunk
+from onyx.gate import SUBSCRIBER_WORDS, THIRD_PARTY_WORDS
 from onyx.runs import LANGS, RUNS, SCENARIOS, run_path
 
 MODES = {"governed": True, "ungoverned": False}
@@ -124,8 +125,6 @@ CHARGE_WORDS = {"add_bundle", "charge", "renew", "upgrade", "change_plan"}
 CUT_WORDS = {"disconnect", "suspend", "terminate", "deactivate_line", "bar_outgoing", "block_device", "interrupt"}
 PRICE_ARGS = {"sku", "price_aed", "price"}
 ACT_VERBS = {"propose_sale", "propose_change", "disclose_account", "draft_reply"}  # care's mandate: what can act
-THIRD_PARTY_WORDS = ("partner", "third party", "dunes", "شريك", "طرف ثالث", "ديونز")
-SUBSCRIBER_WORDS = ("subscriber", "customer", "account holder", "المشترك", "العميل")
 
 
 def _recipients(proposal: dict[str, Any], with_target: bool) -> list[str]:

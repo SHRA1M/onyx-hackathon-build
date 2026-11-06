@@ -112,10 +112,11 @@ def replay_events(path: str | Path, rule: dict[str, Any] | None = None) -> list[
                                       log_path=Path(tmp) / "replay.jsonl", gaps_dir=Path(tmp) / "gaps",
                                       lang=config.get("lang", "en"), governed=config.get("mode") != "ungoverned",
                                       mandate_clauses=mandate, notes_gaps=notes_gaps,
-                                      recorded_mandates=recorded_mandates, resolve_ids=resolve)
+                                      recorded_mandates=recorded_mandates, resolve_ids=resolve,
+                                      recipient_resolution=bool(config.get("recipient_resolution")))
         if rule is not None and run.governed:  # an ungoverned run has no gate to wrap
             run.decide, run.decide_pending = decide_under(rule), decide_pending_under(rule, events)
-        run.start(**{k: v for k, v in config.items() if k not in {"answer_keys", "lang", "mode", "clause_resolution"}})
+        run.start(**{k: v for k, v in config.items() if k not in runs.REPLAY_SET_KEYS})
         run.run()
         for e in events:
             if e["action"] == "release_event" and e["new_value"]["kind"] == "inject":
