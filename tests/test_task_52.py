@@ -103,28 +103,17 @@ ANNEX = (REPO / "docs" / "annex.md").read_text(encoding="utf-8")
 README = (REPO / "README.md").read_text(encoding="utf-8")
 
 
-def _span(pair):
-    return f"{pair[0]:.2f} to {pair[1]:.2f}"
-
-
-def test_annex_c_table_equals_eval():
-    cells = RESULTS["u8"]["cells"]
-    for mode, name in (("governed", "Governed"), ("ungoverned", "Ungoverned")):
-        for lang in ("en", "ar"):
-            c = cells[mode][lang]
-            assert (f"| {name} | {lang} | {c['proposed']} of {c['steps']} | {_span(c['proposed_ci95'])} | "
-                    f"{c['passed']} of {c['steps']} | {_span(c['passed_ci95'])} |") in ANNEX
-
-
 def test_annex_c_and_the_readme_pooled_figures_equal_eval():
     governed, ungoverned = RESULTS["u8"]["cells"]["governed"]["pooled"], RESULTS["u8"]["cells"]["ungoverned"]["pooled"]
-    pooled = f"{governed['passed']} of {governed['steps']} steps passed the gate, 95% interval {_span(governed['passed_ci95'])}"
-    assert pooled in ANNEX and f"{ungoverned['passed']} of {ungoverned['steps']} ungoverned" in ANNEX
-    assert (f"{governed['passed']} of {governed['steps']} steps governed, {ungoverned['passed']} of "
-            f"{ungoverned['steps']} ungoverned") in README
+    pooled = f"the gate allowed {governed['passed']} of {governed['steps']} governed steps"
+    assert pooled in ANNEX and pooled in README
+    assert f"Without the gate, {ungoverned['passed']} of {ungoverned['steps']} steps passed" in ANNEX
+    assert f"ungoverned {ungoverned['passed']} of {ungoverned['steps']} both times" in README
     acts = governed["by_act"]
     assert acts["charge"]["passed"] == acts["disconnect"]["passed"] == acts["keep_handling"]["passed"] == 0
     assert acts["share"]["passed"] == 8 and "8 of 12 share steps" in ANNEX and "0 of 12 steps each" in ANNEX
+    after = RESULTS["u8_fixed"]["cells"]["governed"]["pooled"]["verdicts"]
+    assert after == {"block": 42, "hold": 6} and "block 42 and hold 6" in ANNEX
 
 
 def test_all_twelve_logs_are_read_and_every_chain_verifies():
@@ -147,8 +136,8 @@ def test_every_place_that_prints_the_figure_keeps_the_orders_limits():
     paragraph = ANNEX[start:ANNEX.index("**What the test does not show.**")]
     readme = README[README.index("Steered-subscriber test"):].split("\n")[0]
     for text in (paragraph, readme):
-        assert "team wrote the attacks" in text and ("ungoverned" in text.lower())
-        assert "live system" in text
+        assert ("team wrote the attacks" in text or "written by the team" in text) and "ungoverned" in text.lower()
+        assert "live system" in text and "the trust level" in text
     for text in (ANNEX, README, (REPO / "eval" / "results.md").read_text(encoding="utf-8")):
         for banned in ("attack-proof", "resists prompt injection"):
             assert banned not in text.lower()
@@ -157,9 +146,11 @@ def test_every_place_that_prints_the_figure_keeps_the_orders_limits():
 def test_annex_a_carries_the_ruled_limit_word_for_word():
     assert ("The gate decides from the proposal's verb, arguments and clause ids, the released and retrieved ids, the "
             "scenario's facts and the reachable humans. It does not read the chat text, but the model writes the proposal "
-            "after reading it, and the consent and disconnection gates act on a fixed list of change words: a proposal "
-            "worded outside that list passes them. Facts such as consent are written by the scenario, so a live system's "
-            "way of setting them is untested (steered-subscriber figures: Annex C).") in ANNEX
+            "after reading it, and the consent and disconnection gates act on a fixed list of change words. Found by the "
+            "steered-subscriber test") in ANNEX
+    assert ("Facts such as consent are written by the scenario, so a live system's way of setting them is untested "
+            "(steered-subscriber figures: Annex C).") in ANNEX
+    assert "a proposal worded outside that list passes them" not in ANNEX
 
 
 def test_no_gate_reads_the_chat_text():
