@@ -815,3 +815,7 @@ Tried and dropped: a limits sentence saying words alone did not open a gate; unt
 Detail moved from the background to keep it under its limit:
 - `onyx/why.py`: per decision at the step the verdict (Arabic word beside), each clause id with label, manifest title, page, binding tag and its words from `kb/chunks/` (the rule's quote when the chunk holds it; `NO_AR` line then English where the chunk has no Arabic: every PDPL clause), hand-over obligations and humans on shift, the event hash, `override_refused` lines. A step with no gate event exits 2.
 - `onyx/replay_viewer.py`: steps rendered in Python from logs, rules.json and manifest; events inline as JSON; the script shows one step, switches language, present mode (key p). Hand-over panel: a block carrying both quotes. Figures: `eval.run_metrics` per run shown. Task 19: a picker entry "What-if: S2 under the rule gap 1 recommends" opens `whatif.render` text (section class `whatif`, outside the five scenarios) under a link to the page.
+
+## 2026-11-06: Task 52 merged
+
+Iyas merged PR #22 at 04:26 Amman (`f6442d3`), right after the seventy-sixth wrap, whose files on the branch still said "not merged". This wrap corrected the background and brief on `main`. No code, figures or logs changed. Superseded: "13 pages on main, 14 once Task 52 merges"; the report is 14 pages on `main`.
