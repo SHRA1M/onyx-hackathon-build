@@ -17,13 +17,13 @@ RUNS_PAGE = (REPO / "docs" / "site" / "runs.html").read_text(encoding="utf-8")
 GAPS_MD = (REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
 STRIP = ["5 scenarios, 2 languages, 20 recorded runs", "108 documents, 100 verified",
          "action recall 0.96 en / 1.00 ar (110 of 112 key steps)", "citation validity 0.99 / 1.00",
-         "expected gaps found 5 of 7 in every run"]
+         "abstained and logged the gap on the unanswerable step in 20 of 20 runs"]
 # Each strip cell's figures, as the main text prints them. The cells are shortened, so the words differ.
-PRINTED = {STRIP[0]: ["same five scenarios", "both languages", "over 20 runs"],
+PRINTED = {STRIP[0]: ["same five scenarios", "both languages", "over the 20 scored runs"],
            STRIP[1]: ["108 documents", "100 are verified"],
            STRIP[2]: ["action recall", "0.96 / 1.00", "110 of 112 key steps"],
            STRIP[3]: ["citation validity 0.99 / 1.00"],
-           STRIP[4]: ["5 of 7 found in every run"]}
+           STRIP[4]: ["abstention on the one unanswerable step per scenario 1.00"]}
 
 
 def _row(gap_id: str) -> dict:
@@ -61,7 +61,7 @@ def test_gap_13_says_what_was_checked():
     assert wording in _row("gap-13")["gap"] and wording in " ".join(ANNEX.split())
 
 
-@pytest.mark.parametrize("line, number, name", [("| SRC |", 1, "Data/model Marketplace"), ("| MLFO |", 13, "Digital Infrastructure")])
+@pytest.mark.parametrize("line, number, name", [("| SRC |", 1, "Data/model Marketplace"), ("| MLFO; ML sandbox |", 13, "Digital Infrastructure")])
 def test_the_documents_only_dimensions_are_named_in_their_rows(line, number, name):
     row = next(l for l in REPORT.splitlines() if l.startswith(line))
     assert f"; and {number} {name}, on documents only" in row
@@ -88,7 +88,7 @@ def test_every_strip_figure_is_printed_elsewhere_in_the_main_text():
 def test_the_sources_sentence_is_cut_and_annex_a_carries_what_it_named():
     """hq's stop 1 ruling, question 1: the cut; the strip's 108 documents stays printed in the main text."""
     body = " ".join(REPORT[REPORT.index("## Introduction"):REPORT.index("## Description of the use case")].split())
-    assert body.endswith("Annex A lists the sources; the PDPL is the Personal Data Protection Law 45/2021. 100 are verified: "
+    assert body.endswith("Annex A lists the sources (the PDPL is the Personal Data Protection Law 45/2021); 100 are verified: "
                          "the issuing body's file is on disk with its SHA-256, and a test on every push checks each clause "
                          "the gates cite word for word against the text stored from it. No consumer data was used.")
     assert "other UAE texts" not in REPORT and "foreign texts" not in REPORT
@@ -137,7 +137,7 @@ def test_the_readme_first_screen_is_in_the_orders_order():
 
 def test_the_team_table_carries_the_reviewer_with_his_title_and_his_qualification():
     section = README[README.index("## What Mizan is"):README.index("## Why")]
-    assert "| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri | Al-Balqa Applied University, Faculty of AI, students |" in section
+    assert "| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh | BAU Faculty of Artificial Intelligence. Mentor: Dr. Wafaa Almaaitah |" in section
     assert ("Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan | "
             "practitioner review, not legal advice, no UAE standing |") in section
     assert "Team Onyx (BAU Faculty of AI)" not in README

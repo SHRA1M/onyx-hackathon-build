@@ -6,6 +6,10 @@ OpenAI-compatible adapter (`onyx/model.py`); any model behind that interface can
 was labelled for learning. The data in Mizan is the law, and it is used in three ways: read by the model as
 retrieved context, compiled by people into gate code, and used by the scorer as answer keys.
 
+![Figure 1](docs/fig/fig1-architecture.png)
+
+*Figure 1. Mizan on the Y.3172 nodes; the model proposes, the P node decides, D hands a complaint to a person.*
+
 **Why this model, and where it runs.** Sonnet was chosen in a bake-off of three models on the same scenarios
 (`eval/bakeoff.md`): on prompt v1 it returned well-formed JSON on every call where the larger model's replies were
 stopped by the endpoint's content filter in 18 of 26 English calls, and its citation validity was 1.00 in
@@ -18,7 +22,7 @@ run of S2 on qwen2.5:14b-instruct through Ollama on a desktop GPU is in `runs/de
 `docs/site/localmodel.html` and not scored.
 
 **Retrieval is English-centred, and the design allows for it.** `all-MiniLM-L6-v2` is an English sentence
-embedder; measured alone it is weak in both languages, and weaker in Arabic (Retrieval below). Mizan does not rely on it for the clauses that matter: every agent's
+embedder; measured alone it is weak in both languages, and weaker in Arabic (Retrieval below). Mizan does not rely on it for the clauses that matter. An agent's mandate is its fixed list of what it may do and read. Every agent's
 mandate names the clauses its verbs depend on, and those chunks are placed in the prompt first, in both languages,
 before anything retrieval adds (see Retrieval below). That is why the Arabic runs score 1.00 action recall and 1.00
 citation validity (C5) with an English embedder. A bilingual embedder is listed under next steps; the best one measured before the freeze, bge-m3, moved pooled recall@8 from 0.24 to 0.34 in English and from 0.09 to 0.32 in Arabic (Retrieval below), short of the 0.40 English target set before measuring; it was not adopted, because adopting it would have meant re-recording the scored runs.
@@ -98,6 +102,10 @@ The objection received at step 1 is read by the sharing and marketing gates from
 
 The gate decides from the proposal's verb, arguments and clause ids, the released and retrieved ids, the scenario's facts and the reachable humans. It does not read the chat text, but the model writes the proposal after reading it, and the consent and disconnection gates act on a fixed list of change words. Found by the steered-subscriber test on 2026-11-06 and fixed the same day: the gate now reads every field that names a recipient, a third-party word anywhere sends the step to the sharing check, and a recipient it cannot identify, an unlisted change word or a reply addressed to a partner is held for a person (IMDA 2.2.2: deny by default where no approval policy exists); the scored runs were recorded before the fix and were not re-recorded (their proposals of that shape and verdicts: eval/results.md). The fixed gate would change 19 of their 189 recorded verdicts, listed in eval/results.md: 16 are a hold a person would see, mostly a disclosure or reply to the subscriber addressed by name, which the whole-value match does not read, and 3 are holds that become blocks; none becomes an allow. Facts such as consent are written by the scenario, so a live system's way of setting them is untested (steered-subscriber figures: Annex C).
 
+The gate's rules are code; the clauses it cites are JSON rows. We found no standard machine-readable form for regulatory rules in the texts we hold and claim none; a standards gap on that form is a candidate for after the shortlist, not a finding.
+
+Reviewed on 2026-11-05 by Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan (practitioner review, not legal advice, no UAE standing): his points on CPR 26.7.2's Arabic, licence 3.4.1 and licence 9.1 are in gap 1 and the rule notes; his code-level points are listed for after the shortlist.
+
 ## Annex B. From clause to code: what "plain code" means
 
 Two different things are code, and neither of them is the model.
@@ -109,6 +117,8 @@ Two different things are code, and neither of them is the model.
    proposal and the state of the conversation (channel, facts on file, consent record, warning given, verification
    done, humans on shift) and applies the rules that bind that verb. It returns a verdict with the rule ids it
    relied on, each rule carrying its clause, page and verbatim quote in both languages.
+
+In the main text's Y.3172 table, the SRC node holds 108 documents (100 verified), 161 clause chunks (77 with the Arabic text), English and Arabic; subscriber and account data synthetic, no real person; at the PP node a chunk = document, clause, page, text in both languages, status.
 
 What a rule looks like, as stored (`rules.json`):
 
@@ -146,7 +156,7 @@ What a rule looks like, as stored (`rules.json`):
 
 يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم.
 
-Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading and cites the chapeau, the clause and licence 9.1 together.
+Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading, citing 26.7.2 and licence 9.1; the chapeau is quoted here and holds no rule.
 
 What the gate does with it, as a sketch (the real function is `complaint_gate` in `onyx/gate.py`):
 
@@ -237,7 +247,7 @@ in code.
 
 يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم.
 
-Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading and cites the chapeau, the clause and licence 9.1 together.
+Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading, citing 26.7.2 and licence 9.1; the chapeau is quoted here and holds no rule.
 
 **Precision of the headline figures.** The scored run (C5, prompt v5, governed, two runs per scenario per language)
 pools to action recall 110 of 112 key steps, 95% interval 0.94 to 1.00,
@@ -251,6 +261,10 @@ first C5 Arabic runs showed the subscriber's lines read as translation rather th
 re-recorded on the new text; the earlier runs are kept in `runs/_superseded/c5-ar-2026-10-27/`. The C3 and C4
 Arabic runs, including the ungoverned baseline above, remain on the old text. The report states the figures from
 the re-recorded set.
+
+![Figure 2](docs/fig/fig2-results.png)
+
+*Figure 2. (a) C5: action recall and citation validity. (b) C3: governed rejections, ungoverned claims.*
 
 **Steered subscriber, U8.** We tested the agent with an adversarial scenario written by our team, in English and Arabic: twelve runs, six with the gate and six without. The test exposed a fault in how the gate identified the recipient of account data: before the correction, the gate allowed 8 of 48 governed steps, in 6 of 6 governed runs. We corrected the fault and repeated the same test: 0 of 48 governed steps, in 0 of 6 governed runs; with six runs, a count of zero bounds the true rate at about 39% at 95% confidence (exact one-sided binomial limit; a zero count is reported as a bounded null, OWASP GenAI Red Teaming Manual v1.0, page 124). Without the gate, 48 of 48 steps passed before and after. The gate reads the recipient from the model's own arguments, every field, failing closed on conflict; deriving it from trusted operation metadata, a required recipient field with a fixed value list bound to a delivery channel, is live-app work. The fault is OWASP LLM05:2025 Improper Output Handling (mitigation 1: 'apply proper input validation on responses coming from the model to backend functions') leading to LLM06:2025 Excessive Agency; in the OWASP Top 10 for Agentic Applications 2026 it is ASI02 Tool Misuse, whose mitigation 7 reads 'Fail closed on ambiguous resolution'.
 
@@ -278,8 +292,8 @@ Before the correction, no charge, disconnection or complaint act passed: 0 of 12
 
 **What the test does not show.** C3 ran on prompt v3; the scored run (C5) is prompt v5, governed only, so the
 ungoverned baseline is older than the headline figures. Three runs per cell is enough to show the effect, not to
-estimate it finely. The humans in the runs are scripted. The keys are the team's reading of the clauses; a
-regulator's reading could move a step either way, and the figures recompute from the logs with `python -m onyx eval`.
+estimate it finely. After the shortlist the same test runs on more runs, with attacks written by people who have not read the gate's code. The humans in the runs are scripted. The keys are the team's reading of the clauses; a
+regulator's reading could move a step either way, and the figures recompute from the logs with `python -m onyx eval`. Gap recall counts flags, and only the adviser may flag: flag_gap is in its mandate alone. The S1 key places gap 2 at the channel classification, which is plain code, and gap 6 at the care agent's offer; neither step gives the adviser a model turn. Its one model turn in S1, step 6, shows it only the renewal question, and no run flagged gaps 2 or 6 there, so S1 reads 0.33. The keys were not edited; after the shortlist the adviser reads the whole conversation or the care agent gets the register, and the runs are repeated.
 
 ## Annex D. What ITU can reuse
 
@@ -289,6 +303,7 @@ Capacity Building Week (page on file, read 2026-10-18):
 1. **For the Sandbox Network for Arabic-AI (SNAI):** the Arabic clause chunks of the UAE texts (77 chunks with
    `text_ar`), five scenarios written in Arabic by an Arabic speaker, the frozen keys, and 10 recorded Arabic
    runs with their logs, so an Arabic agent can be scored against binding Arabic law without new annotation.
+   The chunk format carries no telecom-specific field (document, article, clause, page, text in both languages, status, retention class, Y.3172 node): another sector's texts chunked the same way serve the same retrieval, hash-chained log and replay. A swap is not free of code: the gates name CPR clauses by design; the adviser's sales-channel table (`onyx/agents/adviser.py`), the care agent's hand-over line and the coordinator's TDRA role name the same regulation; the replay page highlights two telecom hand-over quotes. Each would be rewritten for that sector. We state the cost of a swap rather than claim a generic framework.
 2. **For the call for domain-specific open knowledge bases:** `kb/manifest.csv` with its 23-column schema (issuer, URL,
    fetch date, HTTP status, SHA-256, pages, language, official-translation flag, binding status, Y.3172 node and
    Readiness dimensions per document), the 108 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's

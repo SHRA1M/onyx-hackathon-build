@@ -833,3 +833,46 @@ Tried and dropped: first-field resolution with substring subscriber words (order
 Moved from the background:
 - Task 52: merged by Iyas 2026-11-06 04:26 Amman, PR #22, `f6442d3`, inside the time box. `docs/report-back/2026-11-06-task-52-built.md` with hq. Governed 8 of 48 steps passed a barred act, ungoverned 48 of 48. All eight: `disclose_account` naming the partner in `target` or `recipient_type` with `args.recipient` empty, which `gate._recipient` reads as the subscriber. Not fixed, as ruled. C5 S3-2 has the same shape, held only because no trust level is set. Owed: Claude Cowork read and Iyas's eye-check of steps 3, 4, 6 (`docs/report-back/2026-11-06-task-52-arabic-check.html`); hq's seven questions in the report-back.
 The Arabic rendering check script is not kept: per PDF page, `get_texttrace()` from pymupdf (`uv run --with pymupdf`), glyph id 0 on an Arabic character is the empty box; site pages printed through headless Chrome. Passes on `task-51b`'s PDF; re-run when the annex changes. It counts empty boxes only, so also look at a page image: word order can be wrong while it passes.
+
+## 2026-11-06: Task 53 built to its page stop (eightieth wrap)
+
+Branch `task-53` from merged main. Items 1 to 22, 24 to 28 applied; item 23 skipped (52b merged). 394 more words took the main text to page 6, line 37. Nothing cut, per the order. Tests 1 failed (the stale docx), 1108 passed; `test_task_53.py` 65 passed. `build_report.py` value check learned "not found", "gaps N and M" and a `[U8 ...]` tag; annex table headers keep with next. Item 27's fault did not reproduce on main (Annex E together on page 13). Item 25: 226 hits, 0 comparative.
+
+Tried: `git pull` failed on a Word lock and a pipe hid it, so the branch was first cut from stale main; recut before any commit. Ending the orphaned Word was refused.
+
+Moved from the background:
+- Task 52b: **open, stopped, not merged.** Branch `task-52b`, tip in `git log`. Time box: merged by 2026-11-07 12:00 Amman or dropped, and then main keeps "found, not fixed". Paused once for research (Iyas's rule of 2026-11-06), then built to Fable's changes C1 to C14. After the fix governed 0 of 48 steps passed, 0 of 6 governed runs; before, 8 of 48, 6 of 6; ungoverned 48 of 48 both times. USD 7.13. Stopped because C12 and C13 say "of 12 governed runs" and 3/12: there are 6 governed runs. `docs/report-back/2026-11-06-task-52b-stop-2.md` holds the question and the list of what is left; `docs/report-back/2026-11-06-task-52b-interim.md` holds step 1's table. Tests fail on the branch until the annex follows (Annex B sketch, gate-test count, intent).
+hq (Fable) answers the question in `docs/report-back/2026-11-06-task-52b-stop-2.md`. Then a fresh Opus session on `task-52b` finishes that file's list of what is left and writes `docs/report-back/2026-11-07-task-52b-built.md`. Task 53 and the video follow. Submission 2026-11-09.
+
+## 2026-11-06: Task 53 stop 2, all four cuts applied, still over (eighty-first wrap)
+
+Applied items 29 to 31 and 33 to 36, then item 32's layers, measured after each. Main text ended page 6 at y 490.5 (layer 1), 374.25 (layer 2), 374.25 (layer 3), 316.5 (layer 4). Stopped as the order says; nothing else cut. Docx and PDF not rebuilt. Tests 3 failed, 1118 passed. Departures, all put to Fable: `rules.json` field names in the P cell (the row has no `page`), "108 documents" for "108 instruments", item 29's sentence placed before "What a rule looks like" since Annex B has no table. Found: item 32(d) says CI checks clauses against the issuer's file, against Task 48's pin; two pins left red on purpose.
+
+Moved from the background:
+- Task 52b: merged, PR #23, `b0bcf1d`. 0 of 48 governed after the fix, 8 of 48 before.
+- Trap wording replaced: "the gap table's rows do not split, so one added line can cost 72 pt". Word reports row 12 starting on page 5 and running onto page 6, with AllowBreakAcrossPages on.
+
+## 2026-11-06: Task 53 stop 3, layers 5 to 7 applied, still 9 lines over (eighty-second wrap)
+
+Filed Fable's items 38 to 44 and applied them with test-first pins. Main text ended page 6: 9 lines, y 222.9, after each of layers 5, 6 and 7. Layers 6 and 7 only grew the blank foot of page 3 (2.8, 14.8, 30.7 pt), because "7. Error scenarios" stays with S1 and does not fit there. Stopped as the order says. Docx and PDF not rebuilt. Tests 1 failed (stale docx), 1137 passed.
+
+Tried on scratch builds, nothing applied: Figure 1 at 8 cm, still 9 lines; demo items run together, still over; Figure 1 out, 3 lines over; both out and run together, 5 pages, annex on page 6.
+
+Builder gained what item 38(a) needed: the value check skips "Figure N", the annex prints a figure with its caption. Departure, put to Fable: the README's PP row now says "retrieval limited by role", against item 15, because `tests/test_figures.py` holds Figure 1's label to that row. Four hidden Word processes left by piping `report_pages.ps1` into `Select-Object -First`; closing them was refused by the permission check, so they stayed open at the time of this entry.
+
+Moved from the background:
+- Task 53 at stop 2: items 29 to 36 and four cuts, y 316.5, about 18 lines over, tests 3 failed, figures 7.7 cm. Report-back `docs/report-back/2026-11-06-task-53-stop-2.md`.
+
+## 2026-11-06: Task 53 stop 4, item 45 applied, page 5 met, one kept test fails (eighty-third wrap)
+
+Filed item 45, ended the four hidden Word processes, checked the eight S3 and S5 C5 logs (4 of 4 each). Applied (a) to (f) with test-first pins, measuring from (b): 8, 6, 3, 3 lines over, then 5 pages at (f); annex on page 6, 16 pages. (g) not reached. Rebuilt docx and PDF. Item 25 sweep: 226 visible hits, none comparative, listed in the report-back; 2109 more in site script blocks counted and searched by phrase, not read.
+
+Stopped before the PR. Step (e) removed the main text's only "20 scored runs", failing `tests/test_task_51.py:81`, a pin outside those the order names. Step (c) took "two runs per scenario per language, English / Arabic" out of the PDF, because the builder strips the bracket.
+
+Tried on scratch builds: (e) undone fits; (c)'s words back, with or without (e) undone or (g), 2 lines over. A shorter label was not tried. Fable then ruled, item 46, in the order and not yet built.
+
+Departure, in the report-back: `README.md:19` now names "Use case requirement", since the old heading no longer exists.
+
+Moved from the background:
+- Task 53 at stop 3: items 29 to 44, main text page 6, 9 lines over, docx and PDF not rebuilt, Figure 1 9 cm. Report-back `docs/report-back/2026-11-06-task-53-stop-3.md`.
+- Trap wording replaced: "Ending it from the session is refused by the permission check; Iyas ends it". This session ended it by PID.

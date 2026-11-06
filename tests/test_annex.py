@@ -15,8 +15,7 @@ from onyx import kb
 DOCS = kb.REPO / "docs"
 ANNEX_MD = DOCS / "annex.md"
 REPORT_MD = DOCS / "report.md"
-POINTER = (" Annex A to F: data and model, clause to code, the governed test, what ITU can reuse, where to look, "
-           "further gaps and candidates.")  # Task 41: Annex F added
+POINTER = " Annex A to F follow."  # Task 53 item 38(e)
 
 
 def _load():
@@ -89,7 +88,7 @@ def test_the_pointer_sentence_closes_the_limits_paragraph():
     md = REPORT_MD.read_text(encoding="utf-8")
     limits = md[md.index("## Limits and next steps"):]
     para = " ".join(limits.split("\n\n")[1].split())
-    assert para.endswith("(practice, not legal advice)." + POINTER)  # Task 51 I(f)
+    assert para.endswith("team approval of holds." + POINTER)  # Task 51 I(f), Task 53 item 19
 
 
 def test_the_example_team_is_absent_from_the_annex():

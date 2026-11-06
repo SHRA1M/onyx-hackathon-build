@@ -56,7 +56,7 @@ Spain's Ley 10/2025 reaches electronic communications services, telephone servic
   - EN: "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints."
   - AR: "يستثنى أو يستبعد منها استخدام وكلاء غير بشريين من قبل المرخص لهم في المحادثات مع المستهلكين بشأن الشكاوى المقدمة من قبلهم."
 
-Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading and cites the chapeau, the clause and licence 9.1 together.
+Our note: The English 26.7.2 is an active prohibition ('preclude'). The Arabic is a passive exclusion, 'excepted or excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 (Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. The CPR does not say which language prevails. Mizan enforces the stricter reading, citing 26.7.2 and licence 9.1; the chapeau is quoted here and holds no rule.
 
 **Clauses searched**
 
@@ -853,7 +853,7 @@ A published method, not a tariff. The UK regulates providers through General Con
   - EN: "shall be punished with a fine that is not less than AED (50,000) Fifty Thousand Dirhams and does not exceed AED (200,000) Two Hundred Thousand Dirhams"
   - AR (`docs/sources/telecom-law-and-licences-2026-10-17.md`): "يعاقب بالغرامة التي لا تقل عن (50.000) خمسون ألف درهم ولا تجاوز (200.000) مائتي ألف درهم كل من خالف أي حكم آخر من أحكام القانون أو لائحته التنفيذية أو الأنظمة أو القرارات أو التعليمات أو القواعد الصادرة بموجبهما."
 - `telecom-law-3-2003-en:79 bis` (p. 29): Paragraph (2), in the same chunk: the Board may fine licensees, and the Cabinet is to issue the schedule of violations and fines, up to AED 10,000,000 a violation.
-  - EN: "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees"
+  - EN: "The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees provided they do not exceed (10,000,000) ten million dirhams for each violation."
   - AR (p. 24, `kb/sources/telecom-law-3-2003-ar.pdf`): "ويصدر مجلس الوزراء قراراً بجدول المخالفات والغرامات التي توقع على المرخص لهم وبما لا يزيد على (10.000.000) عشرة ملايين درهم عن كل مخالفة."
 - `licence-2-2026:16.3.2` (p. 45): A breach of the Law, the licence or the Regulatory Framework: a penalty of AED 50,000 to 200,000.
   - EN: "The penalty shall be not less than Dirhams 50,000 and not more than Dirhams 200,000"

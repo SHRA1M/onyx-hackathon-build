@@ -219,8 +219,9 @@ z
     <text style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; text-anchor: middle" x="173.217098" y="57.946351" transform="rotate(-0 173.217098 57.946351)">PP</text>
    </g>
    <g id="text_8">
-    <text style="font-size: 6.5px; font-family: 'DejaVu Sans'" transform="translate(145.903895 76.595464)">mandate-scoped</text>
-    <text style="font-size: 6.5px; font-family: 'DejaVu Sans'" transform="translate(159.621942 84.050151)">retrieval</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans'" transform="translate(159.621942 70.400151)">retrieval</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans'" transform="translate(156.985887 76.595464)">limited by</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans'" transform="translate(167.061395 84.050151)">role</text>
    </g>
    <g id="text_9">
     <text style="font-weight: 700; font-size: 6.5px; font-family: 'DejaVu Sans'; text-anchor: middle" x="235.984252" y="57.946351" transform="rotate(-0 235.984252 57.946351)">M</text>
