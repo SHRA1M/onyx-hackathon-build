@@ -77,7 +77,7 @@ REPORT_HAS = [
     "override (logged as `override_refused`). Privacy wins by rule, not by what the model happens to do.",
     "4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's "
     "missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4) "
-    "on S4. A re-run costs USD 0; a live run on the model USD 0.27.",  # item 45(e): eval/results.md prints USD 5.3767
+    "on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).",  # item 46 undid 45(e)
     "A partner asks for subscriber data: held, no verification level set (24.10; one Arabic run: block, 24.6); the "
     "override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5).",
     "| P | plain-code gates reading JSON clause rows (`rules.json`: id, document_id, clause, chunk, quote, quote_ar); four "
@@ -85,8 +85,8 @@ REPORT_HAS = [
     "Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading of the texts (practice, not "
     "legal advice, no UAE standing); what he found and what changed are in Annex A. Next:",
     "team approval of holds. Annex A to F follow.",
-    "**Results** `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` (Figure 2, Annex C): "
-    "citation validity 0.99 / 1.00",  # item 45(c)
+    "**Results**, English / Arabic `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` "
+    "(Figure 2, Annex C): citation validity 0.99 / 1.00",  # item 46(i)
     "Plain code written from the binding UAE texts decides; every verdict names the clause it relied on, its page and its "
     "words, in English and Arabic; the model never decides.",
     "One team wrote the keys, gates and scenarios; the humans are scripted; Arabic coverage is uneven; an outage is shown "

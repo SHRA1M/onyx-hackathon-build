@@ -77,7 +77,7 @@ abroad. The gate blocks it under PDPL 22 and 23(2), and refuses even a staff mem
 `override_refused`). Privacy wins by rule, not by what the model happens to do.
 4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's
 missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4)
-on S4. A re-run costs USD 0; a live run on the model USD 0.27.
+on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).
 
 ## Error scenarios
 
@@ -101,7 +101,7 @@ requests a human review (PDPL 18(4)): allow. By when, and who hears a refusal? N
 (24.10; Decision 16/2026). What "adequate verification" is on a remote channel: gap 3. The human verifies, the block
 proceeds: allow; the TDRA's request for the record: blocked by a base check, the deadline written as text, not the rule's value.
 
-**Results** `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` (Figure 2, Annex C): citation validity 0.99 / 1.00 (one id, S2 English); action recall
+**Results**, English / Arabic `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` (Figure 2, Annex C): citation validity 0.99 / 1.00 (one id, S2 English); action recall
 against the frozen keys 0.96 / 1.00 (110 of 112 key steps; both misses English: S3-4, S4-4); abstention on the one
 unanswerable step per scenario 1.00; expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the adviser, the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged. The gate decides in a median of 0.46 ms; the model's proposal
 takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
