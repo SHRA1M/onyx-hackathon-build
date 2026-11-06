@@ -327,7 +327,8 @@ def test_report_figures_match_eval():
     build = _load()
     sets = build.run_sets((kb.REPO / "eval" / "results.md").read_text(encoding="utf-8"))
     text = REPORT_MD.read_text(encoding="utf-8")
-    b1 = "expected gaps: 5 of 7 found in every run, 2 missed (both S1), 3 unexpected ids flagged"  # Task 36 stop 2 ruling, change 6
+    b1 = ("expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the "
+          "adviser, the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged")  # Task 53 item 7
     assert b1 in text
     # Task 36 cut 3: the interval left the report's Results; it stays in eval's output and the README
     assert "95% interval" not in text.split("**Results**")[1].split("## ")[0]
@@ -471,11 +472,9 @@ LINKS = ["**GitHub (public from 2026-11-09):** https://github.com/SHRA1M/onyx-ha
 
 def test_task_34_team_and_the_four_labelled_links():
     lines = REPORT_MD.read_text(encoding="utf-8").splitlines()
-    assert lines[3] == "**Team members:** Mohammed Rawashdeh, Yanal Faouri"
+    assert lines[3] == "**Team members:** Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh. **Mentor:** Dr. Wafaa Almaaitah"
     assert lines[5:7] == LINKS
     assert not any(line.startswith("**GitHub link:**") for line in lines)
-    for path in (REPORT_MD, kb.REPO / "README.md"):
-        assert "Saaydeh" not in path.read_text(encoding="utf-8"), path
 
 
 def test_the_template_example_team_never_appears_in_report_readme_or_site():

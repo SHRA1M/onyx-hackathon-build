@@ -89,7 +89,7 @@ def test_the_pointer_sentence_closes_the_limits_paragraph():
     md = REPORT_MD.read_text(encoding="utf-8")
     limits = md[md.index("## Limits and next steps"):]
     para = " ".join(limits.split("\n\n")[1].split())
-    assert para.endswith("(practice, not legal advice)." + POINTER)  # Task 51 I(f)
+    assert para.endswith("team approval of holds." + POINTER)  # Task 51 I(f), Task 53 item 19
 
 
 def test_the_example_team_is_absent_from_the_annex():

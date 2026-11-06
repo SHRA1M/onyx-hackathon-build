@@ -17,13 +17,13 @@ RUNS_PAGE = (REPO / "docs" / "site" / "runs.html").read_text(encoding="utf-8")
 GAPS_MD = (REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
 STRIP = ["5 scenarios, 2 languages, 20 recorded runs", "108 documents, 100 verified",
          "action recall 0.96 en / 1.00 ar (110 of 112 key steps)", "citation validity 0.99 / 1.00",
-         "expected gaps found 5 of 7 in every run"]
+         "abstained and logged the gap on the unanswerable step in 20 of 20 runs"]
 # Each strip cell's figures, as the main text prints them. The cells are shortened, so the words differ.
-PRINTED = {STRIP[0]: ["same five scenarios", "both languages", "over 20 runs"],
+PRINTED = {STRIP[0]: ["same five scenarios", "both languages", "over the 20 scored runs"],
            STRIP[1]: ["108 documents", "100 are verified"],
            STRIP[2]: ["action recall", "0.96 / 1.00", "110 of 112 key steps"],
            STRIP[3]: ["citation validity 0.99 / 1.00"],
-           STRIP[4]: ["5 of 7 found in every run"]}
+           STRIP[4]: ["abstention on the one unanswerable step per scenario 1.00"]}
 
 
 def _row(gap_id: str) -> dict:
@@ -137,7 +137,7 @@ def test_the_readme_first_screen_is_in_the_orders_order():
 
 def test_the_team_table_carries_the_reviewer_with_his_title_and_his_qualification():
     section = README[README.index("## What Mizan is"):README.index("## Why")]
-    assert "| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri | Al-Balqa Applied University, Faculty of AI, students |" in section
+    assert "| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh | BAU Faculty of Artificial Intelligence, students. Mentor: Dr. Wafaa Almaaitah |" in section
     assert ("Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan | "
             "practitioner review, not legal advice, no UAE standing |") in section
     assert "Team Onyx (BAU Faculty of AI)" not in README

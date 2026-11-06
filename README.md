@@ -22,7 +22,7 @@ The five published criteria, each with its evidence and one way to check it:
 
 ![S2 step 3: the gate blocks the agent's reply and hands the complaint to a person, citing CPR 26.7.2, p. 65](docs/replay/screenshots/S2-step3-en.png)
 
-- A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.
+- The case is an ordinary customer talking to their phone company in a chat or on a call, not a practice exercise.
 - Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in `docs/replay/`.
 - Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 1.00 Arabic on C5 (`eval/results.md`).
 
@@ -35,7 +35,7 @@ clauses. Every step is written to a hash-chained log that replays offline, with 
 
 | Team | Members | Affiliation |
 |---|---|---|
-| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri | Al-Balqa Applied University, Faculty of AI, students |
+| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh | BAU Faculty of Artificial Intelligence, students. Mentor: Dr. Wafaa Almaaitah |
 | Reviewer | Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan | practitioner review, not legal advice, no UAE standing |
 
 The report's annex (data and model, clause to code, the governed test, what ITU can reuse) is in `docs/report.pdf` after page 5.
@@ -259,7 +259,7 @@ Y.3172 clause 9, security of the pipeline: no provider key is in the source tree
 - The answer keys are ours, written and hashed before the first live run (`onyx/data/keys/HASHES.txt`).
 - The humans in the recorded runs (approvers, override attempts) are scripted steps, not people.
 - UNVERIFIED rows in the manifest back no quoted clause; two of them record an absence (the PDPL Executive Regulations, the agentic framework text) that the register claims from the portal check written in the row, dated.
-- Not changed before submission, listed for after the shortlist: a required `recipient` field with a fixed value list in the tool definition (then a re-record); a gate version string in `run_start` in place of the boolean; binding the allowed recipient to the delivery channel in the live app; a wider attack bank with conflicting-field and negation forms in both languages; the account holder's name read from the account record (a trusted record, not the model's text) added to the subscriber match, under a new gate version, with a re-record and the name forms added to the attack bank.
+- Not changed before submission, listed for after the shortlist: a required `recipient` field with a fixed value list in the tool definition (then a re-record); a gate version string in `run_start` in place of the boolean; binding the allowed recipient to the delivery channel in the live app; a wider attack bank with conflicting-field and negation forms in both languages; the account holder's name read from the account record (a trusted record, not the model's text) added to the subscriber match, under a new gate version, with a re-record and the name forms added to the attack bank; attacks written by people who have not read the gate's code, on more runs.
 - No source on file shows how a UAE operator's assistant is governed; the Etisalat Virtual Assistant page lists what it does, not what stops it.
 
 ## Model
@@ -270,7 +270,7 @@ Y.3172 clause 9, security of the pipeline: no provider key is in the source tree
 - Bake-off: [`eval/bakeoff.md`](eval/bakeoff.md), one governed run per scenario (S1 to S5) per language per model.
 - Scored run: [`eval/results.md`](eval/results.md), C5, Sonnet on prompt v5, two runs per scenario per language,
   governed (English / Arabic): action recall 0.96 / 1.00, citation validity 0.99 / 1.00, obligation proxy
-  0.57 / 0.58; 2 of 112 key steps missed (pooled action recall 110 of 112 key steps, 95% interval 0.94 to 1.00).
+  0.57 / 0.58 (share of key obligations on steps that reached the key's verdict with every must_cite clause on the step's record); 2 of 112 key steps missed (pooled action recall 110 of 112 key steps, 95% interval 0.94 to 1.00).
 - Ungoverned baseline: C3, Sonnet on prompt v3, three runs per scenario per mode per language.
 - Local model: S2 recorded once on `qwen2.5:14b-instruct` through Ollama on a desktop GPU, same adapter, in
   `runs/demo-local/` and shown in [`docs/site/localmodel.html`](docs/site/localmodel.html); a demo of the adapter, not scored.

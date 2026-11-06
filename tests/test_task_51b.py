@@ -15,8 +15,8 @@ NOTE = ("The English 26.7.2 is an active prohibition ('preclude'). The Arabic is
         "excluded from them', whose antecedent is the chapeau, 'the provisions of sub-article 26.6', a duty to keep "
         "trained personnel for complaints. TDRA's own English rendering reads the exclusion as a bar, and licence 9.1 "
         "(Arabic binding, licence 16.7) independently requires trained personnel to receive and respond to complaints. "
-        "The CPR does not say which language prevails. Mizan enforces the stricter reading and cites the chapeau, the "
-        "clause and licence 9.1 together.")
+        "The CPR does not say which language prevails. Mizan enforces the stricter reading, citing 26.7.2 and "
+        "licence 9.1; the chapeau is quoted here and holds no rule.")
 CLAUSES = [
     ("26.6", 50, "Licensees shall maintain an adequate number of properly trained personal to receive, process, and "
                  "respond to Consumer Complaints in a timely and prompt manner.",

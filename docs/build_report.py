@@ -85,11 +85,12 @@ FONT = "Times New Roman"
 CELL_SIZE = Pt(10)  # Task 18 item 2a: every table run 10 pt, every cell paragraph 0 pt before and after
 CREATOR = "Team Onyx"
 
-TAG = re.compile(r"\s*`\[(C[35])\b[^\]]*\]`")
+TAG = re.compile(r"\s*`\[(C[35]|U8)\b[^\]]*\]`")
 TOKEN = re.compile(r"(?P<marker>\(\d\)(?![\d.]))"
                    r"|(?P<ident>(?<![\w.])[A-Za-z]+\d[\w-]*)"
                    r"|(?P<interval>(?<![\w.])95% interval (?P<lo>\d\.\d+) to (?P<hi>\d\.\d+))"
-                   r"|(?P<count>(?<![\w.])(?P<cv>\d+) (?P<cu>missed|unexpected)\b)"
+                   r"|(?P<gaps>(?<![\w.])gaps (?P<g1>\d+) and (?P<g2>\d+)\b)"
+                   r"|(?P<count>(?<![\w.])(?P<cv>\d+) (?P<cu>missed|not found|unexpected)\b)"
                    r"|(?P<of>(?<![\w.])(?P<n>\d+) of (?P<m>\d+)(?![\w.]))"
                    r"|(?P<unit>(?<![\w.])(?P<uv>\d+(?:\.\d+)?) (?P<u>ms|s|decisions|calls)\b)"
                    r"|(?P<num>(?<![\w.])\d+(?:\.\d+)?(?![\w]|\.\d))"
@@ -270,8 +271,17 @@ def run_sets(results: str) -> dict[str, RunSet]:
     if not found:
         raise SystemExit("eval/results.md: no 'N of M expected gaps found in every run' line")
     c5.pairs.add((int(found[1]), int(found[2])))
-    c5.counts |= {(int(found[3]), "missed"), (int(found[4]), "unexpected")}
-    return {"C3": c3, "C5": c5}
+    # Task 53 item 7: "the 2 not found (gaps 2 and 6)" is eval's missed count and its missed ids
+    c5.counts |= {(int(found[3]), "missed"), (int(found[3]), "not found"), (int(found[4]), "unexpected")}
+    c5.counts |= {(int(g), "gap") for g in re.findall(r"gap-(\d+)", found[0].split(";")[1])}
+    # Task 53 item 18: the steered-subscriber pair, governed and pooled, before and after the fix
+    u8 = RunSet()
+    for table in _tables(_section(results, "## Steered subscriber, U8")):
+        if "Barred acts passed" in table[0]:
+            passed = table[0].index("Barred acts passed")
+            u8.pairs |= {(int(n), int(m)) for row in table[1:] if row[:2] == ["governed", "pooled"]
+                         for n, m in re.findall(r"(\d+) of (\d+)", row[passed])}
+    return {"C3": c3, "C5": c5, "U8": u8}
 
 
 def _rounded(value: Decimal, token: str) -> Decimal:
@@ -319,6 +329,9 @@ def _check(para: str, named: list[RunSet]) -> list[str]:
                 problems.append(f"{token}: no pooled count in the run set has that interval")
             elif bounds[1] == 1 and all(n < total for n, total in fits):
                 problems.append(f"{token}: misses exist, so the upper bound is below 1; write three decimals")
+        elif m["gaps"]:
+            if not {(int(m["g1"]), "gap"), (int(m["g2"]), "gap")} <= counts:
+                problems.append(f"{token}: not the missed gaps in the run set")
         elif m["count"]:
             if (int(m["cv"]), m["cu"]) not in counts:
                 problems.append(f"{token}: no such count in the run set")
@@ -482,7 +495,7 @@ class Builder:
         paragraph.add_run().add_picture(str(REPO / path), width=FIGURE_WIDTH[path])
         return paragraph
 
-    def table(self, after, block: str, reuse=None):
+    def table(self, after, block: str, reuse=None, keep_header: bool = False):
         rows = [[_plain(c.strip()) for c in _cells(line)]
                 for line in block.splitlines() if not set(line.strip()) <= set("|- ")]
         tbl = reuse if reuse is not None else OxmlElement("w:tbl")
@@ -515,6 +528,8 @@ class Builder:
                 paragraph.paragraph_format.space_before = Pt(0)
                 paragraph.paragraph_format.space_after = Pt(0)
                 if r == 0:
+                    if keep_header:  # Task 53 item 27: a header never sits alone at the foot of a page
+                        paragraph.paragraph_format.keep_with_next = True
                     _run(paragraph, text.replace("**", ""), bold=True, size=CELL_SIZE)
                 else:
                     _runs(paragraph, text, size=CELL_SIZE)
@@ -565,7 +580,7 @@ def render_annex(b: "Builder", heading_proto, md: str) -> None:
     after = heading
     for kind, content in annex_blocks(md):
         if kind == "table":
-            after = b.spacer(b.table(after, content))._p
+            after = b.spacer(b.table(after, content, keep_header=True))._p
             continue
         if kind == "list":
             for item in content:

@@ -41,6 +41,10 @@ LABELS = {"citation_validity": "Citation validity", "action_recall": "Action rec
 DEFINED_AS = {"citation_validity": "citation validity", "action_recall": "action recall", "abstention": "abstention",
               "gap_recall": "gap recall", "gate_rejection_rate": "gate rejection rate",
               "ungoverned_claims_allowed": "ungoverned baseline"}
+# order 2026-11-05 Task 53 items 22 and 10: why the site's 0.87 sits beside the report's 5 of 7
+TILE_NOTES = {"gap_recall": " (average of the five scenarios; S1 reads 0.33, see Annex C; the report counts all gaps "
+                            "together, 5 of 7)"}
+DEF_NOTES = {"gap_recall": " S1 reads 0.33 because its key places two gaps at steps the adviser does not reach; see Annex C."}
 CONFIGS = (("C3 governed", replay_page.RUNS, True), ("C3 ungoverned", replay_page.RUNS, False),
            ("C4 governed", replay_page.RUNS / "c4", True), ("C5 governed", replay_page.RUNS / "c5", True))
 
@@ -131,7 +135,7 @@ def index() -> str:
     results, defs = _results(), definitions()
     notes = list(C5_HEADLINE) + ["ungoverned_claims_allowed", "gate_rejection_rate"]
     c5, c3 = results["c5"]["C5"]["all"], results["c4"]["C3"]["all"]
-    c5_rows = "".join(f'<tr><th>{_label(m, notes)}</th><td class="num">{_fig(c5["en"][m], "C5", m, "en")}</td>'
+    c5_rows = "".join(f'<tr><th>{_label(m, notes)}{TILE_NOTES.get(m, "")}</th><td class="num">{_fig(c5["en"][m], "C5", m, "en")}</td>'
                       f'<td class="num">{_fig(c5["ar"][m], "C5", m, "ar")}</td></tr>' for m in C5_HEADLINE)
     claims = "ungoverned_claims_allowed"
     c3_rows = (f'<tr><th>{_label(claims, notes)}</th><td class="num">{_fig(c3["en"][claims], "C3", claims, "en")}'
@@ -144,7 +148,7 @@ def index() -> str:
     counts = _counts()
     count_cells = "".join(f'<div class="card"><span class="big count" data-status="{s}">{n}</span>'
                           f'<br>{"documents" if s == "documents" else s}</div>' for s, n in counts.items())
-    foot = "".join(f'<li id="def-{m}"><b>{escape(DEFINED_AS[m])}</b>: {escape(defs[DEFINED_AS[m]])}</li>'
+    foot = "".join(f'<li id="def-{m}"><b>{escape(DEFINED_AS[m])}</b>: {escape(defs[DEFINED_AS[m]])}{DEF_NOTES.get(m, "")}</li>'
                    for m in notes)
     body = f"""<h1>Mizan: governed consumer-care agents</h1>
 <p class="notice">{escape(NOTICE)}</p>

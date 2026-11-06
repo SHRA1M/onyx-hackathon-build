@@ -169,7 +169,7 @@ WHY = ("e& reported 371,476 customer complaints in its UAE operations for 2025 (
        "say what the assistant does when a chat becomes a complaint; the binding texts do, and Mizan's gates are "
        "written from them.")
 THREE = [
-    "- A consumer on the line: five scenarios of a subscriber in a chat or call, not an institution in a drill.",
+    "- The case is an ordinary customer talking to their phone company in a chat or on a call, not a practice exercise.",
     "- Gates from binding UAE clauses: every allow and block names the clause, its page and its words, in "
     "`docs/replay/`.",
     "- Arabic parity: the same gates and keys in both languages, action recall 0.96 English / 1.00 Arabic on C5 "
