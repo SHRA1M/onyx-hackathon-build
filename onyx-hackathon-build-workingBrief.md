@@ -1,25 +1,29 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-06 (seventy-eighth wrap, Opus). Handover for the next session.
+Updated 2026-11-06 (eightieth wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Finish Task 52b on branch `task-52b` inside its time box (merged by 2026-11-07 12:00 Amman or dropped), then Task 53 and the video. Submission 2026-11-09.
+Finish Task 53 once Fable rules on the page-5 cut, then the video. Submission 2026-11-09.
 
 ## State
 
-- **Task 52b: stopped at stop 2, not merged, no PR.** The gate fix and the 12 runs are committed and pushed on `task-52b`. Governed 0 of 48 steps, 0 of 6 runs; before, 8 of 48, 6 of 6; ungoverned 48 of 48. USD 7.13, recorded USD 36.11 of 45.
-- The branch's tests are not all green and no run covers its tip. Last full run, before the logs and the `eval` patch: 3 failed, 1000 passed, 1 deselected.
-- Annex, README, `eval/results.md`, changelog's final wording, page count, CI: not done.
+- **Task 53: stopped, branch `task-53`, pushed, no PR, not merged.** Main text ends page 6, line 37; it must end on page 5.
+- Tests: 1108 passed, 1 failed (committed docx not rebuilt, expected).
+- Report-back: `docs/report-back/2026-11-06-task-53-stop-1.md`, with `-evidence.md` and `-item-25-hits.md` beside it.
+- Task 52b merged, PR #23.
 
 ## Open questions
 
-1. hq: C12 and C13 say 12 governed runs and 3/12; 6 are governed. Question and options: `docs/report-back/2026-11-06-task-52b-stop-2.md`.
-2. Arabic check on Task 52's merged text, still owed (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
-3. Earlier, still open: the note's "cites the chapeau"; two AI reads of the gap-15 Cabinet sentence; hq's three items in `docs/report-back/2026-11-05-task-51-built.md`; Iyas asks Ra'ed which translations he found wrong.
+1. hq: the six questions in the report-back (the cut, item 18, S3 mixed logs, item 9's "calls the adviser", Zaid Saaydeh, item 27 not reproduced).
+2. A hidden Word process (PID 6680) locks `docs/report.docx`. It must be gone before the rebuild; a restart clears it. If `report.docx` still fails to write, Iyas ends WINWORD.EXE in Task Manager.
+3. Arabic check on Task 52's merged text, still owed (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
+4. Earlier, still open: two AI reads of the gap-15 Cabinet sentence; hq's three items in `docs/report-back/2026-11-05-task-51-built.md`; Iyas asks Ra'ed which translations he found wrong.
 
 ## Next moves
 
-1. `git status`; `git switch task-52b`; `git pull`.
-2. With hq's answer in hand, read the order's three change sections (`D:\Projects\hq\uni\ai-for-good-hackathon\task-52b-gate-fix-rerun-order-2026-11-06.md`), then work the list "What is left" in the stop-2 file.
-3. No answer by the time box: the order drops 52b. Main keeps Task 52's text; ask Iyas before doing anything to the branch.
+1. `git status`; `git switch task-53`; `git pull`.
+2. Iyas takes the report-back to hq; apply only what the ruling names.
+3. Measure page 5 on a scratch build. Over: stop again.
+4. Rebuild docx and PDF, rerun item 25, full `pytest`, push, open the PR, watch CI.
+5. Write `docs/report-back/2026-11-06-task-53-built.md`, give Iyas the path. He merges.
