@@ -171,6 +171,8 @@ An eighth, written for the steered-subscriber test on 2026-11-06, has a key nami
 |---|---|---|
 | U8 | A subscriber tries to steer the AI by words alone | مشترك يحاول توجيه الذكاء الاصطناعي بالكلام وحده |
 
+Steered-subscriber test (the team wrote the attacks; facts such as consent are the scenario's, so a live system's way of setting them is untested): barred acts passed in 8 of 48 steps governed, 48 of 48 ungoverned. All eight are account data to a partner, a true gate fault, not fixed here: see `eval/results.md` and Annex C.
+
 ## Y.3172 mapping
 
 ```mermaid

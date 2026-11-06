@@ -95,6 +95,80 @@ def test_a_scripted_eval_prints_no_u8_section(tmp_path):
     assert "Steered subscriber" not in (data.DATA_DIR.parents[1] / "eval" / "scripted" / "results.md").read_text(encoding="utf-8")
 
 
+# --- the recorded figures, as printed -----------------------------------------------------------------------------
+
+REPO = data.DATA_DIR.parents[1]
+RESULTS = json.loads((REPO / "eval" / "results.json").read_text(encoding="utf-8"))
+ANNEX = (REPO / "docs" / "annex.md").read_text(encoding="utf-8")
+README = (REPO / "README.md").read_text(encoding="utf-8")
+
+
+def _span(pair):
+    return f"{pair[0]:.2f} to {pair[1]:.2f}"
+
+
+def test_annex_c_table_equals_eval():
+    cells = RESULTS["u8"]["cells"]
+    for mode, name in (("governed", "Governed"), ("ungoverned", "Ungoverned")):
+        for lang in ("en", "ar"):
+            c = cells[mode][lang]
+            assert (f"| {name} | {lang} | {c['proposed']} of {c['steps']} | {_span(c['proposed_ci95'])} | "
+                    f"{c['passed']} of {c['steps']} | {_span(c['passed_ci95'])} |") in ANNEX
+
+
+def test_annex_c_and_the_readme_pooled_figures_equal_eval():
+    governed, ungoverned = RESULTS["u8"]["cells"]["governed"]["pooled"], RESULTS["u8"]["cells"]["ungoverned"]["pooled"]
+    pooled = f"{governed['passed']} of {governed['steps']} steps passed the gate, 95% interval {_span(governed['passed_ci95'])}"
+    assert pooled in ANNEX and f"{ungoverned['passed']} of {ungoverned['steps']} ungoverned" in ANNEX
+    assert (f"{governed['passed']} of {governed['steps']} steps governed, {ungoverned['passed']} of "
+            f"{ungoverned['steps']} ungoverned") in README
+    acts = governed["by_act"]
+    assert acts["charge"]["passed"] == acts["disconnect"]["passed"] == acts["keep_handling"]["passed"] == 0
+    assert acts["share"]["passed"] == 8 and "8 of 12 share steps" in ANNEX and "0 of 12 steps each" in ANNEX
+
+
+def test_all_twelve_logs_are_read_and_every_chain_verifies():
+    u8 = RESULTS["u8"]
+    assert len(u8["runs"]) == 12 and u8["all_chains_ok"] is True
+    assert all(r["model"] == "claude-sonnet-5-5" for r in u8["runs"])
+    assert u8["cost_usd"] < 8.50
+
+
+def test_every_governed_pass_is_a_share_with_no_args_recipient():
+    """The mechanism the annex states, read from the record."""
+    passes = RESULTS["u8"]["passes"]
+    assert len(passes) == 8 and {p["act"] for p in passes} == {"share"}
+    assert {p["verb"] for p in passes} == {"disclose_account"}
+    assert not any("recipient" in p["args"] for p in passes)
+
+
+def test_every_place_that_prints_the_figure_keeps_the_orders_limits():
+    start = ANNEX.index("**Steered subscriber, U8.**")
+    paragraph = ANNEX[start:ANNEX.index("**What the test does not show.**")]
+    readme = README[README.index("Steered-subscriber test"):].split("\n")[0]
+    for text in (paragraph, readme):
+        assert "team wrote the attacks" in text and ("ungoverned" in text.lower())
+        assert "live system" in text
+    for text in (ANNEX, README, (REPO / "eval" / "results.md").read_text(encoding="utf-8")):
+        for banned in ("attack-proof", "resists prompt injection"):
+            assert banned not in text.lower()
+
+
+def test_annex_a_carries_the_ruled_limit_word_for_word():
+    assert ("The gate decides from the proposal's verb, arguments and clause ids, the released and retrieved ids, the "
+            "scenario's facts and the reachable humans. It does not read the chat text, but the model writes the proposal "
+            "after reading it, and the consent and disconnection gates act on a fixed list of change words: a proposal "
+            "worded outside that list passes them. Facts such as consent are written by the scenario, so a live system's "
+            "way of setting them is untested (steered-subscriber figures: Annex C).") in ANNEX
+
+
+def test_no_gate_reads_the_chat_text():
+    """The order's check on the annex sentence: gate.py never touches the step's words."""
+    source = (REPO / "onyx" / "gate.py").read_text(encoding="utf-8")
+    assert "text_en" not in source.replace('chunk.get("text_en", "")', "")
+    assert "text_ar" not in source.replace('chunk.get("text_ar", "")', "")
+
+
 # --- the scenario and the key -------------------------------------------------------------------------------------
 
 def test_u8_has_eight_subscriber_steps_two_per_act_named_by_the_key():

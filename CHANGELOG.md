@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-06
+
+- Added (order 2026-11-05 Task 52, ruling 2026-11-06): no test of a subscriber steering the AI by words. Changed: scenario U8, its key, `eval.barred_act`, 12 runs in `runs/u8/`, section "Steered subscriber, U8" in `eval/results.md`, Annex A and C, README. Found, not fixed: a `disclose_account` that names a partner in `target` or `args.recipient_type` with `args.recipient` empty is read as going to the subscriber, so the sharing gate does not apply; 8 of 48 governed steps passed this way.
+
 ## 2026-11-05
 
 - Fixed (order task-51b, Iyas's five blocks answered): gap 15 printed the Board sentence of Telecom Law 79 bis (2) beside the English Cabinet sentence, and gap 1 lacked the full Arabic of licence 9.1, the 26.7.2 note and the tension with Trade Law 6(7). Changed: gap 15 quotes the Cabinet sentence (Arabic PDF, page 24); gap 1's 9.1 entry quotes the full clause from `docs/sources/licence-2-2026-ar-9.1-full-checked.txt`; gap 1 gains `clause_note` (26.6, the 26.7 opening words, 26.7.1, 26.7.2 in both languages, then the note), also in Annex B and Annex C; `uae_position` gains the tension, Arabic first. Also: an Arabic quote inside an English paragraph came out scrambled in Word, so a paragraph of only Arabic now builds right-to-left (`docs/build_report.py`, `_rtl`). No rule, chunk, key or run changed.

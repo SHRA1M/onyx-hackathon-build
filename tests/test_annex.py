@@ -189,7 +189,7 @@ def test_the_built_report_has_the_annex_after_a_page_break(tmp_path):
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}pageBreakBefore") is not None
     leads = [t for t in texts[annex:] if re.match(r"Annex [A-F]\. ", t)]
     assert [t[:8] for t in leads] == ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E.", "Annex F."]
-    assert len(doc.tables) == 5  # the strip (Task 51 B), mapping, gaps, the C3 table, where to look
+    assert len(doc.tables) == 6  # the strip (Task 51 B), mapping, gaps, the C3 table, the U8 table (Task 52), where to look
     code = next(p for p in doc.paragraphs[annex:] if p.text.startswith("def complaint_gate"))
     assert all(r.font.size.pt == 8 and r.font.name == "Courier New" for r in code.runs)
 
