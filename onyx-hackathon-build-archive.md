@@ -851,3 +851,14 @@ Applied items 29 to 31 and 33 to 36, then item 32's layers, measured after each.
 Moved from the background:
 - Task 52b: merged, PR #23, `b0bcf1d`. 0 of 48 governed after the fix, 8 of 48 before.
 - Trap wording replaced: "the gap table's rows do not split, so one added line can cost 72 pt". Word reports row 12 starting on page 5 and running onto page 6, with AllowBreakAcrossPages on.
+
+## 2026-11-06: Task 53 stop 3, layers 5 to 7 applied, still 9 lines over (eighty-second wrap)
+
+Filed Fable's items 38 to 44 and applied them with test-first pins. Main text ended page 6: 9 lines, y 222.9, after each of layers 5, 6 and 7. Layers 6 and 7 only grew the blank foot of page 3 (2.8, 14.8, 30.7 pt), because "7. Error scenarios" stays with S1 and does not fit there. Stopped as the order says. Docx and PDF not rebuilt. Tests 1 failed (stale docx), 1137 passed.
+
+Tried on scratch builds, nothing applied: Figure 1 at 8 cm, still 9 lines; demo items run together, still over; Figure 1 out, 3 lines over; both out and run together, 5 pages, annex on page 6.
+
+Builder gained what item 38(a) needed: the value check skips "Figure N", the annex prints a figure with its caption. Departure, put to Fable: the README's PP row now says "retrieval limited by role", against item 15, because `tests/test_figures.py` holds Figure 1's label to that row. Four hidden Word processes left by piping `report_pages.ps1` into `Select-Object -First`; closing them was refused by the permission check, so they stayed open at the time of this entry.
+
+Moved from the background:
+- Task 53 at stop 2: items 29 to 36 and four cuts, y 316.5, about 18 lines over, tests 3 failed, figures 7.7 cm. Report-back `docs/report-back/2026-11-06-task-53-stop-2.md`.
