@@ -876,3 +876,31 @@ Departure, in the report-back: `README.md:19` now names "Use case requirement", 
 Moved from the background:
 - Task 53 at stop 3: items 29 to 44, main text page 6, 9 lines over, docx and PDF not rebuilt, Figure 1 9 cm. Report-back `docs/report-back/2026-11-06-task-53-stop-3.md`.
 - Trap wording replaced: "Ending it from the session is refused by the permission check; Iyas ends it". This session ended it by PID.
+
+## 2026-11-06: Task 53 built and merged, PR #24 (eighty-fourth wrap)
+
+Filed item 46. Pinned first (3 failed in the selected tests), then undid step (e) and applied try (i), "Results, English / Arabic". Try (i) fit on a scratch build: 5 main pages, annex page 6, 16 total, 2589 main-text words. (ii) to (iv) and step (g) were not needed. Rebuilt docx and PDF, 489790 bytes. Looked at PDF pages 3 to 5, rendered with `uv run --with pypdfium2`. `check-data` ok, `onyx site` changed nothing. Full `pytest` 1146 passed. CI green on 8b78b29 and on ee95d4e. Iyas ran the merge, `1d9897b`, 2026-11-06 21:09 UTC. The session did not merge.
+
+A hidden Word stayed after the rebuild, PID 8088. Checked as `/Automation -Embedding` with no window, then ended. Why it stays on some runs is still not known.
+
+The report-back's count list uses a different tokenizer from stop 4's, so its totals differ slightly; it says so. Its item 25 appendix is carried from stop 4, after the report, annex and README hit counts matched (16, 27, 28).
+
+This wrap's commit sits on `task-53`, on top of the merge, because a push to main waits for Iyas's go.
+
+Moved from the background:
+- main held Tasks 36 to 45 (PR #14, merge `8b5a569`); `task-47` held Task 47, no PR; each task since 29 was one PR and one tag. No `task-5*` tag exists, locally or on the remote.
+- Task 53 at stop 4: item 45 applied to (f); 1 failed, Task 51's strip test; item 46 not built. Report-back `docs/report-back/2026-11-06-task-53-stop-4.md`.
+- Report figures both 12 cm (Task 36 ruling); report 14 pages in total.
+
+## 2026-11-06: Task 54 built up to its C.3 stop (eighty-fifth wrap)
+
+Filed the order, branched from main at `1d9897b` as told. Computed the verdict list before editing: 9 key steps and 26 of 112 run-steps differ, against the order's 2, so the Annex C paragraph stopped. I first told Iyas 10 steps; the count is 9.
+
+Built A.1, A.2, A.4, A.5, A.7, B.1 to B.3 and C.4. A.3, A.6, C.1 and C.2 were already in from Task 53. A.7 adds "licence 9.1", a departure from the order's words, because the chunks hold its Arabic. B also went into the HTML viewer, which read the same wrong field. Tried a strict and a looser definition of verdict agreement: strict 86 of 112, looser 91 of 112; strict kept so the figure and the list match.
+
+The last wrap's three files were copied from `task-53` into this branch, because that commit never reached main.
+
+Moved from the background:
+- hq's copy of the annex text lacks the three Task 47 edits.
+- hq updated its report copy after Task 35b (2026-10-30).
+- Task 53's figures: main text 5 pages, 16 total; 1146 tests.
