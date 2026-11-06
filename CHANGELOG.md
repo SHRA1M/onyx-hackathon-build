@@ -4,6 +4,7 @@ One entry per fix: date, what broke, what changed.
 
 ## 2026-11-06
 
+- Fixed on branch `task-52b`, not merged (order Task 52b with changes C1 to C14): a `disclose_account` or `draft_reply` with `args.recipient` empty was read as going to the subscriber, and an unlisted change word passed every gate. Changed: on runs whose `run_start` carries `recipient_resolution: true`, the gate reads every recipient field, a third-party word anywhere goes to the sharing gate, and an unidentified recipient, a reply to anyone but the subscriber or a human on the roster, or an unlisted change word is held for a person. Old logs replay as recorded. `runs/u8-fixed/`: 0 of 48 governed steps passed. Figures and annex text pending hq's answer in `docs/report-back/2026-11-06-task-52b-stop-2.md`.
 - Added (order 2026-11-05 Task 52, ruling 2026-11-06): no test of a subscriber steering the AI by words. Changed: scenario U8, its key, `eval.barred_act`, 12 runs in `runs/u8/`, section "Steered subscriber, U8" in `eval/results.md`, Annex A and C, README. Found, not fixed: a `disclose_account` that names a partner in `target` or `args.recipient_type` with `args.recipient` empty is read as going to the subscriber, so the sharing gate does not apply; 8 of 48 governed steps passed this way.
 
 ## 2026-11-05

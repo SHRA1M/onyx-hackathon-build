@@ -819,3 +819,16 @@ Detail moved from the background to keep it under its limit:
 ## 2026-11-06: Task 52 merged
 
 Iyas merged PR #22 at 04:26 Amman (`f6442d3`), right after the seventy-sixth wrap, whose files on the branch still said "not merged". This wrap corrected the background and brief on `main`. No code, figures or logs changed. Superseded: "13 pages on main, 14 once Task 52 merges"; the report is 14 pages on `main`.
+
+## 2026-11-06: Task 52b built to stop 2
+
+Started from the order on `task-52b`. Step 1 printed the fault's shape in the 100 frozen logs: 138 rows, no C5 governed partner disclosure allowed, and C5 S3-2 held by `verification_gate` in 3 of 4 logs where the report says block. Built the flag, the fix and tests, then paused before any model call when Iyas's rule "research before the fix" arrived mid-build: interim report-back, USD 0 spent.
+
+After Fable's read of the Perplexity answer, changes C1 to C11: every recipient field read together, a third-party word wins; subscriber match whole-value; hold reason names 24.10, 24.6 and 24.9; live runs never start with the flag off. The held reply cites no clause, because adding 24.6 and 24.10 to `draft_reply`'s mandate would change care's prompt. Split the gate in two so `test_prompt_v4` reads the clauses per verb. A dry C7 replay found no hold or block turning to allow.
+
+Recorded the 12 runs on commit `60f0dd6`: USD 7.13, recorded total USD 36.11. Governed 0 of 48, 0 of 6 runs; ungoverned 48 of 48. C12 to C14 arrived during the runs (wording only). Stopped on C12 and C13's "of 12 governed runs": 6 are governed. `eval.py`'s before-and-after, run-level and C7 code is committed untested; annex, README, regeneration, page count, PR all remain.
+
+Tried and dropped: first-field resolution with substring subscriber words (order as first written; Perplexity's counterexamples showed `recipient: subscriber` with a partner target still passing).
+
+Moved from the background:
+- Task 52: merged by Iyas 2026-11-06 04:26 Amman, PR #22, `f6442d3`, inside the time box. `docs/report-back/2026-11-06-task-52-built.md` with hq. Governed 8 of 48 steps passed a barred act, ungoverned 48 of 48. All eight: `disclose_account` naming the partner in `target` or `recipient_type` with `args.recipient` empty, which `gate._recipient` reads as the subscriber. Not fixed, as ruled. C5 S3-2 has the same shape, held only because no trust level is set. Owed: Claude Cowork read and Iyas's eye-check of steps 3, 4, 6 (`docs/report-back/2026-11-06-task-52-arabic-check.html`); hq's seven questions in the report-back.
