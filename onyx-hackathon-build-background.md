@@ -71,7 +71,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 53: **stopped at page 5 a second time, not merged.** Branch `task-53`, PR none. Items 29 to 36 and all four cuts applied; main text ends page 6, y 316.5, about 18 printed lines over. Docx and PDF not rebuilt. Tests 3 failed: the stale docx, and two pins on item 32(d)'s sentence, which says CI checks against the issuer's file. Six questions for Fable: `docs/report-back/2026-11-06-task-53-stop-2.md`. Figures now 7.7 cm, text about 3 to 4 pt.
+- Task 53: **stopped at page 5 a second time, not merged.** Branch `task-53`, PR none. Items 29 to 36 and all four cuts applied; main text ends page 6, y 316.5, about 18 printed lines over. Docx and PDF not rebuilt. Tests 3 failed: the stale docx, and two pins on item 32(d)'s sentence, which says CI checks against the issuer's file. Report-back: `docs/report-back/2026-11-06-task-53-stop-2.md`. Figures now 7.7 cm.
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
 - Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered. `record --retriever` exists, default shipped, never used on a live run.
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
@@ -85,4 +85,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Iyas takes `docs/report-back/2026-11-06-task-53-stop-2.md` to hq. Fable rules on its six questions. A fresh Opus session on `task-53` applies the ruling, measures page 5, rebuilds docx and PDF, reruns item 25, opens the PR, writes `docs/report-back/2026-11-06-task-53-built.md`. Then the video. Submission 2026-11-09.
+Fable has ruled: items 38 to 44 are in the order, uncommitted. A fresh Opus session on `task-53` commits the order, applies them, measures page 5, rebuilds docx and PDF, reruns item 25, opens the PR, writes `docs/report-back/2026-11-06-task-53-built.md`. Then the video. Submission 2026-11-09.
