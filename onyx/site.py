@@ -44,7 +44,7 @@ DEFINED_AS = {"citation_validity": "citation validity", "action_recall": "action
 # order 2026-11-05 Task 53 items 22 and 10: why the site's 0.87 sits beside the report's 5 of 7
 TILE_NOTES = {"gap_recall": " (average of the five scenarios; S1 reads 0.33, see Annex C; the report counts all gaps "
                             "together, 5 of 7)"}
-DEF_NOTES = {"gap_recall": " S1 reads 0.33 because its key places two gaps at steps the adviser does not reach; see Annex C."}
+DEF_NOTES = {"gap_recall": " S1 reads 0.33 because its key places two gaps at steps where the adviser has no model turn; see Annex C."}
 CONFIGS = (("C3 governed", replay_page.RUNS, True), ("C3 ungoverned", replay_page.RUNS, False),
            ("C4 governed", replay_page.RUNS / "c4", True), ("C5 governed", replay_page.RUNS / "c5", True))
 

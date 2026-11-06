@@ -14,10 +14,9 @@
 Mizan is a consumer-care AI for a synthetic UAE operator. The case is an ordinary customer talking to their phone company in a chat or on a call, not a practice exercise. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay under a proposed rule: a what-if for the policymaker.
 
 The first contact at a UAE operator is already an AI, and e& reported 371,476 customer complaints in its UAE
-operations for 2025 (e&, Sustainability Report Appendices 2025, Appendix 1). UAE telecom rules already in force set four limits on an AI in that seat. It cannot charge a customer for a service they did not expressly order, so nobody pays for what they did not ask for (TDRA Consumer Protection Regulations v2.0, CPR 4.3). It cannot share their data with affiliates or outside parties without prior consent, so the customer decides who sees it (24.6). It cannot cut their line for non-payment without a warning first, so they have time to act (22.1). And it cannot handle their complaint, because that conversation is reserved for a person: 26.7.2 requires licensees to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints".
+operations for 2025 (e&, Sustainability Report Appendices 2025, Appendix 1). UAE telecom rules already in force set four limits on an AI in that seat. It cannot charge a customer for a service they did not expressly order (TDRA Consumer Protection Regulations v2.0, CPR 4.3). It cannot share their data with affiliates or outside parties without prior consent (24.6). It cannot cut their line for non-payment without a warning first (22.1). And it cannot handle their complaint, because that conversation is reserved for a person: 26.7.2 requires licensees to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints".
 
-Annex A lists the sources; the PDPL is the Personal Data Protection Law 45/2021. 100 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each
-clause the gates cite word for word against the text stored from it. No consumer data was used.
+Annex A lists the sources (the PDPL is the Personal Data Protection Law 45/2021); 100 are verified: the issuing body's file is on disk with its SHA-256, and a test on every push checks each clause the gates cite word for word against it. No consumer data was used.
 
 ## Description of the use case
 
@@ -29,7 +28,7 @@ first), block, or insufficient evidence (the agent abstains; a candidate gap is 
 for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a contested automated decision
 (PDPL 18(4)), and every hold; no human approves every answer, because the texts do not ask for it. The test results in this report can be checked: a command called `eval` recalculates them from the run logs, and anyone can run it.
 
-**What is different.** We ran the same five scenarios twice on the same model, once with the gates on and once with them off. With the gates off, on average about two acts per run went through that should have been stopped or handed to a person: 2.3 in English and 2.1 in Arabic `[C3, prompt v3, three runs per scenario per language]`. On eight steps we wrote where the subscriber's words try to force a barred act, the gate passed 8 of 48 before a fix made the same day and 0 of 48 after (Annex C) `[U8, governed, before and after the fix]`.
+**What is different.** We ran the same five scenarios twice on the same model, once with the gates on and once with them off. With the gates off, on average about two acts per run went through that should have been stopped or handed to a person: 2.3 in English and 2.1 in Arabic `[C3, prompt v3, three runs per scenario per language]`.
 
 ## What is the role played by AI?
 
@@ -62,7 +61,7 @@ scenario did not name.
 | C | per-agent inbox, staged release (C-1) | 7 Strategy Alignment: operator, regulator and Data Office as separate agents (S5) | Licence 2/2026 (9.1, 9.2.4); PDPL |
 | PP | clause chunks; retrieval limited by role (PP-1) | 10 AI & Policies: the policy text is the retrieval unit | all KB rows; `kb/export/` |
 | M | one adapter, any OpenAI-compatible model (M-1) | 6 Human Interface: drafts in both languages; the gate between draft and subscriber | PDPL 7(5), 8(1), 13(2), 22, 23; licence 3.4.1 |
-| P | plain-code gates; four verdicts (P-1, P-2) | 8 Collaboration with AI: the governed-against-ungoverned run | CPR 4.3, 4.10, 4.11, 22.1, 24.6, 24.10, 26.7.2; Cabinet 56/2024; PDPL 18(4) |
+| P | plain-code gates reading JSON clause rows (`rules.json`: id, document_id, clause, chunk, quote, quote_ar); four verdicts (P-1, P-2) | 8 Collaboration with AI: the governed-against-ungoverned run | CPR 4.3, 4.10, 4.11, 22.1, 24.6, 24.10, 26.7.2; Cabinet 56/2024; PDPL 18(4) |
 | D | hand-over; deadlines; routing not built (D-1, D-2) | 6 Human Interface: hand-over with both quotes; no Y.3172 node outcome for it (gap 8) | CPR 26.13.2, 26.13.3; QoS v3.0 T1(2a) |
 | SINK | log; replay; gap register (SINK-1) | 10 AI & Policies: the gap register is a policy input | Y.3172; Readiness 2.0; IMDA, EU AI Act, GDPR, COPPA |
 | MLFO | staged release; model, prompt, gate version and key hashes per run (MLFO-1) | Standards factor: configuration recorded and replayable; and 13 Digital Infrastructure, on documents only | Y.3172 |
@@ -76,22 +75,16 @@ Of the 13 Readiness 2.0 dimensions, we claim five (6, 7, 8, 10, 11) with evidenc
 
 ## Demo scenarios
 
-We test Mizan on five made-up customer conversations, called S1 to S5: S1, roaming before a flight; S2, a billing
-question that becomes a complaint; S3, a partner wants the data and the AI provider is abroad; S4, non-payment and
-an automated disconnection; S5, a TDRA dispute and a loss report. Each is shown in detail under Error scenarios.
-
 1. See it online, nothing to install. The replay site shows each recorded conversation step by step, with the
 clause, page and words behind every decision (`docs/replay/index.html`).
 2. A customer asks why. One command prints the decision, the clause with its quote and the log entry's fingerprint,
-in English or Arabic: `python -m onyx why <log> --step <n>`, where `<log>` is the file of the recorded conversation
-and `<n>` is the step number. The answer is read from the log, so no AI is asked to explain itself afterwards.
+in English or Arabic: `python -m onyx why <log> --step <n>`. The answer is read from the log, so no AI is asked to explain itself afterwards.
 3. Two instructions conflict (the controversy case). In S3, step 3, the care agent proposes sending customer identifiers to the AI provider
 abroad. The gate blocks it under PDPL 22 and 23(2), and refuses even a staff member's override (logged as
 `override_refused`). Privacy wins by rule, not by what the model happens to do.
 4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's
 missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4)
-on S4. A re-run costs USD 0; a new live run on the
-model costs USD 0.27 (USD 5.3767 over the 20 scored runs).
+on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).
 
 ## Error scenarios
 
@@ -104,7 +97,7 @@ licence 9.1, and the coordinator hands the conversation to a named human (D-1). 
 text: gap 1. Replayed as a what-if under the rule the register recommends, the held step releases, the hand-over duty gains its
 clock, and a new finding appears: the hand-over time must be recorded (`docs/replay/whatif-S2-gap-1.md`). With the model call made to fail at step 3, the coordinator's deny-by-default hold hands the conversation to the same human, with no model in that step (`docs/replay/model-down-S2.md`).
 
-**S3, a partner wants the data, and the model provider is abroad.** A partner asks for subscriber data: held, no verification level set (24.10); the override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5). A de-identified payload under
+**S3, a partner wants the data, and the model provider is abroad.** A partner asks for subscriber data: held, no verification level set (24.10; one Arabic run: block, 24.6); the override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5). A de-identified payload under
 the processor contract: allow. A retention offer to a Do Not Call number: block (Cabinet 56/2024).
 
 **S4, non-payment and an automated disconnection.** Disconnection with no warning on file: block (22.1). Notice
@@ -130,7 +123,7 @@ takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
 Method. Every scenario step was put to the gate; a step no clause answers returns insufficient evidence and logs a
 candidate. Each candidate was then searched across the 36 UAE instruments in both languages, then the GCC
 regulations, then foreign law for a global example. A gap is claimed only when the register lists what was searched
-and found absent. The recorded runs re-find, on every run, all 5 expected gaps keyed to a step where the adviser speaks; gaps 2 and 6 are keyed to S1 steps it does not reach (Annex C).
+and found absent. The recorded runs re-find, on every run, all 5 expected gaps keyed to a step where the adviser speaks; gaps 2 and 6 are keyed to S1 steps where it has no model turn (Annex C).
 
 | # | Gap | Kind | Addressee | Example |
 |---|---|---|---|---|

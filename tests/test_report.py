@@ -252,7 +252,7 @@ def test_every_table_cell_is_10_pt_with_no_space_before_or_after(built):
                     assert p.runs and all(r.font.size == Pt(10) for r in p.runs), cell.text
 
 
-def test_both_pictures_are_12_cm_wide_and_keep_with_next(built):
+def test_both_pictures_are_7_7_cm_wide_and_keep_with_next(built):
     from docx import Document
     from docx.shared import Cm
     doc = Document(str(built))
@@ -260,7 +260,7 @@ def test_both_pictures_are_12_cm_wide_and_keep_with_next(built):
     assert len(pictures) == 2
     for p in pictures:
         assert p.paragraph_format.keep_with_next is True
-        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(11)  # Task 36 stop 2 ruling
+        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(7.7)  # Task 53 item 32, layer 1: 70 percent of the 11 cm of Task 36 stop 2
 
 
 def test_the_eight_headings_keep_with_next(built):

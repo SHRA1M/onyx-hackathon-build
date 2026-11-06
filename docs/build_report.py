@@ -9,7 +9,7 @@ paragraphs are Normal with the template's body run (Times New Roman, justified);
 backticks are dropped, nothing else is interpreted but tables, images and headings. The mapping table reuses the
 template's table in place; the gap table is new, with the same table properties. "Limits and next steps" closes
 section 6 under a bold lead, with no heading. Run-set tags are stripped. Task 18 item 2: table cells 10 pt with no
-space before or after, both figures 11 cm wide (Task 36 stop 2 ruling), picture paragraphs and the six headings keep with next. The paragraph after each table is a 4 pt spacer (run 4 pt,
+space before or after, both figures 7.7 cm wide (Task 53 item 32), picture paragraphs and the six headings keep with next. The paragraph after each table is a 4 pt spacer (run 4 pt,
 line exactly 4 pt, no space before or after; Task 36 stop 2 ruling). Fixed core dates and zip times make two
 builds byte-identical.
 
@@ -76,7 +76,7 @@ SECTIONS = ["Introduction", "Description of the use case", "What is the role pla
 # lists as plain lines ("What is the role played by AI?", "Demo scenarios") get a copy of a numbered heading
 ADDED = {"What is the role played by AI?", "Demo scenarios"}
 TAIL = "Limits and next steps"
-FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(11), "docs/fig/fig2-results.png": Cm(11)}  # Task 36 stop 2 ruling (was 12 cm, Task 36; 16 cm, Task 18 item 2b)
+FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(7.7), "docs/fig/fig2-results.png": Cm(7.7)}  # Task 53 item 32, layer 1: 70 percent (was 11 cm, Task 36 stop 2; 12 cm, Task 36; 16 cm, Task 18 item 2b)
 SPACER = Pt(4)  # Task 36 stop 2 ruling: the paragraph after each table, was a full 12 pt body line
 FIXED_DATE = dt.datetime(2026, 10, 23, tzinfo=dt.timezone.utc)
 ZIP_TIME = (2026, 10, 23, 0, 0, 0)

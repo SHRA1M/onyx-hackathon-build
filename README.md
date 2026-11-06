@@ -33,9 +33,11 @@ ITU AI for Good Lab Hackathon UAE 2026 (telecom track): agents propose each step
 written from binding UAE clauses allow or block it, and the same gates run in Arabic and English from the same
 clauses. Every step is written to a hash-chained log that replays offline, with the clause, its page and its words.
 
+Affiliation below: Al-Balqa Applied University (BAU).
+
 | Team | Members | Affiliation |
 |---|---|---|
-| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh | BAU Faculty of Artificial Intelligence, students. Mentor: Dr. Wafaa Almaaitah |
+| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh | BAU Faculty of Artificial Intelligence. Mentor: Dr. Wafaa Almaaitah |
 | Reviewer | Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan | practitioner review, not legal advice, no UAE standing |
 
 The report's annex (data and model, clause to code, the governed test, what ITU can reuse) is in `docs/report.pdf` after page 5.

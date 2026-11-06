@@ -36,17 +36,16 @@ OLD_NOTE = "Mizan enforces the stricter reading and cites the chapeau, the claus
 CABINET = ("The Cabinet shall issue a resolution on the schedule of violations and fines imposed on licensees provided "
            "they do not exceed (10,000,000) ten million dirhams for each violation.")
 TILE = ("(average of the five scenarios; S1 reads 0.33, see Annex C; the report counts all gaps together, 5 of 7)")
-DEF_END = "S1 reads 0.33 because its key places two gaps at steps the adviser does not reach; see Annex C."
+DEF_END = "S1 reads 0.33 because its key places two gaps at steps where the adviser has no model turn; see Annex C."
 
 REPORT_HAS = [
     "**Team leader:** Iyas Shraim (BAU Faculty of Artificial Intelligence)",
     f"**Team members:** {TEAM}",
     CASE,
     "UAE telecom rules already in force set four limits on an AI in that seat. It cannot charge a customer for a service "
-    "they did not expressly order, so nobody pays for what they did not ask for (TDRA Consumer Protection Regulations "
-    "v2.0, CPR 4.3). It cannot share their data with affiliates or outside parties without prior consent, so the customer "
-    "decides who sees it (24.6). It cannot cut their line for non-payment without a warning first, so they have time to "
-    "act (22.1). And it cannot handle their complaint, because that conversation is reserved for a person: 26.7.2 "
+    "they did not expressly order (TDRA Consumer Protection Regulations v2.0, CPR 4.3). It cannot share their data with "
+    "affiliates or outside parties without prior consent (24.6). It cannot cut their line for non-payment without a "
+    "warning first (22.1). And it cannot handle their complaint, because that conversation is reserved for a person: 26.7.2 "
     "requires licensees to \"preclude the use of non-human agents by Licensees in conversations with Consumers regarding "
     "Consumer Complaints\".",
     "**Demo video:** see the repository README.",
@@ -54,7 +53,7 @@ REPORT_HAS = [
     "expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the adviser, "
     "the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged",
     "The recorded runs re-find, on every run, all 5 expected gaps keyed to a step where the adviser speaks; gaps 2 and 6 "
-    "are keyed to S1 steps it does not reach (Annex C).",
+    "are keyed to S1 steps where it has no model turn (Annex C).",
     "We ran the same five scenarios twice on the same model, once with the gates on and once with them off. With the "
     "gates off, on average about two acts per run went through that should have been stopped or handed to a person: 2.3 "
     "in English and 2.1 in Arabic `[C3, prompt v3, three runs per scenario per language]`.",
@@ -68,22 +67,23 @@ REPORT_HAS = [
     "retrieval limited by role",
     "Of the 13 Readiness 2.0 dimensions, we claim five (6, 7, 8, 10, 11) with evidence from the running system and two "
     "(1, 13) from documents only, with no running system behind them; the other six we do not claim.",
-    "We test Mizan on five made-up customer conversations, called S1 to S5: S1, roaming before a flight; S2, a billing "
-    "question that becomes a complaint; S3, a partner wants the data and the AI provider is abroad; S4, non-payment and "
-    "an automated disconnection; S5, a TDRA dispute and a loss report. Each is shown in detail under Error scenarios.",
+    "Annex A lists the sources (the PDPL is the Personal Data Protection Law 45/2021); 100 are verified: the issuing "
+    "body's file is on disk with its SHA-256, and a test on every push checks each clause the gates cite word for word "
+    "against it. No consumer data was used.",
     "1. See it online, nothing to install. The replay site shows each recorded conversation step by step, with the "
     "clause, page and words behind every decision (`docs/replay/index.html`).",
     "2. A customer asks why. One command prints the decision, the clause with its quote and the log entry's fingerprint, "
-    "in English or Arabic: `python -m onyx why <log> --step <n>`, where `<log>` is the file of the recorded conversation "
-    "and `<n>` is the step number. The answer is read from the log, so no AI is asked to explain itself afterwards.",
+    "in English or Arabic: `python -m onyx why <log> --step <n>`. The answer is read from the log, so no AI is asked to explain itself afterwards.",
     "3. Two instructions conflict (the controversy case). In S3, step 3, the care agent proposes sending customer "
     "identifiers to the AI provider abroad. The gate blocks it under PDPL 22 and 23(2), and refuses even a staff member's "
     "override (logged as `override_refused`). Privacy wins by rule, not by what the model happens to do.",
     "4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's "
     "missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4) "
-    "on S4. A re-run costs USD 0; a new live run on the model costs USD 0.27 (USD 5.3767 over the 20 scored runs).",
-    "A partner asks for subscriber data: held, no verification level set (24.10); the override to send identifiers "
-    "abroad: block, no override (PDPL 22, 23(2); gap 5).",
+    "on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).",
+    "A partner asks for subscriber data: held, no verification level set (24.10; one Arabic run: block, 24.6); the "
+    "override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5).",
+    "| P | plain-code gates reading JSON clause rows (`rules.json`: id, document_id, clause, chunk, quote, quote_ar); four "
+    "verdicts (P-1, P-2) |",
     "Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading of the texts (practice, not "
     "legal advice, no UAE standing); what he found and what changed are in Annex A. Next:",
     "team approval of holds. Annex A to F",
@@ -94,6 +94,8 @@ REPORT_GONE = [
     "`eval` recomputes every figure", "where its mandate ends", "bounded mandates", "mandate-scoped retrieval",
     "scoped to the agent's mandate", "Claimed on running evidence", "not by the model's mood",
     "interconnection data", "a data-protection practitioner's review", "supervised by",
+    "We test Mizan on five made-up", "where `<log>` is the file", "so nobody pays", "so the customer decides",
+    "so they have time to act", "On eight steps we wrote",
 ]
 ANNEX_HAS = [
     "An agent's mandate is its fixed list of what it may do and read.",
@@ -101,12 +103,23 @@ ANNEX_HAS = [
     "Amman – Jordan (practitioner review, not legal advice, no UAE standing): his points on CPR 26.7.2's Arabic, licence "
     "3.4.1 and licence 9.1 are in gap 1 and the rule notes; his code-level points are listed for after the shortlist.",
     "Gap recall counts flags, and only the adviser may flag: flag_gap is in its mandate alone. The S1 key places gap 2 at "
-    "the channel classification, which is plain code, and gap 6 at the care agent's offer; neither step calls the "
-    "adviser. Its one model turn in S1, step 6, shows it only the renewal question, and no run flagged gaps 2 or 6 there, "
+    "the channel classification, which is plain code, and gap 6 at the care agent's offer; neither step gives the "
+    "adviser a model turn. Its one model turn in S1, step 6, shows it only the renewal question, and no run flagged gaps 2 or 6 there, "
     "so S1 reads 0.33. The keys were not edited; after the shortlist the adviser reads the whole conversation or the care "
     "agent gets the register, and the runs are repeated.",
     "Three runs per cell is enough to show the effect, not to estimate it finely. After the shortlist the same test runs "
     "on more runs, with attacks written by people who have not read the gate's code.",
+    "The gate's rules are code; the clauses it cites are JSON rows. We found no standard machine-readable form for "
+    "regulatory rules in the texts we hold and claim none; a standards gap on that form is a candidate for after the "
+    "shortlist, not a finding.",
+    "The chunk format carries no telecom field (document, clause, page, text in both languages, status): another "
+    "sector's texts chunked the same way serve the same retrieval, hash-chained log and replay. A swap is not free of "
+    "code: the gates name CPR clauses by design; the adviser's sales-channel table (`onyx/agents/adviser.py`), the care "
+    "agent's hand-over line and the coordinator's TDRA role name the same regulation; the replay page highlights two "
+    "telecom hand-over quotes. Each would be rewritten for that sector. We state the cost of a swap rather than claim a "
+    "generic framework.",
+    "the SRC node holds 108 documents (100 verified), 161 clause chunks, English and Arabic; subscriber and account data "
+    "synthetic, no real person; at the PP node a chunk = document, clause, page, text in both languages, status.",
 ]
 
 
@@ -132,9 +145,11 @@ def test_strip_keeps_five_cells():
     assert len(row.strip("|").split("|")) == 5 and STRIP_CELL in row
 
 
-def test_clause_18_prints_the_pair_from_eval():
-    assert ("On eight steps we wrote where the subscriber's words try to force a barred act, the gate passed 8 of 48 "
-            "before a fix made the same day and 0 of 48 after (Annex C).") in _build().strip_tags(REPORT)
+def test_clause_18_left_the_main_text_and_annex_c_and_the_readme_carry_the_test():
+    """Item 32, layer 3."""
+    assert "`[U8" not in REPORT
+    for text in (ANNEX, README):
+        assert "8 of 48" in text and "0 of 48" in text
 
 
 @pytest.mark.parametrize("para, problem", [
@@ -180,7 +195,9 @@ def test_gap_15_quote_is_the_whole_sentence_and_its_arabic_is_unchanged():
 
 
 def test_readme_team_case_model_and_after_shortlist():
-    assert f"| Onyx | Iyas Shraim (leader), {TEAM} | {FACULTY}, students. {MENTOR} |" in README
+    assert f"| Onyx | Iyas Shraim (leader), {TEAM} | {FACULTY}. {MENTOR} |" in README
+    assert README.count("Al-Balqa Applied University (BAU)") == 1
+    assert README.index("Al-Balqa Applied University (BAU)") < README.index("| Onyx |")
     assert "Faculty of AI" not in README and "supervised by" not in README
     assert "- " + CASE in README and "not an institution in a drill" not in README
     assert ("obligation proxy 0.57 / 0.58 (share of key obligations on steps that reached the key's verdict with every "
@@ -207,6 +224,29 @@ def test_tile_average_is_what_the_code_computes():
         assert round(values[0], 2) == 0.33 and values[1:] == [1.0, 1.0, 1.0, 1.0]
         assert sum(values) / 5 == pytest.approx(results["c5"]["C5"]["all"][lang]["gap_recall"], abs=0.001)
         assert round(sum(values) / 5, 2) == 0.87
+
+
+def test_the_fields_the_report_names_exist():
+    """Items 29 to 31: the P cell names rules.json's own fields; the chunk's fields are the ones Annex B and D list."""
+    rules = json.loads((REPO / "onyx" / "data" / "rules.json").read_text(encoding="utf-8"))["rules"]
+    assert all({"id", "document_id", "clause", "chunk", "quote", "quote_ar"} <= set(r) for r in rules)
+    assert not any("page" in r for r in rules)
+    chunks = [json.loads(line) for f in (REPO / "kb" / "chunks").glob("*.jsonl")
+              for line in f.read_text(encoding="utf-8").splitlines()]
+    assert len(chunks) == 161
+    assert all({"document_id", "clause", "page", "text_en", "text_ar", "status"} <= set(c) for c in chunks)
+    rows = kb.load_manifest()
+    assert len(rows) == 108 and len(kb.verified_rows(rows)) == 100
+
+
+def test_the_new_annex_sentences_sit_where_the_order_puts_them():
+    limits = ANNEX.index("We found no standard machine-readable form")
+    assert ANNEX.index("**Known limits.**") < limits < ANNEX.index("Reviewed on 2026-11-05") < ANNEX.index("## Annex B")
+    assert ANNEX.index("## Annex B") < ANNEX.index("the SRC node holds 108 documents") < ANNEX.index("What a rule looks like")
+    swap = ANNEX.index("The chunk format carries no telecom field")
+    assert ANNEX.index("**For the Sandbox Network for Arabic-AI (SNAI):**") < swap
+    assert swap < ANNEX.index("**For the call for domain-specific open knowledge bases:**")
+    assert "domain-independent" not in ANNEX and "serve the same agents" not in ANNEX
 
 
 def test_every_annex_table_keeps_its_header_with_its_rows(tmp_path):

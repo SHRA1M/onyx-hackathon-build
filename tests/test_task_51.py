@@ -88,7 +88,7 @@ def test_every_strip_figure_is_printed_elsewhere_in_the_main_text():
 def test_the_sources_sentence_is_cut_and_annex_a_carries_what_it_named():
     """hq's stop 1 ruling, question 1: the cut; the strip's 108 documents stays printed in the main text."""
     body = " ".join(REPORT[REPORT.index("## Introduction"):REPORT.index("## Description of the use case")].split())
-    assert body.endswith("Annex A lists the sources; the PDPL is the Personal Data Protection Law 45/2021. 100 are verified: "
+    assert body.endswith("Annex A lists the sources (the PDPL is the Personal Data Protection Law 45/2021); 100 are verified: "
                          "the issuing body's file is on disk with its SHA-256, and a test on every push checks each clause "
                          "the gates cite word for word against the text stored from it. No consumer data was used.")
     assert "other UAE texts" not in REPORT and "foreign texts" not in REPORT
@@ -137,7 +137,7 @@ def test_the_readme_first_screen_is_in_the_orders_order():
 
 def test_the_team_table_carries_the_reviewer_with_his_title_and_his_qualification():
     section = README[README.index("## What Mizan is"):README.index("## Why")]
-    assert "| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh | BAU Faculty of Artificial Intelligence, students. Mentor: Dr. Wafaa Almaaitah |" in section
+    assert "| Onyx | Iyas Shraim (leader), Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh | BAU Faculty of Artificial Intelligence. Mentor: Dr. Wafaa Almaaitah |" in section
     assert ("Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan | "
             "practitioner review, not legal advice, no UAE standing |") in section
     assert "Team Onyx (BAU Faculty of AI)" not in README
