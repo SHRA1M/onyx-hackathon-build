@@ -26,7 +26,7 @@ NODES = {
     "MLFO": "the coordinator's staged release of steps",
     "SRC": "the scenario injects",
     "C": "each agent's inbox",
-    "PP": "mandate-scoped retrieval",
+    "PP": "retrieval limited by role",
     "M": "it proposes, never decides",
     "P": "the gates, plain code",
     "D": "the human hand-over",

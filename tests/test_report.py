@@ -117,7 +117,7 @@ def test_the_creator_is_team_onyx_and_the_template_author_is_gone(built):
 
 def test_a_missing_figure_fails_the_build(tmp_path):
     md = tmp_path / "report.md"
-    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("fig2-results.png", "fig9-missing.png"),
+    md.write_text(REPORT_MD.read_text(encoding="utf-8").replace("fig1-architecture.png", "fig9-missing.png"),
                   encoding="utf-8", newline="\n")
     result = _build(md, tmp_path / "out.docx")
     assert result.returncode != 0 and "fig9-missing.png" in result.stdout + result.stderr
@@ -252,15 +252,15 @@ def test_every_table_cell_is_10_pt_with_no_space_before_or_after(built):
                     assert p.runs and all(r.font.size == Pt(10) for r in p.runs), cell.text
 
 
-def test_both_pictures_are_7_7_cm_wide_and_keep_with_next(built):
+def test_figure_1_is_9_cm_figure_2_is_16_cm_and_both_keep_with_next(built):
     from docx import Document
     from docx.shared import Cm
     doc = Document(str(built))
     pictures = [p for p in doc.paragraphs if p._p.xpath(".//pic:pic")]
     assert len(pictures) == 2
-    for p in pictures:
+    for p, width in zip(pictures, (Cm(9), Cm(16))):  # Task 53 item 38, layers 5 and 7
         assert p.paragraph_format.keep_with_next is True
-        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == Cm(7.7)  # Task 53 item 32, layer 1: 70 percent of the 11 cm of Task 36 stop 2
+        assert int(p._p.xpath(".//wp:extent/@cx")[0]) == width
 
 
 def test_the_eight_headings_keep_with_next(built):
@@ -360,12 +360,13 @@ def test_the_pooled_citation_interval_reads_too():
     assert build.check_paragraph("Validity 95% interval 0.958 to 0.999 `[C5, x]`.", sets) == []  # 130 of 131
 
 
-def test_the_s2_paragraph_names_the_model_down_page():
-    text = REPORT_MD.read_text(encoding="utf-8")
-    whatif = text.index("(`docs/replay/whatif-S2-gap-1.md`).")
-    down = text.index("With the model call made to fail at step 3, the coordinator's deny-by-default hold hands the "
-                      "conversation to the same human, with no model in that step (`docs/replay/model-down-S2.md`).")
-    assert whatif < down < text.index("**S3,")
+def test_the_model_down_path_stays_in_the_requirements_and_annex_a():
+    """Task 53 item 38(c): S2's sentence left the main text."""
+    text = " ".join(REPORT_MD.read_text(encoding="utf-8").split())
+    annex = " ".join((kb.REPO / "docs" / "annex.md").read_text(encoding="utf-8").split())
+    assert "With the model call made to fail" not in text
+    assert "the model-down path hands over with no model in the step" in text
+    assert "When the model provider is unavailable the prototype retries" in annex
     assert (kb.REPO / "docs" / "replay" / "model-down-S2.md").exists()
 
 

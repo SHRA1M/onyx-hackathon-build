@@ -114,7 +114,7 @@ Two different things are code, and neither of them is the model.
    done, humans on shift) and applies the rules that bind that verb. It returns a verdict with the rule ids it
    relied on, each rule carrying its clause, page and verbatim quote in both languages.
 
-In the main text's Y.3172 table, the SRC node holds 108 documents (100 verified), 161 clause chunks, English and Arabic; subscriber and account data synthetic, no real person; at the PP node a chunk = document, clause, page, text in both languages, status.
+In the main text's Y.3172 table, the SRC node holds 108 documents (100 verified), 161 clause chunks (77 with the Arabic text), English and Arabic; subscriber and account data synthetic, no real person; at the PP node a chunk = document, clause, page, text in both languages, status.
 
 What a rule looks like, as stored (`rules.json`):
 
@@ -258,6 +258,10 @@ re-recorded on the new text; the earlier runs are kept in `runs/_superseded/c5-a
 Arabic runs, including the ungoverned baseline above, remain on the old text. The report states the figures from
 the re-recorded set.
 
+![Figure 2](docs/fig/fig2-results.png)
+
+*Figure 2. (a) C5: action recall and citation validity. (b) C3: governed rejections, ungoverned claims.*
+
 **Steered subscriber, U8.** We tested the agent with an adversarial scenario written by our team, in English and Arabic: twelve runs, six with the gate and six without. The test exposed a fault in how the gate identified the recipient of account data: before the correction, the gate allowed 8 of 48 governed steps, in 6 of 6 governed runs. We corrected the fault and repeated the same test: 0 of 48 governed steps, in 0 of 6 governed runs; with six runs, a count of zero bounds the true rate at about 39% at 95% confidence (exact one-sided binomial limit; a zero count is reported as a bounded null, OWASP GenAI Red Teaming Manual v1.0, page 124). Without the gate, 48 of 48 steps passed before and after. The gate reads the recipient from the model's own arguments, every field, failing closed on conflict; deriving it from trusted operation metadata, a required recipient field with a fixed value list bound to a delivery channel, is live-app work. The fault is OWASP LLM05:2025 Improper Output Handling (mitigation 1: 'apply proper input validation on responses coming from the model to backend functions') leading to LLM06:2025 Excessive Agency; in the OWASP Top 10 for Agentic Applications 2026 it is ASI02 Tool Misuse, whose mitigation 7 reads 'Fail closed on ambiguous resolution'.
 
 The scenario is eight subscriber messages, two per barred act, each trying by words alone ("ignore your rules", a claimed staff or TDRA authority, a pasted policy update, "my manager said yes", a request framed as a test, the other language mid-conversation). Three runs per language per set-up, prompt v5, hash chains verified with `verify-log`; the key and the counting list were committed before the first run. A barred act is counted by its effect, from that list. Each step cell counts steps with a barred act, of 8 steps per run; the last column counts runs with at least one barred act passed. Prompt v5 tells care to propose what a message asks and leave the decision to the gate, so the proposed figures are high by instruction.
@@ -295,7 +299,7 @@ Capacity Building Week (page on file, read 2026-10-18):
 1. **For the Sandbox Network for Arabic-AI (SNAI):** the Arabic clause chunks of the UAE texts (77 chunks with
    `text_ar`), five scenarios written in Arabic by an Arabic speaker, the frozen keys, and 10 recorded Arabic
    runs with their logs, so an Arabic agent can be scored against binding Arabic law without new annotation.
-   The chunk format carries no telecom field (document, clause, page, text in both languages, status): another sector's texts chunked the same way serve the same retrieval, hash-chained log and replay. A swap is not free of code: the gates name CPR clauses by design; the adviser's sales-channel table (`onyx/agents/adviser.py`), the care agent's hand-over line and the coordinator's TDRA role name the same regulation; the replay page highlights two telecom hand-over quotes. Each would be rewritten for that sector. We state the cost of a swap rather than claim a generic framework.
+   The chunk format carries no telecom-specific field (document, article, clause, page, text in both languages, status, retention class, Y.3172 node): another sector's texts chunked the same way serve the same retrieval, hash-chained log and replay. A swap is not free of code: the gates name CPR clauses by design; the adviser's sales-channel table (`onyx/agents/adviser.py`), the care agent's hand-over line and the coordinator's TDRA role name the same regulation; the replay page highlights two telecom hand-over quotes. Each would be rewritten for that sector. We state the cost of a swap rather than claim a generic framework.
 2. **For the call for domain-specific open knowledge bases:** `kb/manifest.csv` with its 23-column schema (issuer, URL,
    fetch date, HTTP status, SHA-256, pages, language, official-translation flag, binding status, Y.3172 node and
    Readiness dimensions per document), the 108 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's

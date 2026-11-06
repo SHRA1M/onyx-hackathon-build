@@ -69,7 +69,7 @@ REPORT_HAS = [
     "(1, 13) from documents only, with no running system behind them; the other six we do not claim.",
     "Annex A lists the sources (the PDPL is the Personal Data Protection Law 45/2021); 100 are verified: the issuing "
     "body's file is on disk with its SHA-256, and a test on every push checks each clause the gates cite word for word "
-    "against it. No consumer data was used.",
+    "against the text stored from it. No consumer data was used.",
     "1. See it online, nothing to install. The replay site shows each recorded conversation step by step, with the "
     "clause, page and words behind every decision (`docs/replay/index.html`).",
     "2. A customer asks why. One command prints the decision, the clause with its quote and the log entry's fingerprint, "
@@ -86,7 +86,19 @@ REPORT_HAS = [
     "verdicts (P-1, P-2) |",
     "Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading of the texts (practice, not "
     "legal advice, no UAE standing); what he found and what changed are in Annex A. Next:",
-    "team approval of holds. Annex A to F",
+    "team approval of holds. Annex A to F follow.",
+    "mean over S1 to S5, en / ar]` (Figure 2, Annex C): citation validity 0.99 / 1.00",
+    "Plain code written from the binding UAE texts decides; every verdict names the clause it relied on, its page and its "
+    "words, in English and Arabic; the model never decides.",
+    "One team wrote the keys, gates and scenarios; the humans are scripted; Arabic coverage is uneven; an outage is shown "
+    "only by fault injection; erasure from the log and de-identification are unsolved (Annex A, \"Known limits\"). Ra'ed "
+    "Shraim, a data-protection officer outside the team, reviewed the gates' reading of the texts (practice, not legal "
+    "advice, no UAE standing); what he found and what changed are in Annex A. Next: cold runs of the seven unseen scenarios; "
+    "routing (D-2); team approval of holds. Annex A to F follow.",
+    "the model-down path hands over with no model in the step",
+    "Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1), and its "
+    "hand-over is Readiness D9's inference-to-action latency in the other direction; neither text measures when an acting "
+    "agent must stop, how often it hands over or how long that takes. Left open with ITU's agreement (2026-10-30).",
 ]
 REPORT_GONE = [
     "BAU Faculty of AI", "not an institution in a drill", "bar any AI in that seat",
@@ -96,6 +108,8 @@ REPORT_GONE = [
     "interconnection data", "a data-protection practitioner's review", "supervised by",
     "We test Mizan on five made-up", "where `<log>` is the file", "so nobody pays", "so the customer decides",
     "so they have time to act", "On eight steps we wrote",
+    "![Figure 2]", "Figure 2. (a)", "With the model call made to fail", "the log meets the right to erasure",
+    "Annex A to F: data and model", "The model proposes and plain code",
 ]
 ANNEX_HAS = [
     "An agent's mandate is its fixed list of what it may do and read.",
@@ -112,13 +126,15 @@ ANNEX_HAS = [
     "The gate's rules are code; the clauses it cites are JSON rows. We found no standard machine-readable form for "
     "regulatory rules in the texts we hold and claim none; a standards gap on that form is a candidate for after the "
     "shortlist, not a finding.",
-    "The chunk format carries no telecom field (document, clause, page, text in both languages, status): another "
+    "The chunk format carries no telecom-specific field (document, article, clause, page, text in both languages, status, "
+    "retention class, Y.3172 node): another "
     "sector's texts chunked the same way serve the same retrieval, hash-chained log and replay. A swap is not free of "
     "code: the gates name CPR clauses by design; the adviser's sales-channel table (`onyx/agents/adviser.py`), the care "
     "agent's hand-over line and the coordinator's TDRA role name the same regulation; the replay page highlights two "
     "telecom hand-over quotes. Each would be rewritten for that sector. We state the cost of a swap rather than claim a "
     "generic framework.",
-    "the SRC node holds 108 documents (100 verified), 161 clause chunks, English and Arabic; subscriber and account data "
+    "the SRC node holds 108 documents (100 verified), 161 clause chunks (77 with the Arabic text), English and Arabic; "
+    "subscriber and account data "
     "synthetic, no real person; at the PP node a chunk = document, clause, page, text in both languages, status.",
 ]
 
@@ -160,6 +176,8 @@ def test_clause_18_left_the_main_text_and_annex_c_and_the_readme_carry_the_test(
     ("Gaps: the 2 not found (gaps 2 and 6) `[C5, x]`.", None),
     ("Gaps: the 3 not found `[C5, x]`.", "3 not found"),
     ("Gaps: the 2 not found (gaps 2 and 7) `[C5, x]`.", "gaps 2 and 7"),
+    ("Means `[C5, x]` (Figure 2, Annex C): 5 of 7 found.", None),  # item 38(a): a figure's number is not a value
+    ("Means `[C5, x]` (Figure 2, Annex C): 6 of 7 found.", "6 of 7"),
 ])
 def test_the_value_check_reads_the_new_wording_and_still_fails_a_wrong_figure(para, problem):
     build = _build()
@@ -243,10 +261,51 @@ def test_the_new_annex_sentences_sit_where_the_order_puts_them():
     limits = ANNEX.index("We found no standard machine-readable form")
     assert ANNEX.index("**Known limits.**") < limits < ANNEX.index("Reviewed on 2026-11-05") < ANNEX.index("## Annex B")
     assert ANNEX.index("## Annex B") < ANNEX.index("the SRC node holds 108 documents") < ANNEX.index("What a rule looks like")
-    swap = ANNEX.index("The chunk format carries no telecom field")
+    swap = ANNEX.index("The chunk format carries no telecom-specific field")
     assert ANNEX.index("**For the Sandbox Network for Arabic-AI (SNAI):**") < swap
     assert swap < ANNEX.index("**For the call for domain-specific open knowledge bases:**")
     assert "domain-independent" not in ANNEX and "serve the same agents" not in ANNEX
+
+
+def test_figure_2_prints_in_annex_c_after_the_c5_results(tmp_path):
+    """Item 38(a), with its caption; Figure 1 stays in the main text."""
+    from docx import Document
+
+    assert "![Figure 1](docs/fig/fig1-architecture.png)" in REPORT
+    figure = ANNEX.index("![Figure 2](docs/fig/fig2-results.png)")
+    assert ANNEX.index("the re-recorded set.") < figure < ANNEX.index("**Steered subscriber, U8.**")
+    assert ANNEX.index("*Figure 2. (a) C5: action recall and citation validity. (b) C3: governed rejections, ungoverned "
+                       "claims.*") > figure
+    out = tmp_path / "report.docx"
+    assert _build().main(["--out", str(out)]) == 0
+    paragraphs = Document(str(out)).paragraphs
+    texts = [p.text for p in paragraphs]
+    pictures = [i for i, p in enumerate(paragraphs) if p._p.xpath(".//pic:pic")]
+    assert len(pictures) == 2 and pictures[0] < texts.index("Annex") < pictures[1]
+    assert texts[pictures[1] + 1].startswith("Figure 2. (a) C5")
+    assert all(r.font.size.pt == 10 for r in paragraphs[pictures[1] + 1].runs)
+
+
+def test_the_four_demo_items_are_four_paragraphs():
+    """Item 38(b)."""
+    section = (REPO / "docs" / "report.md").read_text(encoding="utf-8").split("## Demo scenarios")[1].split("## Error")[0]
+    assert [b.strip()[:2] for b in section.split("\n\n") if b.strip()] == ["1.", "2.", "3.", "4."]
+
+
+def test_mlfo_and_ml_sandbox_share_one_row_and_nothing_is_dropped():
+    """Item 38, layer 6."""
+    assert ("| MLFO; ML sandbox | staged release; model, prompt, gate version and key hashes per run (MLFO-1); selftest and "
+            "suite in CI; the governed-against-ungoverned pair (SB-1) | Standards factor: configuration recorded and "
+            "replayable; and 13 Digital Infrastructure, on documents only; Sandbox factor: same scenarios with and without "
+            "gates, same model | Y.3172; Y.3172; Readiness 2.0 |") in REPORT
+    assert "| MLFO | " not in REPORT and "| ML sandbox | " not in REPORT
+
+
+def test_figure_1_says_retrieval_limited_by_role():
+    """Item 43: scripts/fig_architecture.py draws it; the README row it is checked against moves with it."""
+    assert "retrieval limited by role" in (REPO / "scripts" / "fig_architecture.py").read_text(encoding="utf-8")
+    assert "mandate-scoped" not in (REPO / "docs" / "fig" / "fig1-architecture.svg").read_text(encoding="utf-8")
+    assert "| PP | preprocessor | clause chunking and retrieval limited by role |" in README
 
 
 def test_every_annex_table_keeps_its_header_with_its_rows(tmp_path):

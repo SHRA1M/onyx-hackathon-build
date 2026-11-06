@@ -245,7 +245,7 @@ The nodes of ITU-T Y.3172 (06/2019) clause 8.1, with the MLFO and the ML sandbox
 | --- | --- | --- | --- |
 | SRC | source of data | the scenario injects and the KB sources | `onyx/data/scenarios/`, `kb/manifest.csv` |
 | C | collector | each agent's inbox: the coordinator releases a step only to the agent it names | `onyx/coordinator.py` |
-| PP | preprocessor | clause chunking and mandate-scoped retrieval | `onyx/kb.py`, `onyx/agents/base.py` |
+| PP | preprocessor | clause chunking and retrieval limited by role | `onyx/kb.py`, `onyx/agents/base.py` |
 | M | model | the model behind one OpenAI-compatible adapter; it proposes, never decides | `onyx/model.py` |
 | P | policy | the gates, plain code written from binding UAE clauses | `onyx/gate.py` |
 | D | distributor | coordinator routing, the human hand-over and the deadlines the gates set | `onyx/coordinator.py` |

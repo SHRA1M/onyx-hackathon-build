@@ -61,7 +61,7 @@ def test_gap_13_says_what_was_checked():
     assert wording in _row("gap-13")["gap"] and wording in " ".join(ANNEX.split())
 
 
-@pytest.mark.parametrize("line, number, name", [("| SRC |", 1, "Data/model Marketplace"), ("| MLFO |", 13, "Digital Infrastructure")])
+@pytest.mark.parametrize("line, number, name", [("| SRC |", 1, "Data/model Marketplace"), ("| MLFO; ML sandbox |", 13, "Digital Infrastructure")])
 def test_the_documents_only_dimensions_are_named_in_their_rows(line, number, name):
     row = next(l for l in REPORT.splitlines() if l.startswith(line))
     assert f"; and {number} {name}, on documents only" in row

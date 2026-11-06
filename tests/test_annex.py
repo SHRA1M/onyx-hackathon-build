@@ -15,8 +15,7 @@ from onyx import kb
 DOCS = kb.REPO / "docs"
 ANNEX_MD = DOCS / "annex.md"
 REPORT_MD = DOCS / "report.md"
-POINTER = (" Annex A to F: data and model, clause to code, the governed test, what ITU can reuse, where to look, "
-           "further gaps and candidates.")  # Task 41: Annex F added
+POINTER = " Annex A to F follow."  # Task 53 item 38(e)
 
 
 def _load():

@@ -9,12 +9,13 @@ paragraphs are Normal with the template's body run (Times New Roman, justified);
 backticks are dropped, nothing else is interpreted but tables, images and headings. The mapping table reuses the
 template's table in place; the gap table is new, with the same table properties. "Limits and next steps" closes
 section 6 under a bold lead, with no heading. Run-set tags are stripped. Task 18 item 2: table cells 10 pt with no
-space before or after, both figures 7.7 cm wide (Task 53 item 32), picture paragraphs and the six headings keep with next. The paragraph after each table is a 4 pt spacer (run 4 pt,
+space before or after, Figure 1 9 cm and Figure 2 16 cm wide (Task 53 item 38), picture paragraphs and the six headings keep with next. The paragraph after each table is a 4 pt spacer (run 4 pt,
 line exactly 4 pt, no space before or after; Task 36 stop 2 ruling). Fixed core dates and zip times make two
 builds byte-identical.
 
 Value check (item 3, hq rulings 1 and 2 of 2026-10-23): in each tagged paragraph every token holding a digit is
   - a list marker, a single digit alone in brackets: skipped;
+  - a pointer to a figure ("Figure 2"): skipped (Task 53 item 38);
   - an id, letters then a digit (S1, S3-4, C5, v3): skipped;
   - "N of M": a pair in the run set (C5: the Misses line's M minus N, and N of M itself; the Pooled line's counts;
     the gaps-against-keys line's N of M);
@@ -30,7 +31,7 @@ per-scenario C3 / C4 / C5 table (C3 and C5 columns), and the Misses, Pooled and 
 
 Annex (order 2026-11-02 Task 38 item 3): docs/annex.md follows the report after a page break, under "Annex" in the
 template's heading (its numbering removed); the sections "Annex A." to "Annex F." (F: Task 41) are bold leads (the template
-has no second-level heading); body and list text 10 pt, code blocks Courier New 8 pt, tables as above. The annex
+has no second-level heading); body and list text 10 pt, code blocks Courier New 8 pt, tables and figures as above. The annex
 passes the same value check and the knowledge-base counts of Annex A (ANNEX_KB_COUNTS).
 
     uv run python docs/build_report.py [--md docs/report.md] [--annex docs/annex.md] [--out docs/report.docx]
@@ -76,7 +77,7 @@ SECTIONS = ["Introduction", "Description of the use case", "What is the role pla
 # lists as plain lines ("What is the role played by AI?", "Demo scenarios") get a copy of a numbered heading
 ADDED = {"What is the role played by AI?", "Demo scenarios"}
 TAIL = "Limits and next steps"
-FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(7.7), "docs/fig/fig2-results.png": Cm(7.7)}  # Task 53 item 32, layer 1: 70 percent (was 11 cm, Task 36 stop 2; 12 cm, Task 36; 16 cm, Task 18 item 2b)
+FIGURE_WIDTH = {"docs/fig/fig1-architecture.png": Cm(9), "docs/fig/fig2-results.png": Cm(16)}  # Task 53 item 38: Figure 1 layer 7; Figure 2 in Annex C, layer 5 (was 7.7 cm both, item 32; 11 cm, Task 36 stop 2; 12 cm, Task 36; 16 cm, Task 18 item 2b)
 SPACER = Pt(4)  # Task 36 stop 2 ruling: the paragraph after each table, was a full 12 pt body line
 FIXED_DATE = dt.datetime(2026, 10, 23, tzinfo=dt.timezone.utc)
 ZIP_TIME = (2026, 10, 23, 0, 0, 0)
@@ -87,6 +88,7 @@ CREATOR = "Team Onyx"
 
 TAG = re.compile(r"\s*`\[(C[35]|U8)\b[^\]]*\]`")
 TOKEN = re.compile(r"(?P<marker>\(\d\)(?![\d.]))"
+                   r"|(?P<figure>(?<![\w.])Figure \d\b)"
                    r"|(?P<ident>(?<![\w.])[A-Za-z]+\d[\w-]*)"
                    r"|(?P<interval>(?<![\w.])95% interval (?P<lo>\d\.\d+) to (?P<hi>\d\.\d+))"
                    r"|(?P<gaps>(?<![\w.])gaps (?P<g1>\d+) and (?P<g2>\d+)\b)"
@@ -153,7 +155,8 @@ def parse(md: str) -> Report:
 
 def annex_blocks(md: str) -> list[tuple[str, object]]:
     """docs/annex.md as (kind, content): "section" (an "## Annex X." line, the "## " dropped), "code" (a fenced
-    block, verbatim), "table", "list" (numbered items, each joined to one line) or "para"."""
+    block, verbatim), "table", "list" (numbered items, each joined to one line), "image", "caption" (an italic line
+    right after an image) or "para"."""
     out, lines, i = [], md.replace("\r\n", "\n").split("\n"), 0
     while i < len(lines):
         if lines[i].startswith("```"):
@@ -173,6 +176,10 @@ def annex_blocks(md: str) -> list[tuple[str, object]]:
             out.append(("section", text[3:].strip()))
         elif text.startswith("|"):
             out.append(("table", text))
+        elif text.startswith("!["):
+            out.append(("image", text))
+        elif out and out[-1][0] == "image" and text.startswith("*") and text.endswith("*"):
+            out.append(("caption", text.strip("*")))
         elif re.match(r"\d+\. ", text):
             items = re.split(r"\n(?=\d+\. )", text)
             out.append(("list", [" ".join(line.strip() for line in item.splitlines()) for item in items]))
@@ -319,7 +326,7 @@ def _check(para: str, named: list[RunSet]) -> list[str]:
     problems = []
     for m in TOKEN.finditer(para):
         token = m.group(0)
-        if m["marker"] or m["ident"]:
+        if m["marker"] or m["figure"] or m["ident"]:
             continue
         if m["interval"]:
             bounds = (Decimal(m["lo"]), Decimal(m["hi"]))
@@ -588,6 +595,14 @@ def render_annex(b: "Builder", heading_proto, md: str) -> None:
                 p.paragraph_format.left_indent, p.paragraph_format.first_line_indent = Cm(0.6), Cm(-0.6)
                 _runs(p, item, size=ANNEX_SIZE)
                 after = p._p
+            continue
+        if kind == "image":
+            after = b.image(after, content)._p
+            continue
+        if kind == "caption":
+            p = b.paragraph(after, align=WD_ALIGN_PARAGRAPH.CENTER)
+            _runs(p, content, size=Pt(10))
+            after = p._p
             continue
         p = b.paragraph(after, align=WD_ALIGN_PARAGRAPH.LEFT if kind == "code" else WD_ALIGN_PARAGRAPH.JUSTIFY)
         if kind == "section":
