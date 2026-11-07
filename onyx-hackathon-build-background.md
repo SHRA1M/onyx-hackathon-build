@@ -71,8 +71,8 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 54: stop 3, branch `task-54`, no PR. Built: Annex C table, README bullet. Main text 2 lines over page 5 after five cuts. Open trap: `gate.py` 442 and 478 stop on a match, so an unmatched word is allowed (no recorded run did). Fable: `docs/report-back/2026-11-06-task-54-stop-3.md`. Not done: three report lines, count list, PR.
-- Task 53: merged by Iyas, PR #24. Report-back: `docs/report-back/2026-11-06-task-53-built.md`, its hq questions open.
+- Task 54: merged by Iyas 2026-11-07, PR #25 (940df10). Report-back: `docs/report-back/2026-11-07-task-54-built.md`, with Fable's final-read fix appended. Report: main text page 5, annex page 6, 16 pages. Open trap, disclosed in Annex C: `gate.py` 442 and 478 stop on a match, so an unmatched word is allowed (no recorded run did); Task 55 item 3, research first.
+- Task 53: merged, PR #24; its hq questions open (`docs/report-back/2026-11-06-task-53-built.md`).
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
 - Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered.
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
@@ -85,4 +85,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Iyas takes `docs/report-back/2026-11-06-task-54-stop-3.md` to Fable; its ruling finishes Task 54. Task 55 waits until after the shortlist. Open work: the video. Submission 2026-11-09.
+Open work: the video. Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.

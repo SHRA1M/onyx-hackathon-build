@@ -4,6 +4,7 @@ One entry per fix: date, what broke, what changed.
 
 ## 2026-11-07
 
+- Fixed on branch `task-54`, merged in PR #25 (Fable's final read): in Annex C, "Both are listed for the fix..." pointed at "the other four differences" and repeated "listed for the fix". Changed: that sentence deleted; "The identifier check is a deny-list..." now sits after "were blocked.", and the regulator sentence closes the paragraph. Pages unchanged.
 - Changed on branch `task-54`, not merged, finished (order Task 54, rulings on stops 2 and 3): the S4 and S5 lines disagreed with the logs, and Annex C did not say that two checks stop only on a match, so an unmatched word in a constructed test was allowed. Changed: the S3, S4 and S5 lines as ruled; cuts 1 to 5 of the stop-2 ruling; the "Next:" sentence moved from the main text to the end of Annex A; two sentences in Annex C on `model_provider_gate` and `sharing_gate`, the fix listed after the shortlist with its own research first. Main text ends page 5, annex page 6, 16 pages; docx and PDF rebuilt. No gate, log, key or figure changed.
 
 ## 2026-11-06

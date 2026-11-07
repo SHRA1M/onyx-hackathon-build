@@ -929,3 +929,11 @@ Built: the Annex C table "Recorded verdicts against the keys", the README bullet
 Survey of `read_items`: 7 calls, 6 with a fixed English term set. Lines 442 and 478 stop on a match, so an unmatched word was allowed in constructed tests through `gate.decide`, for example `["full name", "phone number"]` and the same in Arabic. All recorded governed allows of a payload were read: question text and plan name only. `sharing_gate` has 26 governed verdicts, all block. So the ruling's "never allowed" was not printed; the annex says what happened at S4-1 to S4-3. An English search also found page numbers and footers in 11 English chunks, so the ruling's Annex A sentence gained a clause.
 
 Measured the ruling's three lines and five cuts on scratch builds: all stay on page 6, 2 lines over. Removing the whole "Next:" sentence fits, as a size probe only. `docs/report.md` was not touched. Commit `3e4f424`.
+
+## 2026-11-07: Task 54 finished and merged, PR #25 (eighty-eighth wrap)
+
+Fable's ruling on stop 3 corrected its stop-2 "never allowed" and named the cut: the whole "Next:" sentence left the main text for the last line of Annex A. Built: the S3, S4 and S5 lines as ruled, cuts 1 to 5, the move, two Annex C sentences on the two match-only checks. Applied in one go, measured once: page 5, annex page 6, 16 pages. Annex line 194 stayed, as its sentence names the uncovered clause. 7 wording pins moved, 3 new tests seen failing first; 1178 passed. Count list against main: report lost only `15.4` (cut 4), annex gained the Annex C table ids and the verdict-agreement figures.
+
+Fable's final read accepted it after one move: "Both are listed..." pointed at "the other four differences" and repeated "listed for the fix", so it was deleted and the deny-list sentence placed after "were blocked." (9bee03f). CI green on 9bee03f and 881c4a5. Iyas merged PR #25 (940df10).
+
+The ruling's "last line of Annex A 'Known limits'" was placed after the Ra'ed review paragraph, the end of Annex A; Fable's final read did not object. First edit attempt in Bash hung on a stray `cat >` waiting for input; stopped and redone from a scratch script.
