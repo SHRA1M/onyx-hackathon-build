@@ -20,6 +20,7 @@ RUNS = kb.REPO / "runs"
 OUT = kb.REPO / "docs" / "replay"
 SCENARIOS = ("S1", "S2", "S3", "S4", "S5")
 HANDOVER_QUOTES = {"CPR 26.7.2", "Licence 9.1"}
+ARABIC_ONLY = "Arabic-only text; no official English on file"
 C5_S2_LINE = ("This page reads a C5 run (prompt v5), not runs/S2/run1.jsonl: the first C5 S2 run whose step 3 carries "
               "the hand-over with both quotes and whose step 4, the human's, is allowed (order 2026-10-22 item 12).")
 
@@ -83,6 +84,25 @@ def _rule_tag(rule_id: str, rules: dict[str, dict[str, Any]]) -> str:
     return tag(rules[rule_id]["document_id"], rules[rule_id]["chunk"])
 
 
+def rule_texts(rule: dict[str, Any]) -> tuple[str, str]:
+    """A rule's English and Arabic (order Task 54 B.1, B.2). Arabic: the chunk's text_ar, then the rule's quote_ar.
+    English: the rule's quote, then the chunk's text_en; "" where the chunk holds Arabic and no English."""
+    try:
+        chunk = kb.get_chunk(rule["document_id"], rule["chunk"])
+    except KeyError:
+        chunk = {}
+    en, ar = " ".join(chunk.get("text_en", "").split()), " ".join(chunk.get("text_ar", "").split())
+    if chunk and not en and ar:
+        return "", ar
+    return rule["quote"] or en, ar or rule.get("quote_ar", "")
+
+
+def check_lines(reasons: list[dict[str, Any]]) -> list[str]:
+    """The check a verdict with no clause rests on, as the log holds it (order Task 54 B.3)."""
+    return [f"{'base' if r.get('gate') == 'base' else r.get('gate')} check: {r['text']}"
+            for r in reasons if r.get("kind") == "check"]
+
+
 def _clauses(ids: list[str], rules: dict[str, dict[str, Any]]) -> list[str]:
     out = []
     for rule_id in ids:
@@ -91,8 +111,11 @@ def _clauses(ids: list[str], rules: dict[str, dict[str, Any]]) -> list[str]:
             out.append(f"  - `{rule_id}`")
             continue
         page = kb.page_of(rule["document_id"], rule["chunk"])
+        en, _ = rule_texts(rule)
         out.append(f"  - `{rule_id}` {rule['label']}{f', p. {page}' if page else ''} {_rule_tag(rule_id, rules)}: "
-                   f"\"{rule['quote']}\"")
+                   f"{'' if en else 'AR: '}\"{rule['quote']}\"")
+        if not en:
+            out.append(f"    - EN: {ARABIC_ONLY}")
     return out
 
 
@@ -118,6 +141,15 @@ def _flagged(gap_ids: list[str], register: str = "../site/gaps.html") -> list[st
 
 def _both(label: str, en: str, ar: str) -> list[str]:
     return [f"  - {label} EN: \"{en}\"", f"  - {label} AR: \"{ar or 'no Arabic text on file'}\""]
+
+
+def _searched(searched: dict[str, Any], rules: dict[str, dict[str, Any]]) -> list[str]:
+    """One clause an abstention searched: the English the log holds, the Arabic its chunk holds (Task 54 B.1, B.2)."""
+    label = f"{searched['label']} {_rule_tag(searched['rule'], rules)}"
+    en, ar = rule_texts(rules[searched["rule"]])
+    if not en:
+        return [f"  - {label} EN: {ARABIC_ONLY}", f"  - {label} AR: \"{ar}\""]
+    return _both(label, searched["says"] or en, ar)
 
 
 def _proposal(p: dict[str, Any]) -> list[str]:
@@ -160,6 +192,8 @@ def render(path: str | Path) -> str:
             what = f"`{e['old_value']['verb']}`" if (e.get("old_value") or {}).get("verb") else e["entity_id"]
             lines.append(f"- Gate on {what}: **{e['verdict']}**")
             lines += _clauses(e["clause_ids"], rules)
+            if not e["clause_ids"]:
+                lines += [f"  - {line}" for line in check_lines(nv.get("reasons", []))]
             quotes = [r for r in nv.get("reasons", []) if r.get("kind") == "quote"]
             if quotes:
                 lines.append("- Hand-over, both languages:")
@@ -170,8 +204,7 @@ def render(path: str | Path) -> str:
             lines += _flagged(nv["gaps"])
             lines.append("- Clauses searched, both languages:")
             for s in nv["searched"]:
-                lines += _both(f"{s['label']} {_rule_tag(s['rule'], rules)}", s["says"],
-                               rules.get(s["rule"], {}).get("quote_ar", ""))
+                lines += _searched(s, rules)
         elif e["action"] == "override_refused":
             lines.append(f"- Override refused: {e['reason']}")
         else:

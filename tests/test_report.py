@@ -91,7 +91,7 @@ def test_limits_and_next_steps_close_section_6_without_a_heading(built):
 def test_the_mapping_table_replaces_the_template_table_and_tables_keep_its_style(built):
     from docx import Document
     doc = Document(str(built))
-    assert len(doc.tables) == 7  # Task 38: the annex adds the C3 table and "where to look"; Task 51 B: the strip; Task 52b: two U8 tables
+    assert len(doc.tables) == 8  # Task 38: the annex adds the C3 table and "where to look"; Task 51 B: the strip; Task 52b: two U8 tables; Task 54: verdicts against the keys
     assert doc.tables[0].rows[0].cells[0].text == "5 scenarios, 2 languages, 20 recorded runs"
     mapping, gaps = doc.tables[1:3]
     assert mapping.rows[0].cells[0].text == "Node" and mapping.rows[1].cells[0].text == "SRC"

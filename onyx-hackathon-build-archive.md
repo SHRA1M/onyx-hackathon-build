@@ -876,3 +876,56 @@ Departure, in the report-back: `README.md:19` now names "Use case requirement", 
 Moved from the background:
 - Task 53 at stop 3: items 29 to 44, main text page 6, 9 lines over, docx and PDF not rebuilt, Figure 1 9 cm. Report-back `docs/report-back/2026-11-06-task-53-stop-3.md`.
 - Trap wording replaced: "Ending it from the session is refused by the permission check; Iyas ends it". This session ended it by PID.
+
+## 2026-11-06: Task 53 built and merged, PR #24 (eighty-fourth wrap)
+
+Filed item 46. Pinned first (3 failed in the selected tests), then undid step (e) and applied try (i), "Results, English / Arabic". Try (i) fit on a scratch build: 5 main pages, annex page 6, 16 total, 2589 main-text words. (ii) to (iv) and step (g) were not needed. Rebuilt docx and PDF, 489790 bytes. Looked at PDF pages 3 to 5, rendered with `uv run --with pypdfium2`. `check-data` ok, `onyx site` changed nothing. Full `pytest` 1146 passed. CI green on 8b78b29 and on ee95d4e. Iyas ran the merge, `1d9897b`, 2026-11-06 21:09 UTC. The session did not merge.
+
+A hidden Word stayed after the rebuild, PID 8088. Checked as `/Automation -Embedding` with no window, then ended. Why it stays on some runs is still not known.
+
+The report-back's count list uses a different tokenizer from stop 4's, so its totals differ slightly; it says so. Its item 25 appendix is carried from stop 4, after the report, annex and README hit counts matched (16, 27, 28).
+
+This wrap's commit sits on `task-53`, on top of the merge, because a push to main waits for Iyas's go.
+
+Moved from the background:
+- main held Tasks 36 to 45 (PR #14, merge `8b5a569`); `task-47` held Task 47, no PR; each task since 29 was one PR and one tag. No `task-5*` tag exists, locally or on the remote.
+- Task 53 at stop 4: item 45 applied to (f); 1 failed, Task 51's strip test; item 46 not built. Report-back `docs/report-back/2026-11-06-task-53-stop-4.md`.
+- Report figures both 12 cm (Task 36 ruling); report 14 pages in total.
+
+## 2026-11-06: Task 54 built up to its C.3 stop (eighty-fifth wrap)
+
+Filed the order, branched from main at `1d9897b` as told. Computed the verdict list before editing: 9 key steps and 26 of 112 run-steps differ, against the order's 2, so the Annex C paragraph stopped. I first told Iyas 10 steps; the count is 9.
+
+Built A.1, A.2, A.4, A.5, A.7, B.1 to B.3 and C.4. A.3, A.6, C.1 and C.2 were already in from Task 53. A.7 adds "licence 9.1", a departure from the order's words, because the chunks hold its Arabic. B also went into the HTML viewer, which read the same wrong field. Tried a strict and a looser definition of verdict agreement: strict 86 of 112, looser 91 of 112; strict kept so the figure and the list match.
+
+The last wrap's three files were copied from `task-53` into this branch, because that commit never reached main.
+
+Moved from the background:
+- hq's copy of the annex text lacks the three Task 47 edits.
+- hq updated its report copy after Task 35b (2026-10-30).
+- Task 53's figures: main text 5 pages, 16 total; 1146 tests.
+- This repo does not know whether hq ran its one "done means" check on Task 53 (also in the brief).
+- Task 50: `record --retriever` exists, default shipped, never used on a live run.
+- Task 54 at the stop: 1167 tests.
+
+## 2026-11-06: Task 54 stop 2, the ruling checked against the logs (eighty-sixth wrap)
+
+Read Fable's ruling on stop 1 and checked its sentences against the frozen logs and the code before writing them. Stopped before any report, annex or README edit; the only new file is `docs/report-back/2026-11-06-task-54-stop-2.md`.
+
+Found: both Arabic S4-3 proposals keep incoming calls and emergency numbers, and the block comes from `gate.py:552` matching English terms only. The Arabic S4-1 holds are on a notice, not a disconnection. S4-2's "the warning lacks" sits on proposals that list the content in another field or as sentences. "9 of the 56 key steps" is 9 of 28 (14 of 56 per language). S5-3's key is hold, so the "key blocks" class does not fit it. Five CPR Arabic chunks hold page-footer words, though Annex A says running headers are removed. The ruling's zero count holds: 0 of 48 key stops allowed.
+
+Measured on scratch builds: the ruling's lines, with every cut it allows, leave 2 lines (30 words) on page 6.
+
+Ran the ruling's Arabic checks: 0 empty boxes on the five replay pages and `runs.html`, with the 2026-10-25 reviewer pack as a control that fails on page 13; 0 ligature hits on 40 displayed chunk texts; S5 page 3 looked at.
+
+Tried the `f5d9c88` cherry-pick with `--no-commit`. It conflicted in the three handover files. `--abort` had nothing to abort under `--no-commit`, so the three files were restored from HEAD. Every line it would add is either already here or older state replaced by the eighty-fifth wrap.
+
+## 2026-11-06: Task 54 stop 3, Annex C built, page 5 and one sentence for Fable (eighty-seventh wrap)
+
+Read Fable's ruling on stop 2 and checked it against the logs and the code. The S4 rows, the 9 of 28 count and the five footer chunks all held.
+
+Built: the Annex C table "Recorded verdicts against the keys", the README bullet, the Annex A sentence, 9 test cases, docx and PDF. Two table-count pins moved from 7 to 8, and the README bullet sits second to last because a kept test holds the last one.
+
+Survey of `read_items`: 7 calls, 6 with a fixed English term set. Lines 442 and 478 stop on a match, so an unmatched word was allowed in constructed tests through `gate.decide`, for example `["full name", "phone number"]` and the same in Arabic. All recorded governed allows of a payload were read: question text and plan name only. `sharing_gate` has 26 governed verdicts, all block. So the ruling's "never allowed" was not printed; the annex says what happened at S4-1 to S4-3. An English search also found page numbers and footers in 11 English chunks, so the ruling's Annex A sentence gained a clause.
+
+Measured the ruling's three lines and five cuts on scratch builds: all stay on page 6, 2 lines over. Removing the whole "Next:" sentence fits, as a size probe only. `docs/report.md` was not touched. Commit `3e4f424`.

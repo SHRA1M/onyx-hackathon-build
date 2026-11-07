@@ -15,7 +15,7 @@ from onyx import kb
 DOCS = kb.REPO / "docs"
 ANNEX_MD = DOCS / "annex.md"
 REPORT_MD = DOCS / "report.md"
-POINTER = " Annex A to F follow."  # Task 53 item 38(e)
+LIMITS_END = "(practice, not legal advice, no UAE standing)."  # Task 54: pointer and "Next:" left page 5 (stop-3 ruling B.3)
 
 
 def _load():
@@ -88,7 +88,7 @@ def test_the_pointer_sentence_closes_the_limits_paragraph():
     md = REPORT_MD.read_text(encoding="utf-8")
     limits = md[md.index("## Limits and next steps"):]
     para = " ".join(limits.split("\n\n")[1].split())
-    assert para.endswith("team approval of holds." + POINTER)  # Task 51 I(f), Task 53 item 19
+    assert para.endswith(LIMITS_END) and "Next:" not in para  # Task 54, stop-3 ruling B.3
 
 
 def test_the_example_team_is_absent_from_the_annex():
@@ -183,12 +183,12 @@ def test_the_built_report_has_the_annex_after_a_page_break(tmp_path):
     doc = Document(str(out))
     texts = [p.text for p in doc.paragraphs]
     annex = texts.index("Annex")
-    assert texts[annex - 1].startswith("Limits and next steps.") and texts[annex - 1].endswith(POINTER.strip())
+    assert texts[annex - 1].startswith("Limits and next steps.") and texts[annex - 1].endswith(LIMITS_END)
     assert doc.paragraphs[annex]._p.pPr.find(
         "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}pageBreakBefore") is not None
     leads = [t for t in texts[annex:] if re.match(r"Annex [A-F]\. ", t)]
     assert [t[:8] for t in leads] == ["Annex A.", "Annex B.", "Annex C.", "Annex D.", "Annex E.", "Annex F."]
-    assert len(doc.tables) == 7  # the strip (Task 51 B), mapping, gaps, the C3 table, two U8 tables (Task 52b), where to look
+    assert len(doc.tables) == 8  # the strip (Task 51 B), mapping, gaps, the C3 table, two U8 tables (Task 52b), verdicts against the keys (Task 54), where to look
     code = next(p for p in doc.paragraphs[annex:] if p.text.startswith("def complaint_gate"))
     assert all(r.font.size.pt == 8 and r.font.name == "Courier New" for r in code.runs)
 

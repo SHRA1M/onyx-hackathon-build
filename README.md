@@ -173,7 +173,7 @@ An eighth, written for the steered-subscriber test on 2026-11-06, has a key nami
 |---|---|---|
 | U8 | A subscriber tries to steer the AI by words alone | مشترك يحاول توجيه الذكاء الاصطناعي بالكلام وحده |
 
-Steered-subscriber test, written by the team, English and Arabic, twelve runs (six governed, six ungoverned): before the correction the gate allowed 8 of 48 governed steps in 6 of 6 governed runs; after it, 0 of 48 in 0 of 6 (upper bound about 39% at 95% confidence, exact binomial limit for 0 of 6); ungoverned 48 of 48 both times. Before and after: `eval/results.md` and Annex C. Consent and the trust level are facts the scenario sets, so a live system's way of setting them is untested.
+Steered-subscriber test, written by the team, English and Arabic, twelve runs (six governed, six ungoverned): before the correction the gate allowed 8 of 48 governed steps in 6 of 6 governed runs; after it, 0 of 48 in 0 of 6 (upper bound about 39% per run at 95% confidence, exact binomial limit for 0 of 6); ungoverned 48 of 48 both times. Before and after: `eval/results.md` and Annex C. Consent and the trust level are facts the scenario sets, so a live system's way of setting them is untested.
 
 ## Y.3172 mapping
 
@@ -262,6 +262,7 @@ Y.3172 clause 9, security of the pipeline: no provider key is in the source tree
 - The humans in the recorded runs (approvers, override attempts) are scripted steps, not people.
 - UNVERIFIED rows in the manifest back no quoted clause; two of them record an absence (the PDPL Executive Regulations, the agentic framework text) that the register claims from the portal check written in the row, dated.
 - Not changed before submission, listed for after the shortlist: a required `recipient` field with a fixed value list in the tool definition (then a re-record); a gate version string in `run_start` in place of the boolean; binding the allowed recipient to the delivery channel in the live app; a wider attack bank with conflicting-field and negation forms in both languages; the account holder's name read from the account record (a trusted record, not the model's text) added to the subscriber match, under a new gate version, with a re-record and the name forms added to the attack bank; attacks written by people who have not read the gate's code, on more runs.
+- Nine of the 28 key steps (26 of 112 run-steps) record a gate verdict that differs from the key's: five are field-shape faults, the gate read a field in a shape the model did not write, in English or in Arabic (S3-5, S4-2, S4-3, S5-5, S5-6), listed for the fix after the shortlist; at the other four the gate held or blocked where the key allows, holds or blocks, or the cited clause was not retrieved. In none of the 26 was an act the key stops allowed. The list: `eval/results.md`, Annex C.
 - No source on file shows how a UAE operator's assistant is governed; the Etisalat Virtual Assistant page lists what it does, not what stops it.
 
 ## Model

@@ -92,13 +92,14 @@ def test_the_note_prints_in_the_register_and_the_site():
     assert NOTE in register and escape(NOTE) in page
 
 
-@pytest.mark.parametrize("letter", ["B", "C"])
-def test_the_note_is_in_annex_b_and_c(letter):
-    section = _annex_section(letter)
-    flat = " ".join(section.split())
+def test_the_note_is_in_annex_b_and_c_points_to_it():
+    """Task 54 A.2: Fable reverses Task 51b's second copy, for room and because it reads as a paste error."""
+    flat = " ".join(_annex_section("B").split())
     assert NOTE in flat
     for _, _, en, ar in CLAUSES:
         assert en in flat and ar in flat
+    c = " ".join(_annex_section("C").split())
+    assert NOTE not in c and "the four clauses in both languages and our reading: Annex B." in c
 
 
 def test_annex_b_prints_it_under_the_rule_sample():
@@ -111,7 +112,7 @@ def test_each_arabic_quote_is_a_right_to_left_paragraph_in_the_word_file():
     word = Document(kb.REPO / "docs" / "report.docx")
     for _, _, _, ar in CLAUSES:
         found = [p for p in word.paragraphs if p.text == ar]
-        assert len(found) == 2, ar
+        assert len(found) == 1, ar  # Task 54 A.2: Annex B only
         for p in found:
             assert p._p.pPr.find(qn("w:bidi")) is not None
             assert all(r._r.rPr.find(qn("w:rtl")) is not None for r in p.runs)
