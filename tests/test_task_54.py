@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 from pathlib import Path
 
@@ -129,6 +130,101 @@ def test_b1_b2_b3_the_viewer_reads_the_same_fields():
     assert f"EN: {ARABIC_ONLY}" in d16 and "AR: " in d16
     html = (REPO / "docs" / "replay" / "index.html").read_text(encoding="utf-8")
     assert "base check: deadline &#x27;three business days from 2026-10-19&#x27;" in html
+
+
+# --- C.3, C.5: recorded verdicts against the keys (rulings of 2026-11-06, stop 1 and stop 2) ----------------------
+
+DIAGNOSED = {"S3-5", "S4-2", "S4-3", "S5-5", "S5-6"}
+
+
+def _flat(text: str) -> str:
+    return " ".join(text.split())
+
+
+def _verdicts_paragraph() -> str:
+    start = ANNEX.index("**Recorded verdicts against the keys.**")
+    return ANNEX[start:ANNEX.index("**What the test does not show.**")]
+
+
+def test_c3_no_step_the_key_stops_was_allowed():
+    """The annex prints this count, so it is computed from the logs and keys, over all 112."""
+    counts = {"block": [0, 0], "hold": [0, 0], "allow": [0, 0], "insufficient_evidence": [0, 0]}
+    for sid in eval_mod.SCENARIOS:
+        key = data.load_key(sid)
+        for lang in eval_mod.LANGS:
+            for n in range(1, 3):
+                events = eval_mod._events(eval_mod.run_path(REPO / "runs" / "c5", sid, n, lang, True))
+                for step in key["steps"]:
+                    judged = eval_mod.judged_verdicts(events, key, step)
+                    cell = counts[step.get("gate_outcome", step["verdict"])]
+                    cell[0] += 1
+                    cell[1] += any(e["verdict"] == "allow" for e in judged)
+    assert (counts["block"], counts["hold"]) == ([20, 0], [28, 0])
+    assert sum(cell[0] for cell in counts.values()) == 112
+    assert "over all 112 run-steps: key block 20, key hold 28, allowed 0" in _flat(_verdicts_paragraph())
+
+
+def test_c3_the_annex_paragraph_opens_with_the_count(agreement):
+    assert ANNEX.count("**Recorded verdicts against the keys.**") == 1
+    assert "**Recorded verdicts against the keys.**" in _annex("## Annex C.", "## Annex D.")
+    steps = {r["step"] for r in agreement["differences"]}
+    total = sum(len(data.load_key(sid)["steps"]) for sid in eval_mod.SCENARIOS)
+    assert (len(steps), total, len(agreement["differences"])) == (9, 28, 26)
+    assert ("differs from the key's at 9 of the 28 steps in the keys, 26 of the 112 run-steps (verdict agreement 0.77, en "
+            "and ar; `eval/results.md`). In none of the 26 did the gate allow an act the key stops") in _flat(_verdicts_paragraph())
+
+
+def test_c3_every_differing_step_has_one_row_and_only_five_are_listed_for_the_fix(agreement):
+    rows = [line for line in _verdicts_paragraph().splitlines() if line.startswith("| S") and not line.startswith("| Step")]
+    assert {row.split("|")[1].strip() for row in rows} == {r["step"] for r in agreement["differences"]}
+    assert len(rows) == 9
+    listed = {row.split("|")[1].strip() for row in rows if "listed for the fix after the shortlist" in row}
+    assert listed == DIAGNOSED
+
+
+def test_c3_the_s4_3_row_says_the_proposal_kept_the_services():
+    """The first ruling's reading ('cut incoming calls') was false against the logs."""
+    for run in ("run1", "run2"):
+        events = eval_mod._events(REPO / "runs" / "c5" / "S4" / "ar" / f"{run}.jsonl")
+        args = next(e["old_value"]["args"] for e in events
+                    if e.get("action") == "gate" and e["entity_id"] == "S4-3-care")
+        assert "المكالمات الواردة" in args["kept"] and "أرقام الطوارئ" in args["kept"]
+    row = next(line for line in _verdicts_paragraph().splitlines() if line.startswith("| S4-3 "))
+    assert "kept incoming calls and emergency numbers in Arabic words" in row
+
+
+def test_c3_the_survey_counts_the_fixed_term_reads():
+    """Ruling C: every read_items call with a fixed English term set. The one at services takes its term from a fact."""
+    tree = ast.parse((REPO / "onyx" / "gate.py").read_text(encoding="utf-8"))
+    calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and getattr(n.func, "id", "") == "read_items"]
+    fixed = [c for c in calls if not isinstance(c.args[1], ast.IfExp)]
+    assert (len(calls), len(fixed)) == (7, 6)
+    assert "(6 checks in `onyx/gate.py`)" in _flat(_verdicts_paragraph())
+
+
+@pytest.mark.parametrize("payload", [["الاسم", "رقم الهاتف"], ["full name", "phone number"]])
+def test_c3_an_unmatched_word_is_not_a_held_word(payload):
+    """Why the annex does not print 'never allowed': this check stops on a match, so a miss lets the payload through.
+    Pinned as found, not as wanted. No recorded run did this. The fix is listed after the shortlist."""
+    assert not gate.read_items(payload, gate.DIRECT_IDENTIFIERS) & gate.DIRECT_IDENTIFIERS
+    assert "never allowed" not in _verdicts_paragraph()
+
+
+def test_c5_the_readme_bullet_is_the_rulings():
+    assert ("- Nine of the 28 key steps (26 of 112 run-steps) record a gate verdict that differs from the key's: five are "
+            "field-shape faults, the gate read a field in a shape the model did not write, in English or in Arabic (S3-5, "
+            "S4-2, S4-3, S5-5, S5-6), listed for the fix after the shortlist; at the other four the gate held or blocked "
+            "where the key allows, holds or blocks, or the cited clause was not retrieved. In none of the 26 was an act the "
+            "key stops allowed. The list: `eval/results.md`, Annex C.") in README
+
+
+def test_b8_the_annex_says_which_chunks_keep_page_furniture():
+    chunks = {c: kb.get_chunk("tdra-cpr-v2-en", c)["text_ar"] for c in ("3.9", "4.7.3", "4.23.2", "24.6", "26.6")}
+    assert all("نسخة رقم" in text for text in chunks.values())
+    assert "Page 60" in kb.get_chunk("tdra-cpr-v2-en", "24.5")["text_en"]
+    flat = _flat(ANNEX)
+    assert "five Arabic chunks (CPR 3.9, 4.7.3, 4.23.2, 24.6, 26.6) still carry the page footer" in flat
+    assert "Running headers are removed. " not in flat
 
 
 # --- C.4: verdict agreement ------------------------------------------------------------------------------------
