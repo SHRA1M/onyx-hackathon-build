@@ -919,3 +919,13 @@ Measured on scratch builds: the ruling's lines, with every cut it allows, leave 
 Ran the ruling's Arabic checks: 0 empty boxes on the five replay pages and `runs.html`, with the 2026-10-25 reviewer pack as a control that fails on page 13; 0 ligature hits on 40 displayed chunk texts; S5 page 3 looked at.
 
 Tried the `f5d9c88` cherry-pick with `--no-commit`. It conflicted in the three handover files. `--abort` had nothing to abort under `--no-commit`, so the three files were restored from HEAD. Every line it would add is either already here or older state replaced by the eighty-fifth wrap.
+
+## 2026-11-06: Task 54 stop 3, Annex C built, page 5 and one sentence for Fable (eighty-seventh wrap)
+
+Read Fable's ruling on stop 2 and checked it against the logs and the code. The S4 rows, the 9 of 28 count and the five footer chunks all held.
+
+Built: the Annex C table "Recorded verdicts against the keys", the README bullet, the Annex A sentence, 9 test cases, docx and PDF. Two table-count pins moved from 7 to 8, and the README bullet sits second to last because a kept test holds the last one.
+
+Survey of `read_items`: 7 calls, 6 with a fixed English term set. Lines 442 and 478 stop on a match, so an unmatched word was allowed in constructed tests through `gate.decide`, for example `["full name", "phone number"]` and the same in Arabic. All recorded governed allows of a payload were read: question text and plan name only. `sharing_gate` has 26 governed verdicts, all block. So the ruling's "never allowed" was not printed; the annex says what happened at S4-1 to S4-3. An English search also found page numbers and footers in 11 English chunks, so the ruling's Annex A sentence gained a clause.
+
+Measured the ruling's three lines and five cuts on scratch builds: all stay on page 6, 2 lines over. Removing the whole "Next:" sentence fits, as a size probe only. `docs/report.md` was not touched. Commit `3e4f424`.
