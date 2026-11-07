@@ -1,6 +1,6 @@
 # onyx-hackathon-build: background
 
-Updated 2026-11-06 (eighty-fifth wrap, Opus: Task 54 stopped at C.3 for Fable).
+Updated 2026-11-06 (eighty-sixth wrap, Opus: Task 54 stop 2, for Fable).
 
 ## What this is
 
@@ -71,7 +71,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Task 54: stopped at C.3, branch `task-54`, no PR. 9 key steps differ from the keys, not the order's 2; verdict agreement 86 of 112 (0.77; en 43 of 56, ar 43 of 56; `eval/results.md`). Annex C paragraph, README bullet and "(Annex C)" not built; count list and item 25 grep not run; PDF not rebuilt. Seven questions for Fable: `docs/report-back/2026-11-06-task-54-stop-1.md`. Three main-text lines (two S4, one S5) disagree with the logs, untouched.
+- Task 54: stop 2, branch `task-54`, no PR. With the ruling's cuts the main text still runs 2 lines onto page 6, and its S4 text does not match the logs (Arabic S4-3 keeps incoming calls; `gate.py:552` reads `kept` in English only). Eight questions for Fable: `docs/report-back/2026-11-06-task-54-stop-2.md`. Annex C table, README bullet, three report lines, count list, item 25 grep, PDF: not done.
 - Task 53: merged by Iyas, PR #24. Report-back: `docs/report-back/2026-11-06-task-53-built.md`, its hq questions open.
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
 - Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered.
@@ -85,4 +85,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-Iyas takes `docs/report-back/2026-11-06-task-54-stop-1.md` to Fable; its ruling finishes Task 54. Task 55 waits until after the shortlist. Open work: the video. Submission 2026-11-09.
+Iyas takes `docs/report-back/2026-11-06-task-54-stop-2.md` to Fable; its ruling finishes Task 54. Task 55 waits until after the shortlist. Open work: the video. Submission 2026-11-09.

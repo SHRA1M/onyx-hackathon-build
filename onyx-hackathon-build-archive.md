@@ -907,3 +907,15 @@ Moved from the background:
 - This repo does not know whether hq ran its one "done means" check on Task 53 (also in the brief).
 - Task 50: `record --retriever` exists, default shipped, never used on a live run.
 - Task 54 at the stop: 1167 tests.
+
+## 2026-11-06: Task 54 stop 2, the ruling checked against the logs (eighty-sixth wrap)
+
+Read Fable's ruling on stop 1 and checked its sentences against the frozen logs and the code before writing them. Stopped before any report, annex or README edit; the only new file is `docs/report-back/2026-11-06-task-54-stop-2.md`.
+
+Found: both Arabic S4-3 proposals keep incoming calls and emergency numbers, and the block comes from `gate.py:552` matching English terms only. The Arabic S4-1 holds are on a notice, not a disconnection. S4-2's "the warning lacks" sits on proposals that list the content in another field or as sentences. "9 of the 56 key steps" is 9 of 28 (14 of 56 per language). S5-3's key is hold, so the "key blocks" class does not fit it. Five CPR Arabic chunks hold page-footer words, though Annex A says running headers are removed. The ruling's zero count holds: 0 of 48 key stops allowed.
+
+Measured on scratch builds: the ruling's lines, with every cut it allows, leave 2 lines (30 words) on page 6.
+
+Ran the ruling's Arabic checks: 0 empty boxes on the five replay pages and `runs.html`, with the 2026-10-25 reviewer pack as a control that fails on page 13; 0 ligature hits on 40 displayed chunk texts; S5 page 3 looked at.
+
+Tried the `f5d9c88` cherry-pick with `--no-commit`. It conflicted in the three handover files. `--abort` had nothing to abort under `--no-commit`, so the three files were restored from HEAD. Every line it would add is either already here or older state replaced by the eighty-fifth wrap.
