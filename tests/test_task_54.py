@@ -285,10 +285,11 @@ def test_stop3_b1_the_annex_discloses_the_two_match_only_checks():
     assert ("or in other words, was held or blocked. Two of these checks stop on a match, the direct-identifier list in "
             "`model_provider_gate` and \"interconnection\" in `sharing_gate`: in a constructed test an unmatched word "
             "there, in Arabic or in other English words, was allowed. No recorded run did this; the governed runs that "
-            "sent identifiers wrote the listed English terms and were blocked.") in para
-    assert para.endswith("Both are listed for the fix after the shortlist with the field-shape faults; the identifier "
-                         "check is a deny-list, and a deny-list that misses fails open, so its fix needs its own research "
-                         "first (Annex A, \"Known limits\").")
+            "sent identifiers wrote the listed English terms and were blocked. The identifier check is a deny-list, "
+            "and a deny-list that misses fails open, so its fix needs its own research first (Annex A, \"Known limits\"). "
+            "Listed for the fix after the shortlist") in para  # final-read ruling, 2026-11-07
+    assert "Both are listed" not in para
+    assert para.endswith("a regulator may read a clause as the key does or as the gate does.")
 
 
 def test_stop3_b3_next_steps_close_annex_a_and_leave_the_main_text():
