@@ -82,27 +82,25 @@ REPORT_HAS = [
     "override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5).",
     "| P | plain-code gates reading JSON clause rows (`rules.json`: id, document_id, clause, chunk, quote, quote_ar); four "
     "verdicts (P-1, P-2) |",
-    "Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading of the texts (practice, not "
-    "legal advice, no UAE standing); what he found and what changed are in Annex A. Next:",
-    "team approval of holds. Annex A to F follow.",
+    "Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading (practice, not "
+    "legal advice, no UAE standing).",  # Task 54, stop-3 ruling B.3
     "**Results**, English / Arabic `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` "
     "(Figure 2, Annex C): citation validity 0.99 / 1.00",  # item 46(i)
     "Plain code written from the binding UAE texts decides; every verdict names the clause it relied on, its page and its "
     "words, in English and Arabic; the model never decides.",
-    "One team wrote the keys, gates and scenarios; the humans are scripted; Arabic coverage is uneven; an outage is shown "
-    "only by fault injection; erasure from the log and de-identification are unsolved (Annex A, \"Known limits\"). Ra'ed "
-    "Shraim, a data-protection officer outside the team, reviewed the gates' reading of the texts (practice, not legal "
-    "advice, no UAE standing); what he found and what changed are in Annex A. Next: cold runs of the seven unseen scenarios; "
-    "routing (D-2); team approval of holds. Annex A to F follow.",
+    "One team wrote the keys, gates and scenarios; humans are scripted; Arabic coverage is uneven; outages are shown "
+    "only by fault injection; erasure from the log and de-identification are unsolved (Annex A). Ra'ed "
+    "Shraim, a data-protection officer outside the team, reviewed the gates' reading (practice, not legal "
+    "advice, no UAE standing).",  # Task 54, stop-2 ruling B.7 cuts 1, 2, 5; stop-3 ruling B.3
     "the model-down path hands over with no model in the step",
     "Agent authority: Mizan's stop at S2-3 sits at Y.3173 'Human and System' on the decision step (Table 7-1), and its "
     "hand-over is Readiness D9's inference-to-action latency in the other direction; neither text measures when an acting "
     "agent must stop, how often it hands over or how long that takes. Left open with ITU's agreement (2026-10-30).",
     "## Use case requirement",  # item 45(a)
     "A retention offer at 19:30 to a Do Not Call number: held under the consent rules; the marketing gate (Cabinet "
-    "56/2024, Spam Calls 15.4) did not run, because it read a field the model did not fill.",
-    "The human verifies, the block proceeds: allow; the TDRA's request for the record: blocked by a base check, the "
-    "deadline written as text, not the rule's value.",
+    "56/2024) did not run, because it read a field the model did not fill.",  # Task 54, stop-2 ruling B.7 cuts 3, 4
+    "The human verifies, the block proceeds: allow in English, blocked in Arabic; the TDRA's request for the record: "
+    "blocked in every run; one base check, a deadline written as text, not the rule's value.",  # Task 54, stop-2 B.7
 ]
 REPORT_GONE = [
     "BAU Faculty of AI", "not an institution in a drill", "bar any AI in that seat",

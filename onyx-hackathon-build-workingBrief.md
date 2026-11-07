@@ -16,6 +16,11 @@ Finish Task 54 from Fable's ruling on stop 3. Open work after it: the video. Sub
 - Not built: the S3, S4 and S5 lines in `docs/report.md` (S4 and S5 still disagree with the logs). None of the five cuts is applied.
 - Not run: the count list, on final text.
 
+## After the shortlist
+
+- Survey every exact-match read in `gate.py` outside `read_items`; Task 55 item 3 covers what it finds (stop-3 ruling C).
+- Task 55 item 3, the two match-only checks: Fable writes the Perplexity question first; no order before that read (stop-3 ruling B.2).
+
 ## Open questions
 
 1. Fable: the two questions and six departures in stop 3. No ruling has reached this repo.

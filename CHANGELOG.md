@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-07
+
+- Changed on branch `task-54`, not merged, finished (order Task 54, rulings on stops 2 and 3): the S4 and S5 lines disagreed with the logs, and Annex C did not say that two checks stop only on a match, so an unmatched word in a constructed test was allowed. Changed: the S3, S4 and S5 lines as ruled; cuts 1 to 5 of the stop-2 ruling; the "Next:" sentence moved from the main text to the end of Annex A; two sentences in Annex C on `model_provider_gate` and `sharing_gate`, the fix listed after the shortlist with its own research first. Main text ends page 5, annex page 6, 16 pages; docx and PDF rebuilt. No gate, log, key or figure changed.
+
 ## 2026-11-06
 
 - Changed on branch `task-54`, not merged, stopped a third time (order Task 54, ruling on stop 2): Annex C did not say where recorded verdicts differ from the keys. Added: the table of all 9 steps, 26 of 112 run-steps, 0 of 48 key stops allowed; the README bullet; the page-furniture sentence in Annex A. Found, not fixed: 6 gate checks match exact English terms. At S4-1 to S4-3 that held or blocked lawful proposals; in `model_provider_gate` and `sharing_gate`, which stop on a match, an unmatched word was allowed in a constructed test, though no recorded run did this. The S3, S4 and S5 lines in the main text are not changed: with the ruling's five cuts it still runs 2 lines onto page 6 (`docs/report-back/2026-11-06-task-54-stop-3.md`).

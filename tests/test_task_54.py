@@ -205,7 +205,8 @@ def test_c3_the_survey_counts_the_fixed_term_reads():
 @pytest.mark.parametrize("payload", [["الاسم", "رقم الهاتف"], ["full name", "phone number"]])
 def test_c3_an_unmatched_word_is_not_a_held_word(payload):
     """Why the annex does not print 'never allowed': this check stops on a match, so a miss lets the payload through.
-    Pinned as found, not as wanted. No recorded run did this. The fix is listed after the shortlist."""
+    Pinned as found, not as wanted. No recorded run did this. The fix is listed after the shortlist (Task 55 item 3,
+    after its own research): task-54-stop-3-ruling-2026-11-07-fable.md, B.1 and B.2. This test moves when the fix lands."""
     assert not gate.read_items(payload, gate.DIRECT_IDENTIFIERS) & gate.DIRECT_IDENTIFIERS
     assert "never allowed" not in _verdicts_paragraph()
 
@@ -271,3 +272,33 @@ def test_c4_the_annex_definition_carries_the_figure(agreement):
     assert ("Action recall scores the proposed verb and addressee against the key; verdict agreement (the gate's verdict "
             f"equals the key's) is 0.77 / 0.77, 86 of 112 key steps, 95% interval {interval}, printed in "
             "`eval/results.md`, en / ar.") in " ".join(ANNEX.split())
+
+
+# --- stop-3 ruling (task-54-stop-3-ruling-2026-11-07-fable.md) ------------------------------------------------
+
+REPORT = (REPO / "docs" / "report.md").read_text(encoding="utf-8")
+NEXT = "Next: cold runs of the seven unseen scenarios; routing (D-2); team approval of holds."
+
+
+def test_stop3_b1_the_annex_discloses_the_two_match_only_checks():
+    para = _flat(_verdicts_paragraph())
+    assert ("or in other words, was held or blocked. Two of these checks stop on a match, the direct-identifier list in "
+            "`model_provider_gate` and \"interconnection\" in `sharing_gate`: in a constructed test an unmatched word "
+            "there, in Arabic or in other English words, was allowed. No recorded run did this; the governed runs that "
+            "sent identifiers wrote the listed English terms and were blocked.") in para
+    assert para.endswith("Both are listed for the fix after the shortlist with the field-shape faults; the identifier "
+                         "check is a deny-list, and a deny-list that misses fails open, so its fix needs its own research "
+                         "first (Annex A, \"Known limits\").")
+
+
+def test_stop3_b3_next_steps_close_annex_a_and_leave_the_main_text():
+    assert NEXT not in REPORT and "Annex A to F follow." not in REPORT
+    annex_a = _annex("## Annex A.", "## Annex B.").rstrip()
+    assert annex_a.endswith(NEXT) and ANNEX.count(NEXT) == 1
+    assert "## Limits and next steps" in REPORT
+
+
+def test_stop3_b3_the_s4_line_is_the_rulings():
+    assert ("Disconnection with no warning on file: block (22.1). The notice: held in every run; the confined "
+            "interruption: allow in English, blocked in Arabic; both because the gate matched exact English terms the "
+            "model wrote otherwise (Annex C).") in _flat(REPORT)
