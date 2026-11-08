@@ -1,15 +1,17 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-07 (eighty-eighth wrap, Opus). Handover for the next session.
+Updated 2026-11-08 (eighty-ninth wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Task 54 is merged (PR #25). Open work: the video. Submission 2026-11-09.
+Task 56 (site restyle) is built, PR #26 open, not merged. Next: the README task, from its own order. Submission 2026-11-09.
 
 ## State
 
-- `main` at 940df10 plus this wrap. Report: main text ends page 5, annex page 6, 16 pages; docx and PDF current. 1178 tests pass; CI green.
-- No order is open in this repo.
+- Branch `task-56` pushed, PR #26 (https://github.com/SHRA1M/onyx-hackathon-build/pull/26). It carries Task 56 and the eighty-eighth wrap (bd3cc6e), which was on local `main` only.
+- Local `main` is one commit ahead of origin (bd3cc6e) until PR #26 merges.
+- 1178 tests pass; selftest exit 0. Report unchanged: main text page 5, annex page 6, 16 pages.
+- Report-back: `docs/report-back/2026-11-08-task-56-site-restyle.md`.
 
 ## After the shortlist
 
@@ -19,12 +21,13 @@ Task 54 is merged (PR #25). Open work: the video. Submission 2026-11-09.
 
 ## Open questions
 
-1. hq: did its one "done means" check on Task 53 run?
-2. Iyas: is Zaid Saaydeh in the Faculty of Artificial Intelligence? "Students" stays out until then.
-3. Earlier, still open: two AI reads of the gap-15 Cabinet sentence; hq's three items in `docs/report-back/2026-11-05-task-51-built.md`; Iyas asks Ra'ed which translations he found wrong; Task 52's Arabic check.
+1. hq: does Task 56 want a CHANGELOG line? The order's file list left it out.
+2. hq: did its one "done means" check on Task 53 run? (`docs/report-back/2026-11-06-task-53-built.md`)
+3. Iyas: is Zaid Saaydeh in the Faculty of Artificial Intelligence? "Students" stays out until then.
+4. Earlier, still open: two AI reads of the gap-15 Cabinet sentence; hq's three items in `docs/report-back/2026-11-05-task-51-built.md`; Iyas asks Ra'ed which translations he found wrong; Task 52's Arabic check.
 
 ## Next moves
 
-1. `git status`; `git pull` on `main`.
-2. Wait for the next order from `D:\Projects\hq\uni\ai-for-good-hackathon\` (the video, or the submission-day order). Build nothing without one.
+1. `git status`. If PR #26 is merged: `git switch main`, `git pull`. If not: ask Iyas before starting the next order on top of it.
+2. Build the README order from `D:\Projects\hq\uni\ai-for-good-hackathon\` (one task). Build nothing without an order.
 3. Any report change: measure page 5 on a scratch build first (`build_report.py --out <scratch>`, then `report_pages.ps1 -Path <scratch>`).
