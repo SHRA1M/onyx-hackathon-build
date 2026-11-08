@@ -101,8 +101,8 @@ def test_cli_writes_the_page(tmp_path, capsys):
 def test_viewer_opens_the_page_beside_the_whatif():
     from onyx import replay_viewer
     html = replay_viewer.render()
-    whatif_button = '<button data-sid="whatif-S2-gap-1">What-if: S2 under the rule gap 1 recommends</button>'
-    down_button = '<button data-sid="model-down-S2">Model down: S2, the call at step 3 fails</button>'
+    whatif_button = '<button class="pick" data-sid="whatif-S2-gap-1">What-if: S2 under the rule gap 1 recommends</button>'
+    down_button = '<button class="pick" data-sid="model-down-S2">Model down: S2, the call at step 3 fails</button>'
     assert html.index(whatif_button) < html.index(down_button)
     assert 'href="model-down-S2.md"' in html
     assert site_escape(modeldown.render(S2, 3)) in html

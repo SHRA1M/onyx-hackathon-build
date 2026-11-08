@@ -30,6 +30,20 @@ WHATIF_LABEL = "What-if: S2 under the rule gap 1 recommends"
 MODELDOWN_AT = 3
 MODELDOWN_LABEL = "Model down: S2, the call at step 3 fails"
 
+# order 2026-11-08 Task 56b item 5: the chat's labels, the only new words; the codes in the log stay as they are
+SENDERS = {"subscriber": "Customer", "coordinator": "Coordinator", "human": "Staff member", "tdra": "TDRA",
+           "partner": "Partner", "system": "System"}
+AGENTS = {"care": "Care agent", "adviser": "Adviser", "data_office": "Data office", "tdra": "TDRA"}
+PLAIN_CODE = "plain code"
+ANSWERS = {gate.ALLOW: "Allowed", gate.HOLD: "Held for a staff member", gate.BLOCK: "Blocked",
+           gate.INSUFFICIENT: "Not enough evidence"}
+HANDED = "Handed to staff member"
+RTL = ' dir="rtl"'
+
+
+def _bubble(who: str, body: str) -> str:
+    return f'<div class="bubble out"><span class="who">{escape(who)}</span>{body}</div>'
+
 
 def _step3_handover(path: Path) -> bool:
     return any(_is_handover(e) for e in runs._events(path) if e["action"] == "gate" and e["entity_id"] == "S2-3-care")
@@ -121,34 +135,48 @@ class Viewer:
         return (f'<li class="proposal"><b>{escape(p["verb"])}</b> to {escape(str(p.get("target") or "no target"))}; '
                 f"cites {cites}{quote}</li>")
 
+    def answer(self, e: dict[str, Any]) -> str:
+        """The code's answer to one proposal (order Task 56b item 5): a coloured label, and the old "Gate on" line with
+        its clauses and quotes word for word inside a fold."""
+        nv = e["new_value"] or {}
+        verb = (e.get("old_value") or {}).get("verb") or e["entity_id"]
+        clauses = "".join(self.clause(c) for c in e["clause_ids"])
+        relied = f'<ul class="clauses">{clauses}</ul>' if clauses else "".join(
+            f"<ul><li>{escape(line)}</li></ul>" for line in replay_page.check_lines(nv.get("reasons", [])))
+        cls = WORDS[e["verdict"]][1]
+        return (f'<div class="answer-row"><span class="answer {cls}">{escape(ANSWERS[e["verdict"]])}</span>'
+                f'<details class="why"><summary>Gate on <b>{escape(verb)}</b>: {_verdict(e["verdict"])}</summary>'
+                f"{relied}</details></div>")
+
     def step(self, n: int, total: int, step_events: list[dict[str, Any]], scenario: dict[str, Any],
-             ungoverned: list[dict[str, Any]] | None) -> str:
+             ungoverned: list[dict[str, Any]] | None, lang: str = "en") -> str:
+        """One step as a chat (order Task 56b item 5): the message that starts it on one side, labelled by its sender
+        (scenario step "from"); each agent's proposals on the other, labelled by the logging actor; the code's answer
+        under each; a hand-over in its own box; "Without the gates" in a fold."""
         release = step_events[0]["new_value"]
         sender = next((s["from"] for s in scenario["steps"] if s["n"] == n), "coordinator")
-        proposals, verdicts, notes, handover, abstain = [], [], [], "", ""
+        turns, notes, handover, abstain = [], [], "", ""
         for e in step_events[1:]:
             nv = e["new_value"] or {}
             if e["action"] == "classify_channel":
-                proposals.append(f'<li class="proposal"><b>classify_channel</b>: <code>{escape(nv["channel"])}</code>'
-                                 f" (plain code)</li>")
+                turns.append(_bubble(PLAIN_CODE, f'<ul><li class="proposal"><b>classify_channel</b>: '
+                                     f'<code>{escape(nv["channel"])}</code> (plain code)</li></ul>'))
             elif e["action"] == "propose":
-                proposals += [self.proposal(p) for p in nv["proposals"]]
-                proposals += [f'<li class="proposal">Rejected before the gate (outside {escape(e["actor"])}\'s '
-                              f'mandate): <b>{escape(p["verb"])}</b></li>' for p in nv.get("rejected", [])]
+                items = [self.proposal(p) for p in nv["proposals"]]
+                items += [f'<li class="proposal">Rejected before the gate (outside {escape(e["actor"])}\'s '
+                          f'mandate): <b>{escape(p["verb"])}</b></li>' for p in nv.get("rejected", [])]
                 if not nv["proposals"] and not nv.get("rejected"):
-                    proposals.append(f'<li class="proposal">{escape(e["actor"])} proposed nothing</li>')
+                    items.append(f'<li class="proposal">{escape(e["actor"])} proposed nothing</li>')
+                turns.append(_bubble(AGENTS.get(e["actor"], e["actor"]), f"<ul>{''.join(items)}</ul>"))
             elif e["action"] == "gate":
+                turns.append(self.answer(e))
                 verb = (e.get("old_value") or {}).get("verb") or e["entity_id"]
-                clauses = "".join(self.clause(c) for c in e["clause_ids"])
-                relied = f'<ul class="clauses">{clauses}</ul>' if clauses else "".join(
-                    f"<ul><li>{escape(line)}</li></ul>" for line in replay_page.check_lines(nv.get("reasons", [])))
-                verdicts.append(f'<li>Gate on <b>{escape(verb)}</b>: {_verdict(e["verdict"])}{relied}</li>')
                 if e["verdict"] == gate.HOLD:
                     notes.append(f"<li>Hold on <b>{escape(verb)}</b>: waits for a named human; this run's log "
                                  "records no approval.</li>")
                 if _is_handover(e) and not handover:
                     quotes = [r for r in nv["reasons"] if r.get("kind") == "quote"]
-                    handover = ('<div class="handover"><h4>Handed to a human</h4><ul>' + "".join(
+                    handover = (f'<div class="handover"><h4>{HANDED}</h4><ul>' + "".join(
                         f"<li>{escape(r['label'])} {self.rule_tag(r['clause'])}<br>{_quote(r['en'], 'en')}<br>{_quote(r['ar'], 'ar')}</li>"
                         for r in quotes) + "</ul></div>")
             elif e["action"] == "abstain":
@@ -160,11 +188,13 @@ class Viewer:
         attempted = release["facts"].get("override_attempted_by")
         if attempted and not any(e["action"] == "override_refused" for e in step_events):
             notes.append(f"<li>Override attempt named in the step: {escape(attempted)}</li>")
+        incoming = (f'<div class="bubble in"><span class="who">{escape(SENDERS.get(sender, sender))}</span>'
+                    f'{_text(release["text"], "message", "div")}</div>')
         parts = [f'<article class="step" data-n="{n}" data-total="{total}">',
-                 f'<h3>Step {n} of {total}: from {escape(sender)} to {escape(release["to"])}</h3>',
-                 _text(release["text"], "message", "div"),
-                 f'<h4>Proposals</h4><ul>{"".join(proposals) or "<li>none</li>"}</ul>',
-                 f'<h4>Gate</h4><ul class="verdicts">{"".join(verdicts) or "<li>no gate event</li>"}</ul>',
+                 f'<p class="step-head">Step {n} of {total}: from {escape(sender)} to {escape(release["to"])}</p>',
+                 f'<div class="chat"{RTL if lang == "ar" else ""}>', incoming, *turns,
+                 "" if any(e["action"] == "gate" for e in step_events) else '<p class="step-head">no gate event</p>',
+                 "</div>",
                  handover, f'<ul class="notes">{"".join(notes)}</ul>' if notes else "", abstain,
                  self.without_gates(ungoverned), "</article>"]
         return "\n".join(p for p in parts if p)
@@ -212,18 +242,19 @@ class Viewer:
                 f'<p class="meta">Without the gates: <code>{_rel(free)}</code>, '
                 f'{_fig(free, "ungoverned_claims_allowed", free_metrics["ungoverned_claims_allowed"])} (eval).'
                 f'{self.verify_link(free)}</p>']
-        body = [self.step(n, total, steps[n], scenario, free_steps.get(n)) for n in sorted(steps) if n]
+        body = [self.step(n, total, steps[n], scenario, free_steps.get(n), lang) for n in sorted(steps) if n]
         headline = (f'<p class="headline" data-sid="{sid}" data-lang="{lang}">Figures for <code>{_rel(path)}</code> '
                     f"(eval.run_metrics): " + ", ".join(_fig(path, m, metrics[m]) for m in HEADLINE) + ".</p>")
         return "\n".join(head + body + ["</div>"]), headline
 
-    def render(self, nav: str = "", css: str = CSS) -> str:
+    def render(self, nav: str = "", css: str | None = None) -> str:
         """nav: a bar above the header (the site's, order Task 25); css: the page's styles."""
         sections, headlines, picker = [], [], []
         for sid in replay_page.SCENARIOS:
             scenario = data.load_scenario(sid)
-            picker.append(f'<button data-sid="{sid}">{sid} {escape(scenario["title_en"])} '
-                          f'{_text(scenario["title_ar"], lang="ar")}</button>')
+            picker.append(f'<button class="pick" data-sid="{sid}"><b>{sid}</b> <span class="t-en">'
+                          f'{escape(scenario["title_en"])}</span> {_text(scenario["title_ar"], "t-ar", lang="ar")}'
+                          "</button>")
             runs_html = []
             for lang in runs.LANGS:
                 html, headline = self.run(sid, lang)
@@ -234,19 +265,19 @@ class Viewer:
         # Task 19 item 2: the what-if page's text, opened from the picker, under a link to the page
         name = whatif.page_name(WHATIF_RUN, "gap-1")
         sid = name.removesuffix(".md")
-        picker.append(f'<button data-sid="{sid}">{escape(WHATIF_LABEL)}</button>')
+        picker.append(f'<button class="pick" data-sid="{sid}">{escape(WHATIF_LABEL)}</button>')
         sections.append(f'<section class="whatif" data-sid="{sid}"><h2>{escape(WHATIF_LABEL)}</h2>\n'
                         f'<p class="meta"><a href="{name}">{name}</a></p>\n'
                         f'<pre class="text" dir="auto">{escape(whatif.render(WHATIF_RUN, "gap-1"))}</pre></section>')
         # Task 29 Part A: the model-down page's text, beside the what-if
         name = modeldown.page_name(WHATIF_RUN)
         sid = name.removesuffix(".md")
-        picker.append(f'<button data-sid="{sid}">{escape(MODELDOWN_LABEL)}</button>')
+        picker.append(f'<button class="pick" data-sid="{sid}">{escape(MODELDOWN_LABEL)}</button>')
         sections.append(f'<section class="whatif" data-sid="{sid}"><h2>{escape(MODELDOWN_LABEL)}</h2>\n'
                         f'<p class="meta"><a href="{name}">{name}</a></p>\n'
                         f'<pre class="text" dir="auto">{escape(modeldown.render(WHATIF_RUN, MODELDOWN_AT))}</pre>'
                         "</section>")
-        return TEMPLATE.format(css=css, js=JS, nav=nav, headlines="\n".join(headlines), picker="\n".join(picker),
+        return TEMPLATE.format(css=CSS + CHAT_CSS if css is None else css, js=JS, nav=nav, headlines="\n".join(headlines), picker="\n".join(picker),
                                sections="\n".join(sections), events=inline_json(self.events))
 
 
@@ -311,6 +342,7 @@ JS = """
     });
     all(".picker button").forEach(function (el) { el.classList.toggle("on", el.dataset.sid === sid); });
     all(".langs button").forEach(function (el) { el.classList.toggle("on", el.dataset.lang === lang); });
+    document.body.classList.toggle("lang-ar", lang === "ar");
     var list = steps();
     index = Math.max(0, Math.min(index, list.length - 1));
     list.forEach(function (el, i) { el.classList.toggle("on", i === index); });
@@ -347,4 +379,34 @@ JS = """
   });
   show();
 })();
+"""
+
+# order 2026-11-08 Task 56b item 5: each step reads as a chat; scenario picker as cards. Uses html_kit.CSS's colours,
+# so docs/replay/index.html and the site's runs page share the layout.
+CHAT_CSS = """
+.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin: 8px 0; }
+.picker button.pick { display: block; text-align: start; padding: 8px 12px; border-radius: 8px; line-height: 1.35; }
+.picker button.pick b { display: block; font-size: .85em; opacity: .75; }
+.picker .t-ar { display: none; }
+body.lang-ar .picker .t-ar { display: block; }
+body.lang-ar .picker .t-en { display: none; }
+.step-head { color: var(--muted); font-size: .88em; margin: 14px 0 6px; }
+.chat { display: flex; flex-direction: column; gap: 10px; margin: 6px 0 12px; }
+.bubble { max-width: min(760px, 88%); padding: 8px 14px 10px; border: 1px solid var(--line); border-radius: 14px; }
+.bubble .who { display: block; font-size: .78em; font-weight: 700; letter-spacing: .03em; color: var(--muted);
+  margin-bottom: 2px; }
+.bubble.in { align-self: flex-start; border-end-start-radius: 4px; background: var(--panel); }
+.bubble.in .message { padding: 0; background: none; }
+.bubble.out { align-self: flex-end; border-end-end-radius: 4px; background: var(--bubble-out, var(--panel)); }
+.bubble ul { margin: 2px 0; }
+.answer-row { align-self: flex-end; max-width: min(760px, 88%); display: flex; flex-wrap: wrap; gap: 6px 10px;
+  align-items: baseline; justify-content: flex-end; }
+.answer { display: inline-block; padding: 2px 12px; border-radius: 6px; color: #fff; font-weight: 700; }
+details.why { font-size: .9em; }
+details.why summary { cursor: pointer; color: var(--muted); }
+details.why[open] { flex-basis: 100%; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--panel); }
+.handover { background: var(--panel); }
+.chat[dir="rtl"] .bubble.out ul, .chat[dir="rtl"] details.why { direction: ltr; text-align: left; }
+.handover h4 { font-size: 1em; }
 """
