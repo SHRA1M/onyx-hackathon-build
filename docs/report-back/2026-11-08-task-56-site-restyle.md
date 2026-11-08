@@ -107,7 +107,7 @@ No sideways page scroll: page width measured on all eight pages, light and dark,
 
 ### 6. PR
 
-Opened from `task-56`, not merged. Link in the commit log of this session.
+Opened from `task-56`, not merged: https://github.com/SHRA1M/onyx-hackathon-build/pull/26
 
 ## Open questions for hq
 
