@@ -30,6 +30,14 @@ REPORT = kb.REPO / "docs" / "report.md"
 REPO_URL = "https://github.com/SHRA1M/onyx-hackathon-build"
 WHATIF_RUN, WHATIF_RULE = replay_viewer.WHATIF_RUN, "gap-1"
 SENTENCE = "A quote that is not word for word in a verified clause is rejected before it reaches the subscriber."
+# order 2026-11-08 Task 56 item 1: the overview's plain top block, its words as the order gives them
+HERO_LINE = "A customer-care AI for a UAE telecom operator that stays inside the law."
+HERO_STEPS = (("The AI proposes.", "An AI agent drafts each step: a reply, a refund, a warning."),
+              ("The code decides.", "Plain code checks the step against UAE law and answers allow, hold for a staff "
+                                    "member, or block."),
+              ("A person has the final word.", "A named staff member takes every complaint and approves what is held."))
+HERO_FOOT = ("Tested on a fictional operator with real UAE laws, in English and Arabic. Every step is written to a log "
+             "you can check on this site.")
 PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("gaps.html", "Gap register"),
          ("kb.html", "Knowledge base"), ("verify.html", "Verify a log"), ("whatif.html", "What-if"),
          ("modeldown.html", "Model down"), ("localmodel.html", "Local model"))
@@ -100,8 +108,8 @@ def _counts() -> dict[str, int]:
 # --- page frame ------------------------------------------------------------------------------------------------
 
 def nav(current: str) -> str:
-    links = "".join(f'<a class="site-link{" on" if name == current else ""}" href="{name}">{escape(label)}</a>'
-                    for name, label in PAGES)
+    links = "".join(f'<a class="site-link{" on" if name == current else ""}" href="{name}"'
+                    f'{" aria-current=\"page\"" if name == current else ""}>{escape(label)}</a>' for name, label in PAGES)
     return (f'<nav class="site"><span class="brand">Mizan</span>{links}'
             f'<a class="site-link" href="{REPO_URL}">Repository</a></nav>\n')
 
@@ -150,12 +158,17 @@ def index() -> str:
                           f'<br>{"documents" if s == "documents" else s}</div>' for s, n in counts.items())
     foot = "".join(f'<li id="def-{m}"><b>{escape(DEFINED_AS[m])}</b>: {escape(defs[DEFINED_AS[m]])}{DEF_NOTES.get(m, "")}</li>'
                    for m in notes)
-    body = f"""<h1>Mizan: governed consumer-care agents</h1>
+    steps = "".join(f'<li class="card step-card"><b>{escape(head)}</b><span>{escape(line)}</span></li>'
+                    for head, line in HERO_STEPS)
+    body = f"""<section class="hero">
+<h1>Mizan</h1>
+<p class="tagline">{escape(HERO_LINE)}</p>
+<ol class="steps">{steps}</ol>
+<p class="hero-foot">{escape(HERO_FOOT)}</p>
+</section>
 <p class="notice">{escape(NOTICE)}</p>
 <p class="lead">{escape(SENTENCE)}</p>
-<p>Five agents propose JSON actions; plain-code gates decide from clauses of binding UAE text, in English and Arabic;
-every step goes to a hash-chained log you can verify on this site.</p>
-<div class="cards">
+<div class="cards pages">
 <a class="card link" href="runs.html"><b>Runs</b><br>Each scenario step by step, governed and without the gates.</a>
 <a class="card link" href="gaps.html"><b>Gap register</b><br>What the binding texts leave open, and who could close it.</a>
 <a class="card link" href="kb.html"><b>Knowledge base</b><br>Every document, its status and its SHA-256.</a>
@@ -175,11 +188,12 @@ every step goes to a hash-chained log you can verify on this site.</p>
 <tbody>{rejection}</tbody></table>
 <h2>Knowledge base</h2>
 <div class="cards counts">{count_cells}</div>
-<h2>Definitions</h2>
+<details class="defs-box" id="definitions"><summary>Definitions</summary>
 <p class="meta">From <code>eval/results.md</code>; every figure above is read from <code>eval/results.json</code>.</p>
 <ol class="defs">{foot}</ol>
+</details>
 """
-    return _frame("index.html", "Mizan", body)
+    return _frame("index.html", "Mizan", body, OPEN_DEFS_JS)
 
 
 # --- runs.html -------------------------------------------------------------------------------------------------
@@ -523,40 +537,106 @@ PAGE = """<!doctype html>
 </html>
 """
 
+# Task 56: one calm style for all eight pages, laid over html_kit.CSS (which docs/replay/ keeps unchanged). One
+# accent colour; the verdict colours keep their meaning (allow green, hold amber, block red); light and dark.
 SITE_CSS = """
-nav.site { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 10px 0;
+:root { --ink: #1c1f24; --muted: #5b6270; --line: #dfe2e7; --bg: #ffffff; --panel: #f6f7f9; --accent: #0b5cad;
+  --accent-soft: #eaf2fb; --changed: #fff5d6; --ok-ink: #1a7f37; --bad-ink: #c62828; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink: #e4e7eb; --muted: #9ba3af; --line: #343a44; --bg: #14171c; --panel: #1c2027; --accent: #6cb0f5;
+    --accent-soft: #1a2633; --changed: #3a3117; --ok-ink: #4ac26b; --bad-ink: #ff7b72; }
+}
+body { max-width: 992px; margin: 0 auto; line-height: 1.65; }
+a { color: var(--accent); }
+h1 { font-size: 1.8em; line-height: 1.25; margin: 20px 0 8px; }
+h2 { font-size: 1.3em; line-height: 1.3; margin: 36px 0 10px; }
+h3 { margin: 20px 0 8px; }
+p { margin: 10px 0; }
+nav.site { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; padding: 12px 0;
   border-bottom: 1px solid var(--line); }
-nav.site .brand { font-weight: 700; margin-inline-end: 8px; }
-a.site-link { color: var(--ink); text-decoration: none; border-bottom: 2px solid transparent; }
-a.site-link.on { border-bottom-color: var(--ink); font-weight: 600; }
-a.button { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: 4px;
+nav.site .brand { font-weight: 700; font-size: 1.1em; margin-inline-end: 10px; color: var(--accent); }
+a.site-link { color: var(--ink); text-decoration: none; padding: 2px 10px; border-radius: 999px; font-size: .95em; }
+a.site-link:hover { background: var(--panel); }
+a.site-link.on { background: var(--accent); color: var(--bg); font-weight: 600; }
+a.button { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: 6px;
   background: var(--panel); color: var(--ink); text-decoration: none; font-size: .9em; }
-main.site { max-width: 1200px; }
-.lead { font-size: 1.15em; font-weight: 600; }
-table.grid { border-collapse: collapse; margin: 8px 0; }
-table.grid th, table.grid td { border: 1px solid var(--line); padding: 4px 8px; text-align: start; vertical-align: top; }
-td.num { font-variant-numeric: tabular-nums; text-align: end; }
-.tablewrap { overflow-x: auto; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
-.card { display: block; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; color: var(--ink); }
+button { color: var(--ink); border-radius: 6px; }
+button.on { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+input { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; }
+main.site { max-width: none; }
+.notice { border-radius: 0 6px 6px 0; }
+.lead { font-size: 1.12em; font-weight: 600; }
+.hero { padding: 28px 0 8px; }
+.hero h1 { font-size: 2.6em; margin: 0 0 6px; letter-spacing: -.01em; }
+.hero .tagline { font-size: 1.3em; line-height: 1.45; margin: 0 0 22px; max-width: 34em; }
+ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: step; display: grid;
+  grid-template-columns: repeat(3, 1fr); gap: 14px; }
+ol.steps li { margin: 0; counter-increment: step; }
+.step-card { border-top: 3px solid var(--accent); }
+.step-card::before { content: counter(step); display: inline-flex; align-items: center; justify-content: center;
+  width: 1.8em; height: 1.8em; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+  font-weight: 700; margin-bottom: 8px; }
+.step-card b { display: block; font-size: 1.08em; margin-bottom: 4px; }
+.step-card span { display: block; color: var(--muted); }
+.hero-foot { color: var(--muted); font-size: .92em; margin-top: 16px; }
+table.grid { border-collapse: collapse; margin: 10px 0; }
+table.grid th, table.grid td { border: 1px solid var(--line); padding: 6px 10px; text-align: start; vertical-align: top; }
+table.grid thead th { background: var(--panel); font-weight: 600; }
+table.grid td.num { font-variant-numeric: tabular-nums; text-align: end; }
+table.figs { width: 100%; table-layout: fixed; }
+table.figs thead th:not(:first-child) { width: 9em; text-align: end; }
+table.figs tbody th { font-weight: 500; }
+.tablewrap { overflow-x: auto; max-width: 100%; }
+main > section table { display: block; overflow-x: auto; max-width: 100%; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin: 18px 0; }
+.card { display: block; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; color: var(--ink);
+  background: var(--panel); }
 a.card { text-decoration: none; }
-a.card:hover { border-color: var(--ink); }
-.big { font-size: 1.8em; font-weight: 700; }
-.defs li { font-size: .92em; }
+a.card b { color: var(--accent); }
+a.card:hover { border-color: var(--accent); }
+.cards.counts .card { text-align: center; }
+.big { font-size: 1.9em; font-weight: 700; font-variant-numeric: tabular-nums; }
+details.defs-box { margin: 36px 0 10px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; }
+details.defs-box summary { cursor: pointer; font-weight: 600; font-size: 1.15em; }
+.defs li { font-size: .92em; margin: 8px 0; }
 code.sha, td.sha { font-family: Consolas, "Courier New", monospace; font-size: .8em; overflow-wrap: anywhere; }
 table.chain { width: 100%; table-layout: fixed; }
 table.chain th:nth-child(1) { width: 4em; }
 table.chain th:nth-child(2) { width: 10em; }
 table.chain th:nth-child(5) { width: 6em; }
+table.chain { min-width: 640px; }
+#summary, #cmd { overflow-wrap: anywhere; }
 table.kb td { font-size: .88em; }
-.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 6px 0; }
-.gap-row, .candidate { border-top: 1px solid var(--line); margin-top: 16px; }
-.rule { padding: 6px 12px; border: 2px dashed var(--hold); border-radius: 4px; }
-tr.changed { background: #fff5d6; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0; }
+.gap-row, .candidate, .nothing-found { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 4px; }
+ol.toc li { margin: 2px 0; }
+.rule { padding: 8px 16px; border: 2px dashed var(--hold); border-radius: 8px; }
+tr.changed { background: var(--changed); }
 table.whatif-table td:first-child code { white-space: nowrap; }
-.ok { color: var(--allow); font-weight: 600; }
-.bad { color: var(--block); font-weight: 600; }
-select { font: inherit; max-width: 100%; }
+.ok { color: var(--ok-ink); font-weight: 600; }
+.bad { color: var(--bad-ink); font-weight: 600; }
+select { font: inherit; max-width: 100%; color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 3px 6px; }
+header { padding: 10px 0; }
+@media (max-width: 700px) {
+  ol.steps { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.1em; }
+  .hero .tagline { font-size: 1.15em; }
+  table.figs thead th:not(:first-child) { width: 5.5em; }
+}
+"""
+
+# a footnote link opens the closed Definitions box before it scrolls there (Task 56 item 2)
+OPEN_DEFS_JS = """
+(function () {
+  function open() {
+    var target = location.hash && document.getElementById(location.hash.slice(1));
+    var box = target && target.closest("details");
+    if (box) { box.open = true; target.scrollIntoView(); }
+  }
+  window.addEventListener("hashchange", open);
+  open();
+})();
 """
 
 KB_JS = """
