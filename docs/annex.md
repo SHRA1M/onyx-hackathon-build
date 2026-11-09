@@ -53,8 +53,8 @@ that cites anything else is invalid.
 record per binding clause a gate enforces, with the verb (must, must not), the value or deadline, and the quote,
 verbatim from the chunk; `check-data` fails if any quote is not found word for word in its chunk. `mandates.json`:
 for each of the five agents, the verbs it may propose and the documents it may read (care 27 documents,
-adviser 40, TDRA 18, Data Office 22, coordinator 8). `scenarios/S1..S5.json`: the
-subscriber's words, in English and Arabic, the facts on file, and for each step the clauses it is grounded in. `keys/`:
+adviser 40, TDRA 18, Data Office 22, coordinator 8; the coordinator is code, not a model). `scenarios/S1..S5.json`: the
+subscriber's words, in English and Arabic, the facts on file, and for each step the clauses it is grounded in. Each scored scenario also carries one proposal written by the team, not made by the model (`pending_proposal`): a move the law stops or the texts do not settle, put to the gate on purpose (S1 step 6, renewal without new consent; S2 step 5, hand-over timing; S3 step 3, the full record sent abroad; S4 step 5, suspension; S5 step 4, device block). At these five steps the key scores the adviser's gap flag, which is the model's. The two classification proposals (S1 step 1, S2 step 1) are plain code and logged as such; every other proposal in the scored runs is the model's. `keys/`:
 the expected verdict, the clauses that must be cited and the obligations due at each step, frozen and hashed before
 the first recorded run (`keys/HASHES.txt`). The keys are the only labelled data in the project, and they label
 scoring, not learning.
@@ -70,7 +70,7 @@ the key clauses in English and 0.09 in Arabic at top 8; a bilingual embedder (mu
 run) finds 0.24 and 0.15, with overlapping Arabic intervals (`eval/results.md`, "Retrieval alone"). Of the clauses absent at a step that still scored, 23 in English and 36 in Arabic were
 carried by the gate's verdict in code; the rest sit on abstention steps, where the key names the clauses the gap is
 about and the adviser's act is to flag the gap, not to cite them, except two clauses at one Arabic step (S3-1) that
-the English run retrieved and the Arabic run did not. The model never sees the keys, the rules file or another agent's inbox.
+the English run retrieved and the Arabic run did not. Two causes are named for the fix after the shortlist: a subscriber's chat line and the clause that answers it often share no words, and each chunk is embedded as bare clause text, without its document name or heading. The plan, in order: add that context to each chunk; measure a bilingual embedder (bge-m3, Qwen3-Embedding-0.6B) on held-out queries written by a teammate who has not read the chunks; only then re-record the scored runs. The model never sees the keys, the rules file or another agent's inbox.
 
 **One call, one proposal.** The agent sends one request (temperature at the endpoint's default, max 16,000 output
 tokens, retried on transport errors, never on content) and receives JSON: a verb from its mandate, arguments, the
@@ -106,7 +106,7 @@ The gate's rules are code; the clauses it cites are JSON rows. We found no stand
 
 Reviewed on 2026-11-05 by Ra'ed Shraim, Director Business Excellence – DPO, Solidarity First Insurance Company, Amman – Jordan (practitioner review, not legal advice, no UAE standing): his points on CPR 26.7.2's Arabic, licence 3.4.1 and licence 9.1 are in gap 1 and the rule notes; his code-level points are listed for after the shortlist.
 
-Next: cold runs of the seven unseen scenarios; routing (D-2); team approval of holds.
+**Next steps, if shortlisted (2026-11-18 to the final on 2026-12-08).** None of this is built. In order: (1) fix the gate faults listed in Annex C: the five field-shape faults in the recorded verdicts against the keys, and the six exact-English-term checks, starting with the two that allow an unmatched word; review the other four verdict differences; (2) the retrieval plan above; (3) let the adviser read the whole conversation, so gaps 2 and 6 can be flagged where they arise; (4) re-record the scored runs once, so every figure moves together, and run the seven unseen scenarios cold in both languages; (5) widen the steered-subscriber test to 30 or more runs, with attackers who have not read the gate code; (6) for the live demo: a chat for the customer and a screen where staff take hand-overs and release holds, in Arabic and English, by text and then by voice; a question to the adviser at any step; routing for a step the scenario did not name (D-2); (7) Arabic text for the 84 English-only chunks, and the reviewer's code-level points.
 
 ## Annex B. From clause to code: what "plain code" means
 
@@ -224,8 +224,9 @@ gate rejection rate per scenario is in the table, printed as the range over the 
 | S4 | 2 | 1 to 2 | 0.11 to 0.14 | 0.33 to 0.50 |
 | S5 | 2 | 2 | 0.33 to 0.38 | 0.33 to 0.38 |
 
-**Reading it.** The model is not reckless: in most steps it proposes the lawful act. But across a five-step
-conversation it lets about two held-or-blocked steps through per run, and it does so in both languages. The cost of
+Of the 67 such steps over the 30 ungoverned runs, 29 are the proposals the team wrote into the scenarios, each judged at its gap step, and 38 are the model's own.
+
+**Reading it.** The model is not reckless: in most steps it proposes the lawful act. But about two held-or-blocked steps go through per run, in both languages: about one is the proposal the team wrote into the scenario, and about 1.3 are the model's own (38 over 30 runs). The cost of
 the gate is the hand-over: the governed run stops at the step the key marks and passes the conversation to a named
 human. That is the controversy case: governance looks slower, because the ungoverned run reaches the subscriber's "yes" first and charges on it. In the three scored scenarios that contain a hand-over (S2, S4, S5) the hand-over latency row in
 `eval/results.md` is 0 steps in both languages: the run hands over at the key's step, not later; S1 and S3 have no
@@ -310,7 +311,7 @@ Capacity Building Week (page on file, read 2026-10-18):
    fetch date, HTTP status, SHA-256, pages, language, official-translation flag, binding status, Y.3172 node and
    Readiness dimensions per document), the 108 records, the datasheet and `kb/export/InputDocs/Inputs.md` in ITU's
    layout. Sources are fetched from the issuer and verified by hash, not redistributed where rights are unconfirmed.
-3. **For the global open repository of AI agents and metadata:** the five agent manifests in `mandates.json` (verbs,
+3. **For the global open repository of AI agents and metadata:** the five manifests (four model-backed agents and the coordinator, which is code) in `mandates.json` (verbs,
    documents, clauses), the gate interface (`decide(proposal, state, knowledge) -> verdict`) and the log schema, which
    together describe an agent by what it may do and under which clause, not by its prompt.
 

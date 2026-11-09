@@ -277,7 +277,7 @@ def test_c4_the_annex_definition_carries_the_figure(agreement):
 # --- stop-3 ruling (task-54-stop-3-ruling-2026-11-07-fable.md) ------------------------------------------------
 
 REPORT = (REPO / "docs" / "report.md").read_text(encoding="utf-8")
-NEXT = "Next: cold runs of the seven unseen scenarios; routing (D-2); team approval of holds."
+NEXT = "**Next steps, if shortlisted (2026-11-18 to the final on 2026-12-08).**"  # end-check order 3, edit 2
 
 
 def test_stop3_b1_the_annex_discloses_the_two_match_only_checks():
@@ -295,7 +295,8 @@ def test_stop3_b1_the_annex_discloses_the_two_match_only_checks():
 def test_stop3_b3_next_steps_close_annex_a_and_leave_the_main_text():
     assert NEXT not in REPORT and "Annex A to F follow." not in REPORT
     annex_a = _annex("## Annex A.", "## Annex B.").rstrip()
-    assert annex_a.endswith(NEXT) and ANNEX.count(NEXT) == 1
+    assert annex_a.split(chr(10) * 2)[-1].startswith(NEXT) and ANNEX.count(NEXT) == 1
+    assert "Next: cold runs of the seven unseen scenarios" not in ANNEX
     assert "## Limits and next steps" in REPORT
 
 
