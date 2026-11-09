@@ -12,7 +12,6 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Where things live
 
-- `kb/manifest.csv` (task-36: 89 rows, 84 VERIFIED, 3 UNVERIFIED, 2 REFERENCED, 35 foreign, 32 UAE instruments not counting the announcement row; Task 35 added six Gulf rows, Task 35b five bot-disclosure rows (Maine §1500-DD, India TRAI TCCRR 2012, Texas BCC 552, California BPC 17940-17943 and HSC 1339.75 as extracts), all binding in their state, no chunks; Task 41 the Ofcom Penalty Guidelines 2017 (`guideline`, http 403, VERIFIED on Iyas's saved PDF, hash of the pypdf text); per-task additions: archive), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 18 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
 - `kb/chunks/*.jsonl`: only the 144 cited clauses (rules, mandates, gap rows and scenario `grounded_in`), 18 documents (committed). `kb.page_of(document_id, clause)`: the chunk's page, None when not committed or when every committed chunk of the document says page 1 (itu-t-y3172); `kb.page_link` gives `url#page=N` only where the manifest url is the PDF itself. Shown as "p. N" (the PDF page index) in replay pages, viewer, gaps.md; the KB export has a Pages column. `kb/chunks-full/`: every clause (gitignored, written by `kb chunk`).
 - `kb/extracts/*.txt`: copies of hq `-checked.txt` files (`# key: value` header with `checked:`, then `<clause> <text>`; a line without a clause number continues the clause). `decision-16-2026-ar.txt` (4.17, 4.18 in full); `licence-2-2026-ar.txt` (`pair_of: licence-2-2026`, fills `text_ar` of 9.1 with the checked fragment). `kb chunk` reads them without hq.
 - `onyx/kb.py`, `onyx/data.py` (`cited_chunks()`), `onyx/data/rules.json` (108 rules), `onyx/data/mandates.json` (16 verbs; a `documents` list per agent), `onyx/data/scenarios/S1..S5.json` (steps, EN and AR, facts, and `grounded_in` {clauses [{clause_id, page}], line, source}: hq's line, Task 16), `onyx/data/keys/S1..S5.json` (`HASHES.txt`), `onyx/data/scenarios/README.md` (shapes, gap ids, verdict map). `data.load_scenario()`, `data.load_key()`.
@@ -47,6 +46,9 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Traps
 
+- Never write another team's name in any file, report-backs included. `test_no_other_entry_is_named_in_a_tracked_file` checks tracked and untracked files: run it after writing a report-back, before the commit (2026-11-09).
+- The session's permission check refuses `gh pr merge`, force-push, Pages and visibility changes: Iyas runs them as one `! ` line (2026-11-09).
+
 - `scripts/report_pdf.ps1` can pass on an old PDF: if Word's export fails (a viewer such as Foxit holds `docs/report.pdf`) it still checks the old file. Confirm the byte count or time moved. The failed export can leave a hidden Word process locking `report.docx`. Run Word checks after the builder, never beside it (2026-11-05). That hidden Word (`/Automation -Embedding`, no window) also makes `git pull` and `git switch` fail on the docx: check the exit code, never pipe `git pull` through `tail`. The session can end it by PID after checking the command line (2026-11-06).
 - An annex paragraph with Arabic and no Latin letters builds right-to-left (`_rtl`, `docs/build_report.py`). Arabic inside an English annex paragraph scrambles in Word.
 - Report pages move in jumps, because keep-with-next and table rows absorb slack: a cut can move nothing alone (Task 53 layer 3). Measure each change with Word. Also, a Bash heredoc holding an apostrophe can fail to parse (2026-11-05): write scripts with the Write tool. Measure on a scratch build: `build_report.py --out <scratch>`, then `report_pages.ps1 -Path <scratch>` (2026-11-06). Never pipe that script into `Select-Object -First`: it dies before `Quit` and leaves a hidden Word (2026-11-06). Run-set brackets `[C5, ...]` do not print (2026-11-06). This PC has no `pdftoppm`: render PDF pages with `uv run --with pypdfium2` (2026-11-06).
@@ -76,23 +78,17 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- PR #26 merged into `main` 2026-11-09 (merge `1a6b9f7`): Tasks 56 to 56f, README top; 1199 tests pass on main, selftest 0. PR #28 (annex) still open. Pages off until sending day.
-- Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
-- Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
-- hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 16 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
-- Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
-- The three ITU call names go to the README reviewer block on submission day (Task 23 F2).
+- 2026-11-09: repo is public at `SHRA1M/onyx-hackathon-build` (`main` and 8 tags), Pages on from `main` `/docs`, built; site and README checked signed out (`docs/report-back/2026-11-09-go-public.md`). Internal notes cleaned before publishing. Two local backups from 2026-11-09 under `D:\Projects\_backups\`.
+- PRs #27 and #28 merged 2026-11-09 (report main text and annex); report 5 main pages, annex from page 6, 17 total; `docs/report.pdf` rebuilt.
+- Old commit hashes quoted in docs (archive, report-backs, README line 312, `eval/bakeoff.*`) no longer resolve; only the two bakeoff pins were updated.
+- README CI badge: first run not checked.
+- Task 52: its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
+- Tasks 51 and 51b: owed: hq's ruling on the note's "cites the chapeau"; two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
+- Task 54 trap, disclosed in Annex C: `gate.py` 442 and 478 stop on a match, so an unmatched word is allowed (no recorded run did); Task 55 item 3, research first.
+- hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates. Sources and extracts under `kb/sources/` are gitignored, this PC only.
+- The three ITU call names go to the README reviewer block on submission day (Task 23 F2). Submission by email to aiforgoodlab@itu.int.
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
 
 ## Next action
 
-hq reads `docs/report-back/2026-11-09-merge-pr-26.md`; Iyas merges PR #28; on sending day hq adds the film line at `<!-- film-link -->` and Pages goes on (docs, main). Submission 2026-11-09.
-
-- 2026-11-08, three open PRs, none merged: #26 `task-56` (site restyle, Tasks 56, 56b, 56d); #27 `end-check-2-report-text` (report main text: U8 paragraph, cuts, reserve medians cut, "Next steps: Annex A."); #28 `end-check-3-annex` (annex: retrieval plan, Next steps paragraph, written-proposal disclosure, coordinator is code, 67/29/38). #27 and #28 both rebuild `docs/report.docx`: rebuild after the second merge. `docs/report.pdf` is behind both.
-- Report-backs 2026-11-08: `docs/report-back/2026-11-08-task-56d-display-fixes.md`, `...-end-check-order-2-report-text.md`, `...-end-check-order-3-annex.md`. Open for hq: order 2's "20 runs" strip pin now matches "two runs per scenario per language".
-- Task 54: merged by Iyas 2026-11-07, PR #25 (940df10). Report-back: `docs/report-back/2026-11-07-task-54-built.md`, with Fable's final-read fix appended. Report: main text page 5, annex page 6, 16 pages. Open trap, disclosed in Annex C: `gate.py` 442 and 478 stop on a match, so an unmatched word is allowed (no recorded run did); Task 55 item 3, research first.
-- Task 53: merged, PR #24; its hq questions open (`docs/report-back/2026-11-06-task-53-built.md`).
-- ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
-
-
-Hq's end-check orders 4 and 5, one per session, then the video. Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.
+hq's after-list (go-public ruling): video link into README and report, PDF rebuild, tag `submission-2026-11-09`, `kb/export/` zip, Fable's last check, cover email draft. One order per session. Submission 2026-11-09.

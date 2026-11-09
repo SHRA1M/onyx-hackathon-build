@@ -4,6 +4,9 @@ One entry per fix: date, what broke, what changed.
 
 ## 2026-11-09
 
+- Merged PRs #27 and #28; `docs/report.docx` rebuilt from source after the second merge, `docs/report.pdf` exported (5 main pages, 17 total).
+- `onyx/bakeoff.py` VERSIONS and `tests/test_bakeoff.py` pinned prompt commit hashes that no longer resolve; now `d7bb264` and `a85a448`.
+
 - Changed on `task-56`, not merged (Task 56f): the model-down story said "7 of 8 later decisions stayed the same", which reads as one decision changed. None changed. It now says all 8 decisions outside step 3 kept their verdict, and that S2-5 lists 19 laws instead of 24.
 - Changed on `task-56`, not merged (README top order): README line 7 replaced by the top block; "eight pages" became "nine pages" (the site has nine since Task 56e).
 

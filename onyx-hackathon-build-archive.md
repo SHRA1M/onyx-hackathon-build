@@ -989,3 +989,35 @@ Moved from background Open:
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
 - Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (16 pages, page 5 ends with Limits, page 6 starts with "Annex").
 - price_change, cancellation and child gates have no scenario step (synthetic tests only).
+
+
+## 2026-11-09: PRs #27 and #28 merged, internal notes cleaned, repo public
+
+Merged PR #27 (`c85cd92`) and PR #28; CHANGELOG and wrap-file conflicts kept both sides, `docs/report.docx` rebuilt from source; PDF exported, 5 main pages, 17 total. Internal notes cleaned before publishing; `test_no_other_entry_is_named_in_a_tracked_file` widened to tracked and untracked files. One full test run gave 6 failures in `test_task_51`/`test_task_53` that did not recur (cause not found). Iyas ran the merges, the pushes, the visibility change and Pages (the session's permission check refused them). Repo public with `main` and 8 tags; Pages built; signed-out checks 200. Bakeoff prompt pins moved to `d7bb264` / `a85a448`.
+
+Moved from background Open (superseded by this session):
+## Open
+
+- PR #26 merged into `main` 2026-11-09 (merge `1a6b9f7`): Tasks 56 to 56f, README top; 1199 tests pass on main, selftest 0. PR #28 (annex) still open. Pages off until sending day.
+- Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
+- Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
+- hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 16 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
+- Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
+- The three ITU call names go to the README reviewer block on submission day (Task 23 F2).
+- price_change, cancellation and child gates have no scenario step (synthetic tests only).
+
+## Next action
+
+hq reads `docs/report-back/2026-11-09-merge-pr-26.md`; Iyas merges PR #28; on sending day hq adds the film line at `<!-- film-link -->` and Pages goes on (docs, main). Submission 2026-11-09.
+
+- 2026-11-08, three open PRs, none merged: #26 `task-56` (site restyle, Tasks 56, 56b, 56d); #27 `end-check-2-report-text` (report main text: U8 paragraph, cuts, reserve medians cut, "Next steps: Annex A."); #28 `end-check-3-annex` (annex: retrieval plan, Next steps paragraph, written-proposal disclosure, coordinator is code, 67/29/38). #27 and #28 both rebuild `docs/report.docx`: rebuild after the second merge. `docs/report.pdf` is behind both.
+- Report-backs 2026-11-08: `docs/report-back/2026-11-08-task-56d-display-fixes.md`, `...-end-check-order-2-report-text.md`, `...-end-check-order-3-annex.md`. Open for hq: order 2's "20 runs" strip pin now matches "two runs per scenario per language".
+- Task 54: merged by Iyas 2026-11-07, PR #25 (940df10). Report-back: `docs/report-back/2026-11-07-task-54-built.md`, with Fable's final-read fix appended. Report: main text page 5, annex page 6, 16 pages. Open trap, disclosed in Annex C: `gate.py` 442 and 478 stop on a match, so an unmatched word is allowed (no recorded run did); Task 55 item 3, research first.
+- Task 53: merged, PR #24; its hq questions open (`docs/report-back/2026-11-06-task-53-built.md`).
+- ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
+
+
+Hq's end-check orders 4 and 5, one per session, then the video. Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.
+
+Moved from background (superseded by the 108-row manifest):
+- `kb/manifest.csv` (task-36: 89 rows, 84 VERIFIED, 3 UNVERIFIED, 2 REFERENCED, 35 foreign, 32 UAE instruments not counting the announcement row; Task 35 added six Gulf rows, Task 35b five bot-disclosure rows (Maine §1500-DD, India TRAI TCCRR 2012, Texas BCC 552, California BPC 17940-17943 and HSC 1339.75 as extracts), all binding in their state, no chunks; Task 41 the Ofcom Penalty Guidelines 2017 (`guideline`, http 403, VERIFIED on Iyas's saved PDF, hash of the pypdf text); per-task additions: archive), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 18 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
