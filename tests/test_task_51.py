@@ -19,7 +19,7 @@ STRIP = ["5 scenarios, 2 languages, 20 recorded runs", "108 documents, 100 verif
          "action recall 0.96 en / 1.00 ar (110 of 112 key steps)", "citation validity 0.99 / 1.00",
          "abstained and logged the gap on the unanswerable step in 20 of 20 runs"]
 # Each strip cell's figures, as the main text prints them. The cells are shortened, so the words differ.
-PRINTED = {STRIP[0]: ["same five scenarios", "both languages", "over the 20 scored runs"],
+PRINTED = {STRIP[0]: ["same five scenarios", "both languages", "two runs per scenario per language"],  # end-check order 2: cut 2 took "over the 20 scored runs"
            STRIP[1]: ["108 documents", "100 are verified"],
            STRIP[2]: ["action recall", "0.96 / 1.00", "110 of 112 key steps"],
            STRIP[3]: ["citation validity 0.99 / 1.00"],

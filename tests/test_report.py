@@ -8,6 +8,7 @@ import json
 import re
 import subprocess
 import sys
+from pathlib import Path
 import zipfile
 
 import pytest
@@ -547,3 +548,19 @@ def test_task_48_addendum_2_check_data_says_what_it_reads(capsys):
     assert data.check_data() == 0
     assert "check-data ok: every rule and mandate quote verbatim, every rule cites a clause" in capsys.readouterr().out
 
+
+
+PARA = chr(10) * 2
+
+
+def test_u8_counts_in_the_main_text_match_the_annex():
+    """End-check order 2 (hq option a): the U8 paragraph is untagged, so the value check skips it; its three counts
+    must match the annex's "Steered subscriber, U8" paragraph."""
+    root = Path(__file__).resolve().parents[1] / "docs"
+    report = next(p for p in (root / "report.md").read_text(encoding="utf-8").split(PARA)
+                  if p.startswith("Our adversarial subscriber (U8)"))
+    annex = next(p for p in (root / "annex.md").read_text(encoding="utf-8").split(PARA)
+                 if p.startswith("**Steered subscriber, U8.**"))
+    assert "8 of 48 governed steps allowed" in report and "allowed 8 of 48 governed steps" in annex
+    assert "0 of 48 over six runs" in report and "0 of 48 governed steps, in 0 of 6 governed runs" in annex
+    assert "without the gate, 48 of 48" in report and "Without the gate, 48 of 48 steps passed" in annex
