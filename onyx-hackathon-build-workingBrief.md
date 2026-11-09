@@ -1,10 +1,10 @@
 # Working brief: onyx-hackathon-build
 
-Updated 2026-11-08 (ninetieth wrap, Opus). Handover for the next session.
+Updated 2026-11-08 (ninety-second wrap, Opus). Handover for the next session.
 
 ## Objective
 
-Task 56c (plain words and two new sections), Order B after 56b, on branch `task-56`, from its own order in `D:\Projects\hq\uni\ai-for-good-hackathon\`. Submission 2026-11-09.
+Task 56c built and pushed on `task-56` (PR #26). Next: the README task, from its own order in hq. Submission 2026-11-09.
 
 ## State
 
@@ -31,5 +31,5 @@ Task 56c (plain words and two new sections), Order B after 56b, on branch `task-
 ## Next moves
 
 1. `git status`; stay on `task-56` (PR #26 open).
-2. Build Task 56c from its order, one task, then report-back and stop.
-3. Then the README task; Iyas merges PR #26.
+2. Run full `uv run pytest -q` once (not rerun after 56c's last repin).
+3. Build the README task from its order; report-back and stop.

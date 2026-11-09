@@ -2,6 +2,10 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-08
+
+- Task 56c: the runs page was hard for a non-engineer to follow; plain titles, stories and step lines added, technical lines moved to a side column, Present fixed at 12 s.
+
 ## 2026-11-07
 
 - Fixed on branch `task-54`, merged in PR #25 (Fable's final read): in Annex C, "Both are listed for the fix..." pointed at "the other four differences" and repeated "listed for the fix". Changed: that sentence deleted; "The identifier check is a deny-list..." now sits after "were blocked.", and the regulator sentence closes the paragraph. Pages unchanged.
