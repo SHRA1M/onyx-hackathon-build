@@ -2,8 +2,18 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-09
+
+- Changed on `task-56`, not merged (Task 56f): the model-down story said "7 of 8 later decisions stayed the same", which reads as one decision changed. None changed. It now says all 8 decisions outside step 3 kept their verdict, and that S2-5 lists 19 laws instead of 24.
+- Changed on `task-56`, not merged (README top order): README line 7 replaced by the top block; "eight pages" became "nine pages" (the site has nine since Task 56e).
+
+## 2026-11-08
+
+- Task 56c: the runs page was hard for a non-engineer to follow; plain titles, stories and step lines added, technical lines moved to a side column, Present fixed at 12 s.
+
 ## 2026-11-07
 
+- Fixed on branch `task-54`, merged in PR #25 (Fable's final read): in Annex C, "Both are listed for the fix..." pointed at "the other four differences" and repeated "listed for the fix". Changed: that sentence deleted; "The identifier check is a deny-list..." now sits after "were blocked.", and the regulator sentence closes the paragraph. Pages unchanged.
 - Changed on branch `task-54`, not merged, finished (order Task 54, rulings on stops 2 and 3): the S4 and S5 lines disagreed with the logs, and Annex C did not say that two checks stop only on a match, so an unmatched word in a constructed test was allowed. Changed: the S3, S4 and S5 lines as ruled; cuts 1 to 5 of the stop-2 ruling; the "Next:" sentence moved from the main text to the end of Annex A; two sentences in Annex C on `model_provider_gate` and `sharing_gate`, the fix listed after the shortlist with its own research first. Main text ends page 5, annex page 6, 16 pages; docx and PDF rebuilt. No gate, log, key or figure changed.
 
 ## 2026-11-06

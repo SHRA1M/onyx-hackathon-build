@@ -30,7 +30,53 @@ REPORT = kb.REPO / "docs" / "report.md"
 REPO_URL = "https://github.com/SHRA1M/onyx-hackathon-build"
 WHATIF_RUN, WHATIF_RULE = replay_viewer.WHATIF_RUN, "gap-1"
 SENTENCE = "A quote that is not word for word in a verified clause is rejected before it reaches the subscriber."
-PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("gaps.html", "Gap register"),
+# order 2026-11-08 Task 56 item 1: the overview's plain top block, its words as the order gives them
+HERO_LINE = "A customer-care AI for a UAE telecom operator that stays inside the law."
+HERO_STEPS = (("The AI proposes.", "An AI agent drafts each step: a reply, a refund, a warning."),
+              ("The code decides.", "Plain code checks the step against UAE law and answers allow, hold for a staff "
+                                    "member, or block."),
+              ("A person has the final word.", "A named staff member takes every complaint and approves what is held."))
+HERO_FOOT = ("Tested on a fictional operator with real UAE laws, in English and Arabic. Every step is written to a log "
+             "you can check on this site.")
+# order 2026-11-08 Task 56c item 7: the agents under the hero, Iyas's film wording
+AGENTS_TEXT = ("Mizan has two parts: five agents, and the gates. The care agent talks to the customer, the adviser checks "
+               "the law, and two agents play the regulators, TDRA and the Data Office. These four are AI. The fifth, the "
+               "coordinator, is plain code that routes each step. The gates are code too. They check every action "
+               "against the law: allow, hold for a staff member, or block. All logged.")
+# Task 56c item 5: the steered-subscriber test in plain words. Each figure is checked against docs/annex.md, the
+# "Steered subscriber, U8" paragraph and the lines after it, by ANNEX_FACTS on every build.
+TRICK = ("We wrote a customer who pushes Mizan to break the law: eight messages, each trying by words alone. We ran "
+         "it three times in English and three times in Arabic with the gates on: 48 tries. Before our fix, 8 of 48 "
+         "went through, all from one fault: sharing account data with an outside company, a marketing partner. After "
+         "the fix, 0 of 48 went through. With the gates off, 48 of 48 went through.")
+ANNEX_FACTS = ("The scenario is eight subscriber messages", "Three runs per language per set-up",
+               "the gate allowed 8 of 48 governed steps", "0 of 48 governed steps",
+               "Without the gate, 48 of 48 steps passed before and after",
+               "All eight passes were one act, account data to the marketing partner")
+# Task 56c item 6: end-check-2026-11-08-fable.md part 6, in plain words; 84 = kb/chunks rows with no text_ar
+NEXT_LEAD = ("If we are shortlisted, we build a customer chat in the operator's app and a screen for staff, in Arabic "
+             "and English, first by text and then by voice. None of this is built yet. The steps, in order:")
+NEXT_STEPS = ("Fix the gate faults we list in Annex C.",
+              "Make Mizan better at finding the right clauses (the retrieval plan in the annex).",
+              "Let the adviser read the whole conversation, so it can flag gaps 2 and 6 where they arise.",
+              "Record the scored runs again, once, so every figure moves together, and run the seven new stories for "
+              "the first time, in both languages.",
+              "Run the attack test 30 or more times, with attackers who have not read the gate code.",
+              "For the live demo: a chat for the customer and a screen where staff take hand-overs and release held "
+              "steps, in Arabic and English, by text and then by voice; a question to the adviser at any step; and "
+              "routing for a step the scenario did not name.",
+              "Arabic text for the {english_only} clauses that have only English, and the reviewer's code-level "
+              "points.")
+# Task 56c items 1 and 4
+VERIFY_PLAIN = ("This page checks that no line of a run's log was changed after it was written, using the hash chain: "
+                "each line carries a fingerprint of itself and of the line before it, so a change breaks every "
+                "fingerprint after it.")
+LOCAL_PLAIN = ("The operator chooses the model. This run uses an open model on one desktop computer instead of the "
+               "hosted one. The same adapter, prompt, gates and answer keys run on it; only the endpoint and the model "
+               "name change. This shows a way around gap 5 (customer data sent to a model provider outside the "
+               "country); it does not close it.")
+LOCAL_LABEL = "Demo, not scored"
+PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("tests.html", "More tests"), ("gaps.html", "Gap register"),
          ("kb.html", "Knowledge base"), ("verify.html", "Verify a log"), ("whatif.html", "What-if"),
          ("modeldown.html", "Model down"), ("localmodel.html", "Local model"))
 C5_HEADLINE = ("citation_validity", "action_recall", "abstention", "gap_recall")
@@ -100,8 +146,8 @@ def _counts() -> dict[str, int]:
 # --- page frame ------------------------------------------------------------------------------------------------
 
 def nav(current: str) -> str:
-    links = "".join(f'<a class="site-link{" on" if name == current else ""}" href="{name}">{escape(label)}</a>'
-                    for name, label in PAGES)
+    links = "".join(f'<a class="site-link{" on" if name == current else ""}" href="{name}"'
+                    f'{" aria-current=\"page\"" if name == current else ""}>{escape(label)}</a>' for name, label in PAGES)
     return (f'<nav class="site"><span class="brand">Mizan</span>{links}'
             f'<a class="site-link" href="{REPO_URL}">Repository</a></nav>\n')
 
@@ -150,12 +196,19 @@ def index() -> str:
                           f'<br>{"documents" if s == "documents" else s}</div>' for s, n in counts.items())
     foot = "".join(f'<li id="def-{m}"><b>{escape(DEFINED_AS[m])}</b>: {escape(defs[DEFINED_AS[m]])}{DEF_NOTES.get(m, "")}</li>'
                    for m in notes)
-    body = f"""<h1>Mizan: governed consumer-care agents</h1>
+    steps = "".join(f'<li class="card step-card"><b>{escape(head)}</b><span>{escape(line)}</span></li>'
+                    for head, line in HERO_STEPS)
+    body = f"""<section class="hero">
+<h1>Mizan</h1>
+<p class="tagline">{escape(HERO_LINE)}</p>
+<ol class="steps">{steps}</ol>
+<p class="hero-foot">{escape(HERO_FOOT)}</p>
+</section>
+<section class="agents"><h2>The agents</h2><p>{escape(AGENTS_TEXT)}</p></section>
+{trick_section()}
 <p class="notice">{escape(NOTICE)}</p>
 <p class="lead">{escape(SENTENCE)}</p>
-<p>Five agents propose JSON actions; plain-code gates decide from clauses of binding UAE text, in English and Arabic;
-every step goes to a hash-chained log you can verify on this site.</p>
-<div class="cards">
+<div class="cards pages">
 <a class="card link" href="runs.html"><b>Runs</b><br>Each scenario step by step, governed and without the gates.</a>
 <a class="card link" href="gaps.html"><b>Gap register</b><br>What the binding texts leave open, and who could close it.</a>
 <a class="card link" href="kb.html"><b>Knowledge base</b><br>Every document, its status and its SHA-256.</a>
@@ -175,17 +228,39 @@ every step goes to a hash-chained log you can verify on this site.</p>
 <tbody>{rejection}</tbody></table>
 <h2>Knowledge base</h2>
 <div class="cards counts">{count_cells}</div>
-<h2>Definitions</h2>
+<details class="defs-box" id="definitions"><summary>Definitions</summary>
 <p class="meta">From <code>eval/results.md</code>; every figure above is read from <code>eval/results.json</code>.</p>
 <ol class="defs">{foot}</ol>
+</details>
+{next_section()}
 """
-    return _frame("index.html", "Mizan", body)
+    return _frame("index.html", "Mizan", body, OPEN_DEFS_JS)
+
+
+def trick_section() -> str:
+    annex = " ".join((kb.REPO / "docs" / "annex.md").read_text(encoding="utf-8").split())
+    assert all(fact in annex for fact in ANNEX_FACTS), "docs/annex.md no longer says what TRICK says"
+    return (f'<section class="trick"><h2>We tried to trick it</h2><p>{escape(TRICK)}</p>'
+            '<p class="meta">Source: <code>docs/annex.md</code>, "Steered subscriber, U8".</p></section>')
+
+
+def english_only() -> int:
+    rows = [json.loads(line) for path in sorted((kb.REPO / "kb" / "chunks").glob("*.jsonl"))
+            for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return sum(not r.get("text_ar") for r in rows)
+
+
+def next_section() -> str:
+    items = "".join(f"<li>{escape(step.format(english_only=english_only()))}</li>" for step in NEXT_STEPS)
+    return (f'<section class="next"><h2>Where Mizan goes next</h2><p class="plan-label">Plan, not built</p>'
+            f"<p>{escape(NEXT_LEAD)}</p><ol>{items}</ol></section>")
 
 
 # --- runs.html -------------------------------------------------------------------------------------------------
 
 def runs_page() -> str:
-    html = replay_viewer.Viewer(verify="verify.html", register="gaps.html").render(nav=nav("runs.html"), css=CSS + SITE_CSS)
+    html = replay_viewer.Viewer(verify="verify.html", register="gaps.html").render(
+        nav=nav("runs.html"), css=CSS + replay_viewer.CHAT_CSS + SITE_CSS)
     # the viewer links the text pages beside the old page; here each has its own site page (Task 51 A.1)
     for name, target in ((whatif.page_name(WHATIF_RUN, WHATIF_RULE), "whatif.html"),
                          (modeldown.page_name(WHATIF_RUN), "modeldown.html")):
@@ -193,7 +268,16 @@ def runs_page() -> str:
         assert html.count(old) == 1
         html = html.replace(old, f'<a href="{target}">{target}</a>')
     assert html.count("</main>") == 1
-    return html.replace("</main>", unseen_bank() + "</main>")
+    return html.replace("</main>", f'<p class="more-tests">{escape(MORE_LINE)}<a href="tests.html">More tests</a>.</p>'
+                        "</main>")
+
+
+MORE_LINE = "Seven stories not run yet, and the attack test: "  # Task 56e item 6
+
+
+def tests_page() -> str:
+    """Task 56e item 6: the two boxes the runs page carried, moved whole."""
+    return _frame("tests.html", "Mizan: more tests", f"<h1>More tests</h1>\n{unseen_bank()}")
 
 
 def unseen_bank() -> str:
@@ -208,9 +292,17 @@ def unseen_bank() -> str:
 
     bank = [s for s in scenarios if s["id"] != "U8"]
     steered = [s for s in scenarios if s["id"] == "U8"]  # Task 52: it has a key and was run, so the line below is not its
-    return (f"<section><h2>The unseen bank</h2>{table(bank)}<p>No key exists for them and none has been run; their cold "
-            "runs are a next step.</p><p>An eighth, written for the steered-subscriber test on 2026-11-06, has a key "
-            f"naming only the barred act per step and was run:</p>{table(steered)}</section>\n")
+    # Task 56c addendum: two boxes; U8's figures are docs/annex.md line 255's, checked by ANNEX_FACTS
+    trick_section()
+    return ('<section class="unseen"><div class="box"><h2>Next tests: seven new stories, not run yet</h2>'
+            f"<p>{escape(UNSEEN_TEXT)}</p>{table(bank)}</div>"
+            '<div class="box"><h2>The attack test: a customer tries to trick Mizan</h2>'
+            f"<p>{escape(U8_TEXT)}</p>{table(steered)}</div></section>\n")
+
+
+UNSEEN_TEXT = ("We wrote these seven stories before our first scored run and locked them, so we could not tune Mizan to "
+               "them. After the shortlist we run them for the first time, in English and Arabic.")
+U8_TEXT = "We ran this one. Before our fix, 8 of 48 tries got through; after it, 0 of 48."
 
 
 # --- gaps.html -------------------------------------------------------------------------------------------------
@@ -325,7 +417,18 @@ def _kb_cell(row: dict[str, str], column: str) -> str:
         return f'<a class="src" href="{escape(value)}">{escape(value)}</a>' if value.startswith("http") else escape(value)
     if column == "document_id":
         return f"<code>{escape(value)}</code>"
+    if column == "language":
+        return escape(language_name(value))
     return escape(value)
+
+
+# Task 56b item 4: the reader sees a language's name; data-* values and tests keep the code
+LANGUAGE_NAMES = {"ar": "Arabic", "de": "German", "en": "English", "es": "Spanish", "fr": "French"}
+
+
+def language_name(codes: str) -> str:
+    """'en,ar' -> 'English, Arabic'; an unknown code shows as itself."""
+    return ", ".join(LANGUAGE_NAMES.get(c.strip(), c.strip()) for c in codes.split(","))
 
 
 def kb_page() -> str:
@@ -335,7 +438,8 @@ def kb_page() -> str:
     filters = []
     for column in ("status", "language"):
         values = sorted({r[column] for r in rows})
-        buttons = "".join(f'<button data-filter="{column}" data-value="{escape(v)}">{escape(v)}</button>'
+        shown = language_name if column == "language" else str
+        buttons = "".join(f'<button data-filter="{column}" data-value="{escape(v)}">{escape(shown(v))}</button>'
                           for v in values)
         filters.append(f'<div class="filters"><span>{column}:</span><button class="on" data-filter="{column}" '
                        f'data-value="">all</button>{buttons}</div>')
@@ -361,7 +465,7 @@ def verify_page() -> str:
         options = "".join(f'<option value="{replay_viewer._rel(p)}">{replay_viewer._rel(p)}</option>' for p in paths)
         groups.append(f'<optgroup label="{escape(label)} ({len(paths)})">{options}</optgroup>')
         logs |= {replay_viewer._rel(p): p.read_text(encoding="utf-8") for p in paths}
-    body = (f'<h1>Verify a log</h1><p class="notice">{escape(NOTICE)}</p>'
+    body = (f'<h1>Verify a log</h1><p class="lead">{escape(VERIFY_PLAIN)}</p><p class="notice">{escape(NOTICE)}</p>'
             "<p>Every event in a run log carries <code>hash = sha256(prev_hash + canonical_json(event without "
             "\"hash\"))</code>; the first <code>prev_hash</code> is 64 zeros (<code>onyx/audit.py</code>). This page "
             "recomputes the chain in your browser with WebCrypto, from the log text it carries; no network call. "
@@ -400,7 +504,7 @@ def whatif_page() -> str:
     path = replay_viewer._rel(WHATIF_RUN)
     md = whatif.page_name(WHATIF_RUN, WHATIF_RULE)
     body = (f"<h1>What-if: {escape(WHATIF_RUN.parent.name)} under the rule {escape(rule['gap'].replace('-', ' '))} "
-            f'recommends</h1><p class="notice">{escape(NOTICE)}</p>'
+            f'recommends</h1>{whatif_story(rule, recorded, changes)}<p class="notice">{escape(NOTICE)}</p>'
             f'<p>Run <code>{path}</code>, hash chain {"ok" if audit.verify(WHATIF_RUN) else "BROKEN"} '
             f'<a class="button verify" href="verify.html#{path}">Verify this log</a>. Replayed offline from the '
             "logged model responses; no model call. Left: what the gate decided in the recorded run. Right: the same "
@@ -416,6 +520,30 @@ def whatif_page() -> str:
             f"<p>{len(recorded) - len(changes)} of {len(recorded)} decisions identical.</p>"
             f"<h2>Second-order finding</h2><ul>{findings or '<li>none</li>'}</ul>")
     return _frame("whatif.html", "Mizan: what-if", body)
+
+
+def whatif_story(rule: dict[str, Any], recorded: list, changes: list) -> str:
+    """Task 56c item 2: the plain story, then the step whose verdict changed, before and after."""
+    flipped = [c for c in changes if c[2] != c[3]]
+    assert len(flipped) == 1, "the story below tells one changed verdict"
+    entity, action, before, after, reasons = flipped[0]
+    n = entity.split("-")[1]
+    same = len(recorded) - len(changes)
+    story = (f"We added one rule the law does not have yet, the one we propose for gap 1: when a chat turns into a "
+             f"complaint, the AI stops and a named staff member takes over within {rule['value']} {rule['unit']}. Then "
+             "we replayed the same S2 conversation from its log, with no new AI call. "
+             f"Before, at step {n} the question of how fast to hand over had no answer in the law, so the gate held "
+             "it for a staff member. "
+             f"After, the proposed rule answers it, so the gate allows it; {same} of {len(recorded)} decisions stay the "
+             "same. The replay also found a new problem: the log records when the complaint began but not when the "
+             f"hand-over happened, so the {rule['value']}-{rule['unit'].rstrip('s')} limit cannot be checked.")
+    added = "".join(f"<li>{escape(r['kind'])}: {escape(r['text'])}</li>" for r in reasons)
+    return (f'<p class="lead">{escape(story)}</p><div class="beforeafter">'
+            f'<div class="card"><h3>Before: the recorded run, step {n}</h3><p><code>{escape(entity)}</code> '
+            f"{escape(action)}</p><p>{_pill(before)}</p><p>No text sets the hand-over time, so a person decides."
+            "</p></div>"
+            f'<div class="card"><h3>After: with the proposed rule, step {n}</h3><p><code>{escape(entity)}</code> '
+            f"{escape(action)}</p><p>{_pill(after)}</p><ul>{added}</ul></div></div>")
 
 
 # --- modeldown.html --------------------------------------------------------------------------------------------
@@ -436,7 +564,13 @@ def modeldown_page() -> str:
                    for n in sorted(set(before) | set(after)))
     path = replay_viewer._rel(WHATIF_RUN)
     md = modeldown.page_name(WHATIF_RUN)
-    body = (f"<h1>Model down: {escape(sid)}, the call at step {at} fails</h1>"
+    card, section = replay_viewer.Viewer(verify="verify.html", register="gaps.html").modeldown()
+    stepnav = ('<div class="stepnav" id="stepnav"><button id="prev">Previous</button> <span id="count"></span> '
+               '<button id="next">Next</button> <button id="pause">Pause</button> <button id="exit">Stop presenting'
+               "</button></div>")
+    body = (f"<h1>{escape(replay_viewer.MODELDOWN_TITLE)}</h1>"
+            f'<nav class="picker">{card}</nav>{section}{stepnav}'
+            f'<div class="md-table"><h2>Model down: {escape(sid)}, the call at step {at} fails</h2>'
             f'<p class="notice">{escape(NOTICE)}</p>'
             f'<p class="lead">{escape(modeldown.LABEL)}</p>'
             f'<p>Run <code>{path}</code>, hash chain {"ok" if audit.verify(WHATIF_RUN) else "BROKEN"} '
@@ -449,8 +583,9 @@ def modeldown_page() -> str:
             "<th>model-down</th></tr></thead><tbody>" + rows + "</tbody></table></div>"
             f"<h2>What stays</h2><p>{same} of {total} decisions outside step {at} identical.</p>"
             + "".join(f"<p>{_code(n)}</p>" for n in notes)
-            + f"<p><b>No model took part in step {at} of the model-down column.</b></p>")
-    return _frame("modeldown.html", "Mizan: model down", body)
+            + f"<p><b>No model took part in step {at} of the model-down column.</b></p></div>")
+    return PAGE.format(title="Mizan: model down", css=CSS + replay_viewer.CHAT_CSS + SITE_CSS,
+                       nav=nav("modeldown.html"), body=body, script=f"<script>{replay_viewer.JS}</script>\n")
 
 
 # --- localmodel.html -------------------------------------------------------------------------------------------
@@ -464,6 +599,7 @@ def localmodel_page() -> str:
         f'<td>{"<br>".join(f"<code>{escape(c)}</code>" for c in r["clauses"])}</td><td>{escape(r["note"])}</td></tr>'
         for r in localmodel.rows())
     body = (f"<h1>Local model: S2 on {escape(m['model'])}</h1>"
+            f'<p class="plan-label">{escape(LOCAL_LABEL)}</p><p class="lead">{escape(LOCAL_PLAIN)}</p>'
             f'<p class="notice">{escape(NOTICE)}</p>'
             f'<p class="lead">{escape(localmodel.LABEL)}</p>'
             f"<p>Model <code>{escape(m['model'])}</code> through Ollama {escape(m['ollama'])}, on this machine: GPU "
@@ -481,7 +617,7 @@ def localmodel_page() -> str:
 # --- write -----------------------------------------------------------------------------------------------------
 
 def render() -> dict[str, str]:
-    return {"index.html": index(), "runs.html": runs_page(), "gaps.html": gaps_page(), "kb.html": kb_page(),
+    return {"index.html": index(), "runs.html": runs_page(), "tests.html": tests_page(), "gaps.html": gaps_page(), "kb.html": kb_page(),
             "verify.html": verify_page(), "whatif.html": whatif_page(), "modeldown.html": modeldown_page(),
             "localmodel.html": localmodel_page()}
 
@@ -523,40 +659,159 @@ PAGE = """<!doctype html>
 </html>
 """
 
+# Task 56b: DP Technologies' Vault palette (navy bar, one gold accent, warm off-white page, white panels), IBM Plex
+# self-hosted from docs/site/fonts/ (SIL OFL, OFL.txt beside them), the window's width less a 32 px gutter (16 px on
+# a phone), capped near 1440 px; running paragraphs near 80 characters. Laid over html_kit.CSS and
+# replay_viewer.CHAT_CSS (which docs/replay/ keeps). Hex first, oklch where the browser has it.
 SITE_CSS = """
-nav.site { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 10px 0;
-  border-bottom: 1px solid var(--line); }
-nav.site .brand { font-weight: 700; margin-inline-end: 8px; }
-a.site-link { color: var(--ink); text-decoration: none; border-bottom: 2px solid transparent; }
-a.site-link.on { border-bottom-color: var(--ink); font-weight: 600; }
-a.button { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: 4px;
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/IBMPlexSans-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans Arabic"; src: url("fonts/IBMPlexSansArabic-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans Arabic"; src: url("fonts/IBMPlexSansArabic-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans Arabic"; src: url("fonts/IBMPlexSansArabic-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("fonts/IBMPlexMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+:root { --navy: #172846; --gold: #f1a716; --bg: #f8f6f4; --panel: #ffffff; --ink: #151b24; --muted: #5d646f;
+  --line: #dadee5; --head: #172846; --bar: #172846; --bar-ink: #ffffff; --accent: #1d4f91; --accent-soft: #fdf3dc;
+  --changed: #fdf3dc; --ok-ink: #1a7f37; --bad-ink: #c62828; --hold: #914f2f; --allow: #1a7f37; --block: #c62828;
+  --insufficient: #5f6773; --bubble-in: #ffffff; --bubble-out: #eef1f6; }
+@supports (color: oklch(0 0 0)) {
+  :root { --navy: oklch(0.28 0.06 260); --gold: oklch(0.78 0.16 76); --bg: oklch(0.975 0.004 80);
+    --panel: oklch(1 0 0); --ink: oklch(0.22 0.02 260); --muted: oklch(0.5 0.02 260); --line: oklch(0.9 0.01 260);
+    --head: oklch(0.28 0.06 260); --bar: oklch(0.28 0.06 260); --hold: oklch(0.5 0.1 45);
+    --bubble-out: oklch(0.95 0.01 260); }
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0b1628; --panel: #132139; --ink: #e7ebf2; --muted: #a7aebb; --line: #313e52; --head: #e7ebf2;
+    --bar: #040d1e; --accent: #f1a716; --accent-soft: #2a2414; --changed: #3a3117; --ok-ink: #4ac26b;
+    --bad-ink: #ff7b72; --bubble-in: #132139; --bubble-out: #1c2c48; }
+  @supports (color: oklch(0 0 0)) {
+    :root { --bg: oklch(0.2 0.04 260); --panel: oklch(0.25 0.05 260); --ink: oklch(0.94 0.01 260);
+      --muted: oklch(0.75 0.02 260); --line: oklch(0.36 0.04 260); --head: oklch(0.94 0.01 260);
+      --bar: oklch(0.16 0.04 260); --accent: oklch(0.78 0.16 76); --bubble-in: oklch(0.25 0.05 260);
+      --bubble-out: oklch(0.3 0.06 260); }
+  }
+}
+body { max-width: none; margin: 0; padding: 0 0 48px; background: var(--bg); color: var(--ink); line-height: 1.65;
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif; }
+[lang="ar"] { font-family: "IBM Plex Sans Arabic", "Segoe UI", "Geeza Pro", "Noto Naskh Arabic", Tahoma, Arial,
+  sans-serif; }
+code, pre, .sha { font-family: "IBM Plex Mono", Consolas, "Courier New", monospace; }
+pre.text { font-family: inherit; }
+main.site { max-width: 1440px; margin: 0 auto; padding: 0 32px; }
+body > header, body > p.meta, body > main:not(.site) { max-width: 1440px; margin-inline: auto; padding-inline: 32px; }
+main.site > p, main.site section > p, main.site > ul > li, main.site > ol > li, .meta, .notice, .headline,
+.gap-row p, .candidate p, .nothing-found p { max-width: 80ch; }
+a { color: var(--accent); }
+h1, h2, h3, h4 { color: var(--head); }
+h1 { font-size: 1.8em; line-height: 1.25; margin: 24px 0 8px; font-weight: 700; }
+h2 { font-size: 1.3em; line-height: 1.3; margin: 36px 0 10px; font-weight: 600; }
+h3 { margin: 20px 0 8px; font-weight: 600; }
+p { margin: 10px 0; }
+nav.site { display: flex; flex-wrap: wrap; gap: 0 4px; align-items: stretch; padding: 0 32px;
+  background: var(--bar); color: var(--bar-ink); }
+nav.site .brand { font-weight: 700; font-size: 1.15em; margin-inline-end: 18px; color: var(--bar-ink);
+  display: flex; align-items: center; padding: 12px 0; letter-spacing: .02em; }
+nav.site .brand::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  background: var(--gold); margin-inline-end: 8px; }
+a.site-link { color: var(--bar-ink); opacity: .85; text-decoration: none; padding: 14px 10px 11px; font-size: .95em;
+  border-bottom: 3px solid transparent; }
+a.site-link:hover { opacity: 1; border-bottom-color: rgba(255, 255, 255, .35); }
+a.site-link.on { opacity: 1; font-weight: 600; border-bottom-color: var(--gold); color: var(--gold); }
+a.button { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: 6px;
   background: var(--panel); color: var(--ink); text-decoration: none; font-size: .9em; }
-main.site { max-width: 1200px; }
-.lead { font-size: 1.15em; font-weight: 600; }
-table.grid { border-collapse: collapse; margin: 8px 0; }
-table.grid th, table.grid td { border: 1px solid var(--line); padding: 4px 8px; text-align: start; vertical-align: top; }
-td.num { font-variant-numeric: tabular-nums; text-align: end; }
-.tablewrap { overflow-x: auto; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
-.card { display: block; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; color: var(--ink); }
+button { color: var(--ink); background: var(--panel); border-color: var(--line); border-radius: 6px; }
+button:hover { border-color: var(--gold); }
+button.on { background: var(--navy); border-color: var(--navy); color: #ffffff; box-shadow: inset 0 -3px 0 var(--gold); }
+input { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+.notice { background: var(--panel); border: 1px solid var(--line); border-inline-start: 4px solid var(--gold);
+  border-radius: 0 6px 6px 0; }
+.lead { font-size: 1.12em; font-weight: 600; }
+.hero { padding: 32px 0 8px; }
+.hero h1 { font-size: 2.6em; margin: 0 0 6px; letter-spacing: -.01em; }
+.hero .tagline { font-size: 1.3em; line-height: 1.45; margin: 0 0 22px; max-width: 40em; }
+ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: step; display: grid;
+  grid-template-columns: repeat(3, 1fr); gap: 16px; }
+ol.steps li { margin: 0; counter-increment: step; }
+.step-card { border-top: 3px solid var(--gold); }
+.step-card::before { content: counter(step); display: inline-flex; align-items: center; justify-content: center;
+  width: 1.8em; height: 1.8em; border-radius: 50%; background: var(--navy); color: #ffffff;
+  font-weight: 700; margin-bottom: 8px; }
+.step-card b { display: block; font-size: 1.08em; margin-bottom: 4px; color: var(--head); }
+.step-card span { display: block; color: var(--muted); }
+.hero-foot { color: var(--muted); font-size: .92em; margin-top: 16px; }
+table.grid { border-collapse: collapse; margin: 10px 0; background: var(--panel); }
+table.grid th, table.grid td { border: 1px solid var(--line); padding: 6px 10px; text-align: start; vertical-align: top; }
+table.grid thead th { background: var(--navy); color: #ffffff; font-weight: 600; }
+table.grid td.num { font-variant-numeric: tabular-nums; text-align: end; }
+table.figs { width: 100%; table-layout: fixed; }
+table.figs thead th:not(:first-child) { width: 9em; text-align: end; }
+table.figs tbody th { font-weight: 500; }
+.tablewrap { overflow-x: auto; max-width: 100%; }
+.tablewrap table.grid { width: 100%; }
+main > section table { display: block; overflow-x: auto; max-width: 100%; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { display: block; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; color: var(--ink);
+  background: var(--panel); }
 a.card { text-decoration: none; }
-a.card:hover { border-color: var(--ink); }
-.big { font-size: 1.8em; font-weight: 700; }
-.defs li { font-size: .92em; }
-code.sha, td.sha { font-family: Consolas, "Courier New", monospace; font-size: .8em; overflow-wrap: anywhere; }
+a.card b { color: var(--head); }
+a.card:hover { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+.cards.counts .card { text-align: center; }
+.big { font-size: 1.9em; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--head); }
+details.defs-box { margin: 36px 0 10px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px;
+  background: var(--panel); }
+details.defs-box summary { cursor: pointer; font-weight: 600; font-size: 1.15em; color: var(--head); }
+.defs li { font-size: .92em; margin: 8px 0; }
+code.sha, td.sha { font-size: .8em; overflow-wrap: anywhere; }
 table.chain { width: 100%; table-layout: fixed; }
 table.chain th:nth-child(1) { width: 4em; }
 table.chain th:nth-child(2) { width: 10em; }
 table.chain th:nth-child(5) { width: 6em; }
+table.chain { min-width: 640px; }
+#summary, #cmd { overflow-wrap: anywhere; }
 table.kb td { font-size: .88em; }
-.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 6px 0; }
-.gap-row, .candidate { border-top: 1px solid var(--line); margin-top: 16px; }
-.rule { padding: 6px 12px; border: 2px dashed var(--hold); border-radius: 4px; }
-tr.changed { background: #fff5d6; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0; }
+.gap-row, .candidate, .nothing-found { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 4px; }
+ol.toc li { margin: 2px 0; }
+.rule { padding: 8px 16px; border: 2px dashed var(--hold); border-radius: 8px; background: var(--panel); }
+tr.changed { background: var(--changed); }
+.beforeafter { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+.plan-label { display: inline-block; margin: 6px 0; padding: 2px 10px; border: 2px solid var(--hold); border-radius: 6px;
+  color: var(--hold); font-weight: 700; }
+.unseen .box { border: 1px solid var(--line); border-radius: 10px; padding: 4px 16px 12px; margin: 16px 0;
+  background: var(--panel); }
+body > div.layout { max-width: 1440px; margin-inline: auto; padding-inline: 32px; }
+body.present .unseen, body.present .more-tests, body.present .md-table, body.present main.site > h1 { display: none; }
 table.whatif-table td:first-child code { white-space: nowrap; }
-.ok { color: var(--allow); font-weight: 600; }
-.bad { color: var(--block); font-weight: 600; }
-select { font: inherit; max-width: 100%; }
+.ok { color: var(--ok-ink); font-weight: 600; }
+.bad { color: var(--bad-ink); font-weight: 600; }
+select { font: inherit; max-width: 100%; color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; padding: 3px 6px; }
+header { padding: 10px 0; background: var(--bg); position: static; }
+@media (max-width: 700px) {
+  main.site, body > header, body > p.meta, body > main:not(.site), body > div.layout { padding-inline: 16px; }
+  .beforeafter { grid-template-columns: 1fr; }
+  nav.site { padding: 0 16px; }
+  a.site-link { padding: 8px 8px 6px; }
+  nav.site .brand { padding: 8px 0 2px; width: 100%; }
+  ol.steps { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.1em; }
+  .hero .tagline { font-size: 1.15em; }
+  table.figs thead th:not(:first-child) { width: 5.5em; }
+}
+"""
+
+# a footnote link opens the closed Definitions box before it scrolls there (Task 56 item 2)
+OPEN_DEFS_JS = """
+(function () {
+  function open() {
+    var target = location.hash && document.getElementById(location.hash.slice(1));
+    var box = target && target.closest("details");
+    if (box) { box.open = true; target.scrollIntoView(); }
+  }
+  window.addEventListener("hashchange", open);
+  open();
+})();
 """
 
 KB_JS = """

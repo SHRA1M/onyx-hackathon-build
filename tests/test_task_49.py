@@ -60,9 +60,9 @@ def test_the_old_wording_is_gone_from_everything_a_reader_opens():
         assert old not in site, old
 
 
-def test_readme_says_eight_pages_and_limits_the_citation_claim_to_s1():
+def test_readme_says_nine_pages_and_limits_the_citation_claim_to_s1():
     readme = _text("README.md")
-    assert "Open `docs/site/index.html` from disk: eight pages, no server" in readme
+    assert "Open `docs/site/index.html` from disk: nine pages, no server" in readme
     assert "no recorded S1 run, C3 or C5, cites CPR 17.4 or 17.4.1." in readme
 
 

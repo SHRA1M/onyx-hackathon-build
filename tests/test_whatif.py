@@ -124,7 +124,7 @@ def test_readme_carries_the_two_sentences_and_the_reviewer_line():
 def test_index_links_the_page_and_opens_its_text():
     html = replay_viewer.render()
     assert 'href="whatif-S2-gap-1.md"' in html
-    assert '<button data-sid="whatif-S2-gap-1">What-if: S2 under the rule gap 1 recommends</button>' in html
+    assert '<button class="pick" data-sid="whatif-S2-gap-1">What-if: S2 under the rule gap 1 recommends</button>' in html
     assert "proposed, not law" in html
 
 

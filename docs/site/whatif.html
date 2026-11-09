@@ -49,45 +49,147 @@ pre.text { white-space: pre-wrap; font: inherit; font-size: .92em; }
 body.present { font-size: 22.4px; }
 body.present .picker { display: none; }
 
-nav.site { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 10px 0;
-  border-bottom: 1px solid var(--line); }
-nav.site .brand { font-weight: 700; margin-inline-end: 8px; }
-a.site-link { color: var(--ink); text-decoration: none; border-bottom: 2px solid transparent; }
-a.site-link.on { border-bottom-color: var(--ink); font-weight: 600; }
-a.button { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: 4px;
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/IBMPlexSans-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans Arabic"; src: url("fonts/IBMPlexSansArabic-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans Arabic"; src: url("fonts/IBMPlexSansArabic-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans Arabic"; src: url("fonts/IBMPlexSansArabic-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("fonts/IBMPlexMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+:root { --navy: #172846; --gold: #f1a716; --bg: #f8f6f4; --panel: #ffffff; --ink: #151b24; --muted: #5d646f;
+  --line: #dadee5; --head: #172846; --bar: #172846; --bar-ink: #ffffff; --accent: #1d4f91; --accent-soft: #fdf3dc;
+  --changed: #fdf3dc; --ok-ink: #1a7f37; --bad-ink: #c62828; --hold: #914f2f; --allow: #1a7f37; --block: #c62828;
+  --insufficient: #5f6773; --bubble-in: #ffffff; --bubble-out: #eef1f6; }
+@supports (color: oklch(0 0 0)) {
+  :root { --navy: oklch(0.28 0.06 260); --gold: oklch(0.78 0.16 76); --bg: oklch(0.975 0.004 80);
+    --panel: oklch(1 0 0); --ink: oklch(0.22 0.02 260); --muted: oklch(0.5 0.02 260); --line: oklch(0.9 0.01 260);
+    --head: oklch(0.28 0.06 260); --bar: oklch(0.28 0.06 260); --hold: oklch(0.5 0.1 45);
+    --bubble-out: oklch(0.95 0.01 260); }
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0b1628; --panel: #132139; --ink: #e7ebf2; --muted: #a7aebb; --line: #313e52; --head: #e7ebf2;
+    --bar: #040d1e; --accent: #f1a716; --accent-soft: #2a2414; --changed: #3a3117; --ok-ink: #4ac26b;
+    --bad-ink: #ff7b72; --bubble-in: #132139; --bubble-out: #1c2c48; }
+  @supports (color: oklch(0 0 0)) {
+    :root { --bg: oklch(0.2 0.04 260); --panel: oklch(0.25 0.05 260); --ink: oklch(0.94 0.01 260);
+      --muted: oklch(0.75 0.02 260); --line: oklch(0.36 0.04 260); --head: oklch(0.94 0.01 260);
+      --bar: oklch(0.16 0.04 260); --accent: oklch(0.78 0.16 76); --bubble-in: oklch(0.25 0.05 260);
+      --bubble-out: oklch(0.3 0.06 260); }
+  }
+}
+body { max-width: none; margin: 0; padding: 0 0 48px; background: var(--bg); color: var(--ink); line-height: 1.65;
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif; }
+[lang="ar"] { font-family: "IBM Plex Sans Arabic", "Segoe UI", "Geeza Pro", "Noto Naskh Arabic", Tahoma, Arial,
+  sans-serif; }
+code, pre, .sha { font-family: "IBM Plex Mono", Consolas, "Courier New", monospace; }
+pre.text { font-family: inherit; }
+main.site { max-width: 1440px; margin: 0 auto; padding: 0 32px; }
+body > header, body > p.meta, body > main:not(.site) { max-width: 1440px; margin-inline: auto; padding-inline: 32px; }
+main.site > p, main.site section > p, main.site > ul > li, main.site > ol > li, .meta, .notice, .headline,
+.gap-row p, .candidate p, .nothing-found p { max-width: 80ch; }
+a { color: var(--accent); }
+h1, h2, h3, h4 { color: var(--head); }
+h1 { font-size: 1.8em; line-height: 1.25; margin: 24px 0 8px; font-weight: 700; }
+h2 { font-size: 1.3em; line-height: 1.3; margin: 36px 0 10px; font-weight: 600; }
+h3 { margin: 20px 0 8px; font-weight: 600; }
+p { margin: 10px 0; }
+nav.site { display: flex; flex-wrap: wrap; gap: 0 4px; align-items: stretch; padding: 0 32px;
+  background: var(--bar); color: var(--bar-ink); }
+nav.site .brand { font-weight: 700; font-size: 1.15em; margin-inline-end: 18px; color: var(--bar-ink);
+  display: flex; align-items: center; padding: 12px 0; letter-spacing: .02em; }
+nav.site .brand::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  background: var(--gold); margin-inline-end: 8px; }
+a.site-link { color: var(--bar-ink); opacity: .85; text-decoration: none; padding: 14px 10px 11px; font-size: .95em;
+  border-bottom: 3px solid transparent; }
+a.site-link:hover { opacity: 1; border-bottom-color: rgba(255, 255, 255, .35); }
+a.site-link.on { opacity: 1; font-weight: 600; border-bottom-color: var(--gold); color: var(--gold); }
+a.button { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: 6px;
   background: var(--panel); color: var(--ink); text-decoration: none; font-size: .9em; }
-main.site { max-width: 1200px; }
-.lead { font-size: 1.15em; font-weight: 600; }
-table.grid { border-collapse: collapse; margin: 8px 0; }
-table.grid th, table.grid td { border: 1px solid var(--line); padding: 4px 8px; text-align: start; vertical-align: top; }
-td.num { font-variant-numeric: tabular-nums; text-align: end; }
-.tablewrap { overflow-x: auto; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
-.card { display: block; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; color: var(--ink); }
+button { color: var(--ink); background: var(--panel); border-color: var(--line); border-radius: 6px; }
+button:hover { border-color: var(--gold); }
+button.on { background: var(--navy); border-color: var(--navy); color: #ffffff; box-shadow: inset 0 -3px 0 var(--gold); }
+input { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+.notice { background: var(--panel); border: 1px solid var(--line); border-inline-start: 4px solid var(--gold);
+  border-radius: 0 6px 6px 0; }
+.lead { font-size: 1.12em; font-weight: 600; }
+.hero { padding: 32px 0 8px; }
+.hero h1 { font-size: 2.6em; margin: 0 0 6px; letter-spacing: -.01em; }
+.hero .tagline { font-size: 1.3em; line-height: 1.45; margin: 0 0 22px; max-width: 40em; }
+ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: step; display: grid;
+  grid-template-columns: repeat(3, 1fr); gap: 16px; }
+ol.steps li { margin: 0; counter-increment: step; }
+.step-card { border-top: 3px solid var(--gold); }
+.step-card::before { content: counter(step); display: inline-flex; align-items: center; justify-content: center;
+  width: 1.8em; height: 1.8em; border-radius: 50%; background: var(--navy); color: #ffffff;
+  font-weight: 700; margin-bottom: 8px; }
+.step-card b { display: block; font-size: 1.08em; margin-bottom: 4px; color: var(--head); }
+.step-card span { display: block; color: var(--muted); }
+.hero-foot { color: var(--muted); font-size: .92em; margin-top: 16px; }
+table.grid { border-collapse: collapse; margin: 10px 0; background: var(--panel); }
+table.grid th, table.grid td { border: 1px solid var(--line); padding: 6px 10px; text-align: start; vertical-align: top; }
+table.grid thead th { background: var(--navy); color: #ffffff; font-weight: 600; }
+table.grid td.num { font-variant-numeric: tabular-nums; text-align: end; }
+table.figs { width: 100%; table-layout: fixed; }
+table.figs thead th:not(:first-child) { width: 9em; text-align: end; }
+table.figs tbody th { font-weight: 500; }
+.tablewrap { overflow-x: auto; max-width: 100%; }
+.tablewrap table.grid { width: 100%; }
+main > section table { display: block; overflow-x: auto; max-width: 100%; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { display: block; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; color: var(--ink);
+  background: var(--panel); }
 a.card { text-decoration: none; }
-a.card:hover { border-color: var(--ink); }
-.big { font-size: 1.8em; font-weight: 700; }
-.defs li { font-size: .92em; }
-code.sha, td.sha { font-family: Consolas, "Courier New", monospace; font-size: .8em; overflow-wrap: anywhere; }
+a.card b { color: var(--head); }
+a.card:hover { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+.cards.counts .card { text-align: center; }
+.big { font-size: 1.9em; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--head); }
+details.defs-box { margin: 36px 0 10px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px;
+  background: var(--panel); }
+details.defs-box summary { cursor: pointer; font-weight: 600; font-size: 1.15em; color: var(--head); }
+.defs li { font-size: .92em; margin: 8px 0; }
+code.sha, td.sha { font-size: .8em; overflow-wrap: anywhere; }
 table.chain { width: 100%; table-layout: fixed; }
 table.chain th:nth-child(1) { width: 4em; }
 table.chain th:nth-child(2) { width: 10em; }
 table.chain th:nth-child(5) { width: 6em; }
+table.chain { min-width: 640px; }
+#summary, #cmd { overflow-wrap: anywhere; }
 table.kb td { font-size: .88em; }
-.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 6px 0; }
-.gap-row, .candidate { border-top: 1px solid var(--line); margin-top: 16px; }
-.rule { padding: 6px 12px; border: 2px dashed var(--hold); border-radius: 4px; }
-tr.changed { background: #fff5d6; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0; }
+.gap-row, .candidate, .nothing-found { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 4px; }
+ol.toc li { margin: 2px 0; }
+.rule { padding: 8px 16px; border: 2px dashed var(--hold); border-radius: 8px; background: var(--panel); }
+tr.changed { background: var(--changed); }
+.beforeafter { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+.plan-label { display: inline-block; margin: 6px 0; padding: 2px 10px; border: 2px solid var(--hold); border-radius: 6px;
+  color: var(--hold); font-weight: 700; }
+.unseen .box { border: 1px solid var(--line); border-radius: 10px; padding: 4px 16px 12px; margin: 16px 0;
+  background: var(--panel); }
+body > div.layout { max-width: 1440px; margin-inline: auto; padding-inline: 32px; }
+body.present .unseen, body.present .more-tests, body.present .md-table, body.present main.site > h1 { display: none; }
 table.whatif-table td:first-child code { white-space: nowrap; }
-.ok { color: var(--allow); font-weight: 600; }
-.bad { color: var(--block); font-weight: 600; }
-select { font: inherit; max-width: 100%; }
+.ok { color: var(--ok-ink); font-weight: 600; }
+.bad { color: var(--bad-ink); font-weight: 600; }
+select { font: inherit; max-width: 100%; color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; padding: 3px 6px; }
+header { padding: 10px 0; background: var(--bg); position: static; }
+@media (max-width: 700px) {
+  main.site, body > header, body > p.meta, body > main:not(.site), body > div.layout { padding-inline: 16px; }
+  .beforeafter { grid-template-columns: 1fr; }
+  nav.site { padding: 0 16px; }
+  a.site-link { padding: 8px 8px 6px; }
+  nav.site .brand { padding: 8px 0 2px; width: 100%; }
+  ol.steps { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.1em; }
+  .hero .tagline { font-size: 1.15em; }
+  table.figs thead th:not(:first-child) { width: 5.5em; }
+}
 </style>
 </head>
 <body>
-<nav class="site"><span class="brand">Mizan</span><a class="site-link" href="index.html">Overview</a><a class="site-link" href="runs.html">Runs</a><a class="site-link" href="gaps.html">Gap register</a><a class="site-link" href="kb.html">Knowledge base</a><a class="site-link" href="verify.html">Verify a log</a><a class="site-link on" href="whatif.html">What-if</a><a class="site-link" href="modeldown.html">Model down</a><a class="site-link" href="localmodel.html">Local model</a><a class="site-link" href="https://github.com/SHRA1M/onyx-hackathon-build">Repository</a></nav>
+<nav class="site"><span class="brand">Mizan</span><a class="site-link" href="index.html">Overview</a><a class="site-link" href="runs.html">Runs</a><a class="site-link" href="tests.html">More tests</a><a class="site-link" href="gaps.html">Gap register</a><a class="site-link" href="kb.html">Knowledge base</a><a class="site-link" href="verify.html">Verify a log</a><a class="site-link on" href="whatif.html" aria-current="page">What-if</a><a class="site-link" href="modeldown.html">Model down</a><a class="site-link" href="localmodel.html">Local model</a><a class="site-link" href="https://github.com/SHRA1M/onyx-hackathon-build">Repository</a></nav>
 <main class="site">
-<h1>What-if: S2 under the rule gap 1 recommends</h1><p class="notice">The operator, subscribers and numbers are synthetic; the law texts are real, linked and hashed.</p><p>Run <code>runs/c5/S2/run1.jsonl</code>, hash chain ok <a class="button verify" href="verify.html#runs/c5/S2/run1.jsonl">Verify this log</a>. Replayed offline from the logged model responses; no model call. Left: what the gate decided in the recorded run. Right: the same replay with the proposed rule added. Text page: <a href="../replay/whatif-S2-gap-1.md">whatif-S2-gap-1.md</a>.</p><div class="rule"><h2>Proposed rule, not law</h2><p><code>proposed-gap-1</code>, proposed, not law, for TDRA.</p><p><span>When a conversation on an automated channel becomes a Consumer Complaint (CPR 2.1.7), the non-human agent stops and a named trained human (licence 9.1) takes the conversation within two minutes of the trigger; the hand-over moment is recorded and is the start of the T1(2a) measurement.</span></p><p><span lang="ar" dir="rtl">عندما تتحول محادثة عبر قناة مؤتمتة إلى &quot;شكوى مستهلك&quot; (وفقاً للبند 2.1.7 من قواعد حماية المستهلك CPR)، يتوقف الوكيل غير البشري عن العمل، ويتولى موظف بشري مُدرَّب ومُحدَّد الهوية (بموجب الترخيص 9.1) متابعة المحادثة في غضون دقيقتين من لحظة وقوع هذه الحالة؛ وتُسجَّل لحظة الانتقال هذه، والتي تُعدُّ نقطة البدء لاحتساب المؤشر الزمني T1(2a).</span></p><p>Value: 2 minutes. Basis: qos-v3-0-t1-2a: the only hand-over time the texts measure (indicative, after the IVR choice); the number is TDRA&#x27;s to set.</p></div><h2>Decision by decision</h2><div class="tablewrap"><table class="grid whatif-table"><thead><tr><th>decision</th><th>action</th><th>recorded</th><th>what-if</th><th>added (proposed, not law)</th></tr></thead><tbody><tr class="" data-entity="S2-1-adviser" data-recorded="allow" data-whatif="allow"><td><code>S2-1-adviser</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-2-care" data-recorded="allow" data-whatif="allow"><td><code>S2-2-care</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="changed" data-entity="S2-3-care" data-recorded="block" data-whatif="block"><td><code>S2-3-care</code></td><td>gate</td><td><span class="verdict v-block">block</span></td><td><span class="verdict v-block">block</span></td><td><ul><li>obligation: hand over within 2 minutes of 2026-10-16 10:12 (synthetic) (proposed-gap-1, not law)</li></ul></td></tr><tr class="changed" data-entity="S2-3-care" data-recorded="block" data-whatif="block"><td><code>S2-3-care</code></td><td>gate</td><td><span class="verdict v-block">block</span></td><td><span class="verdict v-block">block</span></td><td><ul><li>obligation: hand over within 2 minutes of 2026-10-16 10:12 (synthetic) (proposed-gap-1, not law)</li></ul></td></tr><tr class="" data-entity="S2-4-care" data-recorded="hold" data-whatif="hold"><td><code>S2-4-care</code></td><td>gate</td><td><span class="verdict v-hold">hold</span></td><td><span class="verdict v-hold">hold</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-5-adviser" data-recorded="allow" data-whatif="allow"><td><code>S2-5-adviser</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-5-adviser" data-recorded="allow" data-whatif="allow"><td><code>S2-5-adviser</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-5" data-recorded="insufficient_evidence" data-whatif="insufficient_evidence"><td><code>S2-5</code></td><td>abstain</td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td><ul></ul></td></tr><tr class="changed" data-entity="S2-5-coordinator" data-recorded="hold" data-whatif="allow"><td><code>S2-5-coordinator</code></td><td>gate</td><td><span class="verdict v-hold">hold</span></td><td><span class="verdict v-allow">allow</span></td><td><ul><li>check: the proposed rule answers the step&#x27;s question: When a conversation on an automated channel becomes a Consumer Complaint (CPR 2.1.7), the non-human agent stops and a named trained human (licence 9.1) takes the conversation within two minutes of the trigger; the hand-over moment is recorded and is the start of the T1(2a) measurement.</li><li>finding: second-order: the rule needs the hand-over time recorded; this run records the trigger at 2026-10-16 10:12 (synthetic) and no hand-over time, so the two-minute condition cannot be checked</li></ul></td></tr><tr class="" data-entity="S2-6-tdra" data-recorded="allow" data-whatif="allow"><td><code>S2-6-tdra</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr></tbody></table></div><p>8 of 10 decisions identical.</p><h2>Second-order finding</h2><ul><li>second-order: the rule needs the hand-over time recorded; this run records the trigger at 2026-10-16 10:12 (synthetic) and no hand-over time, so the two-minute condition cannot be checked</li></ul>
+<h1>What-if: S2 under the rule gap 1 recommends</h1><p class="lead">We added one rule the law does not have yet, the one we propose for gap 1: when a chat turns into a complaint, the AI stops and a named staff member takes over within 2 minutes. Then we replayed the same S2 conversation from its log, with no new AI call. Before, at step 5 the question of how fast to hand over had no answer in the law, so the gate held it for a staff member. After, the proposed rule answers it, so the gate allows it; 8 of 10 decisions stay the same. The replay also found a new problem: the log records when the complaint began but not when the hand-over happened, so the 2-minute limit cannot be checked.</p><div class="beforeafter"><div class="card"><h3>Before: the recorded run, step 5</h3><p><code>S2-5-coordinator</code> route</p><p><span class="verdict v-hold">hold</span></p><p>No text sets the hand-over time, so a person decides.</p></div><div class="card"><h3>After: with the proposed rule, step 5</h3><p><code>S2-5-coordinator</code> route</p><p><span class="verdict v-allow">allow</span></p><ul><li>check: the proposed rule answers the step&#x27;s question: When a conversation on an automated channel becomes a Consumer Complaint (CPR 2.1.7), the non-human agent stops and a named trained human (licence 9.1) takes the conversation within two minutes of the trigger; the hand-over moment is recorded and is the start of the T1(2a) measurement.</li><li>finding: second-order: the rule needs the hand-over time recorded; this run records the trigger at 2026-10-16 10:12 (synthetic) and no hand-over time, so the two-minute condition cannot be checked</li></ul></div></div><p class="notice">The operator, subscribers and numbers are synthetic; the law texts are real, linked and hashed.</p><p>Run <code>runs/c5/S2/run1.jsonl</code>, hash chain ok <a class="button verify" href="verify.html#runs/c5/S2/run1.jsonl">Verify this log</a>. Replayed offline from the logged model responses; no model call. Left: what the gate decided in the recorded run. Right: the same replay with the proposed rule added. Text page: <a href="../replay/whatif-S2-gap-1.md">whatif-S2-gap-1.md</a>.</p><div class="rule"><h2>Proposed rule, not law</h2><p><code>proposed-gap-1</code>, proposed, not law, for TDRA.</p><p><span>When a conversation on an automated channel becomes a Consumer Complaint (CPR 2.1.7), the non-human agent stops and a named trained human (licence 9.1) takes the conversation within two minutes of the trigger; the hand-over moment is recorded and is the start of the T1(2a) measurement.</span></p><p><span lang="ar" dir="rtl">عندما تتحول محادثة عبر قناة مؤتمتة إلى &quot;شكوى مستهلك&quot; (وفقاً للبند 2.1.7 من قواعد حماية المستهلك CPR)، يتوقف الوكيل غير البشري عن العمل، ويتولى موظف بشري مُدرَّب ومُحدَّد الهوية (بموجب الترخيص 9.1) متابعة المحادثة في غضون دقيقتين من لحظة وقوع هذه الحالة؛ وتُسجَّل لحظة الانتقال هذه، والتي تُعدُّ نقطة البدء لاحتساب المؤشر الزمني T1(2a).</span></p><p>Value: 2 minutes. Basis: qos-v3-0-t1-2a: the only hand-over time the texts measure (indicative, after the IVR choice); the number is TDRA&#x27;s to set.</p></div><h2>Decision by decision</h2><div class="tablewrap"><table class="grid whatif-table"><thead><tr><th>decision</th><th>action</th><th>recorded</th><th>what-if</th><th>added (proposed, not law)</th></tr></thead><tbody><tr class="" data-entity="S2-1-adviser" data-recorded="allow" data-whatif="allow"><td><code>S2-1-adviser</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-2-care" data-recorded="allow" data-whatif="allow"><td><code>S2-2-care</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="changed" data-entity="S2-3-care" data-recorded="block" data-whatif="block"><td><code>S2-3-care</code></td><td>gate</td><td><span class="verdict v-block">block</span></td><td><span class="verdict v-block">block</span></td><td><ul><li>obligation: hand over within 2 minutes of 2026-10-16 10:12 (synthetic) (proposed-gap-1, not law)</li></ul></td></tr><tr class="changed" data-entity="S2-3-care" data-recorded="block" data-whatif="block"><td><code>S2-3-care</code></td><td>gate</td><td><span class="verdict v-block">block</span></td><td><span class="verdict v-block">block</span></td><td><ul><li>obligation: hand over within 2 minutes of 2026-10-16 10:12 (synthetic) (proposed-gap-1, not law)</li></ul></td></tr><tr class="" data-entity="S2-4-care" data-recorded="hold" data-whatif="hold"><td><code>S2-4-care</code></td><td>gate</td><td><span class="verdict v-hold">hold</span></td><td><span class="verdict v-hold">hold</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-5-adviser" data-recorded="allow" data-whatif="allow"><td><code>S2-5-adviser</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-5-adviser" data-recorded="allow" data-whatif="allow"><td><code>S2-5-adviser</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr><tr class="" data-entity="S2-5" data-recorded="insufficient_evidence" data-whatif="insufficient_evidence"><td><code>S2-5</code></td><td>abstain</td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td><span class="verdict v-insufficient">insufficient evidence</span></td><td><ul></ul></td></tr><tr class="changed" data-entity="S2-5-coordinator" data-recorded="hold" data-whatif="allow"><td><code>S2-5-coordinator</code></td><td>gate</td><td><span class="verdict v-hold">hold</span></td><td><span class="verdict v-allow">allow</span></td><td><ul><li>check: the proposed rule answers the step&#x27;s question: When a conversation on an automated channel becomes a Consumer Complaint (CPR 2.1.7), the non-human agent stops and a named trained human (licence 9.1) takes the conversation within two minutes of the trigger; the hand-over moment is recorded and is the start of the T1(2a) measurement.</li><li>finding: second-order: the rule needs the hand-over time recorded; this run records the trigger at 2026-10-16 10:12 (synthetic) and no hand-over time, so the two-minute condition cannot be checked</li></ul></td></tr><tr class="" data-entity="S2-6-tdra" data-recorded="allow" data-whatif="allow"><td><code>S2-6-tdra</code></td><td>gate</td><td><span class="verdict v-allow">allow</span></td><td><span class="verdict v-allow">allow</span></td><td><ul></ul></td></tr></tbody></table></div><p>8 of 10 decisions identical.</p><h2>Second-order finding</h2><ul><li>second-order: the rule needs the hand-over time recorded; this run records the trigger at 2026-10-16 10:12 (synthetic) and no hand-over time, so the two-minute condition cannot be checked</li></ul>
 </main>
 </body>
 </html>

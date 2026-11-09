@@ -90,7 +90,11 @@ def test_five_scenario_sections_each_with_the_notice(page):
             run = next(el for el in page if _has(el, "run") and s in el["parents"] and el["attrs"]["data-lang"] == lang)
             assert NOTICE in _norm(run["text"])
             path = kb.REPO / run["attrs"]["data-run"]
-            assert f"hash chain: {'ok' if audit.verify(path) else 'BROKEN'}" in run["text"]
+            # Task 56c: the technical line sits in the side column; the run carries the plain line
+            tech = next(el for el in page if _has(el, "run-tech") and el["attrs"]["data-sid"] == s["attrs"]["data-sid"]
+                        and el["attrs"]["data-lang"] == lang)
+            assert f"hash chain: {'ok' if audit.verify(path) else 'BROKEN'}" in tech["text"]
+            assert ("The log is untouched." if audit.verify(path) else "The log chain is BROKEN.") in run["text"]
 
 
 def test_runs_shown_agree_with_the_markdown_pages():
@@ -115,13 +119,29 @@ def test_every_quote_is_verbatim_in_the_chunks(page):
     assert missing == []
 
 
+ANSWER_COLOURS = {"Allowed": "v-allow", "Held for a staff member": "v-hold", "Blocked": "v-block",
+                  "Not enough evidence": "v-insufficient"}
+
+
 def test_every_verdict_word_is_one_of_four_with_its_colour(page):
-    verdicts = [el for el in page if _has(el, "verdict")]
-    assert verdicts
-    for el in verdicts:
+    """Task 56d: the gate line's one coloured mark is its answer label; the fold summary's verdict is plain text."""
+    for el in (el for el in page if _has(el, "verdict")):
         assert el["text"] in VERDICTS, el["text"]
         assert _has(el, VERDICTS[el["text"]])
-    assert {el["text"] for el in verdicts} == set(VERDICTS)
+    answers = [el for el in page if _has(el, "answer")]
+    assert answers
+    for el in answers:
+        assert el["text"] in ANSWER_COLOURS, el["text"]
+        assert _has(el, ANSWER_COLOURS[el["text"]])
+    assert {el["text"] for el in answers} == set(ANSWER_COLOURS)
+
+
+def test_gate_summary_verdict_has_no_colour_of_its_own():
+    html = (kb.REPO / "docs" / "replay" / "index.html").read_text(encoding="utf-8")
+    # Task 56e item 3: the "Gate on" line moved inside the fold, under the label's plain sentence
+    lines = re.findall(r'<p class="gate-line">Gate on <b>[^<]*</b>: ([^<]*)</p>', html)
+    assert lines and set(lines) <= set(VERDICTS)
+    assert not re.search(r'<p class="gate-line">Gate on <b>[^<]*</b>: <span', html)
 
 
 def test_arabic_blocks_render_right_to_left(page):

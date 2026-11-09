@@ -16,7 +16,7 @@ import pytest
 from onyx import audit, data, kb, site, whatif
 from onyx.__main__ import build_parser
 
-PAGES = ("index.html", "runs.html", "gaps.html", "kb.html", "verify.html", "whatif.html", "modeldown.html",
+PAGES = ("index.html", "runs.html", "tests.html", "gaps.html", "kb.html", "verify.html", "whatif.html", "modeldown.html",
          "localmodel.html")
 
 
@@ -63,7 +63,7 @@ def _results():
     return json.loads((kb.REPO / "eval" / "results.json").read_text(encoding="utf-8"))
 
 
-def test_eight_pages_linked_from_one_bar(pages):
+def test_nine_pages_linked_from_one_bar(pages):  # Task 56e item 6: More tests after Runs
     assert tuple(pages) == PAGES
     for name, html in pages.items():
         links = [e["attrs"]["href"] for e in _parse(html) if e["tag"] == "a" and "site-link" in
@@ -191,7 +191,7 @@ def test_gap_order_follows_the_report():
 
 def test_runs_page_is_the_viewer_with_verify_links(pages):
     elements = _parse(pages["runs.html"])
-    shown = {e["attrs"]["data-run"] for e in elements if e["tag"] == "div" and "run" in e["attrs"].get("class", "")}
+    shown = {e["attrs"]["data-run"] for e in elements if e["tag"] == "div" and "run" in e["attrs"].get("class", "").split()}
     links = {e["attrs"]["href"] for e in _with(elements, "verify")}
     assert shown and {f"verify.html#{r}" for r in shown} <= links
     logs = {audit_path for audit_path in site.verify_names()}
