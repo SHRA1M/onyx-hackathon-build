@@ -94,10 +94,10 @@ def test_unseen_boxes_and_old_heading_gone():
     assert "The attack test: a customer tries to trick Mizan" in html
 
 
-def test_no_present_seconds_box_and_twelve_seconds():
+def test_no_present_seconds_box_and_fifteen_seconds():
     for html in (_page("runs.html"), (kb.REPO / "docs" / "replay" / "index.html").read_text(encoding="utf-8")):
         assert 'id="secs"' not in html and "seconds per step" not in html
-        assert "SECS = 12" in html
+        assert "SECS = 15" in html  # Task 56e item 1
 
 
 def test_no_em_dash_and_no_arabic_added():

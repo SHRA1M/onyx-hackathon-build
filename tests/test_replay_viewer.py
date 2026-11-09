@@ -138,9 +138,10 @@ def test_every_verdict_word_is_one_of_four_with_its_colour(page):
 
 def test_gate_summary_verdict_has_no_colour_of_its_own():
     html = (kb.REPO / "docs" / "replay" / "index.html").read_text(encoding="utf-8")
-    summaries = re.findall(r'<summary>Gate on <b>[^<]*</b>: ([^<]*)</summary>', html)
-    assert summaries and set(summaries) <= set(VERDICTS)
-    assert not re.search(r'<summary>Gate on <b>[^<]*</b>: <span', html)
+    # Task 56e item 3: the "Gate on" line moved inside the fold, under the label's plain sentence
+    lines = re.findall(r'<p class="gate-line">Gate on <b>[^<]*</b>: ([^<]*)</p>', html)
+    assert lines and set(lines) <= set(VERDICTS)
+    assert not re.search(r'<p class="gate-line">Gate on <b>[^<]*</b>: <span', html)
 
 
 def test_arabic_blocks_render_right_to_left(page):
