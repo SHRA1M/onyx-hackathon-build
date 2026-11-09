@@ -230,16 +230,20 @@ def test_readme_headings_in_the_orders_order():
 
 def test_no_other_entry_is_named_in_a_tracked_file():
     import subprocess
-    tracked = subprocess.run(["git", "ls-files"], cwd=kb.REPO, capture_output=True, text=True).stdout.split()
-    # the four running or named entries of hq's competitor read, as sha256 prefixes of the lowercased word, so this
-    # file names none of them
-    names = {'efb5047d16364e2d', 'b40f83d655ec2d8a', '8121d545b0b04138', '43b23c7cde617876'}
-    for name in tracked:
-        if name.startswith("docs/work-orders/"):  # hq's frozen orders; Task 16's own order names two entries
-            continue
+    # tracked files plus untracked, not-ignored ones, so a new file is caught before its commit (2026-11-09: a
+    # report-back written after the last test run and committed carried the names)
+    listed = subprocess.run(["git", "ls-files", "--cached", "--others", "--exclude-standard"], cwd=kb.REPO,
+                            capture_output=True, text=True).stdout.splitlines()
+    # the 11 names in hq's order history-clean-order-2026-11-09.md, as sha256 prefixes of the lowercased word, so
+    # this file names none of them; work orders included since 2026-11-09 (PR #29 cleaned them)
+    names = {'efb5047d16364e2d', 'b40f83d655ec2d8a', '8121d545b0b04138', '43b23c7cde617876', '506c59b5f6c50f67',
+             '1c779677692fe2ed', 'a0be256b2d28f03c', '41d7cb0a89a19da7', '19a5c3071a07e25b', 'd9c6972123a47b3a',
+             'ce468b82952876c3'}
+    for name in listed:
         path = kb.REPO / name
         if path.suffix in {".md", ".py", ".json", ".html", ".txt", ".csv"} and path.exists():
-            words = set(re.findall(r"[a-z]+", path.read_text(encoding="utf-8", errors="replace").lower()))
+            text = path.read_text(encoding="utf-8", errors="replace").lower()
+            words = set(re.findall(r"[a-z]+", text)) | set(re.findall(r"[a-z]+(?:-[a-z]+)+", text))
             assert not {hashlib.sha256(w.encode()).hexdigest()[:16] for w in words} & names, name
 
 

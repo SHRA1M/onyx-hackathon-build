@@ -15,11 +15,11 @@ of 2026-11-09 (fix the PR #29 report-back via a small PR; update the two hashes 
    at `2db24ad`.
 3. Hash quotes (read before the rewrite): see "Hashes" below.
 4. Rewrite: `git filter-repo --replace-text` and `--replace-message` (regex, case-insensitive), 11 names to
-   "another team", on a fresh mirror copy with GitHub's read-only `refs/pull/*` removed. Every another team and another team
-   hit was a team name; none was left.
-5. Counts, commits touching each name (`git log -i -G`, branches and tags), before and after:
-   another team 5 / 0, another team 4 / 0, another team 5 / 0, another team 3 / 0, another team 6 / 0, another team 3 / 0, another team 4 / 0,
-   another team 3 / 0, another team 3 / 0, another team 3 / 0, another team 4 / 0. Commit messages after: 0 each.
+   "another team", on a fresh mirror copy with GitHub's read-only `refs/pull/*` removed. Every hit of the two
+   names the order asked to check first (its list items 9 and 2) was a team name; none was left.
+5. Counts, commits touching each name (`git log -i -G`, branches and tags), for the 11 names as listed in hq's
+   order history-clean-order-2026-11-09.md, in that list's order. Before: 5, 4, 5, 3, 6, 3, 4, 3, 3, 3, 4.
+   After: 0 each. Commit messages after: 0 each.
    Rewritten `main` tip `d493066` (was `2db24ad`); its file tree is identical to the old tip.
    Local `main` reset to it. On it, plus the hash fix: `uv run pytest -q` 1200 passed; selftest exit 0.
 
