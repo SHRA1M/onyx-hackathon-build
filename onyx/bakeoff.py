@@ -33,7 +33,7 @@ from onyx.runs import LANGS, SCENARIOS, run_path
 ROOT = Path(__file__).resolve().parents[1]
 BAKEOFF_DIR = ROOT / "runs" / "bakeoff"
 # (prompt, runs root, commit of the prompt the runs used): v1 Part B; v2 Part C2 (order 2026-10-21-task-8-part-c)
-VERSIONS = (("v1", BAKEOFF_DIR, "d85871d"), ("v2", ROOT / "runs" / "bakeoff-v2", "a8f4acb"))
+VERSIONS = (("v1", BAKEOFF_DIR, "d7bb264"), ("v2", ROOT / "runs" / "bakeoff-v2", "a85a448"))
 # a line under a version's table, written by hq's order (2026-10-21-task-8-part-c2b item 3)
 NOTES = {"v2": "Arabic gap ids present in notes in 10 of 10 runs; scored 0 under v2 parsing; see C2b."}
 MODELS = ("claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5")
