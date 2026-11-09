@@ -937,3 +937,17 @@ Fable's ruling on stop 3 corrected its stop-2 "never allowed" and named the cut:
 Fable's final read accepted it after one move: "Both are listed..." pointed at "the other four differences" and repeated "listed for the fix", so it was deleted and the deny-list sentence placed after "were blocked." (9bee03f). CI green on 9bee03f and 881c4a5. Iyas merged PR #25 (940df10).
 
 The ruling's "last line of Annex A 'Known limits'" was placed after the Ra'ed review paragraph, the end of Annex A; Fable's final read did not object. First edit attempt in Bash hung on a stray `cat >` waiting for input; stopped and redone from a scratch script.
+
+## 2026-11-08: Task 56d, end-check orders 2 and 3 (ninety-first wrap)
+
+Task 56d on `task-56` (PR #26): the gate fold summary's verdict is plain text; the coloured answer label is the one coloured mark. Visible words lost 0, added 0; 1179 tests; selftest exit 0; commit 2bb02bd.
+
+End-check order 2, branch `end-check-2-report-text`, PR #27: stopped once, because the U8 counts failed the value check in the C3-tagged "What is different." paragraph. hq (Fable): own untagged paragraph, test pins the counts to Annex C line 255. Edit 4b ("29 of the 67") rejected by the value check, dropped. Edits 1 to 4 ran to page 6; the reserve cut (the two medians, kept in `eval/results.md` line 26) brought page 5 back; "Next steps: Annex A." fits. 410 report tests.
+
+End-check order 3, branch `end-check-3-annex`, PR #28: stopped twice. First, part 6 said "the two verdicts against the keys"; the annex lists 9 differences, 5 field-shape faults. Fable's second addendum gave new words. Second, the 67/29/38 sentence failed the value check in the C3 Result paragraph; hq: own paragraph after the table. Recount from `runs/ungoverned/`: 30 runs, 67, 29 written, 38 model. 411 tests; report 5 + annex, 17 pages.
+
+Moved from background Open:
+- Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
+- Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
+- Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (16 pages, page 5 ends with Limits, page 6 starts with "Annex").
+- price_change, cancellation and child gates have no scenario step (synthetic tests only).

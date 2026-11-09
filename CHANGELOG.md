@@ -2,6 +2,12 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-08
+
+- Fixed on branch `task-56`, PR #26 (order Task 56d): each gate line showed the answer twice, a coloured label and a coloured pill in the fold summary. Changed: `onyx/replay_viewer.py` prints the summary's verdict as plain text; `docs/site/runs.html` and `docs/replay/index.html` rebuilt; one test moved to the answer labels, one added. Words lost 0, added 0.
+- Changed on branch `end-check-2-report-text`, PR #27 (end-check order 2): the main text did not mention the attack test. Added the U8 paragraph and "Next steps: Annex A."; cut the Introduction case sentence, the Demo cost sentence and the Results medians sentence (medians stay in `eval/results.md`); S3 item says the scenario has the care agent propose. `docs/report.docx` rebuilt, 5 main pages. Four test files moved, one test added.
+- Changed on branch `end-check-3-annex`, PR #28 (end-check order 3): the annex did not say which proposals the team wrote, nor that the coordinator is code. Added: retrieval plan, the Next steps paragraph, the written-proposal disclosure, the 67/29/38 split, the coordinator wording. `docs/report.docx` rebuilt, 17 pages. Two test files moved, one test added.
+
 ## 2026-11-07
 
 - Fixed on branch `task-54`, merged in PR #25 (Fable's final read): in Annex C, "Both are listed for the fix..." pointed at "the other four differences" and repeated "listed for the fix". Changed: that sentence deleted; "The identifier check is a deny-list..." now sits after "were blocked.", and the regulator sentence closes the paragraph. Pages unchanged.

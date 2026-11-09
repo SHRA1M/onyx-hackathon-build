@@ -69,20 +69,21 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - The copied `docs/sources/` text files carry non-UTF-8 bytes: read them with `errors="replace"`. Python heredocs in Git Bash mangle quotes and turn a written \n into a real newline: write the script to the scratchpad, or use the Edit tool.
 
 
+- Numbers in a `[C3 ...]`/`[C5 ...]` tagged paragraph must be in `eval/results.md`, or `docs/build_report.py` fails ("cannot classify"). hq's rule (2026-11-08, orders 2 and 3): other counts go in their own untagged paragraph, pinned by a test; `build_report.py` is not changed. In a bash heredoc, write `chr(10) * 2`, not `"
+
+"`, inside Python strings meant for a file.
+
 ## Open
 
+- 2026-11-08, three open PRs, none merged: #26 `task-56` (site restyle, Tasks 56, 56b, 56d); #27 `end-check-2-report-text` (report main text: U8 paragraph, cuts, reserve medians cut, "Next steps: Annex A."); #28 `end-check-3-annex` (annex: retrieval plan, Next steps paragraph, written-proposal disclosure, coordinator is code, 67/29/38). #27 and #28 both rebuild `docs/report.docx`: rebuild after the second merge. `docs/report.pdf` is behind both.
+- Report-backs 2026-11-08: `docs/report-back/2026-11-08-task-56d-display-fixes.md`, `...-end-check-order-2-report-text.md`, `...-end-check-order-3-annex.md`. Open for hq: order 2's "20 runs" strip pin now matches "two runs per scenario per language".
 - Task 54: merged by Iyas 2026-11-07, PR #25 (940df10). Report-back: `docs/report-back/2026-11-07-task-54-built.md`, with Fable's final-read fix appended. Report: main text page 5, annex page 6, 16 pages. Open trap, disclosed in Annex C: `gate.py` 442 and 478 stop on a match, so an unmatched word is allowed (no recorded run did); Task 55 item 3, research first.
 - Task 53: merged, PR #24; its hq questions open (`docs/report-back/2026-11-06-task-53-built.md`).
-- Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
-- Task 50: merged, PR #19. Retrieval target 0.40 / 0.30 not met (figures: `eval/results.md`), so the retriever-swap task was not ordered.
-- Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 16 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
-- Reviewer email (hq ruling 2): status not known to this repo; Iyas sends it, and opens `docs/report.pdf` first (16 pages, page 5 ends with Limits, page 6 starts with "Annex").
 - Submission-day order: GitHub Pages from `main`, folder `/docs` (Pages offers root or `/docs`), so the report's site URL is https://shra1m.github.io/onyx-hackathon-build/site/; enabled once the repo is public 2026-11-09, URL checked before the email.
 - The three ITU call names go to the README reviewer block on submission day (Task 23 F2).
-- price_change, cancellation and child gates have no scenario step (synthetic tests only).
 - ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
 
 ## Next action
 
-Open work: the video. Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.
+Hq's end-check orders 4 and 5, one per session, then the video. Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.
