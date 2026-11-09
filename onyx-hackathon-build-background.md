@@ -70,6 +70,10 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - The copied `docs/sources/` text files carry non-UTF-8 bytes: read them with `errors="replace"`. Python heredocs in Git Bash mangle quotes and turn a written \n into a real newline: write the script to the scratchpad, or use the Edit tool.
 
 
+- Numbers in a `[C3 ...]`/`[C5 ...]` tagged paragraph must be in `eval/results.md`, or `docs/build_report.py` fails ("cannot classify"). hq's rule (2026-11-08, orders 2 and 3): other counts go in their own untagged paragraph, pinned by a test; `build_report.py` is not changed. In a bash heredoc, write `chr(10) * 2`, not `"
+
+"`, inside Python strings meant for a file.
+
 ## Open
 
 - PR #26 merged into `main` 2026-11-09 (merge `1a6b9f7`): Tasks 56 to 56f, README top; 1199 tests pass on main, selftest 0. PR #28 (annex) still open. Pages off until sending day.
@@ -83,3 +87,12 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 ## Next action
 
 hq reads `docs/report-back/2026-11-09-merge-pr-26.md`; Iyas merges PR #28; on sending day hq adds the film line at `<!-- film-link -->` and Pages goes on (docs, main). Submission 2026-11-09.
+
+- 2026-11-08, three open PRs, none merged: #26 `task-56` (site restyle, Tasks 56, 56b, 56d); #27 `end-check-2-report-text` (report main text: U8 paragraph, cuts, reserve medians cut, "Next steps: Annex A."); #28 `end-check-3-annex` (annex: retrieval plan, Next steps paragraph, written-proposal disclosure, coordinator is code, 67/29/38). #27 and #28 both rebuild `docs/report.docx`: rebuild after the second merge. `docs/report.pdf` is behind both.
+- Report-backs 2026-11-08: `docs/report-back/2026-11-08-task-56d-display-fixes.md`, `...-end-check-order-2-report-text.md`, `...-end-check-order-3-annex.md`. Open for hq: order 2's "20 runs" strip pin now matches "two runs per scenario per language".
+- Task 54: merged by Iyas 2026-11-07, PR #25 (940df10). Report-back: `docs/report-back/2026-11-07-task-54-built.md`, with Fable's final-read fix appended. Report: main text page 5, annex page 6, 16 pages. Open trap, disclosed in Annex C: `gate.py` 442 and 478 stop on a match, so an unmatched word is allowed (no recorded run did); Task 55 item 3, research first.
+- Task 53: merged, PR #24; its hq questions open (`docs/report-back/2026-11-06-task-53-built.md`).
+- ITU (email and event page, 2026-10-27): submission by email to aiforgoodlab@itu.int; Session 6 on 2026-11-07. Passed to hq by Iyas.
+
+
+Hq's end-check orders 4 and 5, one per session, then the video. Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.

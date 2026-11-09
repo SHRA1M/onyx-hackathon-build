@@ -163,7 +163,7 @@ def test_the_counts_stated_in_the_annex_are_the_repos():
     assert f"`rules.json` ({len(rules)} rules)" in annex
     docs = {a: len(m["documents"]) for a, m in mandates.items()}
     assert (f"(care {docs['care']} documents, adviser {docs['adviser']}, TDRA {docs['tdra']}, Data Office "
-            f"{docs['data_office']}, coordinator {docs['coordinator']})") in annex
+            f"{docs['data_office']}, coordinator {docs['coordinator']}; the coordinator is code, not a model)") in annex  # end-check order 3
     uae_docs = {r["document_id"] for r in rules if r["jurisdiction"] == "UAE"}
     assert f"({len(rules)} rules over {len(uae_docs)} UAE documents)" in annex
     arabic = sum(1 for c in chunks if c.get("text_ar", "").strip())
@@ -314,3 +314,26 @@ def test_annex_f_quotes_are_the_registers_and_its_dates_are_iso():
     for lead in ("**F.1 Gap 7:", "**F.2 Gap 13:", "**F.3 Gap 14:", "**F.4 Gap 15:", "**F.5 Candidates",
                  "**F.6 Searched, nothing found.**"):
         assert lead in f, lead
+
+
+def test_the_written_proposal_split_matches_a_recount_of_the_ungoverned_runs():
+    """End-check order 3 (hq option a): the untagged sentence after the Result table states 67, 30, 29 and 38. Recount
+    with eval.run_metrics' claims rule, split by the team's pending proposal on the abstention step."""
+    from onyx import data, eval as ev, gate
+    runs = written = model = 0
+    for path in sorted((kb.REPO / "runs" / "ungoverned").rglob("*.jsonl")):
+        steps = {s["n"]: s for s in data.load_key(path.relative_to(kb.REPO).parts[2])["steps"]}
+        by_step = {}
+        for e in ev._gates(ev._events(path)):
+            by_step.setdefault(ev._step(e["entity_id"]), []).append(e)
+        for n, step in steps.items():
+            abstain = bool(step.get("abstain"))
+            judged = [e for e in by_step.get(n, []) if bool(e["new_value"].get("pending")) == abstain]
+            if step.get("gate_outcome", step["verdict"]) in {gate.HOLD, gate.BLOCK} and any(
+                    e["verdict"] == gate.ALLOW for e in judged):
+                written, model = written + abstain, model + (not abstain)
+        runs += 1
+    sentence = (f"Of the {written + model} such steps over the {runs} ungoverned runs, {written} are the proposals the "
+                f"team wrote into the scenarios, each judged at its gap step, and {model} are the model's own.")
+    assert (runs, written + model, written, model) == (30, 67, 29, 38)
+    assert sentence in (kb.REPO / "docs" / "annex.md").read_text(encoding="utf-8").split(chr(10) * 2)
