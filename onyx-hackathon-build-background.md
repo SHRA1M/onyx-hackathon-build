@@ -41,7 +41,6 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 - 2026-11-05 (hq, Task 51 stop 1 ruling): the README Knowledge base row prints the shipped retrieval figures (51.A.6, replaces the 2026-11-04 "no number"). A strip figure must be printed in the main text; the wording may differ.
 - 2026-11-04 (hq ruling on Task 47 stop 1): retrieval figures live in `eval/results.md` and Annex A, as found and with their frame. The scored figures stay Sonnet's; the bilingual row is shown, in no scored run. No retrieval redesign, larger embedder or Sonnet-driven retrieval before the freeze.
-- 2026-11-04 (hq ruling on Task 45 stop 1): a file-quoted register line that also has a chunk carries `"chunked": true`, and `data.cited_chunks()` counts it; `_row_all` in `tests/test_gaps.py` hides those lines from older tests, `tests/test_task_45.py` reads them whole. The WAM article and the guide share the instrument `agentic-ai-gov-guide` (86 instruments). Gap 6 and gap 7 positions are hq's words: the DIFC, DHA and DoH texts each bind within their own scope only; the DHA policy sets disclosure, not oversight.
 - 2026-11-02 (Tasks 42, 43; hq answers): absence is "not on the official portal (checked date)", never "never issued"; frozen keys keep their bytes (S4 still says "were never issued"; the grader reads gap ids, not text). Free-zone texts are jurisdiction `UAE-free-zone`, country `UAE`, and every mention says "UAE free zone (DIFC|ADGM), not federal"; ITU rows are `international` as Y.3172. The AI and Data Authority: "the Prime Minister approved" (WAM); the register keeps the PDPL's name.
 - 2026-10-29 (Iyas, `_reference/how-we-build.md`): from Part B on, every report-back pastes the full `uv run pytest` output and repeats the Limits line: touches only the named files, never `runs/` or the keys; fails closed (USD 0, nothing recorded, nothing pushed outward, stop and ask); owner of any failure is Iyas.
 - 2026-10-27: C5 is the scored run, governed (en / ar) action recall 0.96 / 1.00, 110 of 112 key steps; C3 is the ungoverned baseline. Detail: archive, 2026-11-05.
@@ -55,6 +54,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 - Every Y.3172 chunk carries page 1 (chunker quirk); a gap row gives its own `page`. `kb/sources/global/` is gitignored, so the verbatim global-quote test skips in CI.
 
 - `*.txt` is gitignored: a report-back appendix is `.md` (2026-11-06).
+- Site CSS: `.cards` is a grid; never give `body` a class named `cards`. In a Python string, a CSS escape like `\25BE` must be written `\\25BE` (`\25` is an octal escape) (2026-11-08).
 - Rebuilding e5-small replaces `kb/index-bilingual/`, deleting its `e5-base` and `bge-m3` sub-folders.
 - Recorded spend USD 36.11 against the USD 45 stop; the API organisation holds USD 100 promotional credit (granted 2026-10-27, expires 2026-11-25). `record`'s estimate counts both languages even when one is skipped. Outside S1 to S5 the guard underestimates about fourfold (USD 1.71 for 96 care calls that cost about USD 7.42): price from C5's care calls, USD 0.0682 en, 0.0864 ar.
 - A U-scenario records through `runs.record` with the path `unseen/<file>` as its scenario, no code; the `record` CLI refuses it (2026-11-06).
@@ -72,7 +72,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Tasks 56, 56b, 56d, 56c: on `task-56`, PR #26 open (also carries bd3cc6e). 56c (`55cd02e`): plain words, side column, Present 12 s; report-back `docs/report-back/2026-11-08-task-56c-site-words.md` holds 6 decisions for hq. Full pytest not rerun after the last test repin.
+- Tasks 56, 56b, 56d, 56c, 56e: on `task-56`, PR #26 open (also carries bd3cc6e). 56e (`609ab22` words, `c61b599` behaviour): runs page opens on the cards, Present 15 s, label sentences by law count, More tests page, model down as a scenario; 1198 tests pass. Report-back `docs/report-back/2026-11-08-task-56e-runs-polish.md`; for hq: README line 131 says "eight pages", now nine.
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 16 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
@@ -82,4 +82,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-hq reads the 56c report-back (Fable checks all report-backs together); Iyas merges PR #26. Then the README task. Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.
+hq reads the 56c and 56e report-backs; Iyas merges PR #26. Then the README task (and its "eight pages" line). Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.
