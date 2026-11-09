@@ -41,7 +41,6 @@ DEF_END = "S1 reads 0.33 because its key places two gaps at steps where the advi
 REPORT_HAS = [
     "**Team leader:** Iyas Shraim (BAU Faculty of Artificial Intelligence)",
     f"**Team members:** {TEAM}",
-    CASE,
     "UAE telecom rules already in force set four limits on an AI in that seat. It cannot charge a customer for a service "
     "they did not expressly order (TDRA Consumer Protection Regulations v2.0, CPR 4.3). It cannot share their data with "
     "affiliates or outside parties without prior consent (24.6). It cannot cut their line for non-payment without a "
@@ -72,12 +71,12 @@ REPORT_HAS = [
     "clause, page and words behind every decision (`docs/replay/index.html`).",
     "2. A customer asks why. One command prints the decision, the clause with its quote and the log entry's fingerprint, "
     "in English or Arabic: `python -m onyx why <log> --step <n>`. The answer is read from the log, so no AI is asked to explain itself afterwards.",
-    "3. Two instructions conflict (the controversy case). In S3, step 3, the care agent proposes sending customer "
+    "3. Two instructions conflict (the controversy case). In S3, step 3, the scenario has the care agent propose sending customer "
     "identifiers to the AI provider abroad. The gate blocks it under PDPL 22 and 23(2), and refuses even a staff member's "
     "override (logged as `override_refused`). Privacy wins by rule, not by what the model happens to do.",
     "4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's "
     "missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4) "
-    "on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).",  # item 46 undid 45(e)
+    "on S4.",  # end-check order 2, cut 2
     "A partner asks for subscriber data: held, no verification level set (24.10; one Arabic run: block, 24.6); the "
     "override to send identifiers abroad: block, no override (PDPL 22, 23(2); gap 5).",
     "| P | plain-code gates reading JSON clause rows (`rules.json`: id, document_id, clause, chunk, quote, quote_ar); four "

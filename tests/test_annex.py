@@ -15,7 +15,7 @@ from onyx import kb
 DOCS = kb.REPO / "docs"
 ANNEX_MD = DOCS / "annex.md"
 REPORT_MD = DOCS / "report.md"
-LIMITS_END = "(practice, not legal advice, no UAE standing)."  # Task 54: pointer and "Next:" left page 5 (stop-3 ruling B.3)
+LIMITS_END = "(practice, not legal advice, no UAE standing). Next steps: Annex A."  # end-check order 2, edit 5  # Task 54: pointer and "Next:" left page 5 (stop-3 ruling B.3)
 
 
 def _load():

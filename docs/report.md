@@ -11,7 +11,7 @@
 
 ## Introduction
 
-Mizan is a consumer-care AI for a synthetic UAE operator. The case is an ordinary customer talking to their phone company in a chat or on a call, not a practice exercise. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay under a proposed rule: a what-if for the policymaker.
+Mizan is a consumer-care AI for a synthetic UAE operator. Every step goes to a hash-chained log that a judge can replay offline without an API key, and replay under a proposed rule: a what-if for the policymaker.
 
 The first contact at a UAE operator is already an AI, and e& reported 371,476 customer complaints in its UAE
 operations for 2025 (e&, Sustainability Report Appendices 2025, Appendix 1). UAE telecom rules already in force set four limits on an AI in that seat. It cannot charge a customer for a service they did not expressly order (TDRA Consumer Protection Regulations v2.0, CPR 4.3). It cannot share their data with affiliates or outside parties without prior consent (24.6). It cannot cut their line for non-payment without a warning first (22.1). And it cannot handle their complaint, because that conversation is reserved for a person: 26.7.2 requires licensees to "preclude the use of non-human agents by Licensees in conversations with Consumers regarding Consumer Complaints".
@@ -29,6 +29,8 @@ for a person go to a person: a Consumer Complaint (CPR 26.7.2, licence 9.1), a c
 (PDPL 18(4)), and every hold; no human approves every answer, because the texts do not ask for it. The test results in this report can be checked: a command called `eval` recalculates them from the run logs, and anyone can run it.
 
 **What is different.** We ran the same five scenarios twice on the same model, once with the gates on and once with them off. With the gates off, on average about two acts per run went through that should have been stopped or handed to a person: 2.3 in English and 2.1 in Arabic `[C3, prompt v3, three runs per scenario per language]`.
+
+Our adversarial subscriber (U8) tries to steer the agent by words alone, in both languages. The first test exposed a gate fault: 8 of 48 governed steps allowed. After the fix: 0 of 48 over six runs (bound: Annex C); without the gate, 48 of 48.
 
 ## What is the role played by AI?
 
@@ -72,12 +74,12 @@ Of the 13 Readiness 2.0 dimensions, we claim five (6, 7, 8, 10, 11) with evidenc
 clause, page and words behind every decision (`docs/replay/index.html`).
 2. A customer asks why. One command prints the decision, the clause with its quote and the log entry's fingerprint,
 in English or Arabic: `python -m onyx why <log> --step <n>`. The answer is read from the log, so no AI is asked to explain itself afterwards.
-3. Two instructions conflict (the controversy case). In S3, step 3, the care agent proposes sending customer identifiers to the AI provider
+3. Two instructions conflict (the controversy case). In S3, step 3, the scenario has the care agent propose sending customer identifiers to the AI provider
 abroad. The gate blocks it under PDPL 22 and 23(2), and refuses even a staff member's override (logged as
 `override_refused`). Privacy wins by rule, not by what the model happens to do.
 4. Another regulator, another rule. `onyx whatif` re-runs a recorded conversation under a proposed new rule: TDRA's
 missing hand-over rule (gap 1) on S2, and the Data Office's missing rule on reviewing an automated decision (gap 4)
-on S4. A re-run costs USD 0; a live run on the model USD 0.27 (USD 5.3767 over the 20 scored runs).
+on S4.
 
 ## Error scenarios
 
@@ -102,8 +104,7 @@ proceeds: allow in English, blocked in Arabic; the TDRA's request for the record
 
 **Results**, English / Arabic `[C5, governed, two runs per scenario per language, mean over S1 to S5, en / ar]` (Figure 2, Annex C): citation validity 0.99 / 1.00 (one id, S2 English); action recall
 against the frozen keys 0.96 / 1.00 (110 of 112 key steps; both misses English: S3-4, S4-4); abstention on the one
-unanswerable step per scenario 1.00; expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the adviser, the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged. The gate decides in a median of 0.46 ms; the model's proposal
-takes a median of 7.8 s `[C3, governed, 222 decisions, 156 calls]`.
+unanswerable step per scenario 1.00; expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the adviser, the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged.
 
 ## Policy gaps and standards gaps derived from the mapping exercise
 
@@ -135,4 +136,4 @@ Cabinet: AI disclosure at first contact (6). ITU-T: a policy-node outcome routin
 
 ## Limits and next steps
 
-One team wrote the keys, gates and scenarios; humans are scripted; Arabic coverage is uneven; outages are shown only by fault injection; erasure from the log and de-identification are unsolved (Annex A). Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading (practice, not legal advice, no UAE standing).
+One team wrote the keys, gates and scenarios; humans are scripted; Arabic coverage is uneven; outages are shown only by fault injection; erasure from the log and de-identification are unsolved (Annex A). Ra'ed Shraim, a data-protection officer outside the team, reviewed the gates' reading (practice, not legal advice, no UAE standing). Next steps: Annex A.
