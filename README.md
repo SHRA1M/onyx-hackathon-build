@@ -4,7 +4,19 @@
 
 > **Synthetic data.** The operator, subscribers and numbers in this repo are synthetic. The law texts are real, public, linked and hashed. No consumer data.
 
-Mizan is a consumer-care AI for a synthetic UAE operator: agents propose each step of a chat or call, plain-code gates written from binding UAE clauses allow or block it, in Arabic and English, and every step is replayable from a hash-chained log.
+Mizan is a consumer-care AI for a phone company, tested on written scenarios with a fictional UAE operator, not on live customers. The AI proposes each step of a conversation; code written from binding UAE law (the gates) allows it, holds it for a staff member or blocks it, in Arabic and English, and every step goes into a log that anyone can replay.
+
+Five agents: the care agent talks to the customer, the adviser checks the law, and two agents play the regulators, TDRA and the Data Office. These four are AI. The fifth, the coordinator, is plain code that routes each step.
+
+![The runs page: scenario S1, step 3, held for a staff member, with the gate's reason](docs/site/screenshots/runs-S1-step3-held.png)
+
+<!-- film-link -->
+
+See the runs: [https://shra1m.github.io/onyx-hackathon-build/site/runs.html](https://shra1m.github.io/onyx-hackathon-build/site/runs.html)
+
+Read the report: [docs/report.pdf](docs/report.pdf)
+
+In each of the five scored scenarios, one move was written into the test by the team, not proposed by the AI, to check the gate: S1 step 6, S2 step 5, S3 step 3, S4 step 5, S5 step 4. The runs page marks each one; the report's annex lists them.
 
 ## For the reviewer
 
@@ -128,7 +140,7 @@ Demo, four steps (the report's Demo scenarios; every one a replay or plain code 
 
 ## Open the site
 
-Open `docs/site/index.html` from disk: eight pages, no server, no network, no key. The overview's figures come from
+Open `docs/site/index.html` from disk: nine pages, no server, no network, no key. The overview's figures come from
 `eval/results.json`, the runs page is the replay viewer, the gap register and the knowledge base are rendered from
 `onyx/data/gaps.json` and `kb/manifest.csv`, and "Verify a log" recomputes the hash chain of any C3, C4 or C5 run in
 the browser. `python -m onyx site` writes it; CI fails if a byte differs. From 2026-11-09 GitHub Pages serves
