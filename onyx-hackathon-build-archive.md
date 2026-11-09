@@ -967,3 +967,7 @@ Part A `609ab22`: 15 s; "where the customer is talking (business centre, phone c
 
 Moved from background at this wrap (decision still settled):
 - 2026-11-04 (hq ruling on Task 45 stop 1): a file-quoted register line that also has a chunk carries `"chunked": true`, and `data.cited_chunks()` counts it; `_row_all` in `tests/test_gaps.py` hides those lines from older tests, `tests/test_task_45.py` reads them whole. The WAM article and the guide share the instrument `agentic-ai-gov-guide` (86 instruments). Gap 6 and gap 7 positions are hq's words: the DIFC, DHA and DoH texts each bind within their own scope only; the DHA policy sets disclosure, not oversight.
+
+## 2026-11-09: Task 56f and the README top part
+
+Task 56f (`4cb6fa2`, report-back `b4c79ff`): the model-down story box says "all 8 decisions outside step 3 kept their verdict", with S2-5's 19 laws instead of 24. The sentence lives in `onyx/replay_viewer.py` (`MODELDOWN_STORY`), not `site.py`; Iyas approved the file change. README top (`1a52558`): Fable's block above "## For the reviewer" (two sentences, agents line, S1 step 3 held picture at `docs/site/screenshots/runs-S1-step3-held.png`, film-link comment, Pages and report links, written-proposals note), and "nine pages". The Pages address `https://shra1m.github.io/onyx-hackathon-build/site/runs.html` was set by hq; there is no Pages setup in the repo yet. The block takes about 1.5 screens on GitHub. 1199 tests pass, selftest 0.

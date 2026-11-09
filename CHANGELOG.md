@@ -2,6 +2,11 @@
 
 One entry per fix: date, what broke, what changed.
 
+## 2026-11-09
+
+- Changed on `task-56`, not merged (Task 56f): the model-down story said "7 of 8 later decisions stayed the same", which reads as one decision changed. None changed. It now says all 8 decisions outside step 3 kept their verdict, and that S2-5 lists 19 laws instead of 24.
+- Changed on `task-56`, not merged (README top order): README line 7 replaced by the top block; "eight pages" became "nine pages" (the site has nine since Task 56e).
+
 ## 2026-11-08
 
 - Task 56c: the runs page was hard for a non-engineer to follow; plain titles, stories and step lines added, technical lines moved to a side column, Present fixed at 12 s.

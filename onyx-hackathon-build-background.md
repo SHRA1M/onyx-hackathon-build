@@ -72,7 +72,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Tasks 56, 56b, 56d, 56c, 56e: on `task-56`, PR #26 open (also carries bd3cc6e). 56e (`609ab22` words, `c61b599` behaviour): runs page opens on the cards, Present 15 s, label sentences by law count, More tests page, model down as a scenario; 1198 tests pass. Report-back `docs/report-back/2026-11-08-task-56e-runs-polish.md`; for hq: README line 131 says "eight pages", now nine.
+- On `task-56`, PR #26 open, not merged: Tasks 56 to 56f and the README top (`1a52558`), plus bd3cc6e. 1199 tests pass. Report-backs 56e, 56f, readme-top in `docs/report-back/`. README top does not fit one screen (picture); hq to rule.
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 16 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
@@ -82,4 +82,4 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Next action
 
-hq reads the 56c and 56e report-backs; Iyas merges PR #26. Then the README task (and its "eight pages" line). Task 55 (three items) and the exact-match survey of `gate.py` wait until after the shortlist (brief). Submission 2026-11-09.
+hq reads the 56f and readme-top report-backs; Iyas merges PR #26 and PR #28; on sending day hq adds the film line at `<!-- film-link -->` and Pages goes on. Submission 2026-11-09.
