@@ -78,7 +78,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- 2026-11-09: repo is public at `SHRA1M/onyx-hackathon-build` (`main` and 8 tags), Pages on from `main` `/docs`, built; site and README checked signed out (`docs/report-back/2026-11-09-go-public.md`). Internal notes cleaned before publishing. Two local backups from 2026-11-09 under `D:\Projects\_backups\`.
+- 2026-11-09: repo is public at `SHRA1M/onyx-hackathon-build` (`main` and 8 tags), Pages on from `main` `/docs`, built; site and README checked signed out (report-back kept in hq: `D:\Projects\hq\uni\ai-for-good-hackathon\private-report-backs-2026-11-09\`). Internal notes cleaned before publishing. Two local backups from 2026-11-09 under `D:\Projects\_backups\`.
 - PRs #27 and #28 merged 2026-11-09 (report main text and annex); report 5 main pages, annex from page 6, 17 total; `docs/report.pdf` rebuilt.
 - Old commit hashes quoted in docs (archive, report-backs, README line 312, `eval/bakeoff.*`) no longer resolve; only the two bakeoff pins were updated.
 - README CI badge: first run not checked.

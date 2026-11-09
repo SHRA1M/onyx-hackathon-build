@@ -1021,3 +1021,7 @@ Hq's end-check orders 4 and 5, one per session, then the video. Task 55 (three i
 
 Moved from background (superseded by the 108-row manifest):
 - `kb/manifest.csv` (task-36: 89 rows, 84 VERIFIED, 3 UNVERIFIED, 2 REFERENCED, 35 foreign, 32 UAE instruments not counting the announcement row; Task 35 added six Gulf rows, Task 35b five bot-disclosure rows (Maine §1500-DD, India TRAI TCCRR 2012, Texas BCC 552, California BPC 17940-17943 and HSC 1339.75 as extracts), all binding in their state, no chunks; Task 41 the Ofcom Penalty Guidelines 2017 (`guideline`, http 403, VERIFIED on Iyas's saved PDF, hash of the pypdf text); per-task additions: archive), `kb/manifest.schema.json`, `kb/local-sources.json` (hq file, text file or the PDF itself to read with pypdf, splitter per document; `bare_page_numbers: true` on licence-2-2026 only; the Trade Law and Cabinet 28/2023 texts are pypdf extracts, running headers removed, held in hq's `standards-text/`, byte-identical to `kb/sources/`), `kb/export/InputDocs/Inputs.md` (committed; copies of sources stay local). 18 rows keep a landing URL with `kb.LANDING_MARK` in `notes` (hq ruling, item 9); `url_problems` rejects a landing URL without it.
+
+## 2026-11-09: three internal report-backs moved to hq
+
+Three report-backs of 2026-11-09 copied to `D:\Projects\hq\uni\ai-for-good-hackathon\private-report-backs-2026-11-09\` (byte-identical, checked with `cmp`), deleted from the repo in `f243ea1` and pushed; history left as it is. Tests 1200 passed.
