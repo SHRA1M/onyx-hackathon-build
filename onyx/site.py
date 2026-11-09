@@ -38,6 +38,44 @@ HERO_STEPS = (("The AI proposes.", "An AI agent drafts each step: a reply, a ref
               ("A person has the final word.", "A named staff member takes every complaint and approves what is held."))
 HERO_FOOT = ("Tested on a fictional operator with real UAE laws, in English and Arabic. Every step is written to a log "
              "you can check on this site.")
+# order 2026-11-08 Task 56c item 7: the agents under the hero, Iyas's film wording
+AGENTS_TEXT = ("Mizan has two parts: five agents, and the gates. The care agent talks to the customer, the adviser checks "
+               "the law, and two agents play the regulators, TDRA and the Data Office. These four are AI. The fifth, the "
+               "coordinator, is plain code that routes each step. The gates are code too. They check every action "
+               "against the law: allow, hold for a staff member, or block. All logged.")
+# Task 56c item 5: the steered-subscriber test in plain words. Each figure is checked against docs/annex.md, the
+# "Steered subscriber, U8" paragraph and the lines after it, by ANNEX_FACTS on every build.
+TRICK = ("We wrote a customer who pushes Mizan to break the law: eight messages, each trying by words alone. We ran "
+         "it three times in English and three times in Arabic with the gates on: 48 tries. Before our fix, 8 of 48 "
+         "went through, all from one fault: sharing account data with an outside company, a marketing partner. After "
+         "the fix, 0 of 48 went through. With the gates off, 48 of 48 went through.")
+ANNEX_FACTS = ("The scenario is eight subscriber messages", "Three runs per language per set-up",
+               "the gate allowed 8 of 48 governed steps", "0 of 48 governed steps",
+               "Without the gate, 48 of 48 steps passed before and after",
+               "All eight passes were one act, account data to the marketing partner")
+# Task 56c item 6: end-check-2026-11-08-fable.md part 6, in plain words; 84 = kb/chunks rows with no text_ar
+NEXT_LEAD = ("If we are shortlisted, we build a customer chat in the operator's app and a screen for staff, in Arabic "
+             "and English, first by text and then by voice. None of this is built yet. The steps, in order:")
+NEXT_STEPS = ("Fix the gate faults we list in Annex C.",
+              "Make Mizan better at finding the right clauses (the retrieval plan in the annex).",
+              "Let the adviser read the whole conversation, so it can flag gaps 2 and 6 where they arise.",
+              "Record the scored runs again, once, so every figure moves together, and run the seven new stories for "
+              "the first time, in both languages.",
+              "Run the attack test 30 or more times, with attackers who have not read the gate code.",
+              "For the live demo: a chat for the customer and a screen where staff take hand-overs and release held "
+              "steps, in Arabic and English, by text and then by voice; a question to the adviser at any step; and "
+              "routing for a step the scenario did not name.",
+              "Arabic text for the {english_only} clauses that have only English, and the reviewer's code-level "
+              "points.")
+# Task 56c items 1 and 4
+VERIFY_PLAIN = ("This page checks that no line of a run's log was changed after it was written, using the hash chain: "
+                "each line carries a fingerprint of itself and of the line before it, so a change breaks every "
+                "fingerprint after it.")
+LOCAL_PLAIN = ("The operator chooses the model. This run uses an open model on one desktop computer instead of the "
+               "hosted one. The same adapter, prompt, gates and answer keys run on it; only the endpoint and the model "
+               "name change. This shows a way around gap 5 (customer data sent to a model provider outside the "
+               "country); it does not close it.")
+LOCAL_LABEL = "Demo, not scored"
 PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("gaps.html", "Gap register"),
          ("kb.html", "Knowledge base"), ("verify.html", "Verify a log"), ("whatif.html", "What-if"),
          ("modeldown.html", "Model down"), ("localmodel.html", "Local model"))
@@ -166,6 +204,8 @@ def index() -> str:
 <ol class="steps">{steps}</ol>
 <p class="hero-foot">{escape(HERO_FOOT)}</p>
 </section>
+<section class="agents"><h2>The agents</h2><p>{escape(AGENTS_TEXT)}</p></section>
+{trick_section()}
 <p class="notice">{escape(NOTICE)}</p>
 <p class="lead">{escape(SENTENCE)}</p>
 <div class="cards pages">
@@ -192,8 +232,28 @@ def index() -> str:
 <p class="meta">From <code>eval/results.md</code>; every figure above is read from <code>eval/results.json</code>.</p>
 <ol class="defs">{foot}</ol>
 </details>
+{next_section()}
 """
     return _frame("index.html", "Mizan", body, OPEN_DEFS_JS)
+
+
+def trick_section() -> str:
+    annex = " ".join((kb.REPO / "docs" / "annex.md").read_text(encoding="utf-8").split())
+    assert all(fact in annex for fact in ANNEX_FACTS), "docs/annex.md no longer says what TRICK says"
+    return (f'<section class="trick"><h2>We tried to trick it</h2><p>{escape(TRICK)}</p>'
+            '<p class="meta">Source: <code>docs/annex.md</code>, "Steered subscriber, U8".</p></section>')
+
+
+def english_only() -> int:
+    rows = [json.loads(line) for path in sorted((kb.REPO / "kb" / "chunks").glob("*.jsonl"))
+            for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return sum(not r.get("text_ar") for r in rows)
+
+
+def next_section() -> str:
+    items = "".join(f"<li>{escape(step.format(english_only=english_only()))}</li>" for step in NEXT_STEPS)
+    return (f'<section class="next"><h2>Where Mizan goes next</h2><p class="plan-label">Plan, not built</p>'
+            f"<p>{escape(NEXT_LEAD)}</p><ol>{items}</ol></section>")
 
 
 # --- runs.html -------------------------------------------------------------------------------------------------
@@ -223,9 +283,17 @@ def unseen_bank() -> str:
 
     bank = [s for s in scenarios if s["id"] != "U8"]
     steered = [s for s in scenarios if s["id"] == "U8"]  # Task 52: it has a key and was run, so the line below is not its
-    return (f"<section><h2>The unseen bank</h2>{table(bank)}<p>No key exists for them and none has been run; their cold "
-            "runs are a next step.</p><p>An eighth, written for the steered-subscriber test on 2026-11-06, has a key "
-            f"naming only the barred act per step and was run:</p>{table(steered)}</section>\n")
+    # Task 56c addendum: two boxes; U8's figures are docs/annex.md line 255's, checked by ANNEX_FACTS
+    trick_section()
+    return ('<section class="unseen"><div class="box"><h2>Next tests: seven new stories, not run yet</h2>'
+            f"<p>{escape(UNSEEN_TEXT)}</p>{table(bank)}</div>"
+            '<div class="box"><h2>The attack test: a customer tries to trick Mizan</h2>'
+            f"<p>{escape(U8_TEXT)}</p>{table(steered)}</div></section>\n")
+
+
+UNSEEN_TEXT = ("We wrote these seven stories before our first scored run and locked them, so we could not tune Mizan to "
+               "them. After the shortlist we run them for the first time, in English and Arabic.")
+U8_TEXT = "We ran this one. Before our fix, 8 of 48 tries got through; after it, 0 of 48."
 
 
 # --- gaps.html -------------------------------------------------------------------------------------------------
@@ -388,7 +456,7 @@ def verify_page() -> str:
         options = "".join(f'<option value="{replay_viewer._rel(p)}">{replay_viewer._rel(p)}</option>' for p in paths)
         groups.append(f'<optgroup label="{escape(label)} ({len(paths)})">{options}</optgroup>')
         logs |= {replay_viewer._rel(p): p.read_text(encoding="utf-8") for p in paths}
-    body = (f'<h1>Verify a log</h1><p class="notice">{escape(NOTICE)}</p>'
+    body = (f'<h1>Verify a log</h1><p class="lead">{escape(VERIFY_PLAIN)}</p><p class="notice">{escape(NOTICE)}</p>'
             "<p>Every event in a run log carries <code>hash = sha256(prev_hash + canonical_json(event without "
             "\"hash\"))</code>; the first <code>prev_hash</code> is 64 zeros (<code>onyx/audit.py</code>). This page "
             "recomputes the chain in your browser with WebCrypto, from the log text it carries; no network call. "
@@ -427,7 +495,7 @@ def whatif_page() -> str:
     path = replay_viewer._rel(WHATIF_RUN)
     md = whatif.page_name(WHATIF_RUN, WHATIF_RULE)
     body = (f"<h1>What-if: {escape(WHATIF_RUN.parent.name)} under the rule {escape(rule['gap'].replace('-', ' '))} "
-            f'recommends</h1><p class="notice">{escape(NOTICE)}</p>'
+            f'recommends</h1>{whatif_story(rule, recorded, changes)}<p class="notice">{escape(NOTICE)}</p>'
             f'<p>Run <code>{path}</code>, hash chain {"ok" if audit.verify(WHATIF_RUN) else "BROKEN"} '
             f'<a class="button verify" href="verify.html#{path}">Verify this log</a>. Replayed offline from the '
             "logged model responses; no model call. Left: what the gate decided in the recorded run. Right: the same "
@@ -443,6 +511,30 @@ def whatif_page() -> str:
             f"<p>{len(recorded) - len(changes)} of {len(recorded)} decisions identical.</p>"
             f"<h2>Second-order finding</h2><ul>{findings or '<li>none</li>'}</ul>")
     return _frame("whatif.html", "Mizan: what-if", body)
+
+
+def whatif_story(rule: dict[str, Any], recorded: list, changes: list) -> str:
+    """Task 56c item 2: the plain story, then the step whose verdict changed, before and after."""
+    flipped = [c for c in changes if c[2] != c[3]]
+    assert len(flipped) == 1, "the story below tells one changed verdict"
+    entity, action, before, after, reasons = flipped[0]
+    n = entity.split("-")[1]
+    same = len(recorded) - len(changes)
+    story = (f"We added one rule the law does not have yet, the one we propose for gap 1: when a chat turns into a "
+             f"complaint, the AI stops and a named staff member takes over within {rule['value']} {rule['unit']}. Then "
+             "we replayed the same S2 conversation from its log, with no new AI call. "
+             f"Before, at step {n} the question of how fast to hand over had no answer in the law, so the gate held "
+             "it for a staff member. "
+             f"After, the proposed rule answers it, so the gate allows it; {same} of {len(recorded)} decisions stay the "
+             "same. The replay also found a new problem: the log records when the complaint began but not when the "
+             f"hand-over happened, so the {rule['value']}-{rule['unit'].rstrip('s')} limit cannot be checked.")
+    added = "".join(f"<li>{escape(r['kind'])}: {escape(r['text'])}</li>" for r in reasons)
+    return (f'<p class="lead">{escape(story)}</p><div class="beforeafter">'
+            f'<div class="card"><h3>Before: the recorded run, step {n}</h3><p><code>{escape(entity)}</code> '
+            f"{escape(action)}</p><p>{_pill(before)}</p><p>No text sets the hand-over time, so a person decides."
+            "</p></div>"
+            f'<div class="card"><h3>After: with the proposed rule, step {n}</h3><p><code>{escape(entity)}</code> '
+            f"{escape(action)}</p><p>{_pill(after)}</p><ul>{added}</ul></div></div>")
 
 
 # --- modeldown.html --------------------------------------------------------------------------------------------
@@ -491,6 +583,7 @@ def localmodel_page() -> str:
         f'<td>{"<br>".join(f"<code>{escape(c)}</code>" for c in r["clauses"])}</td><td>{escape(r["note"])}</td></tr>'
         for r in localmodel.rows())
     body = (f"<h1>Local model: S2 on {escape(m['model'])}</h1>"
+            f'<p class="plan-label">{escape(LOCAL_LABEL)}</p><p class="lead">{escape(LOCAL_PLAIN)}</p>'
             f'<p class="notice">{escape(NOTICE)}</p>'
             f'<p class="lead">{escape(localmodel.LABEL)}</p>'
             f"<p>Model <code>{escape(m['model'])}</code> through Ollama {escape(m['ollama'])}, on this machine: GPU "
@@ -666,6 +759,13 @@ table.kb td { font-size: .88em; }
 ol.toc li { margin: 2px 0; }
 .rule { padding: 8px 16px; border: 2px dashed var(--hold); border-radius: 8px; background: var(--panel); }
 tr.changed { background: var(--changed); }
+.beforeafter { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+.plan-label { display: inline-block; margin: 6px 0; padding: 2px 10px; border: 2px solid var(--hold); border-radius: 6px;
+  color: var(--hold); font-weight: 700; }
+.unseen .box { border: 1px solid var(--line); border-radius: 10px; padding: 4px 16px 12px; margin: 16px 0;
+  background: var(--panel); }
+body > div.layout { max-width: 1440px; margin-inline: auto; padding-inline: 32px; }
+body.present .unseen { display: none; }
 table.whatif-table td:first-child code { white-space: nowrap; }
 .ok { color: var(--ok-ink); font-weight: 600; }
 .bad { color: var(--bad-ink); font-weight: 600; }
@@ -673,7 +773,8 @@ select { font: inherit; max-width: 100%; color: var(--ink); background: var(--pa
   border-radius: 6px; padding: 3px 6px; }
 header { padding: 10px 0; background: var(--bg); position: static; }
 @media (max-width: 700px) {
-  main.site, body > header, body > p.meta, body > main:not(.site) { padding-inline: 16px; }
+  main.site, body > header, body > p.meta, body > main:not(.site), body > div.layout { padding-inline: 16px; }
+  .beforeafter { grid-template-columns: 1fr; }
   nav.site { padding: 0 16px; }
   a.site-link { padding: 8px 8px 6px; }
   nav.site .brand { padding: 8px 0 2px; width: 100%; }

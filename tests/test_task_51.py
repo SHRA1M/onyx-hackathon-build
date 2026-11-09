@@ -7,7 +7,7 @@ import re
 
 import pytest
 
-from onyx import data, kb
+from onyx import site, data, kb
 
 REPO = kb.REPO
 REPORT = (REPO / "docs" / "report.md").read_text(encoding="utf-8")
@@ -145,7 +145,9 @@ def test_the_team_table_carries_the_reviewer_with_his_title_and_his_qualificatio
 
 def test_the_unseen_bank_is_listed_in_the_readme_and_on_the_runs_page():
     line = "No key exists for them and none has been run; their cold runs are a next step."
-    assert line in README and line in RUNS_PAGE
+    assert line in README
+    # Task 56c addendum: the runs page says it in plain words
+    assert site.UNSEEN_TEXT in RUNS_PAGE
     from html import escape
     for path in sorted((data.SCENARIOS_DIR / "unseen").glob("U*.json")):
         scenario = json.loads(path.read_text(encoding="utf-8"))

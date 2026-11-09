@@ -191,7 +191,7 @@ def test_gap_order_follows_the_report():
 
 def test_runs_page_is_the_viewer_with_verify_links(pages):
     elements = _parse(pages["runs.html"])
-    shown = {e["attrs"]["data-run"] for e in elements if e["tag"] == "div" and "run" in e["attrs"].get("class", "")}
+    shown = {e["attrs"]["data-run"] for e in elements if e["tag"] == "div" and "run" in e["attrs"].get("class", "").split()}
     links = {e["attrs"]["href"] for e in _with(elements, "verify")}
     assert shown and {f"verify.html#{r}" for r in shown} <= links
     logs = {audit_path for audit_path in site.verify_names()}

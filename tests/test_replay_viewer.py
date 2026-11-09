@@ -90,7 +90,11 @@ def test_five_scenario_sections_each_with_the_notice(page):
             run = next(el for el in page if _has(el, "run") and s in el["parents"] and el["attrs"]["data-lang"] == lang)
             assert NOTICE in _norm(run["text"])
             path = kb.REPO / run["attrs"]["data-run"]
-            assert f"hash chain: {'ok' if audit.verify(path) else 'BROKEN'}" in run["text"]
+            # Task 56c: the technical line sits in the side column; the run carries the plain line
+            tech = next(el for el in page if _has(el, "run-tech") and el["attrs"]["data-sid"] == s["attrs"]["data-sid"]
+                        and el["attrs"]["data-lang"] == lang)
+            assert f"hash chain: {'ok' if audit.verify(path) else 'BROKEN'}" in tech["text"]
+            assert ("The log is untouched." if audit.verify(path) else "The log chain is BROKEN.") in run["text"]
 
 
 def test_runs_shown_agree_with_the_markdown_pages():
