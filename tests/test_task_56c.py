@@ -88,8 +88,8 @@ def test_plain_figure_lines_equal_the_eval():
 
 
 def test_unseen_boxes_and_old_heading_gone():
-    html = _page("runs.html")
-    assert "The unseen bank" not in html
+    html = _page("tests.html")  # Task 56e item 6: the boxes moved to the More tests page
+    assert "The unseen bank" not in html and "The unseen bank" not in _page("runs.html")
     assert "Next tests: seven new stories, not run yet" in html
     assert "The attack test: a customer tries to trick Mizan" in html
 

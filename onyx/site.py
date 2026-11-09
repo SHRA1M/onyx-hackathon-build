@@ -76,7 +76,7 @@ LOCAL_PLAIN = ("The operator chooses the model. This run uses an open model on o
                "name change. This shows a way around gap 5 (customer data sent to a model provider outside the "
                "country); it does not close it.")
 LOCAL_LABEL = "Demo, not scored"
-PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("gaps.html", "Gap register"),
+PAGES = (("index.html", "Overview"), ("runs.html", "Runs"), ("tests.html", "More tests"), ("gaps.html", "Gap register"),
          ("kb.html", "Knowledge base"), ("verify.html", "Verify a log"), ("whatif.html", "What-if"),
          ("modeldown.html", "Model down"), ("localmodel.html", "Local model"))
 C5_HEADLINE = ("citation_validity", "action_recall", "abstention", "gap_recall")
@@ -268,7 +268,16 @@ def runs_page() -> str:
         assert html.count(old) == 1
         html = html.replace(old, f'<a href="{target}">{target}</a>')
     assert html.count("</main>") == 1
-    return html.replace("</main>", unseen_bank() + "</main>")
+    return html.replace("</main>", f'<p class="more-tests">{escape(MORE_LINE)}<a href="tests.html">More tests</a>.</p>'
+                        "</main>")
+
+
+MORE_LINE = "Seven stories not run yet, and the attack test: "  # Task 56e item 6
+
+
+def tests_page() -> str:
+    """Task 56e item 6: the two boxes the runs page carried, moved whole."""
+    return _frame("tests.html", "Mizan: more tests", f"<h1>More tests</h1>\n{unseen_bank()}")
 
 
 def unseen_bank() -> str:
@@ -555,7 +564,13 @@ def modeldown_page() -> str:
                    for n in sorted(set(before) | set(after)))
     path = replay_viewer._rel(WHATIF_RUN)
     md = modeldown.page_name(WHATIF_RUN)
-    body = (f"<h1>Model down: {escape(sid)}, the call at step {at} fails</h1>"
+    card, section = replay_viewer.Viewer(verify="verify.html", register="gaps.html").modeldown()
+    stepnav = ('<div class="stepnav" id="stepnav"><button id="prev">Previous</button> <span id="count"></span> '
+               '<button id="next">Next</button> <button id="pause">Pause</button> <button id="exit">Stop presenting'
+               "</button></div>")
+    body = (f"<h1>{escape(replay_viewer.MODELDOWN_TITLE)}</h1>"
+            f'<nav class="picker">{card}</nav>{section}{stepnav}'
+            f'<div class="md-table"><h2>Model down: {escape(sid)}, the call at step {at} fails</h2>'
             f'<p class="notice">{escape(NOTICE)}</p>'
             f'<p class="lead">{escape(modeldown.LABEL)}</p>'
             f'<p>Run <code>{path}</code>, hash chain {"ok" if audit.verify(WHATIF_RUN) else "BROKEN"} '
@@ -568,8 +583,9 @@ def modeldown_page() -> str:
             "<th>model-down</th></tr></thead><tbody>" + rows + "</tbody></table></div>"
             f"<h2>What stays</h2><p>{same} of {total} decisions outside step {at} identical.</p>"
             + "".join(f"<p>{_code(n)}</p>" for n in notes)
-            + f"<p><b>No model took part in step {at} of the model-down column.</b></p>")
-    return _frame("modeldown.html", "Mizan: model down", body)
+            + f"<p><b>No model took part in step {at} of the model-down column.</b></p></div>")
+    return PAGE.format(title="Mizan: model down", css=CSS + replay_viewer.CHAT_CSS + SITE_CSS,
+                       nav=nav("modeldown.html"), body=body, script=f"<script>{replay_viewer.JS}</script>\n")
 
 
 # --- localmodel.html -------------------------------------------------------------------------------------------
@@ -601,7 +617,7 @@ def localmodel_page() -> str:
 # --- write -----------------------------------------------------------------------------------------------------
 
 def render() -> dict[str, str]:
-    return {"index.html": index(), "runs.html": runs_page(), "gaps.html": gaps_page(), "kb.html": kb_page(),
+    return {"index.html": index(), "runs.html": runs_page(), "tests.html": tests_page(), "gaps.html": gaps_page(), "kb.html": kb_page(),
             "verify.html": verify_page(), "whatif.html": whatif_page(), "modeldown.html": modeldown_page(),
             "localmodel.html": localmodel_page()}
 
@@ -765,7 +781,7 @@ tr.changed { background: var(--changed); }
 .unseen .box { border: 1px solid var(--line); border-radius: 10px; padding: 4px 16px 12px; margin: 16px 0;
   background: var(--panel); }
 body > div.layout { max-width: 1440px; margin-inline: auto; padding-inline: 32px; }
-body.present .unseen { display: none; }
+body.present .unseen, body.present .more-tests, body.present .md-table, body.present main.site > h1 { display: none; }
 table.whatif-table td:first-child code { white-space: nowrap; }
 .ok { color: var(--ok-ink); font-weight: 600; }
 .bad { color: var(--bad-ink); font-weight: 600; }

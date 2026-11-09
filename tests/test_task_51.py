@@ -14,6 +14,8 @@ REPORT = (REPO / "docs" / "report.md").read_text(encoding="utf-8")
 ANNEX = (REPO / "docs" / "annex.md").read_text(encoding="utf-8")
 README = (REPO / "README.md").read_text(encoding="utf-8")
 RUNS_PAGE = (REPO / "docs" / "site" / "runs.html").read_text(encoding="utf-8")
+# Task 56e item 6: the unseen boxes moved to the More tests page
+TESTS_PAGE = (REPO / "docs" / "site" / "tests.html").read_text(encoding="utf-8")
 GAPS_MD = (REPO / "docs" / "gaps.md").read_text(encoding="utf-8")
 STRIP = ["5 scenarios, 2 languages, 20 recorded runs", "108 documents, 100 verified",
          "action recall 0.96 en / 1.00 ar (110 of 112 key steps)", "citation validity 0.99 / 1.00",
@@ -143,16 +145,16 @@ def test_the_team_table_carries_the_reviewer_with_his_title_and_his_qualificatio
     assert "Team Onyx (BAU Faculty of AI)" not in README
 
 
-def test_the_unseen_bank_is_listed_in_the_readme_and_on_the_runs_page():
+def test_the_unseen_bank_is_listed_in_the_readme_and_on_the_tests_page():
     line = "No key exists for them and none has been run; their cold runs are a next step."
     assert line in README
     # Task 56c addendum: the runs page says it in plain words
-    assert site.UNSEEN_TEXT in RUNS_PAGE
+    assert site.UNSEEN_TEXT in TESTS_PAGE
     from html import escape
     for path in sorted((data.SCENARIOS_DIR / "unseen").glob("U*.json")):
         scenario = json.loads(path.read_text(encoding="utf-8"))
         assert f"| {scenario['id']} | {scenario['title_en']} | {scenario['title_ar']} |" in README
-        assert escape(scenario["title_en"]) in RUNS_PAGE and scenario["title_ar"] in RUNS_PAGE
+        assert escape(scenario["title_en"]) in TESTS_PAGE and scenario["title_ar"] in TESTS_PAGE
 
 
 def test_nothing_offers_a_judge_a_live_step():

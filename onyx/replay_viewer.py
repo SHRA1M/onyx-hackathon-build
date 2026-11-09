@@ -123,6 +123,14 @@ START = ("Here are the five scenarios we ran. Pick English or Arabic, then pick 
 TOP = "Every law quote here is checked word for word against the official text. To check a run yourself, use Verify."
 PLAY = "Play the steps by themselves, every 15 seconds: press Present on a scenario card, or key p."
 LANG_NAMES = {"en": "English", "ar": "Arabic"}
+MODELDOWN_TITLE = "The AI fails in the middle of a conversation"
+# Task 56e item 7: from the model-down replay's log (attempts, the hand-over, its hold, the decisions that stay) and
+# docs/annex.md line 93 ("shown by fault injection on a replay; no live outage was run")
+MODELDOWN_STORY = ("This is scenario 2, replayed from its log with no new AI call. At step {at}, where the customer "
+                   "complains about a charge, we made the AI call fail: it failed after {attempts} tries. The "
+                   "coordinator, which is plain code, wrote a hand-over to a named staff member, and the gate held it "
+                   "for that person. The rest of the conversation then ran as recorded: {same} of {total} later "
+                   "decisions stayed the same. No live outage was run.")
 # order Task 56e item 3 and its two addenda: each label's first sentence, by the number of laws the verdict lists
 LEADS = {gate.HOLD: "The code did not let this go ahead alone. A staff member must decide.",
          gate.BLOCK: "The code stopped this.", gate.ALLOW: "The gate's checks passed, so this went ahead."}
@@ -260,7 +268,8 @@ class Viewer:
                 f'{f"<ul class=reasons>{reasons}</ul>" if reasons else ""}{laws}</details></div>')
 
     def step(self, n: int, total: int, step_events: list[dict[str, Any]], scenario: dict[str, Any],
-             ungoverned: list[dict[str, Any]] | None, lang: str = "en") -> str:
+             ungoverned: list[dict[str, Any]] | None, lang: str = "en", plain: str | None = None,
+             gates_off: bool = True) -> str:
         """One step as a chat (order Task 56b item 5): the message that starts it on one side, labelled by its sender
         (scenario step "from"); each agent's proposals on the other, labelled by the logging actor; the code's answer
         under each; a hand-over in its own box; "Without the gates" in a fold."""
@@ -297,6 +306,8 @@ class Viewer:
                            f"Gap flagged: {gaps}" + (f'<details class="law"><summary>show the law</summary>'
                                                      f"{self.flagged(nv['gaps'])}</details>" if nv["gaps"] else "")
                            + "</div>")
+            elif e["action"] == "model_unavailable":  # Task 56e item 7: the logged reason, as logged
+                turns.append(_bubble(AGENTS.get(e["actor"], e["actor"]), f'<p>{escape(e["reason"])}</p>'))
             elif e["action"] == "override_refused":
                 notes.append(f"<li>Override attempt: {escape(e['reason'])}. No override.</li>")
         attempted = release["facts"].get("override_attempted_by")
@@ -304,7 +315,7 @@ class Viewer:
             notes.append(f"<li>Override attempt named in the step: {escape(attempted)}</li>")
         incoming = (f'<div class="bubble in"><span class="who">{escape(SENDERS.get(sender, sender))}</span>'
                     f'{_text(release["text"], "message", "div")}</div>')
-        plain = STEP_LINES.get((scenario["id"], n))
+        plain = plain or STEP_LINES.get((scenario["id"], n))
         written = any(s["n"] == n and s.get("pending_proposal") for s in scenario["steps"])
         parts = [f'<article class="step" data-n="{n}" data-total="{total}">',
                  f'<p class="plain-step">{n}. {escape(plain)}</p>' if plain else "",
@@ -314,8 +325,32 @@ class Viewer:
                  "" if any(e["action"] == "gate" for e in step_events) else '<p class="step-head">no gate event</p>',
                  "</div>",
                  handover, f'<ul class="notes">{"".join(notes)}</ul>' if notes else "", abstain,
-                 self.without_gates(ungoverned, written), "</article>"]
+                 self.without_gates(ungoverned, written) if gates_off else "", "</article>"]
         return "\n".join(p for p in parts if p)
+
+    def modeldown(self) -> tuple[str, str]:
+        """Task 56e item 7: the model-down replay as a scenario (its card, its section), from the replay's own log."""
+        events = modeldown.replay_events(WHATIF_RUN, MODELDOWN_AT)
+        scenario = data.load_scenario("S2")
+        down = next(e for e in events if e["action"] == "model_unavailable")
+        same, total_same, _ = modeldown.stays(runs._events(WHATIF_RUN), events, MODELDOWN_AT)
+        sid = modeldown.page_name(WHATIF_RUN).removesuffix(".md")
+        steps, total = _steps(events), len(scenario["steps"])
+        lines = {n: STEP_LINES[("S2", n)] for n in steps if n}
+        lines[MODELDOWN_AT] += (f" Here the AI call fails after {down['new_value']['attempts']} tries, and {CODE[0].lower() + CODE[1:]} "
+                                "writes a hand-over to a staff member instead.")
+        story = MODELDOWN_STORY.format(at=MODELDOWN_AT, attempts=down["new_value"]["attempts"], same=same,
+                                       total=total_same)
+        body = [self.step(n, total, steps[n], scenario, None, "en", lines[n], gates_off=False)
+                for n in sorted(steps) if n]
+        card = (f'<div class="pick-card"><button class="pick" data-sid="{sid}"><b>Model down</b> <span class="t-en">'
+                f'{escape(MODELDOWN_TITLE)}</span></button><p class="present-line">Click Present to start it</p>'
+                f'<button class="present" data-sid="{sid}">Present</button></div>')
+        section = (f'<section class="scenario" data-sid="{sid}"><h2>{escape(MODELDOWN_TITLE)}</h2>'
+                   f'<div class="story"><p>{escape(story)}</p></div>'
+                   f'<div class="run" data-sid="{sid}" data-lang="en" data-run="{_rel(WHATIF_RUN)}">'
+                   f'<p class="notice">{escape(NOTICE)}</p>' + "\n".join(body) + "</div></section>")
+        return card, section
 
     def without_gates(self, ungoverned: list[dict[str, Any]] | None, written: bool = False) -> str:
         body = [f"<p>{escape(GATES_OFF_LEAD)}</p>"] + ([f'<p class="written">{escape(WRITTEN)}</p>'] if written else [])
@@ -490,16 +525,21 @@ TEMPLATE = """<!doctype html>
 JS = """
 (function () {
   // Task 56c: Previous / Next sit under the current step; Present plays a scenario from step 1, one step every 15 s
-  var sid = "S1", lang = "en", index = 0, timer = null, SECS = 15;
+  // Task 56e item 5: the page opens on the cards; with scripts off, every step shows (CHAT_CSS, html:not(.js))
+  document.documentElement.classList.add("js");
+  var sid = null, lang = "en", index = 0, timer = null, SECS = 15;
   function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
   function steps() {
-    var run = document.querySelector('.run[data-sid="' + sid + '"][data-lang="' + lang + '"]');
+    if (!sid) { return []; }
+    var run = document.querySelector('.run[data-sid="' + sid + '"][data-lang="' + lang + '"]') ||
+      document.querySelector('.run[data-sid="' + sid + '"]');
     return run ? all(".step", run) : [];
   }
   function show() {
     all(".scenario, .whatif").forEach(function (el) { el.classList.toggle("on", el.dataset.sid === sid); });
+    var has = document.querySelector('.run[data-sid="' + sid + '"][data-lang="' + lang + '"]');
     all(".run, .run-tech").forEach(function (el) {
-      el.classList.toggle("on", el.dataset.sid === sid && el.dataset.lang === lang);
+      el.classList.toggle("on", el.dataset.sid === sid && (el.dataset.lang === lang || !has));
     });
     all(".picker button.pick").forEach(function (el) { el.classList.toggle("on", el.dataset.sid === sid); });
     all(".langs button").forEach(function (el) { el.classList.toggle("on", el.dataset.lang === lang); });
@@ -507,6 +547,8 @@ JS = """
     var list = steps(), nav = document.getElementById("stepnav");
     index = Math.max(0, Math.min(index, list.length - 1));
     list.forEach(function (el, i) { el.classList.toggle("on", i === index); });
+    document.body.classList.toggle("first", index === 0);
+    document.body.classList.toggle("on-cards", !sid);
     if (list.length) { list[index].appendChild(nav); }
     nav.style.display = list.length ? "" : "none";
     document.getElementById("count").textContent = list.length ? "Step " + (index + 1) + " of " + list.length : "";
@@ -522,12 +564,12 @@ JS = """
   function play() { stop(); timer = setInterval(function () { move(1); }, SECS * 1000); }
   function present(on) {
     document.body.classList.toggle("present", on);
-    if (on) { play(); } else { stop(); }
+    if (on) { play(); } else { stop(); sid = null; index = 0; }
     show();
     if (on) { window.scrollTo(0, 0); }
   }
   all(".picker button.pick").forEach(function (el) {
-    el.addEventListener("click", function () { sid = el.dataset.sid; index = 0; show(); });
+    el.addEventListener("click", function () { stop(); sid = el.dataset.sid; index = 0; show(); });
   });
   all(".picker button.present").forEach(function (el) {
     el.addEventListener("click", function () { sid = el.dataset.sid; index = 0; present(true); });
@@ -543,7 +585,10 @@ JS = """
     if (ev.target && ev.target.tagName === "INPUT") { return; }
     if (ev.key === "ArrowRight") { move(1); }
     else if (ev.key === "ArrowLeft") { move(-1); }
-    else if (ev.key === "p" || ev.key === "P") { present(!document.body.classList.contains("present")); }
+    else if (ev.key === "p" || ev.key === "P") {
+      if (!sid) { sid = "S1"; index = 0; }
+      present(!document.body.classList.contains("present"));
+    }
     else if (ev.key === "Escape") { present(false); }
   });
   show();
@@ -574,7 +619,7 @@ body.lang-ar .picker .t-en { display: none; }
 details.why { font-size: .9em; }
 details.why summary { cursor: pointer; color: var(--muted); list-style: none; }
 details.why summary::-webkit-details-marker { display: none; }
-details.why summary .answer::after { content: " BE"; font-weight: 400; }
+details.why summary .answer::after { content: " \\25BE"; font-weight: 400; }
 .answer-line { font-weight: 600; margin: 4px 0; }
 .gate-line { margin: 4px 0; }
 details.laws summary { cursor: pointer; color: var(--accent); }
@@ -606,6 +651,9 @@ details.law summary { cursor: pointer; color: var(--muted); }
 .stepnav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0; padding: 8px 0;
   background: var(--bg); }
 body:not(.present) #exit { display: none; }
+html:not(.js) .scenario, html:not(.js) .whatif, html:not(.js) .run, html:not(.js) .step { display: block; }
+html:not(.js) .stepnav, html:not(.js) .present, html:not(.js) .present-line { display: none; }
+body.present.first .scenario.on > h2, body.present.first .scenario.on .story { display: block; }
 body.lang-ar .picker .t-ar, body.lang-ar .title-ar, body.lang-ar .chat { text-align: right; }
 body.present { font-size: 16px; }
 body.present header, body.present aside.side, body.present .story, body.present .scenario > h2,
