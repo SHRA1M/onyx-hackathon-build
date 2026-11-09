@@ -971,3 +971,7 @@ Moved from background at this wrap (decision still settled):
 ## 2026-11-09: Task 56f and the README top part
 
 Task 56f (`4cb6fa2`, report-back `b4c79ff`): the model-down story box says "all 8 decisions outside step 3 kept their verdict", with S2-5's 19 laws instead of 24. The sentence lives in `onyx/replay_viewer.py` (`MODELDOWN_STORY`), not `site.py`; Iyas approved the file change. README top (`1a52558`): Fable's block above "## For the reviewer" (two sentences, agents line, S1 step 3 held picture at `docs/site/screenshots/runs-S1-step3-held.png`, film-link comment, Pages and report links, written-proposals note), and "nine pages". The Pages address `https://shra1m.github.io/onyx-hackathon-build/site/runs.html` was set by hq; there is no Pages setup in the repo yet. The block takes about 1.5 screens on GitHub. 1199 tests pass, selftest 0.
+
+## 2026-11-09: PR #26 merged
+
+hq accepted the half-screen scroll. Checks on `task-56` (1199 passed, selftest 0), merged as `1a6b9f7`, the same checks on `main` (1199 passed, selftest 0), and the new block confirmed on the GitHub front page. PR #28, Pages and settings not touched.
