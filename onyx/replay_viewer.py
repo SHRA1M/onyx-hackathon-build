@@ -129,8 +129,11 @@ MODELDOWN_TITLE = "The AI fails in the middle of a conversation"
 MODELDOWN_STORY = ("This is scenario 2, replayed from its log with no new AI call. At step {at}, where the customer "
                    "complains about a charge, we made the AI call fail: it failed after {attempts} tries. The "
                    "coordinator, which is plain code, wrote a hand-over to a named staff member, and the gate held it "
-                   "for that person. The rest of the conversation then ran as recorded: {same} of {total} later "
-                   "decisions stayed the same. No live outage was run.")
+                   "for that person. The rest of the conversation ran as recorded: all {total} decisions outside "
+                   "step {at} kept their verdict. One of them, at step 5, lists 19 laws instead of 24, because the "
+                   "other five were cited only by the AI's step {at} proposals, which were never made here. No live "
+                   "outage was run.")
+# Task 56f: 8, S2-5, 19 of 24 and the five dropped ids from docs/replay/model-down-S2.md ("What stays")
 # order Task 56e item 3 and its two addenda: each label's first sentence, by the number of laws the verdict lists
 LEADS = {gate.HOLD: "The code did not let this go ahead alone. A staff member must decide.",
          gate.BLOCK: "The code stopped this.", gate.ALLOW: "The gate's checks passed, so this went ahead."}

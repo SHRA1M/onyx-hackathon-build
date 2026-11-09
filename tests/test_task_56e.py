@@ -89,7 +89,10 @@ def test_modeldown_page_is_a_scenario_from_its_own_log():
     assert f"it failed after {down['new_value']['attempts']} tries" in html and "No live outage was run." in html
     assert "no live outage was run" in " ".join(_html("docs/annex.md").split())
     same, total, _ = modeldown.stays(runs._events(replay_viewer.WHATIF_RUN), events, replay_viewer.MODELDOWN_AT)
-    assert f"{same} of {total} later decisions stayed the same" in html
+    assert f"{same} of {total} later decisions" not in html
+    assert (f"The rest of the conversation ran as recorded: all {total} decisions outside step 3 kept their verdict. "
+            "One of them, at step 5, lists 19 laws instead of 24, because the other five were cited only by the AI's "
+            "step 3 proposals, which were never made here.") in html
     assert html.count('<p class="plain-step">') == 6 and html.count('<p class="answer-line">') > 0
     assert 'class="present" data-sid="model-down-S2"' in html and down["reason"] in html
     assert "What happened here with the gates off" not in html  # no ungoverned run was replayed
