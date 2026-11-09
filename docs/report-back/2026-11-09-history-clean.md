@@ -1,4 +1,4 @@
-# Report-back (interim, stopped at step 6): history clean (2026-11-09)
+# Report-back: history clean (2026-11-09)
 
 Opus. Order: `D:\Projects\hq\uni\ai-for-good-hackathon\history-clean-order-2026-11-09.md`, plus Iyas's approval
 of 2026-11-09 (fix the PR #29 report-back via a small PR; update the two hashes pinned in `tests/test_bakeoff.py` and
@@ -23,15 +23,21 @@ of 2026-11-09 (fix the PR #29 report-back via a small PR; update the two hashes 
    Rewritten `main` tip `d493066` (was `2db24ad`); its file tree is identical to the old tip.
    Local `main` reset to it. On it, plus the hash fix: `uv run pytest -q` 1200 passed; selftest exit 0.
 
-## Stopped: step 6
+## Step 6: push
 
-`git push --force --all` / `--tags` from the rewritten copy was refused by the session's permission check. Nothing
-on GitHub has changed yet. Steps 6 and 7 not run. The rewritten copy is at
-`C:\Users\SUPER\AppData\Local\Temp\claude\b0cdcceaf887c3b6\f130c7a8-3c4d-4d0c-8280-7f54a331ed24\scratchpad\rewrite.git`.
+The session's push was refused by its permission check; Iyas ran it himself. `git push --force --all`: 63 branches
+forced (34 working, 29 `backup/*`); `git push --force --tags`: 8 tags forced. GitHub `main` is now `d493066`.
+
+## Step 7: old PR pages (checked with `gh api`, PRs #1 to #30; not fixed, by order)
+
+Names still show in "Files changed" of PR #1, #5, #26, #29 and #30. Titles, bodies, comments and commit lists show
+none. Cause: GitHub keeps each PR's original commits under its read-only `refs/pull/N`, which a push cannot change.
+Old commits also stay reachable by their old hash until GitHub removes them. Clearing both needs GitHub Support
+(sensitive-data removal request). This matters only once the repo is public.
 
 ## Hashes (step 8)
 
-Changed, on local branch `history-clean-hashes` (not pushed): `onyx/bakeoff.py` VERSIONS and `tests/test_bakeoff.py`:
+Changed, on branch `history-clean-hashes` (PR, not merged): `onyx/bakeoff.py` VERSIONS and `tests/test_bakeoff.py`:
 `d85871d` to `d7bb264` (v1), `a8f4acb` to `a85a448` (v2).
 
 Left as they are (old hashes, now point nowhere): `eval/bakeoff.json` lines 153, 260 and `eval/bakeoff.md` lines 7,
@@ -39,6 +45,6 @@ Left as they are (old hashes, now point nowhere): `eval/bakeoff.json` lines 153,
 `eval/results.md` (5), `docs/gaps.md` (5), CHANGELOG (4), background (3), archive (179), about 35 report-backs and two
 work orders. The report and annex quote none.
 
-## For Iyas
+## Limits kept
 
-Run the push himself (one line in this chat), then the session does step 7 and finishes this file.
+Repo private, Pages off, no `submission-2026-11-09` tag, backup kept.
