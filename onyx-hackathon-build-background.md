@@ -72,7 +72,7 @@ Python 3.12 (uv), ChromaDB 1.5.9 (default embedding all-MiniLM-L6-v2, 79 MB, dow
 
 ## Open
 
-- Tasks 56, 56b, 56d, 56c: on `task-56`, PR #26 open (also carries bd3cc6e). 56c (2026-11-08, `55cd02e`): plain titles, story boxes, plain step lines (`replay_viewer.STEP_LINES`), side column, Present every 12 s, overview sections; report-back `docs/report-back/2026-11-08-task-56c-site-words.md` lists 6 decisions for hq (S5 'calls', story boxes English only, Stop presenting button). Full pytest not rerun after the last test repin.
+- Tasks 56, 56b, 56d, 56c: on `task-56`, PR #26 open (also carries bd3cc6e). 56c (`55cd02e`): plain words, side column, Present 12 s; report-back `docs/report-back/2026-11-08-task-56c-site-words.md` holds 6 decisions for hq. Full pytest not rerun after the last test repin.
 - Task 52: merged, PR #22. Found the fault above. Its Arabic check is still owed: Claude Cowork read not run, Iyas's eye-check of steps 3, 4 and 6 not done (`docs/report-back/2026-11-06-task-52-arabic-check.html`).
 - Tasks 51 and 51b: merged, PR #20 and #21. Owed: hq's ruling on the note's "cites the chapeau" (the gate's clause list has no chapeau; no rule row); two AI reads (Fable, Claude Cowork) of the gap-15 Cabinet sentence. The footers in stored Arabic of CPR 26.6, 4.23.2, 24.6 print from chunks, not `gaps.json`: a chunk edit, after the shortlist.
 - hq keeps one "done means" check on Task 45. Manifest 108 rows (100 VERIFIED, 5 REFERENCED, 3 UNVERIFIED), 86 instruments, 36 UAE instruments, 38 foreign; 161 chunks in 21 documents; register 15 gaps, 2 candidates; report 5 main pages, 16 total. Sources and extracts under `kb/sources/` are gitignored, this PC only.
