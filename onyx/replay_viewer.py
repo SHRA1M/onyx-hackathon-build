@@ -145,7 +145,7 @@ class Viewer:
             f"<ul><li>{escape(line)}</li></ul>" for line in replay_page.check_lines(nv.get("reasons", [])))
         cls = WORDS[e["verdict"]][1]
         return (f'<div class="answer-row"><span class="answer {cls}">{escape(ANSWERS[e["verdict"]])}</span>'
-                f'<details class="why"><summary>Gate on <b>{escape(verb)}</b>: {_verdict(e["verdict"])}</summary>'
+                f'<details class="why"><summary>Gate on <b>{escape(verb)}</b>: {escape(WORDS[e["verdict"]][0])}</summary>'
                 f"{relied}</details></div>")
 
     def step(self, n: int, total: int, step_events: list[dict[str, Any]], scenario: dict[str, Any],
