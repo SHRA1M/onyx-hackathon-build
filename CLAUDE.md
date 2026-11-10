@@ -1,6 +1,6 @@
 # onyx-hackathon-build
 
-Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom track T1). A synthetic UAE operator's consumer-care AI: five agents propose JSON actions, `gate.py` (the Y.3172 P node) decides in plain code from clauses of binding UAE text, every step lands in a hash-chained log. Readers: the hackathon judges, then ITU. Built by Iyas alone. Submission 2026-11-09.
+Mizan, team Onyx's entry to the ITU AI for Good Lab Hackathon UAE 2026 (telecom track T1). A synthetic UAE operator's consumer-care AI: five agents propose JSON actions, `gate.py` (the Y.3172 P node) decides in plain code from clauses of binding UAE text, every step lands in a hash-chained log. Readers: the hackathon judges, then ITU. Submission 2026-11-09.
 
 ## Session start
 
