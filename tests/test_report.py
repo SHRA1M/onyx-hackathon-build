@@ -66,7 +66,7 @@ def test_eight_list_paragraph_headings_in_template_order(built):
     assert doc.paragraphs[0].text == "AI for Good Sandbox Hackathon – Onyx – Mizan"
     assert [p.text.split(":")[0] for p in doc.paragraphs[1:6]] == ["Team leader", "Team members", "Contact details",
                                                                   "GitHub (public from 2026-11-09)", "Replay site, no install"]  # Task 51 A.2
-    assert "Demo video: see the repository README." in doc.paragraphs[5].text
+    assert "Demo video: https://youtu.be/_hSZLOfSAs0" in doc.paragraphs[5].text
 
 
 def test_two_image_parts_no_template_example_and_no_run_set_tag(built):
@@ -470,8 +470,8 @@ def test_task_33_data_office_sentence_is_in_the_readme_once_not_the_report():
 # --- order 2026-10-30 Task 34 Part A: team and links -------------------------------------------------------------
 
 LINKS = ["**GitHub (public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build",
-         "**Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/. **Demo video:** see the "
-         "repository README."]  # Iyas's A4 answer (1): five header lines; Task 51 A.2
+         "**Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/. **Demo video:** "
+         "https://youtu.be/_hSZLOfSAs0"]  # Iyas's A4 answer (1): five header lines; Task 51 A.2
 
 
 def test_task_34_team_and_the_four_labelled_links():

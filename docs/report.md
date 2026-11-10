@@ -4,7 +4,7 @@
 **Team members:** Mohammed Rawashdeh, Yanal Faouri, Zaid Saaydeh. **Mentor:** Dr. Wafaa Almaaitah
 **Contact details:** iyas.shraim@gmail.com, +962 790 602 577
 **GitHub (public from 2026-11-09):** https://github.com/SHRA1M/onyx-hackathon-build
-**Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/. **Demo video:** see the repository README.
+**Replay site, no install:** https://shra1m.github.io/onyx-hackathon-build/site/. **Demo video:** https://youtu.be/_hSZLOfSAs0
 
 | 5 scenarios, 2 languages, 20 recorded runs | 108 documents, 100 verified | action recall 0.96 en / 1.00 ar (110 of 112 key steps) | citation validity 0.99 / 1.00 | abstained and logged the gap on the unanswerable step in 20 of 20 runs |
 |---|---|---|---|---|

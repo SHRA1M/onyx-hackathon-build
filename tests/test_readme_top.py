@@ -14,7 +14,7 @@ BLOCK = [
     "TDRA and the Data Office. These four are AI. The fifth, the coordinator, is plain code that routes each step.",
     "![The runs page: scenario S1, step 3, held for a staff member, with the gate's reason]"
     "(docs/site/screenshots/runs-S1-step3-held.png)",
-    "<!-- film-link -->",
+    "Watch the 7-minute film: [https://youtu.be/_hSZLOfSAs0](https://youtu.be/_hSZLOfSAs0)",
     "See the runs: [https://shra1m.github.io/onyx-hackathon-build/site/runs.html]"
     "(https://shra1m.github.io/onyx-hackathon-build/site/runs.html)",
     "Read the report: [docs/report.pdf](docs/report.pdf)",

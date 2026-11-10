@@ -47,7 +47,7 @@ REPORT_HAS = [
     "warning first (22.1). And it cannot handle their complaint, because that conversation is reserved for a person: 26.7.2 "
     "requires licensees to \"preclude the use of non-human agents by Licensees in conversations with Consumers regarding "
     "Consumer Complaints\".",
-    "**Demo video:** see the repository README.",
+    "**Demo video:** https://youtu.be/_hSZLOfSAs0",
     STRIP_CELL,
     "expected gaps: 5 of 7 found in every run; the 2 not found (gaps 2 and 6) are keyed to S1 steps where the adviser, "
     "the only agent that holds the register, does not speak (Annex C); 3 unexpected ids flagged",

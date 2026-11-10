@@ -10,7 +10,7 @@ Five agents: the care agent talks to the customer, the adviser checks the law, a
 
 ![The runs page: scenario S1, step 3, held for a staff member, with the gate's reason](docs/site/screenshots/runs-S1-step3-held.png)
 
-<!-- film-link -->
+Watch the 7-minute film: [https://youtu.be/_hSZLOfSAs0](https://youtu.be/_hSZLOfSAs0)
 
 See the runs: [https://shra1m.github.io/onyx-hackathon-build/site/runs.html](https://shra1m.github.io/onyx-hackathon-build/site/runs.html)
 
